@@ -1,8 +1,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:sauftrag/views/Auth/favorite.dart';
 import 'package:sauftrag/views/Auth/login.dart';
+import 'package:sauftrag/views/Auth/media.dart';
 import 'package:sauftrag/views/Auth/signup.dart';
+import 'package:sauftrag/views/Auth/terms.dart';
 import 'package:stacked/stacked.dart';
 
 class NavigationViewModel extends BaseViewModel{
@@ -15,6 +18,18 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateToSignUpScreen(){
     navigationKey.currentState!.push(PageTransition(child: SignUp(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToFavoriteScreen(){
+    navigationKey.currentState!.push(PageTransition(child: Favorite(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToMediaScreen(){
+    navigationKey.currentState!.push(PageTransition(child: Media(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToTermsScreen(){
+    navigationKey.currentState!.push(PageTransition(child: TermsOfService(), type: PageTransitionType.rightToLeftWithFade));
   }
 
   void navigateBack(){

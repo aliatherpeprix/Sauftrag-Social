@@ -3,6 +3,10 @@ import 'package:sauftrag/utils/screen_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/navigation_view_model.dart';
 import 'package:sauftrag/views/Auth/Splash.dart';
+import 'package:sauftrag/views/Auth/favorite.dart';
+import 'package:sauftrag/views/Auth/media.dart';
+import 'package:sauftrag/views/Home/main_view.dart';
+import 'package:sauftrag/views/Home/swipe.dart';
 
 import 'app/locator.dart';
 
@@ -41,7 +45,7 @@ class _MyAppState extends State<MyApp> {
           builder: (context, orientation) {
             SizeConfig().init(constraints, orientation);
             //var prefService = locator<PrefrencesViewModel>();
-            return Splash();
+            return MainView(index: 0);
           },
         );
       },

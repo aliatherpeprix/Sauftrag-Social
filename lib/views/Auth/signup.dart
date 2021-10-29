@@ -43,7 +43,7 @@ class _SignUpState extends State<SignUp> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
 
-                        SizedBox(height: 7.h),
+                        SizedBox(height: Dimensions.topMargin),
 
                         //Logo
                         SvgPicture.asset(ImageUtils.logo),
@@ -737,6 +737,7 @@ class _SignUpState extends State<SignUp> {
                           //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                           child: ElevatedButton(
                             onPressed: () {
+                              model.navigateToFavoriteScreen();
                             },
                             child: const Text("Sign Up"),
                             style: ElevatedButton.styleFrom(
@@ -756,6 +757,7 @@ class _SignUpState extends State<SignUp> {
                             ),
                           ),
                         ),
+                        SizedBox(height: 2.h),
 
                       ],
                     ),
