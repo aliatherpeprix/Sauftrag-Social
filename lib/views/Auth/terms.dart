@@ -255,6 +255,7 @@ class _TermsOfServiceState extends State<TermsOfService> {
                           //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                           child: ElevatedButton(
                             onPressed: () {
+                              model.navigateToHomeScreen(2);
                             },
                             child: const Text("Let’s Get Started"),
                             style: ElevatedButton.styleFrom(

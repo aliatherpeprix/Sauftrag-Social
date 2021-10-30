@@ -99,6 +99,10 @@ class AuthenticationViewModel extends BaseViewModel{
     navigationService.navigateToTermsScreen();
   }
 
+  void navigateToHomeScreen(int index){
+    navigationService.navigateToHomeScreen(index);
+  }
+
   void navigateBack(){
     navigationService.navigateBack();
   }

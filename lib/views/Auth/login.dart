@@ -262,6 +262,7 @@ class _LoginState extends State<Login> {
                             //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                             child: ElevatedButton(
                               onPressed: () {
+                                model.navigateToHomeScreen(2);
                               },
                               child: const Text("Sign In"),
                               style: ElevatedButton.styleFrom(

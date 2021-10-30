@@ -45,7 +45,7 @@ class _MyAppState extends State<MyApp> {
           builder: (context, orientation) {
             SizeConfig().init(constraints, orientation);
             //var prefService = locator<PrefrencesViewModel>();
-            return MainView(index: 0);
+            return Splash();
           },
         );
       },

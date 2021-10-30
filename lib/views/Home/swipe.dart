@@ -201,28 +201,11 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                             ),
                           ),
 
-                          ElevatedButton(
-                            onPressed: () {
-
-                            },
+                          FloatingActionButton(
+                              onPressed: (){},
                             child: SvgPicture.asset(ImageUtils.repeatIcon),
-                            style: ElevatedButton.styleFrom(
-                              primary: ColorUtils.transparent,
-                              onPrimary: ColorUtils.white,
-                              //padding: EdgeInsets.symmetric(vertical: Dimensions.containerVerticalPadding),
-                              padding: EdgeInsets.symmetric(horizontal: 0),
-                              elevation: 1,
-                              /*shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(40),
-                                //side: BorderSide(color: ColorUtils.divider, width: 1)
-                              ),*/
-                              textStyle: TextStyle(
-                                color: ColorUtils.white,
-                                fontFamily: FontUtils.modernistBold,
-                                fontSize: 1.8.t,
-                                //height: 0
-                              ),
-                            ),
+                            backgroundColor: ColorUtils.white,
+
                           ),
 
                           ElevatedButton(
