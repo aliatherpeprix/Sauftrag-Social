@@ -7,6 +7,7 @@ import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:shrink_sidemenu/shrink_sidemenu.dart';
 import 'package:stacked/stacked.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 
@@ -58,6 +59,8 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
     }
 
     _matchEngine = MatchEngine(swipeItems: _swipeItems);
+
+    //matchEngine.currentItem.
     super.initState();
   }
 
@@ -90,7 +93,11 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
 
                           ElevatedButton(
                             onPressed: () {
-
+                              final _state = model.sideMenuKey.currentState;
+                              if (_state!.isOpened)
+                                _state.closeSideMenu(); // close side menu
+                              else
+                                _state.openSideMenu();
                             },
                             child: SvgPicture.asset(ImageUtils.menuIcon),
                             style: ElevatedButton.styleFrom(

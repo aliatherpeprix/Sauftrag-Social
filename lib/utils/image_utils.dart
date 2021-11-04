@@ -30,4 +30,12 @@ class ImageUtils{
   static String swipeIcon = "assets/swipe_icon.svg";
   static String girl1 = "assets/girl_1.png";
   static String girl2 = "assets/girl_2.png";
+  static String barsIcon = "assets/bars_icon.svg";
+  static String eventsIcon = "assets/events_icon.svg";
+  static String followersIcon = "assets/followers_icon.svg";
+  static String logoutIcon = "assets/logout_icon.svg";
+  static String matchedIcon = "assets/matched_icon.svg";
+  static String notificationIcon = "assets/notification_icon.svg";
+  static String qrCodeIcon = "assets/qr_code_icon.svg";
+  static String rankingListIcon = "assets/ranking_list_icon.svg";
 }
