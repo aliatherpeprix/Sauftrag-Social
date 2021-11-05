@@ -7,6 +7,7 @@ import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/widgets/drink_status_dialog_box.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
 import 'package:stacked/stacked.dart';
 import 'package:swipe_cards/swipe_cards.dart';
@@ -55,9 +56,10 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
               content: Text("Superliked ${_names[i]}"),
               duration: Duration(milliseconds: 500),
             ));
-          }));
+          }
+          )
+      );
     }
-
     _matchEngine = MatchEngine(swipeItems: _swipeItems);
 
     //matchEngine.currentItem.
@@ -129,7 +131,12 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
 
                           ElevatedButton(
                             onPressed: () {
-
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context){
+                                    return DrinkStatusDialogBox(title: "Add New Location", btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+                                  }
+                              );
                             },
                             child: SvgPicture.asset(ImageUtils.setStatusIcon),
                             style: ElevatedButton.styleFrom(

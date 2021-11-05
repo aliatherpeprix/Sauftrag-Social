@@ -1,5 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/extensions.dart';
@@ -68,8 +69,8 @@ class _MainViewState extends State<MainView> {
                     color: ColorUtils.white,
                     buttonBackgroundColor: ColorUtils.text_red,
                     index: currentIndex,
-                    animationCurve: Curves.fastLinearToSlowEaseIn,
-                    animationDuration: Duration(milliseconds: 1500),
+                    animationCurve: Curves.ease,
+                    animationDuration: Duration(milliseconds: 300),
                     height: SizeConfig.heightMultiplier * 8,
                     backgroundColor: Color(0xFFefefef),
                     parentDecoration: BoxDecoration(
@@ -94,11 +95,12 @@ class _MainViewState extends State<MainView> {
                   /*CurvedNavigationBar(
               backgroundColor: ColorUtils.transparent,
               buttonBackgroundColor: ColorUtils.text_red,
-
               items: <Widget>[
-                Icon(Icons.add, size: 30),
-                Icon(Icons.list, size: 30),
-                Icon(Icons.compare_arrows, size: 30),
+                SvgPicture.asset(ImageUtils.homeIcon),
+                SvgPicture.asset(ImageUtils.chatIcon),
+                SvgPicture.asset(ImageUtils.swipeIcon, color: ColorUtils.black),
+                SvgPicture.asset(ImageUtils.mapIcon),
+                SvgPicture.asset(ImageUtils.profileIcon),
               ],
               onTap: (index) {
                 //Handle button tap

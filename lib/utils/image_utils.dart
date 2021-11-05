@@ -38,4 +38,7 @@ class ImageUtils{
   static String notificationIcon = "assets/notification_icon.svg";
   static String qrCodeIcon = "assets/qr_code_icon.svg";
   static String rankingListIcon = "assets/ranking_list_icon.svg";
+  static String bottleSelected = "assets/bottle_selected.svg";
+  static String bottleUnselected = "assets/bottle_unselected.svg";
+  static String upDownArrow = "assets/up_down_arrow.svg";
 }
