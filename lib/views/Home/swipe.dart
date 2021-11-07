@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sauftrag/app/locator.dart';
@@ -40,29 +42,16 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
       _swipeItems.add(SwipeItem(
           content: Content(text: _names[i], color: _colors[i]),
           likeAction: () {
-            _scaffoldKey.currentState!.showSnackBar(SnackBar(
-              content: Text("Liked ${_names[i]}"),
-              duration: Duration(milliseconds: 500),
-            ));
           },
           nopeAction: () {
-            _scaffoldKey.currentState!.showSnackBar(SnackBar(
-              content: Text("Nope ${_names[i]}"),
-              duration: Duration(milliseconds: 500),
-            ));
           },
           superlikeAction: () {
-            _scaffoldKey.currentState!.showSnackBar(SnackBar(
-              content: Text("Superliked ${_names[i]}"),
-              duration: Duration(milliseconds: 500),
-            ));
           }
           )
       );
     }
     _matchEngine = MatchEngine(swipeItems: _swipeItems);
 
-    //matchEngine.currentItem.
     super.initState();
   }
 
@@ -158,34 +147,93 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                           ),
                         ],
                       ),
-                      SizedBox(height: 5.h),
+                      SizedBox(height: 3.h),
 
                       Expanded(
                         child: Container(
                           //height: 550,
+                          //color: ColorUtils.red_color,
                           child: SwipeCards(
                             matchEngine: _matchEngine,
                             itemBuilder: (BuildContext context, int index) {
                               return Container(
+                                //margin: EdgeInsets.only(top: index == _swipeItems.indexOf(_matchEngine.currentItem!) ? 5.h : 0),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.all(Radius.circular(20)),
-                                    image: DecorationImage(image: AssetImage(_swipeItems[index].content.text), fit: BoxFit.cover),
                                   ),
                                 alignment: Alignment.center,
+                                child: Stack(
+                                  children: [
+
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                                        image: DecorationImage(image: AssetImage(_swipeItems[index].content.text), fit: BoxFit.cover),
+                                      ),
+                                    ),
+
+                                    Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: Container(
+                                        //height: 10.h,
+                                        padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
+                                        clipBehavior: Clip.hardEdge,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+                                        ),
+                                        child: BackdropFilter(
+                                          filter: ImageFilter.blur(sigmaX: 8.0, sigmaY: 8.0),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+
+                                              SizedBox(height: 0.8.h),
+                                              Text(
+                                                "Stella Christensen, 24",
+                                                style: TextStyle(
+                                                  color: ColorUtils.white,
+                                                  fontFamily: FontUtils.modernistBold,
+                                                  fontSize: 2.2.t,
+                                                ),
+                                              ),
+                                              SizedBox(height: 1.h),
+
+                                              Row(
+                                                children: [
+
+                                                  Icon(Icons.location_pin, color: ColorUtils.white, size: 5.i,),
+
+                                                  Text(
+                                                    "Germany",
+                                                    style: TextStyle(
+                                                      color: ColorUtils.white,
+                                                      fontFamily: FontUtils.modernistRegular,
+                                                      fontSize: 1.5.t,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(height: 1.h),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+
+                                  ],
+                                ),
                                 //color: _swipeItems[index].content.color,
                                 //child: Image.asset(_swipeItems[index].content.text)
                               );
                             },
                             onStackFinished: () {
-                              _scaffoldKey.currentState!.showSnackBar(SnackBar(
-                                content: Text("Stack Finished"),
-                                duration: Duration(milliseconds: 500),
-                              ));
+
                             },
                           ),
                         ),
                       ),
-                      SizedBox(height: 3.h),
+                      SizedBox(height: 2.h),
 
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -193,7 +241,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
 
                           ElevatedButton(
                             onPressed: () {
-
+                              _matchEngine.currentItem!.nope();
                             },
                             child: SvgPicture.asset(ImageUtils.dislikeIcon),
                             style: ElevatedButton.styleFrom(
@@ -216,7 +264,9 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                           ),
 
                           FloatingActionButton(
-                              onPressed: (){},
+                              onPressed: (){
+                                _matchEngine.rewindMatch();
+                              },
                             child: SvgPicture.asset(ImageUtils.repeatIcon),
                             backgroundColor: ColorUtils.white,
 
@@ -224,7 +274,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
 
                           ElevatedButton(
                             onPressed: () {
-
+                              _matchEngine.currentItem!.like();
                             },
                             child: SvgPicture.asset(ImageUtils.likeIcon),
                             style: ElevatedButton.styleFrom(

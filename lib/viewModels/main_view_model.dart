@@ -23,6 +23,8 @@ class MainViewModel extends BaseViewModel{
   int drinkIndex = -1;
   List<int> drinkIndexList = [];
 
+  List<String> interestList = ["White Wine", "Hard Seltzer", "Whiskey", "Club 1", "Club 2", "Goldstrand"];
+
   void addRemoveDrink(int index){
 
     drinkIndex = index + 1;

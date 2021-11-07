@@ -41,6 +41,7 @@ dependencies:
   swipe_cards: ^0.1.0
   curved_navigation_bar: ^1.0.1
   shrink_sidemenu: ^2.0.0+1-null-safety
+  page_view_indicators: ^2.0.0
 
 dev_dependencies:
   flutter_test:

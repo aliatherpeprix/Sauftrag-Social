@@ -41,4 +41,9 @@ class ImageUtils{
   static String bottleSelected = "assets/bottle_selected.svg";
   static String bottleUnselected = "assets/bottle_unselected.svg";
   static String upDownArrow = "assets/up_down_arrow.svg";
+  static String congratzPic = "assets/congratz_pic.svg";
+  static String matchIcon = "assets/match_icon.svg";
+  static String matchBg = "assets/match_bg.svg";
+  static String boy = "assets/boy.png";
+  static String girl = "assets/girl.png";
 }

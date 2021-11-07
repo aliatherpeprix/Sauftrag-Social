@@ -6,6 +6,8 @@ import 'package:sauftrag/views/Auth/Splash.dart';
 import 'package:sauftrag/views/Auth/favorite.dart';
 import 'package:sauftrag/views/Auth/media.dart';
 import 'package:sauftrag/views/Home/main_view.dart';
+import 'package:sauftrag/views/Home/match.dart';
+import 'package:sauftrag/views/Home/profile.dart';
 import 'package:sauftrag/views/Home/swipe.dart';
 
 import 'app/locator.dart';
