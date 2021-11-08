@@ -1,6 +1,6 @@
 
 class ImageUtils{
-  static String logo = "assets/logo.svg";
+  static String logo = "assets/app_logo.svg";
   static String googleIcon = "assets/google_icon.svg";
   static String facebookIcon = "assets/facebook_icon.svg";
   static String twitterIcon = "assets/twitter_icon.svg";
@@ -28,8 +28,6 @@ class ImageUtils{
   static String profileIcon = "assets/profile_icon.svg";
   static String mapIcon = "assets/map_icon.svg";
   static String swipeIcon = "assets/swipe_icon.svg";
-  static String girl1 = "assets/girl_1.png";
-  static String girl2 = "assets/girl_2.png";
   static String barsIcon = "assets/bars_icon.svg";
   static String eventsIcon = "assets/events_icon.svg";
   static String followersIcon = "assets/followers_icon.svg";
@@ -44,6 +42,21 @@ class ImageUtils{
   static String congratzPic = "assets/congratz_pic.svg";
   static String matchIcon = "assets/match_icon.svg";
   static String matchBg = "assets/match_bg.svg";
+  static String matchBgPng = "assets/match_bg.png";
   static String boy = "assets/boy.png";
   static String girl = "assets/girl.png";
+  static String girl1 = "assets/girl_1.png";
+  static String girl2 = "assets/girl_2.png";
+  static String girl3 = "assets/girl_3.png";
+  static String girl4 = "assets/girl_4.png";
+  static String girl5 = "assets/girl_5.png";
+  static String girl6 = "assets/girl_6.png";
+  static String girl7 = "assets/girl_7.png";
+  static String girl8 = "assets/girl_8.png";
+  static String girl9 = "assets/girl_9.png";
+  static String girl10 = "assets/girl_10.png";
+  static String girl11 = "assets/girl_11.png";
+  static String girl12 = "assets/girl_12.png";
+  static String likeCenterIcon = "assets/like_center_icon.svg";
+  static String dislikeCenterIcon = "assets/dislike_center_icon.svg";
 }

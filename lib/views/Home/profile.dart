@@ -10,6 +10,7 @@ import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:stacked/stacked.dart';
 
 class Profile extends StatefulWidget {
@@ -25,6 +26,16 @@ class _ProfileState extends State<Profile> {
   List<String> images = [ImageUtils.girl1, ImageUtils.girl2, ImageUtils.girl1, ImageUtils.girl2, ImageUtils.girl1];
 
   final currentPageNotifier = ValueNotifier<int>(0);
+
+  late PageController controller;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    controller = PageController(initialPage: 0,);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +73,8 @@ class _ProfileState extends State<Profile> {
                                   alignment: Alignment.center,
                                 );
                               },
-                              itemCount: 5,
+                              itemCount: images.length,
+                              controller: controller,
                               onPageChanged: (int index){
                                 currentPageNotifier.value = index;
                               },// Can be null
@@ -77,7 +89,22 @@ class _ProfileState extends State<Profile> {
                                   color: ColorUtils.white.withOpacity(0.6),
                                   
                                 ),
-                                child: CirclePageIndicator(
+                                child: SmoothPageIndicator(
+                                controller: controller,  // PageController
+                                count:  images.length,
+                                effect:  WormEffect(
+                                    spacing:  10,
+                                    dotWidth:  5,
+                                    dotHeight:  5,
+                                    dotColor:  ColorUtils.white.withOpacity(0.5),
+                                    activeDotColor:  ColorUtils.white
+                                ),
+                                axisDirection: Axis.horizontal,
+                                onDotClicked: (index){
+
+                                }
+                            ),
+                                /*CirclePageIndicator(
                                   size: 5.0,
                                   selectedSize: 7.0,
                                   itemCount: 5,
@@ -85,7 +112,7 @@ class _ProfileState extends State<Profile> {
                                   selectedDotColor: ColorUtils.white,
                                   dotSpacing: 3.w,
                                   currentPageNotifier: currentPageNotifier,
-                                ),
+                                ),*/
                               ),
                             )
                           ],
@@ -186,7 +213,7 @@ class _ProfileState extends State<Profile> {
 
                           ElevatedButton(
                             onPressed: () {
-
+                              model.navigateBack();
                             },
                             child: SvgPicture.asset(ImageUtils.dislikeIcon),
                             style: ElevatedButton.styleFrom(
@@ -217,7 +244,7 @@ class _ProfileState extends State<Profile> {
 
                           ElevatedButton(
                             onPressed: () {
-
+                              model.navigateToMatchScreen();
                             },
                             child: SvgPicture.asset(ImageUtils.likeIcon),
                             style: ElevatedButton.styleFrom(

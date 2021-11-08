@@ -33,7 +33,9 @@ class _MatchState extends State<Match> {
               body: Stack(
                 children: [
 
-                  SvgPicture.asset(ImageUtils.matchBg),
+                  //SvgPicture.asset(ImageUtils.matchBg),
+
+                  Image.asset(ImageUtils.matchBgPng),
 
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding, vertical: Dimensions.verticalPadding),

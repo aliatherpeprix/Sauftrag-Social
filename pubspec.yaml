@@ -23,8 +23,6 @@ dependencies:
   http: ^0.13.3
   flash: ^2.0.1
   intl: ^0.17.0
-  google_sign_in:
-  flutter_facebook_auth: ^3.5.0
   chewie: ^1.2.2
   video_player: ^2.1.12
   circular_countdown_timer: ^0.2.0
@@ -42,6 +40,7 @@ dependencies:
   curved_navigation_bar: ^1.0.1
   shrink_sidemenu: ^2.0.0+1-null-safety
   page_view_indicators: ^2.0.0
+  smooth_page_indicator: ^1.0.0+2
 
 dev_dependencies:
   flutter_test:

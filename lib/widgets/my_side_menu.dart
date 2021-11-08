@@ -37,11 +37,11 @@ class _MySideMenuState extends State<MySideMenu> {
                 child: Row(
                   children: [
 
-                    RoundImage(
+                    /*RoundImage(
                         image: ImageUtils.userIcon,
                         height: 13.i,
                         width: 13.i
-                    ),
+                    ),*/
 
                     SizedBox(width: 2.w),
 
