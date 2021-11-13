@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_tindercard/flutter_tindercard.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
@@ -12,7 +13,9 @@ import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/widgets/back_swipe_card.dart';
 import 'package:sauftrag/widgets/drink_status_dialog_box.dart';
 import 'package:sauftrag/widgets/swipe_card.dart';
+import 'package:sauftrag/widgets/swipe_card_new.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:stacked/stacked.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 
@@ -64,23 +67,29 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
   late Animation<double> width;
   int flag = 0;
 
-  //List data = [ImageUtils.girl1, ImageUtils.girl2, ImageUtils.girl3, ImageUtils.girl4, ImageUtils.girl5, ImageUtils.girl6, ImageUtils.girl7, ImageUtils.girl8, ImageUtils.girl9, ImageUtils.girl10, ImageUtils.girl11, ImageUtils.girl12];
+  List<String> welcomeImages = [ImageUtils.girl1, ImageUtils.girl2, ImageUtils.girl3, ImageUtils.girl4, ImageUtils.girl5, ImageUtils.girl6, ImageUtils.girl7, ImageUtils.girl8, ImageUtils.girl9, ImageUtils.girl10, ImageUtils.girl11, ImageUtils.girl12];
   //List data = [ImageUtils.girl1, ImageUtils.girl2, ImageUtils.girl3, ImageUtils.girl4, ImageUtils.girl5, ImageUtils.girl6];
 
   List<List<String>> data = [
-    [ImageUtils.girl1, ImageUtils.girl2, ImageUtils.girl3, ImageUtils.girl4, ImageUtils.girl5, ImageUtils.girl6],
     [ImageUtils.girl7, ImageUtils.girl8, ImageUtils.girl9, ImageUtils.girl10, ImageUtils.girl11, ImageUtils.girl12],
     [ImageUtils.girl2, ImageUtils.girl4, ImageUtils.girl6, ImageUtils.girl8, ImageUtils.girl10, ImageUtils.girl12],
     [ImageUtils.girl12, ImageUtils.girl11, ImageUtils.girl10, ImageUtils.girl9, ImageUtils.girl8, ImageUtils.girl7],
     [ImageUtils.girl6, ImageUtils.girl5, ImageUtils.girl4, ImageUtils.girl3, ImageUtils.girl2, ImageUtils.girl1],
+    [ImageUtils.girl1, ImageUtils.girl2, ImageUtils.girl3, ImageUtils.girl4, ImageUtils.girl5, ImageUtils.girl6],
   ];
 
   List selectedData = [];
+
+  late CardController controller;
+  late PageController pageController;
+  final currentPageNotifier = ValueNotifier<int>(0);
 
   void initState() {
     super.initState();
 
     _buttonController = new AnimationController(duration: new Duration(milliseconds: 1000), vsync: this);
+
+    pageController = PageController(initialPage: 0);
 
     rotate = new Tween<double>(
       begin: -0.0,
@@ -134,6 +143,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
   @override
   void dispose() {
     _buttonController.dispose();
+    pageController.dispose();
     super.dispose();
   }
 
@@ -357,7 +367,8 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                         ),
                       ),
                     ),*/
-                    Expanded(
+
+                    /*Expanded(
                       child: Stack(
                         alignment: AlignmentDirectional.center,
                         children: data.map((item) {
@@ -390,10 +401,263 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                           }
                         }).toList(),
                       ),
-                    ),
-                    SizedBox(height: 2.h),
+                    ),*/
 
-                    Row(
+                    /*Expanded(
+                      child: Stack(
+                        alignment: AlignmentDirectional.center,
+                        children: data.map((item) {
+                          *//*return SwipeCard(
+                              img: item,
+                              cardWidth: backCardWidth + 0,
+                              rotation: rotate.value,
+                              skew: rotate.value < -10 ? 0.1 : 0.0,
+                              details: (){model.navigateToProfileScreen();},
+                              right: right.value,
+                              left: 0.0,
+                              addImg: addImg,
+                              bottom: bottom.value,
+                              flag: flag,
+                              dismissImg: dismissImg,
+                              swipeRight: swipeRight,
+                              swipeLeft: swipeLeft
+                              );*//*
+
+                          return swipeCardNew(
+                              item,
+                              bottom.value,
+                              right.value,
+                              0.0,
+                              backCardWidth + 0,
+                              rotate.value,
+                              rotate.value < -10 ? 0.1 : 0.0,
+                              flag,
+                              dismissImg,
+                              addImg,
+                              model.navigateToProfileScreen,
+                              swipeLeft,
+                              swipeRight,
+                              context
+                          );
+                        }).toList(),
+                      ),
+                    ),*/
+                    SizedBox(height: 1.h),
+
+                    Expanded(
+                      child: TinderSwapCard(
+                        swipeUp: false,
+                        swipeDown: false,
+                        orientation: AmassOrientation.TOP,
+                        totalNum: data.length,
+                        stackNum: 2,
+                        swipeEdge: 10,
+                        allowVerticalMovement: false,
+                        maxWidth: MediaQuery.of(context).size.width * 1,
+                        maxHeight: MediaQuery.of(context).size.height * 1,
+                        minWidth: MediaQuery.of(context).size.width * 0.8,
+                        minHeight: MediaQuery.of(context).size.height * 0.8,
+                        cardBuilder: (context, index) => Stack(
+                          children: [
+
+                            PageView.builder(
+                              itemBuilder: (context, position) {
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                                    image: DecorationImage(image: AssetImage(data[index][position]), fit: BoxFit.cover),
+                                  ),
+                                  alignment: Alignment.center,
+                                );
+                              },
+                              itemCount: data[index].length,
+                              scrollDirection: Axis.vertical,
+                              controller: pageController,
+                              onPageChanged: (int index){
+                                currentPageNotifier.value = index;
+                              },// Can be null
+                            ),
+
+                            Align(
+                                alignment: Alignment.topRight,
+                                child: Container(
+                                  margin: EdgeInsets.only(top: 8.h),
+                                  padding: EdgeInsets.symmetric(horizontal: 2.5.w, vertical: 2.h),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(15), bottomLeft: Radius.circular(15)),
+                                    color: ColorUtils.white.withOpacity(0.6),
+
+                                  ),
+                                  child: SmoothPageIndicator(
+                                      controller: pageController,  // PageController
+                                      count:  data[index].length,
+                                      effect:  WormEffect(
+                                          spacing:  10,
+                                          dotWidth:  5,
+                                          dotHeight:  5,
+                                          dotColor:  ColorUtils.white.withOpacity(0.5),
+                                          activeDotColor:  ColorUtils.white
+                                      ),
+                                      axisDirection: Axis.vertical,
+                                      onDotClicked: (index){
+
+                                      }
+                                  ),
+                                )
+                            ),
+
+                            Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      children: [
+
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            //widget.swipeLeft();
+                                            controller.triggerLeft();
+                                          },
+                                          child: SvgPicture.asset(ImageUtils.dislikeIcon),
+                                          style: ElevatedButton.styleFrom(
+                                            primary: ColorUtils.transparent,
+                                            onPrimary: ColorUtils.white,
+                                            //padding: EdgeInsets.symmetric(vertical: Dimensions.containerVerticalPadding),
+                                            padding: EdgeInsets.symmetric(horizontal: 0),
+                                            elevation: 3,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(35),
+                                              //side: BorderSide(color: ColorUtils.divider, width: 1)
+                                            ),
+                                            textStyle: TextStyle(
+                                              color: ColorUtils.white,
+                                              fontFamily: FontUtils.modernistBold,
+                                              fontSize: 1.8.t,
+                                              //height: 0
+                                            ),
+                                          ),
+                                        ),
+
+                                        FloatingActionButton(
+                                          onPressed: (){
+                                            //_matchEngine.rewindMatch();
+                                          },
+                                          child: SvgPicture.asset(ImageUtils.repeatIcon),
+                                          backgroundColor: ColorUtils.white,
+
+                                        ),
+
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            //widget.swipeRight();
+                                            controller.triggerRight();
+                                          },
+                                          child: SvgPicture.asset(ImageUtils.likeIcon),
+                                          style: ElevatedButton.styleFrom(
+                                            primary: ColorUtils.transparent,
+                                            onPrimary: ColorUtils.white,
+                                            //padding: EdgeInsets.symmetric(vertical: Dimensions.containerVerticalPadding),
+                                            padding: EdgeInsets.symmetric(horizontal: 0),
+                                            elevation: 3,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(35),
+                                              //side: BorderSide(color: ColorUtils.divider, width: 1)
+                                            ),
+                                            textStyle: TextStyle(
+                                              color: ColorUtils.white,
+                                              fontFamily: FontUtils.modernistBold,
+                                              fontSize: 1.8.t,
+                                              //height: 0
+                                            ),
+                                          ),
+                                        ),
+
+                                      ],
+                                    ),
+
+                                    SizedBox(height: 2.h),
+
+                                    Container(
+                                      padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
+                                      clipBehavior: Clip.hardEdge,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+                                      ),
+                                      child: BackdropFilter(
+                                        filter: ImageFilter.blur(sigmaX: 8.0, sigmaY: 8.0),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            SizedBox(height: 0.8.h),
+                                            Text(
+                                              "Stella Christensen, 24",
+                                              style: TextStyle(
+                                                color: ColorUtils.white,
+                                                fontFamily: FontUtils.modernistBold,
+                                                fontSize: 2.2.t,
+                                              ),
+                                            ),
+                                            SizedBox(height: 1.h),
+
+                                            Row(
+                                              children: [
+
+                                                Icon(Icons.location_pin, color: ColorUtils.white, size: 5.i,),
+
+                                                Text(
+                                                  "Germany",
+                                                  style: TextStyle(
+                                                    color: ColorUtils.white,
+                                                    fontFamily: FontUtils.modernistRegular,
+                                                    fontSize: 1.5.t,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(height: 1.h),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                            ),
+
+                            /*Center(
+                              child: Opacity(
+                                  opacity: isLike ? snapshot.data as double : 0 ,
+                                  child: SvgPicture.asset(ImageUtils.likeCenterIcon)
+                              ),
+                            ),
+
+                            Center(
+                              child: Opacity(
+                                  opacity: isLike ? 0 : snapshot.data as double,
+                                  child: SvgPicture.asset(ImageUtils.dislikeCenterIcon)
+                              ),
+                            )*/
+                          ],
+                        ),
+                        cardController: controller = CardController(),
+                        swipeUpdateCallback: (DragUpdateDetails details, Alignment align) {
+                          /// Get swiping card's alignment
+                          if (align.x < 0) {
+                            //Card is LEFT swiping
+                          } else if (align.x > 0) {
+                            //Card is RIGHT swiping
+                          }
+                        },
+                        swipeCompleteCallback: (CardSwipeOrientation orientation, int index) {
+                          /// Get orientation & index of swiped card!
+                        },
+                      ),
+                    ),
+
+                    /*Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
 
@@ -457,8 +721,8 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                         ),
 
                       ],
-                    ),
-                    SizedBox(height: 6.h),
+                    ),*/
+                    SizedBox(height: 4.h),
 
 
                   ],

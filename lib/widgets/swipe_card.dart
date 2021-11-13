@@ -27,8 +27,10 @@ class SwipeCard extends StatefulWidget {
   Function dismissImg;
   Function addImg;
   Function details;
+  Function swipeLeft;
+  Function swipeRight;
 
-  SwipeCard({Key? key, required this.img, required this.bottom, required this.right, required this.left, required this.cardWidth, required this.rotation, required this.skew, required this.flag, required this.dismissImg, required this.addImg, required this.details}) : super(key: key);
+  SwipeCard({Key? key, required this.img, required this.bottom, required this.right, required this.left, required this.cardWidth, required this.rotation, required this.skew, required this.flag, required this.dismissImg, required this.addImg, required this.details, required this.swipeLeft, required this.swipeRight}) : super(key: key);
 
   @override
   _SwipeCardState createState() => _SwipeCardState();
@@ -110,8 +112,8 @@ class _SwipeCardState extends State<SwipeCard> {
                         },
                         child: Container(
                           alignment: Alignment.center,
-                          width: screenSize.width / 1.4 + widget.cardWidth,
-                          height: screenSize.height / 2,
+                          width: screenSize.width / 1.1 + widget.cardWidth,
+                          height: screenSize.height / 1.4,
                           child: Stack(
                             children: [
 
@@ -163,49 +165,121 @@ class _SwipeCardState extends State<SwipeCard> {
 
                               Align(
                                 alignment: Alignment.bottomCenter,
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
-                                  clipBehavior: Clip.hardEdge,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
-                                  ),
-                                  child: BackdropFilter(
-                                    filter: ImageFilter.blur(sigmaX: 8.0, sigmaY: 8.0),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: [
-                                        SizedBox(height: 0.8.h),
-                                        Text(
-                                          "Stella Christensen, 24",
-                                          style: TextStyle(
-                                            color: ColorUtils.white,
-                                            fontFamily: FontUtils.modernistBold,
-                                            fontSize: 2.2.t,
+
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            widget.swipeLeft();
+                                          },
+                                          child: SvgPicture.asset(ImageUtils.dislikeIcon),
+                                          style: ElevatedButton.styleFrom(
+                                            primary: ColorUtils.transparent,
+                                            onPrimary: ColorUtils.white,
+                                            //padding: EdgeInsets.symmetric(vertical: Dimensions.containerVerticalPadding),
+                                            padding: EdgeInsets.symmetric(horizontal: 0),
+                                            elevation: 3,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(35),
+                                              //side: BorderSide(color: ColorUtils.divider, width: 1)
+                                            ),
+                                            textStyle: TextStyle(
+                                              color: ColorUtils.white,
+                                              fontFamily: FontUtils.modernistBold,
+                                              fontSize: 1.8.t,
+                                              //height: 0
+                                            ),
                                           ),
                                         ),
-                                        SizedBox(height: 1.h),
 
-                                        Row(
-                                          children: [
+                                        FloatingActionButton(
+                                          onPressed: (){
+                                            //_matchEngine.rewindMatch();
+                                          },
+                                          child: SvgPicture.asset(ImageUtils.repeatIcon),
+                                          backgroundColor: ColorUtils.white,
 
-                                            Icon(Icons.location_pin, color: ColorUtils.white, size: 5.i,),
-
-                                            Text(
-                                              "Germany",
-                                              style: TextStyle(
-                                                color: ColorUtils.white,
-                                                fontFamily: FontUtils.modernistRegular,
-                                                fontSize: 1.5.t,
-                                              ),
-                                            ),
-                                          ],
                                         ),
-                                        SizedBox(height: 1.h),
+
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            widget.swipeRight();
+                                          },
+                                          child: SvgPicture.asset(ImageUtils.likeIcon),
+                                          style: ElevatedButton.styleFrom(
+                                            primary: ColorUtils.transparent,
+                                            onPrimary: ColorUtils.white,
+                                            //padding: EdgeInsets.symmetric(vertical: Dimensions.containerVerticalPadding),
+                                            padding: EdgeInsets.symmetric(horizontal: 0),
+                                            elevation: 3,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(35),
+                                              //side: BorderSide(color: ColorUtils.divider, width: 1)
+                                            ),
+                                            textStyle: TextStyle(
+                                              color: ColorUtils.white,
+                                              fontFamily: FontUtils.modernistBold,
+                                              fontSize: 1.8.t,
+                                              //height: 0
+                                            ),
+                                          ),
+                                        ),
+
                                       ],
                                     ),
-                                  ),
-                                ),
+
+                                    SizedBox(height: 2.h),
+
+                                    Container(
+                                      padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
+                                      clipBehavior: Clip.hardEdge,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+                                      ),
+                                      child: BackdropFilter(
+                                        filter: ImageFilter.blur(sigmaX: 8.0, sigmaY: 8.0),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            SizedBox(height: 0.8.h),
+                                            Text(
+                                              "Stella Christensen, 24",
+                                              style: TextStyle(
+                                                color: ColorUtils.white,
+                                                fontFamily: FontUtils.modernistBold,
+                                                fontSize: 2.2.t,
+                                              ),
+                                            ),
+                                            SizedBox(height: 1.h),
+
+                                            Row(
+                                              children: [
+
+                                                Icon(Icons.location_pin, color: ColorUtils.white, size: 5.i,),
+
+                                                Text(
+                                                  "Germany",
+                                                  style: TextStyle(
+                                                    color: ColorUtils.white,
+                                                    fontFamily: FontUtils.modernistRegular,
+                                                    fontSize: 1.5.t,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(height: 1.h),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
                               ),
 
                               Center(
