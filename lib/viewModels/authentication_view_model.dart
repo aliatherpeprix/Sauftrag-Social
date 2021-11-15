@@ -14,6 +14,8 @@ class AuthenticationViewModel extends BaseViewModel{
 
   int role = Constants.user;
   bool signupCheck = false;
+  bool termsCheck = false;
+  bool dataCheck = false;
 
   File imageFile = File('my initial file');
   List<File> imageFiles = [File(""), File(""), File(""), File(""), File(""), File("")];

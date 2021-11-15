@@ -36,8 +36,8 @@ class MainViewModel extends BaseViewModel{
     //notifyListeners();
   }
 
-  void navigateToProfileScreen(){
-    navigationService.navigateToProfileScreen();
+  void navigateToProfileScreen(List<String> images){
+    navigationService.navigateToProfileScreen(images);
   }
 
   void navigateToMatchScreen(){

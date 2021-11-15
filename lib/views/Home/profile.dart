@@ -15,7 +15,9 @@ import 'package:stacked/stacked.dart';
 
 class Profile extends StatefulWidget {
 
-  const Profile({Key? key}) : super(key: key);
+  List<String> images;
+
+  Profile({Key? key, required this.images}) : super(key: key);
 
   @override
   _ProfileState createState() => _ProfileState();
@@ -23,7 +25,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
 
-  List<String> images = [ImageUtils.girl1, ImageUtils.girl2, ImageUtils.girl1, ImageUtils.girl2, ImageUtils.girl1];
+  //List<String> images = [ImageUtils.girl1, ImageUtils.girl2, ImageUtils.girl1, ImageUtils.girl2, ImageUtils.girl1];
 
   final currentPageNotifier = ValueNotifier<int>(0);
 
@@ -68,12 +70,12 @@ class _ProfileState extends State<Profile> {
                                 return Container(
                                   decoration: BoxDecoration(
                                     //borderRadius: BorderRadius.all(Radius.circular(20)),
-                                    image: DecorationImage(image: AssetImage(images[position]), fit: BoxFit.cover),
+                                    image: DecorationImage(image: AssetImage(widget.images[position]), fit: BoxFit.cover),
                                   ),
                                   alignment: Alignment.center,
                                 );
                               },
-                              itemCount: images.length,
+                              itemCount: widget.images.length,
                               controller: controller,
                               onPageChanged: (int index){
                                 currentPageNotifier.value = index;
@@ -91,7 +93,7 @@ class _ProfileState extends State<Profile> {
                                 ),
                                 child: SmoothPageIndicator(
                                 controller: controller,  // PageController
-                                count:  images.length,
+                                count:  widget.images.length,
                                 effect:  WormEffect(
                                     spacing:  10,
                                     dotWidth:  5,

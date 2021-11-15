@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_tindercard/flutter_tindercard.dart';
+//import 'package:flutter_tindercard/flutter_tindercard.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
@@ -71,16 +71,17 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
   //List data = [ImageUtils.girl1, ImageUtils.girl2, ImageUtils.girl3, ImageUtils.girl4, ImageUtils.girl5, ImageUtils.girl6];
 
   List<List<String>> data = [
-    [ImageUtils.girl7, ImageUtils.girl8, ImageUtils.girl9, ImageUtils.girl10, ImageUtils.girl11, ImageUtils.girl12],
-    [ImageUtils.girl2, ImageUtils.girl4, ImageUtils.girl6, ImageUtils.girl8, ImageUtils.girl10, ImageUtils.girl12],
+    [ImageUtils.girl11, ImageUtils.girl12, ImageUtils.girl13, ImageUtils.girl14, ImageUtils.girl15],
+    [ImageUtils.girl6, ImageUtils.girl7, ImageUtils.girl8, ImageUtils.girl9, ImageUtils.girl10],
+    [ImageUtils.girl1, ImageUtils.girl2, ImageUtils.girl3, ImageUtils.girl4, ImageUtils.girl5],
+    /*[ImageUtils.girl2, ImageUtils.girl4, ImageUtils.girl6, ImageUtils.girl8, ImageUtils.girl10, ImageUtils.girl12],
     [ImageUtils.girl12, ImageUtils.girl11, ImageUtils.girl10, ImageUtils.girl9, ImageUtils.girl8, ImageUtils.girl7],
-    [ImageUtils.girl6, ImageUtils.girl5, ImageUtils.girl4, ImageUtils.girl3, ImageUtils.girl2, ImageUtils.girl1],
-    [ImageUtils.girl1, ImageUtils.girl2, ImageUtils.girl3, ImageUtils.girl4, ImageUtils.girl5, ImageUtils.girl6],
+    [ImageUtils.girl6, ImageUtils.girl5, ImageUtils.girl4, ImageUtils.girl3, ImageUtils.girl2, ImageUtils.girl1],*/
   ];
 
   List selectedData = [];
 
-  late CardController controller;
+  //late CardController controller;
   late PageController pageController;
   final currentPageNotifier = ValueNotifier<int>(0);
 
@@ -403,16 +404,16 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                       ),
                     ),*/
 
-                    /*Expanded(
+                    Expanded(
                       child: Stack(
                         alignment: AlignmentDirectional.center,
                         children: data.map((item) {
-                          *//*return SwipeCard(
+                          return SwipeCard(
                               img: item,
                               cardWidth: backCardWidth + 0,
                               rotation: rotate.value,
                               skew: rotate.value < -10 ? 0.1 : 0.0,
-                              details: (){model.navigateToProfileScreen();},
+                              details: (){model.navigateToProfileScreen(item);},
                               right: right.value,
                               left: 0.0,
                               addImg: addImg,
@@ -421,7 +422,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                               dismissImg: dismissImg,
                               swipeRight: swipeRight,
                               swipeLeft: swipeLeft
-                              );*//*
+                              );
 
                           return swipeCardNew(
                               item,
@@ -441,22 +442,22 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                           );
                         }).toList(),
                       ),
-                    ),*/
-                    SizedBox(height: 1.h),
+                    ),
+                    //SizedBox(height: 1.h),
 
-                    Expanded(
+                    /*Expanded(
                       child: TinderSwapCard(
                         swipeUp: false,
                         swipeDown: false,
                         orientation: AmassOrientation.TOP,
                         totalNum: data.length,
                         stackNum: 2,
-                        swipeEdge: 10,
+                        swipeEdge: 8,
                         allowVerticalMovement: false,
                         maxWidth: MediaQuery.of(context).size.width * 1,
                         maxHeight: MediaQuery.of(context).size.height * 1,
-                        minWidth: MediaQuery.of(context).size.width * 0.8,
-                        minHeight: MediaQuery.of(context).size.height * 0.8,
+                        minWidth: MediaQuery.of(context).size.width * 0.9,
+                        minHeight: MediaQuery.of(context).size.height * 0.9,
                         cardBuilder: (context, index) => Stack(
                           children: [
 
@@ -474,7 +475,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                               scrollDirection: Axis.vertical,
                               controller: pageController,
                               onPageChanged: (int index){
-                                currentPageNotifier.value = index;
+                                //currentPageNotifier.value = index;
                               },// Can be null
                             ),
 
@@ -627,7 +628,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                 )
                             ),
 
-                            /*Center(
+                            Center(
                               child: Opacity(
                                   opacity: isLike ? snapshot.data as double : 0 ,
                                   child: SvgPicture.asset(ImageUtils.likeCenterIcon)
@@ -639,7 +640,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                   opacity: isLike ? 0 : snapshot.data as double,
                                   child: SvgPicture.asset(ImageUtils.dislikeCenterIcon)
                               ),
-                            )*/
+                            )
                           ],
                         ),
                         cardController: controller = CardController(),
@@ -653,9 +654,10 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                         },
                         swipeCompleteCallback: (CardSwipeOrientation orientation, int index) {
                           /// Get orientation & index of swiped card!
+                          pageController = PageController(initialPage: 0);
                         },
                       ),
-                    ),
+                    ),*/
 
                     /*Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -722,7 +724,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
 
                       ],
                     ),*/
-                    SizedBox(height: 4.h),
+                    SizedBox(height: 2.h),
 
 
                   ],

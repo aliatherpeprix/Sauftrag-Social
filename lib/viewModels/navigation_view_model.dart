@@ -39,8 +39,8 @@ class NavigationViewModel extends BaseViewModel{
     navigationKey.currentState!.pushAndRemoveUntil(PageTransition(child: MainView(index: index), type: PageTransitionType.rightToLeftWithFade),(Route<dynamic> route) => false);
   }
 
-  void navigateToProfileScreen(){
-    navigationKey.currentState!.push(PageTransition(child: Profile(), type: PageTransitionType.rightToLeftWithFade));
+  void navigateToProfileScreen(List<String> images){
+    navigationKey.currentState!.push(PageTransition(child: Profile(images: images), type: PageTransitionType.rightToLeftWithFade));
   }
 
   void navigateToMatchScreen(){

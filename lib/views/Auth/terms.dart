@@ -132,7 +132,7 @@ class _TermsOfServiceState extends State<TermsOfService> {
                         GestureDetector(
                             onTap: (){
                               setState(() {
-                                model.signupCheck = !model.signupCheck;
+                                model.termsCheck = !model.termsCheck;
                               });
                             },
                             child: Row(
@@ -148,10 +148,10 @@ class _TermsOfServiceState extends State<TermsOfService> {
                                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                       checkColor: ColorUtils.white,
                                       activeColor: ColorUtils.text_red,
-                                      value: model.signupCheck,
+                                      value: model.termsCheck,
                                       onChanged: (bool? value) {
                                         setState(() {
-                                          model.signupCheck = value!;
+                                          model.termsCheck = value!;
                                         });
                                       },
                                     ),
@@ -192,7 +192,7 @@ class _TermsOfServiceState extends State<TermsOfService> {
                         GestureDetector(
                             onTap: (){
                               setState(() {
-                                model.signupCheck = !model.signupCheck;
+                                model.dataCheck = !model.dataCheck;
                               });
                             },
                             child: Row(
@@ -207,10 +207,10 @@ class _TermsOfServiceState extends State<TermsOfService> {
                                     child: Checkbox(
                                       checkColor: ColorUtils.white,
                                       activeColor: ColorUtils.text_red,
-                                      value: model.signupCheck,
+                                      value: model.dataCheck,
                                       onChanged: (bool? value) {
                                         setState(() {
-                                          model.signupCheck = value!;
+                                          model.dataCheck = value!;
                                         });
                                       },
                                     ),

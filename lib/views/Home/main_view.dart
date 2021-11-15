@@ -39,83 +39,67 @@ class _MainViewState extends State<MainView> {
   @override
   Widget build(BuildContext context) {
 
-    return ViewModelBuilder<MainViewModel>.reactive(
-      //onModelReady: (data) => data.initializeLoginModel(),
-      builder: (context, model, child) {
-        return SafeArea(
-          top: false,
-          bottom: true,
-          child: SideMenu(
-            key: model.sideMenuKey,
-            menu: MySideMenu(),
-            type: SideMenuType.shrinkNSlide,
-            background: ColorUtils.text_red,
-            closeIcon: null,
-            maxMenuWidth: MediaQuery.of(context).size.width * 0.78,
-            radius: BorderRadius.circular(25),
-            child: Scaffold(
-              resizeToAvoidBottomInset: false,
-              body: Column(
-                children: <Widget>[
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                        child: body
-                    ),
-                  ),
-                  MyCurvedNavBar(
-                    barIconColor: ColorUtils.icon_color,
-                    selectedIconColor: ColorUtils.white,
-                    color: ColorUtils.white,
-                    buttonBackgroundColor: ColorUtils.text_red,
-                    index: currentIndex,
-                    animationCurve: Curves.ease,
-                    animationDuration: Duration(milliseconds: 300),
-                    height: SizeConfig.heightMultiplier * 8,
-                    backgroundColor: Color(0xFFefefef),
-                    parentDecoration: BoxDecoration(
-                        boxShadow: [BoxShadow(
-                            color: Color(0xFFefefef),
-                            blurRadius: 3*SizeConfig.imageSizeMultiplier,
-                            offset: Offset(0,-10)
-                        )]
-                    ),
-                    items: <String>[
-                      ImageUtils.homeIcon,
-                      ImageUtils.chatIcon,
-                      ImageUtils.swipeIcon,
-                      ImageUtils.mapIcon,
-                      ImageUtils.profileIcon
-                    ],
-                    onTap: (index) {
-                      currentIndex = index;
-                      setState(() {});
-                    },
-                  ),
-                  /*CurvedNavigationBar(
-              backgroundColor: ColorUtils.transparent,
-              buttonBackgroundColor: ColorUtils.text_red,
-              items: <Widget>[
-                SvgPicture.asset(ImageUtils.homeIcon),
-                SvgPicture.asset(ImageUtils.chatIcon),
-                SvgPicture.asset(ImageUtils.swipeIcon, color: ColorUtils.black),
-                SvgPicture.asset(ImageUtils.mapIcon),
-                SvgPicture.asset(ImageUtils.profileIcon),
-              ],
-              onTap: (index) {
-                //Handle button tap
-                onClick(index);
-              },
-            ),*/
-                  //BottomBar(index: currentIndex, onClick: onClick)
-                ],
+    return SafeArea(
+      top: false,
+      bottom: true,
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: Column(
+          children: <Widget>[
+            Expanded(
+              flex: 1,
+              child: Container(
+                  child: body
               ),
             ),
-          ),
-        );
-      },
-      viewModelBuilder: () => locator<MainViewModel>(),
-      disposeViewModel: false,
+            MyCurvedNavBar(
+              barIconColor: ColorUtils.icon_color,
+              selectedIconColor: ColorUtils.white,
+              color: ColorUtils.white,
+              buttonBackgroundColor: ColorUtils.text_red,
+              index: currentIndex,
+              animationCurve: Curves.ease,
+              animationDuration: Duration(milliseconds: 300),
+              height: SizeConfig.heightMultiplier * 8,
+              backgroundColor: Color(0xFFefefef),
+              parentDecoration: BoxDecoration(
+                  boxShadow: [BoxShadow(
+                      color: Color(0xFFefefef),
+                      blurRadius: 3*SizeConfig.imageSizeMultiplier,
+                      offset: Offset(0,-10)
+                  )]
+              ),
+              items: <String>[
+                ImageUtils.homeIcon,
+                ImageUtils.chatIcon,
+                ImageUtils.swipeIcon,
+                ImageUtils.mapIcon,
+                ImageUtils.profileIcon
+              ],
+              onTap: (index) {
+                currentIndex = index;
+                setState(() {});
+              },
+            ),
+            /*CurvedNavigationBar(
+            backgroundColor: ColorUtils.transparent,
+            buttonBackgroundColor: ColorUtils.text_red,
+            items: <Widget>[
+              SvgPicture.asset(ImageUtils.homeIcon),
+              SvgPicture.asset(ImageUtils.chatIcon),
+              SvgPicture.asset(ImageUtils.swipeIcon, color: ColorUtils.black),
+              SvgPicture.asset(ImageUtils.mapIcon),
+              SvgPicture.asset(ImageUtils.profileIcon),
+            ],
+            onTap: (index) {
+              //Handle button tap
+              onClick(index);
+            },
+          ),*/
+            //BottomBar(index: currentIndex, onClick: onClick)
+          ],
+        ),
+      ),
     );
   }
 

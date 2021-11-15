@@ -45,18 +45,35 @@ class ImageUtils{
   static String matchBgPng = "assets/match_bg.png";
   static String boy = "assets/boy.png";
   static String girl = "assets/girl.png";
-  static String girl1 = "assets/girl_1.png";
-  static String girl2 = "assets/girl_2.png";
-  static String girl3 = "assets/girl_3.png";
-  static String girl4 = "assets/girl_4.png";
-  static String girl5 = "assets/girl_5.png";
-  static String girl6 = "assets/girl_6.png";
-  static String girl7 = "assets/girl_7.png";
-  static String girl8 = "assets/girl_8.png";
-  static String girl9 = "assets/girl_9.png";
-  static String girl10 = "assets/girl_10.png";
-  static String girl11 = "assets/girl_11.png";
-  static String girl12 = "assets/girl_12.png";
+  // static String girl1 = "assets/girl_1.png";
+  // static String girl2 = "assets/girl_2.png";
+  // static String girl3 = "assets/girl_3.png";
+  // static String girl4 = "assets/girl_4.png";
+  // static String girl5 = "assets/girl_5.png";
+  // static String girl6 = "assets/girl_6.png";
+  // static String girl7 = "assets/girl_7.png";
+  // static String girl8 = "assets/girl_8.png";
+  // static String girl9 = "assets/girl_9.png";
+  // static String girl10 = "assets/girl_10.png";
+  // static String girl11 = "assets/girl_11.png";
+  // static String girl12 = "assets/girl_12.png";
   static String likeCenterIcon = "assets/like_center_icon.svg";
   static String dislikeCenterIcon = "assets/dislike_center_icon.svg";
+
+  //Girls Images
+  static String girl1 = "assets/girls/girl_1.png";
+  static String girl2 = "assets/girls/girl_2.png";
+  static String girl3 = "assets/girls/girl_3.jpeg";
+  static String girl4 = "assets/girls/girl_4.jpeg";
+  static String girl5 = "assets/girls/girl_5.jpeg";
+  static String girl6 = "assets/girls/girl_6.jpeg";
+  static String girl7 = "assets/girls/girl_7.jpeg";
+  static String girl8 = "assets/girls/girl_8.jpeg";
+  static String girl9 = "assets/girls/girl_9.jpeg";
+  static String girl10 = "assets/girls/girl_10.jpeg";
+  static String girl11 = "assets/girls/girl_11.jpeg";
+  static String girl12 = "assets/girls/girl_12.jpeg";
+  static String girl13 = "assets/girls/girl_13.jpeg";
+  static String girl14 = "assets/girls/girl_14.jpeg";
+  static String girl15 = "assets/girls/girl_15.jpeg";
 }
