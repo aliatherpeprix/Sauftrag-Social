@@ -7,8 +7,7 @@ import 'package:stacked/stacked.dart';
 
 import '../main.dart';
 
-class AuthenticationViewModel extends BaseViewModel{
-
+class AuthenticationViewModel extends BaseViewModel {
   var navigationService = navigationViewModel;
   late SharedPreferences prefs;
 
@@ -18,7 +17,14 @@ class AuthenticationViewModel extends BaseViewModel{
   bool dataCheck = false;
 
   File imageFile = File('my initial file');
-  List<File> imageFiles = [File(""), File(""), File(""), File(""), File(""), File("")];
+  List<File> imageFiles = [
+    File(""),
+    File(""),
+    File(""),
+    File(""),
+    File(""),
+    File("")
+  ];
 
   int genderValue = 1;
   String genderValueStr = "Male";
@@ -28,31 +34,56 @@ class AuthenticationViewModel extends BaseViewModel{
     'Female': 2,
   };
 
-  List<String> clubList = ["Club 1", "Club 2", "Club 3", "Club 4", "Club 5", "Club 6", "Club 7", "Club 8", "Club 9", "Club 10"];
+  List<String> clubList = [
+    "Club 1",
+    "Club 2",
+    "Club 3",
+    "Club 4",
+    "Club 5",
+    "Club 6",
+    "Club 7",
+    "Club 8",
+    "Club 9",
+    "Club 10"
+  ];
   List<int> selectedClubList = [];
 
-  List<String> vacationList = ["Ballermann", "Goldstrand", "Zrce Beach", "Lloret", "Ibiza", "Springbreak Cancun"];
+  List<String> vacationList = [
+    "Ballermann",
+    "Goldstrand",
+    "Zrce Beach",
+    "Lloret",
+    "Ibiza",
+    "Springbreak Cancun"
+  ];
   List<int> selectedVacationList = [];
 
-  List<String> drinkList = ["Beer", "White Wine", "Radler", "Red Wine", "Gin", "Whiskey", "Hard Seltzer", "Jägermeister", "Tequila", "Champagne"];
+  List<String> drinkList = [
+    "Beer",
+    "White Wine",
+    "Radler",
+    "Red Wine",
+    "Gin",
+    "Whiskey",
+    "Hard Seltzer",
+    "Jägermeister",
+    "Tequila",
+    "Champagne"
+  ];
   List<int> selectedDrinkList = [];
 
   void initializeSplash() async {
-
     prefs = await SharedPreferences.getInstance();
 
-    Timer(Duration(seconds: 5), ()=> navigateToLoginScreen());
-
+    Timer(Duration(seconds: 5), () => navigateToLoginScreen());
   }
 
-  void selectRole(int role){
-
+  void selectRole(int role) {
     this.role = role;
     notifyListeners();
   }
 
   Future<bool> getImage(int index) async {
-
     ImagePicker picker = ImagePicker();
     //List<XFile>? images = await picker.pickMultiImage();
     XFile? image = await picker.pickImage(source: ImageSource.gallery);
@@ -60,9 +91,7 @@ class AuthenticationViewModel extends BaseViewModel{
 
     if (image == null) {
       return false;
-    }
-    else{
-
+    } else {
       imageFiles.insert(index, File(image.path));
       /*for(XFile image in images){
         imageFiles.add(File(image.path));
@@ -78,34 +107,33 @@ class AuthenticationViewModel extends BaseViewModel{
       notifyListeners();
       return true;
     }*/
-
   }
 
-  void navigateToLoginScreen(){
+  void navigateToLoginScreen() {
     navigationService.navigateToLoginScreen();
   }
 
-  void navigateToSignUpScreen(){
+  void navigateToSignUpScreen() {
     navigationService.navigateToSignUpScreen();
   }
 
-  void navigateToFavoriteScreen(){
+  void navigateToFavoriteScreen() {
     navigationService.navigateToFavoriteScreen();
   }
 
-  void navigateToMediaScreen(){
+  void navigateToMediaScreen() {
     navigationService.navigateToMediaScreen();
   }
 
-  void navigateToTermsScreen(){
+  void navigateToTermsScreen() {
     navigationService.navigateToTermsScreen();
   }
 
-  void navigateToHomeScreen(int index){
+  void navigateToHomeScreen(int index) {
     navigationService.navigateToHomeScreen(index);
   }
 
-  void navigateBack(){
+  void navigateBack() {
     navigationService.navigateBack();
   }
 }

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sauftrag/app/locator.dart';
@@ -11,15 +10,12 @@ import 'package:sauftrag/viewModels/authentication_view_model.dart';
 import 'package:stacked/stacked.dart';
 
 class Splash extends StatefulWidget {
-
   @override
   _SplashState createState() => _SplashState();
 }
 
 class _SplashState extends State<Splash> {
-
   Widget build(BuildContext context) {
-
     return ViewModelBuilder<AuthenticationViewModel>.reactive(
       onModelReady: (data) => data.initializeSplash(),
       builder: (context, model, child) {
@@ -34,11 +30,8 @@ class _SplashState extends State<Splash> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-
                   SvgPicture.asset(ImageUtils.logo),
-
                   SizedBox(height: 3.h),
-
                   Text(
                     "Sauftrag",
                     style: TextStyle(
@@ -47,7 +40,6 @@ class _SplashState extends State<Splash> {
                       fontSize: 5.t,
                     ),
                   ),
-
                   Text(
                     "Social",
                     style: TextStyle(
@@ -65,6 +57,5 @@ class _SplashState extends State<Splash> {
       viewModelBuilder: () => locator<AuthenticationViewModel>(),
       disposeViewModel: false,
     );
-
   }
 }

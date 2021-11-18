@@ -1,5 +1,4 @@
-
-class ImageUtils{
+class ImageUtils {
   static String logo = "assets/app_logo.svg";
   static String googleIcon = "assets/google_icon.svg";
   static String facebookIcon = "assets/facebook_icon.svg";
@@ -76,4 +75,7 @@ class ImageUtils{
   static String girl13 = "assets/girls/girl_13.jpeg";
   static String girl14 = "assets/girls/girl_14.jpeg";
   static String girl15 = "assets/girls/girl_15.jpeg";
+  static String mainfile = "assets/girls/girl_15.jpeg";
+  static String image = "assets/girls/file.jpeg";
+  static String boy1 = "assets/girls/file.jpeg";
 }

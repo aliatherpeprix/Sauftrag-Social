@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sauftrag/utils/screen_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/navigation_view_model.dart';
-import 'package:sauftrag/views/Auth/Splash.dart';
-import 'package:sauftrag/views/Auth/favorite.dart';
+
 import 'package:sauftrag/views/Auth/media.dart';
 import 'package:sauftrag/views/Home/main_view.dart';
 import 'package:sauftrag/views/Home/match.dart';
@@ -13,18 +12,16 @@ import 'package:sauftrag/views/Home/swipe.dart';
 import 'app/locator.dart';
 
 NavigationViewModel navigationViewModel = NavigationViewModel();
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   //SharedPreferences prefs = await SharedPreferences.getInstance();
   //var userId = prefs.getInt("user_id");
   await configure();
-  runApp(
-      MaterialApp(
-        navigatorKey: navigationViewModel.navigationKey,
-        debugShowCheckedModeBanner: false,
-        home: MyApp(),
-      )
-  );
+  runApp(MaterialApp(
+    navigatorKey: navigationViewModel.navigationKey,
+    debugShowCheckedModeBanner: false,
+    home: MyApp(),
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -48,11 +45,10 @@ class _MyAppState extends State<MyApp> {
             SizeConfig().init(constraints, orientation);
             //var prefService = locator<PrefrencesViewModel>();
             //return MainView(index: 2);
-            return Splash();
+            return Media();
           },
         );
       },
     );
-
   }
 }

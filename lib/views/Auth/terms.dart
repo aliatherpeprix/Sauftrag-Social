@@ -8,7 +8,6 @@ import 'package:sauftrag/viewModels/authentication_view_model.dart';
 import 'package:stacked/stacked.dart';
 
 class TermsOfService extends StatefulWidget {
-
   const TermsOfService({Key? key}) : super(key: key);
 
   @override
@@ -16,12 +15,9 @@ class TermsOfService extends StatefulWidget {
 }
 
 class _TermsOfServiceState extends State<TermsOfService> {
-
   @override
   Widget build(BuildContext context) {
-
     return ViewModelBuilder<AuthenticationViewModel>.reactive(
-      //onModelReady: (data) => data.initializeLoginModel(),
       builder: (context, model, child) {
         return GestureDetector(
           onTap: () {
@@ -34,29 +30,30 @@ class _TermsOfServiceState extends State<TermsOfService> {
                 body: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding, vertical: Dimensions.verticalPadding),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: Dimensions.horizontalPadding,
+                        vertical: Dimensions.verticalPadding),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-
                         SizedBox(height: Dimensions.topMargin),
 
                         //Terms of Services
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-
                             IconButton(
-                                onPressed: (){
+                                onPressed: () {
                                   model.navigateBack();
                                 },
                                 iconSize: 18.0,
                                 padding: EdgeInsets.zero,
                                 constraints: BoxConstraints(),
-                                icon: Icon(Icons.arrow_back_ios, color: ColorUtils.black,)
-                            ),
+                                icon: Icon(
+                                  Icons.arrow_back_ios,
+                                  color: ColorUtils.black,
+                                )),
                             SizedBox(width: 2.w),
-
                             Text(
                               "Terms of Services",
                               style: TextStyle(
@@ -130,7 +127,7 @@ class _TermsOfServiceState extends State<TermsOfService> {
                         SizedBox(height: 3.h),
 
                         GestureDetector(
-                            onTap: (){
+                            onTap: () {
                               setState(() {
                                 model.termsCheck = !model.termsCheck;
                               });
@@ -145,7 +142,8 @@ class _TermsOfServiceState extends State<TermsOfService> {
                                     height: 5.i,
                                     width: 5.i,
                                     child: Checkbox(
-                                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                      materialTapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
                                       checkColor: ColorUtils.white,
                                       activeColor: ColorUtils.text_red,
                                       value: model.termsCheck,
@@ -160,37 +158,34 @@ class _TermsOfServiceState extends State<TermsOfService> {
                                 SizedBox(width: 3.w),
                                 Flexible(
                                   child: Text.rich(
-                                    TextSpan(
-                                        children: [
-                                          TextSpan(
-                                            text:  "I agree with the ",
-                                            style: TextStyle(
-                                                color: ColorUtils.text_dark,
-                                                fontFamily: FontUtils.modernistRegular,
-                                                fontSize: 1.8.t,
-                                            ),
-                                          ),
-                                          TextSpan(
-                                            text:  "Terms & Conditions",
-                                            style: TextStyle(
-                                                color: ColorUtils.text_red,
-                                                fontFamily: FontUtils.modernistBold,
-                                                fontSize: 1.8.t,
-
-                                            ),
-                                          ),
-                                        ]
-                                    ),
+                                    TextSpan(children: [
+                                      TextSpan(
+                                        text: "I agree with the ",
+                                        style: TextStyle(
+                                          color: ColorUtils.text_dark,
+                                          fontFamily:
+                                              FontUtils.modernistRegular,
+                                          fontSize: 1.8.t,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: "Terms & Conditions",
+                                        style: TextStyle(
+                                          color: ColorUtils.text_red,
+                                          fontFamily: FontUtils.modernistBold,
+                                          fontSize: 1.8.t,
+                                        ),
+                                      ),
+                                    ]),
                                     maxLines: 2,
                                   ),
                                 ),
                               ],
-                            )
-                        ),
+                            )),
                         SizedBox(height: 3.h),
 
                         GestureDetector(
-                            onTap: (){
+                            onTap: () {
                               setState(() {
                                 model.dataCheck = !model.dataCheck;
                               });
@@ -219,35 +214,31 @@ class _TermsOfServiceState extends State<TermsOfService> {
                                 SizedBox(width: 3.w),
                                 Flexible(
                                   child: Text.rich(
-                                    TextSpan(
-                                        children: [
-                                          TextSpan(
-                                            text:  "I agree with the ",
-                                            style: TextStyle(
-                                              color: ColorUtils.text_dark,
-                                              fontFamily: FontUtils.modernistRegular,
-                                              fontSize: 1.8.t,
-                                            ),
-                                          ),
-                                          TextSpan(
-                                            text:  "Data Protection",
-                                            style: TextStyle(
-                                              color: ColorUtils.text_red,
-                                              fontFamily: FontUtils.modernistBold,
-                                              fontSize: 1.8.t,
-
-                                            ),
-                                          ),
-                                        ]
-                                    ),
+                                    TextSpan(children: [
+                                      TextSpan(
+                                        text: "I agree with the ",
+                                        style: TextStyle(
+                                          color: ColorUtils.text_dark,
+                                          fontFamily:
+                                              FontUtils.modernistRegular,
+                                          fontSize: 1.8.t,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: "Data Protection",
+                                        style: TextStyle(
+                                          color: ColorUtils.text_red,
+                                          fontFamily: FontUtils.modernistBold,
+                                          fontSize: 1.8.t,
+                                        ),
+                                      ),
+                                    ]),
                                     maxLines: 2,
                                   ),
                                 ),
                               ],
-                            )
-                        ),
+                            )),
                         SizedBox(height: 5.h),
-
 
                         //Next Button
                         SizedBox(
@@ -259,13 +250,15 @@ class _TermsOfServiceState extends State<TermsOfService> {
                             },
                             child: const Text("Let’s Get Started"),
                             style: ElevatedButton.styleFrom(
-                              primary: ColorUtils.text_red  ,
+                              primary: ColorUtils.text_red,
                               onPrimary: ColorUtils.white,
-                              padding: EdgeInsets.symmetric(vertical: Dimensions.containerVerticalPadding),
+                              padding: EdgeInsets.symmetric(
+                                  vertical:
+                                      Dimensions.containerVerticalPadding),
                               elevation: 1,
                               shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(Dimensions.roundCorner)
-                              ),
+                                  borderRadius: BorderRadius.circular(
+                                      Dimensions.roundCorner)),
                               textStyle: TextStyle(
                                 color: ColorUtils.white,
                                 fontFamily: FontUtils.modernistBold,
@@ -276,12 +269,10 @@ class _TermsOfServiceState extends State<TermsOfService> {
                           ),
                         ),
                         SizedBox(height: 2.h),
-
                       ],
                     ),
                   ),
-                )
-            ),
+                )),
           ),
         );
       },
