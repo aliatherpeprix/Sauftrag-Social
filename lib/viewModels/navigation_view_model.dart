@@ -9,6 +9,7 @@ import 'package:sauftrag/views/Auth/terms.dart';
 import 'package:sauftrag/views/Home/main_view.dart';
 import 'package:sauftrag/views/Home/match.dart';
 import 'package:sauftrag/views/Home/profile.dart';
+import 'package:sauftrag/views/MapSearch/map_screen.dart';
 import 'package:stacked/stacked.dart';
 
 class NavigationViewModel extends BaseViewModel{
@@ -37,6 +38,10 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateToHomeScreen(int index){
     navigationKey.currentState!.pushAndRemoveUntil(PageTransition(child: MainView(index: index), type: PageTransitionType.rightToLeftWithFade),(Route<dynamic> route) => false);
+  }
+
+  void navigateToMapScreen(int index){
+    navigationKey.currentState!.pushAndRemoveUntil(PageTransition(child: MainView(index: 3), type: PageTransitionType.rightToLeftWithFade),(Route<dynamic> route) => false);
   }
 
   void navigateToProfileScreen(List<String> images){

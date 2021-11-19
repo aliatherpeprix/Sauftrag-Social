@@ -41,14 +41,13 @@ dependencies:
   shrink_sidemenu: ^2.0.0+1-null-safety
   page_view_indicators: ^2.0.0
   smooth_page_indicator: ^1.0.0+2
-  google_maps:
+  google_maps_flutter: ^2.1.1
   #flutter_tindercard: ^0.2.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^1.0.0
   flutter_launcher_icons: ^0.9.0
   json_to_model: ^2.2.0
   build_runner:
@@ -75,3 +74,7 @@ flutter:
     - family: modernistRegular
       fonts:
         - asset: assets/fonts/Sk-Modernist-Regular.otf
+
+    - family: avertaDemoRegular
+      fonts:
+        - asset: assets/fonts/AvertaDemo-Regular.otf

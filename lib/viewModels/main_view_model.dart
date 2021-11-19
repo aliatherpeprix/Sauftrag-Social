@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
@@ -9,8 +12,10 @@ import '../main.dart';
 class MainViewModel extends BaseViewModel{
 
   final GlobalKey<SideMenuState> sideMenuKey = GlobalKey<SideMenuState>();
+  Completer<GoogleMapController> controller = Completer();
   var navigationService = navigationViewModel;
   late SharedPreferences prefs;
+  List<Marker> markers = <Marker>[];
 
   int drinkMotivationValue = 1;
   String drinkMotivationValueStr = "Drink light";
@@ -25,6 +30,23 @@ class MainViewModel extends BaseViewModel{
   List<int> drinkIndexList = [];
 
   List<String> interestList = ["White Wine", "Hard Seltzer", "Whiskey", "Club 1", "Club 2", "Goldstrand"];
+
+  addMarkers(){
+    markers.add(
+        Marker(
+            markerId: MarkerId('SomeId'),
+            position: LatLng(24.8169,67.1118),
+            infoWindow: InfoWindow(
+                title: 'The title of the marker'
+            )
+        )
+    );
+  }
+
+  CameraPosition kGooglePlex = CameraPosition(
+    target: LatLng(24.8169, 67.1118),
+    zoom: 14.4746,
+  );
 
   void addRemoveDrink(int index){
 

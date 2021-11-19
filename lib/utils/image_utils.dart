@@ -44,6 +44,12 @@ class ImageUtils {
   static String matchBgPng = "assets/match_bg.png";
   static String boy = "assets/boy.png";
   static String girl = "assets/girl.png";
+  static String searchIcon = "assets/searchIcon.svg";
+  static String place1 = "assets/place1.png";
+  static String place2 = "assets/place2.png";
+  static String place3 = "assets/place3.png";
+  static String place4 = "assets/place4.png";
+  static String filterIcon = "assets/filterIcon.svg";
   // static String girl1 = "assets/girl_1.png";
   // static String girl2 = "assets/girl_2.png";
   // static String girl3 = "assets/girl_3.png";

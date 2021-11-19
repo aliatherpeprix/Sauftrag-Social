@@ -8,6 +8,8 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/views/Home/swipe.dart';
+import 'package:sauftrag/views/MapSearch/map_screen.dart';
+import 'package:sauftrag/views/MapSearch/search.dart';
 import 'package:sauftrag/widgets/my_curved_nav_bar.dart';
 import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/image_utils.dart';
@@ -78,6 +80,8 @@ class _MainViewState extends State<MainView> {
               ],
               onTap: (index) {
                 currentIndex = index;
+                //MainView(index: 3,);
+                onClick(currentIndex);
                 setState(() {});
               },
             ),
@@ -108,19 +112,19 @@ class _MainViewState extends State<MainView> {
       currentIndex = selectedIndex;
       switch(currentIndex){
         case 0:
-          body = Swipe();
+          body = MapScreen();
           break;
         case 1:
-          body = Swipe();
+          body = MapScreen();
           break;
         case 2:
-          body = Swipe();
+          body = MapScreen();
           break;
         case 3:
-          body = Swipe();
+          body = MapScreen();
           break;
         case 4:
-          body = Swipe();
+          body = MapScreen();
           break;
       }
     });
