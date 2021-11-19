@@ -48,6 +48,8 @@ class AuthenticationViewModel extends BaseViewModel {
   ];
   List<int> selectedClubList = [];
 
+
+
   List<String> vacationList = [
     "Ballermann",
     "Goldstrand",
@@ -56,6 +58,11 @@ class AuthenticationViewModel extends BaseViewModel {
     "Ibiza",
     "Springbreak Cancun"
   ];
+
+  List<int> selectedWeekDays = [];
+
+  List<String> weekDaysList = ["Su" , "Mo" , "Tu", "We" , "Th", "Fr" , "Sa"];
+
   List<int> selectedVacationList = [];
 
   List<String> drinkList = [
@@ -115,6 +122,14 @@ class AuthenticationViewModel extends BaseViewModel {
 
   void navigateToSignUpScreen() {
     navigationService.navigateToSignUpScreen();
+  }
+
+  void navigatorToBarSignIn() {
+    navigationService.navigateToUploadBarMedia();
+  }
+
+  void navigateToUploadBarMedia() {
+    navigationService.navigateToUploadBarMedia();
   }
 
   void navigateToFavoriteScreen() {

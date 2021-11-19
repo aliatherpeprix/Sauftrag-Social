@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:sauftrag/bar/Auth/media.dart';
+import 'package:sauftrag/bar/Auth/signUp.dart';
 import 'package:sauftrag/views/Auth/favorite.dart';
 import 'package:sauftrag/views/Auth/login.dart';
 import 'package:sauftrag/views/Auth/media.dart';
@@ -21,6 +23,14 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateToSignUpScreen(){
     navigationKey.currentState!.push(PageTransition(child: SignUp(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToBarSignUpScreen(){
+    navigationKey.currentState!.push(PageTransition(child: SignUpBar(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToUploadBarMedia(){
+    navigationKey.currentState!.push(PageTransition(child: BarMedia(), type: PageTransitionType.rightToLeftWithFade));
   }
 
   void navigateToFavoriteScreen(){

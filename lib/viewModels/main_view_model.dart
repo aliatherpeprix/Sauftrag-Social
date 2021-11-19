@@ -26,6 +26,8 @@ class MainViewModel extends BaseViewModel{
 
   List<String> interestList = ["White Wine", "Hard Seltzer", "Whiskey", "Club 1", "Club 2", "Goldstrand"];
 
+  List<String> weekDaysList = ["Su" , "Mo" , "Tu", "We" , "Th", "Fr" , "Sa"];
+
   void addRemoveDrink(int index){
 
     drinkIndex = index + 1;
