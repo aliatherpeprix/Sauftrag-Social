@@ -63,6 +63,10 @@ class AuthenticationViewModel extends BaseViewModel {
 
   List<String> weekDaysList = ["Su" , "Mo" , "Tu", "We" , "Th", "Fr" , "Sa"];
 
+  List<int> selectedBarKind = [];
+
+  List<String> barKindList = ["Disco" , "Cocktail" , "Pub", "Hotel Bar" , "Beer Hall"];
+
   List<int> selectedVacationList = [];
 
   List<String> drinkList = [

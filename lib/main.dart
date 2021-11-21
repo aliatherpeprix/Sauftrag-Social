@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:sauftrag/bar/Auth/signUp.dart';
 import 'package:sauftrag/utils/screen_utils.dart';
@@ -14,6 +15,7 @@ import 'package:sauftrag/views/Home/profile.dart';
 import 'package:sauftrag/views/Home/swipe.dart';
 
 import 'app/locator.dart';
+import 'bar/Auth/barEvent.dart';
 import 'bar/Auth/barTimingType.dart';
 import 'bar/Auth/media.dart';
 
@@ -51,7 +53,7 @@ class _MyAppState extends State<MyApp> {
             SizeConfig().init(constraints, orientation);
             //var prefService = locator<PrefrencesViewModel>();
             //return MainView(index: 2);
-            return BarTimingAndType();
+            return BarEvent();
           },
         );
       },
