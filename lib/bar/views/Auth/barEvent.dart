@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -21,32 +22,32 @@ class BarEvent extends StatefulWidget {
 class _BarEventState extends State<BarEvent> {
   List places = [
     {
-      'image': ImageUtils.boy,
+      'image': ImageUtils.place_1,
       'eventName': 'Trivia Nights',
       'date': '1st  May- Sat -2:00 PM',
       'location': 'Lot 13 • Oakland, CA',
-      'image1' : ImageUtils.addClubIcon
+      'image1' : ImageUtils.location_icon
     },
     {
-      'image': ImageUtils.boy,
+      'image': ImageUtils.place_2,
       'eventName': 'Bar Crawl Stop',
       'date': '1st  May- Sat -2:00 PM',
       'location': 'Lot 13 • Oakland, CA',
-      'image1' : ImageUtils.addClubIcon
+      'image1' : ImageUtils.location_icon
     },
     {
-      'image': ImageUtils.boy,
+      'image': ImageUtils.place_3,
       'eventName': 'Singles Night',
       'date': '1st  May- Sat -2:00 PM',
       'location': 'Lot 13 • Oakland, CA',
-      'image1' : ImageUtils.addClubIcon
+      'image1' : ImageUtils.location_icon
     },
     {
-      'image': ImageUtils.boy,
+      'image': ImageUtils.place_4,
       'eventName': 'Bar Olympics',
       'date': '1st  May- Sat -2:00 PM',
       'location': ' Lot 13 • Oakland, CA',
-      'image1' : ImageUtils.addClubIcon
+      'image1' : ImageUtils.location_icon
     },
   ];
 

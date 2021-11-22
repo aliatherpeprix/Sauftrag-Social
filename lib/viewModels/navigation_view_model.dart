@@ -1,8 +1,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:sauftrag/bar/Auth/media.dart';
-import 'package:sauftrag/bar/Auth/signUp.dart';
+import 'package:sauftrag/bar/views/Auth/media.dart';
+import 'package:sauftrag/bar/views/Auth/signUp.dart';
+import 'package:sauftrag/bar/views/Profile/bar_profile.dart';
+import 'package:sauftrag/bar/widgets/bar_event.dart';
 import 'package:sauftrag/views/Auth/favorite.dart';
 import 'package:sauftrag/views/Auth/login.dart';
 import 'package:sauftrag/views/Auth/media.dart';
@@ -37,12 +39,20 @@ class NavigationViewModel extends BaseViewModel{
     navigationKey.currentState!.push(PageTransition(child: Favorite(), type: PageTransitionType.rightToLeftWithFade));
   }
 
+  void navigateToBarProfileScreen(){
+    navigationKey.currentState!.push(PageTransition(child: BarProfile(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
   void navigateToMediaScreen(){
     navigationKey.currentState!.push(PageTransition(child: Media(), type: PageTransitionType.rightToLeftWithFade));
   }
 
   void navigateToTermsScreen(){
     navigationKey.currentState!.push(PageTransition(child: TermsOfService(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToCreateEventScreen(){
+    navigationKey.currentState!.push(PageTransition(child: CreateBarEvent(), type: PageTransitionType.rightToLeftWithFade));
   }
 
   void navigateToHomeScreen(int index){

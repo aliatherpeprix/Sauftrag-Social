@@ -140,12 +140,20 @@ class AuthenticationViewModel extends BaseViewModel {
     navigationService.navigateToFavoriteScreen();
   }
 
+  void navigateToBarProfileScreen() {
+    navigationService.navigateToBarProfileScreen();
+  }
+
   void navigateToMediaScreen() {
     navigationService.navigateToMediaScreen();
   }
 
   void navigateToTermsScreen() {
     navigationService.navigateToTermsScreen();
+  }
+
+  void navigateToCreateEventScreen() {
+    navigationService.navigateToCreateEventScreen();
   }
 
   void navigateToHomeScreen(int index) {

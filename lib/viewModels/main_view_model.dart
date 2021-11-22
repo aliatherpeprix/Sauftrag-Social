@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
@@ -9,6 +11,8 @@ import '../main.dart';
 class MainViewModel extends BaseViewModel{
 
   final GlobalKey<SideMenuState> sideMenuKey = GlobalKey<SideMenuState>();
+  final GlobalKey<NavigatorState> navigationKey = GlobalKey<NavigatorState>();
+
   var navigationService = navigationViewModel;
   late SharedPreferences prefs;
 
@@ -49,6 +53,16 @@ class MainViewModel extends BaseViewModel{
   void navigateBack(){
     navigationService.navigateBack();
   }
+
+  void navigateToCreateEventScreen() {
+    navigationService.navigateToCreateEventScreen();
+  }
+
+
+
+
+
+
 
   /*AnimationController? buttonController;
   Animation<double>? rotate;

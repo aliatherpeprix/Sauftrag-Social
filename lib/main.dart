@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:sauftrag/bar/Auth/signUp.dart';
+
 import 'package:sauftrag/utils/screen_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/navigation_view_model.dart';
@@ -15,9 +15,8 @@ import 'package:sauftrag/views/Home/profile.dart';
 import 'package:sauftrag/views/Home/swipe.dart';
 
 import 'app/locator.dart';
-import 'bar/Auth/barEvent.dart';
-import 'bar/Auth/barTimingType.dart';
-import 'bar/Auth/media.dart';
+import 'bar/views/Home/main_view.dart';
+import 'bar/views/Profile/bar_profile.dart';
 
 NavigationViewModel navigationViewModel = NavigationViewModel();
 void main() async {
@@ -53,7 +52,7 @@ class _MyAppState extends State<MyApp> {
             SizeConfig().init(constraints, orientation);
             //var prefService = locator<PrefrencesViewModel>();
             //return MainView(index: 2);
-            return BarEvent();
+            return BarProfile();
           },
         );
       },

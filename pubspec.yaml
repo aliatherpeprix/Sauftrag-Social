@@ -43,6 +43,7 @@ dependencies:
   smooth_page_indicator: ^1.0.0+2
   google_maps:
   flutter_time_picker_spinner: ^2.0.0
+  qr_code_scanner: ^0.6.1
 
   #flutter_tindercard: ^0.2.0
 
