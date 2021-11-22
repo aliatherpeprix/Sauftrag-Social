@@ -11,6 +11,7 @@ import 'package:sauftrag/views/Home/match.dart';
 import 'package:sauftrag/views/Home/profile.dart';
 import 'package:sauftrag/views/Home/swipe.dart';
 import 'package:sauftrag/views/MapSearch/search.dart';
+import 'package:sauftrag/views/UserFriendList/create_group.dart';
 
 import 'app/locator.dart';
 

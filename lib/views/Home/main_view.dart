@@ -10,6 +10,7 @@ import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/views/Home/swipe.dart';
 import 'package:sauftrag/views/MapSearch/map_screen.dart';
 import 'package:sauftrag/views/MapSearch/search.dart';
+import 'package:sauftrag/views/UserFriendList/friend_list.dart';
 import 'package:sauftrag/widgets/my_curved_nav_bar.dart';
 import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/image_utils.dart';
@@ -115,7 +116,7 @@ class _MainViewState extends State<MainView> {
           body = MapScreen();
           break;
         case 1:
-          body = MapScreen();
+          body = FriendList();
           break;
         case 2:
           body = MapScreen();

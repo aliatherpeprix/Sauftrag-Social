@@ -120,7 +120,7 @@ class _MapScreenState extends State<MapScreen> {
                               enabled: true,
                               //readOnly: true,
                               //focusNode: model.searchFocus,
-                              //controller: model.searchController,
+                              controller: model.mapSearchController,
                               decoration: InputDecoration(
                                 hintText: "Where are you going to ?",
                                 hintStyle: TextStyle(

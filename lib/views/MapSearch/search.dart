@@ -100,7 +100,7 @@ class _SearchState extends State<Search> {
                                   enabled: true,
                                   //readOnly: true,
                                   //focusNode: model.searchFocus,
-                                  //controller: model.searchController,
+                                  controller: model.searchScreenController,
                                   decoration: InputDecoration(
                                     hintText: "Where are you going to ?",
                                     hintStyle: TextStyle(
@@ -159,7 +159,7 @@ class _SearchState extends State<Search> {
                     Expanded(
                       child: ListView.separated(
                         scrollDirection: Axis.vertical,
-                        physics: const AlwaysScrollableScrollPhysics(),
+                        physics: BouncingScrollPhysics(),
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
                           return Padding(

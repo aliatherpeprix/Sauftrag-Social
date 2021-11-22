@@ -10,12 +10,15 @@ import 'package:stacked/stacked.dart';
 import '../main.dart';
 
 class MainViewModel extends BaseViewModel{
-
   final GlobalKey<SideMenuState> sideMenuKey = GlobalKey<SideMenuState>();
   Completer<GoogleMapController> controller = Completer();
   var navigationService = navigationViewModel;
   late SharedPreferences prefs;
   List<Marker> markers = <Marker>[];
+  final mapSearchController = TextEditingController();
+  final searchScreenController = TextEditingController();
+  final friendListSearchController = TextEditingController();
+  bool openGroupMenu = false;
 
   int drinkMotivationValue = 1;
   String drinkMotivationValueStr = "Drink light";

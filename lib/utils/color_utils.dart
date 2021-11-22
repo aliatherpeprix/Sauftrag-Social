@@ -14,6 +14,11 @@ class ColorUtils{
   static Color blackText = Color (0xFF120D26);
   static Color shadowColor = Color (0xFF606470);
   static Color filterText = Color (0xFFECEBFC);
+  static Color textFieldBg = Color (0xFFF7F7FC);
+  static Color onlineProfileColor = Color (0xFF2CC069);
+  static Color lightTextColor = Color (0xFFC4C4C4);
+  static Color chatTime = Color (0xFFA4A4A4);
+  static Color activeColor = Color (0xFF1AC865);
 
   static Color startGradient = Color(0xFF00DCDC);
   static Color endGradient = Color(0xFF00ADEE);

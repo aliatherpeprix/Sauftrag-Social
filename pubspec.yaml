@@ -42,6 +42,7 @@ dependencies:
   page_view_indicators: ^2.0.0
   smooth_page_indicator: ^1.0.0+2
   google_maps_flutter: ^2.1.1
+  bubble: ^1.2.1
   #flutter_tindercard: ^0.2.0
 
 dev_dependencies:
