@@ -4,7 +4,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:sauftrag/bar/views/Auth/media.dart';
 import 'package:sauftrag/bar/views/Auth/signUp.dart';
 import 'package:sauftrag/bar/views/Profile/bar_profile.dart';
-import 'package:sauftrag/bar/widgets/bar_event.dart';
+import 'package:sauftrag/bar/views/Home/bar_event.dart';
 import 'package:sauftrag/views/Auth/favorite.dart';
 import 'package:sauftrag/views/Auth/login.dart';
 import 'package:sauftrag/views/Auth/media.dart';

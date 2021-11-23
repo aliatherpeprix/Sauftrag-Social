@@ -15,8 +15,12 @@ import 'package:sauftrag/views/Home/profile.dart';
 import 'package:sauftrag/views/Home/swipe.dart';
 
 import 'app/locator.dart';
+import 'bar/views/Home/bar_drinks.dart';
 import 'bar/views/Home/main_view.dart';
+import 'bar/views/Home/order_details.dart';
 import 'bar/views/Profile/bar_profile.dart';
+import 'bar/views/Home/barCode2.dart';
+import 'bar/widgets/bar_QR_scanner.dart';
 
 NavigationViewModel navigationViewModel = NavigationViewModel();
 void main() async {
@@ -52,7 +56,7 @@ class _MyAppState extends State<MyApp> {
             SizeConfig().init(constraints, orientation);
             //var prefService = locator<PrefrencesViewModel>();
             //return MainView(index: 2);
-            return BarProfile();
+            return OrderDetails();
           },
         );
       },

@@ -96,4 +96,9 @@ class ImageUtils {
   static String packages = "assets/packages.svg";
   static String gps = "assets/gps.svg";
   static String pen2 = "assets/pen_2.svg";
+  static String flash = "assets/flash.png";
+  static String beer = "assets/beer.svg";
+  static String cocktail = "assets/cocktail.svg";
+  static String longDrink = "assets/longDrink.svg";
+  static String shorts = "assets/shorts.svg";
 }
