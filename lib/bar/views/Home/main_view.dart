@@ -16,6 +16,7 @@ import 'package:sauftrag/widgets/my_side_menu.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
 import 'package:stacked/stacked.dart';
 
+import 'barCode2.dart';
 import 'bar_news_feed.dart';
 
 class MainViewBar extends StatefulWidget {
@@ -75,12 +76,12 @@ class _MainViewBarState extends State<MainViewBar> {
               items: <String>[
                 ImageUtils.homeIcon,
                 ImageUtils.chatIcon,
-                ImageUtils.swipeIcon,
-                ImageUtils.mapIcon,
+                ImageUtils.scanner,
                 ImageUtils.profileIcon
               ],
               onTap: (index) {
                 currentIndex = index;
+                onClick(currentIndex);
                 setState(() {});
               },
             ),
@@ -117,12 +118,9 @@ class _MainViewBarState extends State<MainViewBar> {
           body = Swipe();
           break;
         case 2:
-          body = Swipe();
+          body = QRViewExample();
           break;
         case 3:
-          body = Swipe();
-          break;
-        case 4:
           body = BarProfile();
           break;
       }

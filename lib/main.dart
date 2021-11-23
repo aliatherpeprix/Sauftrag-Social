@@ -56,7 +56,7 @@ class _MyAppState extends State<MyApp> {
             SizeConfig().init(constraints, orientation);
             //var prefService = locator<PrefrencesViewModel>();
             //return MainView(index: 2);
-            return OrderDetails();
+            return MainViewBar(index: 0);
           },
         );
       },
