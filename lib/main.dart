@@ -12,6 +12,7 @@ import 'package:sauftrag/views/Home/profile.dart';
 import 'package:sauftrag/views/Home/swipe.dart';
 import 'package:sauftrag/views/MapSearch/search.dart';
 import 'package:sauftrag/views/UserFriendList/create_group.dart';
+import 'package:sauftrag/views/UserFriendList/group_details.dart';
 
 import 'app/locator.dart';
 
@@ -49,7 +50,7 @@ class _MyAppState extends State<MyApp> {
             SizeConfig().init(constraints, orientation);
             //var prefService = locator<PrefrencesViewModel>();
             //return MainView(index: 2);
-            return Login();
+            return GroupDetails();
           },
         );
       },

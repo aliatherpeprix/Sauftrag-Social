@@ -80,6 +80,10 @@ class ImageUtils {
   // static String girl12 = "assets/girl_12.png";
   static String likeCenterIcon = "assets/like_center_icon.svg";
   static String dislikeCenterIcon = "assets/dislike_center_icon.svg";
+  static String smileyIcon = "assets/smiley_icon.svg";
+  static String photoCamera = "assets/photo_camera.svg";
+  static String lockIcon = "assets/lock.svg";
+  static String speaker = "assets/speaker.svg";
 
   //Girls Images
   static String girl1 = "assets/girls/girl_1.png";
