@@ -10,6 +10,8 @@ import 'package:sauftrag/views/Home/main_view.dart';
 import 'package:sauftrag/views/Home/match.dart';
 import 'package:sauftrag/views/Home/profile.dart';
 import 'package:sauftrag/views/MapSearch/map_screen.dart';
+import 'package:sauftrag/views/UserFriendList/group_details.dart';
+import 'package:sauftrag/views/UserFriendList/group_screen.dart';
 import 'package:stacked/stacked.dart';
 
 class NavigationViewModel extends BaseViewModel{
@@ -54,6 +56,14 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateBack(){
     navigationKey.currentState!.pop();
+  }
+
+  void navigateToGroupDetail(){
+    navigationKey.currentState!.push(PageTransition(child: GroupDetails(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToGroupScreen(){
+    navigationKey.currentState!.push(PageTransition(child: GroupScreen(), type: PageTransitionType.rightToLeftWithFade));
   }
 
   /*void navigateToWelcomeScreen(){

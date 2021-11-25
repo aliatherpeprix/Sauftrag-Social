@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sauftrag/app/locator.dart';
@@ -18,50 +21,11 @@ class CreateGroup extends StatefulWidget {
 }
 
 class _CreateGroupState extends State<CreateGroup> {
-  List contactChecked = [
-    {
-      'name': "Athalia Putri",
-      'image': ImageUtils.messagePerson1,
-    },
-    {
-      'name': "Erlan Sadewa",
-      'image': ImageUtils.messagePerson2,
-    },
-    {
-      'name': "Raki Devon",
-      'image': ImageUtils.messagePerson3,
-    },
-    {
-      'name': "Blanca Hernandez",
-      'image': ImageUtils.messagePerson4,
-    },
-    {
-      'name': "Glen Romero",
-      'image': ImageUtils.messagePerson5,
-    },
-    {
-      'name': "Joe Floyd",
-      'image': ImageUtils.messagePerson6,
-    },
-    {
-      'name': "Carroll Cooper",
-      'image': ImageUtils.messagePerson7,
-    },
-    {
-      'name': "Sidney Alvarado",
-      'image': ImageUtils.messagePerson8,
-    },
-  ];
-
-  List<bool>? selected;
-  bool? selectedValue;
-  int? currentIndex;
-
   @override
-  void initState() {
-    super.initState();
-    selected = List<bool>.filled(contactChecked.length, false);
-  }
+  // void initState() {
+  //   super.initState();
+  //   selected = List<bool>.filled(contactChecked.length, false);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +41,10 @@ class _CreateGroupState extends State<CreateGroup> {
       return ColorUtils.text_red;
     }
     return ViewModelBuilder<MainViewModel>.reactive(
+      onModelReady: (model){
+        model.groupList.clear();
+        model.selected = List<bool>.filled(model.contactChecked.length, false);
+      },
       builder: (context, model, child) {
         return GestureDetector(
           onTap: () {
@@ -85,16 +53,23 @@ class _CreateGroupState extends State<CreateGroup> {
           child: SafeArea(
             top: false,
             child: Scaffold(
-              floatingActionButton: Container(
-                margin: EdgeInsets.only(bottom: 6.h,right: 2.w),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: ColorUtils.text_red,
-                ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: SvgPicture.asset(ImageUtils.floatingForwardIcon),
+              floatingActionButton: GestureDetector(
+                onTap: (){
+                  //model.groupList.add(value);
+                  //model.navigationService.navigateTo(to: ServiceCategory());
+                  model.navigateToGroupDetails();
+                },
+                child: Container(
+                  margin: EdgeInsets.only(bottom: 6.h,right: 2.w),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: ColorUtils.text_red,
                   ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: SvgPicture.asset(ImageUtils.floatingForwardIcon),
+                    ),
+                ),
               ),
                 backgroundColor: ColorUtils.white,
                 body: Container(
@@ -203,11 +178,12 @@ class _CreateGroupState extends State<CreateGroup> {
                                       CircleAvatar(
                                         radius: 30.0,
                                         backgroundImage: AssetImage(
-                                            contactChecked[index]["image"]),
+                                            model.contactChecked[index]["image"]),
                                         backgroundColor: Colors.transparent,
                                       ),
                                       SizedBox(width: 3.w,),
-                                      Text(contactChecked[index]["name"],
+                                      Text(
+                                        model.contactChecked[index]["name"],
                                       style: TextStyle(
                                         fontFamily: FontUtils.modernistBold,
                                         fontSize: 1.8.t,
@@ -223,14 +199,23 @@ class _CreateGroupState extends State<CreateGroup> {
                                     ),
 
                                     fillColor: MaterialStateProperty.resolveWith(getColor),
-                                    value: selected![index],
+                                    value: model.selected![index],
                                     onChanged: (val) {
                                       setState(() {
-                                        selected![index] = val!;
-                                        selectedValue = val;
-                                        print(selectedValue);
-                                        if(selectedValue == true){
-                                          currentIndex = index;
+                                        model.selected![index] = val!;
+                                        model.selectedValue = val;
+                                        //model.groupMap["image"] =
+                                        print(model.selectedValue);
+                                        if(model.selectedValue == true){
+                                          model.currentIndex = index;
+                                          model.groupMap["image"] = model.contactChecked[index]["image"];
+                                          model.groupMap["name"] = model.contactChecked[index]["name"];
+                                          //print(groupMap);
+                                          model.groupList.add({
+                                            "image": model.groupMap["image"],
+                                            "name" : model.groupMap["name"]
+                                          });
+                                          print(model.groupList);
                                           //containerBorder = ColorUtils.greenColor;
                                         }
                                       });
@@ -244,7 +229,7 @@ class _CreateGroupState extends State<CreateGroup> {
                                 height: 3.h,
                               );
                             },
-                            itemCount: contactChecked.length),
+                            itemCount: model.contactChecked.length),
                       ),
                     ],
                   ),

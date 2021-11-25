@@ -84,6 +84,16 @@ class ImageUtils {
   static String photoCamera = "assets/photo_camera.svg";
   static String lockIcon = "assets/lock.svg";
   static String speaker = "assets/speaker.svg";
+  static String cross = "assets/cross.svg";
+  static String groupLock = "assets/group_lock.svg";
+  static String voiceRecorder = "assets/voiceRecorder.svg";
+  static String plusIcon = "assets/plusIcon.svg";
+  static String quietSmiley = "assets/quiet_smiley.svg";
+  static String contact = "assets/contact.svg";
+  static String addIcon = "assets/add_icon.svg";
+  static String mobileIcon = "assets/mobile_icon.svg";
+  static String peopleIcon = "assets/people_icon.svg";
+  static String forwardIcon = "assets/forward_icon.svg";
 
   //Girls Images
   static String girl1 = "assets/girls/girl_1.png";

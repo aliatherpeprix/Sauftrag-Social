@@ -260,6 +260,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0+1"
+  emoji_picker_flutter:
+    dependency: "direct main"
+    description:
+      name: emoji_picker_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.8"
+  expand_tap_area:
+    dependency: "direct main"
+    description:
+      name: expand_tap_area
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.0"
   expandable:
     dependency: "direct main"
     description:

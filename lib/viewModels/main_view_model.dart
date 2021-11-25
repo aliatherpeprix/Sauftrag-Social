@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
@@ -19,6 +22,60 @@ class MainViewModel extends BaseViewModel{
   final searchScreenController = TextEditingController();
   final friendListSearchController = TextEditingController();
   bool openGroupMenu = false;
+  bool privateGroupSelected = false;
+  bool publicGroupSelected = false;
+  XFile? _pickedFile;
+  File? profileFileImage;
+  bool emojiShowing = false;
+  bool emojiSelected = false;
+  final chatController = TextEditingController();
+  bool groupScreenEmojiShowing = false;
+  bool groupScreenEmojiSelected = false;
+  final groupScreenChatController = TextEditingController();
+  final myContactsSearchController = TextEditingController();
+  bool myContactEmojiShowing = false;
+  bool myContactEmojiSelected = false;
+  final myContactsChatController = TextEditingController();
+  List contactChecked = [
+    {
+      'name': "Athalia Putri",
+      'image': ImageUtils.messagePerson1,
+    },
+    {
+      'name': "Erlan Sadewa",
+      'image': ImageUtils.messagePerson2,
+    },
+    {
+      'name': "Raki Devon",
+      'image': ImageUtils.messagePerson3,
+    },
+    {
+      'name': "Blanca Hernandez",
+      'image': ImageUtils.messagePerson4,
+    },
+    {
+      'name': "Glen Romero",
+      'image': ImageUtils.messagePerson5,
+    },
+    {
+      'name': "Joe Floyd",
+      'image': ImageUtils.messagePerson6,
+    },
+    {
+      'name': "Carroll Cooper",
+      'image': ImageUtils.messagePerson7,
+    },
+    {
+      'name': "Sidney Alvarado",
+      'image': ImageUtils.messagePerson8,
+    },
+  ];
+
+  List<bool>? selected;
+  bool? selectedValue;
+  int? currentIndex;
+  List groupList = [];
+  Map<dynamic,dynamic> groupMap = {};
 
   int drinkMotivationValue = 1;
   String drinkMotivationValueStr = "Drink light";
@@ -33,6 +90,82 @@ class MainViewModel extends BaseViewModel{
   List<int> drinkIndexList = [];
 
   List<String> interestList = ["White Wine", "Hard Seltzer", "Whiskey", "Club 1", "Club 2", "Goldstrand"];
+
+  Future<bool> openCamera() async {
+    ImagePicker picker = ImagePicker();
+    var image = await picker.pickImage(source: ImageSource.camera);
+    _pickedFile = image;
+    if(_pickedFile != null){
+      profileFileImage = File(_pickedFile!.path);
+    }
+    if (profileFileImage==null)
+    {
+      return false;
+    }
+    else{
+      notifyListeners();
+      return true;
+    }
+  }
+
+  Future<bool> getImage() async {
+    ImagePicker picker = ImagePicker();
+    var image = await picker.pickImage(source: ImageSource.gallery);
+    _pickedFile = image;
+    if(_pickedFile != null){
+      profileFileImage = File(_pickedFile!.path);
+    }
+    if (profileFileImage==null)
+    {
+      return false;
+    }
+    else{
+      notifyListeners();
+      return true;
+    }
+  }
+
+  myContactOnEmojiSelected(Emoji groupEmoji) {
+    myContactsChatController
+      ..text += groupEmoji.emoji
+      ..selection = TextSelection.fromPosition(
+          TextPosition(offset: myContactsChatController.text.length));
+  }
+
+  myContactOnBackspacePressed() {
+    myContactsChatController
+      ..text = myContactsChatController.text.characters.skipLast(1).toString()
+      ..selection = TextSelection.fromPosition(
+          TextPosition(offset: myContactsChatController.text.length));
+  }
+
+  groupScreenOnEmojiSelected(Emoji groupEmoji) {
+    groupScreenChatController
+      ..text += groupEmoji.emoji
+      ..selection = TextSelection.fromPosition(
+          TextPosition(offset: groupScreenChatController.text.length));
+  }
+
+  groupScreenOnBackspacePressed() {
+    groupScreenChatController
+      ..text = groupScreenChatController.text.characters.skipLast(1).toString()
+      ..selection = TextSelection.fromPosition(
+          TextPosition(offset: groupScreenChatController.text.length));
+  }
+
+  onEmojiSelected(Emoji emoji) {
+    chatController
+      ..text += emoji.emoji
+      ..selection = TextSelection.fromPosition(
+          TextPosition(offset: chatController.text.length));
+  }
+
+  onBackspacePressed() {
+    chatController
+      ..text = chatController.text.characters.skipLast(1).toString()
+      ..selection = TextSelection.fromPosition(
+          TextPosition(offset: chatController.text.length));
+  }
 
   addMarkers(){
     markers.add(
@@ -71,6 +204,14 @@ class MainViewModel extends BaseViewModel{
 
   void navigateBack(){
     navigationService.navigateBack();
+  }
+
+  void navigateToGroupDetails(){
+    navigationService.navigateToGroupDetail();
+  }
+
+  void navigateToGroupScreen(){
+    navigationService.navigateToGroupScreen();
   }
 
   /*AnimationController? buttonController;
