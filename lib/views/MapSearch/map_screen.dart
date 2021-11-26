@@ -1,3 +1,4 @@
+import 'package:another_xlider/another_xlider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -19,7 +20,6 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-
   List places = [
     {
       'image': ImageUtils.place1,
@@ -50,23 +50,23 @@ class _MapScreenState extends State<MapScreen> {
   List filterPlaces = [
     {
       'image': ImageUtils.discoBall,
-      'text' : "Night Club",
+      'text': "Night Club",
     },
     {
       'image': ImageUtils.musicIcon,
-      'text' : "Pub",
+      'text': "Pub",
     },
     {
       'image': ImageUtils.chaimpaineGlass,
-      'text' : "Bar",
+      'text': "Bar",
     },
     {
       'image': ImageUtils.calenderFilter,
-      'text' : "Events",
+      'text': "Events",
     },
     {
       'image': ImageUtils.knife,
-      'text' : "Food",
+      'text': "Food",
     },
   ];
 
@@ -83,6 +83,13 @@ class _MapScreenState extends State<MapScreen> {
   ];
 
   String? selectedLocation;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    selectedLocation = 'Karachi, Pakistan';
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +114,7 @@ class _MapScreenState extends State<MapScreen> {
                     //circles: model.mCircles ?? {},
                     //model.circles ?? {},
                     mapType: MapType.normal,
-                    onMapCreated: (GoogleMapController controller)async {
+                    onMapCreated: (GoogleMapController controller) async {
                       model.controller.complete(controller);
                       //model.getAddress();
                     },
@@ -140,8 +147,9 @@ class _MapScreenState extends State<MapScreen> {
                   ),
                   child: Container(
                     //color: Colors.amber,
-                    margin:
-                    EdgeInsets.symmetric(horizontal: SizeConfig.widthMultiplier * 3,),
+                    margin: EdgeInsets.symmetric(
+                      horizontal: SizeConfig.widthMultiplier * 3,
+                    ),
                     child: Row(
                       children: [
                         Container(
@@ -174,33 +182,36 @@ class _MapScreenState extends State<MapScreen> {
                           ),
                         ),
                         GestureDetector(
-                          onTap: (){
-                             filter(context, model);
+                          onTap: () {
+                            filter(context, model);
                           },
                           child: Container(
                             decoration: BoxDecoration(
                               color: ColorUtils.text_red,
-                              borderRadius: BorderRadius.all(Radius.circular(15)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
                             ),
                             child: Row(
                               children: [
                                 Container(
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle
-                                  ),
+                                  decoration:
+                                      BoxDecoration(shape: BoxShape.circle),
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: SvgPicture.asset(ImageUtils.filterIcon),
+                                    child:
+                                        SvgPicture.asset(ImageUtils.filterIcon),
                                   ),
                                 ),
-                                Text("Filters",
+                                Text(
+                                  "Filters",
                                   style: TextStyle(
                                       fontFamily: FontUtils.avertaDemo,
                                       fontSize: 1.8.t,
-                                      color: ColorUtils.filterText
-                                  ),
+                                      color: ColorUtils.filterText),
                                 ),
-                                SizedBox(width: 2.w,),
+                                SizedBox(
+                                  width: 2.w,
+                                ),
                               ],
                             ),
                           ),
@@ -228,7 +239,9 @@ class _MapScreenState extends State<MapScreen> {
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
                         return Padding(
-                          padding: EdgeInsets.symmetric(horizontal:SizeConfig.widthMultiplier * 4,),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: SizeConfig.widthMultiplier * 4,
+                          ),
                           child: Container(
                             decoration: BoxDecoration(
                               boxShadow: [
@@ -236,11 +249,13 @@ class _MapScreenState extends State<MapScreen> {
                                   color: ColorUtils.black.withOpacity(0.1),
                                   spreadRadius: 0,
                                   blurRadius: 10,
-                                  offset: Offset(0, 5), // changes position of shadow
+                                  offset: Offset(
+                                      0, 5), // changes position of shadow
                                 ),
                               ],
                               color: Colors.white,
-                              borderRadius: BorderRadius.all(Radius.circular(18)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(18)),
                               border: Border.all(color: ColorUtils.red_color),
                             ),
                             child: Column(
@@ -248,43 +263,55 @@ class _MapScreenState extends State<MapScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 2.w,vertical: 1.5.h),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 2.w, vertical: 1.5.h),
                                   child: Row(
                                     children: [
                                       ClipRRect(
                                         borderRadius: BorderRadius.circular(10),
-                                        child: Image.asset(places[index]["image"],
+                                        child: Image.asset(
+                                          places[index]["image"],
                                           width: 20.i,
                                           height: 20.i,
                                           fit: BoxFit.cover,
                                         ),
                                       ),
-                                      SizedBox(width: 3.w,),
+                                      SizedBox(
+                                        width: 3.w,
+                                      ),
                                       Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          Text(places[index]["date"],
+                                          Text(
+                                            places[index]["date"],
                                             style: TextStyle(
-                                                fontFamily: FontUtils.modernistRegular,
+                                                fontFamily:
+                                                    FontUtils.modernistRegular,
                                                 fontSize: 1.7.t,
-                                                color: ColorUtils.text_red
-                                            ),
+                                                color: ColorUtils.text_red),
                                           ),
-                                          SizedBox(height: 1.h,),
-                                          Text(places[index]["eventName"],
+                                          SizedBox(
+                                            height: 1.h,
+                                          ),
+                                          Text(
+                                            places[index]["eventName"],
                                             style: TextStyle(
-                                                fontFamily: FontUtils.modernistBold,
+                                                fontFamily:
+                                                    FontUtils.modernistBold,
                                                 fontSize: 2.2.t,
-                                                color: ColorUtils.blackText
-                                            ),
+                                                color: ColorUtils.blackText),
                                           ),
-                                          SizedBox(height: 1.h,),
-                                          Text(places[index]["location"],
+                                          SizedBox(
+                                            height: 1.h,
+                                          ),
+                                          Text(
+                                            places[index]["location"],
                                             style: TextStyle(
-                                                fontFamily: FontUtils.modernistRegular,
+                                                fontFamily:
+                                                    FontUtils.modernistRegular,
                                                 fontSize: 1.7.t,
-                                                color: ColorUtils.text_dark
-                                            ),
+                                                color: ColorUtils.text_dark),
                                           ),
                                         ],
                                       ),
@@ -298,7 +325,7 @@ class _MapScreenState extends State<MapScreen> {
                       },
                       separatorBuilder: (context, index) {
                         return SizedBox(
-                          width:  SizeConfig.widthMultiplier * 2.5,
+                          width: SizeConfig.widthMultiplier * 2.5,
                         );
                       },
                       itemCount: places.length,
@@ -312,220 +339,301 @@ class _MapScreenState extends State<MapScreen> {
       },
     );
   }
-  void filter(context, MainViewModel mainModel){
+
+  void filter(context, MainViewModel mainModel) {
     showModalBottomSheet(
-        backgroundColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(25.0),
+
+        ),
+        backgroundColor: Colors.white,
         context: context,
-        builder: (BuildContext context){
+        builder: (BuildContext context) {
           return ViewModelBuilder.reactive(
             disposeViewModel: false,
             viewModelBuilder: () => locator<MainViewModel>(),
-              builder: (context, model, child) {
-                return Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(topRight: Radius.circular(50),topLeft: Radius.circular(50))
-                  ),
-                  child: Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(top: 6.h, left: 4.w, right: 4.w),
-                            child: Text("Filter",
-                              style: TextStyle(
-                                fontFamily: FontUtils.modernistBold,
-                                fontSize: 3.0.t,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 2.h,),
-                          Container(
-                            height: 15.h,
-                            child: ListView.separated(
-                              physics: BouncingScrollPhysics(),
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) {
-                                return GestureDetector(
-                                  onTap: (){
-                                    mainModel.eventSelected = true;
-                                    mainModel.currentEventSelected = index;
-                                    mainModel.notifyListeners();
-                                  },
-                                  child: Container(
-                                    margin: EdgeInsets.only(left: 4.w,),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: mainModel.eventSelected == true && index == mainModel.currentEventSelected ? ColorUtils.text_red : Colors.white,
-                                              border: Border.all(color: mainModel.eventSelected == true && index == mainModel.currentEventSelected ? ColorUtils.text_red : ColorUtils.borderColor,)
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(13.0),
-                                            child: Center(
-                                              child: SvgPicture.asset(filterPlaces[index]["image"],
-                                                color: mainModel.eventSelected == true && index == mainModel.currentEventSelected ? Colors.white : ColorUtils.icon_color,
-                                                width: 7.i,
-                                                height: 7.i,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(height: 2.h,),
-                                        Text(filterPlaces[index]["text"]),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
-                              separatorBuilder: (context, index) {
-                                return SizedBox(
-                                  width: 0.5.w,
-                                );
-                              },
-                              itemCount: filterPlaces.length,
-                            ),
-                          ),
-                          //SizedBox(height: 0.5.h,),
-                          Container(
-                            margin: EdgeInsets.only(left: 4.w, right: 4.w),
-                            child: Text("Time & Date",
-                              style: TextStyle(
-                                fontFamily: FontUtils.modernistBold,
-                                fontSize: 2.0.t,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 2.h,),
-                          Container(
-                            height: 6.h,
-                            child: ListView.separated(
-                              physics: BouncingScrollPhysics(),
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) {
-                                return GestureDetector(
-                                  onTap: (){
-                                    mainModel.timeSelected = true;
-                                    mainModel.timeValue = index;
-                                    mainModel.notifyListeners();
-                                    // mainModel.currentEventSelected = index;
-                                     mainModel.notifyListeners();
-                                  },
-                                  child: Container(
-                                    margin: EdgeInsets.only(left: 4.w,),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          shape: BoxShape.rectangle,
-                                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                                          color: mainModel.timeSelected == true && index == mainModel.timeValue ? ColorUtils.text_red : Colors.white,
-                                          border: Border.all(color: mainModel.timeSelected == true && index == mainModel.timeValue ? ColorUtils.text_red : ColorUtils.borderColor,)
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsets.all(3.5.i),
-                                        child: Text(time[index],
-                                          style: TextStyle(
-                                            color: mainModel.timeSelected == true && index == mainModel.timeValue ? Colors.white : ColorUtils.icon_color,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              },
-                              separatorBuilder: (context, index) {
-                                return SizedBox(
-                                  width: 0.5.w,
-                                );
-                              },
-                              itemCount: time.length,
-                            ),
-                          ),
-                          SizedBox(height: 3.h,),
-                          Container(
-                            margin: EdgeInsets.only(left: 4.w, right: 4.w),
-                            child: Text("Location",
-                              style: TextStyle(
-                                fontFamily: FontUtils.modernistBold,
-                                fontSize: 2.0.t,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 2.h,),
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: 4.w),
-                            // width: double.infinity,
-                            // height: 6.5.h,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.rectangle,
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(15.0)),
-                                border: Border.all(
-                                  //width: 2.0,
-                                  color: ColorUtils.text_red,
-                                )),
+            builder: (context, model, child) {
+              return Container(
+                // decoration: BoxDecoration(
+                //     color: Colors.white,
+                //     borderRadius: BorderRadius.only(
+                //         topRight: Radius.circular(50),
+                //         topLeft: Radius.circular(50))
+                // ),
+                child: ListView(
+                  // crossAxisAlignment: CrossAxisAlignment.start,
+                  // mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(top: 3.h, left: 4.w, right: 4.w),
+                      child: Text(
+                        "Filter",
+                        style: TextStyle(
+                          fontFamily: FontUtils.modernistBold,
+                          fontSize: 3.0.t,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    Container(
+                      height: 15.h,
+                      child: ListView.separated(
+                        physics: BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              mainModel.eventSelected = true;
+                              mainModel.currentEventSelected = index;
+                              mainModel.notifyListeners();
+                            },
                             child: Container(
                               margin: EdgeInsets.only(
-                                left: 2.2.w,
-                                right: 2.3.w,
+                                left: 4.w,
                               ),
-                              child: DropdownButtonFormField<String>(
-                                isExpanded: true,
-                                decoration: InputDecoration(
-                                    prefixIcon: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Stack(
-                                        alignment: Alignment.center,
-                                        children: [
-                                          Container(
-                                            width: 15.w,
-                                            height: 7.h,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.rectangle,
-                                              borderRadius: BorderRadius.all(Radius.circular(11.89)),
-                                              color: ColorUtils.text_red,
-                                            ),
-                                          ),
-                                          Container(
-                                            width: 10.w,
-                                            height: 5.h,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.rectangle,
-                                              borderRadius: BorderRadius.all(Radius.circular(10)),
-                                              color: Colors.white,
-                                            ),
-                                            child: Center(
-                                              child: SvgPicture.asset(ImageUtils.locationPin,
-                                                width: 5.i,
-                                                height: 5.i,
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        boxShadow: [
+                                          if(mainModel.eventSelected ==
+                                              true &&
+                                              index ==
+                                                  mainModel
+                                                      .currentEventSelected)
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.3),
+                                            spreadRadius: 0,
+                                            blurRadius: 10,
+                                            offset: Offset(0, 5), // changes position of shadow
                                           ),
                                         ],
+                                        shape: BoxShape.circle,
+                                        color: mainModel.eventSelected ==
+                                                    true &&
+                                                index ==
+                                                    mainModel
+                                                        .currentEventSelected
+                                            ? ColorUtils.text_red
+                                            : Colors.white,
+                                        border: Border.all(
+                                          color: mainModel.eventSelected ==
+                                                      true &&
+                                                  index ==
+                                                      mainModel
+                                                          .currentEventSelected
+                                              ? ColorUtils.text_red
+                                              : ColorUtils.borderColor,
+                                        )),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(13.0),
+                                      child: Center(
+                                        child: SvgPicture.asset(
+                                          filterPlaces[index]["image"],
+                                          color: mainModel.eventSelected ==
+                                                      true &&
+                                                  index ==
+                                                      mainModel
+                                                          .currentEventSelected
+                                              ? Colors.white
+                                              : ColorUtils.icon_color,
+                                          width: 7.i,
+                                          height: 7.i,
+                                        ),
                                       ),
                                     ),
-                                    prefixIconConstraints: BoxConstraints(
-                                      minWidth: 4.i,
-                                      minHeight: 4.i,
+                                  ),
+                                  SizedBox(
+                                    height: 1.5.h,
+                                  ),
+                                  Text(filterPlaces[index]["text"],
+                                  style: TextStyle(
+                                    fontFamily: FontUtils.modernistRegular,
+                                    fontSize: 1.7.t,
+                                    color: ColorUtils.text_dark
+                                  ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return SizedBox(
+                            width: 0.5.w,
+                          );
+                        },
+                        itemCount: filterPlaces.length,
+                      ),
+                    ),
+                    //SizedBox(height: 0.5.h,),
+                    Container(
+                      margin: EdgeInsets.only(left: 4.w, right: 4.w),
+                      child: Text(
+                        "Time & Date",
+                        style: TextStyle(
+                          fontFamily: FontUtils.modernistBold,
+                          fontSize: 2.0.t,
+                          color: ColorUtils.blackText,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    Container(
+                      height: 6.h,
+                      child: ListView.separated(
+                        physics: BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              mainModel.timeSelected = true;
+                              mainModel.timeValue = index;
+                              mainModel.notifyListeners();
+                              // mainModel.currentEventSelected = index;
+                              mainModel.notifyListeners();
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                left: 4.w,
+                              ),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                    color: mainModel.timeSelected == true &&
+                                            index == mainModel.timeValue
+                                        ? ColorUtils.text_red
+                                        : Colors.white,
+                                    border: Border.all(
+                                      color: mainModel.timeSelected == true &&
+                                              index == mainModel.timeValue
+                                          ? ColorUtils.text_red
+                                          : ColorUtils.borderColor,
+                                    )),
+                                child: Padding(
+                                  padding: EdgeInsets.all(3.5.i),
+                                  child: Text(
+                                    time[index],
+                                    style: TextStyle(
+                                      fontFamily: FontUtils.modernistRegular,
+                                      fontSize: 1.9.t,
+                                      color: mainModel.timeSelected == true &&
+                                              index == mainModel.timeValue
+                                          ? Colors.white
+                                          : ColorUtils.icon_color,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return SizedBox(
+                            width: 6.w,
+                          );
+                        },
+                        itemCount: time.length,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 3.h,
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 4.w, right: 4.w),
+                      child: Text(
+                        "Location",
+                        style: TextStyle(
+                          fontFamily: FontUtils.modernistBold,
+                          fontSize: 2.0.t,
+                          color: ColorUtils.blackText,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 4.w),
+                      // width: double.infinity,
+                      // height: 6.5.h,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                          border: Border.all(
+                            //width: 2.0,
+                            color: ColorUtils.borderColor,
+                          )),
+                      child: Container(
+                        margin: EdgeInsets.only(
+                          left: 2.2.w,
+                          right: 2.3.w,
+                        ),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Container(
+                                    width: 12.w,
+                                    height: 6.h,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.rectangle,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(11.89)),
+                                      color: ColorUtils.text_red,
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 8.w,
+                                    height: 4.h,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.rectangle,
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(10)),
+                                      color: Colors.white,
+                                    ),
+                                    child: Center(
+                                      child: SvgPicture.asset(
+                                        ImageUtils.locationPin,
+                                        width: 4.i,
+                                        height: 4.i,
+                                        //fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: DropdownButtonFormField<String>(
+                                //isExpanded: true,
+                                decoration: InputDecoration(
+                                    suffixIcon: Icon(
+                                      Icons.keyboard_arrow_down,
+                                      color: ColorUtils.text_red,
+                                      //size: 6.i,
                                     ),
                                     enabledBorder: UnderlineInputBorder(
                                       borderSide:
-                                      BorderSide(color: Colors.transparent),
+                                          BorderSide(color: Colors.transparent),
                                     )),
                                 icon: Icon(
                                   Icons.keyboard_arrow_down,
                                   color: Colors.black,
-                                  //size: 6.i,
+                                  size: 0.0,
                                 ),
                                 onChanged: (newValue) {
                                   selectedLocation = newValue;
@@ -536,27 +644,183 @@ class _MapScreenState extends State<MapScreen> {
                                     value: city,
                                     child: new Text(
                                       city,
-                                      // style: TextStyle(
-                                      //   fontFamily: FontUtils.avertaSemiBold,
-                                      //   fontSize: 2.3.t,
-                                      //   color: ColorUtils.blueColor,
-                                      // ),
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontFamily: FontUtils.modernistRegular,
+                                        fontSize: 2.3.t,
+                                        color: ColorUtils.locationText,
+                                      ),
                                     ),
                                   );
                                 }).toList(),
                                 value: selectedLocation,
                               ),
                             ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 3.h,
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 4.w, right: 4.w),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Select Range",
+                            style: TextStyle(
+                              fontFamily: FontUtils.modernistBold,
+                              fontSize: 2.0.t,
+                              color: ColorUtils.blackText,
+                            ),
+                          ),
+                          Text(
+                              mainModel.lowValue! +"mi" + "-" + mainModel.highValue!+"mi",
+                            style: TextStyle(
+                              fontFamily: FontUtils.modernistRegular,
+                              fontSize: 2.0.t,
+                              color: ColorUtils.text_red
+                            ),
                           ),
                         ],
                       ),
                     ),
-                  ),
-                );
-              },
-          );
+                    FlutterSlider(
+                      onDragCompleted: (handlerIndex, lowerValue, upperValue) {
+                        handlerIndex = 0;
+                        mainModel.lowerValue = lowerValue;
+                        mainModel.upperValue = upperValue;
+                        // print(_upperValue);
+                        // print(_lowerValue);
+                        setState(() {
 
-        }
-    );
+                        });
+                      },
+                      trackBar: FlutterSliderTrackBar(
+                        activeTrackBar: BoxDecoration(
+                          color: ColorUtils.text_red,
+                        ),
+                        inactiveTrackBar: BoxDecoration(
+                          color: ColorUtils.text_red.withOpacity(0.2),
+                        ),
+                      ),
+                      // handlerHeight: 0.0,
+                      // handlerWidth: 0.0,
+                      handler: FlutterSliderHandler(
+                        decoration: BoxDecoration(
+                            // image: DecorationImage(
+                            //   image:AssetImage(ImageUtils.doubleArrow),
+                            // ),
+                            color: Colors.white,
+                            shape: BoxShape.rectangle,
+                            borderRadius: BorderRadius.all(Radius.circular(9)),
+                            border: Border.all(color: ColorUtils.text_red)),
+                        child: Image.asset(
+                          ImageUtils.doubleArrow,
+                          height: 5.i,
+                          width: 5.i,
+                        ),
+                      ),
+                      rightHandler: FlutterSliderHandler(
+                        decoration: BoxDecoration(
+                            // image: DecorationImage(
+                            //   image:AssetImage(ImageUtils.doubleArrow),
+                            // ),
+                            color: Colors.white,
+                            shape: BoxShape.rectangle,
+                            borderRadius: BorderRadius.all(Radius.circular(9)),
+                            border: Border.all(color: ColorUtils.text_red)),
+                        child: Image.asset(
+                          ImageUtils.doubleArrow,
+                          height: 5.i,
+                          width: 5.i,
+                        ),
+                      ),
+                      values: [mainModel.lowerValue, mainModel.upperValue],
+                      rangeSlider: true,
+                      max: 500,
+                      min: 0,
+                      onDragging: (handlerIndex, lowerValue, upperValue) {
+                        mainModel.lowerValue = lowerValue;
+                        mainModel.upperValue = upperValue;
+                        mainModel.lowValue = mainModel.lowerValue.toStringAsFixed(0);
+                        mainModel.highValue =  mainModel.upperValue.toStringAsFixed(0);
+                        mainModel.notifyListeners();
+                      },
+                    ),
+                    SizedBox(height: 3.h,),
+                    Container(
+                      margin: EdgeInsets.only(left: 4.w, right: 4.w),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: () {
+                              },
+                              child: Text("RESET"),
+                              style: ElevatedButton.styleFrom(
+                                primary: ColorUtils.white,
+                                onPrimary: ColorUtils.text_red,
+                                padding: EdgeInsets.symmetric(vertical: 1.8.h, horizontal: 5.w),
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(Dimensions.roundCorner),
+                                    side: BorderSide(
+                                        color: ColorUtils.text_red,
+                                        width: 1
+                                    )
+                                ),
+                                textStyle: TextStyle(
+                                  //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
+                                  fontFamily: FontUtils.modernistBold,
+                                  fontSize: 1.8.t,
+                                  //height: 0
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          SizedBox(width: 5.w,),
+
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: () {
+                              },
+                              child: Text("APPLY"),
+                              style: ElevatedButton.styleFrom(
+                                primary: ColorUtils.text_red,
+                                onPrimary: ColorUtils.white,
+                                padding: EdgeInsets.symmetric(vertical: 1.8.h, horizontal: 5.w),
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(Dimensions.roundCorner),
+                                    side: BorderSide(
+                                        color: ColorUtils.text_red,
+                                        width: 1
+                                    )
+                                ),
+                                textStyle: TextStyle(
+                                  //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
+                                  fontFamily: FontUtils.modernistBold,
+                                  fontSize: 1.8.t,
+                                  //height: 0
+                                ),
+                              ),
+                            ),
+                          ),
+
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 2.h,),
+                  ],
+                ),
+              );
+            },
+          );
+        });
   }
 }

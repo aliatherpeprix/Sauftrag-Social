@@ -67,6 +67,11 @@ class ImageUtils {
   static String floatingForwardIcon = "assets/floating_forward_icon.svg";
   static String cosmos = "assets/cosmos.png";
   static String locationPin = "assets/location_pin.svg";
+  static String rangeArrows = "assets/range_arrows.svg";
+  static String doubleArrow = "assets/double_arrow.png";
+  static String drinkImage = "assets/drink_image.png";
+  static String chatRectangle = "assets/chat_rectangle.png";
+  static String chatDialog = "assets/chat_dialog.png";
   // static String girl1 = "assets/girl_1.png";
   // static String girl2 = "assets/girl_2.png";
   // static String girl3 = "assets/girl_3.png";

@@ -40,6 +40,16 @@ class MainViewModel extends BaseViewModel{
   int? currentEventSelected;
   bool timeSelected = false;
   int? timeValue;
+  double sliderValue = 0.0;
+  String? lowValue = "50";
+  String? highValue = "180";
+  bool bottomSheetSelected = false;
+  bool messageScreenEmojiShowing = false;
+  bool messageScreenEmojiSelected = false;
+  final messageScreenChatController = TextEditingController();
+
+  double lowerValue = 50;
+  double upperValue = 180;
   List contactChecked = [
     {
       'name': "Athalia Putri",
@@ -127,6 +137,20 @@ class MainViewModel extends BaseViewModel{
       notifyListeners();
       return true;
     }
+  }
+
+  messageEmojiSelected(Emoji emoji) {
+    messageScreenChatController
+      ..text += emoji.emoji
+      ..selection = TextSelection.fromPosition(
+          TextPosition(offset: messageScreenChatController.text.length));
+  }
+
+  messageScreenBackspacePressed() {
+    messageScreenChatController
+      ..text = messageScreenChatController.text.characters.skipLast(1).toString()
+      ..selection = TextSelection.fromPosition(
+          TextPosition(offset: messageScreenChatController.text.length));
   }
 
   myContactOnEmojiSelected(Emoji groupEmoji) {
