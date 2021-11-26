@@ -1,12 +1,16 @@
 
 import 'package:flutter/material.dart';
+import 'package:sauftrag/bar/views/Home/bar_news_feed.dart';
 
 import 'package:sauftrag/utils/screen_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/navigation_view_model.dart';
+import 'package:sauftrag/views/Auth/check_email.dart';
+import 'package:sauftrag/views/Auth/forget_password.dart';
 import 'package:sauftrag/views/Auth/login.dart';
 
 import 'package:sauftrag/views/Auth/media.dart';
+import 'package:sauftrag/views/Auth/resent_password.dart';
 import 'package:sauftrag/views/Auth/signup.dart';
 import 'package:sauftrag/views/Auth/splash.dart';
 import 'package:sauftrag/views/Home/main_view.dart';
@@ -15,6 +19,9 @@ import 'package:sauftrag/views/Home/profile.dart';
 import 'package:sauftrag/views/Home/swipe.dart';
 
 import 'app/locator.dart';
+import 'bar/views/Drawer/barEvent.dart';
+import 'bar/views/Drawer/followers.dart';
+import 'bar/views/Drawer/notifications.dart';
 import 'bar/views/Home/bar_drinks.dart';
 import 'bar/views/Home/main_view.dart';
 import 'bar/views/Home/order_details.dart';
@@ -56,7 +63,7 @@ class _MyAppState extends State<MyApp> {
             SizeConfig().init(constraints, orientation);
             //var prefService = locator<PrefrencesViewModel>();
             //return MainView(index: 2);
-            return MainViewBar(index: 0);
+            return BarNewsFeed();
           },
         );
       },

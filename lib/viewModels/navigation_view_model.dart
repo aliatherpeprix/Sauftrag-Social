@@ -3,11 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:sauftrag/bar/views/Auth/media.dart';
 import 'package:sauftrag/bar/views/Auth/signUp.dart';
+import 'package:sauftrag/bar/views/Drawer/barEvent.dart';
+import 'package:sauftrag/bar/views/Drawer/followers.dart';
+import 'package:sauftrag/bar/views/Drawer/notifications.dart';
+import 'package:sauftrag/bar/views/Home/bar_news_feed.dart';
 import 'package:sauftrag/bar/views/Profile/bar_profile.dart';
 import 'package:sauftrag/bar/views/Home/bar_event.dart';
+import 'package:sauftrag/views/Auth/check_email.dart';
 import 'package:sauftrag/views/Auth/favorite.dart';
+import 'package:sauftrag/views/Auth/forget_password.dart';
 import 'package:sauftrag/views/Auth/login.dart';
 import 'package:sauftrag/views/Auth/media.dart';
+import 'package:sauftrag/views/Auth/resent_password.dart';
 import 'package:sauftrag/views/Auth/signup.dart';
 import 'package:sauftrag/views/Auth/terms.dart';
 import 'package:sauftrag/views/Home/main_view.dart';
@@ -53,6 +60,34 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateToCreateEventScreen(){
     navigationKey.currentState!.push(PageTransition(child: CreateBarEvent(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToBarEventScreen(){
+    navigationKey.currentState!.push(PageTransition(child: BarEvent(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToNotificationScreen(){
+    navigationKey.currentState!.push(PageTransition(child: Notifications(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToFollowersListScreen(){
+    navigationKey.currentState!.push(PageTransition(child: Followers(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToForgetPasswordScreen(){
+    navigationKey.currentState!.push(PageTransition(child: ForgetPassword(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToCheckEmailScreen(){
+    navigationKey.currentState!.push(PageTransition(child: CheckEmail(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToResentPasswordScreen(){
+    navigationKey.currentState!.push(PageTransition(child: ResentPassword(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToBarHomeScreen(){
+    navigationKey.currentState!.push(PageTransition(child: BarNewsFeed(), type: PageTransitionType.rightToLeftWithFade));
   }
 
   void navigateToHomeScreen(int index){

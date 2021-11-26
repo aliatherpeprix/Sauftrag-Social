@@ -268,6 +268,19 @@ class _LoginState extends State<Login> {
                               ),
                             ],
                           ),
+                         GestureDetector(
+                           onTap: (){
+                             model.navigateToForgetPasswordScreen();
+                           },
+                           child:  Row(
+                             crossAxisAlignment: CrossAxisAlignment.start,
+                             mainAxisAlignment: MainAxisAlignment.end,
+                             children: [
+                               Text("Forget Password", style: TextStyle(color: ColorUtils.text_grey,
+                                 fontFamily: FontUtils.modernistRegular, fontSize: 1.5.t,),)
+                             ],
+                           ),
+                         ),
 
                           //Sign in Button
                           SizedBox(

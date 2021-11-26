@@ -102,4 +102,7 @@ class ImageUtils {
   static String longDrink = "assets/longDrink.svg";
   static String shorts = "assets/shorts.svg";
   static String scanner = "assets/scanner.svg";
+  static String johnImg = "assets/johnImg.png";
+  static String searchIcon = "assets/searchIcon.svg";
+  static String emailImg = "assets/emailIcon.png";
 }

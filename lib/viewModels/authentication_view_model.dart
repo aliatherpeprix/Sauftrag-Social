@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:sauftrag/utils/constants.dart';
+import 'package:sauftrag/utils/image_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 
@@ -47,8 +48,6 @@ class AuthenticationViewModel extends BaseViewModel {
     "Club 10"
   ];
   List<int> selectedClubList = [];
-
-
 
   List<String> vacationList = [
     "Ballermann",
@@ -132,9 +131,9 @@ class AuthenticationViewModel extends BaseViewModel {
     navigationService.navigateToUploadBarMedia();
   }
 
-  void navigateToUploadBarMedia() {
-    navigationService.navigateToUploadBarMedia();
-  }
+    void navigateToUploadBarMedia() {
+      navigationService.navigateToUploadBarMedia();
+    }
 
   void navigateToFavoriteScreen() {
     navigationService.navigateToFavoriteScreen();
@@ -158,6 +157,18 @@ class AuthenticationViewModel extends BaseViewModel {
 
   void navigateToHomeScreen(int index) {
     navigationService.navigateToHomeScreen(index);
+  }
+
+  void navigateToForgetPasswordScreen() {
+    navigationService.navigateToForgetPasswordScreen();
+  }
+
+  void navigateToCheckEmailScreen() {
+    navigationService.navigateToCheckEmailScreen();
+  }
+
+  void navigateToResentPasswordScreen() {
+    navigationService.navigateToResentPasswordScreen();
   }
 
   void navigateBack() {
