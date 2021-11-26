@@ -19,6 +19,7 @@ class ColorUtils{
   static Color lightTextColor = Color (0xFFC4C4C4);
   static Color chatTime = Color (0xFFA4A4A4);
   static Color activeColor = Color (0xFF1AC865);
+  static Color borderColor = Color (0xFFE5E5E5);
 
   static Color startGradient = Color(0xFF00DCDC);
   static Color endGradient = Color(0xFF00ADEE);

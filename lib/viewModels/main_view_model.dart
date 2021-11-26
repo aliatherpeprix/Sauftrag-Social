@@ -36,6 +36,10 @@ class MainViewModel extends BaseViewModel{
   bool myContactEmojiShowing = false;
   bool myContactEmojiSelected = false;
   final myContactsChatController = TextEditingController();
+  bool eventSelected = false;
+  int? currentEventSelected;
+  bool timeSelected = false;
+  int? timeValue;
   List contactChecked = [
     {
       'name': "Athalia Putri",

@@ -402,15 +402,31 @@ class _InvitePeopleState extends State<InvitePeople> {
                     //crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SvgPicture.asset(ImageUtils.mobileIcon),
+                          SvgPicture.asset(ImageUtils.mobileIcon,
+                          width: 5.i,
+                            height: 5.i,
+                          ),
                           SizedBox(width: 2.w,),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Find Contacts Easily"),
-                              Text("Add contacts from your device"),
+                              Text("Find Contacts Easily",
+                                style: TextStyle(
+                                  fontFamily: FontUtils.modernistBold,
+                                  fontSize: 1.9.t,
+                                  color: ColorUtils.text_dark,
+                                ),
+                              ),
+                              SizedBox(height: 0.5.h,),
+                              Text("Add contacts from your device",
+                                style: TextStyle(
+                                  fontFamily: FontUtils.modernistRegular,
+                                  fontSize: 1.9.t,
+                                  color: ColorUtils.text_dark,
+                                ),
+                              ),
                             ],
                           ),
                         ],
@@ -423,19 +439,37 @@ class _InvitePeopleState extends State<InvitePeople> {
                 Container(
                   margin: EdgeInsets.only(top: 3.h, left: 4.w, right: 4.w, bottom: 3.h),
                   child: Row(
+                    //mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     //crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SvgPicture.asset(ImageUtils.mobileIcon),
+                          SvgPicture.asset(ImageUtils.peopleIcon,
+                          width: 5.i,
+                          height: 5.i,
+                          ),
                           SizedBox(width: 2.w,),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Find Contacts Easily"),
-                              Text("Add contacts from your device"),
+                              Text("Invite to Souftrag",
+                              style: TextStyle(
+                                fontFamily: FontUtils.modernistBold,
+                                fontSize: 1.9.t,
+                                color: ColorUtils.text_dark,
+                              ),
+                              ),
+                              SizedBox(height: 0.5.h,),
+                              Text("Connect with friends and family",
+                                style: TextStyle(
+                                  fontFamily: FontUtils.modernistRegular,
+                                  fontSize: 1.9.t,
+                                  color: ColorUtils.text_dark,
+                                ),
+                              ),
                             ],
                           ),
                         ],

@@ -66,6 +66,7 @@ class ImageUtils {
   static String messagePerson8 = "assets/message_person8.png";
   static String floatingForwardIcon = "assets/floating_forward_icon.svg";
   static String cosmos = "assets/cosmos.png";
+  static String locationPin = "assets/location_pin.svg";
   // static String girl1 = "assets/girl_1.png";
   // static String girl2 = "assets/girl_2.png";
   // static String girl3 = "assets/girl_3.png";
@@ -94,6 +95,12 @@ class ImageUtils {
   static String mobileIcon = "assets/mobile_icon.svg";
   static String peopleIcon = "assets/people_icon.svg";
   static String forwardIcon = "assets/forward_icon.svg";
+  static String discoBall = "assets/disco_ball.svg";
+  static String musicIcon = "assets/music_icon.svg";
+  static String chaimpaineGlass = "assets/chaimpaine_glass.svg";
+  static String calenderFilter = "assets/calender_filter.svg";
+  static String knifeFork = "assets/knife_fork.svg";
+  static String knife = "assets/knife.svg";
 
   //Girls Images
   static String girl1 = "assets/girls/girl_1.png";

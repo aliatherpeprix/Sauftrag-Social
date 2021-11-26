@@ -47,6 +47,43 @@ class _MapScreenState extends State<MapScreen> {
     },
   ];
 
+  List filterPlaces = [
+    {
+      'image': ImageUtils.discoBall,
+      'text' : "Night Club",
+    },
+    {
+      'image': ImageUtils.musicIcon,
+      'text' : "Pub",
+    },
+    {
+      'image': ImageUtils.chaimpaineGlass,
+      'text' : "Bar",
+    },
+    {
+      'image': ImageUtils.calenderFilter,
+      'text' : "Events",
+    },
+    {
+      'image': ImageUtils.knife,
+      'text' : "Food",
+    },
+  ];
+
+  List time = [
+    "Today",
+    "Tomorrow",
+    "This week",
+  ];
+
+  List<String> location = [
+    'Karachi, Pakistan',
+    'Lahore, Pakistan',
+    'Islamabad, Pakistan',
+  ];
+
+  String? selectedLocation;
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<MainViewModel>.reactive(
@@ -136,31 +173,36 @@ class _MapScreenState extends State<MapScreen> {
                             ),
                           ),
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: ColorUtils.text_red,
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
-                          ),
-                          child: Row(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle
+                        GestureDetector(
+                          onTap: (){
+                             filter(context, model);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: ColorUtils.text_red,
+                              borderRadius: BorderRadius.all(Radius.circular(15)),
+                            ),
+                            child: Row(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: SvgPicture.asset(ImageUtils.filterIcon),
+                                  ),
                                 ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: SvgPicture.asset(ImageUtils.filterIcon),
+                                Text("Filters",
+                                  style: TextStyle(
+                                      fontFamily: FontUtils.avertaDemo,
+                                      fontSize: 1.8.t,
+                                      color: ColorUtils.filterText
+                                  ),
                                 ),
-                              ),
-                              Text("Filters",
-                                style: TextStyle(
-                                    fontFamily: FontUtils.avertaDemo,
-                                    fontSize: 1.8.t,
-                                    color: ColorUtils.filterText
-                                ),
-                              ),
-                              SizedBox(width: 2.w,),
-                            ],
+                                SizedBox(width: 2.w,),
+                              ],
+                            ),
                           ),
                         ),
                         // Text(searchHere,
@@ -268,6 +310,253 @@ class _MapScreenState extends State<MapScreen> {
           ),
         );
       },
+    );
+  }
+  void filter(context, MainViewModel mainModel){
+    showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        context: context,
+        builder: (BuildContext context){
+          return ViewModelBuilder.reactive(
+            disposeViewModel: false,
+            viewModelBuilder: () => locator<MainViewModel>(),
+              builder: (context, model, child) {
+                return Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(topRight: Radius.circular(50),topLeft: Radius.circular(50))
+                  ),
+                  child: Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(top: 6.h, left: 4.w, right: 4.w),
+                            child: Text("Filter",
+                              style: TextStyle(
+                                fontFamily: FontUtils.modernistBold,
+                                fontSize: 3.0.t,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 2.h,),
+                          Container(
+                            height: 15.h,
+                            child: ListView.separated(
+                              physics: BouncingScrollPhysics(),
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: (){
+                                    mainModel.eventSelected = true;
+                                    mainModel.currentEventSelected = index;
+                                    mainModel.notifyListeners();
+                                  },
+                                  child: Container(
+                                    margin: EdgeInsets.only(left: 4.w,),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: mainModel.eventSelected == true && index == mainModel.currentEventSelected ? ColorUtils.text_red : Colors.white,
+                                              border: Border.all(color: mainModel.eventSelected == true && index == mainModel.currentEventSelected ? ColorUtils.text_red : ColorUtils.borderColor,)
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(13.0),
+                                            child: Center(
+                                              child: SvgPicture.asset(filterPlaces[index]["image"],
+                                                color: mainModel.eventSelected == true && index == mainModel.currentEventSelected ? Colors.white : ColorUtils.icon_color,
+                                                width: 7.i,
+                                                height: 7.i,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(height: 2.h,),
+                                        Text(filterPlaces[index]["text"]),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                              separatorBuilder: (context, index) {
+                                return SizedBox(
+                                  width: 0.5.w,
+                                );
+                              },
+                              itemCount: filterPlaces.length,
+                            ),
+                          ),
+                          //SizedBox(height: 0.5.h,),
+                          Container(
+                            margin: EdgeInsets.only(left: 4.w, right: 4.w),
+                            child: Text("Time & Date",
+                              style: TextStyle(
+                                fontFamily: FontUtils.modernistBold,
+                                fontSize: 2.0.t,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 2.h,),
+                          Container(
+                            height: 6.h,
+                            child: ListView.separated(
+                              physics: BouncingScrollPhysics(),
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: (){
+                                    mainModel.timeSelected = true;
+                                    mainModel.timeValue = index;
+                                    mainModel.notifyListeners();
+                                    // mainModel.currentEventSelected = index;
+                                     mainModel.notifyListeners();
+                                  },
+                                  child: Container(
+                                    margin: EdgeInsets.only(left: 4.w,),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.rectangle,
+                                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                                          color: mainModel.timeSelected == true && index == mainModel.timeValue ? ColorUtils.text_red : Colors.white,
+                                          border: Border.all(color: mainModel.timeSelected == true && index == mainModel.timeValue ? ColorUtils.text_red : ColorUtils.borderColor,)
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(3.5.i),
+                                        child: Text(time[index],
+                                          style: TextStyle(
+                                            color: mainModel.timeSelected == true && index == mainModel.timeValue ? Colors.white : ColorUtils.icon_color,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                              separatorBuilder: (context, index) {
+                                return SizedBox(
+                                  width: 0.5.w,
+                                );
+                              },
+                              itemCount: time.length,
+                            ),
+                          ),
+                          SizedBox(height: 3.h,),
+                          Container(
+                            margin: EdgeInsets.only(left: 4.w, right: 4.w),
+                            child: Text("Location",
+                              style: TextStyle(
+                                fontFamily: FontUtils.modernistBold,
+                                fontSize: 2.0.t,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 2.h,),
+                          Container(
+                            margin: EdgeInsets.symmetric(horizontal: 4.w),
+                            // width: double.infinity,
+                            // height: 6.5.h,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(15.0)),
+                                border: Border.all(
+                                  //width: 2.0,
+                                  color: ColorUtils.text_red,
+                                )),
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                left: 2.2.w,
+                                right: 2.3.w,
+                              ),
+                              child: DropdownButtonFormField<String>(
+                                isExpanded: true,
+                                decoration: InputDecoration(
+                                    prefixIcon: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Stack(
+                                        alignment: Alignment.center,
+                                        children: [
+                                          Container(
+                                            width: 15.w,
+                                            height: 7.h,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.rectangle,
+                                              borderRadius: BorderRadius.all(Radius.circular(11.89)),
+                                              color: ColorUtils.text_red,
+                                            ),
+                                          ),
+                                          Container(
+                                            width: 10.w,
+                                            height: 5.h,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.rectangle,
+                                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                                              color: Colors.white,
+                                            ),
+                                            child: Center(
+                                              child: SvgPicture.asset(ImageUtils.locationPin,
+                                                width: 5.i,
+                                                height: 5.i,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    prefixIconConstraints: BoxConstraints(
+                                      minWidth: 4.i,
+                                      minHeight: 4.i,
+                                    ),
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide:
+                                      BorderSide(color: Colors.transparent),
+                                    )),
+                                icon: Icon(
+                                  Icons.keyboard_arrow_down,
+                                  color: Colors.black,
+                                  //size: 6.i,
+                                ),
+                                onChanged: (newValue) {
+                                  selectedLocation = newValue;
+                                  setState(() {});
+                                },
+                                items: location.map((city) {
+                                  return DropdownMenuItem(
+                                    value: city,
+                                    child: new Text(
+                                      city,
+                                      // style: TextStyle(
+                                      //   fontFamily: FontUtils.avertaSemiBold,
+                                      //   fontSize: 2.3.t,
+                                      //   color: ColorUtils.blueColor,
+                                      // ),
+                                    ),
+                                  );
+                                }).toList(),
+                                value: selectedLocation,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+          );
+
+        }
     );
   }
 }
