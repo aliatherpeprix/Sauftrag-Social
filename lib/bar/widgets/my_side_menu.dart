@@ -137,7 +137,9 @@ class _MySideMenuState extends State<MySideMenu> {
 
               //Logout
               InkWell(
-                onTap: (){},
+                onTap: (){
+                  model.navigateAndRemoveSignInScreen();
+                },
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: Dimensions.containerHorizontalPadding, vertical: Dimensions.containerVerticalPadding),
                   child: Row(

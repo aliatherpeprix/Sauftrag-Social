@@ -44,18 +44,6 @@ class _BarProfileState extends State<BarProfile> {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          IconButton(
-                              onPressed: () {
-                                model.navigateBack();
-                              },
-                              iconSize: 18.0,
-                              padding: EdgeInsets.zero,
-                              constraints: BoxConstraints(),
-                              icon: Icon(
-                                Icons.arrow_back_ios,
-                                color: ColorUtils.black,
-                              )),
-                          SizedBox(width: 2.w),
                           Text(
                             "Settings",
                             style: TextStyle(

@@ -162,6 +162,36 @@ class _BarDrinksState extends State<BarDrinks> {
                               children: [
                                 GestureDetector(
                                     onTap: () {
+                                      if(index != 0){
+                                        index = index - 1;
+                                      }
+                                      setState(() {});
+                                    },
+                                    child: Center(
+                                      child: Container(
+                                        //padding: EdgeInsets.all(8.0),
+                                        decoration: BoxDecoration(
+                                            color: ColorUtils.white,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(50)),
+                                            border: Border.all(
+                                                color: ColorUtils.text_red)),
+                                        child: Icon(
+                                          Icons.remove,
+                                          size: 5.i,
+                                          color: ColorUtils.text_red,
+                                        ),
+                                      ),
+                                    )),
+                                Text(
+                                  index.toString(),
+                                  style: TextStyle(
+                                      color: ColorUtils.text_red,
+                                      fontSize: 2.h),
+                                ),
+
+                                GestureDetector(
+                                    onTap: () {
                                       index = index + 1;
                                       setState(() {});
                                     },
@@ -176,33 +206,6 @@ class _BarDrinksState extends State<BarDrinks> {
                                                 color: ColorUtils.text_red)),
                                         child: Icon(
                                           Icons.add,
-                                          size: 5.i,
-                                          color: ColorUtils.text_red,
-                                        ),
-                                      ),
-                                    )),
-                                Text(
-                                  index.toString(),
-                                  style: TextStyle(
-                                      color: ColorUtils.text_red,
-                                      fontSize: 2.h),
-                                ),
-                                GestureDetector(
-                                    onTap: () {
-                                      index = index - 1;
-                                      setState(() {});
-                                    },
-                                    child: Center(
-                                      child: Container(
-                                        //padding: EdgeInsets.all(8.0),
-                                        decoration: BoxDecoration(
-                                            color: ColorUtils.white,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(50)),
-                                            border: Border.all(
-                                                color: ColorUtils.text_red)),
-                                        child: Icon(
-                                          Icons.remove,
                                           size: 5.i,
                                           color: ColorUtils.text_red,
                                         ),
@@ -279,6 +282,36 @@ class _BarDrinksState extends State<BarDrinks> {
                               children: [
                                 GestureDetector(
                                     onTap: () {
+                                      if(index1 != 0)
+                                        {
+                                          index1 = index1 - 1;
+                                        }
+                                      setState(() {});
+                                    },
+                                    child: Center(
+                                      child: Container(
+                                        //padding: EdgeInsets.all(8.0),
+                                        decoration: BoxDecoration(
+                                            color: ColorUtils.white,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(50)),
+                                            border: Border.all(
+                                                color: ColorUtils.icon_color)),
+                                        child: Icon(
+                                          Icons.remove,
+                                          size: 5.i,
+                                          color: ColorUtils.icon_color,
+                                        ),
+                                      ),
+                                    )),
+                                Text(
+                                  index1.toString(),
+                                  style: TextStyle(
+                                      color: ColorUtils.icon_color,
+                                      fontSize: 2.h),
+                                ),
+                                GestureDetector(
+                                    onTap: () {
                                       index1 = index1 + 1;
                                       setState(() {});
                                     },
@@ -298,33 +331,7 @@ class _BarDrinksState extends State<BarDrinks> {
                                         ),
                                       ),
                                     )),
-                                Text(
-                                  index1.toString(),
-                                  style: TextStyle(
-                                      color: ColorUtils.icon_color,
-                                      fontSize: 2.h),
-                                ),
-                                GestureDetector(
-                                    onTap: () {
-                                      index1 = index1 - 1;
-                                      setState(() {});
-                                    },
-                                    child: Center(
-                                      child: Container(
-                                        //padding: EdgeInsets.all(8.0),
-                                        decoration: BoxDecoration(
-                                            color: ColorUtils.white,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(50)),
-                                            border: Border.all(
-                                                color: ColorUtils.icon_color)),
-                                        child: Icon(
-                                          Icons.remove,
-                                          size: 5.i,
-                                          color: ColorUtils.icon_color,
-                                        ),
-                                      ),
-                                    )),
+
                               ],
                             ),
                           ),
@@ -396,6 +403,38 @@ class _BarDrinksState extends State<BarDrinks> {
                               children: [
                                 GestureDetector(
                                     onTap: () {
+                                      if(index2 != 0)
+                                        {
+                                          index2 = index2 - 1;
+                                        }
+
+                                      setState(() {});
+                                    },
+                                    child: Center(
+                                      child: Container(
+                                        //padding: EdgeInsets.all(8.0),
+                                        decoration: BoxDecoration(
+                                            color: ColorUtils.white,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(50)),
+                                            border: Border.all(
+                                                color: ColorUtils.icon_color)),
+                                        child: Icon(
+                                          Icons.remove,
+                                          size: 5.i,
+                                          color: ColorUtils.icon_color,
+                                        ),
+                                      ),
+                                    )),
+                                Text(
+                                  index2.toString(),
+                                  style: TextStyle(
+                                      color: ColorUtils.icon_color,
+                                      fontSize: 2.h),
+                                ),
+
+                                GestureDetector(
+                                    onTap: () {
                                       index2 = index2 + 1;
                                       setState(() {});
                                     },
@@ -410,33 +449,6 @@ class _BarDrinksState extends State<BarDrinks> {
                                                 color: ColorUtils.icon_color)),
                                         child: Icon(
                                           Icons.add,
-                                          size: 5.i,
-                                          color: ColorUtils.icon_color,
-                                        ),
-                                      ),
-                                    )),
-                                Text(
-                                  index2.toString(),
-                                  style: TextStyle(
-                                      color: ColorUtils.icon_color,
-                                      fontSize: 2.h),
-                                ),
-                                GestureDetector(
-                                    onTap: () {
-                                      index2 = index2 - 1;
-                                      setState(() {});
-                                    },
-                                    child: Center(
-                                      child: Container(
-                                        //padding: EdgeInsets.all(8.0),
-                                        decoration: BoxDecoration(
-                                            color: ColorUtils.white,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(50)),
-                                            border: Border.all(
-                                                color: ColorUtils.icon_color)),
-                                        child: Icon(
-                                          Icons.remove,
                                           size: 5.i,
                                           color: ColorUtils.icon_color,
                                         ),
@@ -538,6 +550,38 @@ class _BarDrinksState extends State<BarDrinks> {
                               children: [
                                 GestureDetector(
                                     onTap: () {
+                                      if(index3 != 0)
+                                        {
+                                          index3 = index3 - 1;
+                                        }
+
+                                      setState(() {});
+                                    },
+                                    child: Center(
+                                      child: Container(
+                                        //padding: EdgeInsets.all(8.0),
+                                        decoration: BoxDecoration(
+                                            color: ColorUtils.white,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(50)),
+                                            border: Border.all(
+                                                color: ColorUtils.text_red)),
+                                        child: Icon(
+                                          Icons.remove,
+                                          size: 5.i,
+                                          color: ColorUtils.text_red,
+                                        ),
+                                      ),
+                                    )),
+                                Text(
+                                  index3.toString(),
+                                  style: TextStyle(
+                                      color: ColorUtils.text_red,
+                                      fontSize: 2.h),
+                                ),
+
+                                GestureDetector(
+                                    onTap: () {
                                       index3 = index3 + 1;
                                       setState(() {});
                                     },
@@ -552,33 +596,6 @@ class _BarDrinksState extends State<BarDrinks> {
                                                 color: ColorUtils.text_red)),
                                         child: Icon(
                                           Icons.add,
-                                          size: 5.i,
-                                          color: ColorUtils.text_red,
-                                        ),
-                                      ),
-                                    )),
-                                Text(
-                                  index3.toString(),
-                                  style: TextStyle(
-                                      color: ColorUtils.text_red,
-                                      fontSize: 2.h),
-                                ),
-                                GestureDetector(
-                                    onTap: () {
-                                      index3 = index3 - 1;
-                                      setState(() {});
-                                    },
-                                    child: Center(
-                                      child: Container(
-                                        //padding: EdgeInsets.all(8.0),
-                                        decoration: BoxDecoration(
-                                            color: ColorUtils.white,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(50)),
-                                            border: Border.all(
-                                                color: ColorUtils.text_red)),
-                                        child: Icon(
-                                          Icons.remove,
                                           size: 5.i,
                                           color: ColorUtils.text_red,
                                         ),
@@ -639,9 +656,9 @@ class _BarDrinksState extends State<BarDrinks> {
                         //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                         child: ElevatedButton(
                           onPressed: () {
-                            model.navigateToTermsScreen();
+                            model.navigateToOrderDetailsScreen();
                           },
-                          child: const Text("Next"),
+                          child: const Text("Confirm"),
                           style: ElevatedButton.styleFrom(
                             primary: ColorUtils.text_red,
                             onPrimary: ColorUtils.white,

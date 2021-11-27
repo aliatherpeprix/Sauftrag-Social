@@ -9,6 +9,7 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/views/Home/swipe.dart';
+import 'package:sauftrag/views/UserFriendList/friend_list.dart';
 import 'package:sauftrag/widgets/my_curved_nav_bar.dart';
 import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/image_utils.dart';
@@ -115,7 +116,7 @@ class _MainViewBarState extends State<MainViewBar> {
           body = BarNewsFeed();
           break;
         case 1:
-          body = Swipe();
+          body = FriendList();
           break;
         case 2:
           body = QRViewExample();

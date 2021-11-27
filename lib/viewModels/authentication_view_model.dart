@@ -172,6 +172,21 @@ class AuthenticationViewModel extends BaseViewModel {
   }
 
 
+  void navigateToBarTimingTypeScreen() {
+    navigationService.navigateToBarTimingTypeScreen();
+  }
+
+  void navigateToHomeBarScreen() {
+    navigationService.navigateToHomeBarScreen();
+  }
+
+  void navigateToOrderDetailsScreen() {
+    navigationService.navigateToOrderDetailsScreen();
+  }
+
+  // void navigateToResentPasswordScreen() {
+  //   navigationService.navigateToResentPasswordScreen();
+  // }
 
   void navigateBack() {
     navigationService.navigateBack();

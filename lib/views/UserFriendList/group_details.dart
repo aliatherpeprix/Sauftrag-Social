@@ -47,7 +47,7 @@ class _GroupDetailsState extends State<GroupDetails> {
                     vertical: Dimensions.verticalPadding),
                 child: ElevatedButton(
                   onPressed: () {
-                    //model.navigateToHomeScreen(2);
+                    model.navigateToFriendListScreen();
                   },
                   child: const Text("Create Group"),
                   style: ElevatedButton.styleFrom(

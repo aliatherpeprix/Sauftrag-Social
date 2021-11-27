@@ -1,12 +1,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:sauftrag/bar/views/Auth/barTimingType.dart';
 import 'package:sauftrag/bar/views/Auth/media.dart';
 import 'package:sauftrag/bar/views/Auth/signUp.dart';
 import 'package:sauftrag/bar/views/Drawer/barEvent.dart';
 import 'package:sauftrag/bar/views/Drawer/followers.dart';
 import 'package:sauftrag/bar/views/Drawer/notifications.dart';
 import 'package:sauftrag/bar/views/Home/bar_news_feed.dart';
+import 'package:sauftrag/bar/views/Home/main_view.dart';
+import 'package:sauftrag/bar/views/Home/order_details.dart';
 import 'package:sauftrag/bar/views/Profile/bar_profile.dart';
 import 'package:sauftrag/bar/views/Home/bar_event.dart';
 import 'package:sauftrag/views/Auth/check_email.dart';
@@ -21,8 +24,11 @@ import 'package:sauftrag/views/Home/main_view.dart';
 import 'package:sauftrag/views/Home/match.dart';
 import 'package:sauftrag/views/Home/profile.dart';
 import 'package:sauftrag/views/MapSearch/map_screen.dart';
+import 'package:sauftrag/views/UserFriendList/create_group.dart';
+import 'package:sauftrag/views/UserFriendList/friend_list.dart';
 import 'package:sauftrag/views/UserFriendList/group_details.dart';
 import 'package:sauftrag/views/UserFriendList/group_screen.dart';
+import 'package:sauftrag/views/UserFriendList/invite_people.dart';
 import 'package:sauftrag/widgets/bar_auth_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -98,6 +104,10 @@ class NavigationViewModel extends BaseViewModel{
     navigationKey.currentState!.pushAndRemoveUntil(PageTransition(child: MainView(index: index), type: PageTransitionType.rightToLeftWithFade),(Route<dynamic> route) => false);
   }
 
+  void navigateToHomeBarScreen(){
+    navigationKey.currentState!.pushAndRemoveUntil(PageTransition(child: MainViewBar(index: 0), type: PageTransitionType.rightToLeftWithFade),(Route<dynamic> route) => false);
+  }
+
   void navigateToMapScreen(int index){
     navigationKey.currentState!.pushAndRemoveUntil(PageTransition(child: MainView(index: 3), type: PageTransitionType.rightToLeftWithFade),(Route<dynamic> route) => false);
   }
@@ -109,6 +119,28 @@ class NavigationViewModel extends BaseViewModel{
   void navigateToMatchScreen(){
     navigationKey.currentState!.push(PageTransition(child: Match(), type: PageTransitionType.rightToLeftWithFade));
   }
+
+  void navigateToFriendListScreen(){
+    navigationKey.currentState!.push(PageTransition(child: FriendList(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToMsgCreateGroupScreen(){
+    navigationKey.currentState!.push(PageTransition(child: CreateGroup(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToInvitePeopleScreen(){
+    navigationKey.currentState!.push(PageTransition(child: InvitePeople(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToBarTimingTypeScreen(){
+    navigationKey.currentState!.push(PageTransition(child: BarTimingAndType(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToOrderDetailsScreen(){
+    navigationKey.currentState!.push(PageTransition(child: OrderDetails(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+
 
 
 
@@ -122,6 +154,10 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateToGroupScreen(){
     navigationKey.currentState!.push(PageTransition(child: GroupScreen(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateAndRemoveSignInScreen(){
+    navigationKey.currentState!.pushAndRemoveUntil(PageTransition(child: Login(), type: PageTransitionType.rightToLeftWithFade), (route) => false);
   }
 
 

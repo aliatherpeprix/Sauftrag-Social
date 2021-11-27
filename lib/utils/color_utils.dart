@@ -10,7 +10,7 @@ class ColorUtils{
   static Color text_dark = Color (0xFF333333);
   static Color icon_color = Color (0xFFC1C1C1);
   static Color yellow_color = Color (0xFFF7E36D);
-  static Color red_color = Color (0xFFB63327);
+  static Color red_color = Color (0xFFE20000);
   static Color blackText = Color (0xFF120D26);
   static Color shadowColor = Color (0xFF606470);
   static Color filterText = Color (0xFFECEBFC);

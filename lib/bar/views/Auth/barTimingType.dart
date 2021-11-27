@@ -514,7 +514,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                           //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                           child: ElevatedButton(
                             onPressed: () {
-                              model.navigateToTermsScreen();
+                              model.navigateToHomeBarScreen();
                             },
                             child: const Text("Let's Get Started"),
                             style: ElevatedButton.styleFrom(

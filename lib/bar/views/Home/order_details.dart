@@ -230,34 +230,9 @@ class _OrderDetailsState extends State<OrderDetails> {
                             ),)
                         ],
                       ),
-                      SizedBox(height: 6.h),
-                      //Next Button
-                      SizedBox(
-                        width: double.infinity,
-                        //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            model.navigateToTermsScreen();
-                          },
-                          child: const Text("Confirm"),
-                          style: ElevatedButton.styleFrom(
-                            primary: ColorUtils.text_red,
-                            onPrimary: ColorUtils.white,
-                            padding: EdgeInsets.symmetric(
-                                vertical: Dimensions.containerVerticalPadding),
-                            elevation: 1,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    Dimensions.roundCorner)),
-                            textStyle: TextStyle(
-                              color: ColorUtils.white,
-                              fontFamily: FontUtils.modernistBold,
-                              fontSize: 1.8.t,
-                              //height: 0
-                            ),
-                          ),
-                        ),
-                      ),
+
+
+
                     ],
                   ),
                 ),

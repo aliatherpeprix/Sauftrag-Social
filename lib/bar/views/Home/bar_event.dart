@@ -715,7 +715,7 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                         //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                         child: ElevatedButton(
                           onPressed: () {
-                            model.navigateToMediaScreen();
+                            //model.navigateToMediaScreen();
                           },
                           child: const Text("Create Event"),
                           style: ElevatedButton.styleFrom(

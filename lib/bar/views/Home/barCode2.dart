@@ -57,6 +57,7 @@ class _QRViewExampleState extends State<QRViewExample> {
   Barcode? result;
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  int count = 0;
 
 
   // In order to get hot reload to work we need to pause the camera if the platform
@@ -248,11 +249,15 @@ class _QRViewExampleState extends State<QRViewExample> {
   }
 
   void _onQRViewCreated(QRViewController controller) {
+
     setState(() {
       this.controller = controller;
     });
     controller.scannedDataStream.listen((scanData) {
-      Navigator.push(context, PageTransition(child: BarDrinks(), type: PageTransitionType.rightToLeftWithFade));
+      if (count==0){
+        count = count + 1;
+        Navigator.push(context, PageTransition(child: BarDrinks(), type: PageTransitionType.rightToLeftWithFade));
+      }
       setState(() {
         result = scanData;
       });

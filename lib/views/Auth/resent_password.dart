@@ -210,7 +210,7 @@ class _ResentPasswordState extends State<ResentPassword> {
                           //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                           child: ElevatedButton(
                             onPressed: () {
-                               model.navigateToBarHomeScreen();
+                               model.navigateToHomeBarScreen();
                             },
                             child: const Text("Reset Password"),
                             style: ElevatedButton.styleFrom(

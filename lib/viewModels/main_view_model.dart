@@ -355,6 +355,29 @@ class MainViewModel extends BaseViewModel{
     navigationService.navigateToFollowersListScreen();
   }
 
+  void navigateToFriendListScreen() {
+    navigationService.navigateToFriendListScreen();
+  }
+
+  void navigateToMsgCreateGroupScreen() {
+    navigationService.navigateToMsgCreateGroupScreen();
+  }
+
+  void navigateToInvitePeopleScreen() {
+    navigationService.navigateToInvitePeopleScreen();
+  }
+
+  void navigateToHomeBarScreen() {
+    navigationService.navigateToHomeBarScreen();
+  }
+
+  void navigateAndRemoveSignInScreen() {
+    navigationService.navigateAndRemoveSignInScreen();
+  }
+
+
+
+
 
   /*AnimationController? buttonController;
   Animation<double>? rotate;
