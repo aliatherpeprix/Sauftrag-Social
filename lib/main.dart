@@ -19,6 +19,7 @@ import 'package:sauftrag/views/Home/profile.dart';
 import 'package:sauftrag/views/Home/swipe.dart';
 
 import 'app/locator.dart';
+import 'bar/views/Auth/signUp.dart';
 import 'bar/views/Drawer/barEvent.dart';
 import 'bar/views/Drawer/followers.dart';
 import 'bar/views/Drawer/notifications.dart';

@@ -212,7 +212,7 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
                               //       }
                               //   );*/
                               // },
-                              child: Image.asset(ImageUtils.profileImg),
+                              child: Image.asset(ImageUtils.profileImg, height: 15.i,),
                             ),
                           ],
                         ),

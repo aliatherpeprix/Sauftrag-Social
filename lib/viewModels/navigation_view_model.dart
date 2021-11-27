@@ -20,6 +20,7 @@ import 'package:sauftrag/views/Auth/terms.dart';
 import 'package:sauftrag/views/Home/main_view.dart';
 import 'package:sauftrag/views/Home/match.dart';
 import 'package:sauftrag/views/Home/profile.dart';
+import 'package:sauftrag/widgets/bar_auth_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 class NavigationViewModel extends BaseViewModel{
@@ -102,9 +103,14 @@ class NavigationViewModel extends BaseViewModel{
     navigationKey.currentState!.push(PageTransition(child: Match(), type: PageTransitionType.rightToLeftWithFade));
   }
 
+
+
   void navigateBack(){
     navigationKey.currentState!.pop();
   }
+
+
+
 
   /*void navigateToWelcomeScreen(){
     navigationKey.currentState!.pushReplacement(PageTransition(child: Welcome(), type: PageTransitionType.fade));

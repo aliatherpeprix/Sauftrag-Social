@@ -171,6 +171,8 @@ class AuthenticationViewModel extends BaseViewModel {
     navigationService.navigateToResentPasswordScreen();
   }
 
+
+
   void navigateBack() {
     navigationService.navigateBack();
   }

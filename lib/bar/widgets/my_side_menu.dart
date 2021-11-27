@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sauftrag/app/locator.dart';
@@ -34,17 +35,12 @@ class _MySideMenuState extends State<MySideMenu> {
 
               //User
               Container(
-                padding: EdgeInsets.symmetric(horizontal: Dimensions.containerHorizontalPadding, vertical: Dimensions.containerVerticalPadding),
+                padding: EdgeInsets.symmetric( vertical: Dimensions.containerVerticalPadding),
                 child: Row(
                   children: [
 
-                    /*RoundImage(
-                        image: ImageUtils.userIcon,
-                        height: 13.i,
-                        width: 13.i
-                    ),*/
+                  Image.asset(ImageUtils.profileImg),
 
-                    SizedBox(width: 2.w),
 
                     Text(
                       "Jenny Sandals",
