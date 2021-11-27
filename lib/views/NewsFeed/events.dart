@@ -111,7 +111,7 @@ class _EventsState extends State<Events> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: 6.h,
+                    height: 3.h,
                   ),
                   // Container(
                   //   margin: EdgeInsets.only(left: 1.5.w, right: 4.w),
@@ -132,7 +132,7 @@ class _EventsState extends State<Events> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
-                          SizedBox(height: 4.h,),
+                          //SizedBox(height: 4.h,),
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 4.w),
                             child: Row(
@@ -141,13 +141,12 @@ class _EventsState extends State<Events> {
                                 Text("Upcoming Events",
                                   style: TextStyle(
                                     fontFamily: FontUtils.modernistBold,
-                                    fontSize: 2.6.t,
+                                    fontSize: 2.3.t,
                                     color: ColorUtils.text_dark,
                                   ),
                                 ),
                                 GestureDetector(
                                   onTap: (){
-                                    //model.navigationService.navigateTo(to: ForgotPassword());
                                   },
                                   child: Align(
                                     alignment: Alignment.centerRight,
@@ -188,7 +187,7 @@ class _EventsState extends State<Events> {
                                 itemBuilder: (context, index) {
                                   return GestureDetector(
                                     onTap: (){
-                                      //model.navigationService.navigateTo(to: EventDetails());
+                                      model.navigateToEventDetailsScreen();
                                     },
                                     child: Padding(
                                       padding: EdgeInsets.only(left: 4.w, bottom: 2.h),
@@ -264,7 +263,7 @@ class _EventsState extends State<Events> {
                                                     Text("Trivia Nights",
                                                       style: TextStyle(
                                                           fontFamily: FontUtils.modernistBold,
-                                                          fontSize: 2.4.t,
+                                                          fontSize: 2.3.t,
                                                           color: ColorUtils.blackText
                                                       ),
                                                     ),
@@ -284,7 +283,7 @@ class _EventsState extends State<Events> {
                                                         Text(upComingEvents[index]["going"] + " Going",
                                                           style: TextStyle(
                                                             fontFamily: FontUtils.modernistRegular,
-                                                            fontSize: 1.7.t,
+                                                            fontSize: 1.6.t,
                                                             color: ColorUtils.goingColor,
                                                           ),
                                                         ),
@@ -298,7 +297,7 @@ class _EventsState extends State<Events> {
                                                         Text(upComingEvents[index]["location"],
                                                           style: TextStyle(
                                                             fontFamily: FontUtils.modernistRegular,
-                                                            fontSize: 1.7.t,
+                                                            fontSize: 1.6.t,
                                                             color: ColorUtils.text_dark,
                                                           ),
                                                         ),
@@ -329,7 +328,7 @@ class _EventsState extends State<Events> {
                                 Text("All Events",
                                   style: TextStyle(
                                     fontFamily: FontUtils.modernistBold,
-                                    fontSize: 2.6.t,
+                                    fontSize: 2.3.t,
                                     color: ColorUtils.text_dark,
                                   ),
                                 ),
@@ -370,71 +369,76 @@ class _EventsState extends State<Events> {
                             physics: BouncingScrollPhysics(),
                             shrinkWrap: true,
                             itemBuilder: (context, index) {
-                              return Padding(
-                                padding: EdgeInsets.symmetric(horizontal:SizeConfig.widthMultiplier * 4,),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: ColorUtils.black.withOpacity(0.1),
-                                        spreadRadius: 0,
-                                        blurRadius: 10,
-                                        offset: Offset(0, 5), // changes position of shadow
-                                      ),
-                                    ],
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.all(Radius.circular(18)),
-                                    border: Border.all(color: ColorUtils.red_color),
-                                  ),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: 2.w,vertical: 1.5.h),
-                                        child: Row(
-                                          children: [
-                                            ClipRRect(
-                                              borderRadius: BorderRadius.circular(10),
-                                              child: Image.asset(places[index]["image"],
-                                                width: 20.i,
-                                                height: 20.i,
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                            SizedBox(width: 3.w,),
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Text(places[index]["date"],
-                                                  style: TextStyle(
-                                                      fontFamily: FontUtils.modernistRegular,
-                                                      fontSize: 1.7.t,
-                                                      color: ColorUtils.text_red
-                                                  ),
-                                                ),
-                                                SizedBox(height: 1.h,),
-                                                Text(places[index]["eventName"],
-                                                  style: TextStyle(
-                                                      fontFamily: FontUtils.modernistBold,
-                                                      fontSize: 2.2.t,
-                                                      color: ColorUtils.blackText
-                                                  ),
-                                                ),
-                                                SizedBox(height: 1.h,),
-                                                Text(places[index]["location"],
-                                                  style: TextStyle(
-                                                      fontFamily: FontUtils.modernistRegular,
-                                                      fontSize: 1.7.t,
-                                                      color: ColorUtils.text_dark
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
+                              return GestureDetector(
+                                onTap: (){
+                                  model.navigateToEventDetailsScreen();
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal:SizeConfig.widthMultiplier * 4,),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: ColorUtils.black.withOpacity(0.1),
+                                          spreadRadius: 0,
+                                          blurRadius: 10,
+                                          offset: Offset(0, 5), // changes position of shadow
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.all(Radius.circular(18)),
+                                      border: Border.all(color: ColorUtils.red_color),
+                                    ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(horizontal: 2.w,vertical: 1.5.h),
+                                          child: Row(
+                                            children: [
+                                              ClipRRect(
+                                                borderRadius: BorderRadius.circular(10),
+                                                child: Image.asset(places[index]["image"],
+                                                  width: 20.i,
+                                                  height: 20.i,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                              SizedBox(width: 3.w,),
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(places[index]["date"],
+                                                    style: TextStyle(
+                                                        fontFamily: FontUtils.modernistRegular,
+                                                        fontSize: 1.7.t,
+                                                        color: ColorUtils.text_red
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: 1.h,),
+                                                  Text(places[index]["eventName"],
+                                                    style: TextStyle(
+                                                        fontFamily: FontUtils.modernistBold,
+                                                        fontSize: 2.2.t,
+                                                        color: ColorUtils.blackText
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: 1.h,),
+                                                  Text(places[index]["location"],
+                                                    style: TextStyle(
+                                                        fontFamily: FontUtils.modernistRegular,
+                                                        fontSize: 1.7.t,
+                                                        color: ColorUtils.text_dark
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               );

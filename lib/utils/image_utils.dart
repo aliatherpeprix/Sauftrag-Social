@@ -119,6 +119,9 @@ class ImageUtils {
   static String groupGoing = "assets/groupGoing.png";
   static String upcomingLocation = "assets/upcoming_location_icon.svg";
   static String eventOrganizer = "assets/event_organizer.png";
+  static String barIcon = "assets/bar_icon.svg";
+  static String sendIcon = "assets/send_icon.svg";
+  static String targetIcon = "assets/target_icon.svg";
 
   //Girls Images
   static String girl1 = "assets/girls/girl_1.png";

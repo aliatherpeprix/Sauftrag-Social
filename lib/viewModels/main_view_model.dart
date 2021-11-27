@@ -53,6 +53,7 @@ class MainViewModel extends BaseViewModel{
   bool messageScreenEmojiShowing = false;
   bool messageScreenEmojiSelected = false;
   final messageScreenChatController = TextEditingController();
+  bool userNewsFeed = false;
 
   double lowerValue = 50;
   double upperValue = 180;
@@ -376,7 +377,9 @@ class MainViewModel extends BaseViewModel{
   }
 
 
-
+  void navigateToEventDetailsScreen() {
+    navigationService.navigateToEventDetailScreen();
+  }
 
 
   /*AnimationController? buttonController;

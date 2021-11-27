@@ -26,6 +26,7 @@ import 'package:sauftrag/views/Home/profile.dart';
 import 'package:sauftrag/views/MapSearch/map_screen.dart';
 import 'package:sauftrag/views/UserFriendList/create_group.dart';
 import 'package:sauftrag/views/UserFriendList/friend_list.dart';
+import 'package:sauftrag/views/NewsFeed/event_detail.dart';
 import 'package:sauftrag/views/UserFriendList/group_details.dart';
 import 'package:sauftrag/views/UserFriendList/group_screen.dart';
 import 'package:sauftrag/views/UserFriendList/invite_people.dart';
@@ -156,8 +157,13 @@ class NavigationViewModel extends BaseViewModel{
     navigationKey.currentState!.push(PageTransition(child: GroupScreen(), type: PageTransitionType.rightToLeftWithFade));
   }
 
+
   void navigateAndRemoveSignInScreen(){
     navigationKey.currentState!.pushAndRemoveUntil(PageTransition(child: Login(), type: PageTransitionType.rightToLeftWithFade), (route) => false);
+  }
+  void navigateToEventDetailScreen(){
+    navigationKey.currentState!.push(PageTransition(child: EventDetails(), type: PageTransitionType.rightToLeftWithFade));
+
   }
 
 
