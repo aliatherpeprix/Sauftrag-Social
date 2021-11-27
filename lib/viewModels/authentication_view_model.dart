@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:sauftrag/utils/constants.dart';
+import 'package:sauftrag/utils/image_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 
@@ -56,6 +57,15 @@ class AuthenticationViewModel extends BaseViewModel {
     "Ibiza",
     "Springbreak Cancun"
   ];
+
+  List<int> selectedWeekDays = [];
+
+  List<String> weekDaysList = ["Su" , "Mo" , "Tu", "We" , "Th", "Fr" , "Sa"];
+
+  List<int> selectedBarKind = [];
+
+  List<String> barKindList = ["Disco" , "Cocktail" , "Pub", "Hotel Bar" , "Beer Hall"];
+
   List<int> selectedVacationList = [];
 
   List<String> drinkList = [
@@ -117,8 +127,20 @@ class AuthenticationViewModel extends BaseViewModel {
     navigationService.navigateToSignUpScreen();
   }
 
+  void navigatorToBarSignIn() {
+    navigationService.navigateToUploadBarMedia();
+  }
+
+    void navigateToUploadBarMedia() {
+      navigationService.navigateToUploadBarMedia();
+    }
+
   void navigateToFavoriteScreen() {
     navigationService.navigateToFavoriteScreen();
+  }
+
+  void navigateToBarProfileScreen() {
+    navigationService.navigateToBarProfileScreen();
   }
 
   void navigateToMediaScreen() {
@@ -129,9 +151,27 @@ class AuthenticationViewModel extends BaseViewModel {
     navigationService.navigateToTermsScreen();
   }
 
+  void navigateToCreateEventScreen() {
+    navigationService.navigateToCreateEventScreen();
+  }
+
   void navigateToHomeScreen(int index) {
     navigationService.navigateToHomeScreen(index);
   }
+
+  void navigateToForgetPasswordScreen() {
+    navigationService.navigateToForgetPasswordScreen();
+  }
+
+  void navigateToCheckEmailScreen() {
+    navigationService.navigateToCheckEmailScreen();
+  }
+
+  void navigateToResentPasswordScreen() {
+    navigationService.navigateToResentPasswordScreen();
+  }
+
+
 
   void navigateBack() {
     navigationService.navigateBack();

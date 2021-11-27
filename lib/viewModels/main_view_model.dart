@@ -5,6 +5,8 @@ import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:page_transition/page_transition.dart';
+
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
@@ -14,7 +16,11 @@ import '../main.dart';
 
 class MainViewModel extends BaseViewModel{
   final GlobalKey<SideMenuState> sideMenuKey = GlobalKey<SideMenuState>();
+
   Completer<GoogleMapController> controller = Completer();
+  final GlobalKey<NavigatorState> navigationKey = GlobalKey<NavigatorState>();
+
+
   var navigationService = navigationViewModel;
   late SharedPreferences prefs;
   List<Marker> markers = <Marker>[];
@@ -212,6 +218,92 @@ class MainViewModel extends BaseViewModel{
     zoom: 14.4746,
   );
 
+  List<String> weekDaysList = ["Su" , "Mo" , "Tu", "We" , "Th", "Fr" , "Sa"];
+
+  List placed = [];
+
+  List places = [
+    {
+      'image': ImageUtils.place_1,
+      'eventName': 'Trivia Nights',
+      'date': '1st  May- Sat -2:00 PM',
+      'location': 'Lot 13 • Oakland, CA',
+      'image1' : ImageUtils.location_icon
+    },
+    {
+      'image': ImageUtils.place_2,
+      'eventName': 'Bar Crawl Stop',
+      'date': '1st  May- Sat -2:00 PM',
+      'location': 'Lot 13 • Oakland, CA',
+      'image1' : ImageUtils.location_icon
+    },
+    {
+      'image': ImageUtils.place_3,
+      'eventName': 'Singles Night',
+      'date': '1st  May- Sat -2:00 PM',
+      'location': 'Lot 13 • Oakland, CA',
+      'image1' : ImageUtils.location_icon
+    },
+    {
+      'image': ImageUtils.place_4,
+      'eventName': 'Bar Olympics',
+      'date': '1st  May- Sat -2:00 PM',
+      'location': ' Lot 13 • Oakland, CA',
+      'image1' : ImageUtils.location_icon
+    },
+  ];
+
+  List notifications = [
+    {
+      'image': ImageUtils.johnImg,
+      'title': 'John Milton',
+      'para': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+      'time': '1h ago',
+    },
+    {
+      'image': ImageUtils.johnImg,
+      'title': 'John Milton',
+      'para': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+      'time': '1h ago',
+    },
+    {
+      'image': ImageUtils.johnImg,
+      'title': 'John Milton',
+      'para': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+      'time': '1h ago',
+    },
+    {
+      'image': ImageUtils.johnImg,
+      'title': 'John Milton',
+      'para': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+      'time': '1h ago',
+    },
+    {
+      'image': ImageUtils.johnImg,
+      'title': 'John Milton',
+      'para': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+      'time': '1h ago',
+    },
+    {
+      'image': ImageUtils.johnImg,
+      'title': 'John Milton',
+      'para': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+      'time': '1h ago',
+    },
+    {
+      'image': ImageUtils.johnImg,
+      'title': 'John Milton',
+      'para': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+      'time': '1h ago',
+    },
+    {
+      'image': ImageUtils.johnImg,
+      'title': 'John Milton',
+      'para': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+      'time': '1h ago',
+    },
+  ];
+
   void addRemoveDrink(int index){
 
     drinkIndex = index + 1;
@@ -241,6 +333,28 @@ class MainViewModel extends BaseViewModel{
   void navigateToGroupScreen(){
     navigationService.navigateToGroupScreen();
   }
+
+
+  void navigateToCreateEventScreen() {
+    navigationService.navigateToCreateEventScreen();
+  }
+
+  void navigateToBarEventScreen() {
+    navigationService.navigateToBarEventScreen();
+  }
+
+  void navigateToBarHomeScreen() {
+    navigationService.navigateToBarHomeScreen();
+  }
+
+  void navigateToNotificationScreen() {
+    navigationService.navigateToNotificationScreen();
+  }
+
+  void navigateToFollowersListScreen() {
+    navigationService.navigateToFollowersListScreen();
+  }
+
 
   /*AnimationController? buttonController;
   Animation<double>? rotate;

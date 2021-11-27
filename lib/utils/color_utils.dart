@@ -27,4 +27,6 @@ class ColorUtils{
 
   static Color startGradient = Color(0xFF00DCDC);
   static Color endGradient = Color(0xFF00ADEE);
+  static Color searchFieldColor = Color(0xFFF7F7FC);
+  static Color emailBoxColor = Color(0xFFF3D9E9);
 }
