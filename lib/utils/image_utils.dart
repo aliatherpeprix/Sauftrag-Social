@@ -72,6 +72,15 @@ class ImageUtils {
   static String drinkImage = "assets/drink_image.png";
   static String chatRectangle = "assets/chat_rectangle.png";
   static String chatDialog = "assets/chat_dialog.png";
+  static String backCupertino = "assets/back_cupertino.svg";
+  static String eventDetail = "assets/event_detail.png";
+  static String userProfileAccount = "assets/userProfile_account.svg";
+  static String userProfileNotification = "assets/userProfile_notification.svg";
+  static String userProfileLegalTerms = "assets/userProfile_legalTerms.svg";
+  static String userProfileInviteFriends = "assets/userProfile_invite.svg";
+  static String userProfileGPs = "assets/userProfile_gps.svg";
+  static String userProfileProfile = "assets/userProfile_profileIamge.png";
+  static String levelStar = "assets/level_star.png";
   // static String girl1 = "assets/girl_1.png";
   // static String girl2 = "assets/girl_2.png";
   // static String girl3 = "assets/girl_3.png";
@@ -106,6 +115,10 @@ class ImageUtils {
   static String calenderFilter = "assets/calender_filter.svg";
   static String knifeFork = "assets/knife_fork.svg";
   static String knife = "assets/knife.svg";
+  static String upComingEvent = "assets/upcomingevent.png";
+  static String groupGoing = "assets/groupGoing.png";
+  static String upcomingLocation = "assets/upcoming_location_icon.svg";
+  static String eventOrganizer = "assets/event_organizer.png";
 
   //Girls Images
   static String girl1 = "assets/girls/girl_1.png";

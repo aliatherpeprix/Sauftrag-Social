@@ -5,6 +5,7 @@ import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/views/NewsFeed/events.dart';
 import 'package:stacked/stacked.dart';
 
 class NewsFeed extends StatefulWidget {
@@ -77,9 +78,7 @@ class _NewsFeedState extends State<NewsFeed> {
                             ),
 
                             // second tab bar viiew widget
-                            Center(
-                              child: Text("hi"),
-                            ),
+                            Events(),
                           ],
                         ),
                       ),
