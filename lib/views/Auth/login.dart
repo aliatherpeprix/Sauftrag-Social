@@ -31,6 +31,7 @@ class _LoginState extends State<Login> {
           },
           child: SafeArea(
             top: false,
+            bottom: false,
             child: Scaffold(
                 backgroundColor: ColorUtils.white,
                 body: SingleChildScrollView(
@@ -42,7 +43,8 @@ class _LoginState extends State<Login> {
                     child: Container(
                       padding: EdgeInsets.symmetric(
                           horizontal: Dimensions.horizontalPadding,
-                          vertical: Dimensions.verticalPadding),
+                          vertical: Dimensions.verticalPadding
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

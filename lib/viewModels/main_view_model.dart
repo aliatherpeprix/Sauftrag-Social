@@ -376,9 +376,17 @@ class MainViewModel extends BaseViewModel{
     navigationService.navigateAndRemoveSignInScreen();
   }
 
+  void navigateToSwipeScreen() {
+    navigationService.navigateToSwipeScreen();
+  }
+
 
   void navigateToEventDetailsScreen() {
     navigationService.navigateToEventDetailScreen();
+  }
+
+  void navigateToMapSearchScreen() {
+    navigationService.navigateToMapSearchScreen();
   }
 
 

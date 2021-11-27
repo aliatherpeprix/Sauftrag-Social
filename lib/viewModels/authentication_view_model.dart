@@ -243,7 +243,7 @@ class AuthenticationViewModel extends BaseViewModel {
         navigateToHomeScreen(2);
       }
       else if(logInBarSelected == true){
-        navigateToBarNewsFeed();
+        navigateToHomeBarScreen();
       }
     }
   }

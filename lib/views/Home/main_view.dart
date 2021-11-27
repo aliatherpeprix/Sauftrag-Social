@@ -46,7 +46,7 @@ class _MainViewState extends State<MainView> {
 
     return SafeArea(
       top: false,
-      bottom: true,
+      bottom: false,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         body: Column(

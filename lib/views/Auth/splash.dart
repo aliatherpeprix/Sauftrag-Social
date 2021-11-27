@@ -21,6 +21,7 @@ class _SplashState extends State<Splash> {
       builder: (context, model, child) {
         return SafeArea(
           top: false,
+          bottom: false,
           child: Scaffold(
             backgroundColor: ColorUtils.white,
             body: Container(

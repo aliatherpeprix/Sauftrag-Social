@@ -95,6 +95,7 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
       // },
       builder: (context, model, child) {
         return SafeArea(
+          bottom: false,
           top: false,
           child: SideMenu(
             key: model.sideMenuKey,

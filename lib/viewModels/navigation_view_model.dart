@@ -23,7 +23,9 @@ import 'package:sauftrag/views/Auth/terms.dart';
 import 'package:sauftrag/views/Home/main_view.dart';
 import 'package:sauftrag/views/Home/match.dart';
 import 'package:sauftrag/views/Home/profile.dart';
+import 'package:sauftrag/views/Home/swipe.dart';
 import 'package:sauftrag/views/MapSearch/map_screen.dart';
+import 'package:sauftrag/views/MapSearch/search.dart';
 import 'package:sauftrag/views/UserFriendList/create_group.dart';
 import 'package:sauftrag/views/UserFriendList/friend_list.dart';
 import 'package:sauftrag/views/NewsFeed/event_detail.dart';
@@ -141,6 +143,10 @@ class NavigationViewModel extends BaseViewModel{
     navigationKey.currentState!.push(PageTransition(child: OrderDetails(), type: PageTransitionType.rightToLeftWithFade));
   }
 
+  void navigateToSwipeScreen(){
+    navigationKey.currentState!.push(PageTransition(child: MainView(index: 2), type: PageTransitionType.rightToLeftWithFade));
+  }
+
 
 
 
@@ -163,6 +169,11 @@ class NavigationViewModel extends BaseViewModel{
   }
   void navigateToEventDetailScreen(){
     navigationKey.currentState!.push(PageTransition(child: EventDetails(), type: PageTransitionType.rightToLeftWithFade));
+
+  }
+
+  void navigateToMapSearchScreen(){
+    navigationKey.currentState!.push(PageTransition(child: Search(), type: PageTransitionType.rightToLeftWithFade));
 
   }
 

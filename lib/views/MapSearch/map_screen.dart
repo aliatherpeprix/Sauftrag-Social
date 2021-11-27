@@ -850,6 +850,7 @@ class _MapScreenState extends State<MapScreen> {
                           Expanded(
                             child: ElevatedButton(
                               onPressed: () {
+                                mainModel.navigateToMapSearchScreen();
                               },
                               child: Text("APPLY"),
                               style: ElevatedButton.styleFrom(

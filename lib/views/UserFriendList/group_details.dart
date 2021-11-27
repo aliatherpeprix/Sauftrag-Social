@@ -38,6 +38,7 @@ class _GroupDetailsState extends State<GroupDetails> {
           },
           child: SafeArea(
             top: false,
+            bottom: false,
             child: Scaffold(
               //resizeToAvoidBottomInset: false,
               floatingActionButton: Container(

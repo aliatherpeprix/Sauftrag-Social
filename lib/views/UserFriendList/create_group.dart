@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
+import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sauftrag/app/locator.dart';
@@ -52,6 +53,7 @@ class _CreateGroupState extends State<CreateGroup> {
           },
           child: SafeArea(
             top: false,
+            bottom: false,
             child: Scaffold(
               floatingActionButton: GestureDetector(
                 onTap: (){

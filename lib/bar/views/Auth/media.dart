@@ -29,6 +29,7 @@ class _BarMediaState extends State<BarMedia> {
             FocusScope.of(context).unfocus();
           },
           child: SafeArea(
+            bottom: false,
             top: false,
             child: Scaffold(
                 backgroundColor: ColorUtils.white,

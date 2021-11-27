@@ -34,6 +34,7 @@ class _SignUpBarState extends State<SignUpBar> {
             FocusScope.of(context).unfocus();
           },
           child: SafeArea(
+            bottom: false,
             top: false,
             child: Scaffold(
                 backgroundColor: ColorUtils.white,

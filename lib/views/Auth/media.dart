@@ -29,6 +29,7 @@ class _MediaState extends State<Media> {
           },
           child: SafeArea(
             top: false,
+            bottom: false,
             child: Scaffold(
                 backgroundColor: ColorUtils.white,
                 body: SingleChildScrollView(

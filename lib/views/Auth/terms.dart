@@ -25,6 +25,7 @@ class _TermsOfServiceState extends State<TermsOfService> {
           },
           child: SafeArea(
             top: false,
+            bottom: false,
             child: Scaffold(
                 backgroundColor: ColorUtils.white,
                 body: SingleChildScrollView(

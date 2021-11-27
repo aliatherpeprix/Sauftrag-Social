@@ -46,7 +46,7 @@ class _MainViewBarState extends State<MainViewBar> {
 
     return SafeArea(
       top: false,
-      bottom: true,
+      bottom: false,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         body: Column(

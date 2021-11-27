@@ -85,7 +85,9 @@ class _MySideMenuState extends State<MySideMenu> {
 
               //Notification
               InkWell(
-                onTap: (){},
+                onTap: (){
+                  model.navigateToNotificationScreen();
+                },
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: Dimensions.containerHorizontalPadding, vertical: Dimensions.containerVerticalPadding),
                   child: Row(
@@ -135,7 +137,9 @@ class _MySideMenuState extends State<MySideMenu> {
 
               //Followers
               InkWell(
-                onTap: (){},
+                onTap: (){
+                  model.navigateToFollowersListScreen();
+                },
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: Dimensions.containerHorizontalPadding, vertical: Dimensions.containerVerticalPadding),
                   child: Row(
@@ -235,7 +239,9 @@ class _MySideMenuState extends State<MySideMenu> {
 
               //Logout
               InkWell(
-                onTap: (){},
+                onTap: (){
+                  model.navigateAndRemoveSignInScreen();
+                },
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: Dimensions.containerHorizontalPadding, vertical: Dimensions.containerVerticalPadding),
                   child: Row(

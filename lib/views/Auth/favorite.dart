@@ -35,6 +35,7 @@ class _FavoriteState extends State<Favorite> {
           },
           child: SafeArea(
             top: false,
+            bottom: false,
             child: Scaffold(
                 backgroundColor: ColorUtils.white,
                 body: SingleChildScrollView(

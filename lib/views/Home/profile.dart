@@ -47,6 +47,7 @@ class _ProfileState extends State<Profile> {
           },
           child: SafeArea(
             top: false,
+            bottom: false,
             child: Scaffold(
                 backgroundColor: ColorUtils.white,
                 body: Container(

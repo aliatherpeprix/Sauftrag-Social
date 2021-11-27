@@ -28,6 +28,7 @@ class _MatchState extends State<Match> {
       builder: (context, model, child) {
         return SafeArea(
           top: false,
+          bottom: false,
           child: Scaffold(
               backgroundColor: ColorUtils.white,
               body: Stack(
@@ -156,6 +157,7 @@ class _MatchState extends State<Match> {
                             Expanded(
                               child: ElevatedButton(
                                 onPressed: () {
+                                  model.navigateToSwipeScreen();
                                 },
                                 child: Text("Keep Swiping"),
                                 style: ElevatedButton.styleFrom(

@@ -26,6 +26,20 @@ class BarTimingAndType extends StatefulWidget {
 class _BarTimingAndTypeState extends State<BarTimingAndType> {
 
   DateTime _dateTime = DateTime.now();
+  String? openingTimeFrom;
+  String? openingTimeTo;
+  String? breakTimeFrom;
+  String? breakTimeTo;
+
+  @override
+  void didChangeDependencies() {
+    openingTimeFrom = TimeOfDay.now().format(context);
+    openingTimeTo = TimeOfDay.now().format(context);
+    breakTimeFrom = TimeOfDay.now().format(context);
+    breakTimeTo = TimeOfDay.now().format(context);
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +51,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
             FocusScope.of(context).unfocus();
           },
           child: SafeArea(
+            bottom: false,
             top: false,
             child: Scaffold(
                 backgroundColor: ColorUtils.white,
@@ -168,122 +183,269 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                         ///----Bar opening time-----///
                         SizedBox(height: 3.h),
                         Container(
-                          //padding: EdgeInsets.symmetric(horizontal: 1*SizeConfig.widthMultiplier),
+                          margin: EdgeInsets.symmetric(horizontal: 5.w),
                           child: Row(
                             children: [
-                              Stack(
-                                children: [
-                                  Container(
-                                      width: 45.w,
-                                      padding: EdgeInsets.symmetric(
-                                          vertical:
-                                          SizeConfig.heightMultiplier*2,
-                                          horizontal: SizeConfig.widthMultiplier*1
+
+                              //From
+                              Expanded(
+                                child: Stack(
+                                  children: [
+
+                                   GestureDetector(
+                                     onTap: (){
+                                       showTimePicker(
+                                           context: context,
+                                           initialTime: TimeOfDay.now(),
+                                           initialEntryMode: TimePickerEntryMode.dial,
+                                           confirmText: "CONFIRM",
+                                           cancelText: "NOT NOW",
+                                           helpText: "BOOKING TIME"
+                                       ).then((value){
+                                          openingTimeFrom = value!.format(context);
+                                          model.notifyListeners();
+                                       });
+                                     },
+                                     child:  Container(
+                                       height: 6.h,
+                                       padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 3.w),
+                                       decoration: BoxDecoration(
+                                           color: ColorUtils.white,
+                                           borderRadius: BorderRadius.all(Radius.circular(20)),
+                                           border: Border.all(color: ColorUtils.divider)
+                                       ),
+                                       child: Row(
+                                         children: [
+
+                                           Expanded(
+                                             child: Text(
+                                               openingTimeFrom!,
+                                               style: TextStyle(
+                                                 color: ColorUtils.text_dark,
+                                                 fontFamily: FontUtils.modernistRegular,
+                                                 fontSize: 1.6.t,
+                                                 //height: .4
+                                               ),
+                                             ),
+                                           ),
+
+                                           SizedBox(width: 4.w),
+
+                                           SvgPicture.asset(ImageUtils.upDownArrow),
+                                         ],
+                                       ),
+                                     ),
+                                   ),
+
+                                    Container(
+                                      margin: EdgeInsets.only(left: 3.w),
+                                      padding: EdgeInsets.symmetric(horizontal: 1.w),
+                                      color: ColorUtils.white,
+                                      child: Text(
+                                        "From",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: ColorUtils.text_grey,
+                                            fontFamily: FontUtils.modernistRegular,
+                                            fontSize: 1.5.t,
+                                            height: .4
+                                        ),
                                       ),
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(
-                                                  Dimensions.roundCorner)),
-                                          border:
-                                          Border.all(color: ColorUtils.divider)),
-                                      child: TimePickerSpinner(
-                                        is24HourMode: false,
-                                        normalTextStyle: TextStyle(
-                                          fontSize: 14,
-                                          //color: Colors.deepOrange
-                                        ),
-                                        highlightedTextStyle: TextStyle(
-                                          fontSize: 14,
-                                          //color: Colors.yellow
-                                        ),
-                                        spacing: 1,
-                                        itemHeight: 15,
-                                        //isForce2Digits: false,
-                                        minutesInterval: 5,
-                                        onTimeChange: (time) {
-                                          setState(() {
-                                            _dateTime = time;
-                                          });
-                                        },
-                                      )
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(left: 5.w),
-                                    //padding: EdgeInsets.symmetric(horizontal: 1.w),
-                                    color: ColorUtils.white,
-                                    child: Text(
-                                      "To",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          color: ColorUtils.text_grey,
-                                          fontFamily: FontUtils.modernistRegular,
-                                          fontSize: 1.5.t,
-                                          height: .4),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                              Stack(
-                                children: [
-                                  Container(
-                                    width: 45.w,
-                                    padding: EdgeInsets.symmetric(
-                                        vertical:
-                                        SizeConfig.heightMultiplier*2,
-                                        /*horizontal:
-                                        SizeConfig.widthMultiplier*1*/),
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(
-                                                Dimensions.roundCorner)),
-                                        border:
-                                        Border.all(color: ColorUtils.divider)),
-                                    child: Row(
-                                      children: [
-                                        TimePickerSpinner(
-                                          is24HourMode: false,
-                                          normalTextStyle: TextStyle(
-                                            fontSize: 14,
-                                            //color: Colors.deepOrange
-                                          ),
-                                          highlightedTextStyle: TextStyle(
-                                            fontSize: 14,
-                                            //color: Colors.yellow
-                                          ),
-                                          spacing: 1,
-                                          itemHeight: 15,
-                                          //isForce2Digits: false,
-                                          minutesInterval: 5,
-                                          onTimeChange: (time) {
-                                            setState(() {
-                                              _dateTime = time;
-                                            });
-                                          },
-                                        )
-                                      ],
+
+                              SizedBox(width: 20),
+
+                              //To
+                              Expanded(
+                                child: Stack(
+                                  children: [
+
+                                    GestureDetector(
+                                      onTap: (){
+                                        showTimePicker(
+                                            context: context,
+                                            initialTime: TimeOfDay.now(),
+                                            initialEntryMode: TimePickerEntryMode.dial,
+                                            confirmText: "CONFIRM",
+                                            cancelText: "NOT NOW",
+                                            helpText: "BOOKING TIME"
+                                        ).then((value){
+                                          openingTimeTo = value!.format(context);
+                                          model.notifyListeners();
+                                        });
+                                      },
+                                      child: Container(
+                                        height: 6.h,
+                                        padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 3.w),
+                                        decoration: BoxDecoration(
+                                            color: ColorUtils.white,
+                                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                                            border: Border.all(color: ColorUtils.divider)
+                                        ),
+                                        child: Row(
+                                          children: [
+
+                                            Expanded(
+                                              child: Text(
+                                                openingTimeTo!,
+                                                style: TextStyle(
+                                                  color: ColorUtils.text_dark,
+                                                  fontFamily: FontUtils.modernistRegular,
+                                                  fontSize: 1.6.t,
+                                                  //height: .4
+                                                ),
+                                              ),
+                                            ),
+
+                                            SizedBox(width: 4.w),
+
+                                            SvgPicture.asset(ImageUtils.upDownArrow),
+                                          ],
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(left: 5.w),
-                                    padding: EdgeInsets.symmetric(horizontal: 1.w),
-                                    color: ColorUtils.white,
-                                    child: Text(
-                                      "To",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          color: ColorUtils.text_grey,
-                                          fontFamily: FontUtils.modernistRegular,
-                                          fontSize: 1.5.t,
-                                          height: .4),
+
+                                    Container(
+                                      margin: EdgeInsets.only(left: 3.w),
+                                      padding: EdgeInsets.symmetric(horizontal: 1.w),
+                                      color: ColorUtils.white,
+                                      child: Text(
+                                        "To",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: ColorUtils.text_grey,
+                                            fontFamily: FontUtils.modernistRegular,
+                                            fontSize: 1.5.t,
+                                            height: .4
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ],
                           ),
                         ),
+                        // Container(
+                        //   //padding: EdgeInsets.symmetric(horizontal: 1*SizeConfig.widthMultiplier),
+                        //   child: Row(
+                        //     children: [
+                        //       Stack(
+                        //         children: [
+                        //           Container(
+                        //               width: 45.w,
+                        //               padding: EdgeInsets.symmetric(
+                        //                   vertical:
+                        //                   SizeConfig.heightMultiplier*2,
+                        //                   horizontal: SizeConfig.widthMultiplier*1
+                        //               ),
+                        //               decoration: BoxDecoration(
+                        //                   color: Colors.white,
+                        //                   borderRadius: BorderRadius.all(
+                        //                       Radius.circular(
+                        //                           Dimensions.roundCorner)),
+                        //                   border:
+                        //                   Border.all(color: ColorUtils.divider)),
+                        //               child: TimePickerSpinner(
+                        //                 is24HourMode: false,
+                        //                 normalTextStyle: TextStyle(
+                        //                   fontSize: 14,
+                        //                   //color: Colors.deepOrange
+                        //                 ),
+                        //                 highlightedTextStyle: TextStyle(
+                        //                   fontSize: 14,
+                        //                   //color: Colors.yellow
+                        //                 ),
+                        //                 spacing: 1,
+                        //                 itemHeight: 15,
+                        //                 //isForce2Digits: false,
+                        //                 minutesInterval: 5,
+                        //                 onTimeChange: (time) {
+                        //                   setState(() {
+                        //                     _dateTime = time;
+                        //                   });
+                        //                 },
+                        //               )
+                        //           ),
+                        //           Container(
+                        //             margin: EdgeInsets.only(left: 5.w),
+                        //             //padding: EdgeInsets.symmetric(horizontal: 1.w),
+                        //             color: ColorUtils.white,
+                        //             child: Text(
+                        //               "To",
+                        //               textAlign: TextAlign.center,
+                        //               style: TextStyle(
+                        //                   color: ColorUtils.text_grey,
+                        //                   fontFamily: FontUtils.modernistRegular,
+                        //                   fontSize: 1.5.t,
+                        //                   height: .4),
+                        //             ),
+                        //           ),
+                        //         ],
+                        //       ),
+                        //       Stack(
+                        //         children: [
+                        //           Container(
+                        //             width: 45.w,
+                        //             padding: EdgeInsets.symmetric(
+                        //                 vertical:
+                        //                 SizeConfig.heightMultiplier*2,
+                        //                 /*horizontal:
+                        //                 SizeConfig.widthMultiplier*1*/),
+                        //             decoration: BoxDecoration(
+                        //                 color: Colors.white,
+                        //                 borderRadius: BorderRadius.all(
+                        //                     Radius.circular(
+                        //                         Dimensions.roundCorner)),
+                        //                 border:
+                        //                 Border.all(color: ColorUtils.divider)),
+                        //             child: Row(
+                        //               children: [
+                        //                 TimePickerSpinner(
+                        //                   is24HourMode: false,
+                        //                   normalTextStyle: TextStyle(
+                        //                     fontSize: 14,
+                        //                     //color: Colors.deepOrange
+                        //                   ),
+                        //                   highlightedTextStyle: TextStyle(
+                        //                     fontSize: 14,
+                        //                     //color: Colors.yellow
+                        //                   ),
+                        //                   spacing: 1,
+                        //                   itemHeight: 15,
+                        //                   //isForce2Digits: false,
+                        //                   minutesInterval: 5,
+                        //                   onTimeChange: (time) {
+                        //                     setState(() {
+                        //                       _dateTime = time;
+                        //                     });
+                        //                   },
+                        //                 )
+                        //               ],
+                        //             ),
+                        //           ),
+                        //           Container(
+                        //             margin: EdgeInsets.only(left: 5.w),
+                        //             padding: EdgeInsets.symmetric(horizontal: 1.w),
+                        //             color: ColorUtils.white,
+                        //             child: Text(
+                        //               "To",
+                        //               textAlign: TextAlign.center,
+                        //               style: TextStyle(
+                        //                   color: ColorUtils.text_grey,
+                        //                   fontFamily: FontUtils.modernistRegular,
+                        //                   fontSize: 1.5.t,
+                        //                   height: .4),
+                        //             ),
+                        //           ),
+                        //         ],
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
 
                         ///---Bar Break Time----///
                         SizedBox(height: 3.h),
@@ -298,122 +460,269 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
 
                         SizedBox(height: 3.h),
                         Container(
-                          //padding: EdgeInsets.symmetric(horizontal: 1*SizeConfig.widthMultiplier),
+                          margin: EdgeInsets.symmetric(horizontal: 5.w),
                           child: Row(
                             children: [
-                              Stack(
-                                children: [
-                                  Container(
-                                      width: 45.w,
-                                      padding: EdgeInsets.symmetric(
-                                          vertical:
-                                          SizeConfig.heightMultiplier*2,
-                                          horizontal: SizeConfig.widthMultiplier*1
+
+                              //From
+                              Expanded(
+                                child: Stack(
+                                  children: [
+
+                                    GestureDetector(
+                                      onTap: (){
+                                        showTimePicker(
+                                            context: context,
+                                            initialTime: TimeOfDay.now(),
+                                            initialEntryMode: TimePickerEntryMode.dial,
+                                            confirmText: "CONFIRM",
+                                            cancelText: "NOT NOW",
+                                            helpText: "BOOKING TIME"
+                                        ).then((value){
+                                          breakTimeFrom = value!.format(context);
+                                          model.notifyListeners();
+                                        });
+                                      },
+                                      child: Container(
+                                        height: 6.h,
+                                        padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 3.w),
+                                        decoration: BoxDecoration(
+                                            color: ColorUtils.white,
+                                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                                            border: Border.all(color: ColorUtils.divider)
+                                        ),
+                                        child: Row(
+                                          children: [
+
+                                            Expanded(
+                                              child: Text(
+                                                breakTimeFrom!,
+                                                style: TextStyle(
+                                                  color: ColorUtils.text_dark,
+                                                  fontFamily: FontUtils.modernistRegular,
+                                                  fontSize: 1.6.t,
+                                                  //height: .4
+                                                ),
+                                              ),
+                                            ),
+
+                                            SizedBox(width: 4.w),
+
+                                            SvgPicture.asset(ImageUtils.upDownArrow),
+                                          ],
+                                        ),
                                       ),
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(
-                                                  Dimensions.roundCorner)),
-                                          border:
-                                          Border.all(color: ColorUtils.divider)),
-                                      child: TimePickerSpinner(
-                                        is24HourMode: false,
-                                        normalTextStyle: TextStyle(
-                                          fontSize: 14,
-                                          //color: Colors.deepOrange
-                                        ),
-                                        highlightedTextStyle: TextStyle(
-                                          fontSize: 14,
-                                          //color: Colors.yellow
-                                        ),
-                                        spacing: 1,
-                                        itemHeight: 15,
-                                        //isForce2Digits: false,
-                                        minutesInterval: 5,
-                                        onTimeChange: (time) {
-                                          setState(() {
-                                            _dateTime = time;
-                                          });
-                                        },
-                                      )
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(left: 5.w),
-                                    //padding: EdgeInsets.symmetric(horizontal: 1.w),
-                                    color: ColorUtils.white,
-                                    child: Text(
-                                      "To",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          color: ColorUtils.text_grey,
-                                          fontFamily: FontUtils.modernistRegular,
-                                          fontSize: 1.5.t,
-                                          height: .4),
                                     ),
-                                  ),
-                                ],
+
+                                    Container(
+                                      margin: EdgeInsets.only(left: 3.w),
+                                      padding: EdgeInsets.symmetric(horizontal: 1.w),
+                                      color: ColorUtils.white,
+                                      child: Text(
+                                        "From",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: ColorUtils.text_grey,
+                                            fontFamily: FontUtils.modernistRegular,
+                                            fontSize: 1.5.t,
+                                            height: .4
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                              Stack(
-                                children: [
-                                  Container(
-                                    width: 45.w,
-                                    padding: EdgeInsets.symmetric(
-                                      vertical:
-                                      SizeConfig.heightMultiplier*2,
-                                      /*horizontal:
-                                        SizeConfig.widthMultiplier*1*/),
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(
-                                                Dimensions.roundCorner)),
-                                        border:
-                                        Border.all(color: ColorUtils.divider)),
-                                    child: Row(
-                                      children: [
-                                        TimePickerSpinner(
-                                          is24HourMode: false,
-                                          normalTextStyle: TextStyle(
-                                            fontSize: 14,
-                                            //color: Colors.deepOrange
-                                          ),
-                                          highlightedTextStyle: TextStyle(
-                                            fontSize: 14,
-                                            //color: Colors.yellow
-                                          ),
-                                          spacing: 1,
-                                          itemHeight: 15,
-                                          //isForce2Digits: false,
-                                          minutesInterval: 5,
-                                          onTimeChange: (time) {
-                                            setState(() {
-                                              _dateTime = time;
-                                            });
-                                          },
-                                        )
-                                      ],
+
+                              SizedBox(width: 20),
+
+                              //To
+                              Expanded(
+                                child: Stack(
+                                  children: [
+
+                                    GestureDetector(
+                                      onTap: (){
+                                        showTimePicker(
+                                            context: context,
+                                            initialTime: TimeOfDay.now(),
+                                            initialEntryMode: TimePickerEntryMode.dial,
+                                            confirmText: "CONFIRM",
+                                            cancelText: "NOT NOW",
+                                            helpText: "BOOKING TIME"
+                                        ).then((value){
+                                          breakTimeTo = value!.format(context);
+                                          model.notifyListeners();
+                                        });
+                                      },
+                                      child: Container(
+                                        height: 6.h,
+                                        padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 3.w),
+                                        decoration: BoxDecoration(
+                                            color: ColorUtils.white,
+                                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                                            border: Border.all(color: ColorUtils.divider)
+                                        ),
+                                        child: Row(
+                                          children: [
+
+                                            Expanded(
+                                              child: Text(
+                                                breakTimeTo!,
+                                                style: TextStyle(
+                                                  color: ColorUtils.text_dark,
+                                                  fontFamily: FontUtils.modernistRegular,
+                                                  fontSize: 1.6.t,
+                                                  //height: .4
+                                                ),
+                                              ),
+                                            ),
+
+                                            SizedBox(width: 4.w),
+
+                                            SvgPicture.asset(ImageUtils.upDownArrow),
+                                          ],
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(left: 5.w),
-                                    padding: EdgeInsets.symmetric(horizontal: 1.w),
-                                    color: ColorUtils.white,
-                                    child: Text(
-                                      "To",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          color: ColorUtils.text_grey,
-                                          fontFamily: FontUtils.modernistRegular,
-                                          fontSize: 1.5.t,
-                                          height: .4),
+
+                                    Container(
+                                      margin: EdgeInsets.only(left: 3.w),
+                                      padding: EdgeInsets.symmetric(horizontal: 1.w),
+                                      color: ColorUtils.white,
+                                      child: Text(
+                                        "To",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: ColorUtils.text_grey,
+                                            fontFamily: FontUtils.modernistRegular,
+                                            fontSize: 1.5.t,
+                                            height: .4
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ],
                           ),
                         ),
+                        // Container(
+                        //   //padding: EdgeInsets.symmetric(horizontal: 1*SizeConfig.widthMultiplier),
+                        //   child: Row(
+                        //     children: [
+                        //       Stack(
+                        //         children: [
+                        //           Container(
+                        //               width: 45.w,
+                        //               padding: EdgeInsets.symmetric(
+                        //                   vertical:
+                        //                   SizeConfig.heightMultiplier*2,
+                        //                   horizontal: SizeConfig.widthMultiplier*1
+                        //               ),
+                        //               decoration: BoxDecoration(
+                        //                   color: Colors.white,
+                        //                   borderRadius: BorderRadius.all(
+                        //                       Radius.circular(
+                        //                           Dimensions.roundCorner)),
+                        //                   border:
+                        //                   Border.all(color: ColorUtils.divider)),
+                        //               child: TimePickerSpinner(
+                        //                 is24HourMode: false,
+                        //                 normalTextStyle: TextStyle(
+                        //                   fontSize: 14,
+                        //                   //color: Colors.deepOrange
+                        //                 ),
+                        //                 highlightedTextStyle: TextStyle(
+                        //                   fontSize: 14,
+                        //                   //color: Colors.yellow
+                        //                 ),
+                        //                 spacing: 1,
+                        //                 itemHeight: 15,
+                        //                 //isForce2Digits: false,
+                        //                 minutesInterval: 5,
+                        //                 onTimeChange: (time) {
+                        //                   setState(() {
+                        //                     _dateTime = time;
+                        //                   });
+                        //                 },
+                        //               )
+                        //           ),
+                        //           Container(
+                        //             margin: EdgeInsets.only(left: 5.w),
+                        //             //padding: EdgeInsets.symmetric(horizontal: 1.w),
+                        //             color: ColorUtils.white,
+                        //             child: Text(
+                        //               "To",
+                        //               textAlign: TextAlign.center,
+                        //               style: TextStyle(
+                        //                   color: ColorUtils.text_grey,
+                        //                   fontFamily: FontUtils.modernistRegular,
+                        //                   fontSize: 1.5.t,
+                        //                   height: .4),
+                        //             ),
+                        //           ),
+                        //         ],
+                        //       ),
+                        //       Stack(
+                        //         children: [
+                        //           Container(
+                        //             width: 45.w,
+                        //             padding: EdgeInsets.symmetric(
+                        //               vertical:
+                        //               SizeConfig.heightMultiplier*2,
+                        //               /*horizontal:
+                        //                 SizeConfig.widthMultiplier*1*/),
+                        //             decoration: BoxDecoration(
+                        //                 color: Colors.white,
+                        //                 borderRadius: BorderRadius.all(
+                        //                     Radius.circular(
+                        //                         Dimensions.roundCorner)),
+                        //                 border:
+                        //                 Border.all(color: ColorUtils.divider)),
+                        //             child: Row(
+                        //               children: [
+                        //                 TimePickerSpinner(
+                        //                   is24HourMode: false,
+                        //                   normalTextStyle: TextStyle(
+                        //                     fontSize: 14,
+                        //                     //color: Colors.deepOrange
+                        //                   ),
+                        //                   highlightedTextStyle: TextStyle(
+                        //                     fontSize: 14,
+                        //                     //color: Colors.yellow
+                        //                   ),
+                        //                   spacing: 1,
+                        //                   itemHeight: 15,
+                        //                   //isForce2Digits: false,
+                        //                   minutesInterval: 5,
+                        //                   onTimeChange: (time) {
+                        //                     setState(() {
+                        //                       _dateTime = time;
+                        //                     });
+                        //                   },
+                        //                 )
+                        //               ],
+                        //             ),
+                        //           ),
+                        //           Container(
+                        //             margin: EdgeInsets.only(left: 5.w),
+                        //             padding: EdgeInsets.symmetric(horizontal: 1.w),
+                        //             color: ColorUtils.white,
+                        //             child: Text(
+                        //               "To",
+                        //               textAlign: TextAlign.center,
+                        //               style: TextStyle(
+                        //                   color: ColorUtils.text_grey,
+                        //                   fontFamily: FontUtils.modernistRegular,
+                        //                   fontSize: 1.5.t,
+                        //                   height: .4),
+                        //             ),
+                        //           ),
+                        //         ],
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
 
                         ///----Kind of Bar----///
                         SizedBox(height: 3.h),

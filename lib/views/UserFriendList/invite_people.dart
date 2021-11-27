@@ -37,6 +37,7 @@ class _InvitePeopleState extends State<InvitePeople> {
           },
           child: SafeArea(
             top: false,
+            bottom: false,
             child: Scaffold(
                 backgroundColor: ColorUtils.white,
                 body: Column(
