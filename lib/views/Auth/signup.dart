@@ -99,6 +99,7 @@ class _SignUpState extends State<SignUp> {
                             ElevatedButton(
                               onPressed: () {
                                 model.selectRole(Constants.bar);
+                                model.navigateToSignUpBar();
                               },
                               child: const Text("Bar"),
                               style: ElevatedButton.styleFrom(
@@ -148,7 +149,7 @@ class _SignUpState extends State<SignUp> {
                                   Expanded(
                                     child: TextField(
                                       //focusNode: model.logInEmailFocus,
-                                      //controller: model.logInEmailController,
+                                      controller: model.signUpUserController,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.next,
                                       style: TextStyle(
@@ -209,7 +210,7 @@ class _SignUpState extends State<SignUp> {
                                   Expanded(
                                     child: TextField(
                                       //focusNode: model.logInEmailFocus,
-                                      //controller: model.logInEmailController,
+                                      controller: model.signUpEmailController,
                                       keyboardType: TextInputType.emailAddress,
                                       textInputAction: TextInputAction.next,
                                       style: TextStyle(
@@ -270,7 +271,7 @@ class _SignUpState extends State<SignUp> {
                                   Expanded(
                                     child: TextField(
                                       //focusNode: model.logInEmailFocus,
-                                      //controller: model.logInEmailController,
+                                      controller: model.signUpPhoneController,
                                       keyboardType: TextInputType.phone,
                                       textInputAction: TextInputAction.next,
                                       style: TextStyle(
@@ -410,7 +411,8 @@ class _SignUpState extends State<SignUp> {
                                   Expanded(
                                     child: TextField(
                                       //focusNode: model.logInEmailFocus,
-                                      //controller: model.logInEmailController,
+                                      controller: model.signUpPasswordController,
+                                      obscureText: true,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.next,
                                       style: TextStyle(
@@ -471,7 +473,8 @@ class _SignUpState extends State<SignUp> {
                                   Expanded(
                                     child: TextField(
                                       //focusNode: model.logInEmailFocus,
-                                      //controller: model.logInEmailController,
+                                      controller: model.signUpVerifyPasswordController,
+                                      obscureText: true,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.next,
                                       style: TextStyle(
@@ -532,7 +535,7 @@ class _SignUpState extends State<SignUp> {
                                   Expanded(
                                     child: TextField(
                                       //focusNode: model.logInEmailFocus,
-                                      //controller: model.logInEmailController,
+                                      controller: model.signUpAddressController,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.next,
                                       style: TextStyle(
@@ -593,7 +596,7 @@ class _SignUpState extends State<SignUp> {
                                   Expanded(
                                     child: TextField(
                                       //focusNode: model.logInEmailFocus,
-                                      //controller: model.logInEmailController,
+                                      controller: model.signUpDOBController,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.next,
                                       style: TextStyle(
@@ -654,7 +657,7 @@ class _SignUpState extends State<SignUp> {
                                   Expanded(
                                     child: TextField(
                                       //focusNode: model.logInEmailFocus,
-                                      //controller: model.logInEmailController,
+                                      controller: model.signUpRelationshipController,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.next,
                                       style: TextStyle(
@@ -707,10 +710,10 @@ class _SignUpState extends State<SignUp> {
                                   child: Checkbox(
                                     checkColor: ColorUtils.white,
                                     activeColor: ColorUtils.text_red,
-                                    value: model.signupCheck,
+                                    value: model.isChecked,
                                     onChanged: (bool? value) {
                                       setState(() {
-                                        model.signupCheck = value!;
+                                        model.isChecked = value!;
                                       });
                                     },
                                   ),
@@ -737,7 +740,8 @@ class _SignUpState extends State<SignUp> {
                           //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                           child: ElevatedButton(
                             onPressed: () {
-                              model.navigateToFavoriteScreen();
+                              //model.navigateToFavoriteScreen();
+                              model.createUserAccount();
                             },
                             child: const Text("Sign Up"),
                             style: ElevatedButton.styleFrom(

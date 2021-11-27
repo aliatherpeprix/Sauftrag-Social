@@ -10,7 +10,9 @@ import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/views/Home/swipe.dart';
 import 'package:sauftrag/views/MapSearch/map_screen.dart';
 import 'package:sauftrag/views/MapSearch/search.dart';
+import 'package:sauftrag/views/NewsFeed/news_feed.dart';
 import 'package:sauftrag/views/UserFriendList/friend_list.dart';
+import 'package:sauftrag/views/UserProfile/user_profile.dart';
 import 'package:sauftrag/widgets/my_curved_nav_bar.dart';
 import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/image_utils.dart';
@@ -113,19 +115,19 @@ class _MainViewState extends State<MainView> {
       currentIndex = selectedIndex;
       switch(currentIndex){
         case 0:
-          body = MapScreen();
+          body = NewsFeed();
           break;
         case 1:
           body = FriendList();
           break;
         case 2:
-          body = MapScreen();
+          body = Swipe();
           break;
         case 3:
           body = MapScreen();
           break;
         case 4:
-          body = MapScreen();
+          body = UserProfile();
           break;
       }
     });

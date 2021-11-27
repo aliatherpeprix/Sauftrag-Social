@@ -229,107 +229,164 @@ class _MapScreenState extends State<MapScreen> {
                   ),
                 ),
                 Align(
-                  alignment: Alignment.bottomCenter,
+                  alignment: Alignment.centerRight,
                   child: Container(
-                    margin: EdgeInsets.only(bottom: 7.h),
-                    height: 15.h,
-                    child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: SizeConfig.widthMultiplier * 4,
+                    margin: EdgeInsets.only(
+                        left: SizeConfig.widthMultiplier * 4.5,
+                        right: SizeConfig.widthMultiplier * 5,
+                        top: SizeConfig.heightMultiplier * 8),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          width: 11.w,
+                          height: 5.5.h,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.rectangle,
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                            color: ColorUtils.text_red
                           ),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  color: ColorUtils.black.withOpacity(0.1),
-                                  spreadRadius: 0,
-                                  blurRadius: 10,
-                                  offset: Offset(
-                                      0, 5), // changes position of shadow
+                          child: Center(child: SvgPicture.asset(ImageUtils.sendIcon)),
+                        ),
+                        SizedBox(
+                          height: 2.5.h,
+                        ),
+                        Container(
+                          width: 11.w,
+                          height: 5.5.h,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              borderRadius: BorderRadius.all(Radius.circular(15)),
+                              color: Colors.white
+                          ),
+                          child: Center(child: SvgPicture.asset(ImageUtils.targetIcon)),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: SizeConfig.widthMultiplier * 4,
+                        ),
+                        child: Text("Near Events",
+                        style: TextStyle(
+                          fontFamily: FontUtils.modernistBold,
+                          fontSize: 1.7.t,
+                          color: Colors.black
+                        ),
+                        ),
+                      ),
+                      SizedBox(height: 1.h,),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 6.h),
+                        height: 13.h,
+                        child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: SizeConfig.widthMultiplier * 2,
+                              ),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width / 1.2,
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: ColorUtils.black.withOpacity(0.1),
+                                      spreadRadius: 0,
+                                      blurRadius: 10,
+                                      offset: Offset(
+                                          0, 5), // changes position of shadow
+                                    ),
+                                  ],
+                                  color: Colors.white,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(18)),
+                                  border: Border.all(color: ColorUtils.red_color),
                                 ),
-                              ],
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(18)),
-                              border: Border.all(color: ColorUtils.red_color),
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 2.w, vertical: 1.5.h),
-                                  child: Row(
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(10),
-                                        child: Image.asset(
-                                          places[index]["image"],
-                                          width: 20.i,
-                                          height: 20.i,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 3.w,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 2.w, vertical: 1.5.h),
+                                      child: Row(
                                         children: [
-                                          Text(
-                                            places[index]["date"],
-                                            style: TextStyle(
-                                                fontFamily:
-                                                    FontUtils.modernistRegular,
-                                                fontSize: 1.7.t,
-                                                color: ColorUtils.text_red),
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.circular(10),
+                                            child: Image.asset(
+                                              places[index]["image"],
+                                              width: 15.i,
+                                              height: 18.i,
+                                              fit: BoxFit.cover,
+                                            ),
                                           ),
                                           SizedBox(
-                                            height: 1.h,
+                                            width: 3.w,
                                           ),
-                                          Text(
-                                            places[index]["eventName"],
-                                            style: TextStyle(
-                                                fontFamily:
-                                                    FontUtils.modernistBold,
-                                                fontSize: 2.2.t,
-                                                color: ColorUtils.blackText),
-                                          ),
-                                          SizedBox(
-                                            height: 1.h,
-                                          ),
-                                          Text(
-                                            places[index]["location"],
-                                            style: TextStyle(
-                                                fontFamily:
-                                                    FontUtils.modernistRegular,
-                                                fontSize: 1.7.t,
-                                                color: ColorUtils.text_dark),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                places[index]["date"],
+                                                style: TextStyle(
+                                                    fontFamily:
+                                                        FontUtils.modernistRegular,
+                                                    fontSize: 1.7.t,
+                                                    color: ColorUtils.text_red),
+                                              ),
+                                              SizedBox(
+                                                height: 1.h,
+                                              ),
+                                              Text(
+                                                places[index]["eventName"],
+                                                style: TextStyle(
+                                                    fontFamily:
+                                                        FontUtils.modernistBold,
+                                                    fontSize: 2.2.t,
+                                                    color: ColorUtils.blackText),
+                                              ),
+                                              SizedBox(
+                                                height: 1.h,
+                                              ),
+                                              Text(
+                                                places[index]["location"],
+                                                style: TextStyle(
+                                                    fontFamily:
+                                                        FontUtils.modernistRegular,
+                                                    fontSize: 1.7.t,
+                                                    color: ColorUtils.text_dark),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return SizedBox(
-                          width: SizeConfig.widthMultiplier * 2.5,
-                        );
-                      },
-                      itemCount: places.length,
-                    ),
+                              ),
+                            );
+                          },
+                          separatorBuilder: (context, index) {
+                            return SizedBox(
+                              width: SizeConfig.widthMultiplier * 0,
+                            );
+                          },
+                          itemCount: places.length,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -759,6 +816,11 @@ class _MapScreenState extends State<MapScreen> {
                           Expanded(
                             child: ElevatedButton(
                               onPressed: () {
+                                mainModel.eventSelected = false;
+                                mainModel.currentEventSelected = null;
+                                mainModel.timeSelected = false;
+                                mainModel.timeValue = null;
+                                mainModel.notifyListeners();
                               },
                               child: Text("RESET"),
                               style: ElevatedButton.styleFrom(

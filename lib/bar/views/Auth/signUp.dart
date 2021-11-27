@@ -73,6 +73,7 @@ class _SignUpBarState extends State<SignUpBar> {
                             ElevatedButton(
                               onPressed: () {
                                 model.selectRole(Constants.user);
+                                model.navigateToSignUpScreen();
                               },
                               child: const Text("User"),
                               style: ElevatedButton.styleFrom(
@@ -102,6 +103,7 @@ class _SignUpBarState extends State<SignUpBar> {
                             ElevatedButton(
                               onPressed: () {
                                 model.selectRole(Constants.bar);
+                                model.navigateToSignUpBar();
                               },
                               child: const Text("Bar"),
                               style: ElevatedButton.styleFrom(
@@ -151,7 +153,7 @@ class _SignUpBarState extends State<SignUpBar> {
                                   Expanded(
                                     child: TextField(
                                       //focusNode: model.logInEmailFocus,
-                                      //controller: model.logInEmailController,
+                                      controller: model.signUpBarUserController,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.next,
                                       style: TextStyle(
@@ -212,7 +214,7 @@ class _SignUpBarState extends State<SignUpBar> {
                                   Expanded(
                                     child: TextField(
                                       //focusNode: model.logInEmailFocus,
-                                      //controller: model.logInEmailController,
+                                      controller: model.signUpBarAddressController,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.next,
                                       style: TextStyle(
@@ -273,7 +275,8 @@ class _SignUpBarState extends State<SignUpBar> {
                                   Expanded(
                                     child: TextField(
                                       //focusNode: model.logInEmailFocus,
-                                      //controller: model.logInEmailController,
+                                      controller: model.signUpBarPasswordController,
+                                      obscureText: true,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.next,
                                       style: TextStyle(
@@ -335,9 +338,10 @@ class _SignUpBarState extends State<SignUpBar> {
                                   Expanded(
                                     child: TextField(
                                       //focusNode: model.logInEmailFocus,
-                                      //controller: model.logInEmailController,
+                                      controller: model.signUpBarVerifyPasswordController,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.next,
+                                      obscureText: true,
                                       style: TextStyle(
                                         color: ColorUtils.black,
                                         fontFamily: FontUtils.modernistRegular,
@@ -380,7 +384,7 @@ class _SignUpBarState extends State<SignUpBar> {
                           //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                           child: ElevatedButton(
                             onPressed: () {
-                              model.navigateToUploadBarMedia();
+                              model.createBarAccount();
                             },
                             child: const Text("Sign Up"),
                             style: ElevatedButton.styleFrom(

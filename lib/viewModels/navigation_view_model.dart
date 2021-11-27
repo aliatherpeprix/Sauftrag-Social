@@ -21,6 +21,7 @@ import 'package:sauftrag/views/Home/main_view.dart';
 import 'package:sauftrag/views/Home/match.dart';
 import 'package:sauftrag/views/Home/profile.dart';
 import 'package:sauftrag/views/MapSearch/map_screen.dart';
+import 'package:sauftrag/views/NewsFeed/event_detail.dart';
 import 'package:sauftrag/views/UserFriendList/group_details.dart';
 import 'package:sauftrag/views/UserFriendList/group_screen.dart';
 import 'package:sauftrag/widgets/bar_auth_viewmodel.dart';
@@ -122,6 +123,10 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateToGroupScreen(){
     navigationKey.currentState!.push(PageTransition(child: GroupScreen(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToEventDetailScreen(){
+    navigationKey.currentState!.push(PageTransition(child: EventDetails(), type: PageTransitionType.rightToLeftWithFade));
   }
 
 

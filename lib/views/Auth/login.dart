@@ -81,6 +81,9 @@ class _LoginState extends State<Login> {
                               ElevatedButton(
                                 onPressed: () {
                                   model.selectRole(Constants.user);
+                                  model.logInUserSelected = !model.logInUserSelected;
+                                  model.logInBarSelected = false;
+                                  model.notifyListeners();
                                 },
                                 child: const Text("User"),
                                 style: ElevatedButton.styleFrom(
@@ -118,6 +121,9 @@ class _LoginState extends State<Login> {
                               ElevatedButton(
                                 onPressed: () {
                                   model.selectRole(Constants.bar);
+                                  model.logInBarSelected = !model.logInBarSelected;
+                                  model.logInUserSelected = false;
+                                  model.notifyListeners();
                                 },
                                 child: const Text("Bar"),
                                 style: ElevatedButton.styleFrom(
@@ -167,12 +173,15 @@ class _LoginState extends State<Login> {
                                         Border.all(color: ColorUtils.divider)),
                                 child: Row(
                                   children: [
-                                    SvgPicture.asset(ImageUtils.userIcon),
+                                    SvgPicture.asset(
+                                      model.logInUserSelected == true ?
+                                        ImageUtils.userIcon : ImageUtils.barIcon,
+                                    ),
                                     SizedBox(width: 4.w),
                                     Expanded(
                                       child: TextField(
-                                        //focusNode: model.logInEmailFocus,
-                                        //controller: model.logInEmailController,
+                                        //focusNode: model.logInUserNameFocus,
+                                        controller: model.logInUserController,
                                         keyboardType: TextInputType.text,
                                         textInputAction: TextInputAction.next,
                                         style: TextStyle(
@@ -232,9 +241,10 @@ class _LoginState extends State<Login> {
                                     Expanded(
                                       child: TextField(
                                         //focusNode: model.logInEmailFocus,
-                                        //controller: model.logInEmailController,
+                                        controller: model.logInPasswordController,
                                         keyboardType: TextInputType.text,
                                         textInputAction: TextInputAction.next,
+                                        obscureText: true,
                                         style: TextStyle(
                                           color: ColorUtils.black,
                                           fontFamily:
@@ -288,7 +298,8 @@ class _LoginState extends State<Login> {
                             //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                             child: ElevatedButton(
                               onPressed: () {
-                                model.navigateToHomeScreen(2);
+                                //model.navigateToHomeScreen(2);
+                                model.onLogIn();
                               },
                               child: const Text("Sign In"),
                               style: ElevatedButton.styleFrom(
@@ -433,7 +444,14 @@ class _LoginState extends State<Login> {
                                 ),
                               ),
                               InkWell(
-                                onTap: () => model.navigateToSignUpScreen(),
+                                onTap: (){
+                                  if(model.logInUserSelected == true){
+                                    model.navigateToSignUpScreen();
+                                  }
+                                  else if(model.logInBarSelected == true){
+                                    model.navigateToSignUpBar();
+                                  }
+                                },
                                 child: Text(
                                   "Sign Up",
                                   textAlign: TextAlign.center,

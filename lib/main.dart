@@ -5,6 +5,7 @@ import 'package:sauftrag/bar/views/Home/bar_news_feed.dart';
 import 'package:sauftrag/utils/screen_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/navigation_view_model.dart';
+import 'package:sauftrag/views/Auth/splash.dart';
 import 'package:sauftrag/views/Home/main_view.dart';
 import 'package:sauftrag/views/Home/match.dart';
 import 'package:sauftrag/views/Home/profile.dart';
@@ -67,7 +68,7 @@ class _MyAppState extends State<MyApp> {
             SizeConfig().init(constraints, orientation);
             //var prefService = locator<PrefrencesViewModel>();
             //return MainView(index: 2);
-            return UserProfile();
+            return Splash();
           },
         );
       },

@@ -371,7 +371,8 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
                       SizedBox(height: 2.h),
                     ],
                   ),
-                )),
+                )
+            ),
           ),
         );
       },
