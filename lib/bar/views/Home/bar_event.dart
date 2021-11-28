@@ -70,6 +70,7 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 4.w),
                   child: Column(
+                    mainAxisSize: MainAxisSize.max,
                     children: [
                       SizedBox(height: Dimensions.topMargin),
                       Row(
@@ -161,39 +162,40 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                         children: [
 
                           Container(
-                              height: 20.h,
+                            //height: 20.h,
                               padding: EdgeInsets.symmetric(vertical: Dimensions.containerVerticalPadding, horizontal: Dimensions.containerHorizontalPadding),
                               decoration: BoxDecoration(
                                   color: ColorUtils.white,
                                   borderRadius: BorderRadius.all(Radius.circular(Dimensions.roundCorner)),
                                   border: Border.all(color: ColorUtils.text_red)
                               ),
-                              child: Expanded(
-                                child: TextField(
-                                  //focusNode: model.logInEmailFocus,
-                                  //controller: model.logInEmailController,
-                                  keyboardType: TextInputType.text,
-                                  textInputAction: TextInputAction.next,
-                                  style: TextStyle(
-                                    color: ColorUtils.text_red,
+                              child: TextField(
+                                maxLines: 4,
+                                maxLength: 120,
+                                //focusNode: model.logInEmailFocus,
+                                //controller: model.logInEmailController,
+                                keyboardType: TextInputType.text,
+                                textInputAction: TextInputAction.next,
+                                style: TextStyle(
+                                  color: ColorUtils.black,
+                                  fontFamily: FontUtils.modernistRegular,
+                                  fontSize: 1.8.t,
+                                ),
+                                decoration:  InputDecoration(
+                                  hintText: "Add Description",
+                                  hintStyle: TextStyle(
+                                    color: ColorUtils.black,
                                     fontFamily: FontUtils.modernistRegular,
                                     fontSize: 1.8.t,
                                   ),
-                                  decoration:  InputDecoration(
-                                    hintText: "Add Description",
-                                    hintStyle: TextStyle(
-                                      color: ColorUtils.black,
-                                      fontFamily: FontUtils.modernistRegular,
-                                      fontSize: 1.8.t,
-                                    ),
-                                    border: InputBorder.none,
+                                  border: InputBorder.none,
 
-                                    isDense:true,
-                                    contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                                  ),
+                                  isDense:true,
+                                  contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                                 ),
                               )
                           ),
+
 
                           Container(
                             margin: EdgeInsets.only(left: 5.w),
@@ -212,7 +214,26 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 3.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.symmetric(
+                                vertical: 1 * SizeConfig.heightMultiplier),
+                            child: Text(
+                              "120 characters only",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily:
+                                FontUtils.modernistRegular,
+                                fontSize:  1.5.t,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 1.h),
 
 
                       ///----------------Add Events Pictures---------------------------///
@@ -601,7 +622,7 @@ class _CreateBarEventState extends State<CreateBarEvent> {
 
                       ///-----------------Event Date(From, To) ---------------------///
                       Container(
-                        margin: EdgeInsets.symmetric(horizontal: 5.w),
+                        //margin: EdgeInsets.symmetric(horizontal: 5.w),
                         child: Row(
                           children: [
 
@@ -629,7 +650,7 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                       padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 3.w),
                                       decoration: BoxDecoration(
                                           color: ColorUtils.white,
-                                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                                          borderRadius: BorderRadius.all(Radius.circular(16)),
                                           border: Border.all(color: ColorUtils.divider)
                                       ),
                                       child: Row(
@@ -700,7 +721,7 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                       padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 3.w),
                                       decoration: BoxDecoration(
                                           color: ColorUtils.white,
-                                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                                          borderRadius: BorderRadius.all(Radius.circular(16)),
                                           border: Border.all(color: ColorUtils.divider)
                                       ),
                                       child: Row(
