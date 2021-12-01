@@ -17,7 +17,8 @@ class DrinkStatusDialogBox extends StatefulWidget {
   String btnTxt;
   String icon;
 
-  DrinkStatusDialogBox({Key? key, required this.title, required this.btnTxt, required this.icon}) : super(key: key);
+  DrinkStatusDialogBox({Key? key, required this.title, required this.btnTxt, required this.icon})
+      : super(key: key);
 
   @override
   _DrinkStatusDialogBoxState createState() => _DrinkStatusDialogBoxState();

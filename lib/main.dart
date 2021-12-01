@@ -23,6 +23,7 @@ import 'package:sauftrag/views/UserFriendList/message_screen.dart';
 import 'package:sauftrag/views/UserProfile/user_profile.dart';
 
 import 'app/locator.dart';
+
 import 'bar/views/Auth/barTimingType.dart';
 import 'bar/views/Auth/signUp.dart';
 import 'bar/views/Drawer/barEvent.dart';
@@ -32,6 +33,8 @@ import 'bar/views/Home/bar_drinks.dart';
 import 'bar/views/Home/bar_event.dart';
 import 'bar/views/Home/main_view.dart';
 import 'bar/views/Home/order_details.dart';
+import 'bar/views/Profile/bar_account_ownership.dart';
+import 'bar/views/Profile/bar_accounts.dart';
 import 'bar/views/Profile/bar_profile.dart';
 import 'bar/views/Home/barCode2.dart';
 import 'bar/widgets/bar_QR_scanner.dart';
@@ -70,7 +73,7 @@ class _MyAppState extends State<MyApp> {
             SizeConfig().init(constraints, orientation);
             //var prefService = locator<PrefrencesViewModel>();
             //return MainView(index: 2);
-            return Splash();
+            return Notification();
           },
         );
       },

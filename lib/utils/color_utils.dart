@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ColorUtils{
-  static Color transparent = Color (0x00FFFFFF);
+  static Color transparent = Color (0xFFFFFFFF);
   static Color white = Color (0xFFFFFFFF);
   static Color black = Color (0xFF000000);
   static Color text_red = Color (0xFFE20000);

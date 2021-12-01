@@ -30,6 +30,8 @@ class MainViewModel extends BaseViewModel{
   bool openGroupMenu = false;
   bool privateGroupSelected = false;
   bool publicGroupSelected = false;
+  bool deleteSelected = false;
+  bool deleteUnselected = false;
   XFile? _pickedFile;
   File? profileFileImage;
   bool emojiShowing = false;

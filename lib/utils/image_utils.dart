@@ -169,4 +169,8 @@ class ImageUtils {
   static String johnImg = "assets/johnImg.png";
   //static String searchIcon = "assets/searchIcon.svg";
   static String emailImg = "assets/emailIcon.png";
+  static String radioSelected = "assets/radioSelected.svg";
+  static String radioUnselected = "assets/radioUnselected.svg";
+  static String binIcon = "assets/binIcon.svg";
+  static String deactivateIcon = "assets/disable.svg";
 }

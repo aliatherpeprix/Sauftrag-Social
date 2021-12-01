@@ -63,6 +63,26 @@ class AuthenticationViewModel extends BaseViewModel {
     'Female': 2,
   };
 
+  int kindOfBarValue = 1;
+  String kindOfBarValueStr = "Cocktail";
+  List<String> kindOfBarList = ["Beer", "Cocktail", "Long Drink", "Shot" ];
+  Map<String, int> kindOfBarMap = {
+    'Beer': 1,
+    'Cocktail': 2,
+    'Long Drink' : 3,
+    'Shot' : 4
+  };
+
+  // int blockContactValue = 1;
+  // String blockContactValueStr = "Cocktail";
+  // List<String> blockContactList = ["Beer", "Cocktail", "Long Drink", "Shot" ];
+  // Map<String, int> blockContactMap = {
+  //   'Beer': 1,
+  //   'Cocktail': 2,
+  //   'Long Drink' : 3,
+  //   'Shot' : 4
+  // };
+
   List<String> clubList = [
     "Club 1",
     "Club 2",
@@ -328,4 +348,23 @@ class AuthenticationViewModel extends BaseViewModel {
   void navigateBack() {
     navigationService.navigateBack();
   }
+
+  ///-------------BAR ACCOUNT OPTIONS---------------///
+  FocusNode LocationFocus = new FocusNode();
+  bool isLocationInFocus = false;
+  final LocationController = TextEditingController();
+
+  FocusNode KindOfBarFocus = new FocusNode();
+  bool isKindOfBarInFocus = false;
+  final KindOfBarController = TextEditingController();
+
+  FocusNode BlockContactsFocus = new FocusNode();
+  bool isBlockContactsInFocus = false;
+  final BlockContactsController = TextEditingController();
+
+  FocusNode AccountOwnershipFocus = new FocusNode();
+  bool isAccountOwnershipInFocus = false;
+  final AccountOwnershipController = TextEditingController();
+
+
 }
