@@ -173,4 +173,12 @@ class ImageUtils {
   static String radioUnselected = "assets/radioUnselected.svg";
   static String binIcon = "assets/binIcon.svg";
   static String deactivateIcon = "assets/disable.svg";
+  static String BarProfileImage = "assets/BarProfileImage.png";
+  static String barCircle = "assets/barCircle.png";
+  static String comment = "assets/comment.png";
+  static String like = "assets/Like.png";
+  static String Nil = "assets/nil.png";
+  static String ron = "assets/ron.png";
+
+
 }

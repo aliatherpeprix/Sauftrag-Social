@@ -50,6 +50,9 @@ dependencies:
   google_maps:
   flutter_time_picker_spinner: ^2.0.0
   qr_code_scanner: ^0.6.1
+  country_code_picker: ^2.0.2
+  syncfusion_flutter_sliders: ^19.3.56
+
 
   #flutter_tindercard: ^0.2.0
 

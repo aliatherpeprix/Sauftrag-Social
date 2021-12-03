@@ -20,10 +20,7 @@ class BackArrowContainer extends StatelessWidget {
             shape: BoxShape.rectangle,
             borderRadius: BorderRadius.all(Radius.circular(15))
         ),
-        child: Padding(
-          padding:EdgeInsets.symmetric(horizontal: 5.8.w,vertical: 2.4.h),
-          child: SvgPicture.asset(ImageUtils.backCupertino),
-        ),
+        child: Center(child: SvgPicture.asset(ImageUtils.backCupertino,height: 3.5.i,)),
       ),
     );
   }

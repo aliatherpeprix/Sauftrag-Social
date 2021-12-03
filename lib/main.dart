@@ -20,6 +20,11 @@ import 'package:sauftrag/views/UserFriendList/group_details.dart';
 import 'package:sauftrag/views/UserFriendList/group_screen.dart';
 import 'package:sauftrag/views/UserFriendList/invite_people.dart';
 import 'package:sauftrag/views/UserFriendList/message_screen.dart';
+import 'package:sauftrag/views/UserProfile/account.dart';
+import 'package:sauftrag/views/UserProfile/accountOwnership.dart';
+import 'package:sauftrag/views/UserProfile/gps.dart';
+import 'package:sauftrag/views/UserProfile/legalTerm.dart';
+import 'package:sauftrag/views/UserProfile/notifications.dart';
 import 'package:sauftrag/views/UserProfile/user_profile.dart';
 
 import 'app/locator.dart';
@@ -27,6 +32,7 @@ import 'app/locator.dart';
 import 'bar/views/Auth/barTimingType.dart';
 import 'bar/views/Auth/signUp.dart';
 import 'bar/views/Drawer/barEvent.dart';
+import 'bar/views/Drawer/barProfile.dart';
 import 'bar/views/Drawer/followers.dart';
 import 'bar/views/Drawer/notifications.dart';
 import 'bar/views/Home/bar_drinks.dart';
@@ -73,7 +79,7 @@ class _MyAppState extends State<MyApp> {
             SizeConfig().init(constraints, orientation);
             //var prefService = locator<PrefrencesViewModel>();
             //return MainView(index: 2);
-            return Notification();
+            return Barprofile();
           },
         );
       },

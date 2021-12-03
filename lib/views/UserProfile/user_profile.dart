@@ -193,30 +193,35 @@ class _UserProfileState extends State<UserProfile> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            children: [
-                              SvgPicture.asset(ImageUtils.userProfileAccount),
-                              SizedBox(width: 1.5.h,),
-                              Text(
-                                "Accounts",
-                                style: TextStyle(
-                                  color: ColorUtils.black,
-                                  fontFamily: FontUtils.modernistBold,
-                                  fontSize: 2.t,
+                          GestureDetector(
+                            onTap:(){
+                              model.navigateToUserProfileAccountScreen();
+                            },
+                            child: Row(
+                              children: [
+                                SvgPicture.asset(ImageUtils.userProfileAccount),
+                                SizedBox(width: 1.5.h,),
+                                Text(
+                                  "Accounts",
+                                  style: TextStyle(
+                                    color: ColorUtils.black,
+                                    fontFamily: FontUtils.modernistBold,
+                                    fontSize: 2.t,
+                                  ),
                                 ),
-                              ),
-                              // Container(
-                              //   margin: EdgeInsets.only(right: 20),
-                              //   child: RoundImage(
-                              //     url: widget.profile.imageurl,
-                              //     txtsize: 18,
-                              //     txt: widget.profile.fullName,
-                              //     width: 50,
-                              //     height: 50,
-                              //     borderRadius: 15,
-                              //   ),
-                              // ),
-                            ],
+                                // Container(
+                                //   margin: EdgeInsets.only(right: 20),
+                                //   child: RoundImage(
+                                //     url: widget.profile.imageurl,
+                                //     txtsize: 18,
+                                //     txt: widget.profile.fullName,
+                                //     width: 50,
+                                //     height: 50,
+                                //     borderRadius: 15,
+                                //   ),
+                                // ),
+                              ],
+                            ),
                           ),
 
                           Icon(
@@ -227,78 +232,88 @@ class _UserProfileState extends State<UserProfile> {
                         ],
                       ),
                       SizedBox(height: 3.h),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              SvgPicture.asset(ImageUtils.userProfileNotification),
-                              SizedBox(width: 1.5.h,),
-                              Text(
-                                "Notification",
-                                style: TextStyle(
-                                  color: ColorUtils.black,
-                                  fontFamily: FontUtils.modernistBold,
-                                  fontSize: 2.t,
+                      GestureDetector(
+                        onTap: (){
+                          model.navigateToUserProfileAccountNotificationScreen();
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                SvgPicture.asset(ImageUtils.userProfileNotification),
+                                SizedBox(width: 1.5.h,),
+                                Text(
+                                  "Notification",
+                                  style: TextStyle(
+                                    color: ColorUtils.black,
+                                    fontFamily: FontUtils.modernistBold,
+                                    fontSize: 2.t,
+                                  ),
                                 ),
-                              ),
-                              // Container(
-                              //   margin: EdgeInsets.only(right: 20),
-                              //   child: RoundImage(
-                              //     url: widget.profile.imageurl,
-                              //     txtsize: 18,
-                              //     txt: widget.profile.fullName,
-                              //     width: 50,
-                              //     height: 50,
-                              //     borderRadius: 15,
-                              //   ),
-                              // ),
-                            ],
-                          ),
+                                // Container(
+                                //   margin: EdgeInsets.only(right: 20),
+                                //   child: RoundImage(
+                                //     url: widget.profile.imageurl,
+                                //     txtsize: 18,
+                                //     txt: widget.profile.fullName,
+                                //     width: 50,
+                                //     height: 50,
+                                //     borderRadius: 15,
+                                //   ),
+                                // ),
+                              ],
+                            ),
 
-                          Icon(
-                            Icons.keyboard_arrow_right_rounded,
-                            size: 30,
-                            color: Colors.black,
-                          )
-                        ],
+                            Icon(
+                              Icons.keyboard_arrow_right_rounded,
+                              size: 30,
+                              color: Colors.black,
+                            )
+                          ],
+                        ),
                       ),
                       SizedBox(height: 3.h),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              SvgPicture.asset(ImageUtils.userProfileLegalTerms),
-                              SizedBox(width: 1.5.h,),
-                              Text(
-                                "Legal Terms",
-                                style: TextStyle(
-                                  color: ColorUtils.black,
-                                  fontFamily: FontUtils.modernistBold,
-                                  fontSize: 2.t,
+                      GestureDetector(
+                        onTap: (){
+                          model.navigateToUserProfileAccountLegalTermScreen();
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                SvgPicture.asset(ImageUtils.userProfileLegalTerms),
+                                SizedBox(width: 1.5.h,),
+                                Text(
+                                  "Legal Terms",
+                                  style: TextStyle(
+                                    color: ColorUtils.black,
+                                    fontFamily: FontUtils.modernistBold,
+                                    fontSize: 2.t,
+                                  ),
                                 ),
-                              ),
-                              // Container(
-                              //   margin: EdgeInsets.only(right: 20),
-                              //   child: RoundImage(
-                              //     url: widget.profile.imageurl,
-                              //     txtsize: 18,
-                              //     txt: widget.profile.fullName,
-                              //     width: 50,
-                              //     height: 50,
-                              //     borderRadius: 15,
-                              //   ),
-                              // ),
-                            ],
-                          ),
+                                // Container(
+                                //   margin: EdgeInsets.only(right: 20),
+                                //   child: RoundImage(
+                                //     url: widget.profile.imageurl,
+                                //     txtsize: 18,
+                                //     txt: widget.profile.fullName,
+                                //     width: 50,
+                                //     height: 50,
+                                //     borderRadius: 15,
+                                //   ),
+                                // ),
+                              ],
+                            ),
 
-                          Icon(
-                            Icons.keyboard_arrow_right_rounded,
-                            size: 30,
-                            color: Colors.black,
-                          )
-                        ],
+                            Icon(
+                              Icons.keyboard_arrow_right_rounded,
+                              size: 30,
+                              color: Colors.black,
+                            )
+                          ],
+                        ),
                       ),
                       SizedBox(height: 3.h),
                       Row(
@@ -338,41 +353,47 @@ class _UserProfileState extends State<UserProfile> {
                         ],
                       ),
                       SizedBox(height: 3.h),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              SvgPicture.asset(ImageUtils.userProfileGPs),
-                              SizedBox(width: 1.5.h,),
-                              Text(
-                                "GPS",
-                                style: TextStyle(
-                                  color: ColorUtils.black,
-                                  fontFamily: FontUtils.modernistBold,
-                                  fontSize: 2.t,
-                                ),
-                              ),
-                              // Container(
-                              //   margin: EdgeInsets.only(right: 20),
-                              //   child: RoundImage(
-                              //     url: widget.profile.imageurl,
-                              //     txtsize: 18,
-                              //     txt: widget.profile.fullName,
-                              //     width: 50,
-                              //     height: 50,
-                              //     borderRadius: 15,
-                              //   ),
-                              // ),
-                            ],
-                          ),
+                      GestureDetector(
+                        onTap: (){
+                          model.navigateToUserProfileAccountGpsScreen();
 
-                          Icon(
-                            Icons.keyboard_arrow_right_rounded,
-                            size: 30,
-                            color: Colors.black,
-                          )
-                        ],
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                SvgPicture.asset(ImageUtils.userProfileGPs),
+                                SizedBox(width: 1.5.h,),
+                                Text(
+                                  "GPS",
+                                  style: TextStyle(
+                                    color: ColorUtils.black,
+                                    fontFamily: FontUtils.modernistBold,
+                                    fontSize: 2.t,
+                                  ),
+                                ),
+                                // Container(
+                                //   margin: EdgeInsets.only(right: 20),
+                                //   child: RoundImage(
+                                //     url: widget.profile.imageurl,
+                                //     txtsize: 18,
+                                //     txt: widget.profile.fullName,
+                                //     width: 50,
+                                //     height: 50,
+                                //     borderRadius: 15,
+                                //   ),
+                                // ),
+                              ],
+                            ),
+
+                            Icon(
+                              Icons.keyboard_arrow_right_rounded,
+                              size: 30,
+                              color: Colors.black,
+                            )
+                          ],
+                        ),
                       ),
                       SizedBox(height: 3.h),
                     ],

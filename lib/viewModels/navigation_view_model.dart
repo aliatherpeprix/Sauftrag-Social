@@ -32,6 +32,11 @@ import 'package:sauftrag/views/NewsFeed/event_detail.dart';
 import 'package:sauftrag/views/UserFriendList/group_details.dart';
 import 'package:sauftrag/views/UserFriendList/group_screen.dart';
 import 'package:sauftrag/views/UserFriendList/invite_people.dart';
+import 'package:sauftrag/views/UserProfile/account.dart';
+import 'package:sauftrag/views/UserProfile/accountOwnership.dart';
+import 'package:sauftrag/views/UserProfile/gps.dart';
+import 'package:sauftrag/views/UserProfile/legalTerm.dart';
+import 'package:sauftrag/views/UserProfile/notifications.dart';
 import 'package:sauftrag/widgets/bar_auth_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -161,6 +166,26 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateToGroupScreen(){
     navigationKey.currentState!.push(PageTransition(child: GroupScreen(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToUserProfileAccountScreen(){
+    navigationKey.currentState!.push(PageTransition(child: Account(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToUserProfileAccountOwnershipScreen(){
+    navigationKey.currentState!.push(PageTransition(child: OwnerShip(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToUserProfileAccountNotificationScreen(){
+    navigationKey.currentState!.push(PageTransition(child: UserNotifications(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToUserProfileAccountLegalTermScreen(){
+    navigationKey.currentState!.push(PageTransition(child: LegalTerm(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToUserProfileAccountGpsScreen(){
+    navigationKey.currentState!.push(PageTransition(child: GPS(), type: PageTransitionType.rightToLeftWithFade));
   }
 
 

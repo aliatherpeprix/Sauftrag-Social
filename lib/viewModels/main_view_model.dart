@@ -334,9 +334,28 @@ class MainViewModel extends BaseViewModel{
   }
 
   void navigateToGroupScreen(){
-    navigationService.navigateToGroupScreen();
+    navigationService.navigateToGroupDetail();
   }
 
+  void navigateToUserProfileAccountScreen(){
+    navigationService.navigateToUserProfileAccountScreen();
+  }
+
+  void navigateToUserProfileAccountOwnershipScreen(){
+    navigationService.navigateToUserProfileAccountOwnershipScreen();
+  }
+
+  void navigateToUserProfileAccountNotificationScreen(){
+    navigationService.navigateToUserProfileAccountNotificationScreen();
+  }
+
+  void navigateToUserProfileAccountLegalTermScreen(){
+    navigationService.navigateToUserProfileAccountLegalTermScreen();
+  }
+
+  void navigateToUserProfileAccountGpsScreen(){
+    navigationService.navigateToUserProfileAccountGpsScreen();
+  }
 
   void navigateToCreateEventScreen() {
     navigationService.navigateToCreateEventScreen();
