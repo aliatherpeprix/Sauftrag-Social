@@ -52,6 +52,7 @@ dependencies:
   qr_code_scanner: ^0.6.1
   country_code_picker: ^2.0.2
   syncfusion_flutter_sliders: ^19.3.56
+  flutter_rating_bar: ^4.0.0
 
 
   #flutter_tindercard: ^0.2.0

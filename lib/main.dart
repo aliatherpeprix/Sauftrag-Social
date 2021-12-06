@@ -34,7 +34,9 @@ import 'bar/views/Auth/signUp.dart';
 import 'bar/views/Drawer/barEvent.dart';
 import 'bar/views/Drawer/barProfile.dart';
 import 'bar/views/Drawer/followers.dart';
+import 'bar/views/Drawer/list_of_bar.dart';
 import 'bar/views/Drawer/notifications.dart';
+import 'bar/views/Drawer/qr_code_scanner.dart';
 import 'bar/views/Home/bar_drinks.dart';
 import 'bar/views/Home/bar_event.dart';
 import 'bar/views/Home/main_view.dart';
@@ -79,7 +81,7 @@ class _MyAppState extends State<MyApp> {
             SizeConfig().init(constraints, orientation);
             //var prefService = locator<PrefrencesViewModel>();
             //return MainView(index: 2);
-            return Barprofile();
+            return QRCodeScanner();
           },
         );
       },

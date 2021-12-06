@@ -152,10 +152,6 @@ class NavigationViewModel extends BaseViewModel{
     navigationKey.currentState!.push(PageTransition(child: MainView(index: 2), type: PageTransitionType.rightToLeftWithFade));
   }
 
-
-
-
-
   void navigateBack(){
     navigationKey.currentState!.pop();
   }

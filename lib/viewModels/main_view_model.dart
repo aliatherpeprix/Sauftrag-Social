@@ -307,6 +307,60 @@ class MainViewModel extends BaseViewModel{
     },
   ];
 
+
+  List ListOfBar = [
+    {
+      'image': ImageUtils.barImg1,
+      'title': 'Beer Garden',
+      'locationIcon': ImageUtils.locationPin,
+      'address': '1458 Caden Valleys, 12 kms away.',
+      'type': 'Disco',
+    },
+    {
+      'image': ImageUtils.barImg2,
+      'title': 'The Love Shack',
+      'locationIcon': ImageUtils.locationPin,
+      'address': '1458 Caden Valleys, 12 kms away.',
+      'type': 'Pub',
+    },
+    {
+      'image': ImageUtils.barImg3,
+      'title': 'Stag Nite Bar',
+      'locationIcon': ImageUtils.locationPin,
+      'address': '1458 Caden Valleys, 12 kms away.',
+      'type': 'Hotel Bar',
+    },
+    {
+      'image': ImageUtils.barImg4,
+      'title': 'New Jack Swing Bar',
+      'locationIcon': ImageUtils.locationPin,
+      'address': '1458 Caden Valleys, 12 kms away.',
+      'type': 'Cocktail Lounge',
+    },
+    {
+      'image': ImageUtils.barImg5,
+      'title': 'Wild Rover Pub',
+      'locationIcon': ImageUtils.locationPin,
+      'address': '1458 Caden Valleys, 12 kms away.',
+      'type': 'Karaoke Bar',
+    },
+    {
+      'image': ImageUtils.barImg6,
+      'title': 'Whistle Stop Club',
+      'locationIcon': ImageUtils.locationPin,
+      'address': '1458 Caden Valleys, 12 kms away.',
+      'type': 'Music Bar',
+    },
+    {
+      'image': ImageUtils.barImg7,
+      'title': 'The High Five Bar',
+      'locationIcon': ImageUtils.locationPin,
+      'address': '1458 Caden Valleys, 12 kms away.',
+      'type': 'Night Club',
+    },
+
+  ];
+
   void addRemoveDrink(int index){
 
     drinkIndex = index + 1;

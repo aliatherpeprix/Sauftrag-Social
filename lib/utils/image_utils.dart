@@ -179,6 +179,14 @@ class ImageUtils {
   static String like = "assets/Like.png";
   static String Nil = "assets/nil.png";
   static String ron = "assets/ron.png";
+  static String barImg1 = "assets/bar_1.png";
+  static String barImg2 = "assets/bar_2.png";
+  static String barImg3 = "assets/bar_3.png";
+  static String barImg4 = "assets/bar_4.png";
+  static String barImg5 = "assets/bar_5.png";
+  static String barImg6 = "assets/bar_6.png";
+  static String barImg7 = "assets/bar_7.png";
+  static String qrCodeImg = "assets/qrCodeImg.png";
 
 
 }
