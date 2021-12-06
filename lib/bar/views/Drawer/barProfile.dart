@@ -35,6 +35,7 @@ class _BarprofileState extends State<Barprofile> {
         body: Column(
             children: [
               Container(
+                height: 45.h,
                 child: SafeArea(
                   child:
                       Stack(
@@ -76,7 +77,7 @@ class _BarprofileState extends State<Barprofile> {
               Expanded(
                 child: SingleChildScrollView(
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding,vertical: Dimensions.verticalPadding),
+                    padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding),
                     child:  Column(
                         children: [
                           Row(
