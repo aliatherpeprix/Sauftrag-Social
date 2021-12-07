@@ -1,5 +1,4 @@
-import 'package:date_picker_timeline/extra/dimen.dart';
-import 'package:expand_tap_area/expand_tap_area.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
@@ -12,23 +11,26 @@ import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/widgets/back_arrow_with_container.dart';
 import 'package:sauftrag/widgets/rating_dialog_box.dart';
 
-class Barprofile extends StatefulWidget {
+class BarRating extends StatefulWidget {
+  const BarRating({Key? key}) : super(key: key);
+
   @override
-  _BarprofileState createState() => _BarprofileState();
+  _BarRatingState createState() => _BarRatingState();
 }
 
-class _BarprofileState extends State<Barprofile> {
+class _BarRatingState extends State<BarRating> {
+
   List people = [
     {
       'name': "Nellie Mendez",
       'detail':
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar blandit magna.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar blandit magna.",
       'image': ImageUtils.Nil,
     },
     {
       'name': "Ron Wright",
       'detail':
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar blandit magna.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar blandit magna.",
       'image': ImageUtils.ron
     },
 
@@ -112,7 +114,7 @@ class _BarprofileState extends State<Barprofile> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         backgroundColor: Colors.white,
         body: Column(children: [
@@ -137,7 +139,7 @@ class _BarprofileState extends State<Barprofile> {
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
+                              BorderRadius.all(Radius.circular(10))),
                           child: BackArrowContainer())),
                   Positioned(
                       top: 30.6.h,
@@ -181,12 +183,12 @@ class _BarprofileState extends State<Barprofile> {
                                 padding: EdgeInsets.symmetric(horizontal: 30),
                                 child: Center(
                                     child: Text(
-                                  "Follow",
-                                  style: TextStyle(
-                                      color: ColorUtils.white,
-                                      fontSize: 2.t,
-                                      fontFamily: FontUtils.modernistBold),
-                                )),
+                                      "Follow",
+                                      style: TextStyle(
+                                          color: ColorUtils.white,
+                                          fontSize: 2.t,
+                                          fontFamily: FontUtils.modernistBold),
+                                    )),
                               ),
                             ),
                           )
@@ -295,9 +297,10 @@ class _BarprofileState extends State<Barprofile> {
                           Tab(
                             text: "Ratings",
                           ),
-                          Tab(
-                            text: "Events",
-                          ),
+                          // Tab(
+                          //   text: "",
+                          // ),
+
                         ],
                       ),
                       Container(
@@ -339,21 +342,21 @@ class _BarprofileState extends State<Barprofile> {
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             crossAxisAlignment: CrossAxisAlignment.end,
                                             children: [
-                                            Row(
+                                              Row(
 
-                                              children: [  Image.asset(
-                                                people[index]
-                                                ['image'], height: 10.i,),
-                                                SizedBox(
-                                                  width: 4.w,
-                                                ),
-                                                Text(
-                                                  people[index]["name"],
-                                                  style: TextStyle(
-                                                      fontFamily:
-                                                      FontUtils.modernistBold),
-                                                ),],
-                                            ),
+                                                children: [  Image.asset(
+                                                  people[index]
+                                                  ['image'], height: 10.i,),
+                                                  SizedBox(
+                                                    width: 4.w,
+                                                  ),
+                                                  Text(
+                                                    people[index]["name"],
+                                                    style: TextStyle(
+                                                        fontFamily:
+                                                        FontUtils.modernistBold),
+                                                  ),],
+                                              ),
                                               IconButton(
                                                   onPressed: () {},
                                                   icon: Icon(
@@ -425,95 +428,95 @@ class _BarprofileState extends State<Barprofile> {
                                 children: [
                                   Container(
 
-                                      // padding: EdgeInsets.symmetric( horizontal: 2.w),
+                                    // padding: EdgeInsets.symmetric( horizontal: 2.w),
                                       child:
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        height: 2.5.h,
-                                      ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "Customer Rating",
-                                          style: TextStyle(
-                                              fontFamily: FontUtils.modernistBold,
-                                              fontSize: 2.2.t),
-                                        ),
-                                        GestureDetector(
-                                          onTap: (){
-                                            showDialog(
-                                                context: context,
-                                                builder: (BuildContext context){
-                                                  return RatingDialogBox(title: "Add New Location",
-                                                      btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
-                                                }
-                                            );
-                                          },
-                                          child: Text("Give Rating",
-                                            style: TextStyle(
-                                              color: ColorUtils.red_color,
-                                                fontFamily: FontUtils.modernistRegular,
-                                                fontSize: 1.7.t,
-                                              decoration:
-                                              TextDecoration.underline,
-                                            ),
+                                      Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            height: 2.5.h,
                                           ),
-                                        ),
-                                      ],
-                                    ),SizedBox(
-                                        height: 2.5.h,
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.symmetric(vertical:0.5.h , horizontal: 3.w),
-                                        decoration: BoxDecoration(
-                                          // boxShadow: [
-                                          //   BoxShadow(
-                                          //     color: ColorUtils.black.withOpacity(0.1),
-                                          //     spreadRadius: 0,
-                                          //     blurRadius: 10,
-                                          //     offset: Offset(0, 5), // changes position of shadow
-                                          //   ),
-                                          // ],
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.all(Radius.circular(18)),
-                                          border: Border.all(color: ColorUtils.text_red),
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: [
-                                          RatingBar.builder(
-                                          initialRating: 4,
-                                          minRating: 1,
-                                          direction: Axis.horizontal,
-                                          allowHalfRating: true,
-                                          itemCount: 5,
-                                            itemSize: 10.i,
-                                          itemPadding: EdgeInsets.symmetric(horizontal: 3.0),
-                                          itemBuilder: (context, _) => Icon(
-                                            Icons.star_rounded,
-                                            color: ColorUtils.red_color,
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                "Customer Rating",
+                                                style: TextStyle(
+                                                    fontFamily: FontUtils.modernistBold,
+                                                    fontSize: 2.2.t),
+                                              ),
+                                              GestureDetector(
+                                                onTap: (){
+                                                  showDialog(
+                                                      context: context,
+                                                      builder: (BuildContext context){
+                                                        return RatingDialogBox(title: "Add New Location",
+                                                            btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+                                                      }
+                                                  );
+                                                },
+                                                child: Text("See all",
+                                                  style: TextStyle(
+                                                    color: ColorUtils.red_color,
+                                                    fontFamily: FontUtils.modernistRegular,
+                                                    fontSize: 1.7.t,
+                                                    decoration:
+                                                    TextDecoration.underline,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),SizedBox(
+                                            height: 2.5.h,
                                           ),
-                                          onRatingUpdate: (rating) {
-                                            print(rating);
-                                          },
-                                        ),
-                                            Text("4.7 out of 5", style: TextStyle(
-                                              color: ColorUtils.red_color,
-                                              fontFamily: FontUtils.modernistRegular,
-                                              fontSize: 1.7.t,
+                                          Container(
+                                              padding: EdgeInsets.symmetric(vertical:0.5.h , horizontal: 3.w),
+                                              decoration: BoxDecoration(
+                                                // boxShadow: [
+                                                //   BoxShadow(
+                                                //     color: ColorUtils.black.withOpacity(0.1),
+                                                //     spreadRadius: 0,
+                                                //     blurRadius: 10,
+                                                //     offset: Offset(0, 5), // changes position of shadow
+                                                //   ),
+                                                // ],
+                                                color: Colors.white,
+                                                borderRadius: BorderRadius.all(Radius.circular(18)),
+                                                border: Border.all(color: ColorUtils.text_red),
+                                              ),
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: [
+                                                  RatingBar.builder(
+                                                    initialRating: 4,
+                                                    minRating: 1,
+                                                    direction: Axis.horizontal,
+                                                    allowHalfRating: true,
+                                                    itemCount: 5,
+                                                    itemSize: 10.i,
+                                                    itemPadding: EdgeInsets.symmetric(horizontal: 3.0),
+                                                    itemBuilder: (context, _) => Icon(
+                                                      Icons.star_rounded,
+                                                      color: ColorUtils.red_color,
+                                                    ),
+                                                    onRatingUpdate: (rating) {
+                                                      print(rating);
+                                                    },
+                                                  ),
+                                                  Text("4.7 out of 5", style: TextStyle(
+                                                    color: ColorUtils.red_color,
+                                                    fontFamily: FontUtils.modernistRegular,
+                                                    fontSize: 1.7.t,
 
-                                            ),)
-                                          ],
-                                        )
-                                      )
-                                    ],
-                                  )),
+                                                  ),)
+                                                ],
+                                              )
+                                          )
+                                        ],
+                                      )),
                                   SizedBox(
                                     height: 2.5.h,
                                   ),
@@ -530,14 +533,14 @@ class _BarprofileState extends State<Barprofile> {
                                           //width: 6.h,
                                           //height: 30.h,
                                           decoration: BoxDecoration(
-                                            boxShadow: [
+                                           /* boxShadow: [
                                               BoxShadow(
                                                 color: ColorUtils.black.withOpacity(0.1),
                                                 spreadRadius: 0,
                                                 blurRadius: 10,
                                                 offset: Offset(0, 5), // changes position of shadow
                                               ),
-                                            ],
+                                            ],*/
                                             color: Colors.white,
                                             borderRadius:
                                             BorderRadius.all(Radius.circular(18)),
@@ -558,30 +561,30 @@ class _BarprofileState extends State<Barprofile> {
                                                         SizedBox(
                                                           width: 4.w,
                                                         ),
-                                                       Column(
-                                                         crossAxisAlignment: CrossAxisAlignment.start,
-                                                         children: [
-                                                           Text(
-                                                             ratingDialog[index]["name"],
-                                                             style: TextStyle(
-                                                               fontSize: 2.h,
-                                                                  fontFamily:
-                                                                  FontUtils.modernistBold,
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: [
+                                                            Text(
+                                                              ratingDialog[index]["name"],
+                                                              style: TextStyle(
+                                                                fontSize: 2.h,
+                                                                fontFamily:
+                                                                FontUtils.modernistBold,
 
-                                                             ),
-                                                           ),
-                                                           SizedBox(height: 0.5.h,),
-                                                           Text(
-                                                             ratingDialog[index]["date"],
-                                                             style: TextStyle(
-                                                               color: ColorUtils.text_grey,
+                                                              ),
+                                                            ),
+                                                            SizedBox(height: 0.5.h,),
+                                                            Text(
+                                                              ratingDialog[index]["date"],
+                                                              style: TextStyle(
+                                                                  color: ColorUtils.text_grey,
                                                                   fontFamily:
                                                                   FontUtils.modernistRegular,
                                                                   fontSize: 1.3.h
-                                                             ),
-                                                           ),
-                                                         ],
-                                                       )
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        )
                                                       ],
                                                     ),
                                                     RatingBar.builder(
@@ -695,93 +698,93 @@ class _BarprofileState extends State<Barprofile> {
 
 
                             ///----Event Tab----///
-                            Container(
-                              margin: EdgeInsets.only(top: 3.h),
-                              child:  ListView.separated(
-                                padding: EdgeInsets.zero,
-                                scrollDirection: Axis.vertical,
-                                physics: BouncingScrollPhysics(),
-                                shrinkWrap: true,
-                                itemBuilder: (context, index) {
-                                  return Container(
-
-                                    decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: ColorUtils.black.withOpacity(0.1),
-                                          spreadRadius: 0,
-                                          blurRadius: 10,
-                                          offset: Offset(0, 5), // changes position of shadow
-                                        ),
-                                      ],
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.all(Radius.circular(18)),
-                                      border: Border.all(color: ColorUtils.red_color),
-                                    ),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(horizontal: 2.w,vertical: 2.h),
-                                          child: Row(
-                                            children: [
-                                              ClipRRect(
-                                                borderRadius: BorderRadius.circular(10),
-                                                child: Image.asset(places[index]["image"],
-                                                  width: 20.i,
-                                                  height: 20.i,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                              SizedBox(width: 3.w,),
-                                              Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(places[index]["date"],
-                                                    style: TextStyle(
-                                                        fontFamily: FontUtils.modernistRegular,
-                                                        fontSize: 1.7.t,
-                                                        color: ColorUtils.text_red
-                                                    ),
-                                                  ),
-                                                  SizedBox(height: 1.h,),
-                                                  Text(places[index]["eventName"],
-                                                    style: TextStyle(
-                                                        fontFamily: FontUtils.modernistBold,
-                                                        fontSize: 2.2.t,
-                                                        color: ColorUtils.black
-                                                    ),
-                                                  ),
-                                                  SizedBox(height: 1.h,),
-                                                  Row(
-                                                    children: [
-                                                      SvgPicture.asset(places[index]['locationIcon']),
-                                                      SizedBox(width: 2.w,),
-                                                      Text(places[index]["location"],
-                                                        style: TextStyle(
-                                                            fontFamily: FontUtils.modernistRegular,
-                                                            fontSize: 1.7.t,
-                                                            color: ColorUtils.text_dark
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                                separatorBuilder: (context, index) {
-                                  return SizedBox(height:  SizeConfig.heightMultiplier * 2,);
-                                },
-                                itemCount: places.length,
-                              ),
-                            ),
+                            // Container(
+                            //   margin: EdgeInsets.only(top: 3.h),
+                            //   child:  ListView.separated(
+                            //     padding: EdgeInsets.zero,
+                            //     scrollDirection: Axis.vertical,
+                            //     physics: BouncingScrollPhysics(),
+                            //     shrinkWrap: true,
+                            //     itemBuilder: (context, index) {
+                            //       return Container(
+                            //
+                            //         decoration: BoxDecoration(
+                            //           boxShadow: [
+                            //             BoxShadow(
+                            //               color: ColorUtils.black.withOpacity(0.1),
+                            //               spreadRadius: 0,
+                            //               blurRadius: 10,
+                            //               offset: Offset(0, 5), // changes position of shadow
+                            //             ),
+                            //           ],
+                            //           color: Colors.white,
+                            //           borderRadius: BorderRadius.all(Radius.circular(18)),
+                            //           border: Border.all(color: ColorUtils.red_color),
+                            //         ),
+                            //         child: Column(
+                            //           mainAxisSize: MainAxisSize.min,
+                            //           crossAxisAlignment: CrossAxisAlignment.start,
+                            //           children: [
+                            //             Padding(
+                            //               padding: EdgeInsets.symmetric(horizontal: 2.w,vertical: 2.h),
+                            //               child: Row(
+                            //                 children: [
+                            //                   ClipRRect(
+                            //                     borderRadius: BorderRadius.circular(10),
+                            //                     child: Image.asset(places[index]["image"],
+                            //                       width: 20.i,
+                            //                       height: 20.i,
+                            //                       fit: BoxFit.cover,
+                            //                     ),
+                            //                   ),
+                            //                   SizedBox(width: 3.w,),
+                            //                   Column(
+                            //                     crossAxisAlignment: CrossAxisAlignment.start,
+                            //                     children: [
+                            //                       Text(places[index]["date"],
+                            //                         style: TextStyle(
+                            //                             fontFamily: FontUtils.modernistRegular,
+                            //                             fontSize: 1.7.t,
+                            //                             color: ColorUtils.text_red
+                            //                         ),
+                            //                       ),
+                            //                       SizedBox(height: 1.h,),
+                            //                       Text(places[index]["eventName"],
+                            //                         style: TextStyle(
+                            //                             fontFamily: FontUtils.modernistBold,
+                            //                             fontSize: 2.2.t,
+                            //                             color: ColorUtils.black
+                            //                         ),
+                            //                       ),
+                            //                       SizedBox(height: 1.h,),
+                            //                       Row(
+                            //                         children: [
+                            //                           SvgPicture.asset(places[index]['locationIcon']),
+                            //                           SizedBox(width: 2.w,),
+                            //                           Text(places[index]["location"],
+                            //                             style: TextStyle(
+                            //                                 fontFamily: FontUtils.modernistRegular,
+                            //                                 fontSize: 1.7.t,
+                            //                                 color: ColorUtils.text_dark
+                            //                             ),
+                            //                           ),
+                            //                         ],
+                            //                       )
+                            //                     ],
+                            //                   ),
+                            //                 ],
+                            //               ),
+                            //             ),
+                            //           ],
+                            //         ),
+                            //       );
+                            //     },
+                            //     separatorBuilder: (context, index) {
+                            //       return SizedBox(height:  SizeConfig.heightMultiplier * 2,);
+                            //     },
+                            //     itemCount: places.length,
+                            //   ),
+                            // ),
                           ]),
                         ),
                       ),
@@ -796,4 +799,3 @@ class _BarprofileState extends State<Barprofile> {
     );
   }
 }
-

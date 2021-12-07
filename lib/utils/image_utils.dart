@@ -187,6 +187,27 @@ class ImageUtils {
   static String barImg6 = "assets/bar_6.png";
   static String barImg7 = "assets/bar_7.png";
   static String qrCodeImg = "assets/qrCodeImg.png";
+  static String followerProfile = "assets/followerProfile.png";
+  static String followerImg1 = "assets/fimg_1.png";
+  static String followerImg2 = "assets/fimg_2.png";
+  static String followerImg3 = "assets/fimg_3.png";
+  static String followerImg4 = "assets/fimg_4.png";
+  static String followerImg5 = "assets/fimg_5.png";
+  static String friends1 = "assets/friends_1.png";
+  static String friends2 = "assets/friends_2.png";
+  static String friends3 = "assets/friends_3.png";
+  static String friends4 = "assets/friends_4.png";
+  static String mutualfrnd1 = "assets/mfriends_1.png";
+  static String mutualfrnd2 = "assets/mfriends_2.png";
+  static String mutualfrnd3 = "assets/mfriends_3.png";
+  static String mutualfrnd4 = "assets/mfriends_4.png";
+  static String matchedImg1 = "assets/matchImg_1.png";
+  static String matchedImg2 = "assets/matchImg_2.png";
+  static String matchedImg3 = "assets/matchImg_3.png";
+  static String matchedImg4 = "assets/matchImg_4.png";
+  static String matchedImg5 = "assets/matchImg_5.png";
+  static String matchedImg6 = "assets/matchImg_6.png";
+  static String nickWalkerImg = "assets/nickWalker.png";
 
 
 }

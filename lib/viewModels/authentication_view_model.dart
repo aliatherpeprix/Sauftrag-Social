@@ -27,6 +27,8 @@ class AuthenticationViewModel extends BaseViewModel {
   bool signUpUserSelected = true;
   bool signUpBarSelected = false;
 
+  final myContactsSearchController = TextEditingController();
+
   final signUpUserController = TextEditingController();
   final signUpEmailController = TextEditingController();
   final signUpPhoneController = TextEditingController();
@@ -71,6 +73,30 @@ class AuthenticationViewModel extends BaseViewModel {
     'Cocktail': 2,
     'Long Drink' : 3,
     'Shot' : 4
+  };
+
+  int nightClubValue = 1;
+  String nightClubValueStr = "Club 1";
+  List<String> nightClubList = ["Club 1", "Club 2", "Club 3", "Club 4", "Club 5", "Club 6", "Club 7", "Club 8" ];
+  Map<String, int> nightClubMap = {
+    'Club 1': 1,
+    'Club 2': 2,
+    'Club 3' : 3,
+    'Club 4' : 4,
+    'Club 5' : 5,
+    'Club 6' : 6,
+    'Club 7' : 7,
+    'Club 8' : 8,
+  };
+
+  int partyVacationValue = 1;
+  String partyVacationValueStr = "Ibiza Beach";
+  List<String> partyVacationList = ["Ibiza Beach", "Goldstrand", "Zrce Beach", "Lloret" ];
+  Map<String, int> partyVacationMap = {
+    'Ibiza Beach': 1,
+    'Goldstrand': 2,
+    'Zrce Beach' : 3,
+    'Lloret' : 4
   };
 
   // int blockContactValue = 1;
@@ -130,6 +156,18 @@ class AuthenticationViewModel extends BaseViewModel {
   ];
   List<int> selectedDrinkList = [];
 
+  List<String> interestList = [
+    "White Wine",
+    "Hard Seltzer",
+    "Whiskey",
+    "Club 1",
+    "Club 2",
+    "Goldstrand",
+  ];
+  List<int> selectedInterestList = [];
+
+
+
   void initializeSplash() async {
     prefs = await SharedPreferences.getInstance();
 
@@ -151,6 +189,7 @@ class AuthenticationViewModel extends BaseViewModel {
       return false;
     } else {
       imageFiles.insert(index, File(image.path));
+      print(imageFiles);
       /*for(XFile image in images){
         imageFiles.add(File(image.path));
       }*/

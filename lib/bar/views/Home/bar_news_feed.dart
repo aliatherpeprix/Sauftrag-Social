@@ -133,21 +133,26 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
                         SizedBox(
                           height: 2.h,
                         ),
-                        Container(
-                            decoration: BoxDecoration(
+                        GestureDetector(
+                          onTap: (){
+                            add(context);
+                          },
+                          child: Container(
+                              decoration: BoxDecoration(
 
-                              color: ColorUtils.text_red,
-                              borderRadius: BorderRadius.all(Radius.circular(25)),
-                              //border: Border.all(color: ColorUtils.red_color),
-                            ),
-                            height: 5.4.h,
-                            width: 11.5.w,
-                            child: Padding(
-                              padding: const EdgeInsets.all(11.0),
-                              child: SvgPicture.asset(
-                                ImageUtils.pen2,
+                                color: ColorUtils.text_red,
+                                borderRadius: BorderRadius.all(Radius.circular(25)),
+                                //border: Border.all(color: ColorUtils.red_color),
                               ),
-                            )),
+                              height: 5.4.h,
+                              width: 11.5.w,
+                              child: Padding(
+                                padding: const EdgeInsets.all(11.0),
+                                child: SvgPicture.asset(
+                                  ImageUtils.pen2,
+                                ),
+                              )),
+                        ),
                       ],
                     )
                   ],
@@ -379,6 +384,108 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
       },
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
+    );
+  }
+  void add(context){
+    showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        context: context,
+        builder: (BuildContext context){
+          return Container(
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(topRight: Radius.circular(50),topLeft: Radius.circular(50))
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  margin: EdgeInsets.only(top: 6.h, left: 4.w, right: 4.w),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SvgPicture.asset(ImageUtils.mobileIcon,
+                            width: 5.i,
+                            height: 5.i,
+                          ),
+                          SizedBox(width: 2.w,),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Find Contacts Easily",
+                                style: TextStyle(
+                                  fontFamily: FontUtils.modernistBold,
+                                  fontSize: 1.9.t,
+                                  color: ColorUtils.text_dark,
+                                ),
+                              ),
+                              SizedBox(height: 0.5.h,),
+                              Text("Add contacts from your device",
+                                style: TextStyle(
+                                  fontFamily: FontUtils.modernistRegular,
+                                  fontSize: 1.9.t,
+                                  color: ColorUtils.text_dark,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      SvgPicture.asset(ImageUtils.forwardIcon)
+                    ],
+                  ),
+                ),
+                SizedBox(height: 3.h,),
+                Container(
+                  margin: EdgeInsets.only(top: 3.h, left: 4.w, right: 4.w, bottom: 3.h),
+                  child: Row(
+                    //mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SvgPicture.asset(ImageUtils.peopleIcon,
+                            width: 5.i,
+                            height: 5.i,
+                          ),
+                          SizedBox(width: 2.w,),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Invite to Souftrag",
+                                style: TextStyle(
+                                  fontFamily: FontUtils.modernistBold,
+                                  fontSize: 1.9.t,
+                                  color: ColorUtils.text_dark,
+                                ),
+                              ),
+                              SizedBox(height: 0.5.h,),
+                              Text("Connect with friends and family",
+                                style: TextStyle(
+                                  fontFamily: FontUtils.modernistRegular,
+                                  fontSize: 1.9.t,
+                                  color: ColorUtils.text_dark,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      SvgPicture.asset(ImageUtils.forwardIcon)
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
     );
   }
 }
