@@ -1,5 +1,12 @@
+import 'dart:io';
+
+import 'package:date_picker_timeline/extra/dimen.dart';
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
+import 'package:expand_tap_area/expand_tap_area.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sauftrag/app/locator.dart';
@@ -65,6 +72,7 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
       'likes': '53.5 k',
     },
   ];
+
 
   void _showAction(BuildContext context, int index) {
     showDialog<void>(
@@ -135,7 +143,7 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
                         ),
                         GestureDetector(
                           onTap: (){
-                            add(context);
+                            add(context, model);
                           },
                           child: Container(
                               decoration: BoxDecoration(
@@ -209,16 +217,13 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
                                 fontSize: 2.5.t,
                               ),
                             ),
-                            Container(
-                              // onPressed: () {
-                              //  /* showDialog(
-                              //       context: context,
-                              //       builder: (BuildContext context){
-                              //         return DrinkStatusDialogBox(title: "Add New Location", btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
-                              //       }
-                              //   );*/
-                              // },
-                              child: Image.asset(ImageUtils.profileImg, height: 15.i,),
+                            GestureDetector(
+                              onTap: (){
+                                model.navigateToBarProfile2();
+                              },
+                              child: Container(
+                                child: Image.asset(ImageUtils.profileImg, height: 15.i,),
+                              ),
                             ),
                           ],
                         ),
@@ -386,12 +391,15 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
       disposeViewModel: false,
     );
   }
-  void add(context){
+  void add(context, MainViewModel mainModel){
+    final scrollController = ScrollController();
     showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
-        builder: (BuildContext context){
+        builder: (BuildContext context ){
+
           return Container(
+            padding: EdgeInsets.symmetric( horizontal: Dimensions.horizontalPadding),
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(topRight: Radius.circular(50),topLeft: Radius.circular(50))
@@ -400,7 +408,7 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  margin: EdgeInsets.only(top: 6.h, left: 4.w, right: 4.w),
+                  padding: EdgeInsets.only(top: Dimensions.homeTopMargin),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     //crossAxisAlignment: CrossAxisAlignment.start,
@@ -408,15 +416,15 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SvgPicture.asset(ImageUtils.mobileIcon,
-                            width: 5.i,
-                            height: 5.i,
+                          Image.asset(ImageUtils.johnImg,
+                            width: 13.i,
+                            height: 13.i,
                           ),
                           SizedBox(width: 2.w,),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Find Contacts Easily",
+                              Text("John Milton",
                                 style: TextStyle(
                                   fontFamily: FontUtils.modernistBold,
                                   fontSize: 1.9.t,
@@ -424,64 +432,311 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
                                 ),
                               ),
                               SizedBox(height: 0.5.h,),
-                              Text("Add contacts from your device",
-                                style: TextStyle(
-                                  fontFamily: FontUtils.modernistRegular,
-                                  fontSize: 1.9.t,
-                                  color: ColorUtils.text_dark,
+                              Container(
+                               height: 3.h,
+                                width: 25.w,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 2.w),
+                                decoration: BoxDecoration(
+                                    color: ColorUtils.white,
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(Dimensions.roundCorner)),
+                                    border: Border.all(color: ColorUtils.red_color)
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                   SvgPicture.asset(ImageUtils.privateIcon, height: 1.6.h,),
+                                    SizedBox(width: 1.5.w,),
+                                    Expanded(
+                                        child: DropdownButton<String>(
+                                          value: mainModel.msgTypeValueStr,
+                                          items: mainModel.msgTypeList
+                                              .asMap()
+                                              .values
+                                              .map((String value) {
+                                            return DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Text(
+                                                value,
+                                                style: TextStyle(
+                                                  fontSize: 1.6.t,
+                                                  fontFamily: FontUtils
+                                                      .modernistRegular,
+                                                  color: ColorUtils.black,
+                                                  //height: 1.8
+                                                ),
+                                              ),
+                                            );
+                                          }).toList(),
+                                          onChanged: (data) {
+                                            setState(() {
+                                              mainModel.msgTypeValueStr =
+                                              data as String;
+                                              mainModel.msgTypeValue =
+                                              mainModel.msgTypeMap[mainModel
+                                                  .msgTypeValueStr] as int;
+                                            });
+                                          },
+                                          hint: Text(
+                                            "Select an option",
+                                            style: TextStyle(
+                                              fontSize: 1.8.t,
+                                              fontFamily: FontUtils.modernistRegular,
+                                              color: ColorUtils.red_color,
+                                            ),
+                                          ),
+                                          isExpanded: true,
+                                          underline: Container(
+                                          ),
+                                          icon: Align(
+                                              alignment: Alignment.centerRight,
+                                              child: Icon(
+                                                Icons.keyboard_arrow_down_rounded,
+                                                color: ColorUtils.black,
+                                                size: 4.2.i,
+                                              )
+                                          ),
+                                        )
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
                           ),
                         ],
                       ),
-                      SvgPicture.asset(ImageUtils.forwardIcon)
+                     Row(
+                       children: [
+                         Text("Sindh, Karachi",
+                           style: TextStyle(
+                             fontFamily: FontUtils.modernistBold,
+                             fontSize: 1.8.t,
+                             color: ColorUtils.text_dark,
+                           ),
+                         ),
+                         SizedBox(width: 1.8.w),
+                         SvgPicture.asset(ImageUtils.locationIcon, height: 8.i,),
+                       ],
+                     )
                     ],
                   ),
                 ),
                 SizedBox(height: 3.h,),
                 Container(
-                  margin: EdgeInsets.only(top: 3.h, left: 4.w, right: 4.w, bottom: 3.h),
+
                   child: Row(
                     //mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     //crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          SvgPicture.asset(ImageUtils.peopleIcon,
-                            width: 5.i,
-                            height: 5.i,
-                          ),
-                          SizedBox(width: 2.w,),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Invite to Souftrag",
-                                style: TextStyle(
-                                  fontFamily: FontUtils.modernistBold,
-                                  fontSize: 1.9.t,
-                                  color: ColorUtils.text_dark,
+                          Container(
+
+                            margin: EdgeInsets.only(
+                              //left: SizeConfig.widthMultiplier * 4.5,
+                              //right: SizeConfig.widthMultiplier * 2,
+                              //top: SizeConfig.heightMultiplier * 3,
+                            ),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(15.0),
                                 ),
+                                border: Border.all(color: ColorUtils.text_red)
+                            ),
+                            child: Container(
+                              //color: Colors.amber,
+                              margin:
+                              EdgeInsets.symmetric(horizontal: SizeConfig.widthMultiplier * 3,),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  ExpandTapWidget(
+                                    onTap: () {
+                                      mainModel.messageScreenEmojiShowing = !mainModel.messageScreenEmojiShowing;
+                                      mainModel.messageScreenEmojiSelected = !mainModel.messageScreenEmojiSelected;
+                                      SchedulerBinding.instance!.addPostFrameCallback((_) {
+                                        scrollController.jumpTo(scrollController.position.maxScrollExtent);
+                                      });
+                                      setState(() {
+                                      });
+                                    },
+                                    tapPadding: EdgeInsets.all(25.0),
+                                    child: SvgPicture.asset(ImageUtils.smileyIcon),
+                                  ),
+                                  // GestureDetector(
+                                  //   onTap: (){
+                                  //     emojiShowing = !emojiShowing;
+                                  //     emojiSelected = !emojiSelected;
+                                  //     SchedulerBinding.instance!.addPostFrameCallback((_) {
+                                  //       scrollController.jumpTo(scrollController.position.maxScrollExtent);
+                                  //     });
+                                  //     setState(() {
+                                  //     });
+                                  //   },
+                                  //   child: Container(
+                                  //     child: SvgPicture.asset(ImageUtils.smileyIcon),
+                                  //   ),
+                                  // ),
+                                  SizedBox(width: 1.w,),
+                                  Container(
+                                    height: 8.h,
+                                    width: 57.w,
+                                    margin: EdgeInsets.only(
+                                        left: SizeConfig.widthMultiplier * 3,
+                                        right: SizeConfig.widthMultiplier * 3),
+                                    child: TextField(
+                                      onTap: () {},
+                                      enabled: true,
+                                      //readOnly: true,
+                                      //focusNode: model.searchFocus,
+                                      controller: mainModel.messageScreenChatController,
+                                      decoration: InputDecoration(
+                                        hintText: "Type your message...",
+                                        hintStyle: TextStyle(
+                                          //fontFamily: FontUtils.proximaNovaRegular,
+                                          //color: ColorUtils.silverColor,
+                                          fontSize: SizeConfig.textMultiplier * 1.9,
+                                        ),
+                                        border: InputBorder.none,
+                                        isDense: true,
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: SizeConfig.heightMultiplier * 2),
+                                      ),maxLines: 8,
+                                    ),
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      //color: ColorUtils.text_red,
+                                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        ExpandTapWidget(
+                                          onTap: () {
+                                            mainModel.getImage();
+                                            setState(() {
+                                            });
+                                          },
+                                          tapPadding: EdgeInsets.all(50.0),
+                                          child: SvgPicture.asset(ImageUtils.plusIcon),
+                                        ),
+                                        // GestureDetector(
+                                        //   onTap: (){
+                                        //     model.getImage();
+                                        //   },
+                                        //     child: SvgPicture.asset(ImageUtils.plusIcon),
+                                        // ),
+                                        SizedBox(width: 3.w,),
+                                        ExpandTapWidget(
+                                            onTap: () async{
+                                              // final cameras = await availableCameras();
+                                              // final firstCamera = cameras.first;
+                                              //model.navigationService.navigateTo(to: TakePictureScreen(camera: firstCamera,));
+                                              mainModel.openCamera();
+                                            },
+                                            tapPadding: EdgeInsets.all(25.0),
+                                            child: SvgPicture.asset(ImageUtils.photoCamera, color: ColorUtils.red_color,)
+                                        ),
+                                        // GestureDetector(
+                                        //   onTap: (){
+                                        //   },
+                                        //   child: SvgPicture.asset(ImageUtils.photoCamera)
+                                        // ),
+                                      ],
+                                    ),
+                                  ),
+                                  // Text(searchHere,
+                                  //   style: TextStyle(
+                                  //     fontFamily: FontUtils.gibsonRegular,
+                                  //     fontWeight: FontWeight.w400,
+                                  //     fontSize: SizeConfig.textMultiplier * 1.8,
+                                  //     color: ColorUtils.searchFieldText,
+                                  //   ),
+                                  // ),
+                                ],
                               ),
-                              SizedBox(height: 0.5.h,),
-                              Text("Connect with friends and family",
-                                style: TextStyle(
-                                  fontFamily: FontUtils.modernistRegular,
-                                  fontSize: 1.9.t,
-                                  color: ColorUtils.text_dark,
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
+                          // Container(
+                          //   decoration: BoxDecoration(
+                          //     shape: BoxShape.circle,
+                          //     color: ColorUtils.text_red,
+                          //   ),
+                          //   child: Padding(
+                          //     padding: const EdgeInsets.all(15.0),
+                          //     child: SvgPicture.asset(ImageUtils.voiceRecorder,
+                          //       color: Colors.white,
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
-                      SvgPicture.asset(ImageUtils.forwardIcon)
+                      SizedBox(height: 2.h,),
+                      if(mainModel.messageScreenEmojiSelected == true)
+                        Container(
+                          height: 30.h,
+                          child: Offstage(
+                            offstage: !mainModel.messageScreenEmojiShowing,
+                            child: EmojiPicker(
+                                onEmojiSelected: (Category category, Emoji emoji) {
+                                  mainModel.messageEmojiSelected(emoji);
+                                },
+                                onBackspacePressed: mainModel.messageScreenBackspacePressed(),
+                                config: Config(
+                                    columns: 7,
+                                    // Issue: https://github.com/flutter/flutter/issues/28894
+                                    emojiSizeMax: 32 * (Platform.isIOS ? 1.30 : 1.0),
+                                    verticalSpacing: 0,
+                                    horizontalSpacing: 0,
+                                    initCategory: Category.RECENT,
+                                    bgColor: const Color(0xFFF2F2F2),
+                                    indicatorColor: Colors.blue,
+                                    iconColor: Colors.grey,
+                                    iconColorSelected: Colors.blue,
+                                    progressIndicatorColor: Colors.blue,
+                                    backspaceColor: Colors.blue,
+                                    showRecentsTab: true,
+                                    recentsLimit: 28,
+                                    noRecentsText: 'No Recents',
+                                    noRecentsStyle: const TextStyle(
+                                        fontSize: 20, color: Colors.black26),
+                                    tabIndicatorAnimDuration: kTabScrollDuration,
+                                    categoryIcons: const CategoryIcons(),
+                                    buttonMode: ButtonMode.MATERIAL)),
+                          ),
+                        ),
                     ],
                   ),
                 ),
+                SizedBox(height: 2.h,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(bottom: 2.h),
+                      padding: EdgeInsets.symmetric(vertical: 1.2.h, horizontal: 10.w),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                        border: Border.all(color: ColorUtils.text_red),
+                        color: ColorUtils.text_red
+                      ),
+                      child: Text("Post",   style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: FontUtils.modernistRegular,
+                        fontSize: 1.8.t,
+                      ),),
+                    )
+                  ],
+                )
               ],
             ),
           );

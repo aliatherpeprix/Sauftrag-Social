@@ -32,58 +32,61 @@ class _LegalTermState extends State<LegalTerm> {
             ),
             backgroundColor: Colors.white,
             body:
-            Container(
-              margin: EdgeInsets.only(top: 6.h),
-              padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding),
+            SafeArea(
+              top: false,
+              bottom: false,
               child: Container(
+                margin: EdgeInsets.only(top: Dimensions.topMargin),
                 padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding),
-                width: 350.w,
-                height: 23.h,
-                decoration: BoxDecoration(
-                    border: Border.all(color:ColorUtils.red_color),
-                    borderRadius: BorderRadius.circular(15)
-                ),
                 child: Container(
-                  padding: EdgeInsets.symmetric(vertical: Dimensions.verticalPadding),
-                  child: Column(
-                    children: [
-                      InkWell(
-                        onTap:(){
-                          // Navigator.push(context, MaterialPageRoute(builder: (Context)=>GPS()));
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Legal Terms",style: TextStyle(fontSize: 2.t,color: ColorUtils.red_color),),
-                            Icon(Icons.arrow_forward_ios_sharp,color: Colors.black,size: 17,)
-                          ],
+                  padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding),
+                  height: 20.h,
+                  decoration: BoxDecoration(
+                      border: Border.all(color:ColorUtils.red_color),
+                      borderRadius: BorderRadius.circular(15)
+                  ),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: Dimensions.verticalPadding),
+                    child: Column(
+                      children: [
+                        InkWell(
+                          onTap:(){
+                            // Navigator.push(context, MaterialPageRoute(builder: (Context)=>GPS()));
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Legal Terms",style: TextStyle(fontSize: 2.t,color: ColorUtils.red_color),),
+                              Icon(Icons.arrow_forward_ios_sharp,color: Colors.black,size: 17,)
+                            ],
+                          ),
                         ),
-                      ),
-                      Divider(),
-                      SizedBox(height: 1.8.h,),
-                      InkWell(
-                        onTap:(){},
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Contact",style: TextStyle(fontSize: 2.t,color:ColorUtils.red_color),),
-                            Icon(Icons.arrow_forward_ios_sharp,color: Colors.black,size: 17,)
-                          ],
+                        Divider(),
+                        SizedBox(height: 1.8.h,),
+                        InkWell(
+                          onTap:(){},
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Contact",style: TextStyle(fontSize: 2.t,color:ColorUtils.red_color),),
+                              Icon(Icons.arrow_forward_ios_sharp,color: Colors.black,size: 17,)
+                            ],
+                          ),
                         ),
-                      ),
-                      Divider(),
-                      SizedBox(height: 1.h,),
-                      InkWell(
-                        onTap:(){},
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Imprint",style: TextStyle(fontSize: 2.t,color: ColorUtils.red_color),),
-                            Icon(Icons.arrow_forward_ios_sharp,color: Colors.black,size: 17,)
-                          ],
+                        Divider(),
+                        SizedBox(height: 1.h,),
+                        InkWell(
+                          onTap:(){},
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Imprint",style: TextStyle(fontSize: 2.t,color: ColorUtils.red_color),),
+                              Icon(Icons.arrow_forward_ios_sharp,color: Colors.black,size: 17,)
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

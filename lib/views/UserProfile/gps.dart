@@ -31,48 +31,52 @@ class _GPSState extends State<GPS> {
               backgroundColor: Colors.white,
             ),
             backgroundColor: Colors.white,
-            body: Container(
-              padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding,vertical: Dimensions.verticalPadding),
-              child: Column(
-                children: [
-                  SizedBox(height: 6.h,),
-                  Row(
-                    children: [
-                      Text(
-                        "GPS Service",
-                        style:
-                        TextStyle(fontSize: 2.t, fontFamily: FontUtils.modernistBold),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 2.h,),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding),
-                    width: 350.w,
-                    height: 7.h,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: ColorUtils.red_color),
-                        borderRadius: BorderRadius.circular(15)
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            body: SafeArea(
+              top: false,
+              bottom: false,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding,),
+                child: Column(
+                  children: [
+                    SizedBox(height: 3.h,),
+                    Row(
                       children: [
-                        Text("On",style: TextStyle(color: ColorUtils.red_color,fontFamily: FontUtils.modernistBold),),
-                        Switch(
-                          value: isSwitched,
-                          onChanged: (value) {
-                            setState(() {
-                              isSwitched = value;
-                              print(isSwitched);
-                            });
-                          },
-                          activeTrackColor:ColorUtils.red_color,
-                          activeColor: ColorUtils.red_color,
+                        Text(
+                          "GPS Service",
+                          style:
+                          TextStyle(fontSize: 2.t, fontFamily: FontUtils.modernistBold),
                         ),
                       ],
                     ),
-                  ),
-                ],
+                    SizedBox(height: 2.h,),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding),
+                      width: 350.w,
+                      height: 7.h,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: ColorUtils.red_color),
+                          borderRadius: BorderRadius.circular(15)
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("On",style: TextStyle(color: ColorUtils.red_color,fontFamily: FontUtils.modernistBold),),
+                          Switch(
+                            value: isSwitched,
+                            onChanged: (value) {
+                              setState(() {
+                                isSwitched = value;
+                                print(isSwitched);
+                              });
+                            },
+                            activeTrackColor:ColorUtils.red_color,
+                            activeColor: ColorUtils.red_color,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );

@@ -131,6 +131,15 @@ class MainViewModel extends BaseViewModel{
     }
   }
 
+  int msgTypeValue = 1;
+  String msgTypeValueStr = "Private";
+  List<String> msgTypeList = ["Private", "Public"];
+  Map<String, int> msgTypeMap = {
+    'Private': 1,
+    'Public': 2,
+  };
+
+
   Future<bool> getImage() async {
     ImagePicker picker = ImagePicker();
     var image = await picker.pickImage(source: ImageSource.gallery);
@@ -253,6 +262,52 @@ class MainViewModel extends BaseViewModel{
       'date': '1st  May- Sat -2:00 PM',
       'location': ' Lot 13 • Oakland, CA',
       'image1' : ImageUtils.location_icon
+    },
+  ];
+
+  List ratingListed = [];
+  List ratingList = [
+    {
+      'rank': '#4',
+      'image': ImageUtils.johnImg,
+      'title': 'John Milton',
+      'points': '240 Pts',
+    },
+    {
+      'rank': '#5',
+      'image': ImageUtils.mutualfrnd1,
+      'title': 'Riki Davon',
+      'points': '240 Pts',
+    },
+    {
+      'rank': '#6',
+      'image': ImageUtils.followerImg1,
+      'title': 'Josefina Ward',
+      'points': '240 Pts',
+    },
+    {
+      'rank': '#7',
+      'image': ImageUtils.mutualfrnd2,
+      'title': 'Andre Patterson',
+      'points': '240 Pts',
+    },
+    {
+      'rank': '#8',
+      'image': ImageUtils.followerImg2,
+      'title': 'Hazel Ballard',
+      'points': '240 Pts',
+    },
+    {
+      'rank': '#9',
+      'image': ImageUtils.mutualfrnd3,
+      'title': 'Nettie Parsons',
+      'points': '240 Pts',
+    },
+    {
+      'rank': '#10',
+      'image': ImageUtils.followerImg3,
+      'title': 'Hazel Ballard',
+      'points': '240 Pts',
     },
   ];
 
@@ -464,8 +519,68 @@ class MainViewModel extends BaseViewModel{
     navigationService.navigateToMapSearchScreen();
   }
 
+  void navigateToUserDetailSettings() {
+    navigationService.navigateToUserDetailSettings();
+  }
+///------User Drawer -----/////
+  void navigateToRatingList() {
+    navigationService.navigateToRatingList();
+  }
 
-  /*AnimationController? buttonController;
+  void navigateToMatchedList() {
+    navigationService.navigateToMatchedList();
+  }
+
+  void navigateToFollowerList() {
+    navigationService.navigateToFollowerList();
+  }
+
+  void navigateToListOfBar() {
+    navigationService.navigateToListOfBar();
+  }
+
+  void navigateToBarProfile() {
+    navigationService.navigateToBarProfile();
+  }
+
+  void navigateToUserBarCodeScanner() {
+    navigationService.navigateToUserBarCodeScanner();
+  }
+
+  void navigateToUpcomingEvent() {
+    navigationService.navigateToUpcomingEvent();
+  }
+
+  ///-----------Bar Profile ---------------///
+  void navigateToBarProfile2() {
+    navigationService.navigateToBarProfile2();
+  }
+
+  void navigateToAllBarRating() {
+    navigationService.navigateToAllBarRating();
+  }
+
+///--------------Bar Profile ------------------///
+  void navigateToBarDetails() {
+    navigationService.navigateToBarDetails();
+  }
+  void navigateToBarAccounts() {
+    navigationService.navigateToBarAccounts();
+  }
+
+  void navigateToBarAccountOwnerShip() {
+    navigationService.navigateToBarAccountOwnerShip();
+  }
+
+
+
+
+
+
+
+
+
+/*AnimationController? buttonController;
   Animation<double>? rotate;
   Animation<double>? right;
   Animation<double>? bottom;

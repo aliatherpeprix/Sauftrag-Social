@@ -69,7 +69,7 @@ class _FriendListState extends State<FriendList> {
                 body: Container(
                   padding: EdgeInsets.symmetric(
                       horizontal: Dimensions.horizontalPadding,
-                      vertical: Dimensions.verticalPadding),
+                      ),
                   child: Stack(
                     children: [
                       if(model.openGroupMenu == true)
@@ -120,42 +120,50 @@ class _FriendListState extends State<FriendList> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Expanded(
-                                flex: 3,
-                                child: Text(
-                                  "Messages",
-                                  style: TextStyle(
-                                    fontFamily: FontUtils.modernistBold,
-                                    color: Colors.black,
-                                    fontSize: 2.5.t,
-                                  ),
+                              Text(
+                                "Messages",
+                                style: TextStyle(
+                                  fontFamily: FontUtils.modernistBold,
+                                  color: Colors.black,
+                                  fontSize: 2.5.t,
                                 ),
                               ),
-                              Expanded(
-                                flex: 2,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    IconButton(
-                                      padding: EdgeInsets.zero,
-                                      onPressed: () {
-                                        model.navigateToInvitePeopleScreen();
-                                        // if(model.openGroupMenu == false){
-                                        //   model.openGroupMenu = true;
-                                        //   model.notifyListeners();
-                                        // }
-                                        // else if (model.openGroupMenu == true){
-                                        //   model.openGroupMenu = false;
-                                        //   model.notifyListeners();
-                                        // }
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  IconButton(
+                                    padding: EdgeInsets.zero,
+                                    onPressed: () {
+                                      model.navigateToInvitePeopleScreen();
+                                      // if(model.openGroupMenu == false){
+                                      //   model.openGroupMenu = true;
+                                      //   model.notifyListeners();
+                                      // }
+                                      // else if (model.openGroupMenu == true){
+                                      //   model.openGroupMenu = false;
+                                      //   model.notifyListeners();
+                                      // }
 
-                                      },
-                                      icon:
-                                          SvgPicture.asset(ImageUtils.addFriendIcon),
-                                    ),
-                                    IconButton(
-                                      padding: EdgeInsets.zero,
-                                      onPressed: () {
+                                    },
+                                    icon:
+                                        SvgPicture.asset(ImageUtils.addFriendIcon),
+                                  ),
+                                  IconButton(
+                                    padding: EdgeInsets.zero,
+                                    onPressed: () {
+                                      if(model.openGroupMenu == false){
+                                        model.openGroupMenu = true;
+                                        model.notifyListeners();
+                                      }
+                                      else if (model.openGroupMenu == true){
+                                        model.openGroupMenu = false;
+                                        model.notifyListeners();
+                                      }
+                                    },
+                                    icon: SvgPicture.asset(ImageUtils.messageIcon),
+                                  ),
+                                  IconButton(
+                                      onPressed: (){
                                         if(model.openGroupMenu == false){
                                           model.openGroupMenu = true;
                                           model.notifyListeners();
@@ -165,29 +173,15 @@ class _FriendListState extends State<FriendList> {
                                           model.notifyListeners();
                                         }
                                       },
-                                      icon: SvgPicture.asset(ImageUtils.messageIcon),
-                                    ),
-                                    IconButton(
-                                        onPressed: (){
-                                          if(model.openGroupMenu == false){
-                                            model.openGroupMenu = true;
-                                            model.notifyListeners();
-                                          }
-                                          else if (model.openGroupMenu == true){
-                                            model.openGroupMenu = false;
-                                            model.notifyListeners();
-                                          }
-                                        },
-                                        icon: SvgPicture.asset(ImageUtils.menuCheckIcon),
-                                    )
-                                  ],
-                                ),
+                                      icon: SvgPicture.asset(ImageUtils.menuCheckIcon),
+                                  )
+                                ],
                               ),
                             ],
                           ),
                           //if(model.openMenu == false)
                           SizedBox(
-                            height: 4.h,
+                            height: 3.h,
                           ),
                           // if(model.openMenu == true)
                           //   Align(
@@ -308,6 +302,7 @@ class _FriendListState extends State<FriendList> {
                             ),
                           ),
                           Expanded(
+
                             child: TabBarView(
                               children: [
                                 // first tab bar view widget

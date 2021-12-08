@@ -33,20 +33,13 @@ class _MySideMenuState extends State<MySideMenu> {
 
               //User
               Container(
-                padding: EdgeInsets.symmetric(horizontal: Dimensions.containerHorizontalPadding, vertical: Dimensions.containerVerticalPadding),
+                padding: EdgeInsets.symmetric( vertical: Dimensions.containerVerticalPadding),
                 child: Row(
                   children: [
 
-                    /*RoundImage(
-                        image: ImageUtils.userIcon,
-                        height: 13.i,
-                        width: 13.i
-                    ),*/
-
-                    SizedBox(width: 2.w),
-
+                    Image.asset(ImageUtils.profileImg),
                     Text(
-                      "John Doe",
+                      "John Wick",
                       style: TextStyle(
                         color: ColorUtils.white,
                         fontFamily: FontUtils.modernistBold,
@@ -56,11 +49,13 @@ class _MySideMenuState extends State<MySideMenu> {
                   ],
                 ),
               ),
-              SizedBox(height: 1.h),
+
 
               //Ranking List
               InkWell(
-                onTap: (){},
+                onTap: (){
+                  model.navigateToRatingList();
+                },
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: Dimensions.containerHorizontalPadding, vertical: Dimensions.containerVerticalPadding),
                   child: Row(
@@ -112,7 +107,9 @@ class _MySideMenuState extends State<MySideMenu> {
 
               //Matched
               InkWell(
-                onTap: (){},
+                onTap: (){
+                  model.navigateToMatchedList();
+                },
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: Dimensions.containerHorizontalPadding, vertical: Dimensions.containerVerticalPadding),
                   child: Row(
@@ -164,7 +161,9 @@ class _MySideMenuState extends State<MySideMenu> {
 
               //Bars
               InkWell(
-                onTap: (){},
+                onTap: (){
+                  model.navigateToListOfBar();
+                },
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: Dimensions.containerHorizontalPadding, vertical: Dimensions.containerVerticalPadding),
                   child: Row(
@@ -189,7 +188,9 @@ class _MySideMenuState extends State<MySideMenu> {
 
               //QR Code
               InkWell(
-                onTap: (){},
+                onTap: (){
+                  model.navigateToUserBarCodeScanner();
+                },
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: Dimensions.containerHorizontalPadding, vertical: Dimensions.containerVerticalPadding),
                   child: Row(
@@ -214,7 +215,9 @@ class _MySideMenuState extends State<MySideMenu> {
 
               //Events
               InkWell(
-                onTap: (){},
+                onTap: (){
+                  model.navigateToUpcomingEvent();
+                },
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: Dimensions.containerHorizontalPadding, vertical: Dimensions.containerVerticalPadding),
                   child: Row(

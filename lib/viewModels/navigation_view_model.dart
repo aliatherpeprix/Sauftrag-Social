@@ -5,11 +5,23 @@ import 'package:sauftrag/bar/views/Auth/barTimingType.dart';
 import 'package:sauftrag/bar/views/Auth/media.dart';
 import 'package:sauftrag/bar/views/Auth/signUp.dart';
 import 'package:sauftrag/bar/views/Drawer/barEvent.dart';
+import 'package:sauftrag/bar/views/Drawer/barProfile.dart';
+import 'package:sauftrag/bar/views/Drawer/bar_Rating.dart';
+import 'package:sauftrag/bar/views/Drawer/bar_all_rating.dart';
+import 'package:sauftrag/bar/views/Drawer/follower_profile.dart';
 import 'package:sauftrag/bar/views/Drawer/followers.dart';
+import 'package:sauftrag/bar/views/Drawer/list_of_bar.dart';
+import 'package:sauftrag/bar/views/Drawer/matched_screen.dart';
 import 'package:sauftrag/bar/views/Drawer/notifications.dart';
+import 'package:sauftrag/bar/views/Drawer/qr_code_scanner.dart';
+import 'package:sauftrag/bar/views/Drawer/rating_list.dart';
+import 'package:sauftrag/bar/views/Drawer/upcoming_event.dart';
 import 'package:sauftrag/bar/views/Home/bar_news_feed.dart';
 import 'package:sauftrag/bar/views/Home/main_view.dart';
 import 'package:sauftrag/bar/views/Home/order_details.dart';
+import 'package:sauftrag/bar/views/Profile/bar_account_ownership.dart';
+import 'package:sauftrag/bar/views/Profile/bar_accounts.dart';
+import 'package:sauftrag/bar/views/Profile/bar_details.dart';
 import 'package:sauftrag/bar/views/Profile/bar_profile.dart';
 import 'package:sauftrag/bar/views/Home/bar_event.dart';
 import 'package:sauftrag/views/Auth/check_email.dart';
@@ -37,6 +49,7 @@ import 'package:sauftrag/views/UserProfile/accountOwnership.dart';
 import 'package:sauftrag/views/UserProfile/gps.dart';
 import 'package:sauftrag/views/UserProfile/legalTerm.dart';
 import 'package:sauftrag/views/UserProfile/notifications.dart';
+import 'package:sauftrag/views/UserProfile/user_details.dart';
 import 'package:sauftrag/widgets/bar_auth_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -169,7 +182,7 @@ class NavigationViewModel extends BaseViewModel{
   }
 
   void navigateToUserProfileAccountOwnershipScreen(){
-    navigationKey.currentState!.push(PageTransition(child: OwnerShip(), type: PageTransitionType.rightToLeftWithFade));
+    navigationKey.currentState!.push(PageTransition(child: BarAccountOwnership(), type: PageTransitionType.rightToLeftWithFade));
   }
 
   void navigateToUserProfileAccountNotificationScreen(){
@@ -198,9 +211,81 @@ class NavigationViewModel extends BaseViewModel{
 
   }
 
+  void navigateToUserDetailSettings(){
+    navigationKey.currentState!.push(PageTransition(child: UserDetails(), type: PageTransitionType.rightToLeftWithFade));
+
+  }
+///----Drawer------////
+  void navigateToRatingList(){
+    navigationKey.currentState!.push(PageTransition(child: RatingList(), type: PageTransitionType.rightToLeftWithFade));
+
+  }
+  void navigateToMatchedList(){
+    navigationKey.currentState!.push(PageTransition(child: MatchedScreen(), type: PageTransitionType.rightToLeftWithFade));
+
+  }
+
+  void navigateToFollowerList(){
+    navigationKey.currentState!.push(PageTransition(child: FollowerProfile(), type: PageTransitionType.rightToLeftWithFade));
+
+  }
+
+  void navigateToListOfBar(){
+    navigationKey.currentState!.push(PageTransition(child: ListOfBar(), type: PageTransitionType.rightToLeftWithFade));
+
+  }
+
+  void navigateToBarProfile(){
+    navigationKey.currentState!.push(PageTransition(child: Barprofile(), type: PageTransitionType.rightToLeftWithFade));
+
+  }
+
+  void navigateToUserBarCodeScanner(){
+    navigationKey.currentState!.push(PageTransition(child: QRCodeScanner(), type: PageTransitionType.rightToLeftWithFade));
+
+  }
+
+  void navigateToUpcomingEvent(){
+    navigationKey.currentState!.push(PageTransition(child: UpcomingEvent(), type: PageTransitionType.rightToLeftWithFade));
+
+  }
 
 
-  /*void navigateToWelcomeScreen(){
+  ///------------------Bar Profile ---------------------------------///
+
+  void navigateToBarProfile2(){
+    navigationKey.currentState!.push(PageTransition(child: BarRating(), type: PageTransitionType.rightToLeftWithFade));
+
+  }
+
+  void navigateToAllBarRating(){
+    navigationKey.currentState!.push(PageTransition(child: BarAllRating(), type: PageTransitionType.rightToLeftWithFade));
+
+  }
+
+///-----------------Bar Profile --------------------------------------///
+  void navigateToBarDetails(){
+    navigationKey.currentState!.push(PageTransition(child: BarDetail(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToBarAccounts(){
+    navigationKey.currentState!.push(PageTransition(child: BarAccount(), type: PageTransitionType.rightToLeftWithFade));
+
+  }
+
+  void navigateToBarAccountOwnerShip(){
+    navigationKey.currentState!.push(PageTransition(child: BarAccountOwnership(), type: PageTransitionType.rightToLeftWithFade));
+
+  }
+
+
+
+
+
+
+
+
+/*void navigateToWelcomeScreen(){
     navigationKey.currentState!.pushReplacement(PageTransition(child: Welcome(), type: PageTransitionType.fade));
   }
 

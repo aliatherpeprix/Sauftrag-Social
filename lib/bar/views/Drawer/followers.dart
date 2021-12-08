@@ -127,74 +127,79 @@ class _FollowersState extends State<Followers> {
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: EdgeInsets.symmetric(horizontal:SizeConfig.widthMultiplier * 4,),
-                        child: Container(
-                          padding: EdgeInsets.symmetric( horizontal: 2.w),
-                          decoration: BoxDecoration(
-                            // boxShadow: [
-                            //   BoxShadow(
-                            //     color: ColorUtils.black.withOpacity(0.1),
-                            //     spreadRadius: 0,
-                            //     blurRadius: 10,
-                            //     offset: Offset(0, 5), // changes position of shadow
-                            //   ),
-                            // ],
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(18)),
-                            // border: Border.all(color: ColorUtils.text_red),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Row(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Image.asset(model.notifications[index]["image"],
-                                      width: 15.i,
-                                      height: 15.i,
-                                      fit: BoxFit.cover,
+                        child: GestureDetector(
+                          onTap: (){
+                            model.navigateToFollowerList();
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric( horizontal: 2.w),
+                            decoration: BoxDecoration(
+                              // boxShadow: [
+                              //   BoxShadow(
+                              //     color: ColorUtils.black.withOpacity(0.1),
+                              //     spreadRadius: 0,
+                              //     blurRadius: 10,
+                              //     offset: Offset(0, 5), // changes position of shadow
+                              //   ),
+                              // ],
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all(Radius.circular(18)),
+                              // border: Border.all(color: ColorUtils.text_red),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Row(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.asset(model.notifications[index]["image"],
+                                        width: 15.i,
+                                        height: 15.i,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(width: 3.w,),
-                                  Text(model.notifications[index]["title"],
-                                    style: TextStyle(
-                                        fontFamily: FontUtils.modernistBold,
-                                        fontSize: 2.2.t,
-                                        color: ColorUtils.black
+                                    SizedBox(width: 3.w,),
+                                    Text(model.notifications[index]["title"],
+                                      style: TextStyle(
+                                          fontFamily: FontUtils.modernistBold,
+                                          fontSize: 2.2.t,
+                                          color: ColorUtils.black
+                                      ),
                                     ),
-                                  ),
 
-                                ],
-                              ),
-                              SizedBox(width: 2.w,),
-                              Container(
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                  },
-                                  child: Text("Followers"),
-                                  style: ElevatedButton.styleFrom(
-                                    primary: ColorUtils.text_red,
-                                    onPrimary: ColorUtils.white,
-                                    padding: EdgeInsets.symmetric(vertical: 1.2.h, horizontal: 4.w),
-                                    elevation: 0,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(Dimensions.roundCorner),
-                                        side: BorderSide(
-                                            color: ColorUtils.text_red,
-                                            width: 1
-                                        )
-                                    ),
-                                    textStyle: TextStyle(
-                                      //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
-                                      fontFamily: FontUtils.modernistBold,
-                                      fontSize: 2.t,
-                                      //height: 0
+                                  ],
+                                ),
+                                SizedBox(width: 2.w,),
+                                Container(
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                    },
+                                    child: Text("Followers"),
+                                    style: ElevatedButton.styleFrom(
+                                      primary: ColorUtils.text_red,
+                                      onPrimary: ColorUtils.white,
+                                      padding: EdgeInsets.symmetric(vertical: 1.2.h, horizontal: 4.w),
+                                      elevation: 0,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(Dimensions.roundCorner),
+                                          side: BorderSide(
+                                              color: ColorUtils.text_red,
+                                              width: 1
+                                          )
+                                      ),
+                                      textStyle: TextStyle(
+                                        //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
+                                        fontFamily: FontUtils.modernistBold,
+                                        fontSize: 2.t,
+                                        //height: 0
+                                      ),
                                     ),
                                   ),
-                                ),
-                              )
-                            ],
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       );

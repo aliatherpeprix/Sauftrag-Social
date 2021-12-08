@@ -56,73 +56,78 @@ class _UserProfileState extends State<UserProfile> {
                       SizedBox(height: 5.h),
 
                       ///--------------Event Name--------------------///
-                      Container(
-                        // padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            color: Colors.white),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Container(
-                                  // onPressed: () {
-                                  //  /* showDialog(
-                                  //       context: context,
-                                  //       builder: (BuildContext context){
-                                  //         return DrinkStatusDialogBox(title: "Add New Location", btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
-                                  //       }
-                                  //   );*/
-                                  // },
-                                  child: Image.asset(ImageUtils.userProfileProfile,
-                                  height: 15.i,
-                                  width: 15.i,
+                      GestureDetector(
+                        onTap: (){
+                          model.navigateToUserDetailSettings();
+                        },
+                        child: Container(
+                          // padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              color: Colors.white),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                    // onPressed: () {
+                                    //  /* showDialog(
+                                    //       context: context,
+                                    //       builder: (BuildContext context){
+                                    //         return DrinkStatusDialogBox(title: "Add New Location", btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+                                    //       }
+                                    //   );*/
+                                    // },
+                                    child: Image.asset(ImageUtils.userProfileProfile,
+                                    height: 15.i,
+                                    width: 15.i,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(width: 2.w,),
-                                // Container(
-                                //   margin: EdgeInsets.only(right: 20),
-                                //   child: RoundImage(
-                                //     url: widget.profile.imageurl,
-                                //     txtsize: 18,
-                                //     txt: widget.profile.fullName,
-                                //     width: 50,
-                                //     height: 50,
-                                //     borderRadius: 15,
-                                //   ),
-                                // ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "John Wick",
-                                      style: TextStyle(
-                                        color: ColorUtils.black,
-                                        fontFamily: FontUtils.modernistBold,
-                                        fontSize: 2.t,
+                                  SizedBox(width: 2.w,),
+                                  // Container(
+                                  //   margin: EdgeInsets.only(right: 20),
+                                  //   child: RoundImage(
+                                  //     url: widget.profile.imageurl,
+                                  //     txtsize: 18,
+                                  //     txt: widget.profile.fullName,
+                                  //     width: 50,
+                                  //     height: 50,
+                                  //     borderRadius: 15,
+                                  //   ),
+                                  // ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "John Wick",
+                                        style: TextStyle(
+                                          color: ColorUtils.black,
+                                          fontFamily: FontUtils.modernistBold,
+                                          fontSize: 2.t,
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(height: 1.h,),
-                                    Text(
-                                      "+62 1309 - 1710 - 1920",
-                                      style: TextStyle(
-                                        color: ColorUtils.text_grey,
-                                        fontFamily: FontUtils.modernistBold,
-                                        fontSize: 1.7.t,
+                                      SizedBox(height: 1.h,),
+                                      Text(
+                                        "+62 1309 - 1710 - 1920",
+                                        style: TextStyle(
+                                          color: ColorUtils.text_grey,
+                                          fontFamily: FontUtils.modernistBold,
+                                          fontSize: 1.7.t,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            Icon(
-                              Icons.keyboard_arrow_right_rounded,
-                              size: 30,
-                              color: Colors.black,
-                            )
-                          ],
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Icon(
+                                Icons.keyboard_arrow_right_rounded,
+                                size: 30,
+                                color: Colors.black,
+                              )
+                            ],
+                          ),
                         ),
                       ),
                       SizedBox(height: 3.h,),

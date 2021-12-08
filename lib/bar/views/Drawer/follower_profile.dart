@@ -112,19 +112,24 @@ class _FollowerProfileState extends State<FollowerProfile> {
                   child: CustomScrollView(
                     slivers: [
                       SliverAppBar(
-                        leading: Container(
-                          margin: EdgeInsets.symmetric(
-                              horizontal: 1.7.w, vertical: 1.1.h),
-                          padding: EdgeInsets.all(13),
+                        leading: GestureDetector(
+                          onTap: (){
+                            model.navigateBack();
+                          },
+                          child: Container(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 1.7.w, vertical: 1.1.h),
+                            padding: EdgeInsets.all(13),
 //height: 10.h,
-                          decoration: BoxDecoration(
-                            color: ColorUtils.white,
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(10),
+                            decoration: BoxDecoration(
+                              color: ColorUtils.white,
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(10),
+                              ),
                             ),
+                            child: SvgPicture.asset(ImageUtils.backArrow),
+                            height: 5.i,
                           ),
-                          child: SvgPicture.asset(ImageUtils.backArrow),
-                          height: 5.i,
                         ),
                         actions: [
                           IconButton(

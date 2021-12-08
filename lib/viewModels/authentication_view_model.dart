@@ -99,6 +99,14 @@ class AuthenticationViewModel extends BaseViewModel {
     'Lloret' : 4
   };
 
+  int msgTypeValue = 1;
+  String msgTypeValueStr = "Private";
+  List<String> msgTypeList = ["Private", "Public"];
+  Map<String, int> msgTypeMap = {
+    'Private': 1,
+    'Public': 2,
+  };
+
   // int blockContactValue = 1;
   // String blockContactValueStr = "Cocktail";
   // List<String> blockContactList = ["Beer", "Cocktail", "Long Drink", "Shot" ];
@@ -379,6 +387,10 @@ class AuthenticationViewModel extends BaseViewModel {
   void navigateToOrderDetailsScreen() {
     navigationService.navigateToOrderDetailsScreen();
   }
+  void navigateToBarAccountOwnerShip() {
+    navigationService.navigateToBarAccountOwnerShip();
+  }
+
 
   // void navigateToResentPasswordScreen() {
   //   navigationService.navigateToResentPasswordScreen();

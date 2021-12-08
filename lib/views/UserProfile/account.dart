@@ -35,28 +35,43 @@ class _AccountState extends State<Account> {
           },
           child: Scaffold(
               resizeToAvoidBottomInset: false,
-              appBar: AppBar(
-                leading: IconButton(onPressed: (){Navigator.pop(context);}, icon: Icon(Icons.arrow_back_ios,color: Colors.black,)),
-                  backgroundColor: Colors.white,
-                  elevation: 0,
-                  title: Container(
-                    child: Text(
-                      "Account",
-                      style: TextStyle(
-                          color: Colors.black, fontSize: 2.5.t, fontFamily: FontUtils.modernistBold),
-                    ),
-                  ),
-                ),
 
               backgroundColor: Colors.white,
               body: SafeArea(
+                top: false,
+                bottom: false,
                     child: Container(
-                      padding:  EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding,vertical: Dimensions.verticalPadding),
+                      padding:  EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding,),
                       child: Column(children: [
-                          SizedBox(
-                            height: 1.h,
-                          ),
-                          SizedBox(height: 4.h,),
+                        SizedBox(height: Dimensions.topMargin),
+                        //Add Images
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                  model.navigateBack();
+                                },
+                                iconSize: 18.0,
+                                padding: EdgeInsets.zero,
+                                constraints: BoxConstraints(),
+                                icon: Icon(
+                                  Icons.arrow_back_ios,
+                                  color: ColorUtils.black,
+                                )),
+                            SizedBox(width: 2.w),
+                            Text(
+                              "John Wick",
+                              style: TextStyle(
+                                color: ColorUtils.black,
+                                fontFamily: FontUtils.modernistBold,
+                                fontSize: 2.5.t,
+                              ),
+                            ),
+                          ],
+                        ),
+
+                          SizedBox(height: 3.h,),
                           Row(
                             children: [
                               Text(
@@ -69,27 +84,30 @@ class _AccountState extends State<Account> {
                           SizedBox(
                             height: 2.h,
                           ),
-                          TextFormField(
-                            style: TextStyle(
-                                color: ColorUtils.red_color,fontFamily: FontUtils.modernistBold),
-                            decoration: InputDecoration(
-                                focusedBorder: OutlineInputBorder(
+                          Container(
+                            height: 7.h,
+                            child: TextFormField(
+                              style: TextStyle(
+                                  color: ColorUtils.red_color,fontFamily: FontUtils.modernistBold),
+                              decoration: InputDecoration(
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                                      borderSide: BorderSide(color: ColorUtils.red_color)),
+                                  enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(Radius.circular(15)),
-                                    borderSide: BorderSide(color: ColorUtils.red_color)),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                                  borderSide: BorderSide(color:  ColorUtils.red_color),
-                                ),
-                                focusColor:  ColorUtils.red_color,
-                                prefixIcon: CountryCodePicker(
-                                  initialSelection: 'US',
-                                  showCountryOnly: false,
+                                    borderSide: BorderSide(color:  ColorUtils.red_color),
+                                  ),
+                                  focusColor:  ColorUtils.red_color,
+                                  prefixIcon: CountryCodePicker(
+                                    initialSelection: 'US',
+                                    showCountryOnly: false,
 
-                                ),
-                                hintText: 'Enter Your Phone number',
-                                hintStyle: TextStyle(color:  ColorUtils.red_color)),
-                            keyboardType: TextInputType.phone,
-                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                  ),
+                                  hintText: 'Enter Your Phone number',
+                                  hintStyle: TextStyle(color:  ColorUtils.red_color)),
+                              keyboardType: TextInputType.phone,
+                              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                            ),
                           ),
                           SizedBox(
                             height: 2.h,
@@ -106,26 +124,29 @@ class _AccountState extends State<Account> {
                           SizedBox(
                             height: 2.h,
                           ),
-                          TextFormField(
-                            style: TextStyle(
-                                color: Color(0xFFE20000), fontWeight: FontWeight.w700),
-                            decoration: InputDecoration(
-                                focusedBorder: OutlineInputBorder(
+                          Container(
+                            height: 7.h,
+                            child: TextFormField(
+                              style: TextStyle(
+                                  color: Color(0xFFE20000), fontWeight: FontWeight.w700),
+                              decoration: InputDecoration(
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                                      borderSide: BorderSide(color:  ColorUtils.red_color)),
+                                  enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(Radius.circular(15)),
-                                    borderSide: BorderSide(color:  ColorUtils.red_color)),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                                  borderSide: BorderSide(color:  ColorUtils.red_color),
-                                ),
-                                focusColor: ColorUtils.red_color,
-                                hintText: 'anywhere in the world',
-                                hintStyle: TextStyle(color:  ColorUtils.red_color),
-                                suffixIcon: IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(
-                                      Icons.my_location_sharp,
-                                      color: ColorUtils.red_color,
-                                    ))),
+                                    borderSide: BorderSide(color:  ColorUtils.red_color),
+                                  ),
+                                  focusColor: ColorUtils.red_color,
+                                  hintText: 'anywhere in the world',
+                                  hintStyle: TextStyle(color:  ColorUtils.red_color),
+                                  suffixIcon: IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(
+                                        Icons.my_location_sharp,
+                                        color: ColorUtils.red_color,
+                                      ))),
+                            ),
                           ),
                           SizedBox(
                             height: 2.h,
@@ -144,7 +165,7 @@ class _AccountState extends State<Account> {
                           ),
                           Container(
                               width: 370.w,
-                              height: 10.h,
+                              height: 8.h,
                               decoration: BoxDecoration(
                                   border: Border.all(color: ColorUtils.red_color),
                                   borderRadius: BorderRadius.circular(15)),
@@ -179,8 +200,8 @@ class _AccountState extends State<Account> {
                           InkWell(
                             onTap: () {},
                             child: Container(
-                              width: 370.w,
-                              height: 8.h,
+
+                              height: 7.h,
                               padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding),
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.grey.shade500),
@@ -190,12 +211,12 @@ class _AccountState extends State<Account> {
                                 children: [
                                   Text(
                                     "Block Contacts",
-                                    style: TextStyle(color: Colors.grey[500]),
+                                    style: TextStyle(color: Colors.grey[500], fontFamily: FontUtils.modernistBold),
                                   ),
                                   Icon(
                                     Icons.arrow_forward_ios,
                                     color: Colors.black,
-                                    size: 18,
+                                    size: 4.5.i,
                                   )
                                 ],
                               ),
@@ -209,8 +230,8 @@ class _AccountState extends State<Account> {
                               model.navigateToUserProfileAccountOwnershipScreen();
                             },
                             child: Container(
-                              width: 370.w,
-                              height: 8.h,
+
+                              height: 7.h,
                               padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding),
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.grey.shade500),
@@ -219,13 +240,13 @@ class _AccountState extends State<Account> {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "AccountOwnership & Control",
-                                    style: TextStyle(color: Colors.black),
+                                    "Account Ownership & Control",
+                                    style: TextStyle(color: Colors.black, fontFamily: FontUtils.modernistBold),
                                   ),
                                   Icon(
                                     Icons.arrow_forward_ios,
                                     color: Colors.black,
-                                    size: 18,
+                                    size: 4.5.i,
                                   )
                                 ],
                               ),

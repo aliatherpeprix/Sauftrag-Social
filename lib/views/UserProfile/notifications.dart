@@ -39,95 +39,100 @@ class _UserNotificationsState extends State<UserNotifications> {
             ),
           ),
           backgroundColor: Colors.white,
-          body: Container(
-            padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding,vertical: Dimensions.verticalPadding),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      "Push Notifications",
-                      style:
-                      TextStyle(fontSize: 2.t, fontFamily: FontUtils.modernistBold),
+          body: SafeArea(
+            top: false,
+            bottom: false,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding,),
+              child: Column(
+                children: [
+                  SizedBox(height: 3.h,),
+                  Row(
+                    children: [
+                      Text(
+                        "Push Notifications",
+                        style:
+                        TextStyle(fontSize: 2.t, fontFamily: FontUtils.modernistBold),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 2.h,),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding),
+                    width: 350.w,
+                    height: 6.h,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: ColorUtils.red_color),
+                        borderRadius: BorderRadius.circular(15)
                     ),
-                  ],
-                ),
-                SizedBox(height: 2.h,),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding),
-                  width: 350.w,
-                  height: 7.h,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: ColorUtils.red_color),
-                      borderRadius: BorderRadius.circular(15)
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("On",style: TextStyle(color: ColorUtils.red_color,fontFamily: FontUtils.modernistBold),),
+                        Switch(
+                          value: _isSwitch,
+                          onChanged: (value) {
+                            setState(() {
+                              _isSwitch = value;
+                              print(_isSwitch);
+                            });
+                          },
+                          activeTrackColor:ColorUtils.red_color,
+                          activeColor: ColorUtils.red_color,
+                        ),
+                      ],
+                    ),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("On",style: TextStyle(color: ColorUtils.red_color,fontFamily: FontUtils.modernistBold),),
-                      Switch(
-                        value: _isSwitch,
-                        onChanged: (value) {
-                          setState(() {
-                            _isSwitch = value;
-                            print(_isSwitch);
-                          });
-                        },
-                        activeTrackColor:ColorUtils.red_color,
-                        activeColor: ColorUtils.red_color,
-                      ),
-                    ],
+                  SizedBox(height: 2.h,),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding),
+
+                    height: 15.h,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: ColorUtils.red_color),
+                        borderRadius: BorderRadius.circular(15)
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Receiving Messages",style: TextStyle(color: ColorUtils.red_color,fontFamily: FontUtils.modernistBold),),
+                            Switch(
+                              value: _isSwitch1,
+                              onChanged: (value) {
+                                setState(() {
+                                  _isSwitch1 = value;
+                                  print(_isSwitch1);
+                                });
+                              },
+                              activeTrackColor:ColorUtils.red_color,
+                              activeColor: ColorUtils.red_color,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("New Friend Requests",style: TextStyle(color: ColorUtils.red_color,fontFamily: FontUtils.modernistBold),),
+                            Switch(
+                              value: _isSwitch2,
+                              onChanged: (value) {
+                                setState(() {
+                                  _isSwitch2 = value;
+                                  print(_isSwitch2);
+                                });
+                              },
+                              activeTrackColor:ColorUtils.red_color,
+                              activeColor: ColorUtils.red_color,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(height: 2.h,),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding),
-                  width: 350.w,
-                  height: 18.h,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: ColorUtils.red_color),
-                      borderRadius: BorderRadius.circular(15)
-                  ),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Receiving Messages",style: TextStyle(color: ColorUtils.red_color,fontFamily: FontUtils.modernistBold),),
-                          Switch(
-                            value: _isSwitch1,
-                            onChanged: (value) {
-                              setState(() {
-                                _isSwitch1 = value;
-                                print(_isSwitch1);
-                              });
-                            },
-                            activeTrackColor:ColorUtils.red_color,
-                            activeColor: ColorUtils.red_color,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("New Friend Requests",style: TextStyle(color: ColorUtils.red_color,fontFamily: FontUtils.modernistBold),),
-                          Switch(
-                            value: _isSwitch2,
-                            onChanged: (value) {
-                              setState(() {
-                                _isSwitch2 = value;
-                                print(_isSwitch2);
-                              });
-                            },
-                            activeTrackColor:ColorUtils.red_color,
-                            activeColor: ColorUtils.red_color,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );

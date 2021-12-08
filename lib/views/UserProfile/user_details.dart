@@ -39,7 +39,7 @@ class _UserDetailsState extends State<UserDetails> {
                   child: Container(
                     padding: EdgeInsets.symmetric(
                         horizontal: Dimensions.horizontalPadding,
-                        vertical: Dimensions.verticalPadding),
+                        ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -796,6 +796,7 @@ class _UserDetailsState extends State<UserDetails> {
                             ],
                           ),
                         ),
+                        SizedBox(height: 2.h),
 
 
                       ],

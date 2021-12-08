@@ -191,7 +191,7 @@ class _BarAccountState extends State<BarAccount> {
                         ///----Bar opening time-----///
                         SizedBox(height: 3.h),
                         Container(
-                          margin: EdgeInsets.symmetric(horizontal: 5.w),
+                         // margin: EdgeInsets.symmetric(horizontal: 5.w),
                           child: Row(
                             children: [
                               //From
@@ -471,7 +471,7 @@ class _BarAccountState extends State<BarAccount> {
 
                         SizedBox(height: 3.h),
                         Container(
-                          margin: EdgeInsets.symmetric(horizontal: 5.w),
+                          //margin: EdgeInsets.symmetric(horizontal: 5.w),
                           child: Row(
                             children: [
                               //From
@@ -751,7 +751,7 @@ class _BarAccountState extends State<BarAccount> {
 
                         Container(
                             padding: EdgeInsets.symmetric(
-                                vertical: 1.5.h, horizontal: 4.w),
+                                vertical: 1.2.h, horizontal: 4.w),
                             // margin: EdgeInsets.symmetric(horizontal: Dimensions.containerHorizontalPadding),
                             decoration: BoxDecoration(
                                 shape: BoxShape.rectangle,
@@ -907,7 +907,7 @@ class _BarAccountState extends State<BarAccount> {
                             onPressed: () {},
 
                             padding: EdgeInsets.symmetric(
-                                vertical: 2.5.h, horizontal: 4.w),
+                                vertical: 2.2.h, horizontal: 4.w),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -934,10 +934,12 @@ class _BarAccountState extends State<BarAccount> {
                                     color: ColorUtils.lightTextColor
                                 )
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              model.navigateToBarAccountOwnerShip();
+                            },
 
                             padding: EdgeInsets.symmetric(
-                                vertical: 2.5.h, horizontal: 4.w),
+                                vertical: 2.2.h, horizontal: 4.w),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,

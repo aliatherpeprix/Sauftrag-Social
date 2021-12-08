@@ -57,38 +57,23 @@ class _BarProfileState extends State<BarProfile> {
                       SizedBox(height: 5.h),
 
                       ///--------------Event Name--------------------///
-                      Container(
-                        // padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            color: Colors.white),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
+                      GestureDetector(
+                        onTap: (){
+                          model.navigateToBarDetails();
+                        },
+                        child: Container(
+                          // padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                          decoration: BoxDecoration(
+
+                              color: Colors.white),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
                             Row(
                               children: [
-                                Container(
-                                  // onPressed: () {
-                                  //  /* showDialog(
-                                  //       context: context,
-                                  //       builder: (BuildContext context){
-                                  //         return DrinkStatusDialogBox(title: "Add New Location", btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
-                                  //       }
-                                  //   );*/
-                                  // },
-                                  child: Image.asset(ImageUtils.profileImg),
-                                ),
-                                // Container(
-                                //   margin: EdgeInsets.only(right: 20),
-                                //   child: RoundImage(
-                                //     url: widget.profile.imageurl,
-                                //     txtsize: 18,
-                                //     txt: widget.profile.fullName,
-                                //     width: 50,
-                                //     height: 50,
-                                //     borderRadius: 15,
-                                //   ),
-                                // ),
+                                Image.asset(ImageUtils.profileImg),
+
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,6 +98,51 @@ class _BarProfileState extends State<BarProfile> {
                                 ),
                               ],
                             ),
+                              Icon(
+                                Icons.keyboard_arrow_right_rounded,
+                                size: 30,
+                                color: Colors.grey,
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 4.h),
+
+                      ///--------------Settings Options--------------------///
+                      GestureDetector(
+                        onTap: (){
+                          model.navigateToBarAccounts();
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                SvgPicture.asset(ImageUtils.profile),
+                                SizedBox(width: 1.5.h,),
+                                Text(
+                                  "Accounts",
+                                  style: TextStyle(
+                                    color: ColorUtils.black,
+                                    fontFamily: FontUtils.modernistBold,
+                                    fontSize: 2.t,
+                                  ),
+                                ),
+                                // Container(
+                                //   margin: EdgeInsets.only(right: 20),
+                                //   child: RoundImage(
+                                //     url: widget.profile.imageurl,
+                                //     txtsize: 18,
+                                //     txt: widget.profile.fullName,
+                                //     width: 50,
+                                //     height: 50,
+                                //     borderRadius: 15,
+                                //   ),
+                                // ),
+                              ],
+                            ),
+
                             Icon(
                               Icons.keyboard_arrow_right_rounded,
                               size: 30,
@@ -121,118 +151,90 @@ class _BarProfileState extends State<BarProfile> {
                           ],
                         ),
                       ),
-                      SizedBox(height: 4.h),
+                      SizedBox(height: 3.h),
 
-                      ///--------------Settings Options--------------------///
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              SvgPicture.asset(ImageUtils.profile),
-                              SizedBox(width: 1.5.h,),
-                              Text(
-                                "Accounts",
-                                style: TextStyle(
-                                  color: ColorUtils.black,
-                                  fontFamily: FontUtils.modernistBold,
-                                  fontSize: 2.t,
+                      GestureDetector(
+                        onTap: (){
+                          model.navigateToUserProfileAccountNotificationScreen();
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                SvgPicture.asset(ImageUtils.notification),
+                                SizedBox(width: 1.5.h,),
+                                Text(
+                                  "Notification",
+                                  style: TextStyle(
+                                    color: ColorUtils.black,
+                                    fontFamily: FontUtils.modernistBold,
+                                    fontSize: 2.t,
+                                  ),
                                 ),
-                              ),
-                              // Container(
-                              //   margin: EdgeInsets.only(right: 20),
-                              //   child: RoundImage(
-                              //     url: widget.profile.imageurl,
-                              //     txtsize: 18,
-                              //     txt: widget.profile.fullName,
-                              //     width: 50,
-                              //     height: 50,
-                              //     borderRadius: 15,
-                              //   ),
-                              // ),
-                            ],
-                          ),
+                                // Container(
+                                //   margin: EdgeInsets.only(right: 20),
+                                //   child: RoundImage(
+                                //     url: widget.profile.imageurl,
+                                //     txtsize: 18,
+                                //     txt: widget.profile.fullName,
+                                //     width: 50,
+                                //     height: 50,
+                                //     borderRadius: 15,
+                                //   ),
+                                // ),
+                              ],
+                            ),
 
-                          Icon(
-                            Icons.keyboard_arrow_right_rounded,
-                            size: 30,
-                            color: Colors.grey,
-                          )
-                        ],
+                            Icon(
+                              Icons.keyboard_arrow_right_rounded,
+                              size: 30,
+                              color: Colors.grey,
+                            )
+                          ],
+                        ),
                       ),
                       SizedBox(height: 3.h),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              SvgPicture.asset(ImageUtils.notification),
-                              SizedBox(width: 1.5.h,),
-                              Text(
-                                "Notification",
-                                style: TextStyle(
-                                  color: ColorUtils.black,
-                                  fontFamily: FontUtils.modernistBold,
-                                  fontSize: 2.t,
+                      GestureDetector(
+                        onTap: (){
+                          model.navigateToUserProfileAccountLegalTermScreen();
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                SvgPicture.asset(ImageUtils.terms),
+                                SizedBox(width: 1.5.h,),
+                                Text(
+                                  "Legal Terms",
+                                  style: TextStyle(
+                                    color: ColorUtils.black,
+                                    fontFamily: FontUtils.modernistBold,
+                                    fontSize: 2.t,
+                                  ),
                                 ),
-                              ),
-                              // Container(
-                              //   margin: EdgeInsets.only(right: 20),
-                              //   child: RoundImage(
-                              //     url: widget.profile.imageurl,
-                              //     txtsize: 18,
-                              //     txt: widget.profile.fullName,
-                              //     width: 50,
-                              //     height: 50,
-                              //     borderRadius: 15,
-                              //   ),
-                              // ),
-                            ],
-                          ),
+                                // Container(
+                                //   margin: EdgeInsets.only(right: 20),
+                                //   child: RoundImage(
+                                //     url: widget.profile.imageurl,
+                                //     txtsize: 18,
+                                //     txt: widget.profile.fullName,
+                                //     width: 50,
+                                //     height: 50,
+                                //     borderRadius: 15,
+                                //   ),
+                                // ),
+                              ],
+                            ),
 
-                          Icon(
-                            Icons.keyboard_arrow_right_rounded,
-                            size: 30,
-                            color: Colors.grey,
-                          )
-                        ],
-                      ),
-                      SizedBox(height: 3.h),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              SvgPicture.asset(ImageUtils.terms),
-                              SizedBox(width: 1.5.h,),
-                              Text(
-                                "Legal Terms",
-                                style: TextStyle(
-                                  color: ColorUtils.black,
-                                  fontFamily: FontUtils.modernistBold,
-                                  fontSize: 2.t,
-                                ),
-                              ),
-                              // Container(
-                              //   margin: EdgeInsets.only(right: 20),
-                              //   child: RoundImage(
-                              //     url: widget.profile.imageurl,
-                              //     txtsize: 18,
-                              //     txt: widget.profile.fullName,
-                              //     width: 50,
-                              //     height: 50,
-                              //     borderRadius: 15,
-                              //   ),
-                              // ),
-                            ],
-                          ),
-
-                          Icon(
-                            Icons.keyboard_arrow_right_rounded,
-                            size: 30,
-                            color: Colors.grey,
-                          )
-                        ],
+                            Icon(
+                              Icons.keyboard_arrow_right_rounded,
+                              size: 30,
+                              color: Colors.grey,
+                            )
+                          ],
+                        ),
                       ),
                       SizedBox(height: 3.h),
                       Row(
@@ -272,41 +274,46 @@ class _BarProfileState extends State<BarProfile> {
                         ],
                       ),
                       SizedBox(height: 3.h),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              SvgPicture.asset(ImageUtils.gps),
-                              SizedBox(width: 1.5.h,),
-                              Text(
-                                "GPS",
-                                style: TextStyle(
-                                  color: ColorUtils.black,
-                                  fontFamily: FontUtils.modernistBold,
-                                  fontSize: 2.t,
+                      GestureDetector(
+                        onTap: (){
+                          model.navigateToUserProfileAccountGpsScreen();
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                SvgPicture.asset(ImageUtils.gps),
+                                SizedBox(width: 1.5.h,),
+                                Text(
+                                  "GPS",
+                                  style: TextStyle(
+                                    color: ColorUtils.black,
+                                    fontFamily: FontUtils.modernistBold,
+                                    fontSize: 2.t,
+                                  ),
                                 ),
-                              ),
-                              // Container(
-                              //   margin: EdgeInsets.only(right: 20),
-                              //   child: RoundImage(
-                              //     url: widget.profile.imageurl,
-                              //     txtsize: 18,
-                              //     txt: widget.profile.fullName,
-                              //     width: 50,
-                              //     height: 50,
-                              //     borderRadius: 15,
-                              //   ),
-                              // ),
-                            ],
-                          ),
+                                // Container(
+                                //   margin: EdgeInsets.only(right: 20),
+                                //   child: RoundImage(
+                                //     url: widget.profile.imageurl,
+                                //     txtsize: 18,
+                                //     txt: widget.profile.fullName,
+                                //     width: 50,
+                                //     height: 50,
+                                //     borderRadius: 15,
+                                //   ),
+                                // ),
+                              ],
+                            ),
 
-                          Icon(
-                            Icons.keyboard_arrow_right_rounded,
-                            size: 30,
-                            color: Colors.grey,
-                          )
-                        ],
+                            Icon(
+                              Icons.keyboard_arrow_right_rounded,
+                              size: 30,
+                              color: Colors.grey,
+                            )
+                          ],
+                        ),
                       ),
                       SizedBox(height: 3.h),
                     ],

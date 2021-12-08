@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+  import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sauftrag/app/locator.dart';
@@ -26,6 +26,8 @@ class _BarAccountOwnershipState extends State<BarAccountOwnership> {
   int radioSelected = 0;
   int checkSelected = 0;
   int selectedIndex = 0;
+  bool radioSelected1 = false;
+  bool radioUnselected1 = false;
 
 
 
@@ -93,17 +95,20 @@ class _BarAccountOwnershipState extends State<BarAccountOwnership> {
                         SizedBox(height: 3.h),
                         GestureDetector(
                           onTap: () {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context){
-                                  return DeactivateAccountDialog(title: "Add New Location",
-                                      btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
-                                }
-                            );
+
+                            // showDialog(
+                            //     context: context,
+                            //     builder: (BuildContext context){
+                            //       return DeactivateAccountDialog(title: "Add New Location",
+                            //           btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+                            //     }
+                            // );
                             setState(() {
                               // ignore: unnecessary_statements
                               //roomusers.length == 0;
                               radioSelected = selected;
+                              radioSelected1 == true;
+                              radioUnselected1 == false;
                             });
                           },
                           child: Container(
@@ -168,18 +173,20 @@ class _BarAccountOwnershipState extends State<BarAccountOwnership> {
                         ),
                         GestureDetector(
                             onTap: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context){
-                                    return DeleteAcountDialogbox(title: "Add New Location",
-                                        btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
-                                  }
-                              );
+                              // showDialog(
+                              //     context: context,
+                              //     builder: (BuildContext context){
+                              //       return DeleteAcountDialogbox(title: "Add New Location",
+                              //           btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+                              //     }
+                              // );
                               setState(() {
                                 // ignore: unnecessary_statements
                                 //roomusers.length == 1;
 
                                 radioSelected = unselected;
+                                 radioSelected1 = true;
+                                radioUnselected1 == false;
                               });
                             },
                             child: Container(
@@ -245,9 +252,27 @@ class _BarAccountOwnershipState extends State<BarAccountOwnership> {
                           //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                           child: ElevatedButton(
                             onPressed: () {
-                              model.navigateToHomeBarScreen();
+                              //model.navigateToHomeBarScreen();
+                              if(radioSelected1 == true )
+                                {
+                                  showDialog(
+                                          context: context,
+                                          builder: (BuildContext context){
+                                            return DeactivateAccountDialog(title: "Add New Location",
+                                                btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+                                          }
+                                      );
+                                }
+                              else
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context){
+                                    return DeleteAcountDialogbox(title: "Add New Location",
+                                        btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+                                  }
+                              );
                             },
-                            child: const Text("Let's Get Started"),
+                            child: const Text("Delete Account"),
                             style: ElevatedButton.styleFrom(
                               primary: ColorUtils.text_red,
                               onPrimary: ColorUtils.white,

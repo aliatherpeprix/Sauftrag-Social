@@ -208,6 +208,13 @@ class ImageUtils {
   static String matchedImg5 = "assets/matchImg_5.png";
   static String matchedImg6 = "assets/matchImg_6.png";
   static String nickWalkerImg = "assets/nickWalker.png";
+  static String privateIcon = "assets/privateIcon.svg";
+  static String publicIcon = "assets/public.svg";
+  static String rank1 = "assets/rank1.png";
+  static String rank2 = "assets/rank2.png";
+  static String rank3 = "assets/rank3.png";
+  static String crownImg = "assets/crown.png";
+  static String polygon = "assets/polygon.png";
 
 
 }

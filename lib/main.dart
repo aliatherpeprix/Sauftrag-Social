@@ -44,6 +44,7 @@ import 'bar/views/Drawer/list_of_bar.dart';
 import 'bar/views/Drawer/matched_screen.dart';
 import 'bar/views/Drawer/notifications.dart';
 import 'bar/views/Drawer/qr_code_scanner.dart';
+import 'bar/views/Drawer/rating_list.dart';
 import 'bar/views/Drawer/upcoming_event.dart';
 import 'bar/views/Home/bar_drinks.dart';
 import 'bar/views/Home/bar_event.dart';
@@ -55,6 +56,7 @@ import 'bar/views/Profile/bar_details.dart';
 import 'bar/views/Profile/bar_profile.dart';
 import 'bar/views/Home/barCode2.dart';
 import 'bar/widgets/bar_QR_scanner.dart';
+import 'bar/widgets/my_side_menu.dart';
 
 NavigationViewModel navigationViewModel = NavigationViewModel();
 void main() async {
@@ -90,7 +92,7 @@ class _MyAppState extends State<MyApp> {
             SizeConfig().init(constraints, orientation);
             //var prefService = locator<PrefrencesViewModel>();
             //return MainView(index: 2);
-            return BarNewsFeed();
+            return Splash();
           },
         );
       },
