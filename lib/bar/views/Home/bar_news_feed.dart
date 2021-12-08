@@ -174,67 +174,72 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
                       SizedBox(height: Dimensions.homeTopMargin),
 
                       //Top bar
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: Dimensions.horizontalPadding),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                final _state = model.sideMenuKey.currentState;
-                                if (_state!.isOpened)
-                                  _state.closeSideMenu(); // close side menu
-                                else
-                                  _state.openSideMenu();
-                              },
-                              child: SvgPicture.asset(ImageUtils.menuIcon),
-                              style: ElevatedButton.styleFrom(
-                                primary: ColorUtils.white,
-                                onPrimary: ColorUtils.white,
-                                padding: EdgeInsets.symmetric(
-                                    vertical:
-                                        Dimensions.containerVerticalPadding),
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                        Dimensions.roundCorner),
-                                    side: BorderSide(
-                                        color: ColorUtils.divider, width: 1)),
-                                textStyle: TextStyle(
-                                  color: ColorUtils.white,
-                                  fontFamily: FontUtils.modernistBold,
-                                  fontSize: 1.8.t,
-                                  //height: 0
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 1.h),
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: Dimensions.horizontalPadding),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  final _state = model.sideMenuKey.currentState;
+                                  if (_state!.isOpened)
+                                    _state.closeSideMenu(); // close side menu
+                                  else
+                                    _state.openSideMenu();
+                                },
+                                child: SvgPicture.asset(ImageUtils.menuIcon),
+                                style: ElevatedButton.styleFrom(
+                                  primary: ColorUtils.white,
+                                  onPrimary: ColorUtils.white,
+                                  padding: EdgeInsets.symmetric(
+                                      vertical:
+                                          Dimensions.containerVerticalPadding),
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          Dimensions.roundCorner),
+                                      side: BorderSide(
+                                          color: ColorUtils.divider, width: 1)),
+                                  textStyle: TextStyle(
+                                    color: ColorUtils.white,
+                                    fontFamily: FontUtils.modernistBold,
+                                    fontSize: 1.8.t,
+                                    //height: 0
+                                  ),
                                 ),
                               ),
-                            ),
-                            Text(
-                              "News Feed",
-                              style: TextStyle(
-                                color: ColorUtils.black,
-                                fontFamily: FontUtils.modernistBold,
-                                fontSize: 2.5.t,
+                              Text(
+                                "News Feed",
+                                style: TextStyle(
+                                  color: ColorUtils.black,
+                                  fontFamily: FontUtils.modernistBold,
+                                  fontSize: 2.5.t,
+                                ),
                               ),
-                            ),
-                            GestureDetector(
-                              onTap: (){
-                                model.navigateToBarProfile2();
-                              },
-                              child: Container(
-                                child: Image.asset(ImageUtils.profileImg, height: 15.i,),
+                              GestureDetector(
+                                onTap: (){
+                                  model.navigateToBarProfile2();
+                                },
+                                child: Container(
+                                  child: Image.asset(ImageUtils.profileImg, height: 17.i,),
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       //SizedBox(height: 3.h),
 
                       SizedBox(
-                        height: SizeConfig.heightMultiplier * 3,
+                        height: SizeConfig.heightMultiplier * 2,
                       ),
                       Expanded(
                         child: ListView.separated(
+                          padding: EdgeInsets.zero,
                           scrollDirection: Axis.vertical,
                           physics: const BouncingScrollPhysics(),
                           shrinkWrap: true,

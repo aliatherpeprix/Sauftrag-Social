@@ -265,12 +265,12 @@ class _FavoriteState extends State<Favorite> {
 
                             ElevatedButton(
                               onPressed: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context){
-                                      return AddDialogBox(title: "Add New Club", btnTxt: "Add Club", icon: ImageUtils.addClubIcon);
-                                    }
-                                );
+                                // showDialog(
+                                //     context: context,
+                                //     builder: (BuildContext context){
+                                //       return AddDialogBox(title: "Add New Club", btnTxt: "Add Club", icon: ImageUtils.addClubIcon);
+                                //     }
+                                // );
                               },
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
@@ -374,12 +374,12 @@ class _FavoriteState extends State<Favorite> {
 
                             ElevatedButton(
                               onPressed: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context){
-                                      return AddDialogBox(title: "Add New Location", btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
-                                    }
-                                );
+                                // showDialog(
+                                //     context: context,
+                                //     builder: (BuildContext context){
+                                //       return AddDialogBox(title: "Add New Location", btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+                                //     }
+                                // );
                               },
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,

@@ -44,7 +44,7 @@ import 'bar/views/Drawer/list_of_bar.dart';
 import 'bar/views/Drawer/matched_screen.dart';
 import 'bar/views/Drawer/notifications.dart';
 import 'bar/views/Drawer/qr_code_scanner.dart';
-import 'bar/views/Drawer/rating_list.dart';
+import 'bar/views/Drawer/ranking_list.dart';
 import 'bar/views/Drawer/upcoming_event.dart';
 import 'bar/views/Home/bar_drinks.dart';
 import 'bar/views/Home/bar_event.dart';

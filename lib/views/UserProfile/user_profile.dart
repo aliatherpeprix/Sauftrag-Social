@@ -195,14 +195,14 @@ class _UserProfileState extends State<UserProfile> {
                       SizedBox(height: 4.h),
 
                       ///--------------Settings Options--------------------///
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GestureDetector(
-                            onTap:(){
-                              model.navigateToUserProfileAccountScreen();
-                            },
-                            child: Row(
+                      GestureDetector(
+                        onTap: (){
+                          model.navigateToUserProfileAccountScreen();
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
                               children: [
                                 SvgPicture.asset(ImageUtils.userProfileAccount),
                                 SizedBox(width: 1.5.h,),
@@ -227,14 +227,14 @@ class _UserProfileState extends State<UserProfile> {
                                 // ),
                               ],
                             ),
-                          ),
 
-                          Icon(
-                            Icons.keyboard_arrow_right_rounded,
-                            size: 30,
-                            color: Colors.black,
-                          )
-                        ],
+                            Icon(
+                              Icons.keyboard_arrow_right_rounded,
+                              size: 30,
+                              color: Colors.black,
+                            )
+                          ],
+                        ),
                       ),
                       SizedBox(height: 3.h),
                       GestureDetector(

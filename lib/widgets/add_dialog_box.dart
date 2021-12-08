@@ -110,7 +110,7 @@ class _AddDialogBoxState extends State<AddDialogBox> {
                   //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                   child: ElevatedButton(
                     onPressed: () {
-                      model.navigateToTermsScreen();
+                      //model.navigateToTermsScreen();
                     },
                     child: Text(widget.btnTxt),
                     style: ElevatedButton.styleFrom(

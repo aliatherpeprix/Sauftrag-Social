@@ -61,7 +61,7 @@ class _RatingListState extends State<RatingList> {
                               )),
                           SizedBox(width: 2.w),
                           Text(
-                            "QR Code",
+                            "Ranting List",
                             style: TextStyle(
                               color: ColorUtils.black,
                               fontFamily: FontUtils.modernistBold,

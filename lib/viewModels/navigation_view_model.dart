@@ -14,7 +14,7 @@ import 'package:sauftrag/bar/views/Drawer/list_of_bar.dart';
 import 'package:sauftrag/bar/views/Drawer/matched_screen.dart';
 import 'package:sauftrag/bar/views/Drawer/notifications.dart';
 import 'package:sauftrag/bar/views/Drawer/qr_code_scanner.dart';
-import 'package:sauftrag/bar/views/Drawer/rating_list.dart';
+import 'package:sauftrag/bar/views/Drawer/ranking_list.dart';
 import 'package:sauftrag/bar/views/Drawer/upcoming_event.dart';
 import 'package:sauftrag/bar/views/Home/bar_news_feed.dart';
 import 'package:sauftrag/bar/views/Home/main_view.dart';
