@@ -96,7 +96,6 @@ class _MatchedScreenState extends State<MatchedScreen> {
                                   Image.asset(matchedImg[index]['image']),
                                   PositionedDirectional(
                                     bottom: 0,
-
                                       child: Container(
                                         padding: EdgeInsets.symmetric(horizontal: 6.7.w, vertical: 1.2.h),
                                         color: ColorUtils.transparent.withOpacity(0.2),

@@ -539,9 +539,10 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.end,
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
+
 
                             margin: EdgeInsets.only(
                               //left: SizeConfig.widthMultiplier * 4.5,
@@ -549,7 +550,7 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
                               //top: SizeConfig.heightMultiplier * 3,
                             ),
                             decoration: BoxDecoration(
-                                color: Colors.white,
+                                color: Colors.blue,
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(15.0),
                                 ),
@@ -557,11 +558,10 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
                             ),
                             child: Container(
                               //color: Colors.amber,
-                              margin:
-                              EdgeInsets.symmetric(horizontal: SizeConfig.widthMultiplier * 3,),
+
                               child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   ExpandTapWidget(
                                     onTap: () {
@@ -592,11 +592,8 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
                                   // ),
                                   SizedBox(width: 1.w,),
                                   Container(
-                                    height: 8.h,
                                     width: 57.w,
-                                    margin: EdgeInsets.only(
-                                        left: SizeConfig.widthMultiplier * 3,
-                                        right: SizeConfig.widthMultiplier * 3),
+
                                     child: TextField(
                                       onTap: () {},
                                       enabled: true,
@@ -614,7 +611,9 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
                                         isDense: true,
                                         contentPadding: EdgeInsets.symmetric(
                                             vertical: SizeConfig.heightMultiplier * 2),
-                                      ),maxLines: 8,
+                                      ),
+                                      keyboardType: TextInputType.multiline,
+                                      maxLines: null,
                                     ),
                                   ),
                                   Container(
