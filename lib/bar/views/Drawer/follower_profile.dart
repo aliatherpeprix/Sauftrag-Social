@@ -105,7 +105,7 @@ class _FollowerProfileState extends State<FollowerProfile> {
                 //   ),
                 // ),
                 // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-                backgroundColor: Colors.white.withOpacity(0.9),
+                backgroundColor: Colors.white,
                 key: _scaffoldKey,
                 body: Container(
                   padding: EdgeInsets.only(top: Dimensions.homeTopMargin),
