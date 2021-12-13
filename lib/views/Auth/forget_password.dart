@@ -9,6 +9,7 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/widgets/back_arrow_with_container.dart';
 import 'package:stacked/stacked.dart';
 
 class ForgetPassword extends StatefulWidget {
@@ -24,7 +25,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
     return ViewModelBuilder<AuthenticationViewModel>.reactive(
       viewModelBuilder: () => locator<AuthenticationViewModel>(),
       disposeViewModel: false,
-      onModelReady: (model){
+      onModelReady: (model) {
         //model.initialize();
       },
       builder: (context, model, child) {
@@ -32,7 +33,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
           top: false,
           bottom: false,
           child: GestureDetector(
-            onTap: (){
+            onTap: () {
               context.unFocus();
             },
             child: Scaffold(
@@ -42,28 +43,30 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 children: [
                   SizedBox(height: Dimensions.topMargin),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: Dimensions.horizontalPadding),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        IconButton(
-                            onPressed: () {
-                              model.navigateBack();
-                            },
-                            iconSize: 18.0,
-                            padding: EdgeInsets.zero,
-                            constraints: BoxConstraints(),
-                            icon: Icon(
-                              Icons.arrow_back_ios,
-                              color: ColorUtils.black,
-                            )),
-                        SizedBox(width: 2.w),
+                        BackArrowContainer(),
+                        // IconButton(
+                        //     onPressed: () {
+                        //       model.navigateBack();
+                        //     },
+                        //
+                        //     padding: EdgeInsets.zero,
+                        //     constraints: BoxConstraints(),
+                        //     icon: Icon(
+                        //       Icons.arrow_back_ios,
+                        //       color: ColorUtils.black,
+                        //     )),
+                        SizedBox(width: 4.w),
                         Text(
                           "Forgot Password",
                           style: TextStyle(
                             color: ColorUtils.black,
                             fontFamily: FontUtils.modernistBold,
-                            fontSize: 2.5.t,
+                            fontSize: 3.t,
                           ),
                         ),
                       ],
@@ -77,58 +80,64 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                         SizedBox(
                           height: 3.0.h,
                         ),
-
-                        SizedBox(height: 1.5.h,),
-                        Text("Enter the email associated with your account and we’ll send an email with instruction to reset your password.",
+                        SizedBox(
+                          height: 1.5.h,
+                        ),
+                        Text(
+                          "Enter the email associated with your account and we’ll send an email with instruction to reset your password.",
                           style: TextStyle(
                             height: 1.2,
                             fontFamily: FontUtils.modernistRegular,
-                            fontSize: 1.9.t,
-                            color: ColorUtils.black,
+                            fontSize: 1.8.t,
+                            color: ColorUtils.text_grey,
                           ),
                         ),
-                        SizedBox(height: 5.h,),
+                        SizedBox(
+                          height: 5.h,
+                        ),
                         Stack(
                           children: [
-
                             Container(
                               height: 7.h,
-                              padding: EdgeInsets.symmetric(vertical: Dimensions.containerVerticalPadding, horizontal: Dimensions.containerHorizontalPadding),
+                              padding: EdgeInsets.symmetric(
+                                  vertical:
+                                  Dimensions.containerVerticalPadding,
+                                  horizontal:
+                                  Dimensions.containerHorizontalPadding),
                               decoration: BoxDecoration(
                                   color: ColorUtils.white,
-                                  borderRadius: BorderRadius.all(Radius.circular(Dimensions.roundCorner)),
-                                  border: Border.all(color: ColorUtils.divider)
-                              ),
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(Dimensions.roundCorner)),
+                                  border:
+                                      Border.all(color: ColorUtils.divider)),
                               child: Row(
+
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-
-                                  SvgPicture.asset(ImageUtils.userIcon),
-
+                                  SvgPicture.asset(ImageUtils.emailIcon),
                                   SizedBox(width: 4.w),
-
                                   Expanded(
                                     child: TextField(
-                                      //focusNode: model.logInEmailFocus,
-                                      //controller: model.logInEmailController,
+                                      focusNode: model.forgetPasswordFocus,
+                                      controller: model.forgetPasswordController,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.next,
                                       style: TextStyle(
-                                        color: ColorUtils.black,
+                                        color: ColorUtils.red_color,
                                         fontFamily: FontUtils.modernistRegular,
                                         fontSize: 1.8.t,
                                       ),
                                       decoration: const InputDecoration(
                                         border: InputBorder.none,
-                                        isDense:true,
-                                        contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                                        isDense: true,
+                                        contentPadding: EdgeInsets.symmetric(
+                                            horizontal: 0, vertical: 0),
                                       ),
                                     ),
                                   ),
-
                                 ],
                               ),
                             ),
-
                             Container(
                               margin: EdgeInsets.only(left: 5.w),
                               padding: EdgeInsets.symmetric(horizontal: 1.w),
@@ -140,19 +149,20 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                                     color: ColorUtils.text_grey,
                                     fontFamily: FontUtils.modernistRegular,
                                     fontSize: 1.5.t,
-                                    height: .4
-                                ),
+                                    height: .4),
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(height: 6.h,),
+                        SizedBox(
+                          height: 6.h,
+                        ),
                         SizedBox(
                           width: double.infinity,
                           //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                           child: ElevatedButton(
                             onPressed: () {
-                               model.navigateToCheckEmailScreen();
+                              model.navigateToCheckEmailScreen();
                             },
                             child: const Text("Send Instruction"),
                             style: ElevatedButton.styleFrom(
@@ -160,7 +170,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                               onPrimary: ColorUtils.white,
                               padding: EdgeInsets.symmetric(
                                   vertical:
-                                  Dimensions.containerVerticalPadding),
+                                      Dimensions.containerVerticalPadding),
                               elevation: 1,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(

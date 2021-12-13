@@ -8,6 +8,10 @@ import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/widgets/error_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
+import 'package:sauftrag/utils/common_functions.dart';
+import 'package:get/get_utils/src/extensions/string_extensions.dart';
+
+
 
 import '../main.dart';
 
@@ -22,14 +26,38 @@ class AuthenticationViewModel extends BaseViewModel {
 
   bool logInUserSelected = true;
   bool logInBarSelected = false;
+
+  FocusNode logInUserFocus = new FocusNode();
+  bool isLogInUserInFocus = false;
   final logInUserController = TextEditingController();
+
+
   final logInPasswordController = TextEditingController();
+  bool isLoginPasswordInFocus = false;
+  FocusNode loginPasswordFocus = new FocusNode();
+
+  final forgetPasswordController = TextEditingController();
+  bool isForgetPasswordInFocus = false;
+  FocusNode forgetPasswordFocus = new FocusNode();
+
+  final newPasswordController = TextEditingController();
+  bool isNewPasswordInFocus = false;
+  FocusNode newPasswordFocus = new FocusNode();
+
+  final confirmNewPasswordController = TextEditingController();
+  bool isConfirmNewPasswordInFocus = false;
+  FocusNode confirmNewPasswordFocus = new FocusNode();
+
+
   bool signUpUserSelected = true;
   bool signUpBarSelected = false;
 
   final myContactsSearchController = TextEditingController();
 
   final signUpUserController = TextEditingController();
+  bool isSignUpUserInFocus = false;
+  FocusNode signUpUserFocus = new FocusNode();
+
   final signUpEmailController = TextEditingController();
   final signUpPhoneController = TextEditingController();
   final signUpPasswordController = TextEditingController();
@@ -225,7 +253,13 @@ class AuthenticationViewModel extends BaseViewModel {
         error: "Email is required",
       ));
       return;
-    }else if (signUpPhoneController.text.isEmpty) {
+    } if (signUpEmailController.text.isEmail) {
+      DialogUtils().showDialog(MyErrorWidget(error: "Email is invalid"));
+      return;
+    }
+
+
+    else if (signUpPhoneController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Phone Number is required",
       ));

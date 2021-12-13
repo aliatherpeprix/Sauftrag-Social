@@ -211,7 +211,7 @@ class _SignUpState extends State<SignUp> {
                                   Expanded(
                                     child: TextField(
                                       //focusNode: model.logInEmailFocus,
-                                      controller: model.signUpEmailController,
+                                      controller: model.signUpUserController,
                                       keyboardType: TextInputType.emailAddress,
                                       textInputAction: TextInputAction.next,
                                       style: TextStyle(

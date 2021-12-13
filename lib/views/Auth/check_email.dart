@@ -9,6 +9,7 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/widgets/back_arrow_with_container.dart';
 import 'package:stacked/stacked.dart';
 
 class CheckEmail extends StatelessWidget {
@@ -41,21 +42,22 @@ class CheckEmail extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        IconButton(
-                            onPressed: () {
-                              model.navigateBack();
-                            },
-                            iconSize: 18.0,
-                            padding: EdgeInsets.zero,
-                            constraints: BoxConstraints(),
-                            icon: Icon(
-                              Icons.arrow_back_ios,
-                              color: ColorUtils.black,
-                            )),
+                        BackArrowContainer(),
+                        // IconButton(
+                        //     onPressed: () {
+                        //       model.navigateBack();
+                        //     },
+                        //     iconSize: 18.0,
+                        //     padding: EdgeInsets.zero,
+                        //     constraints: BoxConstraints(),
+                        //     icon: Icon(
+                        //       Icons.arrow_back_ios,
+                        //       color: ColorUtils.black,
+                        //     )),
 
                         Center(
                           child: Container(
-                            padding: EdgeInsets.symmetric(vertical: 3.h, horizontal: 8.w),
+                            padding: EdgeInsets.symmetric(vertical: 3.h, horizontal: 7.w),
                             decoration: BoxDecoration(
                                 shape: BoxShape.rectangle,
                                 borderRadius: BorderRadius.all(Radius.circular(16.0)),
@@ -88,8 +90,8 @@ class CheckEmail extends StatelessWidget {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: FontUtils.modernistRegular,
-                            fontSize: 2.t,
-                            color: ColorUtils.black,
+                            fontSize: 1.8.t,
+                            color: ColorUtils.text_grey,
                           ),
                         ),
                         SizedBox(

@@ -7,7 +7,9 @@ import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
+import 'package:sauftrag/viewModels/authentication_view_model.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/widgets/back_arrow_with_container.dart';
 import 'package:stacked/stacked.dart';
 
 class ResentPassword extends StatefulWidget {
@@ -20,8 +22,8 @@ class ResentPassword extends StatefulWidget {
 class _ResentPasswordState extends State<ResentPassword> {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<MainViewModel>.reactive(
-      viewModelBuilder: () => locator<MainViewModel>(),
+    return ViewModelBuilder<AuthenticationViewModel>.reactive(
+      viewModelBuilder: () => locator<AuthenticationViewModel>(),
       disposeViewModel: false,
       onModelReady: (model){
         //model.initialize();
@@ -45,24 +47,25 @@ class _ResentPasswordState extends State<ResentPassword> {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        IconButton(
-                            onPressed: () {
-                              model.navigateBack();
-                            },
-                            iconSize: 18.0,
-                            padding: EdgeInsets.zero,
-                            constraints: BoxConstraints(),
-                            icon: Icon(
-                              Icons.arrow_back_ios,
-                              color: ColorUtils.black,
-                            )),
-                        SizedBox(width: 2.w),
+                        BackArrowContainer(),
+                        // IconButton(
+                        //     onPressed: () {
+                        //       model.navigateBack();
+                        //     },
+                        //     iconSize: 18.0,
+                        //     padding: EdgeInsets.zero,
+                        //     constraints: BoxConstraints(),
+                        //     icon: Icon(
+                        //       Icons.arrow_back_ios,
+                        //       color: ColorUtils.black,
+                        //     )),
+                        SizedBox(width: 4.w),
                         Text(
                           "Create New Password",
                           style: TextStyle(
                             color: ColorUtils.black,
                             fontFamily: FontUtils.modernistBold,
-                            fontSize: 2.5.t,
+                            fontSize: 3.t,
                           ),
                         ),
                       ],
@@ -82,8 +85,8 @@ class _ResentPasswordState extends State<ResentPassword> {
                           style: TextStyle(
                             height: 1.2,
                             fontFamily: FontUtils.modernistRegular,
-                            fontSize: 1.9.t,
-                            color: ColorUtils.black,
+                            fontSize: 1.8.t,
+                            color: ColorUtils.text_grey,
                           ),
                         ),
                         SizedBox(height: 6.h,),
@@ -107,12 +110,12 @@ class _ResentPasswordState extends State<ResentPassword> {
 
                                   Expanded(
                                     child: TextField(
-                                      //focusNode: model.logInEmailFocus,
-                                      //controller: model.logInEmailController,
+                                      focusNode: model.confirmNewPasswordFocus,
+                                      controller: model.confirmNewPasswordController,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.next,
                                       style: TextStyle(
-                                        color: ColorUtils.black,
+                                        color: ColorUtils.red_color,
                                         fontFamily: FontUtils.modernistRegular,
                                         fontSize: 1.8.t,
                                       ),
@@ -166,12 +169,12 @@ class _ResentPasswordState extends State<ResentPassword> {
 
                                   Expanded(
                                     child: TextField(
-                                      //focusNode: model.logInEmailFocus,
-                                      //controller: model.logInEmailController,
+                                      focusNode: model.newPasswordFocus,
+                                      controller: model.newPasswordController,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.next,
                                       style: TextStyle(
-                                        color: ColorUtils.black,
+                                        color: ColorUtils.red_color,
                                         fontFamily: FontUtils.modernistRegular,
                                         fontSize: 1.8.t,
                                       ),
@@ -192,7 +195,7 @@ class _ResentPasswordState extends State<ResentPassword> {
                               padding: EdgeInsets.symmetric(horizontal: 1.w),
                               color: ColorUtils.white,
                               child: Text(
-                                "Confirm NewPassword",
+                                "Confirm New Password",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: ColorUtils.text_grey,
