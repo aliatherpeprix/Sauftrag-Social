@@ -153,14 +153,14 @@ class _SignUpBarState extends State<SignUpBar> {
 
                                   Expanded(
                                     child: TextField(
-                                      //focusNode: model.logInEmailFocus,
+                                      focusNode: model.signUpBarUserFocus,
                                       controller: model.signUpBarUserController,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.next,
                                       style: TextStyle(
-                                        color: ColorUtils.black,
+                                        color: ColorUtils.red_color,
                                         fontFamily: FontUtils.modernistRegular,
-                                        fontSize: 1.8.t,
+                                        fontSize: 1.9.t,
                                       ),
                                       decoration: const InputDecoration(
                                         border: InputBorder.none,
@@ -214,14 +214,14 @@ class _SignUpBarState extends State<SignUpBar> {
 
                                   Expanded(
                                     child: TextField(
-                                      //focusNode: model.logInEmailFocus,
+                                      focusNode: model.signUpBarAddressFocus,
                                       controller: model.signUpBarAddressController,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.next,
                                       style: TextStyle(
-                                        color: ColorUtils.black,
+                                        color: ColorUtils.red_color,
                                         fontFamily: FontUtils.modernistRegular,
-                                        fontSize: 1.8.t,
+                                        fontSize: 1.9.t,
                                       ),
                                       decoration: const InputDecoration(
                                         border: InputBorder.none,
@@ -275,15 +275,15 @@ class _SignUpBarState extends State<SignUpBar> {
 
                                   Expanded(
                                     child: TextField(
-                                      //focusNode: model.logInEmailFocus,
+                                      focusNode: model.signUpBarPasswordFocus,
                                       controller: model.signUpBarPasswordController,
-                                      obscureText: true,
+                                      obscureText: !model.signupPasswordVisible,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.next,
                                       style: TextStyle(
-                                        color: ColorUtils.black,
+                                        color: ColorUtils.red_color,
                                         fontFamily: FontUtils.modernistRegular,
-                                        fontSize: 1.8.t,
+                                        fontSize: 1.9.t,
                                       ),
                                       decoration: const InputDecoration(
                                         border: InputBorder.none,
@@ -291,6 +291,23 @@ class _SignUpBarState extends State<SignUpBar> {
                                         contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                                       ),
                                     ),
+                                  ),
+                                  SizedBox(width: 3.w),
+                                  IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        model.signupPasswordVisible = !model.signupPasswordVisible;
+                                      });
+                                    },
+                                    icon: Icon(model.signupPasswordVisible
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                      color: ColorUtils.red_color,
+                                      //size: 6 * SizeConfig.imageSizeMultiplier,
+                                      //color: ColorUtils.textFormColor,),
+                                    ),
+                                    padding: EdgeInsets.zero,
+                                    constraints: BoxConstraints(),
                                   ),
 
                                 ],
@@ -338,15 +355,15 @@ class _SignUpBarState extends State<SignUpBar> {
 
                                   Expanded(
                                     child: TextField(
-                                      //focusNode: model.logInEmailFocus,
+                                      focusNode: model.signUpBarVerifyPasswordFocus,
                                       controller: model.signUpBarVerifyPasswordController,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.next,
-                                      obscureText: true,
+                                      obscureText: !model.signupVerifyPasswordVisible,
                                       style: TextStyle(
-                                        color: ColorUtils.black,
+                                        color: ColorUtils.red_color,
                                         fontFamily: FontUtils.modernistRegular,
-                                        fontSize: 1.8.t,
+                                        fontSize: 1.9.t,
                                       ),
                                       decoration: const InputDecoration(
                                         border: InputBorder.none,
@@ -354,6 +371,23 @@ class _SignUpBarState extends State<SignUpBar> {
                                         contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                                       ),
                                     ),
+                                  ),
+                                  SizedBox(width: 3.w),
+                                  IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        model.signupVerifyPasswordVisible = !model.signupVerifyPasswordVisible;
+                                      });
+                                    },
+                                    icon: Icon(model.signupVerifyPasswordVisible
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                      color: ColorUtils.red_color,
+                                      //size: 6 * SizeConfig.imageSizeMultiplier,
+                                      //color: ColorUtils.textFormColor,),
+                                    ),
+                                    padding: EdgeInsets.zero,
+                                    constraints: BoxConstraints(),
                                   ),
 
                                 ],

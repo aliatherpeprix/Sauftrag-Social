@@ -23,6 +23,8 @@ class AuthenticationViewModel extends BaseViewModel {
   bool signupCheck = false;
   bool termsCheck = false;
   bool dataCheck = false;
+  bool signupPasswordVisible = false;
+  bool signupVerifyPasswordVisible = false;
 
   bool logInUserSelected = true;
   bool logInBarSelected = false;
@@ -59,20 +61,54 @@ class AuthenticationViewModel extends BaseViewModel {
   FocusNode signUpUserFocus = new FocusNode();
 
   final signUpEmailController = TextEditingController();
+  bool isSignUpEmailInFocus = false;
+  FocusNode signUpEmailFocus = new FocusNode();
+
   final signUpPhoneController = TextEditingController();
+  bool isSignUpPhoneInFocus = false;
+  FocusNode signUpPhoneFocus = new FocusNode();
+
   final signUpPasswordController = TextEditingController();
+  bool isSignUpPasswordInFocus = false;
+  FocusNode signUpPasswordFocus = new FocusNode();
+
   final signUpVerifyPasswordController = TextEditingController();
+  bool isSignUpVerifyPasswordInFocus = false;
+  FocusNode signUpVerifyPasswordFocus = new FocusNode();
+
   final signUpAddressController = TextEditingController();
+  bool isSignUpAddressInFocus = false;
+  FocusNode signUpAddressFocus = new FocusNode();
+
   final signUpDOBController = TextEditingController();
+  bool isSignUpDOBInFocus = false;
+  FocusNode signUpDOBFocus = new FocusNode();
+
   final signUpRelationshipController = TextEditingController();
+  bool isSignUpRelationshipInFocus = false;
+  FocusNode signUpRelationshipFocus = new FocusNode();
+
   bool isChecked = false;
 
   final signUpBarUserController = TextEditingController();
+  bool isSignUpBarUserInFocus = false;
+  FocusNode signUpBarUserFocus = new FocusNode();
+
   final signUpBarAddressController = TextEditingController();
+  bool isSignUpBarAddressInFocus = false;
+  FocusNode signUpBarAddressFocus = new FocusNode();
+
   final signUpBarPasswordController = TextEditingController();
+  bool isSignUpBarPasswordInFocus = false;
+  FocusNode signUpBarPasswordFocus = new FocusNode();
+
   final signUpBarVerifyPasswordController = TextEditingController();
+  bool isSignUpBarVerifyPasswordInFocus = false;
+  FocusNode signUpBarVerifyPasswordFocus = new FocusNode();
 
   bool loginPasswordVisible = false;
+
+  DateTime selectedDOB = DateTime.now();
 
 
   File imageFile = File('my initial file');
@@ -253,33 +289,71 @@ class AuthenticationViewModel extends BaseViewModel {
         error: "Email is required",
       ));
       return;
-    } if (signUpEmailController.text.isEmail) {
+    } if (!signUpEmailController.text.isEmail) {
       DialogUtils().showDialog(MyErrorWidget(error: "Email is invalid"));
       return;
     }
 
-
     else if (signUpPhoneController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
-        error: "Phone Number is required",
-      ));
+        error: "Phone Number is required",));
       return;
-    }else if (signUpPasswordController.text.isEmpty) {
+    }
+    if (signUpPhoneController.text.length < 11) {
+      DialogUtils().showDialog(MyErrorWidget(error: "Mobile number should contain 11 digits"));
+      return;
+    }
+    if (!signUpPhoneController.text.toString().startsWith("0")) {
+      DialogUtils().showDialog(MyErrorWidget(error: "Mobile number should start with zero"));
+      return;
+    }
+    else if (signUpPasswordController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Password is required",
       ));
       return;
-    }else if (signUpVerifyPasswordController.text.isEmpty) {
+    }
+    if (signUpPasswordController.text.length < 7) {
+      DialogUtils().showDialog(MyErrorWidget(error: "Password must be at least 8 characters"));
+      return;
+    }
+    if (!CommonFunctions.hasOneUpperCase(signUpPasswordController.text.trim())) {
+      DialogUtils().showDialog(MyErrorWidget(error: "Password should contain at least one upper case"));
+      return;
+    }
+    if (!CommonFunctions.hasOneLowerCase(signUpPasswordController.text.trim())) {
+      DialogUtils().showDialog(MyErrorWidget(error: "Password should contain at least one lower case"));
+      return;
+    }
+    if (!CommonFunctions.hasOneDigit(signUpPasswordController.text.trim())) {
+      DialogUtils().showDialog(MyErrorWidget(error: "Password should contain at least one digit"));
+      return;
+    }
+    if (!CommonFunctions.hasOneSpeicalCharacter(signUpPasswordController.text.trim())) {
+      DialogUtils().showDialog(MyErrorWidget(error: "Password should contain at least one special character"));
+      return;
+    }
+
+    else if (signUpVerifyPasswordController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Verify Password is required",
       ));
       return;
-    }else if (signUpAddressController.text.isEmpty) {
+    }
+    else if (signUpVerifyPasswordController.text == signUpPasswordController.text) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Password & Verify Password don't match",
+      ));
+      return;
+    }
+
+    else if (signUpAddressController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Address is required",
       ));
       return;
-    }else if (signUpDOBController.text.isEmpty) {
+    }
+    else if (signUpDOBController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Date Of Birth is required",
       ));
@@ -296,8 +370,14 @@ class AuthenticationViewModel extends BaseViewModel {
       return;
     }
     else{
-      navigateToFavoriteScreen();
+      //navigateToFavoriteScreen();
     }
+    navigateToFavoriteScreen();
+  }
+
+  void openAndSelectDob(BuildContext context) async {
+    selectedDOB = await CommonFunctions.showDateOfBirthPicker(context, selectedDOB);
+    notifyListeners();
   }
 
   createBarAccount(){
@@ -316,15 +396,44 @@ class AuthenticationViewModel extends BaseViewModel {
         error: "Password is required",
       ));
       return;
-    }else if (signUpBarVerifyPasswordController.text.isEmpty) {
+    }
+    if (signUpBarPasswordController.text.length < 7) {
+      DialogUtils().showDialog(MyErrorWidget(error: "Password must be at least 8 characters"));
+      return;
+    }
+    if (!CommonFunctions.hasOneUpperCase(signUpBarPasswordController.text.trim())) {
+      DialogUtils().showDialog(MyErrorWidget(error: "Password should contain at least one upper case"));
+      return;
+    }
+    if (!CommonFunctions.hasOneLowerCase(signUpBarPasswordController.text.trim())) {
+      DialogUtils().showDialog(MyErrorWidget(error: "Password should contain at least one lower case"));
+      return;
+    }
+    if (!CommonFunctions.hasOneDigit(signUpBarPasswordController.text.trim())) {
+      DialogUtils().showDialog(MyErrorWidget(error: "Password should contain at least one digit"));
+      return;
+    }
+    if (!CommonFunctions.hasOneSpeicalCharacter(signUpBarPasswordController.text.trim())) {
+      DialogUtils().showDialog(MyErrorWidget(error: "Password should contain at least one special character"));
+      return;
+    }
+
+    else if (signUpBarVerifyPasswordController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Verify Password is required",
       ));
       return;
     }
-    else{
-      navigateToUploadBarMedia();
+    else if (signUpBarVerifyPasswordController.text == signUpBarPasswordController.text) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Password & Verify Password don't match",
+      ));
+      return;
     }
+    else{
+
+    }
+    navigateToUploadBarMedia();
   }
 
   onLogIn(){
