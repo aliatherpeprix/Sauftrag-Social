@@ -8,6 +8,7 @@ import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
+import 'package:sauftrag/widgets/back_arrow_with_container.dart';
 import 'package:stacked/stacked.dart';
 
 class Media extends StatefulWidget {
@@ -36,8 +37,7 @@ class _MediaState extends State<Media> {
                   physics: const BouncingScrollPhysics(),
                   child: Container(
                     padding: EdgeInsets.symmetric(
-                        horizontal: Dimensions.horizontalPadding,
-                        vertical: Dimensions.verticalPadding),
+                        horizontal: Dimensions.horizontalPadding,),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -47,24 +47,14 @@ class _MediaState extends State<Media> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            IconButton(
-                                onPressed: () {
-                                  model.navigateBack();
-                                },
-                                iconSize: 18.0,
-                                padding: EdgeInsets.zero,
-                                constraints: BoxConstraints(),
-                                icon: Icon(
-                                  Icons.arrow_back_ios,
-                                  color: ColorUtils.black,
-                                )),
-                            SizedBox(width: 2.w),
+                            BackArrowContainer(),
+                            SizedBox(width: 4.w),
                             Text(
                               "Add Images",
                               style: TextStyle(
                                 color: ColorUtils.black,
                                 fontFamily: FontUtils.modernistBold,
-                                fontSize: 2.5.t,
+                                fontSize: 3.t,
                               ),
                             ),
                           ],

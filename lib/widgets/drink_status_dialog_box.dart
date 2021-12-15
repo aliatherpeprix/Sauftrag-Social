@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
@@ -26,6 +27,17 @@ class DrinkStatusDialogBox extends StatefulWidget {
 
 class _DrinkStatusDialogBoxState extends State<DrinkStatusDialogBox> {
 
+  String? drinkingFrom;
+  String? drinkingTo;
+
+  @override
+  void didChangeDependencies() {
+    drinkingFrom = TimeOfDay.now().format(context);
+    drinkingTo = TimeOfDay.now().format(context);
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -50,7 +62,7 @@ class _DrinkStatusDialogBoxState extends State<DrinkStatusDialogBox> {
                     onPressed: (){
                       model.navigateBack();
                     },
-                    iconSize: 15.0,
+                    //iconSize: 8.0,
                     //padding: EdgeInsets.all(20),
                     //constraints: BoxConstraints(),
                     icon: SvgPicture.asset(ImageUtils.cancelIcon),
@@ -78,7 +90,7 @@ class _DrinkStatusDialogBoxState extends State<DrinkStatusDialogBox> {
                         style: TextStyle(
                           color: ColorUtils.black,
                           fontFamily: FontUtils.modernistBold,
-                          fontSize: 2.2.t,
+                          fontSize: 2.5.t,
                         ),
                       ),
                     ),
@@ -108,7 +120,7 @@ class _DrinkStatusDialogBoxState extends State<DrinkStatusDialogBox> {
                         style: TextStyle(
                           color: ColorUtils.text_red,
                           fontFamily: FontUtils.modernistBold,
-                          fontSize: 2.2.t,
+                          fontSize: 2.5.t,
                         ),
                       ),
                     ),
@@ -153,7 +165,7 @@ class _DrinkStatusDialogBoxState extends State<DrinkStatusDialogBox> {
                     SizedBox(height: 4.h),
 
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 5.w),
+                      margin: EdgeInsets.symmetric(horizontal: 2.w),
                       child: Row(
                         children: [
 
@@ -162,33 +174,48 @@ class _DrinkStatusDialogBoxState extends State<DrinkStatusDialogBox> {
                             child: Stack(
                               children: [
 
-                                Container(
-                                  height: 6.h,
-                                  padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 3.w),
-                                  decoration: BoxDecoration(
-                                      color: ColorUtils.white,
-                                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                                      border: Border.all(color: ColorUtils.divider)
-                                  ),
-                                  child: Row(
-                                    children: [
+                                GestureDetector(
+                                  onTap: (){
+                                    showTimePicker(
+                                        context: context,
+                                        initialTime: TimeOfDay.now(),
+                                        initialEntryMode: TimePickerEntryMode.dial,
+                                        confirmText: "CONFIRM",
+                                        cancelText: "NOT NOW",
+                                        helpText: "BOOKING TIME"
+                                    ).then((value){
+                                      drinkingFrom = value!.format(context);
+                                      model.notifyListeners();
+                                    });
+                                  },
+                                  child: Container(
+                                    height: 6.h,
+                                    padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 3.w),
+                                    decoration: BoxDecoration(
+                                        color: ColorUtils.white,
+                                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                                        border: Border.all(color: ColorUtils.divider)
+                                    ),
+                                    child: Row(
+                                      children: [
 
-                                      Expanded(
-                                        child: Text(
-                                          "03:00 PM",
-                                          style: TextStyle(
+                                        Expanded(
+                                          child: Text(
+                                            drinkingFrom!,
+                                            style: TextStyle(
                                               color: ColorUtils.text_dark,
                                               fontFamily: FontUtils.modernistRegular,
                                               fontSize: 1.6.t,
                                               //height: .4
+                                            ),
                                           ),
                                         ),
-                                      ),
 
-                                      SizedBox(width: 4.w),
+                                        SizedBox(width: 4.w),
 
-                                      SvgPicture.asset(ImageUtils.upDownArrow),
-                                    ],
+                                        SvgPicture.asset(ImageUtils.upDownArrow),
+                                      ],
+                                    ),
                                   ),
                                 ),
 
@@ -218,33 +245,48 @@ class _DrinkStatusDialogBoxState extends State<DrinkStatusDialogBox> {
                             child: Stack(
                               children: [
 
-                                Container(
-                                  height: 6.h,
-                                  padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 3.w),
-                                  decoration: BoxDecoration(
-                                      color: ColorUtils.white,
-                                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                                      border: Border.all(color: ColorUtils.divider)
-                                  ),
-                                  child: Row(
-                                    children: [
+                                GestureDetector(
+                                  onTap: (){
+                                    showTimePicker(
+                                        context: context,
+                                        initialTime: TimeOfDay.now(),
+                                        initialEntryMode: TimePickerEntryMode.dial,
+                                        confirmText: "CONFIRM",
+                                        cancelText: "NOT NOW",
+                                        helpText: "BOOKING TIME"
+                                    ).then((value){
+                                      drinkingTo = value!.format(context);
+                                      model.notifyListeners();
+                                    });
+                                  },
+                                  child: Container(
+                                    height: 6.h,
+                                    padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 3.w),
+                                    decoration: BoxDecoration(
+                                        color: ColorUtils.white,
+                                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                                        border: Border.all(color: ColorUtils.divider)
+                                    ),
+                                    child: Row(
+                                      children: [
 
-                                      Expanded(
-                                        child: Text(
-                                          "03:00 PM",
-                                          style: TextStyle(
-                                            color: ColorUtils.text_dark,
-                                            fontFamily: FontUtils.modernistRegular,
-                                            fontSize: 1.6.t,
-                                            //height: .4
+                                        Expanded(
+                                          child: Text(
+                                            drinkingTo!,
+                                            style: TextStyle(
+                                              color: ColorUtils.text_dark,
+                                              fontFamily: FontUtils.modernistRegular,
+                                              fontSize: 1.6.t,
+                                              //height: .4
+                                            ),
                                           ),
                                         ),
-                                      ),
 
-                                      SizedBox(width: 4.w),
+                                        SizedBox(width: 4.w),
 
-                                      SvgPicture.asset(ImageUtils.upDownArrow),
-                                    ],
+                                        SvgPicture.asset(ImageUtils.upDownArrow),
+                                      ],
+                                    ),
                                   ),
                                 ),
 
@@ -280,7 +322,7 @@ class _DrinkStatusDialogBoxState extends State<DrinkStatusDialogBox> {
                         style: TextStyle(
                           color: ColorUtils.black,
                           fontFamily: FontUtils.modernistBold,
-                          fontSize: 2.2.t,
+                          fontSize: 2.5.t,
                         ),
                       ),
                     ),
@@ -292,7 +334,7 @@ class _DrinkStatusDialogBoxState extends State<DrinkStatusDialogBox> {
                       padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: Dimensions.containerHorizontalPadding),
                       decoration: BoxDecoration(
                           color: ColorUtils.white,
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          borderRadius: BorderRadius.all(Radius.circular(15)),
                           border: Border.all(color: ColorUtils.divider)
                       ),
                       child: Row(
@@ -347,7 +389,7 @@ class _DrinkStatusDialogBoxState extends State<DrinkStatusDialogBox> {
                     //Save Button
                     ElevatedButton(
                       onPressed: () {
-
+                        model.navigateBack();
                       },
                       child: const Text("Save"),
                       style: ElevatedButton.styleFrom(

@@ -5,6 +5,7 @@ import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
+import 'package:sauftrag/widgets/back_arrow_with_container.dart';
 import 'package:stacked/stacked.dart';
 
 class TermsOfService extends StatefulWidget {
@@ -33,7 +34,7 @@ class _TermsOfServiceState extends State<TermsOfService> {
                   child: Container(
                     padding: EdgeInsets.symmetric(
                         horizontal: Dimensions.horizontalPadding,
-                        vertical: Dimensions.verticalPadding),
+                       ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -43,24 +44,14 @@ class _TermsOfServiceState extends State<TermsOfService> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            IconButton(
-                                onPressed: () {
-                                  model.navigateBack();
-                                },
-                                iconSize: 18.0,
-                                padding: EdgeInsets.zero,
-                                constraints: BoxConstraints(),
-                                icon: Icon(
-                                  Icons.arrow_back_ios,
-                                  color: ColorUtils.black,
-                                )),
-                            SizedBox(width: 2.w),
+                            BackArrowContainer(),
+                            SizedBox(width: 4.w),
                             Text(
                               "Terms of Services",
                               style: TextStyle(
                                 color: ColorUtils.black,
                                 fontFamily: FontUtils.modernistBold,
-                                fontSize: 2.5.t,
+                                fontSize: 3.t,
                               ),
                             ),
                           ],
@@ -130,7 +121,8 @@ class _TermsOfServiceState extends State<TermsOfService> {
                         GestureDetector(
                             onTap: () {
                               setState(() {
-                                model.termsCheck = !model.termsCheck;
+                                model.termsCheck =  true ;
+                                model.notifyListeners();
                               });
                             },
                             child: Row(
@@ -188,7 +180,8 @@ class _TermsOfServiceState extends State<TermsOfService> {
                         GestureDetector(
                             onTap: () {
                               setState(() {
-                                model.dataCheck = !model.dataCheck;
+                                model.dataCheck =  true ;
+                                model.notifyListeners();
                               });
                             },
                             child: Row(
@@ -247,7 +240,7 @@ class _TermsOfServiceState extends State<TermsOfService> {
                           //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                           child: ElevatedButton(
                             onPressed: () {
-                              model.navigateToHomeScreen(2);
+                              model.termsAndCondition();
                             },
                             child: const Text("Let’s Get Started"),
                             style: ElevatedButton.styleFrom(

@@ -60,8 +60,8 @@ class _AddDialogBoxState extends State<AddDialogBox> {
                 SizedBox(height: 5.h),
 
                 Container(
-                  height: 7.h,
-                  padding: EdgeInsets.symmetric(vertical: Dimensions.containerVerticalPadding, horizontal: Dimensions.containerHorizontalPadding),
+                  height: 6.h,
+                  padding: EdgeInsets.symmetric( horizontal: Dimensions.containerHorizontalPadding),
                   decoration: BoxDecoration(
                       color: ColorUtils.white,
                       borderRadius: BorderRadius.all(Radius.circular(Dimensions.roundCorner)),
@@ -110,11 +110,12 @@ class _AddDialogBoxState extends State<AddDialogBox> {
                   //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                   child: ElevatedButton(
                     onPressed: () {
+                      model.navigateBack();
                       //model.navigateToTermsScreen();
                     },
                     child: Text(widget.btnTxt),
                     style: ElevatedButton.styleFrom(
-                      primary: ColorUtils.text_red  ,
+                      primary: ColorUtils.text_red ,
                       onPrimary: ColorUtils.white,
                       padding: EdgeInsets.symmetric(vertical: Dimensions.containerVerticalPadding),
                       elevation: 1,

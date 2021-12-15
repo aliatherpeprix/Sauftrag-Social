@@ -10,6 +10,7 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
 import 'package:sauftrag/widgets/add_dialog_box.dart';
+import 'package:sauftrag/widgets/back_arrow_with_container.dart';
 import 'package:sauftrag/widgets/radler_dialog_box.dart';
 import 'package:stacked/stacked.dart';
 
@@ -41,7 +42,7 @@ class _FavoriteState extends State<Favorite> {
                 body: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding, vertical: Dimensions.verticalPadding),
+                    padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding, ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -58,23 +59,15 @@ class _FavoriteState extends State<Favorite> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
 
-                                IconButton(
-                                    onPressed: (){
-                                      model.navigateBack();
-                                    },
-                                    iconSize: 18.0,
-                                    padding: EdgeInsets.zero,
-                                    constraints: BoxConstraints(),
-                                    icon: Icon(Icons.arrow_back_ios, color: ColorUtils.black,)
-                                ),
-                                SizedBox(width: 2.w),
+                                BackArrowContainer(),
+                                SizedBox(width: 4.w),
 
                                 Text(
                                   "Favorite Alcoholic Drink",
                                   style: TextStyle(
                                     color: ColorUtils.black,
                                     fontFamily: FontUtils.modernistBold,
-                                    fontSize: 2.5.t,
+                                    fontSize: 3.t,
                                   ),
                                 ),
                               ],
@@ -132,7 +125,7 @@ class _FavoriteState extends State<Favorite> {
                                   textStyle: TextStyle(
                                     //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
                                     fontFamily: model.selectedDrinkList.contains(model.drinkList.indexOf(element)) ? FontUtils.modernistBold : FontUtils.modernistRegular,
-                                    fontSize: 1.5.t,
+                                    fontSize: 1.8.t,
                                     //height: 0
                                   ),
                                 ),
@@ -176,14 +169,14 @@ class _FavoriteState extends State<Favorite> {
                                 ),
                                 textStyle: TextStyle(
                                   fontFamily: FontUtils.modernistRegular,
-                                  fontSize: 1.5.t,
+                                  fontSize: 1.8.t,
                                   //height: 0
                                 ),
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(height: 5.h),
+                        SizedBox(height: 4.h),
 
                         //Favorite Night Clubs
                         Column(
@@ -195,7 +188,7 @@ class _FavoriteState extends State<Favorite> {
                               style: TextStyle(
                                 color: ColorUtils.black,
                                 fontFamily: FontUtils.modernistBold,
-                                fontSize: 2.5.t,
+                                fontSize: 3.t,
                               ),
                             ),
                             SizedBox(height: 2.h),
@@ -253,7 +246,7 @@ class _FavoriteState extends State<Favorite> {
                                       textStyle: TextStyle(
                                         //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
                                         fontFamily: model.selectedClubList.contains(index) ? FontUtils.modernistBold : FontUtils.modernistRegular,
-                                        fontSize: 1.5.t,
+                                        fontSize: 1.8.t,
                                         //height: 0
                                       ),
                                     ),
@@ -299,14 +292,14 @@ class _FavoriteState extends State<Favorite> {
                                 ),
                                 textStyle: TextStyle(
                                   fontFamily: FontUtils.modernistRegular,
-                                  fontSize: 1.5.t,
+                                  fontSize: 1.8.t,
                                   //height: 0
                                 ),
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(height: 5.h),
+                        SizedBox(height: 4.h),
 
                         //Favorite Party Vacation
                         Column(
@@ -318,7 +311,7 @@ class _FavoriteState extends State<Favorite> {
                               style: TextStyle(
                                 color: ColorUtils.black,
                                 fontFamily: FontUtils.modernistBold,
-                                fontSize: 2.5.t,
+                                fontSize: 3.t,
                               ),
                             ),
                             SizedBox(height: 2.h),
@@ -364,7 +357,7 @@ class _FavoriteState extends State<Favorite> {
                                   textStyle: TextStyle(
                                     //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
                                     fontFamily: model.selectedVacationList.contains(model.vacationList.indexOf(element)) ? FontUtils.modernistBold : FontUtils.modernistRegular,
-                                    fontSize: 1.5.t,
+                                    fontSize: 1.8.t,
                                     //height: 0
                                   ),
                                 ),
@@ -408,7 +401,7 @@ class _FavoriteState extends State<Favorite> {
                                 ),
                                 textStyle: TextStyle(
                                   fontFamily: FontUtils.modernistRegular,
-                                  fontSize: 1.5.t,
+                                  fontSize: 1.8.t,
                                   //height: 0
                                 ),
                               ),

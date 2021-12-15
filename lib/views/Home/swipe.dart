@@ -220,6 +220,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                       //Top bar
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding),
+                        //margin: EdgeInsets.only(bottom: 1.h),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -251,13 +252,25 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                               ),
                             ),
 
-                            Text(
-                              "Discover",
-                              style: TextStyle(
-                                color: ColorUtils.black,
-                                fontFamily: FontUtils.modernistBold,
-                                fontSize: 2.5.t,
-                              ),
+                            Column(
+                              children: [
+                                Text(
+                                  "Discover",
+                                  style: TextStyle(
+                                    color: ColorUtils.black,
+                                    fontFamily: FontUtils.modernistBold,
+                                    fontSize: 3.t,
+                                  ),
+                                ),
+                                Text(
+                                  "Chicago",
+                                  style: TextStyle(
+                                    color: ColorUtils.black,
+                                    fontFamily: FontUtils.modernistRegular,
+                                    fontSize: 1.7.t,
+                                  ),
+                                ),
+                              ],
                             ),
 
                             ElevatedButton(
@@ -413,42 +426,45 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                       ),*/
 
                       Expanded(
-                        child: Stack(
-                          alignment: AlignmentDirectional.center,
-                          children: data.map((item) {
-                            return SwipeCard(
-                                img: item,
-                                cardWidth: backCardWidth + 0,
-                                rotation: rotate.value,
-                                skew: rotate.value < -10 ? 0.1 : 0.0,
-                                details: (){model.navigateToProfileScreen(item);},
-                                right: right.value,
-                                left: 0.0,
-                                addImg: addImg,
-                                bottom: bottom.value,
-                                flag: flag,
-                                dismissImg: dismissImg,
-                                swipeRight: swipeRight,
-                                swipeLeft: swipeLeft
-                                );
+                        child: Container(
+                          //margin: EdgeInsets.symmetric(vertical: 2.h),
+                          child: Stack(
+                            alignment: AlignmentDirectional.center,
+                            children: data.map((item) {
+                              return SwipeCard(
+                                  img: item,
+                                  cardWidth: backCardWidth + 0,
+                                  rotation: rotate.value,
+                                  skew: rotate.value < -10 ? 0.1 : 0.0,
+                                  details: (){model.navigateToProfileScreen(item);},
+                                  right: right.value,
+                                  left: 0.0,
+                                  addImg: addImg,
+                                  bottom: bottom.value,
+                                  flag: flag,
+                                  dismissImg: dismissImg,
+                                  swipeRight: swipeRight,
+                                  swipeLeft: swipeLeft
+                                  );
 
-                            return swipeCardNew(
-                                item,
-                                bottom.value,
-                                right.value,
-                                0.0,
-                                backCardWidth + 0,
-                                rotate.value,
-                                rotate.value < -10 ? 0.1 : 0.0,
-                                flag,
-                                dismissImg,
-                                addImg,
-                                model.navigateToProfileScreen,
-                                swipeLeft,
-                                swipeRight,
-                                context
-                            );
-                          }).toList(),
+                              return swipeCardNew(
+                                  item,
+                                  bottom.value,
+                                  right.value,
+                                  0.0,
+                                  backCardWidth + 0,
+                                  rotate.value,
+                                  rotate.value < -10 ? 0.1 : 0.0,
+                                  flag,
+                                  dismissImg,
+                                  addImg,
+                                  model.navigateToProfileScreen,
+                                  swipeLeft,
+                                  swipeRight,
+                                  context
+                              );
+                            }).toList(),
+                          ),
                         ),
                       ),
                       //SizedBox(height: 1.h),

@@ -499,8 +499,8 @@ class _MapScreenState extends State<MapScreen> {
                                                           .currentEventSelected
                                               ? Colors.white
                                               : ColorUtils.icon_color,
-                                          width: 7.i,
-                                          height: 7.i,
+                                          width: 10.i,
+                                          height: 10.i,
                                         ),
                                       ),
                                     ),
@@ -535,7 +535,7 @@ class _MapScreenState extends State<MapScreen> {
                         "Time & Date",
                         style: TextStyle(
                           fontFamily: FontUtils.modernistBold,
-                          fontSize: 2.0.t,
+                          fontSize: 2.2.t,
                           color: ColorUtils.blackText,
                         ),
                       ),
@@ -544,7 +544,9 @@ class _MapScreenState extends State<MapScreen> {
                       height: 2.h,
                     ),
                     Container(
-                      height: 6.h,
+
+                     // margin: EdgeInsets.symmetric(horizontal: 5.w),
+                      height: 5.5.h,
                       child: ListView.separated(
                         physics: BouncingScrollPhysics(),
                         shrinkWrap: true,
@@ -558,11 +560,9 @@ class _MapScreenState extends State<MapScreen> {
                               // mainModel.currentEventSelected = index;
                               mainModel.notifyListeners();
                             },
-                            child: Container(
-                              margin: EdgeInsets.only(
-                                left: 4.w,
-                              ),
+                            child: Expanded(
                               child: Container(
+                                margin: EdgeInsets.symmetric(horizontal: 3.w),
                                 decoration: BoxDecoration(
                                     shape: BoxShape.rectangle,
                                     borderRadius:
@@ -578,7 +578,7 @@ class _MapScreenState extends State<MapScreen> {
                                           : ColorUtils.borderColor,
                                     )),
                                 child: Padding(
-                                  padding: EdgeInsets.all(3.5.i),
+                                  padding: EdgeInsets.all(3.i),
                                   child: Text(
                                     time[index],
                                     style: TextStyle(
@@ -612,7 +612,7 @@ class _MapScreenState extends State<MapScreen> {
                         "Location",
                         style: TextStyle(
                           fontFamily: FontUtils.modernistBold,
-                          fontSize: 2.0.t,
+                          fontSize: 2.2.t,
                           color: ColorUtils.blackText,
                         ),
                       ),
@@ -729,7 +729,7 @@ class _MapScreenState extends State<MapScreen> {
                             "Select Range",
                             style: TextStyle(
                               fontFamily: FontUtils.modernistBold,
-                              fontSize: 2.0.t,
+                              fontSize: 2.2.t,
                               color: ColorUtils.blackText,
                             ),
                           ),

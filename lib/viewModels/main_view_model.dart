@@ -522,6 +522,10 @@ class MainViewModel extends BaseViewModel{
   void navigateToUserDetailSettings() {
     navigationService.navigateToUserDetailSettings();
   }
+
+
+
+
 ///------User Drawer -----/////
   void navigateToRatingList() {
     navigationService.navigateToRatingList();
@@ -559,6 +563,8 @@ class MainViewModel extends BaseViewModel{
   void navigateToAllBarRating() {
     navigationService.navigateToAllBarRating();
   }
+
+
 
 ///--------------Bar Profile ------------------///
   void navigateToBarDetails() {

@@ -251,6 +251,8 @@ class NavigationViewModel extends BaseViewModel{
   }
 
 
+
+
   ///------------------Bar Profile ---------------------------------///
 
   void navigateToBarProfile2(){

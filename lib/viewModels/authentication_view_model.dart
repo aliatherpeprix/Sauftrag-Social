@@ -21,8 +21,12 @@ class AuthenticationViewModel extends BaseViewModel {
 
   int role = Constants.user;
   bool signupCheck = false;
+
+  bool isChecked1 = false;
   bool termsCheck = false;
   bool dataCheck = false;
+
+  bool isChecked = false;
   bool signupPasswordVisible = false;
   bool signupVerifyPasswordVisible = false;
 
@@ -88,7 +92,7 @@ class AuthenticationViewModel extends BaseViewModel {
   bool isSignUpRelationshipInFocus = false;
   FocusNode signUpRelationshipFocus = new FocusNode();
 
-  bool isChecked = false;
+
 
   final signUpBarUserController = TextEditingController();
   bool isSignUpBarUserInFocus = false;
@@ -340,7 +344,7 @@ class AuthenticationViewModel extends BaseViewModel {
       ));
       return;
     }
-    else if (signUpVerifyPasswordController.text == signUpPasswordController.text) {
+    else if (signUpVerifyPasswordController.text != signUpPasswordController.text) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Password & Verify Password don't match",
       ));
@@ -353,12 +357,13 @@ class AuthenticationViewModel extends BaseViewModel {
       ));
       return;
     }
-    else if (signUpDOBController.text.isEmpty) {
-      DialogUtils().showDialog(MyErrorWidget(
-        error: "Date Of Birth is required",
-      ));
-      return;
-    }else if (signUpRelationshipController.text.isEmpty) {
+    // else if (signUpDOBController.text.isEmpty) {
+    //   DialogUtils().showDialog(MyErrorWidget(
+    //     error: "Date Of Birth is required",
+    //   ));
+    //   return;
+    // }
+    else if (signUpRelationshipController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "RelationShip is required",
       ));
@@ -373,6 +378,22 @@ class AuthenticationViewModel extends BaseViewModel {
       //navigateToFavoriteScreen();
     }
     navigateToFavoriteScreen();
+  }
+
+  termsAndCondition(){
+    if (termsCheck == false) {
+    DialogUtils().showDialog(MyErrorWidget(
+    error: "Please Accept Terms and Conditions",
+    ));
+    return;
+    }
+    else if (dataCheck == false) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Please Accept Date Protection",
+      ));
+      return;
+    }
+    navigateToHomeScreen(2);
   }
 
   void openAndSelectDob(BuildContext context) async {
@@ -424,7 +445,7 @@ class AuthenticationViewModel extends BaseViewModel {
       ));
       return;
     }
-    else if (signUpBarVerifyPasswordController.text == signUpBarPasswordController.text) {
+    else if (signUpBarVerifyPasswordController.text != signUpBarPasswordController.text) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Password & Verify Password don't match",
       ));

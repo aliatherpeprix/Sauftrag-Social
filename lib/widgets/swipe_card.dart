@@ -179,7 +179,8 @@ class _SwipeCardState extends State<SwipeCard> {
                                           },
                                           child: SvgPicture.asset(ImageUtils.dislikeIcon),
                                           style: ElevatedButton.styleFrom(
-                                            primary: ColorUtils.transparent,
+                                            shadowColor: ColorUtils.red_color,
+                                            primary: ColorUtils.red_color.withOpacity(0.9),
                                             onPrimary: ColorUtils.white,
                                             //padding: EdgeInsets.symmetric(vertical: Dimensions.containerVerticalPadding),
                                             padding: EdgeInsets.symmetric(horizontal: 0),
@@ -212,7 +213,8 @@ class _SwipeCardState extends State<SwipeCard> {
                                           },
                                           child: SvgPicture.asset(ImageUtils.likeIcon),
                                           style: ElevatedButton.styleFrom(
-                                            primary: ColorUtils.transparent,
+                                            shadowColor: Colors.green,
+                                            primary: Colors.green.withOpacity(0.9),
                                             onPrimary: ColorUtils.white,
                                             //padding: EdgeInsets.symmetric(vertical: Dimensions.containerVerticalPadding),
                                             padding: EdgeInsets.symmetric(horizontal: 0),
