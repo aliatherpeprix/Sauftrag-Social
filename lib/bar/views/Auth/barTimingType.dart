@@ -13,6 +13,7 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
+import 'package:sauftrag/widgets/back_arrow_with_container.dart';
 import 'package:sauftrag/widgets/radler_dialog_box.dart';
 import 'package:stacked/stacked.dart';
 
@@ -59,8 +60,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                   physics:  BouncingScrollPhysics(),
                   child: Container(
                     padding: EdgeInsets.symmetric(
-                        horizontal: Dimensions.horizontalPadding,
-                        vertical: Dimensions.verticalPadding),
+                        horizontal: Dimensions.horizontalPadding,),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -70,24 +70,25 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            IconButton(
-                                onPressed: () {
-                                  model.navigateBack();
-                                },
-                                iconSize: 18.0,
-                                padding: EdgeInsets.zero,
-                                constraints: BoxConstraints(),
-                                icon: Icon(
-                                  Icons.arrow_back_ios,
-                                  color: ColorUtils.black,
-                                )),
-                            SizedBox(width: 2.w),
+                            // IconButton(
+                            //     onPressed: () {
+                            //       model.navigateBack();
+                            //     },
+                            //     iconSize: 18.0,
+                            //     padding: EdgeInsets.zero,
+                            //     constraints: BoxConstraints(),
+                            //     icon: Icon(
+                            //       Icons.arrow_back_ios,
+                            //       color: ColorUtils.black,
+                            //     )),
+                            BackArrowContainer(),
+                            SizedBox(width: 4.w),
                             Text(
                               "Bar Timing",
                               style: TextStyle(
                                 color: ColorUtils.black,
                                 fontFamily: FontUtils.modernistBold,
-                                fontSize: 2.5.t,
+                                fontSize: 3.t,
                               ),
                             ),
                           ],
@@ -156,8 +157,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                           ? 5
                                           : 0,
                                       shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              Dimensions.roundCorner),
+                                          borderRadius: BorderRadius.circular(4),
                                           side: BorderSide(
                                               color: model.selectedWeekDays
                                                       .contains(model.weekDaysList
@@ -172,7 +172,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                                     .indexOf(element))
                                             ? FontUtils.modernistBold
                                             : FontUtils.modernistRegular,
-                                        fontSize: 1.5.t,
+                                        fontSize: 1.8.t,
                                         //height: 0
                                       ),
                                     ),

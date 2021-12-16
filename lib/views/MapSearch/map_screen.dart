@@ -747,6 +747,7 @@ class _MapScreenState extends State<MapScreen> {
                     FlutterSlider(
                       onDragCompleted: (handlerIndex, lowerValue, upperValue) {
                         handlerIndex = 0;
+
                         mainModel.lowerValue = lowerValue;
                         mainModel.upperValue = upperValue;
                         // print(_upperValue);

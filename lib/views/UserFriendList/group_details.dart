@@ -12,6 +12,7 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/widgets/back_arrow_with_container.dart';
 import 'package:stacked/stacked.dart';
 
 class GroupDetails extends StatefulWidget {
@@ -45,10 +46,16 @@ class _GroupDetailsState extends State<GroupDetails> {
                 width: double.infinity,
                 padding: EdgeInsets.symmetric(
                     horizontal: Dimensions.horizontalPadding,
-                    vertical: Dimensions.verticalPadding),
+                   ),
                 child: ElevatedButton(
                   onPressed: () {
-                    model.navigateToFriendListScreen();
+                    if(model.logInUserSelected == true){
+                      model.navigateToFriendListScreen();
+                    }
+                    else if(model.logInBarSelected == true){
+                      model.navigateToFriendListScreen1();
+                    }
+
                   },
                   child: const Text("Create Group"),
                   style: ElevatedButton.styleFrom(
@@ -75,7 +82,7 @@ class _GroupDetailsState extends State<GroupDetails> {
                 body: Container(
                   padding: EdgeInsets.symmetric(
                       horizontal: Dimensions.horizontalPadding,
-                      vertical: Dimensions.verticalPadding),
+                     ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -83,29 +90,30 @@ class _GroupDetailsState extends State<GroupDetails> {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          IconButton(
-                              onPressed: () {
-                                model.navigateBack();
-                              },
-                              iconSize: 18.0,
-                              padding: EdgeInsets.zero,
-                              constraints: BoxConstraints(),
-                              icon: Icon(
-                                Icons.arrow_back_ios,
-                                color: ColorUtils.black,
-                              )),
-                          SizedBox(width: 2.w),
+                          // IconButton(
+                          //     onPressed: () {
+                          //       model.navigateBack();
+                          //     },
+                          //     iconSize: 18.0,
+                          //     padding: EdgeInsets.zero,
+                          //     constraints: BoxConstraints(),
+                          //     icon: Icon(
+                          //       Icons.arrow_back_ios,
+                          //       color: ColorUtils.black,
+                          //     )),
+                          BackArrowContainer(),
+                          SizedBox(width: 4.w),
                           Text(
                             "Group Name",
                             style: TextStyle(
                               color: ColorUtils.black,
                               fontFamily: FontUtils.modernistBold,
-                              fontSize: 2.5.t,
+                              fontSize: 3.t,
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(height: 4.h,),
+                      SizedBox(height: 3.5.h,),
                       Expanded(
                         child: SingleChildScrollView(
                           physics: BouncingScrollPhysics(),
@@ -129,7 +137,7 @@ class _GroupDetailsState extends State<GroupDetails> {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(width: 2.5.w,),
+                                  SizedBox(width: 2.w,),
                                   Expanded(
                                     child: Container(
                                       //width: 200.0,
@@ -329,13 +337,14 @@ class _GroupDetailsState extends State<GroupDetails> {
                               Text("Participants",
                                 style: TextStyle(
                                   fontFamily: FontUtils.modernistBold,
-                                  fontSize: 2.t,
+                                  fontSize: 2.2.t,
                                   color: Colors.black,
                                 ),
                               ),
                               Container(
-                                //margin: EdgeInsets.symmetric(horizontal: 4.w),
+                                margin: EdgeInsets.only(top: 3.h),
                                 child: GridView.builder(
+                                  padding: EdgeInsets.zero,
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
                                   itemCount: model.groupList.length,

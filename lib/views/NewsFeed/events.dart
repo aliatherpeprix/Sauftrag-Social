@@ -137,50 +137,51 @@ class _EventsState extends State<Events> {
                             margin: EdgeInsets.symmetric(horizontal: 4.w),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text("Upcoming Events",
                                   style: TextStyle(
                                     fontFamily: FontUtils.modernistBold,
-                                    fontSize: 2.3.t,
+                                    fontSize: 2.2.t,
                                     color: ColorUtils.text_dark,
                                   ),
                                 ),
                                 GestureDetector(
                                   onTap: (){
                                   },
-                                  child: Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Text(
-                                      "See all",
-                                      style: TextStyle(
-                                        fontFamily: FontUtils.modernistRegular,
-                                        fontSize: 1.7.t,
+                                  child: Text(
+                                    "See all",
+                                    style: TextStyle(
+                                      fontFamily: FontUtils.modernistRegular,
+                                      fontSize: 1.7.t,
+                                      color: ColorUtils.text_red,
+                                        decoration: TextDecoration.underline,
 
-                                        shadows: [
-                                          Shadow(
-                                              color: ColorUtils.text_red,
-                                              offset: Offset(0, -3))
-                                        ],
-                                        color: Colors.transparent,
-                                        decoration:
-                                        TextDecoration.underline,
-                                        decorationColor: ColorUtils.text_red,
-                                        decorationThickness: 1,
-                                        decorationStyle:
-                                        TextDecorationStyle.solid,
-                                      ),
+                                      // shadows: [
+                                      //   Shadow(
+                                      //       color: ColorUtils.text_red,
+                                      //       offset: Offset(0, -3))
+                                      // ],
+                                      // color: Colors.transparent,
+                                      // decoration:
+                                      // TextDecoration.underline,
+                                      // decorationColor: ColorUtils.text_red,
+                                      // decorationThickness: 1,
+                                      // decorationStyle:
+                                      // TextDecorationStyle.solid,
                                     ),
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                          SizedBox(height: 3.h,),
+                          SizedBox(height: 2.h,),
                           Container(
-                            //margin: EdgeInsets.only(left: 0.w,right: 1.w),
-                            height: 38.5.h,
+                            margin: EdgeInsets.only(right: 2.w,),
+                            height: 35.h,
                             //width: 70.w,
                             child: ListView.separated(
+                              padding: EdgeInsets.zero,
                                 scrollDirection: Axis.horizontal,
                                 shrinkWrap: true,
                                 //padding: EdgeInsets.zero,
@@ -190,8 +191,9 @@ class _EventsState extends State<Events> {
                                       model.navigateToEventDetailsScreen();
                                     },
                                     child: Padding(
-                                      padding: EdgeInsets.only(left: 4.w, bottom: 2.h),
+                                      padding: EdgeInsets.only(left: 4.w, bottom: 2.h,),
                                       child: Container(
+                                        width: 65.w,
                                         decoration: BoxDecoration(
                                           shape: BoxShape.rectangle,
                                           boxShadow: [
@@ -204,7 +206,7 @@ class _EventsState extends State<Events> {
                                           ],
                                           color: Colors.white,
                                           borderRadius: BorderRadius.all(Radius.circular(18)),
-                                          border: Border.all(color: ColorUtils.text_red),
+                                          // border: Border.all(color: ColorUtils.text_red),
                                         ),
                                         child: Padding(
                                           padding: const EdgeInsets.all(12.0),
@@ -218,7 +220,7 @@ class _EventsState extends State<Events> {
                                                     borderRadius: BorderRadius.circular(10),
                                                     child: Image.asset(upComingEvents[index]["image"],
                                                       fit: BoxFit.fitHeight,
-                                                      height: 20.h,
+                                                      height: 17.h,
                                                     ),
                                                   ),
                                                   Positioned(
@@ -319,11 +321,12 @@ class _EventsState extends State<Events> {
                                 itemCount: upComingEvents.length
                             ),
                           ),
-                          SizedBox(height: 3.h,),
+                          SizedBox(height: 2.5.h,),
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 4.w),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text("All Events",
                                   style: TextStyle(
@@ -336,35 +339,38 @@ class _EventsState extends State<Events> {
                                   onTap: (){
                                     //model.navigationService.navigateTo(to: ForgotPassword());
                                   },
-                                  child: Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Text(
-                                      "See all",
-                                      style: TextStyle(
-                                        fontFamily: FontUtils.modernistRegular,
-                                        fontSize: 1.7.t,
+                                  child: Text(
+                                    "See all",
+                                    style: TextStyle(
+                                      fontFamily: FontUtils.modernistRegular,
+                                      fontSize: 1.7.t,
+                                      color: ColorUtils.red_color,
+                                      decoration:
+                                      TextDecoration.underline,
+                                      decorationColor: ColorUtils.text_red,
 
-                                        shadows: [
-                                          Shadow(
-                                              color: ColorUtils.text_red,
-                                              offset: Offset(0, -3))
-                                        ],
-                                        color: Colors.transparent,
-                                        decoration:
-                                        TextDecoration.underline,
-                                        decorationColor: ColorUtils.text_red,
-                                        decorationThickness: 1,
-                                        decorationStyle:
-                                        TextDecorationStyle.solid,
-                                      ),
+                                      // shadows: [
+                                      //   Shadow(
+                                      //       color: ColorUtils.text_red,
+                                      //       offset: Offset(0, -3))
+                                      // ],
+                                      // color: Colors.transparent,
+                                      // decoration:
+                                      // TextDecoration.underline,
+                                      // decorationColor: ColorUtils.text_red,
+                                      // decorationThickness: 1,
+                                      // decorationStyle:
+                                      // TextDecorationStyle.solid,
                                     ),
                                   ),
                                 ),
                               ],
                             ),
                           ),
+                          SizedBox(height: 2.5.h,),
                           //SizedBox(height: 3.h,),
                           ListView.separated(
+                            padding: EdgeInsets.zero,
                             scrollDirection: Axis.vertical,
                             physics: BouncingScrollPhysics(),
                             shrinkWrap: true,

@@ -115,7 +115,7 @@ class _FriendListState extends State<FriendList> {
                       ),
                       Column(
                         children: [
-                          SizedBox(height: Dimensions.topMargin),
+                          SizedBox(height: 6.h),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -125,7 +125,7 @@ class _FriendListState extends State<FriendList> {
                                 style: TextStyle(
                                   fontFamily: FontUtils.modernistBold,
                                   color: Colors.black,
-                                  fontSize: 2.5.t,
+                                  fontSize: 3.t,
                                 ),
                               ),
                               Row(
@@ -151,14 +151,14 @@ class _FriendListState extends State<FriendList> {
                                   IconButton(
                                     padding: EdgeInsets.zero,
                                     onPressed: () {
-                                      if(model.openGroupMenu == false){
-                                        model.openGroupMenu = true;
-                                        model.notifyListeners();
-                                      }
-                                      else if (model.openGroupMenu == true){
-                                        model.openGroupMenu = false;
-                                        model.notifyListeners();
-                                      }
+                                      // if(model.openGroupMenu == false){
+                                      //   model.openGroupMenu = true;
+                                      //   model.notifyListeners();
+                                      // }
+                                      // else if (model.openGroupMenu == true){
+                                      //   model.openGroupMenu = false;
+                                      //   model.notifyListeners();
+                                      // }
                                     },
                                     icon: SvgPicture.asset(ImageUtils.messageIcon),
                                   ),
@@ -272,41 +272,41 @@ class _FriendListState extends State<FriendList> {
                               ),
                             ),
                           ),
+                          SizedBox(height: 2.h,),
                           //SizedBox(height: 2.h),
-                          SizedBox(
-                            height: 10.h,
-                            child: AppBar(
-                              backgroundColor: Colors.white,
-                              elevation: 0.0,
-                              bottom: TabBar(
-                                indicatorColor: ColorUtils.text_red,
-                                labelColor: ColorUtils.text_red,
-                                labelStyle: TextStyle(
-                                  fontFamily: FontUtils.modernistBold,
-                                  fontSize: 1.8.t,
-                                ),
-                                unselectedLabelStyle: TextStyle(
-                                  fontFamily: FontUtils.modernistRegular,
-                                  fontSize: 1.8.t,
-                                ),
-                                unselectedLabelColor: ColorUtils.icon_color,
-                                tabs: [
-                                  Tab(
-                                    text: "Direct",
-                                  ),
-                                  Tab(
-                                    text: "Groups",
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
+                       Container(
+
+                         child:  TabBar(
+                           labelPadding: EdgeInsets.zero,
+
+                           indicatorColor: ColorUtils.text_red,
+                           labelColor: ColorUtils.text_red,
+                           labelStyle: TextStyle(
+                             fontFamily: FontUtils.modernistBold,
+                             fontSize: 2.t,
+                           ),
+                           unselectedLabelStyle: TextStyle(
+                             fontFamily: FontUtils.modernistRegular,
+                             fontSize: 2.t,
+                           ),
+                           unselectedLabelColor: ColorUtils.icon_color,
+                           tabs: [
+                             Tab(
+                               text: "Direct",
+                             ),
+                             Tab(
+                               text: "Groups",
+                             ),
+                           ],
+                         ),
+                       ),
                           Expanded(
 
                             child: TabBarView(
                               children: [
                                 // first tab bar view widget
                                 ListView.separated(
+                                  padding: EdgeInsets.symmetric(vertical:4.h),
                                   physics: BouncingScrollPhysics(),
                                     shrinkWrap: true,
                                     itemBuilder: (context, index) {
@@ -320,9 +320,7 @@ class _FriendListState extends State<FriendList> {
                                         },
                                         child: Column(
                                           children: [
-                                            SizedBox(
-                                              height: 2.h,
-                                            ),
+
                                             Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.spaceBetween,
@@ -379,7 +377,7 @@ class _FriendListState extends State<FriendList> {
                                                                   .text_dark),
                                                         ),
                                                         SizedBox(
-                                                          height: 2.h,
+                                                          height: 0.5.h,
                                                         ),
                                                         Container(
                                                           width: MediaQuery.of(context).size.width / 2,
@@ -458,7 +456,8 @@ class _FriendListState extends State<FriendList> {
                                     model.navigateToGroupScreen();
                                   },
                                   child: Container(
-                                    margin: EdgeInsets.only(top: 3.h),
+                                    padding: EdgeInsets.symmetric(vertical:4.h),
+                                    //margin: EdgeInsets.only(top: 3.h),
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -489,7 +488,7 @@ class _FriendListState extends State<FriendList> {
                                                           .text_dark),
                                                 ),
                                                 SizedBox(
-                                                  height: 2.h,
+                                                  height: 1.h,
                                                 ),
                                                 Container(
                                                   width: MediaQuery.of(context).size.width / 2,

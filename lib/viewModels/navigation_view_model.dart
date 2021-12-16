@@ -32,6 +32,7 @@ import 'package:sauftrag/views/Auth/media.dart';
 import 'package:sauftrag/views/Auth/resent_password.dart';
 import 'package:sauftrag/views/Auth/signup.dart';
 import 'package:sauftrag/views/Auth/terms.dart';
+import 'package:sauftrag/views/Auth/verification_code.dart';
 import 'package:sauftrag/views/Home/main_view.dart';
 import 'package:sauftrag/views/Home/match.dart';
 import 'package:sauftrag/views/Home/profile.dart';
@@ -117,12 +118,16 @@ class NavigationViewModel extends BaseViewModel{
     navigationKey.currentState!.push(PageTransition(child: ResentPassword(), type: PageTransitionType.rightToLeftWithFade));
   }
 
+  void navigateToVerificationCodeScreen(){
+    navigationKey.currentState!.push(PageTransition(child: VerificationCode(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
   void navigateToBarHomeScreen(){
     navigationKey.currentState!.push(PageTransition(child: BarNewsFeed(), type: PageTransitionType.rightToLeftWithFade));
   }
 
   void navigateToHomeScreen(int index){
-    navigationKey.currentState!.pushAndRemoveUntil(PageTransition(child: MainView(index: index), type: PageTransitionType.rightToLeftWithFade),(Route<dynamic> route) => false);
+    navigationKey.currentState!.pushAndRemoveUntil(PageTransition(child: MainView(index: 3), type: PageTransitionType.rightToLeftWithFade),(Route<dynamic> route) => false);
   }
 
   void navigateToHomeBarScreen(){
@@ -130,7 +135,7 @@ class NavigationViewModel extends BaseViewModel{
   }
 
   void navigateToMapScreen(int index){
-    navigationKey.currentState!.pushAndRemoveUntil(PageTransition(child: MainView(index: 3), type: PageTransitionType.rightToLeftWithFade),(Route<dynamic> route) => false);
+    navigationKey.currentState!.pushAndRemoveUntil(PageTransition(child: MainView(index: index), type: PageTransitionType.rightToLeftWithFade),(Route<dynamic> route) => false);
   }
 
   void navigateToProfileScreen(List<String> images){
@@ -141,8 +146,16 @@ class NavigationViewModel extends BaseViewModel{
     navigationKey.currentState!.push(PageTransition(child: Match(), type: PageTransitionType.rightToLeftWithFade));
   }
 
+  // void navigateToFriendListScreen(){
+  //   navigationKey.currentState!.push(PageTransition(child: FriendList(), type: PageTransitionType.rightToLeftWithFade));
+  // }
+
+  void navigateToFriendListScreen1(){
+    navigationKey.currentState!.push(PageTransition(child: MainViewBar(index: 1), type: PageTransitionType.rightToLeftWithFade));
+  }
+
   void navigateToFriendListScreen(){
-    navigationKey.currentState!.push(PageTransition(child: FriendList(), type: PageTransitionType.rightToLeftWithFade));
+    navigationKey.currentState!.push(PageTransition(child: MainView(index: 1), type: PageTransitionType.rightToLeftWithFade));
   }
 
   void navigateToMsgCreateGroupScreen(){

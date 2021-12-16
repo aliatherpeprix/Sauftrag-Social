@@ -12,6 +12,7 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/widgets/back_arrow_with_container.dart';
 import 'package:stacked/stacked.dart';
 
 class CreateGroup extends StatefulWidget {
@@ -62,7 +63,7 @@ class _CreateGroupState extends State<CreateGroup> {
                   model.navigateToGroupDetails();
                 },
                 child: Container(
-                  margin: EdgeInsets.only(bottom: 6.h,right: 2.w),
+                  margin: EdgeInsets.only(bottom: 3.h,right: 2.w),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: ColorUtils.text_red,
@@ -73,11 +74,12 @@ class _CreateGroupState extends State<CreateGroup> {
                     ),
                 ),
               ),
+
                 backgroundColor: ColorUtils.white,
                 body: Container(
                   padding: EdgeInsets.symmetric(
                       horizontal: Dimensions.horizontalPadding,
-                      vertical: Dimensions.verticalPadding),
+                      ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -85,24 +87,25 @@ class _CreateGroupState extends State<CreateGroup> {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          IconButton(
-                              onPressed: () {
-                                model.navigateBack();
-                              },
-                              iconSize: 18.0,
-                              padding: EdgeInsets.zero,
-                              constraints: BoxConstraints(),
-                              icon: Icon(
-                                Icons.arrow_back_ios,
-                                color: ColorUtils.black,
-                              )),
-                          SizedBox(width: 2.w),
+                          // IconButton(
+                          //     onPressed: () {
+                          //       model.navigateBack();
+                          //     },
+                          //     iconSize: 18.0,
+                          //     padding: EdgeInsets.zero,
+                          //     constraints: BoxConstraints(),
+                          //     icon: Icon(
+                          //       Icons.arrow_back_ios,
+                          //       color: ColorUtils.black,
+                          //     )),
+                          BackArrowContainer(),
+                          SizedBox(width: 4.w),
                           Text(
                             "Create Group",
                             style: TextStyle(
                               color: ColorUtils.black,
                               fontFamily: FontUtils.modernistBold,
-                              fontSize: 2.5.t,
+                              fontSize: 3.t,
                             ),
                           ),
                         ],
@@ -167,8 +170,11 @@ class _CreateGroupState extends State<CreateGroup> {
                           ),
                         ),
                       ),
+                      SizedBox(height: 3.h,),
+
                       Expanded(
                         child: ListView.separated(
+                          padding: EdgeInsets.zero,
                             physics: BouncingScrollPhysics(),
                           shrinkWrap: true,
                             itemBuilder: (context, index) {
@@ -178,7 +184,7 @@ class _CreateGroupState extends State<CreateGroup> {
                                   Row(
                                     children: [
                                       CircleAvatar(
-                                        radius: 30.0,
+                                        radius: 26.5,
                                         backgroundImage: AssetImage(
                                             model.contactChecked[index]["image"]),
                                         backgroundColor: Colors.transparent,

@@ -162,7 +162,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                           //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                           child: ElevatedButton(
                             onPressed: () {
-                              model.navigateToCheckEmailScreen();
+                              model.forgetPassword();
                             },
                             child: const Text("Send Instruction"),
                             style: ElevatedButton.styleFrom(

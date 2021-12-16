@@ -61,14 +61,14 @@ class _EventDetailsState extends State<EventDetails> {
                   ),
                   child: MaterialButton(
                     padding: EdgeInsets.zero,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                     onPressed: (){
                     },
                     child: Text(
                       "Attend Event",
                       style: TextStyle(
                           fontFamily: FontUtils.modernistBold,
-                          fontSize: 2.2.t,
+                          fontSize: 1.8.t,
                           color: Colors.white),
                     ),
                   ),
@@ -112,6 +112,7 @@ class _EventDetailsState extends State<EventDetails> {
                   height: MediaQuery.of(context).size.height /2.7,
                   child: Stack(
                     children: [
+
                       Container(
                         margin: EdgeInsets.only(bottom: 3.5.h),
                         decoration: BoxDecoration(
@@ -132,25 +133,27 @@ class _EventDetailsState extends State<EventDetails> {
                       Container(
                         margin: EdgeInsets.only(left: 4.w, right: 4.w, top: 3.h),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
-                              children: [
-                                BackArrowContainer(),
-                                SizedBox(width: 3.w,),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    //color: Colors.grey.withOpacity(0.1)
-                                  ),
-                                  child: Text("Event Details",
-                                    style: TextStyle(
-                                        fontFamily: FontUtils.modernistBold,
-                                        fontSize: 2.7.t,
-                                        color: Colors.white
-                                    ),
-                                  ),
+                            Container(
+                                width: 10.w,
+                                height: 5.h,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(10))),
+                                child: BackArrowContainer()),
+                            SizedBox(width: 3.w,),
+                            Container(
+                              decoration: BoxDecoration(
+                                //color: Colors.grey.withOpacity(0.1)
+                              ),
+                              child: Text("Event Details",
+                                style: TextStyle(
+                                    fontFamily: FontUtils.modernistBold,
+                                    fontSize: 2.7.t,
+                                    color: Colors.white
                                 ),
-                              ],
+                              ),
                             ),
                           ],
                         ),
@@ -289,7 +292,7 @@ class _EventDetailsState extends State<EventDetails> {
                                   ),
                                 ],
                               ),
-                              SvgPicture.asset(ImageUtils.forwardIcon),
+                             // SvgPicture.asset(ImageUtils.forwardIcon),
                             ],
                           ),
 
@@ -332,7 +335,7 @@ class _EventDetailsState extends State<EventDetails> {
                                   ),
                                 ],
                               ),
-                              SvgPicture.asset(ImageUtils.forwardIcon),
+                             // SvgPicture.asset(ImageUtils.forwardIcon),
                             ],
                           ),
 

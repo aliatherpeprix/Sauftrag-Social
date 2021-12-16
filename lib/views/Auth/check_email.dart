@@ -103,7 +103,7 @@ class CheckEmail extends StatelessWidget {
                           //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                           child: ElevatedButton(
                             onPressed: () {
-                               model.navigateToResentPasswordScreen();
+                               model.navigateToVerificationCodeScreen();
                             },
                             child: const Text("Open Email"),
                             style: ElevatedButton.styleFrom(

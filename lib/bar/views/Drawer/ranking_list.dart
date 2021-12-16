@@ -61,7 +61,7 @@ class _RatingListState extends State<RatingList> {
                               )),
                           SizedBox(width: 2.w),
                           Text(
-                            "Ranting List",
+                            "Ranking List",
                             style: TextStyle(
                               color: ColorUtils.black,
                               fontFamily: FontUtils.modernistBold,

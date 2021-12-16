@@ -20,7 +20,8 @@ class MainViewModel extends BaseViewModel{
   Completer<GoogleMapController> controller = Completer();
   final GlobalKey<NavigatorState> navigationKey = GlobalKey<NavigatorState>();
 
-
+  bool logInUserSelected = true;
+  bool logInBarSelected = false;
   var navigationService = navigationViewModel;
   late SharedPreferences prefs;
   List<Marker> markers = <Marker>[];
@@ -443,7 +444,7 @@ class MainViewModel extends BaseViewModel{
   }
 
   void navigateToGroupScreen(){
-    navigationService.navigateToGroupDetail();
+    navigationService.navigateToGroupScreen();
   }
 
   void navigateToUserProfileAccountScreen(){
@@ -510,6 +511,10 @@ class MainViewModel extends BaseViewModel{
     navigationService.navigateToSwipeScreen();
   }
 
+  void navigateToFriendListScreen1() {
+    navigationService.navigateToFriendListScreen1();
+  }
+
 
   void navigateToEventDetailsScreen() {
     navigationService.navigateToEventDetailScreen();
@@ -522,8 +527,6 @@ class MainViewModel extends BaseViewModel{
   void navigateToUserDetailSettings() {
     navigationService.navigateToUserDetailSettings();
   }
-
-
 
 
 ///------User Drawer -----/////

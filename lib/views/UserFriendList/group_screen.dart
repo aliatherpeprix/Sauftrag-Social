@@ -12,6 +12,7 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/widgets/back_arrow_with_container.dart';
 import 'package:stacked/stacked.dart';
 
 class GroupScreen extends StatefulWidget {
@@ -47,7 +48,7 @@ class _GroupScreenState extends State<GroupScreen> {
                   Container(
                     padding: EdgeInsets.symmetric(
                         horizontal: Dimensions.horizontalPadding,
-                        vertical: Dimensions.verticalPadding),
+                    ),
                     child: Column(
                       children: [
                         SizedBox(height: Dimensions.topMargin),
@@ -56,15 +57,15 @@ class _GroupScreenState extends State<GroupScreen> {
                           children: [
                             Row(
                               children: [
-                                SvgPicture.asset(ImageUtils.backArrow),
-                                SizedBox(width: 5.w,),
+                                BackArrowContainer(),
+                                SizedBox(width: 4.w,),
                                 Row(
                                   children: [
                                     Stack(
                                       alignment: Alignment.topCenter,
                                       children: [
                                         CircleAvatar(
-                                          radius: 30.0,
+                                          radius: 26.0,
                                           backgroundImage:
                                           AssetImage(ImageUtils.cosmos),
                                           backgroundColor: Colors.transparent,
@@ -88,7 +89,7 @@ class _GroupScreenState extends State<GroupScreen> {
                                             SvgPicture.asset(ImageUtils.groupLock),
                                           ],
                                         ),
-                                        SizedBox(height: 1.h,),
+                                        SizedBox(height: 0.8.h,),
                                         Text("4 Members, 1 Online",
                                           style: TextStyle(
                                               fontFamily: FontUtils.modernistBold,
@@ -116,14 +117,14 @@ class _GroupScreenState extends State<GroupScreen> {
                       Text("Awfully quite in here",
                         style: TextStyle(
                           fontFamily: FontUtils.modernistRegular,
-                          fontSize: 1.85.t,
+                          fontSize: 2.t,
                           color: ColorUtils.text_dark,
                         ),
                       ),
                     ],
                   ),
                   Container(
-                    margin: EdgeInsets.only(bottom:2.h),
+                   // margin: EdgeInsets.only(bottom:2.h),
                     padding: EdgeInsets.symmetric(
                         horizontal: Dimensions.horizontalPadding,
                         vertical: Dimensions.verticalPadding),

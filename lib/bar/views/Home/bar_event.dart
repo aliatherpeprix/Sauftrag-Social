@@ -442,19 +442,19 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                 decoration: BoxDecoration(
                                   borderRadius:
                                   BorderRadius.all(Radius.circular(20)),
-                                  image: model.imageFiles[2].path.isEmpty
+                                  image: model.imageFiles[3].path.isEmpty
                                       ? null
                                       : DecorationImage(
                                       image:
-                                      FileImage(model.imageFiles[2]),
+                                      FileImage(model.imageFiles[3]),
                                       fit: BoxFit.cover),
                                 ),
                                 child: Stack(
                                   children: [
-                                    model.imageFiles[2].path.isEmpty
+                                    model.imageFiles[3].path.isEmpty
                                         ? InkWell(
                                         onTap: () {
-                                          model.getImage(2);
+                                          model.getImage(3);
                                           model.notifyListeners();
                                         },
                                         child: DottedBorder(
@@ -472,7 +472,7 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                               ),
                                             )))
                                         : Container(),
-                                    model.imageFiles[2].path.isEmpty
+                                    model.imageFiles[3].path.isEmpty
                                         ? Container()
                                         : Align(
                                       alignment: Alignment.bottomRight,

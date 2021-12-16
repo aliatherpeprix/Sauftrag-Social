@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/utils/constants.dart';
 import 'package:sauftrag/utils/dialog_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
@@ -11,9 +12,8 @@ import 'package:stacked/stacked.dart';
 import 'package:sauftrag/utils/common_functions.dart';
 import 'package:get/get_utils/src/extensions/string_extensions.dart';
 
-
-
 import '../main.dart';
+import 'main_view_model.dart';
 
 class AuthenticationViewModel extends BaseViewModel {
   var navigationService = navigationViewModel;
@@ -26,6 +26,8 @@ class AuthenticationViewModel extends BaseViewModel {
   bool termsCheck = false;
   bool dataCheck = false;
 
+  bool otpLoading = false;
+
   bool isChecked = false;
   bool signupPasswordVisible = false;
   bool signupVerifyPasswordVisible = false;
@@ -37,6 +39,7 @@ class AuthenticationViewModel extends BaseViewModel {
   bool isLogInUserInFocus = false;
   final logInUserController = TextEditingController();
 
+  final codeController = TextEditingController();
 
   final logInPasswordController = TextEditingController();
   bool isLoginPasswordInFocus = false;
@@ -53,7 +56,6 @@ class AuthenticationViewModel extends BaseViewModel {
   final confirmNewPasswordController = TextEditingController();
   bool isConfirmNewPasswordInFocus = false;
   FocusNode confirmNewPasswordFocus = new FocusNode();
-
 
   bool signUpUserSelected = true;
   bool signUpBarSelected = false;
@@ -92,8 +94,6 @@ class AuthenticationViewModel extends BaseViewModel {
   bool isSignUpRelationshipInFocus = false;
   FocusNode signUpRelationshipFocus = new FocusNode();
 
-
-
   final signUpBarUserController = TextEditingController();
   bool isSignUpBarUserInFocus = false;
   FocusNode signUpBarUserFocus = new FocusNode();
@@ -113,7 +113,6 @@ class AuthenticationViewModel extends BaseViewModel {
   bool loginPasswordVisible = false;
 
   DateTime selectedDOB = DateTime.now();
-
 
   File imageFile = File('my initial file');
   List<File> imageFiles = [
@@ -135,36 +134,50 @@ class AuthenticationViewModel extends BaseViewModel {
 
   int kindOfBarValue = 1;
   String kindOfBarValueStr = "Cocktail";
-  List<String> kindOfBarList = ["Beer", "Cocktail", "Long Drink", "Shot" ];
+  List<String> kindOfBarList = ["Beer", "Cocktail", "Long Drink", "Shot"];
   Map<String, int> kindOfBarMap = {
     'Beer': 1,
     'Cocktail': 2,
-    'Long Drink' : 3,
-    'Shot' : 4
+    'Long Drink': 3,
+    'Shot': 4
   };
 
   int nightClubValue = 1;
   String nightClubValueStr = "Club 1";
-  List<String> nightClubList = ["Club 1", "Club 2", "Club 3", "Club 4", "Club 5", "Club 6", "Club 7", "Club 8" ];
+  List<String> nightClubList = [
+    "Club 1",
+    "Club 2",
+    "Club 3",
+    "Club 4",
+    "Club 5",
+    "Club 6",
+    "Club 7",
+    "Club 8"
+  ];
   Map<String, int> nightClubMap = {
     'Club 1': 1,
     'Club 2': 2,
-    'Club 3' : 3,
-    'Club 4' : 4,
-    'Club 5' : 5,
-    'Club 6' : 6,
-    'Club 7' : 7,
-    'Club 8' : 8,
+    'Club 3': 3,
+    'Club 4': 4,
+    'Club 5': 5,
+    'Club 6': 6,
+    'Club 7': 7,
+    'Club 8': 8,
   };
 
   int partyVacationValue = 1;
   String partyVacationValueStr = "Ibiza Beach";
-  List<String> partyVacationList = ["Ibiza Beach", "Goldstrand", "Zrce Beach", "Lloret" ];
+  List<String> partyVacationList = [
+    "Ibiza Beach",
+    "Goldstrand",
+    "Zrce Beach",
+    "Lloret"
+  ];
   Map<String, int> partyVacationMap = {
     'Ibiza Beach': 1,
     'Goldstrand': 2,
-    'Zrce Beach' : 3,
-    'Lloret' : 4
+    'Zrce Beach': 3,
+    'Lloret': 4
   };
 
   int msgTypeValue = 1;
@@ -210,11 +223,17 @@ class AuthenticationViewModel extends BaseViewModel {
 
   List<int> selectedWeekDays = [];
 
-  List<String> weekDaysList = ["Su" , "Mo" , "Tu", "We" , "Th", "Fr" , "Sa"];
+  List<String> weekDaysList = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
   List<int> selectedBarKind = [];
 
-  List<String> barKindList = ["Disco" , "Cocktail" , "Pub", "Hotel Bar" , "Beer Hall"];
+  List<String> barKindList = [
+    "Disco",
+    "Cocktail",
+    "Pub",
+    "Hotel Bar",
+    "Beer Hall"
+  ];
 
   List<int> selectedVacationList = [];
 
@@ -241,8 +260,6 @@ class AuthenticationViewModel extends BaseViewModel {
     "Goldstrand",
   ];
   List<int> selectedInterestList = [];
-
-
 
   void initializeSplash() async {
     prefs = await SharedPreferences.getInstance();
@@ -282,7 +299,11 @@ class AuthenticationViewModel extends BaseViewModel {
     }*/
   }
 
-  createUserAccount(){
+  loginUser(){
+
+  }
+
+  createUserAccount() {
     if (signUpUserController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "User Name is required",
@@ -293,65 +314,70 @@ class AuthenticationViewModel extends BaseViewModel {
         error: "Email is required",
       ));
       return;
-    } if (!signUpEmailController.text.isEmail) {
+    }
+    if (!signUpEmailController.text.isEmail) {
       DialogUtils().showDialog(MyErrorWidget(error: "Email is invalid"));
       return;
-    }
-
-    else if (signUpPhoneController.text.isEmpty) {
+    } else if (signUpPhoneController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
-        error: "Phone Number is required",));
+        error: "Phone Number is required",
+      ));
       return;
     }
     if (signUpPhoneController.text.length < 11) {
-      DialogUtils().showDialog(MyErrorWidget(error: "Mobile number should contain 11 digits"));
+      DialogUtils().showDialog(
+          MyErrorWidget(error: "Mobile number should contain 11 digits"));
       return;
     }
     if (!signUpPhoneController.text.toString().startsWith("0")) {
-      DialogUtils().showDialog(MyErrorWidget(error: "Mobile number should start with zero"));
+      DialogUtils().showDialog(
+          MyErrorWidget(error: "Mobile number should start with zero"));
       return;
-    }
-    else if (signUpPasswordController.text.isEmpty) {
+    } else if (signUpPasswordController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Password is required",
       ));
       return;
     }
     if (signUpPasswordController.text.length < 7) {
-      DialogUtils().showDialog(MyErrorWidget(error: "Password must be at least 8 characters"));
+      DialogUtils().showDialog(
+          MyErrorWidget(error: "Password must be at least 8 characters"));
       return;
     }
-    if (!CommonFunctions.hasOneUpperCase(signUpPasswordController.text.trim())) {
-      DialogUtils().showDialog(MyErrorWidget(error: "Password should contain at least one upper case"));
+    if (!CommonFunctions.hasOneUpperCase(
+        signUpPasswordController.text.trim())) {
+      DialogUtils().showDialog(MyErrorWidget(
+          error: "Password should contain at least one upper case"));
       return;
     }
-    if (!CommonFunctions.hasOneLowerCase(signUpPasswordController.text.trim())) {
-      DialogUtils().showDialog(MyErrorWidget(error: "Password should contain at least one lower case"));
+    if (!CommonFunctions.hasOneLowerCase(
+        signUpPasswordController.text.trim())) {
+      DialogUtils().showDialog(MyErrorWidget(
+          error: "Password should contain at least one lower case"));
       return;
     }
     if (!CommonFunctions.hasOneDigit(signUpPasswordController.text.trim())) {
-      DialogUtils().showDialog(MyErrorWidget(error: "Password should contain at least one digit"));
+      DialogUtils().showDialog(
+          MyErrorWidget(error: "Password should contain at least one digit"));
       return;
     }
-    if (!CommonFunctions.hasOneSpeicalCharacter(signUpPasswordController.text.trim())) {
-      DialogUtils().showDialog(MyErrorWidget(error: "Password should contain at least one special character"));
+    if (!CommonFunctions.hasOneSpeicalCharacter(
+        signUpPasswordController.text.trim())) {
+      DialogUtils().showDialog(MyErrorWidget(
+          error: "Password should contain at least one special character"));
       return;
-    }
-
-    else if (signUpVerifyPasswordController.text.isEmpty) {
+    } else if (signUpVerifyPasswordController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Verify Password is required",
       ));
       return;
-    }
-    else if (signUpVerifyPasswordController.text != signUpPasswordController.text) {
+    } else if (signUpVerifyPasswordController.text !=
+        signUpPasswordController.text) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Password & Verify Password don't match",
       ));
       return;
-    }
-
-    else if (signUpAddressController.text.isEmpty) {
+    } else if (signUpAddressController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Address is required",
       ));
@@ -368,26 +394,24 @@ class AuthenticationViewModel extends BaseViewModel {
         error: "RelationShip is required",
       ));
       return;
-    }else if (isChecked == false) {
+    } else if (isChecked == false) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Please Accept Terms and Conditions",
       ));
       return;
-    }
-    else{
+    } else {
       //navigateToFavoriteScreen();
     }
     navigateToFavoriteScreen();
   }
 
-  termsAndCondition(){
+  termsAndCondition() {
     if (termsCheck == false) {
-    DialogUtils().showDialog(MyErrorWidget(
-    error: "Please Accept Terms and Conditions",
-    ));
-    return;
-    }
-    else if (dataCheck == false) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Please Accept Terms and Conditions",
+      ));
+      return;
+    } else if (dataCheck == false) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Please Accept Date Protection",
       ));
@@ -397,67 +421,137 @@ class AuthenticationViewModel extends BaseViewModel {
   }
 
   void openAndSelectDob(BuildContext context) async {
-    selectedDOB = await CommonFunctions.showDateOfBirthPicker(context, selectedDOB);
+    selectedDOB =
+        await CommonFunctions.showDateOfBirthPicker(context, selectedDOB);
     notifyListeners();
   }
 
-  createBarAccount(){
+  forgetPassword() {
+    if (forgetPasswordController.text.isEmpty) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Email is required",
+      ));
+      return;
+    }
+    if (!forgetPasswordController.text.isEmail) {
+      DialogUtils().showDialog(MyErrorWidget(error: "Email is invalid"));
+      return;
+    }
+    navigateToCheckEmailScreen();
+  }
+
+  resentPassword() {
+    if (confirmNewPasswordController.text.isEmpty) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Password is required",
+      ));
+      return;
+    }
+    if (confirmNewPasswordController.text.length < 7) {
+      DialogUtils().showDialog(
+          MyErrorWidget(error: "Password must be at least 8 characters"));
+      return;
+    }
+    if (!CommonFunctions.hasOneUpperCase(
+        confirmNewPasswordController.text.trim())) {
+      DialogUtils().showDialog(MyErrorWidget(
+          error: "Password should contain at least one upper case"));
+      return;
+    }
+    if (!CommonFunctions.hasOneLowerCase(
+        confirmNewPasswordController.text.trim())) {
+      DialogUtils().showDialog(MyErrorWidget(
+          error: "Password should contain at least one lower case"));
+      return;
+    }
+    if (!CommonFunctions.hasOneDigit(confirmNewPasswordController.text.trim())) {
+      DialogUtils().showDialog(
+          MyErrorWidget(error: "Password should contain at least one digit"));
+      return;
+    }
+    if (!CommonFunctions.hasOneSpeicalCharacter(
+        confirmNewPasswordController.text.trim())) {
+      DialogUtils().showDialog(MyErrorWidget(
+          error: "Password should contain at least one special character"));
+      return;
+    } else if (newPasswordController.text.isEmpty) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Verify Password is required",
+      ));
+      return;
+    } else if (newPasswordController.text !=
+        confirmNewPasswordController.text) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Password & Verify Password don't match",
+      ));
+      return;
+    }
+    navigateToHomeBarScreen();
+  }
+
+  createBarAccount() {
     if (signUpBarUserController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "User Name is required",
       ));
       return;
-    } else if (signUpBarAddressController.text.isEmpty) {
+    }
+    else if (signUpBarAddressController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Address is required",
       ));
       return;
-    }else if (signUpBarPasswordController.text.isEmpty) {
+    }
+    else if (signUpBarPasswordController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Password is required",
       ));
       return;
     }
     if (signUpBarPasswordController.text.length < 7) {
-      DialogUtils().showDialog(MyErrorWidget(error: "Password must be at least 8 characters"));
+      DialogUtils().showDialog(
+          MyErrorWidget(error: "Password must be at least 8 characters"));
       return;
     }
-    if (!CommonFunctions.hasOneUpperCase(signUpBarPasswordController.text.trim())) {
-      DialogUtils().showDialog(MyErrorWidget(error: "Password should contain at least one upper case"));
+    if (!CommonFunctions.hasOneUpperCase(
+        signUpBarPasswordController.text.trim())) {
+      DialogUtils().showDialog(MyErrorWidget(
+          error: "Password should contain at least one upper case"));
       return;
     }
-    if (!CommonFunctions.hasOneLowerCase(signUpBarPasswordController.text.trim())) {
-      DialogUtils().showDialog(MyErrorWidget(error: "Password should contain at least one lower case"));
+    if (!CommonFunctions.hasOneLowerCase(
+        signUpBarPasswordController.text.trim())) {
+      DialogUtils().showDialog(MyErrorWidget(
+          error: "Password should contain at least one lower case"));
       return;
     }
     if (!CommonFunctions.hasOneDigit(signUpBarPasswordController.text.trim())) {
-      DialogUtils().showDialog(MyErrorWidget(error: "Password should contain at least one digit"));
+      DialogUtils().showDialog(
+          MyErrorWidget(error: "Password should contain at least one digit"));
       return;
     }
-    if (!CommonFunctions.hasOneSpeicalCharacter(signUpBarPasswordController.text.trim())) {
-      DialogUtils().showDialog(MyErrorWidget(error: "Password should contain at least one special character"));
+    if (!CommonFunctions.hasOneSpeicalCharacter(
+        signUpBarPasswordController.text.trim())) {
+      DialogUtils().showDialog(MyErrorWidget(
+          error: "Password should contain at least one special character"));
       return;
     }
-
     else if (signUpBarVerifyPasswordController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Verify Password is required",
       ));
       return;
-    }
-    else if (signUpBarVerifyPasswordController.text != signUpBarPasswordController.text) {
+    } else if (signUpBarVerifyPasswordController.text !=
+        signUpBarPasswordController.text) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Password & Verify Password don't match",
       ));
       return;
-    }
-    else{
-
-    }
+    } else {}
     navigateToUploadBarMedia();
   }
 
-  onLogIn(){
+  onLogIn() {
     if (logInUserController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "User Name is required",
@@ -469,17 +563,49 @@ class AuthenticationViewModel extends BaseViewModel {
       ));
       return;
     }
-    else{
-      if(logInUserSelected == true){
+    else if (logInPasswordController.text.length < 7) {
+      DialogUtils().showDialog(
+          MyErrorWidget(error: "Password must contain 7 digit"));
+      return;
+    }
+    // else if (!CommonFunctions.hasOneUpperCase(
+    //     logInPasswordController.text.trim())) {
+    //   DialogUtils().showDialog(MyErrorWidget(
+    //       error: "Wrong Password"));
+    //   return;
+    // }
+    // else if (!CommonFunctions.hasOneLowerCase(
+    //     logInPasswordController.text.trim())) {
+    //   DialogUtils().showDialog(MyErrorWidget(
+    //       error: "Wrong Password"));
+    //   return;
+    // }
+    // else if (!CommonFunctions.hasOneDigit(logInPasswordController.text.trim())) {
+    //   DialogUtils().showDialog(
+    //       MyErrorWidget(error: "Wrong Password"));
+    //   return;
+    // }
+    // else if (!CommonFunctions.hasOneSpeicalCharacter(
+    //     logInPasswordController.text.trim())) {
+    //   DialogUtils().showDialog(MyErrorWidget(
+    //       error: "Wrong Password"));
+    //   return;
+    // }
+    else {
+      MainViewModel  mainViewModel = locator<MainViewModel>();
+      if (logInUserSelected == true) {
+        mainViewModel.logInUserSelected = true;
+        mainViewModel.logInBarSelected = false;
         navigateToHomeScreen(2);
-      }
-      else if(logInBarSelected == true){
+      } else if (logInBarSelected == true) {
+        mainViewModel.logInUserSelected = false;
+        mainViewModel.logInBarSelected = true;
         navigateToHomeBarScreen();
       }
     }
   }
 
-  void navigateToSignUpBar(){
+  void navigateToSignUpBar() {
     navigationService.navigateToBarSignUpScreen();
   }
 
@@ -499,9 +625,9 @@ class AuthenticationViewModel extends BaseViewModel {
     navigationService.navigateToUploadBarMedia();
   }
 
-    void navigateToUploadBarMedia() {
-      navigationService.navigateToUploadBarMedia();
-    }
+  void navigateToUploadBarMedia() {
+    navigationService.navigateToUploadBarMedia();
+  }
 
   void navigateToFavoriteScreen() {
     navigationService.navigateToFavoriteScreen();
@@ -539,6 +665,9 @@ class AuthenticationViewModel extends BaseViewModel {
     navigationService.navigateToResentPasswordScreen();
   }
 
+  void navigateToVerificationCodeScreen() {
+    navigationService.navigateToVerificationCodeScreen();
+  }
 
   void navigateToBarTimingTypeScreen() {
     navigationService.navigateToBarTimingTypeScreen();
@@ -551,10 +680,10 @@ class AuthenticationViewModel extends BaseViewModel {
   void navigateToOrderDetailsScreen() {
     navigationService.navigateToOrderDetailsScreen();
   }
+
   void navigateToBarAccountOwnerShip() {
     navigationService.navigateToBarAccountOwnerShip();
   }
-
 
   // void navigateToResentPasswordScreen() {
   //   navigationService.navigateToResentPasswordScreen();
@@ -580,6 +709,4 @@ class AuthenticationViewModel extends BaseViewModel {
   FocusNode AccountOwnershipFocus = new FocusNode();
   bool isAccountOwnershipInFocus = false;
   final AccountOwnershipController = TextEditingController();
-
-
 }

@@ -245,7 +245,7 @@ class _LoginState extends State<Login> {
                                     Expanded(
                                       child: TextField(
                                         focusNode: model.loginPasswordFocus,
-                                        obscureText: model.loginPasswordVisible,
+                                        obscureText: !model.loginPasswordVisible,
                                         controller: model.logInPasswordController,
                                         textAlign: TextAlign.start,
                                         keyboardType: TextInputType.visiblePassword,

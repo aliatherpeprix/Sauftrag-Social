@@ -133,33 +133,27 @@ class _NewsFeedState extends State<NewsFeed> {
                             ),
                           ),
                         ),
-                        SizedBox(
-                          height: 10.h,
-                          child: AppBar(
-                            backgroundColor: Colors.white,
-                            elevation: 0.0,
-                            bottom: TabBar(
-                              indicatorColor: ColorUtils.text_red,
-                              labelColor: ColorUtils.text_red,
-                              labelStyle: TextStyle(
-                                fontFamily: FontUtils.modernistBold,
-                                fontSize: 1.8.t,
-                              ),
-                              unselectedLabelStyle: TextStyle(
-                                fontFamily: FontUtils.modernistRegular,
-                                fontSize: 1.8.t,
-                              ),
-                              unselectedLabelColor: ColorUtils.icon_color,
-                              tabs: [
-                                Tab(
-                                  text: "NewsFeed",
-                                ),
-                                Tab(
-                                  text: "Events",
-                                ),
-                              ],
-                            ),
+                        SizedBox(height: 1.h,),
+                        TabBar(
+                          indicatorColor: ColorUtils.text_red,
+                          labelColor: ColorUtils.text_red,
+                          labelStyle: TextStyle(
+                            fontFamily: FontUtils.modernistBold,
+                            fontSize: 2.2.t,
                           ),
+                          unselectedLabelStyle: TextStyle(
+                            fontFamily: FontUtils.modernistRegular,
+                            fontSize: 2.2.t,
+                          ),
+                          unselectedLabelColor: ColorUtils.icon_color,
+                          tabs: [
+                            Tab(
+                              text: "NewsFeed",
+                            ),
+                            Tab(
+                              text: "Events",
+                            ),
+                          ],
                         ),
                         Expanded(
                           child: TabBarView(
@@ -232,7 +226,7 @@ class _NewsFeedState extends State<NewsFeed> {
                                     //SizedBox(height: 3.h),
 
                                     SizedBox(
-                                      height: SizeConfig.heightMultiplier * 1,
+                                      height: 3.5.h
                                     ),
                                     Expanded(
                                       child: Container(
@@ -241,6 +235,7 @@ class _NewsFeedState extends State<NewsFeed> {
                                             //vertical: Dimensions.verticalPadding
                                         ),
                                         child: ListView.separated(
+                                          padding: EdgeInsets.zero,
                                           scrollDirection: Axis.vertical,
                                           physics: const BouncingScrollPhysics(),
                                           shrinkWrap: true,

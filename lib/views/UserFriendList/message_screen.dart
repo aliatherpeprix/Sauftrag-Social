@@ -15,6 +15,7 @@ import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/views/UserFriendList/chat_input.dart';
 import 'package:sauftrag/views/UserFriendList/chat_list_widget.dart';
+import 'package:sauftrag/widgets/back_arrow_with_container.dart';
 import 'package:stacked/stacked.dart';
 
 class MessageScreen extends StatefulWidget {
@@ -51,7 +52,7 @@ class _MessageScreenState extends State<MessageScreen> {
               body: Container(
                 padding: EdgeInsets.symmetric(
                     horizontal: Dimensions.horizontalPadding,
-                    vertical: Dimensions.verticalPadding),
+                   ),
                 child: Column(
                   children: [
                     SizedBox(height: Dimensions.topMargin),
@@ -60,15 +61,15 @@ class _MessageScreenState extends State<MessageScreen> {
                       children: [
                         Row(
                           children: [
-                            SvgPicture.asset(ImageUtils.backArrow),
-                            SizedBox(width: 5.w,),
+                           BackArrowContainer(),
+                            SizedBox(width: 4.w,),
                             Row(
                               children: [
                                 Stack(
                                   alignment: Alignment.topCenter,
                                   children: [
                                     CircleAvatar(
-                                      radius: 30.0,
+                                      radius: 26.0,
                                       backgroundImage:
                                       AssetImage(ImageUtils.messagePerson1),
                                       backgroundColor: Colors.transparent,
@@ -78,6 +79,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                 SizedBox(width: 3.w,),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Text("Athalia Putri",
                                       style: TextStyle(
@@ -86,7 +88,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                           color: ColorUtils.text_dark
                                       ),
                                     ),
-                                    SizedBox(height: 1.h,),
+                                    SizedBox(height: 0.5.h,),
                                     Text("Active",
                                       style: TextStyle(
                                           fontFamily: FontUtils.modernistBold,
@@ -103,14 +105,14 @@ class _MessageScreenState extends State<MessageScreen> {
                         SvgPicture.asset(ImageUtils.chatMenuIcon),
                       ],
                     ),
-                    SizedBox(height: 4.h,),
+                    SizedBox(height: 1.h,),
                     Expanded(
                       child: SingleChildScrollView(
+                        physics: BouncingScrollPhysics(),
                         controller: scrollController,
                         child: Container(
                           padding: EdgeInsets.only(
-                              left: 4.w,
-                              right: 4.w,
+
                               //top: 6.h
                           ),
                           child: Column(

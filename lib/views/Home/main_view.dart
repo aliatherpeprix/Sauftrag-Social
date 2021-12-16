@@ -32,7 +32,7 @@ class MainView extends StatefulWidget {
 class _MainViewState extends State<MainView> {
 
   int currentIndex = 0;
-  Widget body = Swipe();
+  Widget body = MapScreen();
 
   @override
   void initState() {
