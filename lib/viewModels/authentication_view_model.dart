@@ -70,6 +70,10 @@ class AuthenticationViewModel extends BaseViewModel {
   bool isSignUpEmailInFocus = false;
   FocusNode signUpEmailFocus = new FocusNode();
 
+  final signUpConfirmEmailController = TextEditingController();
+  bool isSignUpConfirmEmailInFocus = false;
+  FocusNode signUpConfirmEmailFocus = new FocusNode();
+
   final signUpPhoneController = TextEditingController();
   bool isSignUpPhoneInFocus = false;
   FocusNode signUpPhoneFocus = new FocusNode();
@@ -131,6 +135,19 @@ class AuthenticationViewModel extends BaseViewModel {
     'Male': 1,
     'Female': 2,
   };
+
+
+  int relationStatusValue = 1;
+  String relationStatusValueStr = "Single";
+  List<String> relationStatusList = ["Single", "Relationship", "Open Relationship", "It´s Complicated", "Married"];
+  Map<String, int> relationStatusMap = {
+    'Single': 1,
+    'Relationship': 2,
+    'Open Relationship': 1,
+    'It´s Complicated': 2,
+    'Married': 1,
+  };
+
 
   int kindOfBarValue = 1;
   String kindOfBarValueStr = "Cocktail";
@@ -309,7 +326,8 @@ class AuthenticationViewModel extends BaseViewModel {
         error: "User Name is required",
       ));
       return;
-    } else if (signUpEmailController.text.isEmpty) {
+    }
+    else if (signUpEmailController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Email is required",
       ));
@@ -318,7 +336,24 @@ class AuthenticationViewModel extends BaseViewModel {
     if (!signUpEmailController.text.isEmail) {
       DialogUtils().showDialog(MyErrorWidget(error: "Email is invalid"));
       return;
-    } else if (signUpPhoneController.text.isEmpty) {
+    }
+    else if (signUpConfirmEmailController.text.isEmpty) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Confirm Email is required",
+      ));
+      return;
+    }
+    else if (!signUpConfirmEmailController.text.isEmail) {
+      DialogUtils().showDialog(MyErrorWidget(
+          error: "Email is invalid"));
+      return;
+    }
+    else if (signUpConfirmEmailController.text != signUpEmailController.text ) {
+      DialogUtils().showDialog(MyErrorWidget(
+          error: "Email & Confirm don't match"));
+      return;
+    }
+    else if (signUpPhoneController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Phone Number is required",
       ));

@@ -177,14 +177,14 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                 keyboardType: TextInputType.text,
                                 textInputAction: TextInputAction.next,
                                 style: TextStyle(
-                                  color: ColorUtils.black,
+                                  color: ColorUtils.text_red,
                                   fontFamily: FontUtils.modernistRegular,
                                   fontSize: 1.8.t,
                                 ),
                                 decoration:  InputDecoration(
                                   hintText: "Add Description",
                                   hintStyle: TextStyle(
-                                    color: ColorUtils.black,
+                                    color: ColorUtils.text_red,
                                     fontFamily: FontUtils.modernistRegular,
                                     fontSize: 1.8.t,
                                   ),
@@ -524,7 +524,7 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                     keyboardType: TextInputType.text,
                                     textInputAction: TextInputAction.next,
                                     style: TextStyle(
-                                      color: ColorUtils.black,
+                                      color: ColorUtils.text_red,
                                       fontFamily: FontUtils.modernistRegular,
                                       fontSize: 1.8.t,
                                     ),
@@ -585,7 +585,7 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                     keyboardType: TextInputType.text,
                                     textInputAction: TextInputAction.next,
                                     style: TextStyle(
-                                      color: ColorUtils.black,
+                                      color: ColorUtils.text_red,
                                       fontFamily: FontUtils.modernistRegular,
                                       fontSize: 2.t,
                                     ),
@@ -660,7 +660,7 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                             child: Text(
                                               openingTimeFrom!,
                                               style: TextStyle(
-                                                color: ColorUtils.text_dark,
+                                                color: ColorUtils.text_red,
                                                 fontFamily: FontUtils.modernistRegular,
                                                 fontSize: 1.6.t,
                                                 //height: .4
@@ -731,7 +731,7 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                             child: Text(
                                               openingTimeTo!,
                                               style: TextStyle(
-                                                color: ColorUtils.text_dark,
+                                                color: ColorUtils.text_red,
                                                 fontFamily: FontUtils.modernistRegular,
                                                 fontSize: 1.6.t,
                                                 //height: .4

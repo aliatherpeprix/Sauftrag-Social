@@ -32,21 +32,26 @@ class _MySideMenuState extends State<MySideMenu> {
             children: [
 
               //User
-              Container(
-                padding: EdgeInsets.symmetric( vertical: Dimensions.containerVerticalPadding),
-                child: Row(
-                  children: [
+              GestureDetector(
+                onTap: (){
+                  model.navigateToUserDetailSettings();
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric( vertical: Dimensions.containerVerticalPadding),
+                  child: Row(
+                    children: [
 
-                    Image.asset(ImageUtils.profileImg),
-                    Text(
-                      "John Wick",
-                      style: TextStyle(
-                        color: ColorUtils.white,
-                        fontFamily: FontUtils.modernistBold,
-                        fontSize: 2.2.t,
+                      Image.asset(ImageUtils.profileImg),
+                      Text(
+                        "John Wick",
+                        style: TextStyle(
+                          color: ColorUtils.white,
+                          fontFamily: FontUtils.modernistBold,
+                          fontSize: 2.2.t,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
 

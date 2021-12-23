@@ -311,80 +311,80 @@ class _DrinkStatusDialogBoxState extends State<DrinkStatusDialogBox> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 3.h),
-
-                    //Drinking Motivation
-                    Container(
-                      alignment: Alignment.center,
-                      child: Text(
-                        "Drinking Motivation",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: ColorUtils.black,
-                          fontFamily: FontUtils.modernistBold,
-                          fontSize: 2.5.t,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 3.h),
-
-                    //Drinking Motivation Selector
-                    Container(
-                      height: 6.h,
-                      padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: Dimensions.containerHorizontalPadding),
-                      decoration: BoxDecoration(
-                          color: ColorUtils.white,
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
-                          border: Border.all(color: ColorUtils.divider)
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Expanded(
-                              child: DropdownButton<String>(
-                                value: model.drinkMotivationValueStr,
-                                items: model.drinkMotivationList.asMap().values.map((String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(
-                                      value,
-                                      style : TextStyle(
-                                        fontSize: 1.8.t,
-                                        fontFamily: FontUtils.modernistRegular,
-                                        color: ColorUtils.black,
-                                        //height: 1.8
-                                      ),
-                                    ),
-                                  );
-                                }).toList(),
-                                onChanged: (data) {
-                                  setState(() {
-                                    model.drinkMotivationValueStr = data as String;
-                                    model.drinkMotivationValue = model.drinkMotivationMap[model.drinkMotivationValueStr] as int;
-                                  });
-                                },
-                                hint: Text(
-                                  "Select an option",
-                                  style : TextStyle(
-                                    fontSize: 1.8.t,
-                                    fontFamily: FontUtils.modernistRegular,
-                                    color: ColorUtils.text_grey,
-                                  ),
-                                ),
-                                isExpanded: true,
-                                underline: Container(
-                                ),
-                                icon: Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Icon(Icons.keyboard_arrow_down_rounded, color: ColorUtils.black,)
-                                ),
-                              )
-                          ),
-                        ],
-                      ),
-                    ),
                     SizedBox(height: 5.h),
+
+                    // //Drinking Motivation
+                    // Container(
+                    //   alignment: Alignment.center,
+                    //   child: Text(
+                    //     "Drinking Motivation",
+                    //     textAlign: TextAlign.center,
+                    //     style: TextStyle(
+                    //       color: ColorUtils.black,
+                    //       fontFamily: FontUtils.modernistBold,
+                    //       fontSize: 2.5.t,
+                    //     ),
+                    //   ),
+                    // ),
+                    // SizedBox(height: 3.h),
+                    //
+                    // //Drinking Motivation Selector
+                    // Container(
+                    //   height: 6.h,
+                    //   padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: Dimensions.containerHorizontalPadding),
+                    //   decoration: BoxDecoration(
+                    //       color: ColorUtils.white,
+                    //       borderRadius: BorderRadius.all(Radius.circular(15)),
+                    //       border: Border.all(color: ColorUtils.divider)
+                    //   ),
+                    //   child: Row(
+                    //     crossAxisAlignment: CrossAxisAlignment.center,
+                    //     mainAxisAlignment: MainAxisAlignment.start,
+                    //     children: [
+                    //       Expanded(
+                    //           child: DropdownButton<String>(
+                    //             value: model.drinkMotivationValueStr,
+                    //             items: model.drinkMotivationList.asMap().values.map((String value) {
+                    //               return DropdownMenuItem<String>(
+                    //                 value: value,
+                    //                 child: Text(
+                    //                   value,
+                    //                   style : TextStyle(
+                    //                     fontSize: 1.8.t,
+                    //                     fontFamily: FontUtils.modernistRegular,
+                    //                     color: ColorUtils.black,
+                    //                     //height: 1.8
+                    //                   ),
+                    //                 ),
+                    //               );
+                    //             }).toList(),
+                    //             onChanged: (data) {
+                    //               setState(() {
+                    //                 model.drinkMotivationValueStr = data as String;
+                    //                 model.drinkMotivationValue = model.drinkMotivationMap[model.drinkMotivationValueStr] as int;
+                    //               });
+                    //             },
+                    //             hint: Text(
+                    //               "Select an option",
+                    //               style : TextStyle(
+                    //                 fontSize: 1.8.t,
+                    //                 fontFamily: FontUtils.modernistRegular,
+                    //                 color: ColorUtils.text_grey,
+                    //               ),
+                    //             ),
+                    //             isExpanded: true,
+                    //             underline: Container(
+                    //             ),
+                    //             icon: Align(
+                    //                 alignment: Alignment.centerRight,
+                    //                 child: Icon(Icons.keyboard_arrow_down_rounded, color: ColorUtils.black,)
+                    //             ),
+                    //           )
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    // SizedBox(height: 5.h),
 
                     //Save Button
                     ElevatedButton(

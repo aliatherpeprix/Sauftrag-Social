@@ -171,6 +171,9 @@ class _AccountState extends State<Account> {
                                   borderRadius: BorderRadius.circular(15)),
                               child: Center(
                                   child: SfSlider(
+                                    showLabels: true,
+                                      enableTooltip: true,
+
                                       activeColor:  ColorUtils.red_color,
                                       inactiveColor: Color(0xFFFFE4E8),
                                       min: 0.0,

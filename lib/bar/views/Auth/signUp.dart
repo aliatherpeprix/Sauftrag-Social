@@ -439,7 +439,42 @@ class _SignUpBarState extends State<SignUpBar> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 2.h),
+                        SizedBox(height: 3.h),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Already have an account? ",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: ColorUtils.black,
+                                fontFamily: FontUtils.modernistRegular,
+                                fontSize: 1.8.t,
+                              ),
+                            ),
+                            InkWell(
+                              onTap: (){
+                                // if(model.logInUserSelected == true){
+                                //   model.navigateToSignUpScreen();
+                                // }
+                                // else if(model.logInBarSelected == true){
+                                //   model.navigateToSignUpBar();
+                                // }
+                                model.navigateToLoginScreen();
+                              },
+                              child: Text(
+                                "Login",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: ColorUtils.text_red,
+                                  fontFamily: FontUtils.modernistBold,
+                                  fontSize: 1.8.t,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 3.h),
 
                       ],
                     ),

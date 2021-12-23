@@ -97,7 +97,7 @@ class _MyAppState extends State<MyApp> {
             SizeConfig().init(constraints, orientation);
             //var prefService = locator<PrefrencesViewModel>();
             //return MainView(index: 2);
-            return Splash();
+            return CreateBarEvent();
           },
         );
       },

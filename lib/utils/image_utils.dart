@@ -216,6 +216,8 @@ class ImageUtils {
   static String crownImg = "assets/crown.png";
   static String polygon = "assets/polygon.png";
   static String disLike = "assets/disLikeIcon.svg";
+  static String bottleRank = "assets/bottleRank.png";
+  static String coinImg = "assets/coinImg.png";
 
 
 }

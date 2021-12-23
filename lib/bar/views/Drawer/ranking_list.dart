@@ -89,6 +89,7 @@ class _RatingListState extends State<RatingList> {
                                         fontFamily: FontUtils.modernistBold,
                                         fontSize: 2.5.t,
                                       ),),
+                                      SizedBox(height: 0.8.h,),
                                       Image.asset(ImageUtils.polygon, height: 1.2.h,),
                                       SizedBox(height: 0.8.h,),
                                       Container(
@@ -104,11 +105,18 @@ class _RatingListState extends State<RatingList> {
                                         fontFamily: FontUtils.modernistBold,
                                         fontSize: 2.t,
                                       ),),
-                                      Text("290 pts", style: TextStyle(
-                                        color: ColorUtils.red_color,
-                                        fontFamily: FontUtils.modernistBold,
-                                        fontSize: 1.8.t,
-                                      ),),
+                                      Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text("290", style: TextStyle(
+                                            color: ColorUtils.red_color,
+                                            fontFamily: FontUtils.modernistBold,
+                                            fontSize: 1.8.t,
+                                          ),),
+                                          SizedBox(width: 1.w,),
+                                          Image.asset(ImageUtils.coinImg)
+                                        ],
+                                      )
                                     ],
                                   ),
                                 )),
@@ -123,6 +131,7 @@ class _RatingListState extends State<RatingList> {
                                         fontFamily: FontUtils.modernistBold,
                                         fontSize: 2.5.t,
                                       ),),
+                                      SizedBox(height: 0.8.h,),
                                       Image.asset(ImageUtils.polygon,height: 1.2.h, ),
                                       SizedBox(height: 0.8.h,),
                                       Container(
@@ -137,11 +146,18 @@ class _RatingListState extends State<RatingList> {
                                         fontFamily: FontUtils.modernistBold,
                                         fontSize: 2.t,
                                       ),),
-                                      Text("260 pts", style: TextStyle(
-                                        color: ColorUtils.red_color,
-                                        fontFamily: FontUtils.modernistBold,
-                                        fontSize: 1.8.t,
-                                      ),),
+                                      Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text("260 ", style: TextStyle(
+                                            color: ColorUtils.red_color,
+                                            fontFamily: FontUtils.modernistBold,
+                                            fontSize: 1.8.t,
+                                          ),),
+                                          SizedBox(width: 1.w,),
+                                          Image.asset(ImageUtils.coinImg)
+                                        ],
+                                      )
                                     ],
                                   ),
                                 )),
@@ -154,7 +170,8 @@ class _RatingListState extends State<RatingList> {
                                       fontFamily: FontUtils.modernistBold,
                                       fontSize: 2.5.t,
                                     ),),
-                                    Image.asset(ImageUtils.crownImg, height: 4.h,),
+                                    SizedBox(height: 1.h,),
+                                    Image.asset(ImageUtils.bottleRank, height: 4.h,),
                                     Container(
                                         decoration: BoxDecoration(),
                                         child: Image.asset(
@@ -167,11 +184,18 @@ class _RatingListState extends State<RatingList> {
                                       fontFamily: FontUtils.modernistBold,
                                       fontSize: 2.t,
                                     ),),
-                                    Text("300 pts", style: TextStyle(
-                                      color: ColorUtils.red_color,
-                                      fontFamily: FontUtils.modernistBold,
-                                      fontSize: 1.8.t,
-                                    ),),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text("300", style: TextStyle(
+                                          color: ColorUtils.red_color,
+                                          fontFamily: FontUtils.modernistBold,
+                                          fontSize: 1.8.t,
+                                        ),),
+                                        SizedBox(width: 1.w,),
+                                        Image.asset(ImageUtils.coinImg)
+                                      ],
+                                    )
                                   ],
                                 )
                             ),
@@ -250,12 +274,18 @@ class _RatingListState extends State<RatingList> {
                                             ),
                                           ],
                                         ),
-                                        Text(model.ratingList[index]["points"],
-                                          style: TextStyle(
-                                              fontFamily: FontUtils.modernistRegular,
-                                              fontSize: 2.t,
-                                              color: ColorUtils.red_color),
-                                        ),
+                                       Row(
+                                         children: [
+                                           Text(model.ratingList[index]["points"],
+                                             style: TextStyle(
+                                                 fontFamily: FontUtils.modernistRegular,
+                                                 fontSize: 2.t,
+                                                 color: ColorUtils.red_color),
+                                           ),
+                                           SizedBox(width: 1.w,),
+                                           Image.asset(model.ratingList[index]['image1'])
+                                         ],
+                                       )
                                       ],
                                     ),
                                   ),

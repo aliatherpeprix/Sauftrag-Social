@@ -34,23 +34,28 @@ class _MySideMenuState extends State<MySideMenu> {
             children: [
 
               //User
-              Container(
-                padding: EdgeInsets.symmetric( vertical: Dimensions.containerVerticalPadding),
-                child: Row(
-                  children: [
+              GestureDetector(
+                onTap: (){
+                  model.navigateToBarDetails();
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric( vertical: Dimensions.containerVerticalPadding),
+                  child: Row(
+                    children: [
 
-                  Image.asset(ImageUtils.profileImg),
+                    Image.asset(ImageUtils.profileImg),
 
 
-                    Text(
-                      "Jenny Sandals",
-                      style: TextStyle(
-                        color: ColorUtils.white,
-                        fontFamily: FontUtils.modernistBold,
-                        fontSize: 2.2.t,
+                      Text(
+                        "Jenny Sandals",
+                        style: TextStyle(
+                          color: ColorUtils.white,
+                          fontFamily: FontUtils.modernistBold,
+                          fontSize: 2.2.t,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               SizedBox(height: 1.h),

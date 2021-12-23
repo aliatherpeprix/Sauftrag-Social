@@ -183,7 +183,7 @@ class _MapScreenState extends State<MapScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            filter(context, model);
+                              filter(context, model);
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -560,35 +560,33 @@ class _MapScreenState extends State<MapScreen> {
                               // mainModel.currentEventSelected = index;
                               mainModel.notifyListeners();
                             },
-                            child: Expanded(
-                              child: Container(
-                                margin: EdgeInsets.symmetric(horizontal: 3.w),
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.rectangle,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
+                            child: Container(
+                              margin: EdgeInsets.symmetric(horizontal: 3.w),
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.rectangle,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                  color: mainModel.timeSelected == true &&
+                                          index == mainModel.timeValue
+                                      ? ColorUtils.text_red
+                                      : Colors.white,
+                                  border: Border.all(
                                     color: mainModel.timeSelected == true &&
                                             index == mainModel.timeValue
                                         ? ColorUtils.text_red
-                                        : Colors.white,
-                                    border: Border.all(
-                                      color: mainModel.timeSelected == true &&
-                                              index == mainModel.timeValue
-                                          ? ColorUtils.text_red
-                                          : ColorUtils.borderColor,
-                                    )),
-                                child: Padding(
-                                  padding: EdgeInsets.all(3.i),
-                                  child: Text(
-                                    time[index],
-                                    style: TextStyle(
-                                      fontFamily: FontUtils.modernistRegular,
-                                      fontSize: 1.9.t,
-                                      color: mainModel.timeSelected == true &&
-                                              index == mainModel.timeValue
-                                          ? Colors.white
-                                          : ColorUtils.icon_color,
-                                    ),
+                                        : ColorUtils.borderColor,
+                                  )),
+                              child: Padding(
+                                padding: EdgeInsets.all(3.i),
+                                child: Text(
+                                  time[index],
+                                  style: TextStyle(
+                                    fontFamily: FontUtils.modernistRegular,
+                                    fontSize: 1.9.t,
+                                    color: mainModel.timeSelected == true &&
+                                            index == mainModel.timeValue
+                                        ? Colors.white
+                                        : ColorUtils.icon_color,
                                   ),
                                 ),
                               ),

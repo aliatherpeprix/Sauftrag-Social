@@ -493,10 +493,11 @@ class _BarRatingState extends State<BarRating> {
                                                         crossAxisAlignment: CrossAxisAlignment.center,
                                                         children: [
                                                           RatingBar.builder(
+                                                            tapOnlyMode: false,
                                                             initialRating: 4,
-                                                            minRating: 1,
+                                                            minRating: 1,ignoreGestures: true,
                                                             direction: Axis.horizontal,
-                                                            allowHalfRating: true,
+                                                            //allowHalfRating: true,
                                                             itemCount: 5,
                                                             itemSize: 10.i,
                                                             itemPadding: EdgeInsets.symmetric(horizontal: 3.0),
@@ -505,7 +506,7 @@ class _BarRatingState extends State<BarRating> {
                                                               color: ColorUtils.red_color,
                                                             ),
                                                             onRatingUpdate: (rating) {
-                                                              print(rating);
+                                                              //print(rating);
                                                             },
                                                           ),
                                                           Text("4.7 out of 5", style: TextStyle(

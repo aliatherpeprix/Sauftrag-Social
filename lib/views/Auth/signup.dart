@@ -255,6 +255,65 @@ class _SignUpState extends State<SignUp> {
                         ),
                         SizedBox(height: 3.h),
 
+                        //Confirm Email
+                        Stack(
+                          children: [
+                            Container(
+                              height: 7.h,
+                              padding: EdgeInsets.symmetric(
+                                  vertical: Dimensions.containerVerticalPadding,
+                                  horizontal:
+                                  Dimensions.containerHorizontalPadding),
+                              decoration: BoxDecoration(
+                                  color: ColorUtils.white,
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(Dimensions.roundCorner)),
+                                  border:
+                                  Border.all(color: ColorUtils.divider)),
+                              child: Row(
+                                children: [
+                                  SvgPicture.asset(ImageUtils.emailIcon),
+                                  SizedBox(width: 4.w),
+                                  Expanded(
+                                    child: TextField(
+                                      focusNode: model.signUpEmailFocus,
+                                      controller: model.signUpEmailController,
+                                      keyboardType: TextInputType.emailAddress,
+                                      textInputAction: TextInputAction.next,
+                                      style: TextStyle(
+                                        color: ColorUtils.red_color,
+                                        fontFamily: FontUtils.modernistRegular,
+                                        fontSize: 1.9.t,
+                                      ),
+                                      decoration: const InputDecoration(
+                                        border: InputBorder.none,
+                                        isDense: true,
+                                        contentPadding: EdgeInsets.symmetric(
+                                            horizontal: 0, vertical: 0),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(left: 5.w),
+                              padding: EdgeInsets.symmetric(horizontal: 1.w),
+                              color: ColorUtils.white,
+                              child: Text(
+                                "Confirm Email",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: ColorUtils.text_grey,
+                                    fontFamily: FontUtils.modernistRegular,
+                                    fontSize: 1.5.t,
+                                    height: .4),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 3.h),
+
                         //Phone No.
                         Stack(
                           children: [
@@ -793,24 +852,51 @@ class _SignUpState extends State<SignUp> {
                                   SvgPicture.asset(ImageUtils.relationIcon),
                                   SizedBox(width: 4.w),
                                   Expanded(
-                                    child: TextField(
-                                      focusNode: model.signUpRelationshipFocus,
-                                      controller:
-                                          model.signUpRelationshipController,
-                                      keyboardType: TextInputType.text,
-                                      textInputAction: TextInputAction.next,
-                                      style: TextStyle(
-                                        color: ColorUtils.red_color,
-                                        fontFamily: FontUtils.modernistRegular,
-                                        fontSize: 1.9.t,
+                                    child: DropdownButton<String>(
+                                      value: model.relationStatusValueStr,
+                                      items: model.relationStatusList
+                                          .asMap()
+                                          .values
+                                          .map((String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(
+                                            value,
+                                            style: TextStyle(
+                                              fontSize: 1.9.t,
+                                              fontFamily:
+                                              FontUtils.modernistRegular,
+                                              color: ColorUtils.red_color,
+                                              //height: 1.8
+                                            ),
+                                          ),
+                                        );
+                                      }).toList(),
+                                      onChanged: (data) {
+                                        setState(() {
+                                          model.relationStatusValueStr = data as String;
+                                          model.relationStatusValue = model
+                                              .relationStatusMap[model.relationStatusValueStr]
+                                          as int;
+                                        });
+                                      },
+                                      hint: Text(
+                                        "Select an option",
+                                        style: TextStyle(
+                                          fontSize: 1.8.t,
+                                          fontFamily: FontUtils.modernistRegular,
+                                          color: ColorUtils.text_grey,
+                                        ),
                                       ),
-                                      decoration: const InputDecoration(
-                                        border: InputBorder.none,
-                                        isDense: true,
-                                        contentPadding: EdgeInsets.symmetric(
-                                            horizontal: 0, vertical: 0),
-                                      ),
-                                    ),
+                                      isExpanded: true,
+                                      underline: Container(),
+                                      icon: Align(
+                                          alignment: Alignment.centerRight,
+                                          child: Icon(
+                                            Icons.keyboard_arrow_down_rounded,
+                                            color: ColorUtils.black,
+                                          )),
+                                    )
                                   ),
                                 ],
                               ),
@@ -899,7 +985,44 @@ class _SignUpState extends State<SignUp> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 2.h),
+                        SizedBox(height: 3.h),
+                        //Already have an account? Sign Up
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Already have an account? ",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: ColorUtils.black,
+                                fontFamily: FontUtils.modernistRegular,
+                                fontSize: 1.8.t,
+                              ),
+                            ),
+                            InkWell(
+                              onTap: (){
+                                // if(model.logInUserSelected == true){
+                                //   model.navigateToSignUpScreen();
+                                // }
+                                // else if(model.logInBarSelected == true){
+                                //   model.navigateToSignUpBar();
+                                // }
+                                model.navigateToLoginScreen();
+                              },
+                              child: Text(
+                                "Login",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: ColorUtils.text_red,
+                                  fontFamily: FontUtils.modernistBold,
+                                  fontSize: 1.8.t,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 3.h),
+
                       ],
                     ),
                   ),

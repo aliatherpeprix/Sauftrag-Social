@@ -272,43 +272,50 @@ class MainViewModel extends BaseViewModel{
       'rank': '#4',
       'image': ImageUtils.johnImg,
       'title': 'John Milton',
-      'points': '240 Pts',
+      'points': '240',
+      'image1' : ImageUtils.coinImg
     },
     {
       'rank': '#5',
       'image': ImageUtils.mutualfrnd1,
       'title': 'Riki Davon',
-      'points': '240 Pts',
+      'points': '240',
+      'image1' : ImageUtils.coinImg
     },
     {
       'rank': '#6',
       'image': ImageUtils.followerImg1,
       'title': 'Josefina Ward',
-      'points': '240 Pts',
+      'points': '240',
+      'image1' : ImageUtils.coinImg
     },
     {
       'rank': '#7',
       'image': ImageUtils.mutualfrnd2,
       'title': 'Andre Patterson',
-      'points': '240 Pts',
+      'points': '240',
+      'image1' : ImageUtils.coinImg
     },
     {
       'rank': '#8',
       'image': ImageUtils.followerImg2,
       'title': 'Hazel Ballard',
-      'points': '240 Pts',
+      'points': '240',
+      'image1' : ImageUtils.coinImg
     },
     {
       'rank': '#9',
       'image': ImageUtils.mutualfrnd3,
       'title': 'Nettie Parsons',
-      'points': '240 Pts',
+      'points': '240',
+      'image1' : ImageUtils.coinImg
     },
     {
       'rank': '#10',
       'image': ImageUtils.followerImg3,
       'title': 'Hazel Ballard',
-      'points': '240 Pts',
+      'points': '240',
+      'image1' : ImageUtils.coinImg
     },
   ];
 

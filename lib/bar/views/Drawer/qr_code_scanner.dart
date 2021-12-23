@@ -194,11 +194,17 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
                                      ),),
                                    ],
                                  ),
-                                 Text("75 Pts",  style: TextStyle(
-                                     fontFamily: FontUtils.modernistRegular,
-                                     fontSize: 2.t,
-                                     color: ColorUtils.red_color
-                                 ),),
+                               Row(
+                                 children: [
+                                   Text("75",  style: TextStyle(
+                                       fontFamily: FontUtils.modernistRegular,
+                                       fontSize: 2.t,
+                                       color: ColorUtils.red_color
+                                   ),),
+                                   SizedBox(width: 1.w,),
+                                   Image.asset(ImageUtils.coinImg)
+                                 ],
+                               )
                                ],
                              ),
                            ),
