@@ -281,7 +281,7 @@ class AuthenticationViewModel extends BaseViewModel {
   void initializeSplash() async {
     prefs = await SharedPreferences.getInstance();
 
-    Timer(Duration(seconds: 5), () => navigateToLoginScreen());
+    Timer(Duration(seconds: 7), () => navigateToLoginScreen());
   }
 
   void selectRole(int role) {

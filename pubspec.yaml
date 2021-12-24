@@ -80,6 +80,7 @@ flutter:
   assets:
     - assets/
     - assets/girls/
+    - assets/gifs/
 
   fonts:
     - family: modernistBold

@@ -151,6 +151,7 @@ class _FriendListState extends State<FriendList> {
                                   IconButton(
                                     padding: EdgeInsets.zero,
                                     onPressed: () {
+                                      model.navigateToSelectIndividualChatScreen();
                                       // if(model.openGroupMenu == false){
                                       //   model.openGroupMenu = true;
                                       //   model.notifyListeners();

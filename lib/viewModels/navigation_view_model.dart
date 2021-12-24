@@ -39,12 +39,16 @@ import 'package:sauftrag/views/Home/profile.dart';
 import 'package:sauftrag/views/Home/swipe.dart';
 import 'package:sauftrag/views/MapSearch/map_screen.dart';
 import 'package:sauftrag/views/MapSearch/search.dart';
+import 'package:sauftrag/views/NewsFeed/all_event_list.dart';
+import 'package:sauftrag/views/NewsFeed/upcoming_event_list.dart';
 import 'package:sauftrag/views/UserFriendList/create_group.dart';
 import 'package:sauftrag/views/UserFriendList/friend_list.dart';
 import 'package:sauftrag/views/NewsFeed/event_detail.dart';
 import 'package:sauftrag/views/UserFriendList/group_details.dart';
 import 'package:sauftrag/views/UserFriendList/group_screen.dart';
 import 'package:sauftrag/views/UserFriendList/invite_people.dart';
+import 'package:sauftrag/views/UserFriendList/message_screen.dart';
+import 'package:sauftrag/views/UserFriendList/select_individual_chat.dart';
 import 'package:sauftrag/views/UserProfile/account.dart';
 import 'package:sauftrag/views/UserProfile/accountOwnership.dart';
 import 'package:sauftrag/views/UserProfile/gps.dart';
@@ -228,6 +232,18 @@ class NavigationViewModel extends BaseViewModel{
     navigationKey.currentState!.push(PageTransition(child: UserDetails(), type: PageTransitionType.rightToLeftWithFade));
 
   }
+
+  void navigateToUpcomingBarEventScreen(){
+    navigationKey.currentState!.push(PageTransition(child: UpcomingBarEvent(), type: PageTransitionType.rightToLeftWithFade));
+
+  }
+
+  void navigateToAllEventListScreen(){
+    navigationKey.currentState!.push(PageTransition(child: AllEventList(), type: PageTransitionType.rightToLeftWithFade));
+
+  }
+
+
 ///----Drawer------////
   void navigateToRatingList(){
     navigationKey.currentState!.push(PageTransition(child: RatingList(), type: PageTransitionType.rightToLeftWithFade));
@@ -260,8 +276,16 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateToUpcomingEvent(){
     navigationKey.currentState!.push(PageTransition(child: UpcomingEvent(), type: PageTransitionType.rightToLeftWithFade));
-
   }
+
+  void navigateToMessageScreen(){
+    navigationKey.currentState!.push(PageTransition(child: MessageScreen(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToSelectIndividualChatScreen(){
+    navigationKey.currentState!.push(PageTransition(child: SelectIndividualChat(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
 
 
 
@@ -292,6 +316,7 @@ class NavigationViewModel extends BaseViewModel{
     navigationKey.currentState!.push(PageTransition(child: BarAccountOwnership(), type: PageTransitionType.rightToLeftWithFade));
 
   }
+
 
 
 

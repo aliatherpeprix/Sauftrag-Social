@@ -535,8 +535,17 @@ class MainViewModel extends BaseViewModel{
     navigationService.navigateToUserDetailSettings();
   }
 
+  void navigateToUpcomingBarEventScreen() {
+    navigationService.navigateToUpcomingBarEventScreen();
+  }
 
-///------User Drawer -----/////
+  void navigateToAllEventListScreen() {
+    navigationService.navigateToAllEventListScreen();
+  }
+
+
+
+  ///------User Drawer -----/////
   void navigateToRatingList() {
     navigationService.navigateToRatingList();
   }
@@ -563,6 +572,14 @@ class MainViewModel extends BaseViewModel{
 
   void navigateToUpcomingEvent() {
     navigationService.navigateToUpcomingEvent();
+  }
+
+  void navigateToMessageScreen() {
+    navigationService.navigateToMessageScreen();
+  }
+
+  void navigateToSelectIndividualChatScreen() {
+    navigationService.navigateToSelectIndividualChatScreen();
   }
 
   ///-----------Bar Profile ---------------///

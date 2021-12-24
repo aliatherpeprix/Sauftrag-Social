@@ -148,6 +148,7 @@ class _EventsState extends State<Events> {
                                 ),
                                 GestureDetector(
                                   onTap: (){
+                                    model.navigateToUpcomingBarEventScreen();
                                   },
                                   child: Text(
                                     "See all",
@@ -337,7 +338,7 @@ class _EventsState extends State<Events> {
                                 ),
                                 GestureDetector(
                                   onTap: (){
-                                    //model.navigationService.navigateTo(to: ForgotPassword());
+                                    model.navigateToAllEventListScreen();
                                   },
                                   child: Text(
                                     "See all",

@@ -31,8 +31,7 @@ class _SplashState extends State<Splash> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SvgPicture.asset(ImageUtils.logo),
-                  SizedBox(height: 3.h),
+                  Image.asset("assets/gifs/logo.gif",  ),
                   Text(
                     "Sauftrag",
                     style: TextStyle(

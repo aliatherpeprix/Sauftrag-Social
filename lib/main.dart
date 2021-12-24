@@ -20,12 +20,14 @@ import 'package:sauftrag/views/MapSearch/map_screen.dart';
 import 'package:sauftrag/views/MapSearch/search.dart';
 import 'package:sauftrag/views/NewsFeed/event_detail.dart';
 import 'package:sauftrag/views/NewsFeed/news_feed.dart';
+import 'package:sauftrag/views/NewsFeed/upcoming_event_list.dart';
 import 'package:sauftrag/views/UserFriendList/create_group.dart';
 import 'package:sauftrag/views/UserFriendList/friend_list.dart';
 import 'package:sauftrag/views/UserFriendList/group_details.dart';
 import 'package:sauftrag/views/UserFriendList/group_screen.dart';
 import 'package:sauftrag/views/UserFriendList/invite_people.dart';
 import 'package:sauftrag/views/UserFriendList/message_screen.dart';
+import 'package:sauftrag/views/UserFriendList/select_individual_chat.dart';
 import 'package:sauftrag/views/UserProfile/account.dart';
 import 'package:sauftrag/views/UserProfile/accountOwnership.dart';
 import 'package:sauftrag/views/UserProfile/gps.dart';
@@ -62,6 +64,7 @@ import 'bar/views/Profile/bar_profile.dart';
 import 'bar/views/Home/barCode2.dart';
 import 'bar/widgets/bar_QR_scanner.dart';
 import 'bar/widgets/my_side_menu.dart';
+import 'views/NewsFeed/events.dart';
 
 NavigationViewModel navigationViewModel = NavigationViewModel();
 void main() async {
@@ -97,7 +100,7 @@ class _MyAppState extends State<MyApp> {
             SizeConfig().init(constraints, orientation);
             //var prefService = locator<PrefrencesViewModel>();
             //return MainView(index: 2);
-            return CreateBarEvent();
+            return Splash();
           },
         );
       },

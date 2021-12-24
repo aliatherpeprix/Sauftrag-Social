@@ -819,6 +819,9 @@ class _MapScreenState extends State<MapScreen> {
                                 mainModel.currentEventSelected = null;
                                 mainModel.timeSelected = false;
                                 mainModel.timeValue = null;
+                                mainModel.lowerValue = 20;
+                                mainModel.upperValue = 100;
+                                selectedLocation = 'Karachi, Pakistan';
                                 mainModel.notifyListeners();
                               },
                               child: Text("RESET"),

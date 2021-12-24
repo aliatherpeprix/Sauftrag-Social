@@ -220,4 +220,9 @@ class ImageUtils {
   static String coinImg = "assets/coinImg.png";
 
 
+  static String saufTragLogoGif = "assets/gifs/logo.gif";
+
+
+
+
 }
