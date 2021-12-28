@@ -272,7 +272,7 @@ class _BarAccountOwnershipState extends State<BarAccountOwnership> {
                                   }
                               );
                             },
-                            child: const Text("Delete Account"),
+                            child:  Text(radioSelected == unselected ? "Delete Account" : "Deactivate Account"),
                             style: ElevatedButton.styleFrom(
                               primary: ColorUtils.text_red,
                               onPrimary: ColorUtils.white,

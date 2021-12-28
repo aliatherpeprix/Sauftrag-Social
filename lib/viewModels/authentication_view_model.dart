@@ -32,6 +32,9 @@ class AuthenticationViewModel extends BaseViewModel {
   bool signupPasswordVisible = false;
   bool signupVerifyPasswordVisible = false;
 
+  bool resetNewPasswordVisible = false;
+  bool resetConfirmPasswordVisible = false;
+
   bool logInUserSelected = true;
   bool logInBarSelected = false;
 
@@ -57,10 +60,22 @@ class AuthenticationViewModel extends BaseViewModel {
   bool isConfirmNewPasswordInFocus = false;
   FocusNode confirmNewPasswordFocus = new FocusNode();
 
+  final resetNewPasswordController = TextEditingController();
+  bool isResetNewPasswordInFocus = false;
+  FocusNode resetNewPasswordFocus = new FocusNode();
+
+  final resetConfirmPasswordController = TextEditingController();
+  bool isResetConfirmPasswordInFocus = false;
+  FocusNode resetConfirmPasswordFocus = new FocusNode();
+
   bool signUpUserSelected = true;
   bool signUpBarSelected = false;
 
   final myContactsSearchController = TextEditingController();
+
+  ///-----Bar Options -------------------///
+  final aboutMeController = TextEditingController();
+  final barNameController = TextEditingController();
 
   final signUpUserController = TextEditingController();
   bool isSignUpUserInFocus = false;
@@ -117,6 +132,8 @@ class AuthenticationViewModel extends BaseViewModel {
   bool loginPasswordVisible = false;
 
   DateTime selectedDOB = DateTime.now();
+
+  DateTime selectedEventDate = DateTime.now();
 
   File imageFile = File('my initial file');
   List<File> imageFiles = [
@@ -240,7 +257,11 @@ class AuthenticationViewModel extends BaseViewModel {
 
   List<int> selectedWeekDays = [];
 
-  List<String> weekDaysList = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+  List<String> weekDaysList = ["Mo", "Tu", "We", "Th", "Fr"];
+
+  List<int> selectedWeekendDays = [];
+
+  List<String> weekendDaysList = ["Su", "Sa",];
 
   List<int> selectedBarKind = [];
 
@@ -458,6 +479,12 @@ class AuthenticationViewModel extends BaseViewModel {
   void openAndSelectDob(BuildContext context) async {
     selectedDOB =
         await CommonFunctions.showDateOfBirthPicker(context, selectedDOB);
+    notifyListeners();
+  }
+
+  void openAndSelectEventDate(BuildContext context) async {
+    selectedEventDate =
+    await CommonFunctions.showEventDatePicker(context, selectedEventDate);
     notifyListeners();
   }
 

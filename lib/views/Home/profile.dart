@@ -116,20 +116,31 @@ class _ProfileState extends State<Profile> {
                                     ],
                                   ),
                                 ),
+                                // Positioned(
+                                //     bottom: -2.2.h,
+                                //     right: 3.w,
+                                //     child: GestureDetector(
+                                //       onTap: (){
+                                //         model.navigateToMatchScreen();
+                                //       },
+                                //       child: Container(
+                                //         width: 12.w,
+                                //         height: 12.h,
+                                //         decoration: BoxDecoration(shape: BoxShape.circle, color: ColorUtils.red_color,),
+                                //         child: Icon(Icons.keyboard_arrow_down_rounded, color: Colors.white,)
+                                //       ),
+                                //     )),
                                 Positioned(
-                                    bottom: -2.2.h,
-                                    right: 3.w,
-                                    child: GestureDetector(
-                                      onTap: (){
-                                        model.navigateToMatchScreen();
-                                      },
-                                      child: Container(
-                                        width: 12.w,
-                                        height: 12.h,
-                                        decoration: BoxDecoration(shape: BoxShape.circle, color: ColorUtils.red_color,),
-                                        child: Icon(Icons.keyboard_arrow_down_rounded, color: Colors.white,)
-                                      ),
-                                    ))
+                                    top: 5.h,
+                                    left: 5.w,
+                                    child: Container(
+                                        width: 10.w,
+                                        height: 6.h,
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                            BorderRadius.all(Radius.circular(10))),
+                                        child: BackArrowContainer())),
                               ],
                             ),
                           ),
@@ -241,12 +252,14 @@ class _ProfileState extends State<Profile> {
                           color: ColorUtils.divider,
                           thickness: 1,
                         ),
+
+                        ///-------Favorite Alcoholic Drink------------------////
                         SizedBox(height: 2.5.h),
                         Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal: Dimensions.horizontalPadding),
                           child: Text(
-                            "Interest",
+                            "Favorite Alcoholic Drink",
                             style: TextStyle(
                               color: ColorUtils.black,
                               fontFamily: FontUtils.modernistBold,
@@ -262,11 +275,11 @@ class _ProfileState extends State<Profile> {
                             spacing: 2.5.w,
                             runSpacing: 1.5.h,
                             direction: Axis.horizontal,
-                            children: model.interestList
+                            children: model.favoriteAlcoholicDrink
                                 .map((element) => ElevatedButton(
                                       onPressed: () {},
-                                      child: Text(model.interestList[
-                                          model.interestList.indexOf(element)]),
+                                      child: Text(model.favoriteAlcoholicDrink[
+                                          model.favoriteAlcoholicDrink.indexOf(element)]),
                                       style: ElevatedButton.styleFrom(
                                         primary: ColorUtils.white,
                                         onPrimary: ColorUtils.text_red,
@@ -290,6 +303,110 @@ class _ProfileState extends State<Profile> {
                                 .toList(),
                           ),
                         ),
+
+                        ///-----------Favorite Night Club---------------------///
+                        SizedBox(height: 3.h),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: Dimensions.horizontalPadding),
+                          child: Text(
+                            "Favorite Night Club",
+                            style: TextStyle(
+                              color: ColorUtils.black,
+                              fontFamily: FontUtils.modernistBold,
+                              fontSize: 2.5.t,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 3.h),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: Dimensions.horizontalPadding),
+                          child: Wrap(
+                            spacing: 2.5.w,
+                            runSpacing: 1.5.h,
+                            direction: Axis.horizontal,
+                            children: model.favoriteNightClub
+                                .map((element) => ElevatedButton(
+                              onPressed: () {},
+                              child: Text(model.favoriteNightClub[
+                              model.favoriteNightClub.indexOf(element)]),
+                              style: ElevatedButton.styleFrom(
+                                primary: ColorUtils.white,
+                                onPrimary: ColorUtils.text_red,
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 1.8.h, horizontal: 5.w),
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        Dimensions.roundCorner),
+                                    side: BorderSide(
+                                        color: ColorUtils.text_red,
+                                        width: 1)),
+                                textStyle: TextStyle(
+                                  //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
+                                  fontFamily: FontUtils.modernistRegular,
+                                  fontSize: 1.7.t,
+                                  //height: 0
+                                ),
+                              ),
+                            ))
+                                .toList(),
+                          ),
+                        ),
+
+                        ///---------------Favorite Party Vacation --------------///
+                        SizedBox(height: 3.h),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: Dimensions.horizontalPadding),
+                          child: Text(
+                            "Favorite Party Vacation",
+                            style: TextStyle(
+                              color: ColorUtils.black,
+                              fontFamily: FontUtils.modernistBold,
+                              fontSize: 2.5.t,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 3.h),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: Dimensions.horizontalPadding),
+                          child: Wrap(
+                            spacing: 2.5.w,
+                            runSpacing: 1.5.h,
+                            direction: Axis.horizontal,
+                            children: model.favoritePartyVacation
+                                .map((element) => ElevatedButton(
+                              onPressed: () {},
+                              child: Text(model.favoritePartyVacation[
+                              model.favoritePartyVacation.indexOf(element)]),
+                              style: ElevatedButton.styleFrom(
+                                primary: ColorUtils.white,
+                                onPrimary: ColorUtils.text_red,
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 1.8.h, horizontal: 5.w),
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        Dimensions.roundCorner),
+                                    side: BorderSide(
+                                        color: ColorUtils.text_red,
+                                        width: 1)),
+                                textStyle: TextStyle(
+                                  //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
+                                  fontFamily: FontUtils.modernistRegular,
+                                  fontSize: 1.7.t,
+                                  //height: 0
+                                ),
+                              ),
+                            ))
+                                .toList(),
+                          ),
+                        ),
+
+                        ///-------- Like & Dislike ---------///
                         SizedBox(height: 4.h),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

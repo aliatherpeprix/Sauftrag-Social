@@ -8,6 +8,7 @@ import 'package:sauftrag/viewModels/navigation_view_model.dart';
 import 'package:sauftrag/views/Auth/check_email.dart';
 import 'package:sauftrag/views/Auth/favorite.dart';
 import 'package:sauftrag/views/Auth/media.dart';
+import 'package:sauftrag/views/Auth/resent_password.dart';
 import 'package:sauftrag/views/Auth/signup.dart';
 import 'package:sauftrag/views/Auth/splash.dart';
 import 'package:sauftrag/views/Auth/terms.dart';
@@ -100,7 +101,7 @@ class _MyAppState extends State<MyApp> {
             SizeConfig().init(constraints, orientation);
             //var prefService = locator<PrefrencesViewModel>();
             //return MainView(index: 2);
-            return FriendList();
+            return ResentPassword();
           },
         );
       },

@@ -113,7 +113,11 @@ class MainViewModel extends BaseViewModel{
   int drinkIndex = -1;
   List<int> drinkIndexList = [];
 
-  List<String> interestList = ["White Wine", "Hard Seltzer", "Whiskey", "Club 1", "Club 2", "Goldstrand"];
+  List<String> favoriteAlcoholicDrink = ["White Wine", "Hard Seltzer", "Whiskey", "Jägermeister", "Champagne",];
+
+  List<String> favoriteNightClub = ["Club 1", "Club 6", "Club 8"];
+
+  List<String> favoritePartyVacation = ["Goldstrand", "Zrce Beach", "Springbreak Cancun",];
 
   Future<bool> openCamera() async {
     ImagePicker picker = ImagePicker();

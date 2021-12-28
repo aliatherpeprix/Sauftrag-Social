@@ -81,7 +81,7 @@ class _BarAccountState extends State<BarAccount> {
                               style: TextStyle(
                                 color: ColorUtils.black,
                                 fontFamily: FontUtils.modernistBold,
-                                fontSize: 2.5.t,
+                                fontSize: 3.t,
                               ),
                             ),
                           ],
@@ -92,7 +92,7 @@ class _BarAccountState extends State<BarAccount> {
                           style: TextStyle(
                             color: ColorUtils.black,
                             fontFamily: FontUtils.modernistBold,
-                            fontSize: 2.t,
+                            fontSize: 2.5.t,
                           ),
                         ),
                         SizedBox(height: 2.h),
@@ -107,22 +107,100 @@ class _BarAccountState extends State<BarAccount> {
                         ),
                         SizedBox(height: 3.h),
 
+                        // Wrap(
+                        //   spacing: 2.w,
+                        //   //runSpacing: 1.5.h,
+                        //   direction: Axis.horizontal,
+                        //   children: model.weekDaysList
+                        //       .map((element) =>
+                        //       ElevatedButton(
+                        //         onPressed: () {
+                        //           if (model.selectedWeekDays.contains(model
+                        //               .weekDaysList
+                        //               .indexOf(element))) {
+                        //             model.selectedWeekDays.remove(model
+                        //                 .weekDaysList
+                        //                 .indexOf(element));
+                        //           } else {
+                        //             /* if (element == "Radler") {
+                        //                   showDialog(
+                        //                       context: context,
+                        //                       builder: (BuildContext context) {
+                        //                         return RadlerDialogBox(
+                        //                             title: "Add New Location",
+                        //                             btnTxt: "Add Location",
+                        //                             icon: ImageUtils
+                        //                                 .addLocationIcon);
+                        //                       });
+                        //                 } */
+                        //             /*  else {
+                        //
+                        //                 }*/
+                        //             model.selectedWeekDays.add(model
+                        //                 .weekDaysList
+                        //                 .indexOf(element));
+                        //           }
+                        //           model.notifyListeners();
+                        //         },
+                        //         child: Text(model.weekDaysList[
+                        //         model.weekDaysList.indexOf(element)]),
+                        //         style: ElevatedButton.styleFrom(
+                        //           primary: model.selectedWeekDays.contains(
+                        //               model.weekDaysList
+                        //                   .indexOf(element))
+                        //               ? ColorUtils.text_red
+                        //               : ColorUtils.white,
+                        //           onPrimary: model.selectedWeekDays
+                        //               .contains(model.weekDaysList
+                        //               .indexOf(element))
+                        //               ? ColorUtils.white
+                        //               : ColorUtils.text_dark,
+                        //           /* padding: EdgeInsets.symmetric(
+                        //                   vertical: 1.8.h, horizontal: 9.w),*/
+                        //           elevation: model.selectedWeekDays
+                        //               .contains(model.weekDaysList
+                        //               .indexOf(element))
+                        //               ? 5
+                        //               : 0,
+                        //           shape: RoundedRectangleBorder(
+                        //               borderRadius: BorderRadius.circular(
+                        //                   Dimensions.roundCorner),
+                        //               side: BorderSide(
+                        //                   color: model.selectedWeekDays
+                        //                       .contains(model
+                        //                       .weekDaysList
+                        //                       .indexOf(element))
+                        //                       ? ColorUtils.text_red
+                        //                       : ColorUtils.divider,
+                        //                   width: 1)),
+                        //           textStyle: TextStyle(
+                        //             //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
+                        //             fontFamily: model.selectedWeekDays
+                        //                 .contains(model.weekDaysList
+                        //                 .indexOf(element))
+                        //                 ? FontUtils.modernistBold
+                        //                 : FontUtils.modernistRegular,
+                        //             fontSize: 1.5.t,
+                        //             //height: 0
+                        //           ),
+                        //         ),
+                        //       ))
+                        //       .toList(),
+                        // ),
                         Wrap(
-                          spacing: 2.w,
+                          spacing: 3.w,
                           //runSpacing: 1.5.h,
                           direction: Axis.horizontal,
                           children: model.weekDaysList
-                              .map((element) =>
-                              ElevatedButton(
-                                onPressed: () {
-                                  if (model.selectedWeekDays.contains(model
-                                      .weekDaysList
-                                      .indexOf(element))) {
-                                    model.selectedWeekDays.remove(model
-                                        .weekDaysList
-                                        .indexOf(element));
-                                  } else {
-                                    /* if (element == "Radler") {
+                              .map((element) => GestureDetector(
+                            onTap: () {
+                              if (model.selectedWeekDays.contains(
+                                  model.weekDaysList.indexOf(element))) {
+                                model.selectedWeekDays.remove(
+                                    model.weekDaysList.indexOf(element));
+                              }
+                              else  {
+                                /* if (element == "Radler") {
                                           showDialog(
                                               context: context,
                                               builder: (BuildContext context) {
@@ -133,63 +211,52 @@ class _BarAccountState extends State<BarAccount> {
                                                         .addLocationIcon);
                                               });
                                         } */
-                                    /*  else {
+                                /*  else {
 
                                         }*/
-                                    model.selectedWeekDays.add(model
-                                        .weekDaysList
-                                        .indexOf(element));
-                                  }
-                                  model.notifyListeners();
-                                },
-                                child: Text(model.weekDaysList[
-                                model.weekDaysList.indexOf(element)]),
-                                style: ElevatedButton.styleFrom(
-                                  primary: model.selectedWeekDays.contains(
-                                      model.weekDaysList
-                                          .indexOf(element))
-                                      ? ColorUtils.text_red
-                                      : ColorUtils.white,
-                                  onPrimary: model.selectedWeekDays
-                                      .contains(model.weekDaysList
-                                      .indexOf(element))
-                                      ? ColorUtils.white
-                                      : ColorUtils.text_dark,
-                                  /* padding: EdgeInsets.symmetric(
-                                          vertical: 1.8.h, horizontal: 9.w),*/
-                                  elevation: model.selectedWeekDays
-                                      .contains(model.weekDaysList
-                                      .indexOf(element))
-                                      ? 5
-                                      : 0,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          Dimensions.roundCorner),
-                                      side: BorderSide(
-                                          color: model.selectedWeekDays
-                                              .contains(model
-                                              .weekDaysList
-                                              .indexOf(element))
-                                              ? ColorUtils.text_red
-                                              : ColorUtils.divider,
-                                          width: 1)),
-                                  textStyle: TextStyle(
-                                    //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
-                                    fontFamily: model.selectedWeekDays
-                                        .contains(model.weekDaysList
-                                        .indexOf(element))
-                                        ? FontUtils.modernistBold
-                                        : FontUtils.modernistRegular,
-                                    fontSize: 1.5.t,
-                                    //height: 0
-                                  ),
-                                ),
-                              ))
+                                model.selectedWeekDays.add(
+                                    model.weekDaysList.indexOf(element));
+                              }
+                              model.notifyListeners();
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(vertical: 1.2.h, horizontal: 5.w),
+                              decoration: BoxDecoration(
+                                // border: Border.all(color: model.selectedWeekDays
+                                //     .contains(model.weekDaysList
+                                //     .indexOf(element))
+                                //     ? ColorUtils.text_red
+                                //     : ColorUtils.icon_color,),
+                                borderRadius: BorderRadius.circular(4),
+                                color: model.selectedWeekDays
+                                    .contains(model.weekDaysList
+                                    .indexOf(element))
+                                    ? ColorUtils.text_red
+                                    : ColorUtils.divider,
+                              ),
+                              child: Text(model.weekDaysList[
+                              model.weekDaysList.indexOf(element)], style: TextStyle(
+                                color: model.selectedWeekDays
+                                    .contains(model.weekDaysList
+                                    .indexOf(element))
+                                    ? ColorUtils.white
+                                    : ColorUtils.icon_color,
+                                fontFamily: model.selectedWeekDays
+                                    .contains(model.weekDaysList
+                                    .indexOf(element))
+                                    ? FontUtils.modernistBold
+                                    : FontUtils.modernistRegular,
+                                fontSize: 1.8.t,
+                                //height: 0
+                              ),),
+
+                            ),
+                          ))
                               .toList(),
                         ),
 
                         ///----Bar opening time-----///
-                        SizedBox(height: 3.h),
+                        SizedBox(height: 5.h),
                         Container(
                          // margin: EdgeInsets.symmetric(horizontal: 5.w),
                           child: Row(
@@ -737,6 +804,511 @@ class _BarAccountState extends State<BarAccount> {
                         //   ),
                         // ),
 
+                        SizedBox(height: 4.h),
+                        Text(
+                          "Weekend Timings",
+                          style: TextStyle(
+                            color: ColorUtils.black,
+                            fontFamily: FontUtils.modernistBold,
+                            fontSize: 2.5.t,
+                          ),
+                        ),
+                        SizedBox(height: 3.h),
+                        Wrap(
+                          spacing: 3.w,
+                          //runSpacing: 1.5.h,
+                          direction: Axis.horizontal,
+                          children: model.weekendDaysList
+                              .map((element) => GestureDetector(
+                            onTap: () {
+                              if (model.selectedWeekendDays.contains(
+                                  model.weekendDaysList.indexOf(element))) {
+                                model.selectedWeekendDays.remove(
+                                    model.weekendDaysList.indexOf(element));
+                              }
+                              else  {
+                                /* if (element == "Radler") {
+                                          showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return RadlerDialogBox(
+                                                    title: "Add New Location",
+                                                    btnTxt: "Add Location",
+                                                    icon: ImageUtils
+                                                        .addLocationIcon);
+                                              });
+                                        } */
+                                /*  else {
+
+                                        }*/
+                                model.selectedWeekendDays.add(
+                                    model.weekendDaysList.indexOf(element));
+                              }
+                              model.notifyListeners();
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(vertical: 1.2.h, horizontal: 5.w),
+                              decoration: BoxDecoration(
+                                // border: Border.all(color: model.selectedWeekendDays
+                                //     .contains(model.weekendDaysList
+                                //     .indexOf(element))
+                                //     ? ColorUtils.text_red
+                                //     : ColorUtils.icon_color,),
+                                borderRadius: BorderRadius.circular(4),
+                                color: model.selectedWeekendDays
+                                    .contains(model.weekendDaysList
+                                    .indexOf(element))
+                                    ? ColorUtils.text_red
+                                    : ColorUtils.divider,
+                              ),
+                              child: Text(model.weekendDaysList[
+                              model.weekendDaysList.indexOf(element)], style: TextStyle(
+                                color: model.selectedWeekendDays
+                                    .contains(model.weekendDaysList
+                                    .indexOf(element))
+                                    ? ColorUtils.white
+                                    : ColorUtils.icon_color,
+                                fontFamily: model.selectedWeekendDays
+                                    .contains(model.weekendDaysList
+                                    .indexOf(element))
+                                    ? FontUtils.modernistBold
+                                    : FontUtils.modernistRegular,
+                                fontSize: 1.8.t,
+                                //height: 0
+                              ),),
+
+                            ),
+                          ))
+                              .toList(),
+                        ),
+
+                        ///----Bar opening time-----///
+                        SizedBox(height: 5.h),
+                        Container(
+                          //margin: EdgeInsets.symmetric(horizontal: 5.w),
+                          child: Row(
+                            children: [
+
+                              //From
+                              Expanded(
+                                child: Stack(
+                                  children: [
+
+                                    GestureDetector(
+                                      onTap: (){
+                                        showTimePicker(
+                                            context: context,
+                                            initialTime: TimeOfDay.now(),
+                                            initialEntryMode: TimePickerEntryMode.dial,
+                                            confirmText: "CONFIRM",
+                                            cancelText: "NOT NOW",
+                                            helpText: "BOOKING TIME"
+                                        ).then((value){
+                                          openingTimeFrom = value!.format(context);
+                                          model.notifyListeners();
+                                        });
+                                      },
+                                      child:  Container(
+                                        height: 6.h,
+                                        padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 3.w),
+                                        decoration: BoxDecoration(
+                                            color: ColorUtils.white,
+                                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                                            border: Border.all(color: ColorUtils.divider)
+                                        ),
+                                        child: Row(
+                                          children: [
+
+                                            Expanded(
+                                              child: Text(
+                                                openingTimeFrom!,
+                                                style: TextStyle(
+                                                  color: ColorUtils.text_dark,
+                                                  fontFamily: FontUtils.modernistRegular,
+                                                  fontSize: 1.6.t,
+                                                  //height: .4
+                                                ),
+                                              ),
+                                            ),
+
+                                            SizedBox(width: 4.w),
+
+                                            SvgPicture.asset(ImageUtils.upDownArrow),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+
+                                    Container(
+                                      margin: EdgeInsets.only(left: 3.w),
+                                      padding: EdgeInsets.symmetric(horizontal: 1.w),
+                                      color: ColorUtils.white,
+                                      child: Text(
+                                        "From",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: ColorUtils.text_grey,
+                                            fontFamily: FontUtils.modernistRegular,
+                                            fontSize: 1.5.t,
+                                            height: .4
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              SizedBox(width: 20),
+
+                              //To
+                              Expanded(
+                                child: Stack(
+                                  children: [
+
+                                    GestureDetector(
+                                      onTap: (){
+                                        showTimePicker(
+                                            context: context,
+                                            initialTime: TimeOfDay.now(),
+                                            initialEntryMode: TimePickerEntryMode.dial,
+                                            confirmText: "CONFIRM",
+                                            cancelText: "NOT NOW",
+                                            helpText: "BOOKING TIME"
+                                        ).then((value){
+                                          openingTimeTo = value!.format(context);
+                                          model.notifyListeners();
+                                        });
+                                      },
+                                      child: Container(
+                                        height: 6.h,
+                                        padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 3.w),
+                                        decoration: BoxDecoration(
+                                            color: ColorUtils.white,
+                                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                                            border: Border.all(color: ColorUtils.divider)
+                                        ),
+                                        child: Row(
+                                          children: [
+
+                                            Expanded(
+                                              child: Text(
+                                                openingTimeTo!,
+                                                style: TextStyle(
+                                                  color: ColorUtils.text_dark,
+                                                  fontFamily: FontUtils.modernistRegular,
+                                                  fontSize: 1.6.t,
+                                                  //height: .4
+                                                ),
+                                              ),
+                                            ),
+
+                                            SizedBox(width: 4.w),
+
+                                            SvgPicture.asset(ImageUtils.upDownArrow),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+
+                                    Container(
+                                      margin: EdgeInsets.only(left: 3.w),
+                                      padding: EdgeInsets.symmetric(horizontal: 1.w),
+                                      color: ColorUtils.white,
+                                      child: Text(
+                                        "To",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: ColorUtils.text_grey,
+                                            fontFamily: FontUtils.modernistRegular,
+                                            fontSize: 1.5.t,
+                                            height: .4
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        // Container(
+                        //   //padding: EdgeInsets.symmetric(horizontal: 1*SizeConfig.widthMultiplier),
+                        //   child: Row(
+                        //     children: [
+                        //       Stack(
+                        //         children: [
+                        //           Container(
+                        //               width: 45.w,
+                        //               padding: EdgeInsets.symmetric(
+                        //                   vertical:
+                        //                   SizeConfig.heightMultiplier*2,
+                        //                   horizontal: SizeConfig.widthMultiplier*1
+                        //               ),
+                        //               decoration: BoxDecoration(
+                        //                   color: Colors.white,
+                        //                   borderRadius: BorderRadius.all(
+                        //                       Radius.circular(
+                        //                           Dimensions.roundCorner)),
+                        //                   border:
+                        //                   Border.all(color: ColorUtils.divider)),
+                        //               child: TimePickerSpinner(
+                        //                 is24HourMode: false,
+                        //                 normalTextStyle: TextStyle(
+                        //                   fontSize: 14,
+                        //                   //color: Colors.deepOrange
+                        //                 ),
+                        //                 highlightedTextStyle: TextStyle(
+                        //                   fontSize: 14,
+                        //                   //color: Colors.yellow
+                        //                 ),
+                        //                 spacing: 1,
+                        //                 itemHeight: 15,
+                        //                 //isForce2Digits: false,
+                        //                 minutesInterval: 5,
+                        //                 onTimeChange: (time) {
+                        //                   setState(() {
+                        //                     _dateTime = time;
+                        //                   });
+                        //                 },
+                        //               )
+                        //           ),
+                        //           Container(
+                        //             margin: EdgeInsets.only(left: 5.w),
+                        //             //padding: EdgeInsets.symmetric(horizontal: 1.w),
+                        //             color: ColorUtils.white,
+                        //             child: Text(
+                        //               "To",
+                        //               textAlign: TextAlign.center,
+                        //               style: TextStyle(
+                        //                   color: ColorUtils.text_grey,
+                        //                   fontFamily: FontUtils.modernistRegular,
+                        //                   fontSize: 1.5.t,
+                        //                   height: .4),
+                        //             ),
+                        //           ),
+                        //         ],
+                        //       ),
+                        //       Stack(
+                        //         children: [
+                        //           Container(
+                        //             width: 45.w,
+                        //             padding: EdgeInsets.symmetric(
+                        //                 vertical:
+                        //                 SizeConfig.heightMultiplier*2,
+                        //                 /*horizontal:
+                        //                 SizeConfig.widthMultiplier*1*/),
+                        //             decoration: BoxDecoration(
+                        //                 color: Colors.white,
+                        //                 borderRadius: BorderRadius.all(
+                        //                     Radius.circular(
+                        //                         Dimensions.roundCorner)),
+                        //                 border:
+                        //                 Border.all(color: ColorUtils.divider)),
+                        //             child: Row(
+                        //               children: [
+                        //                 TimePickerSpinner(
+                        //                   is24HourMode: false,
+                        //                   normalTextStyle: TextStyle(
+                        //                     fontSize: 14,
+                        //                     //color: Colors.deepOrange
+                        //                   ),
+                        //                   highlightedTextStyle: TextStyle(
+                        //                     fontSize: 14,
+                        //                     //color: Colors.yellow
+                        //                   ),
+                        //                   spacing: 1,
+                        //                   itemHeight: 15,
+                        //                   //isForce2Digits: false,
+                        //                   minutesInterval: 5,
+                        //                   onTimeChange: (time) {
+                        //                     setState(() {
+                        //                       _dateTime = time;
+                        //                     });
+                        //                   },
+                        //                 )
+                        //               ],
+                        //             ),
+                        //           ),
+                        //           Container(
+                        //             margin: EdgeInsets.only(left: 5.w),
+                        //             padding: EdgeInsets.symmetric(horizontal: 1.w),
+                        //             color: ColorUtils.white,
+                        //             child: Text(
+                        //               "To",
+                        //               textAlign: TextAlign.center,
+                        //               style: TextStyle(
+                        //                   color: ColorUtils.text_grey,
+                        //                   fontFamily: FontUtils.modernistRegular,
+                        //                   fontSize: 1.5.t,
+                        //                   height: .4),
+                        //             ),
+                        //           ),
+                        //         ],
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
+
+                        ///---Bar Break Time----///
+                        SizedBox(height: 3.h),
+                        Text(
+                          "Please set your bar break time",
+                          style: TextStyle(
+                            color: ColorUtils.text_dark,
+                            fontFamily: FontUtils.modernistRegular,
+                            fontSize: 2.t,
+                          ),
+                        ),
+
+                        SizedBox(height: 3.h),
+                        Container(
+                          //margin: EdgeInsets.symmetric(horizontal: 5.w),
+                          child: Row(
+                            children: [
+
+                              //From
+                              Expanded(
+                                child: Stack(
+                                  children: [
+
+                                    GestureDetector(
+                                      onTap: (){
+                                        showTimePicker(
+                                            context: context,
+                                            initialTime: TimeOfDay.now(),
+                                            initialEntryMode: TimePickerEntryMode.dial,
+                                            confirmText: "CONFIRM",
+                                            cancelText: "NOT NOW",
+                                            helpText: "BOOKING TIME"
+                                        ).then((value){
+                                          breakTimeFrom = value!.format(context);
+                                          model.notifyListeners();
+                                        });
+                                      },
+                                      child: Container(
+                                        height: 6.h,
+                                        padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 3.w),
+                                        decoration: BoxDecoration(
+                                            color: ColorUtils.white,
+                                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                                            border: Border.all(color: ColorUtils.divider)
+                                        ),
+                                        child: Row(
+                                          children: [
+
+                                            Expanded(
+                                              child: Text(
+                                                breakTimeFrom!,
+                                                style: TextStyle(
+                                                  color: ColorUtils.text_dark,
+                                                  fontFamily: FontUtils.modernistRegular,
+                                                  fontSize: 1.6.t,
+                                                  //height: .4
+                                                ),
+                                              ),
+                                            ),
+
+                                            SizedBox(width: 4.w),
+
+                                            SvgPicture.asset(ImageUtils.upDownArrow),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+
+                                    Container(
+                                      margin: EdgeInsets.only(left: 3.w),
+                                      padding: EdgeInsets.symmetric(horizontal: 1.w),
+                                      color: ColorUtils.white,
+                                      child: Text(
+                                        "From",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: ColorUtils.text_grey,
+                                            fontFamily: FontUtils.modernistRegular,
+                                            fontSize: 1.5.t,
+                                            height: .4
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              SizedBox(width: 20),
+
+                              //To
+                              Expanded(
+                                child: Stack(
+                                  children: [
+
+                                    GestureDetector(
+                                      onTap: (){
+                                        showTimePicker(
+                                            context: context,
+                                            initialTime: TimeOfDay.now(),
+                                            initialEntryMode: TimePickerEntryMode.dial,
+                                            confirmText: "CONFIRM",
+                                            cancelText: "NOT NOW",
+                                            helpText: "BOOKING TIME"
+                                        ).then((value){
+                                          breakTimeTo = value!.format(context);
+                                          model.notifyListeners();
+                                        });
+                                      },
+                                      child: Container(
+                                        height: 6.h,
+                                        padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 3.w),
+                                        decoration: BoxDecoration(
+                                            color: ColorUtils.white,
+                                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                                            border: Border.all(color: ColorUtils.divider)
+                                        ),
+                                        child: Row(
+                                          children: [
+
+                                            Expanded(
+                                              child: Text(
+                                                breakTimeTo!,
+                                                style: TextStyle(
+                                                  color: ColorUtils.text_dark,
+                                                  fontFamily: FontUtils.modernistRegular,
+                                                  fontSize: 1.6.t,
+                                                  //height: .4
+                                                ),
+                                              ),
+                                            ),
+
+                                            SizedBox(width: 4.w),
+
+                                            SvgPicture.asset(ImageUtils.upDownArrow),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+
+                                    Container(
+                                      margin: EdgeInsets.only(left: 3.w),
+                                      padding: EdgeInsets.symmetric(horizontal: 1.w),
+                                      color: ColorUtils.white,
+                                      child: Text(
+                                        "To",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: ColorUtils.text_grey,
+                                            fontFamily: FontUtils.modernistRegular,
+                                            fontSize: 1.5.t,
+                                            height: .4
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
                         ///----Location----///
                         SizedBox(height: 3.h),
                         Text(
@@ -744,7 +1316,7 @@ class _BarAccountState extends State<BarAccount> {
                           style: TextStyle(
                             color: ColorUtils.black,
                             fontFamily: FontUtils.modernistBold,
-                            fontSize: 2.t,
+                            fontSize: 2.5.t,
                           ),
                         ),
                         SizedBox(height: 2.h),
@@ -810,7 +1382,7 @@ class _BarAccountState extends State<BarAccount> {
                           style: TextStyle(
                             color: ColorUtils.black,
                             fontFamily: FontUtils.modernistBold,
-                            fontSize: 2.t,
+                            fontSize: 2.5.t,
                           ),
                         ),
                         SizedBox(height: 2.h),
@@ -889,7 +1461,7 @@ class _BarAccountState extends State<BarAccount> {
                           style: TextStyle(
                             color: ColorUtils.black,
                             fontFamily: FontUtils.modernistBold,
-                            fontSize: 2.t,
+                            fontSize: 2.5.t,
                           ),
                         ),
 
@@ -953,7 +1525,37 @@ class _BarAccountState extends State<BarAccount> {
                                 Icon(Icons.arrow_forward_ios_rounded, size: 4.i, color: Colors.black,)
                               ],
                             )),
-                        SizedBox(height: 5.h),
+                        SizedBox(height: 6.h),
+
+
+                        SizedBox(
+                          width: double.infinity,
+                          //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              model.navigateToHomeBarScreen();
+                            },
+                            child: const Text("Save"),
+                            style: ElevatedButton.styleFrom(
+                              primary: ColorUtils.text_red,
+                              onPrimary: ColorUtils.white,
+                              padding: EdgeInsets.symmetric(
+                                  vertical:
+                                  Dimensions.containerVerticalPadding),
+                              elevation: 1,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      Dimensions.roundCorner)),
+                              textStyle: TextStyle(
+                                color: ColorUtils.white,
+                                fontFamily: FontUtils.modernistBold,
+                                fontSize: 1.8.t,
+                                //height: 0
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 2.h),
 
 
                       ],

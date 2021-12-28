@@ -125,6 +125,81 @@ class CommonFunctions{
         isDismissible: true);
   }
 
+  static Future showEventDatePicker(BuildContext context,DateTime initialDate) {
+    DateTime selectedDateTime;
+    initialDate = initialDate==null ? DateTime.now() : initialDate;
+    // DateTime maxDateTime = DateTime.now();
+    // selectedDateTime = maxDateTime;
+    DateTime minDateTime = DateTime.now();
+    selectedDateTime = minDateTime;
+    return showModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.transparent,
+        builder: (context){
+          return Container(
+            //height: ScreenUtil.getInstance().height*.35,
+            padding: EdgeInsets.symmetric(vertical: 2.h),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(topRight: Radius.circular(20),topLeft: Radius.circular(20))
+            ),
+            child: Column(
+              //mainAxisSize: MainAxisSize.min,
+              children: [
+                Expanded(
+                  child: Center(
+                    child: CupertinoTheme(
+                      child: CupertinoDatePicker(
+                        mode: CupertinoDatePickerMode.date,
+                      // minimumDate: minDateTime,
+                        //maximumDate:  maxDateTime,
+                        //minimumDate: DateTime.now().subtract(Duration(days: 365*100)),
+                        initialDateTime: initialDate,
+                        onDateTimeChanged: (DateTime dateTime) {
+                          selectedDateTime = dateTime;
+                        },
+                      ),
+                      data: CupertinoThemeData(
+                        textTheme: CupertinoTextThemeData(
+                          dateTimePickerTextStyle: TextStyle(
+                              color: ColorUtils.red_color,
+                              fontFamily: FontUtils.modernistBold,
+                              fontSize: 2.t
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context, selectedDateTime);
+                  },
+                  child: Text('Done'),
+                  style: ElevatedButton.styleFrom(
+                    primary: ColorUtils.red_color,
+                    onPrimary: ColorUtils.white,
+                    padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 10.w),
+                    elevation: 1,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)
+                    ),
+                    textStyle: TextStyle(
+                      color: ColorUtils.white,
+                      fontFamily: FontUtils.modernistBold,
+                      fontSize: 1.8.t,
+                      //height: 0
+                    ),
+                  ),
+                ),
+                //SizedBox(height: 2.h)
+              ],
+            ),
+          );
+        },
+        isDismissible: true);
+  }
+
   static Future showExpiryPicker(BuildContext context,DateTime initialDate) {
     DateTime selectedDateTime;
     //initialDate = initialDate==null ? DateTime.now() : initialDate;

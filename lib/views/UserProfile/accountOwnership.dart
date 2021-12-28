@@ -3,11 +3,14 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/bar/widgets/deactivate_account_dialog_box.dart';
+import 'package:sauftrag/bar/widgets/delete_account_dialog_box.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
+import 'package:sauftrag/viewModels/authentication_view_model.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:stacked/stacked.dart';
 class OwnerShip extends StatefulWidget {
@@ -18,239 +21,287 @@ class OwnerShip extends StatefulWidget {
 }
 
 class _OwnerShipState extends State<OwnerShip> {
-  int val = 1;
+  int selected = 1;
+  int unselected = 0;
+  int radioSelected = 0;
+  int checkSelected = 0;
+  int selectedIndex = 0;
+  bool radioSelected1 = false;
+  bool radioUnselected1 = false;
+
+
+
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<MainViewModel>.reactive(
-      viewModelBuilder: () => locator<MainViewModel>(),
-      disposeViewModel: false,
+    return ViewModelBuilder<AuthenticationViewModel>.reactive(
+      //onModelReady: (data) => data.initializeLoginModel(),
       builder: (context, model, child) {
         return GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();
           },
-          child: Scaffold(
-            resizeToAvoidBottomInset: false,
-            backgroundColor: Colors.white,
-            body: SafeArea(
-              top: false,
-              bottom: false,
-              child: Padding(
-                padding:  EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding,),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      SizedBox(height: Dimensions.topMargin),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          IconButton(
-                              onPressed: () {
-                                model.navigateBack();
-                              },
-                              iconSize: 18.0,
-                              padding: EdgeInsets.zero,
-                              constraints: BoxConstraints(),
-                              icon: Icon(
-                                Icons.arrow_back_ios,
+          child: SafeArea(
+            bottom: false,
+            top: false,
+            child: Scaffold(
+                backgroundColor: ColorUtils.white,
+                body: SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: Dimensions.horizontalPadding,
+                        vertical: Dimensions.verticalPadding),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: Dimensions.topMargin),
+
+                        //Add Images
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                  model.navigateBack();
+                                },
+                                iconSize: 18.0,
+                                padding: EdgeInsets.zero,
+                                constraints: BoxConstraints(),
+                                icon: Icon(
+                                  Icons.arrow_back_ios,
+                                  color: ColorUtils.black,
+                                  size: 4.i,
+                                )),
+                            SizedBox(width: 2.w),
+                            Text(
+                              "Account Ownership",
+                              style: TextStyle(
                                 color: ColorUtils.black,
-                              )),
-                          SizedBox(width: 2.w),
-                          Text(
-                            "Account Ownership",
-                            style: TextStyle(
-                              color: ColorUtils.black,
-                              fontFamily: FontUtils.modernistBold,
-                              fontSize: 2.5.t,
+                                fontFamily: FontUtils.modernistBold,
+                                fontSize: 2.5.t,
+                              ),
                             ),
+                          ],
+                        ),
+                        SizedBox(height: 6.w),
+                        Text(
+                          "If you want to take a break from sauftrag, you can deactivate or you can delete your account,.",
+                          style: TextStyle(
+                            color: ColorUtils.text_dark,
+                            fontFamily: FontUtils.modernistRegular,
+                            fontSize: 1.7.t,
                           ),
-                        ],
-                      ),
+                        ),
+                        SizedBox(height: 3.h),
+                        GestureDetector(
+                          onTap: () {
 
-                      SizedBox(height: 3.h,),
-                      Text("If you want to take a break from sauftrag, you can deactivate or you can delete your account,.",style: TextStyle(fontFamily: FontUtils.modernistRegular),),
-
-                      SizedBox(
-                        height: 4.h,
-                      ),
-                      Container(
-
-
-                        decoration: BoxDecoration(
-                            border: Border.all(color:ColorUtils.red_color),
-                            borderRadius: BorderRadius.circular(15)),
-                        child: RadioListTile(
-                          activeColor: ColorUtils.red_color,
-                          value: 1,
-                          groupValue: val,
-                          onChanged: (_value) {
-                            setState(() => val = 1);
+                            // showDialog(
+                            //     context: context,
+                            //     builder: (BuildContext context){
+                            //       return DeactivateAccountDialog(title: "Add New Location",
+                            //           btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+                            //     }
+                            // );
+                            setState(() {
+                              // ignore: unnecessary_statements
+                              //roomusers.length == 0;
+                              radioSelected = selected;
+                              radioSelected1 == true;
+                              radioUnselected1 == false;
+                            });
                           },
-                          title: Text(
-                            "Deactivate Account",
-                            style: TextStyle(
-                                color: ColorUtils.red_color,
-                                fontSize: 2.t,
-                                fontFamily: FontUtils.modernistBold),
-                          ),
-                          subtitle: Text(
-                            "Deactivating your account is temporary. Your account will be disabled and your photos will be removed from most of the things.",
-                            style: TextStyle(
-                                fontSize: 1.7.t,
-                                fontFamily: FontUtils.modernistRegular
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 2.h,
-                      ),
-                      Container(
-
-                        decoration: BoxDecoration(
-                            border: Border.all(color: ColorUtils.red_color),
-                            borderRadius: BorderRadius.circular(15)),
-                        child: RadioListTile(
-                          activeColor: ColorUtils.red_color,
-                          value: 2,
-                          groupValue: val,
-                          onChanged: (_value) => setState(() => val = 2),
-                          title: Text(
-                            "Delete Account",
-                            style: TextStyle(
-                                color: ColorUtils.red_color,
-                                fontSize: 2.t,
-                                fontWeight: FontWeight.w700,fontFamily: FontUtils.modernistBold),
-                          ),
-                          subtitle: Text(
-                            "Deleting your account is permament. When you delete your account, you won’t be able to retrieve the content or the information that you have shared.",
-                            style: TextStyle(
-                                fontSize: 1.7.t,
-                                fontFamily: FontUtils.modernistRegular
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 8.h,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                titlePadding: EdgeInsets.all(16),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15.0)
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: Dimensions.verticalPadding, horizontal: Dimensions.horizontalPadding),
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: ColorUtils.black.withOpacity(0.1),
+                                  spreadRadius: 0,
+                                  blurRadius: 10,
+                                  offset: Offset(
+                                      0, 5), // changes position of shadow
                                 ),
-                                title: Column(
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.topRight,
-                                      child: Container(
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-//color: Color(kColor)
-                                              border: Border.all(color: ColorUtils.red_color,width: 0.5.w)
-                                          ),
-                                          child: InkWell(onTap: (){Navigator.pop(context);} ,child: Icon(Icons.close,color: ColorUtils.red_color,size: 15,))
-                                      ),
-                                    ),
-                                    SvgPicture.asset(ImageUtils.binIcon),
-                                    SizedBox(height: 1.5.h,),
-                                    Text(
-                                      "Do you really want to delete your account and make the radler lobby win???",
-                                      style: TextStyle(fontSize: 1.8.t,fontFamily: FontUtils.modernistRegular),
-                                    ),
-                                    SizedBox(
-                                      height: 3.h,
-                                    ),
-                                    Center(
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          GestureDetector(
-                                            onTap: (){
-                                              model.deleteSelected = true;
-                                              model.deleteUnselected = false;
-                                              model.notifyListeners();
-                                            },
-                                            child: Container(
-                                              padding: EdgeInsets.symmetric(vertical: 1.5.h, horizontal: 12.w),
+                              ],
+                              color: Colors.white,
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(18)),
+                              border: Border.all(color: ColorUtils.red_color),
+                            ),
+                            child: Row(
+                              mainAxisAlignment:
+                              MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                SvgPicture.asset(radioSelected == selected
+                                    ? ImageUtils.radioSelected
+                                    : ImageUtils.radioUnselected),
+                                SizedBox(width: 3.w,),
+                                Expanded(
+                                  child: Column(
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Deactivate Account",
+                                          style: TextStyle(
+                                              color: ColorUtils.red_color,
+                                              fontSize: 2.2.t,
+                                              fontFamily: FontUtils
+                                                  .modernistBold),
+                                        ),
+                                        SizedBox(height: 2.w,),
+                                        Text(
+                                          "Deactivating your account is temporary. Your account will be disabled and your photos will be removed from most of the things.",
+                                          style: TextStyle(
+                                              color: ColorUtils.black,
+                                              fontSize: 1.7.t,
+                                              fontFamily: FontUtils
+                                                  .modernistRegular),
+                                        ),
 
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.rectangle,
-                                                borderRadius: BorderRadius.all(Radius.circular(15)),
-                                                border: Border.all(color: ColorUtils.text_red),
-                                                color: model.deleteSelected == true ? ColorUtils.text_red
-                                                    : Colors.white,
-                                              ),
-                                              child: Text("Yes",
-                                                style: TextStyle(
-                                                  color: model.deleteSelected == true ? Colors.white
-                                                      : ColorUtils.text_red,
-                                                  fontFamily: FontUtils.modernistRegular,
-                                                  fontSize: 1.8.t,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(width: 4.w,),
-                                          GestureDetector(
-                                            onTap: (){
-                                              model.deleteUnselected = true;
-                                              model.deleteSelected = true;
-                                              model.notifyListeners();
-                                            },
-                                            child: Container(
-                                              padding: EdgeInsets.symmetric(vertical: 1.5.h, horizontal: 12.w),
-
-                                              decoration: BoxDecoration(
-                                                color: model.deleteUnselected == true ? ColorUtils.text_red
-                                                    : Colors.white,
-                                                shape: BoxShape.rectangle,
-                                                borderRadius: BorderRadius.all(Radius.circular(15)),
-                                                border: Border.all(color: ColorUtils.text_red),
-                                              ),
-                                              child: Text("No",
-                                                style: TextStyle(
-                                                  color: model.deleteUnselected == true ? Colors.white
-                                                      : ColorUtils.text_red,
-                                                  fontFamily: FontUtils.modernistRegular,
-                                                  fontSize: 1.8.t,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
+                                      ]),
                                 ),
-                              ));
-                        },
-                        child: Container(
-                          width: 370.w,
-                          height: 7.h,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: ColorUtils.red_color),
-                          child: Center(
-                            child: Text(
-                              "Delete Account",
-                              style: TextStyle(color: Colors.white,fontFamily: FontUtils.modernistBold),
+
+                              ],
                             ),
                           ),
                         ),
-                      )
-                    ],
+                        SizedBox(
+                          height:  2.5.h,
+                        ),
+                        GestureDetector(
+                            onTap: () {
+                              // showDialog(
+                              //     context: context,
+                              //     builder: (BuildContext context){
+                              //       return DeleteAcountDialogbox(title: "Add New Location",
+                              //           btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+                              //     }
+                              // );
+                              setState(() {
+                                // ignore: unnecessary_statements
+                                //roomusers.length == 1;
+
+                                radioSelected = unselected;
+                                radioSelected1 = true;
+                                radioUnselected1 == false;
+                              });
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(vertical: Dimensions.verticalPadding, horizontal: Dimensions.horizontalPadding),
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: ColorUtils.black.withOpacity(0.1),
+                                    spreadRadius: 0,
+                                    blurRadius: 10,
+                                    offset: Offset(
+                                        0, 5), // changes position of shadow
+                                  ),
+                                ],
+                                color: Colors.white,
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(18)),
+                                border: Border.all(color: ColorUtils.red_color),
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+
+                                  SvgPicture.asset(radioSelected == unselected
+                                      ? ImageUtils.radioSelected
+                                      : ImageUtils.radioUnselected),
+                                  SizedBox(width: 3.w,),
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Delete Account",
+                                          style: TextStyle(
+                                              color: ColorUtils.red_color,
+                                              fontSize: 2.2.t,
+                                              fontFamily: FontUtils
+                                                  .modernistBold),
+                                        ),
+                                        SizedBox(height: 2.w,),
+                                        Text(
+                                          "Deleting your account is permament. When you delete your account, you won’t be able to retrieve the content or the information that you have shared.",
+                                          style: TextStyle(
+                                              color: ColorUtils.black,
+                                              fontSize: 1.7.t,
+                                              fontFamily: FontUtils
+                                                  .modernistRegular),
+                                        ),
+
+                                      ],
+                                    ),
+                                  ),
+
+                                ],
+                              ),
+                            )),
+                        SizedBox(height: 8.h),
+                        SizedBox(
+                          width: double.infinity,
+                          //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              //model.navigateToHomeBarScreen();
+                              if(radioSelected1 == true )
+                              {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context){
+                                      return DeactivateAccountDialog(title: "Add New Location",
+                                          btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+                                    }
+                                );
+                              }
+                              else
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context){
+                                      return DeleteAcountDialogbox(title: "Add New Location",
+                                          btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+                                    }
+                                );
+                            },
+                            child:  Text(radioSelected == unselected ? "Delete Account" : "Deactivate Account"),
+                            style: ElevatedButton.styleFrom(
+                              primary: ColorUtils.text_red,
+                              onPrimary: ColorUtils.white,
+                              padding: EdgeInsets.symmetric(
+                                  vertical:
+                                  Dimensions.containerVerticalPadding),
+                              elevation: 1,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      Dimensions.roundCorner)),
+                              textStyle: TextStyle(
+                                color: ColorUtils.white,
+                                fontFamily: FontUtils.modernistBold,
+                                fontSize: 1.8.t,
+                                //height: 0
+                              ),
+                            ),
+                          ),
+                        ),
+
+                      ],
+                    ),
                   ),
-                ),
-              ),
-            ),
+                )),
           ),
         );
       },
+      viewModelBuilder: () => locator<AuthenticationViewModel>(),
+      disposeViewModel: false,
     );
   }
 }

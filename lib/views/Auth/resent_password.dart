@@ -104,14 +104,15 @@ class _ResentPasswordState extends State<ResentPassword> {
                               child: Row(
                                 children: [
 
-                                  SvgPicture.asset(ImageUtils.userIcon),
+                                  SvgPicture.asset(ImageUtils.passwordIcon),
 
                                   SizedBox(width: 4.w),
 
                                   Expanded(
                                     child: TextField(
-                                      focusNode: model.confirmNewPasswordFocus,
-                                      controller: model.confirmNewPasswordController,
+                                      obscureText: !model.resetNewPasswordVisible,
+                                      focusNode: model.resetNewPasswordFocus,
+                                      controller: model.resetNewPasswordController,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.next,
                                       style: TextStyle(
@@ -125,6 +126,23 @@ class _ResentPasswordState extends State<ResentPassword> {
                                         contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                                       ),
                                     ),
+                                  ),
+                                  SizedBox(width: 3.w),
+                                  IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        model.resetNewPasswordVisible = !model.resetNewPasswordVisible;
+                                      });
+                                    },
+                                    icon: Icon(model.resetNewPasswordVisible
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                      color: ColorUtils.red_color,
+                                      //size: 6 * SizeConfig.imageSizeMultiplier,
+                                      //color: ColorUtils.textFormColor,),
+                                    ),
+                                    padding: EdgeInsets.zero,
+                                    constraints: BoxConstraints(),
                                   ),
 
                                 ],
@@ -163,14 +181,15 @@ class _ResentPasswordState extends State<ResentPassword> {
                               child: Row(
                                 children: [
 
-                                  SvgPicture.asset(ImageUtils.userIcon),
+                                  SvgPicture.asset(ImageUtils.passwordIcon),
 
                                   SizedBox(width: 4.w),
 
                                   Expanded(
                                     child: TextField(
-                                      focusNode: model.newPasswordFocus,
-                                      controller: model.newPasswordController,
+                                      obscureText: !model.resetConfirmPasswordVisible,
+                                      focusNode: model.resetConfirmPasswordFocus,
+                                      controller: model.resetConfirmPasswordController,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.next,
                                       style: TextStyle(
@@ -184,6 +203,23 @@ class _ResentPasswordState extends State<ResentPassword> {
                                         contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                                       ),
                                     ),
+                                  ),
+                                  SizedBox(width: 3.w),
+                                  IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        model.resetConfirmPasswordVisible = !model.resetConfirmPasswordVisible;
+                                      });
+                                    },
+                                    icon: Icon(model.resetConfirmPasswordVisible
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                      color: ColorUtils.red_color,
+                                      //size: 6 * SizeConfig.imageSizeMultiplier,
+                                      //color: ColorUtils.textFormColor,),
+                                    ),
+                                    padding: EdgeInsets.zero,
+                                    constraints: BoxConstraints(),
                                   ),
 
                                 ],

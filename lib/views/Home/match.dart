@@ -128,6 +128,7 @@ class _MatchState extends State<Match> {
                             Expanded(
                               child: ElevatedButton(
                                 onPressed: () {
+                                  model.navigateToMessageScreen();
                                 },
                                 child: Text("Say Hi"),
                                 style: ElevatedButton.styleFrom(

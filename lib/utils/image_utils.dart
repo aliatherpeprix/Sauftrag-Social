@@ -218,6 +218,7 @@ class ImageUtils {
   static String disLike = "assets/disLikeIcon.svg";
   static String bottleRank = "assets/bottleRank.png";
   static String coinImg = "assets/coinImg.png";
+  static String sendIcon1 = "assets/sndIcon.svg";
 
 
   static String saufTragLogoGif = "assets/gifs/logo.gif";

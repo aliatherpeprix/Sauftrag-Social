@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
+import 'package:intl/intl.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
@@ -560,44 +561,134 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                       SizedBox(height: 3.h),
 
                       ///-----------------Event Date ---------------------///
+                      // Stack(
+                      //   children: [
+                      //
+                      //     Container(
+                      //       height: 7.h,
+                      //       padding: EdgeInsets.symmetric(vertical: Dimensions.containerVerticalPadding, horizontal: Dimensions.containerHorizontalPadding),
+                      //       decoration: BoxDecoration(
+                      //           color: ColorUtils.white,
+                      //           borderRadius: BorderRadius.all(Radius.circular(Dimensions.roundCorner)),
+                      //           border: Border.all(color: ColorUtils.divider)
+                      //       ),
+                      //       child: Row(
+                      //         children: [
+                      //
+                      //           SvgPicture.asset(ImageUtils.calendarIcon),
+                      //
+                      //           SizedBox(width: 4.w),
+                      //
+                      //           Expanded(
+                      //             child: TextField(
+                      //               //focusNode: model.logInEmailFocus,
+                      //               //controller: model.logInEmailController,
+                      //               keyboardType: TextInputType.text,
+                      //               textInputAction: TextInputAction.next,
+                      //               style: TextStyle(
+                      //                 color: ColorUtils.text_red,
+                      //                 fontFamily: FontUtils.modernistRegular,
+                      //                 fontSize: 2.t,
+                      //               ),
+                      //               decoration: const InputDecoration(
+                      //                 border: InputBorder.none,
+                      //                 isDense:true,
+                      //                 contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                      //               ),
+                      //             ),
+                      //           ),
+                      //
+                      //         ],
+                      //       ),
+                      //     ),
+                      //
+                      //     Container(
+                      //       margin: EdgeInsets.only(left: 5.w),
+                      //       padding: EdgeInsets.symmetric(horizontal: 1.w),
+                      //       color: ColorUtils.white,
+                      //       child: Text(
+                      //         "Event Date",
+                      //         textAlign: TextAlign.center,
+                      //         style: TextStyle(
+                      //             color: ColorUtils.text_grey,
+                      //             fontFamily: FontUtils.modernistRegular,
+                      //             fontSize: 1.5.t,
+                      //             height: .4
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+
                       Stack(
                         children: [
 
-                          Container(
-                            height: 7.h,
-                            padding: EdgeInsets.symmetric(vertical: Dimensions.containerVerticalPadding, horizontal: Dimensions.containerHorizontalPadding),
-                            decoration: BoxDecoration(
-                                color: ColorUtils.white,
-                                borderRadius: BorderRadius.all(Radius.circular(Dimensions.roundCorner)),
-                                border: Border.all(color: ColorUtils.divider)
-                            ),
-                            child: Row(
-                              children: [
+                          GestureDetector(
+                            onTap: () {
+                              model.openAndSelectEventDate(context);
+                              context.unFocus();
+                            },
+                            child: Container(
+                              height: 7.h,
+                              padding: EdgeInsets.symmetric(vertical: Dimensions.containerVerticalPadding, horizontal: Dimensions.containerHorizontalPadding),
+                              decoration: BoxDecoration(
+                                  color: ColorUtils.white,
+                                  borderRadius: BorderRadius.all(Radius.circular(Dimensions.roundCorner)),
+                                  border: Border.all(color: ColorUtils.divider)
+                              ),
+                              child: Row(
+                                children: [
 
-                                SvgPicture.asset(ImageUtils.calendarIcon),
+                                  SvgPicture.asset(ImageUtils.calendarIcon),
 
-                                SizedBox(width: 4.w),
+                                  SizedBox(width: 4.w),
 
-                                Expanded(
-                                  child: TextField(
-                                    //focusNode: model.logInEmailFocus,
-                                    //controller: model.logInEmailController,
-                                    keyboardType: TextInputType.text,
-                                    textInputAction: TextInputAction.next,
-                                    style: TextStyle(
-                                      color: ColorUtils.text_red,
-                                      fontFamily: FontUtils.modernistRegular,
-                                      fontSize: 2.t,
-                                    ),
-                                    decoration: const InputDecoration(
-                                      border: InputBorder.none,
-                                      isDense:true,
-                                      contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                                    ),
+                                  Expanded(
+                                      child: Stack(
+                                        children: <Widget>[
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Container(
+                                              margin: EdgeInsets.only(
+                                                  left: 2.5.w, right: 4.w),
+                                              child: Text(
+                                                model.selectedEventDate == null
+                                                    ? "Date of Birth"
+                                                    : DateFormat('dd/MM/yyyy')
+                                                    .format(model.selectedEventDate),
+                                                style: model.selectedEventDate == null
+                                                    ? TextStyle(
+                                                    color: model.signUpDOBFocus
+                                                        .hasFocus ||
+                                                        model.signUpDOBController
+                                                            .text.length !=
+                                                            0
+                                                        ? ColorUtils.red_color
+                                                        : ColorUtils.text_grey,
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 1.9.t)
+                                                    : TextStyle(
+                                                    color: ColorUtils.red_color),
+                                              ),
+                                            ),
+                                          ),
+                                          Align(
+                                            alignment: Alignment.centerRight,
+                                            child: Container(
+                                              margin: EdgeInsets.only(right: 4.w),
+                                              child: SvgPicture.asset(
+                                                ImageUtils.calender,
+                                                width: 4.5.i,
+                                                height: 4.5.i,
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      )
                                   ),
-                                ),
 
-                              ],
+                                ],
+                              ),
                             ),
                           ),
 
