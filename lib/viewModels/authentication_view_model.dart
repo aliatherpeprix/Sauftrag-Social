@@ -446,7 +446,7 @@ class AuthenticationViewModel extends BaseViewModel {
     //   ));
     //   return;
     // }
-    else if (signUpRelationshipController.text.isEmpty) {
+    else if (relationStatusValueStr.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "RelationShip is required",
       ));

@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:sauftrag/bar/views/Home/bar_news_feed.dart';
 
@@ -79,6 +80,13 @@ void main() async {
 
  // Get.put<MyDrawerController>(MyDrawerController());
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.white, // For both Android + iOS
+
+    // Status bar brightness (optional)
+    statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
+    statusBarBrightness: Brightness.light,
+  ));
   //SharedPreferences prefs = await SharedPreferences.getInstance();
   //var userId = prefs.getInt("user_id");
   await configure();

@@ -29,7 +29,7 @@ class _SignUpState extends State<SignUp> {
             FocusScope.of(context).unfocus();
           },
           child: SafeArea(
-            top: false,
+            top: true,
             bottom: false,
             child: Scaffold(
                 backgroundColor: ColorUtils.white,
@@ -276,8 +276,8 @@ class _SignUpState extends State<SignUp> {
                                   SizedBox(width: 4.w),
                                   Expanded(
                                     child: TextField(
-                                      focusNode: model.signUpEmailFocus,
-                                      controller: model.signUpEmailController,
+                                      focusNode: model.signUpConfirmEmailFocus,
+                                      controller: model.signUpConfirmEmailController,
                                       keyboardType: TextInputType.emailAddress,
                                       textInputAction: TextInputAction.next,
                                       style: TextStyle(

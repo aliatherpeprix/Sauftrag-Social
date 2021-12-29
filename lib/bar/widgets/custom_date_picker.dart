@@ -1890,6 +1890,29 @@ class _RestorableTimePickerMode extends RestorableValue<_TimePickerMode> {
   Object? toPrimitives() => value.index;
 }
 
+class _RestorableAutovalidateMode extends RestorableValue<AutovalidateMode> {
+  _RestorableAutovalidateMode(
+      AutovalidateMode defaultValue,
+      ) : _defaultValue = defaultValue;
+
+  final AutovalidateMode _defaultValue;
+
+  @override
+  AutovalidateMode createDefaultValue() => _defaultValue;
+
+  @override
+  void didUpdateValue(AutovalidateMode? oldValue) {
+    assert(debugIsSerializableForRestoration(value.index));
+    notifyListeners();
+  }
+
+  @override
+  AutovalidateMode fromPrimitives(Object? data) => AutovalidateMode.values[data! as int];
+
+  @override
+  Object? toPrimitives() => value.index;
+}
+
 // A restorable [_RestorableTimePickerEntryMode] value.
 //
 // This serializes each entry as a unique `int` value.
@@ -1924,7 +1947,7 @@ class _TimePickerDialogState extends State<TimePickerDialog> with RestorationMix
   late final _RestorableTimePickerEntryMode _entryMode = _RestorableTimePickerEntryMode(widget.initialEntryMode);
   final _RestorableTimePickerMode _mode = _RestorableTimePickerMode(_TimePickerMode.hour);
   final _RestorableTimePickerModeN _lastModeAnnounced = _RestorableTimePickerModeN(null);
-  final RestorableBool _autoValidate = RestorableBool(false);
+  final _RestorableAutovalidateMode _autovalidateMode = _RestorableAutovalidateMode(AutovalidateMode.disabled);
   final RestorableBoolN _autofocusHour = RestorableBoolN(null);
   final RestorableBoolN _autofocusMinute = RestorableBoolN(null);
   final RestorableBool _announcedInitialTime = RestorableBool(false);
@@ -1945,7 +1968,7 @@ class _TimePickerDialogState extends State<TimePickerDialog> with RestorationMix
     registerForRestoration(_entryMode, 'entry_mode');
     registerForRestoration(_mode, 'mode');
     registerForRestoration(_lastModeAnnounced, 'last_mode_announced');
-    registerForRestoration(_autoValidate, 'autovalidate');
+    registerForRestoration(_autovalidateMode, 'autovalidateMode');
     registerForRestoration(_autofocusHour, 'autofocus_hour');
     registerForRestoration(_autofocusMinute, 'autofocus_minute');
     registerForRestoration(_announcedInitialTime, 'announced_initial_time');
@@ -1988,7 +2011,7 @@ class _TimePickerDialogState extends State<TimePickerDialog> with RestorationMix
     setState(() {
       switch (_entryMode.value) {
         case TimePickerEntryMode.dial:
-          _autoValidate.value = false;
+          _autovalidateMode.value = AutovalidateMode.disabled;
           _entryMode.value = TimePickerEntryMode.input;
           break;
         case TimePickerEntryMode.input:
@@ -2062,7 +2085,7 @@ class _TimePickerDialogState extends State<TimePickerDialog> with RestorationMix
     if (_entryMode.value == TimePickerEntryMode.input) {
       final FormState form = _formKey.currentState!;
       if (!form.validate()) {
-        setState(() { _autoValidate.value = true; });
+        setState(() { _autovalidateMode.value = AutovalidateMode.always; });
         return;
       }
       form.save();
@@ -2223,7 +2246,7 @@ class _TimePickerDialogState extends State<TimePickerDialog> with RestorationMix
       case TimePickerEntryMode.input:
         picker = Form(
           key: _formKey,
-          autovalidate: _autoValidate.value,
+          autovalidateMode: _autovalidateMode.value,
           child: SingleChildScrollView(
             restorationId: 'time_picker_scroll_view',
             child: Column(
