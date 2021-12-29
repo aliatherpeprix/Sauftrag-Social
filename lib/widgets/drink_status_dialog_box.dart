@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/bar/widgets/custom_date_picker.dart' as customDatePicker;
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/extensions.dart';
@@ -32,8 +33,8 @@ class _DrinkStatusDialogBoxState extends State<DrinkStatusDialogBox> {
 
   @override
   void didChangeDependencies() {
-    drinkingFrom = TimeOfDay.now().format(context);
-    drinkingTo = TimeOfDay.now().format(context);
+    drinkingFrom = TimeOfDay(hour: TimeOfDay.now().hour,minute: 0).format(context);
+    drinkingTo = TimeOfDay(hour: TimeOfDay.now().hour,minute: 0).format(context);
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
   }
@@ -176,10 +177,9 @@ class _DrinkStatusDialogBoxState extends State<DrinkStatusDialogBox> {
 
                                 GestureDetector(
                                   onTap: (){
-                                    showTimePicker(
-                                        context: context,
-                                        initialTime: TimeOfDay.now(),
-                                        initialEntryMode: TimePickerEntryMode.dial,
+                                    customDatePicker.showCustomTimePicker(context: context,
+                                        initialTime: TimeOfDay(hour: TimeOfDay.now().hour, minute: 0),
+                                        initialEntryMode: customDatePicker.TimePickerEntryMode.dial,
                                         confirmText: "CONFIRM",
                                         cancelText: "NOT NOW",
                                         helpText: "BOOKING TIME"
@@ -247,10 +247,9 @@ class _DrinkStatusDialogBoxState extends State<DrinkStatusDialogBox> {
 
                                 GestureDetector(
                                   onTap: (){
-                                    showTimePicker(
-                                        context: context,
-                                        initialTime: TimeOfDay.now(),
-                                        initialEntryMode: TimePickerEntryMode.dial,
+                                    customDatePicker.showCustomTimePicker(context: context,
+                                        initialTime: TimeOfDay(hour: TimeOfDay.now().hour, minute: 0),
+                                        initialEntryMode: customDatePicker.TimePickerEntryMode.dial,
                                         confirmText: "CONFIRM",
                                         cancelText: "NOT NOW",
                                         helpText: "BOOKING TIME"

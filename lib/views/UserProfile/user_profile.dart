@@ -48,7 +48,7 @@ class _UserProfileState extends State<UserProfile> {
                             style: TextStyle(
                               color: ColorUtils.black,
                               fontFamily: FontUtils.modernistBold,
-                              fontSize: 2.5.t,
+                              fontSize: 3.t,
                             ),
                           ),
                         ],

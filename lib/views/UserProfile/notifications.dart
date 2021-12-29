@@ -26,18 +26,18 @@ class _UserNotificationsState extends State<UserNotifications> {
       builder: (context, model, child) {
         return Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: AppBar(
-            leading: IconButton(onPressed: (){Navigator.pop(context);}, icon: Icon(Icons.arrow_back_ios,color: Colors.black,)),
-            backgroundColor: Colors.white,
-            elevation: 0,
-            title: Container(
-              child: Text(
-                "Notifications",
-                style: TextStyle(
-                    color: Colors.black, fontSize: 2.5.t, fontFamily: FontUtils.modernistBold),
-              ),
-            ),
-          ),
+          // appBar: AppBar(
+          //   leading: IconButton(onPressed: (){Navigator.pop(context);}, icon: Icon(Icons.arrow_back_ios,color: Colors.black,)),
+          //   backgroundColor: Colors.white,
+          //   elevation: 0,
+          //   title: Container(
+          //     child: Text(
+          //       "Notifications",
+          //       style: TextStyle(
+          //           color: Colors.black, fontSize: 2.5.t, fontFamily: FontUtils.modernistBold),
+          //     ),
+          //   ),
+          // ),
           backgroundColor: Colors.white,
           body: SafeArea(
             top: false,
@@ -46,9 +46,42 @@ class _UserNotificationsState extends State<UserNotifications> {
               padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding,),
               child: Column(
                 children: [
-                  SizedBox(height: 3.h,),
+                  SizedBox(height: Dimensions.topMargin),
+                  Container(
+                    // padding: EdgeInsets.symmetric(
+                    //   horizontal: Dimensions.horizontalPadding,
+                    // ),
+                    child:  Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        IconButton(
+                            onPressed: () {
+                              model.navigateBack();
+                            },
+                            iconSize: 18.0,
+                            padding: EdgeInsets.zero,
+                            constraints: BoxConstraints(),
+                            icon: Icon(
+                              Icons.arrow_back_ios,
+                              color: ColorUtils.black,
+                              size: 4.5.i,
+                            )),
+                        SizedBox(width: 2.w),
+                        Text(
+                          "Notifications",
+                          style: TextStyle(
+                            color: ColorUtils.black,
+                            fontFamily: FontUtils.modernistBold,
+                            fontSize: 3.t,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 6.h),
                   Row(
                     children: [
+
                       Text(
                         "Push Notifications",
                         style:

@@ -46,15 +46,33 @@ class _OrderDetailsState extends State<OrderDetails> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            "Order Details",
-                            style: TextStyle(
-                              color: ColorUtils.black,
-                              fontFamily: FontUtils.modernistBold,
-                              fontSize: 2.5.t,
-                            ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              IconButton(
+                                  onPressed: () {
+                                    model.navigateBack();
+                                  },
+                                  iconSize: 18.0,
+                                  padding: EdgeInsets.zero,
+                                  constraints: BoxConstraints(),
+                                  icon: Icon(
+                                    Icons.arrow_back_ios,
+                                    color: ColorUtils.black,
+                                    size: 4.5.i,
+                                  )),
+                              SizedBox(width: 2.w),
+                              Text(
+                                "Order Details",
+                                style: TextStyle(
+                                  color: ColorUtils.black,
+                                  fontFamily: FontUtils.modernistBold,
+                                  fontSize: 3.t,
+                                ),
+                              ),
+                            ],
                           ),
-                          SizedBox(height: 5.w),
+                          SizedBox(height: 8.w),
                           Text(
                             "Product",
                             style: TextStyle(
@@ -65,7 +83,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 5.h),
+                      SizedBox(height: 2.h),
 
                       Stack(
                         children: [

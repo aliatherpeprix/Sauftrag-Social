@@ -36,7 +36,7 @@ class _NotificationsState extends State<Notifications> {
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding),
 
-                  child: Row(
+                  child:  Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       IconButton(
@@ -49,22 +49,24 @@ class _NotificationsState extends State<Notifications> {
                           icon: Icon(
                             Icons.arrow_back_ios,
                             color: ColorUtils.black,
+                            size: 4.5.i,
                           )),
                       SizedBox(width: 2.w),
                       Text(
-                        "Notification",
+                        "Notifications",
                         style: TextStyle(
                           color: ColorUtils.black,
                           fontFamily: FontUtils.modernistBold,
-                          fontSize: 2.5.t,
+                          fontSize: 3.t,
                         ),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: SizeConfig.heightMultiplier * 3,),
+                SizedBox(height: SizeConfig.heightMultiplier * 5,),
                 Expanded(
                   child: ListView.separated(
+                    padding: EdgeInsets.zero,
                     scrollDirection: Axis.vertical,
                     physics: BouncingScrollPhysics(),
                     shrinkWrap: true,

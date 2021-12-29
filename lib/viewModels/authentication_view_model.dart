@@ -27,6 +27,7 @@ class AuthenticationViewModel extends BaseViewModel {
   bool dataCheck = false;
 
   bool otpLoading = false;
+  TimeOfDay? startTime;
 
   bool isChecked = false;
   bool signupPasswordVisible = false;
@@ -745,6 +746,16 @@ class AuthenticationViewModel extends BaseViewModel {
 
   void navigateToBarAccountOwnerShip() {
     navigationService.navigateToBarAccountOwnerShip();
+  }
+
+  convert (){
+    String s = "00:00";
+    startTime = TimeOfDay(hour:int.parse(s.split(":")[0]),minute: int.parse(s.split(":")[1]));
+  }
+
+
+  void navigateToFollowerList() {
+    navigationService.navigateToFollowerList();
   }
 
   // void navigateToResentPasswordScreen() {

@@ -113,7 +113,18 @@ class _SearchState extends State<Search> {
                       children: [
                         Container(
                           padding: EdgeInsets.symmetric(horizontal: 5.w),
-                            child: BackArrowContainer()),
+                            child: IconButton(
+                                onPressed: () {
+                                  model.navigateBack();
+                                },
+                                iconSize: 18.0,
+                                padding: EdgeInsets.zero,
+                                constraints: BoxConstraints(),
+                                icon: Icon(
+                                  Icons.arrow_back_ios,
+                                  color: ColorUtils.black,
+                                  size: 4.5.i,
+                                )),),
                       ],
                     ),
                     //SizedBox(height: 3.h,),

@@ -42,7 +42,18 @@ class CheckEmail extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        BackArrowContainer(),
+                        IconButton(
+                            onPressed: () {
+                              model.navigateBack();
+                            },
+                            iconSize: 18.0,
+                            padding: EdgeInsets.zero,
+                            constraints: BoxConstraints(),
+                            icon: Icon(
+                              Icons.arrow_back_ios,
+                              color: ColorUtils.black,
+                              size: 4.5.i,
+                            )),
                         // IconButton(
                         //     onPressed: () {
                         //       model.navigateBack();

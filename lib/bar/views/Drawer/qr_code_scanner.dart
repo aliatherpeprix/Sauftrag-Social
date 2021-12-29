@@ -43,19 +43,19 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
                     children: [
                       SizedBox(height: Dimensions.topMargin),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           IconButton(
                               onPressed: () {
                                 model.navigateBack();
                               },
-                              iconSize: 15.0,
+                              iconSize: 18.0,
                               padding: EdgeInsets.zero,
                               constraints: BoxConstraints(),
                               icon: Icon(
                                 Icons.arrow_back_ios,
                                 color: ColorUtils.black,
+                                size: 4.5.i,
                               )),
                           SizedBox(width: 2.w),
                           Text(
@@ -63,7 +63,7 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
                             style: TextStyle(
                               color: ColorUtils.black,
                               fontFamily: FontUtils.modernistBold,
-                              fontSize: 2.5.t,
+                              fontSize: 3.t,
                             ),
                           ),
                         ],

@@ -14,6 +14,7 @@ import 'package:sauftrag/widgets/my_curved_nav_bar.dart';
 import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/widgets/my_side_menu.dart';
+import 'package:sauftrag/widgets/zoom_drawer.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
 import 'package:stacked/stacked.dart';
 

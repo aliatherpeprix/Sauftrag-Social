@@ -18,11 +18,17 @@ class BarAccount extends StatefulWidget {
 }
 
 class _BarAccountState extends State<BarAccount> {
+
+
   DateTime _dateTime = DateTime.now();
   String? openingTimeFrom;
   String? openingTimeTo;
   String? breakTimeFrom;
   String? breakTimeTo;
+  String? weekEndOpeningTimeFrom;
+  String? weekEndOpeningTimeTo;
+  String? weekEndBreakTimeFrom;
+  String? weekEndBreakTimeTo;
 
   @override
   void didChangeDependencies() {
@@ -30,14 +36,20 @@ class _BarAccountState extends State<BarAccount> {
     openingTimeTo = TimeOfDay.now().format(context);
     breakTimeFrom = TimeOfDay.now().format(context);
     breakTimeTo = TimeOfDay.now().format(context);
+
+    weekEndOpeningTimeFrom = TimeOfDay.now().format(context);
+    weekEndOpeningTimeTo = TimeOfDay.now().format(context);
+    weekEndBreakTimeFrom = TimeOfDay.now().format(context);
+    weekEndBreakTimeTo = TimeOfDay.now().format(context);
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
   }
 
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<AuthenticationViewModel>.reactive(
-      //onModelReady: (data) => data.initializeLoginModel(),
+      onModelReady: (data) => data.convert(),
       builder: (context, model, child) {
         return GestureDetector(
           onTap: () {
@@ -53,7 +65,8 @@ class _BarAccountState extends State<BarAccount> {
                   child: Container(
                     padding: EdgeInsets.symmetric(
                         horizontal: Dimensions.horizontalPadding,
-                        vertical: Dimensions.verticalPadding),
+                        //vertical: Dimensions.verticalPadding
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -73,7 +86,7 @@ class _BarAccountState extends State<BarAccount> {
                                 icon: Icon(
                                   Icons.arrow_back_ios,
                                   color: ColorUtils.black,
-                                  size: 4.i,
+                                  size: 4.5.i,
                                 )),
                             SizedBox(width: 2.w),
                             Text(
@@ -268,8 +281,9 @@ class _BarAccountState extends State<BarAccount> {
                                     GestureDetector(
                                       onTap: () {
                                         showTimePicker(
-                                            context: context,
+
                                             initialTime: TimeOfDay.now(),
+                                            context: context,
                                             initialEntryMode:
                                             TimePickerEntryMode.dial,
                                             confirmText: "CONFIRM",
@@ -295,7 +309,8 @@ class _BarAccountState extends State<BarAccount> {
                                           children: [
                                             Expanded(
                                               child: Text(
-                                                openingTimeFrom!,
+                                                // model.startTime!.toString(),
+                                                  openingTimeFrom!,
                                                 style: TextStyle(
                                                   color: ColorUtils.text_dark,
                                                   fontFamily: FontUtils
@@ -904,7 +919,7 @@ class _BarAccountState extends State<BarAccount> {
                                             cancelText: "NOT NOW",
                                             helpText: "BOOKING TIME"
                                         ).then((value){
-                                          openingTimeFrom = value!.format(context);
+                                          weekEndOpeningTimeFrom = value!.format(context);
                                           model.notifyListeners();
                                         });
                                       },
@@ -921,7 +936,7 @@ class _BarAccountState extends State<BarAccount> {
 
                                             Expanded(
                                               child: Text(
-                                                openingTimeFrom!,
+                                                weekEndOpeningTimeFrom!,
                                                 style: TextStyle(
                                                   color: ColorUtils.text_dark,
                                                   fontFamily: FontUtils.modernistRegular,
@@ -975,7 +990,7 @@ class _BarAccountState extends State<BarAccount> {
                                             cancelText: "NOT NOW",
                                             helpText: "BOOKING TIME"
                                         ).then((value){
-                                          openingTimeTo = value!.format(context);
+                                          weekEndOpeningTimeTo = value!.format(context);
                                           model.notifyListeners();
                                         });
                                       },
@@ -992,7 +1007,7 @@ class _BarAccountState extends State<BarAccount> {
 
                                             Expanded(
                                               child: Text(
-                                                openingTimeTo!,
+                                                weekEndOpeningTimeTo!,
                                                 style: TextStyle(
                                                   color: ColorUtils.text_dark,
                                                   fontFamily: FontUtils.modernistRegular,
@@ -1181,7 +1196,7 @@ class _BarAccountState extends State<BarAccount> {
                                             cancelText: "NOT NOW",
                                             helpText: "BOOKING TIME"
                                         ).then((value){
-                                          breakTimeFrom = value!.format(context);
+                                          weekEndBreakTimeFrom = value!.format(context);
                                           model.notifyListeners();
                                         });
                                       },
@@ -1198,7 +1213,7 @@ class _BarAccountState extends State<BarAccount> {
 
                                             Expanded(
                                               child: Text(
-                                                breakTimeFrom!,
+                                                weekEndBreakTimeFrom!,
                                                 style: TextStyle(
                                                   color: ColorUtils.text_dark,
                                                   fontFamily: FontUtils.modernistRegular,
@@ -1252,7 +1267,7 @@ class _BarAccountState extends State<BarAccount> {
                                             cancelText: "NOT NOW",
                                             helpText: "BOOKING TIME"
                                         ).then((value){
-                                          breakTimeTo = value!.format(context);
+                                          weekEndBreakTimeTo = value!.format(context);
                                           model.notifyListeners();
                                         });
                                       },
@@ -1269,7 +1284,7 @@ class _BarAccountState extends State<BarAccount> {
 
                                             Expanded(
                                               child: Text(
-                                                breakTimeTo!,
+                                                weekEndBreakTimeTo!,
                                                 style: TextStyle(
                                                   color: ColorUtils.text_dark,
                                                   fontFamily: FontUtils.modernistRegular,

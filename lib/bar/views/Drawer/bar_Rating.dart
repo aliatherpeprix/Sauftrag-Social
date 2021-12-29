@@ -183,26 +183,26 @@ class _BarRatingState extends State<BarRating> {
                                           fontFamily: FontUtils.modernistBold,
                                           fontSize: 2.5.t),
                                     ),
-                                    GestureDetector(
-                                      onTap: () {},
-                                      child: Container(
-                                        height: 4.5.h,
-                                        decoration: BoxDecoration(
-                                            color: ColorUtils.red_color,
-                                            borderRadius: BorderRadius.circular(18)),
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(horizontal: 30),
-                                          child: Center(
-                                              child: Text(
-                                                "Follow",
-                                                style: TextStyle(
-                                                    color: ColorUtils.white,
-                                                    fontSize: 2.t,
-                                                    fontFamily: FontUtils.modernistBold),
-                                              )),
-                                        ),
-                                      ),
-                                    )
+                                    // GestureDetector(
+                                    //   onTap: () {},
+                                    //   child: Container(
+                                    //     height: 4.5.h,
+                                    //     decoration: BoxDecoration(
+                                    //         color: ColorUtils.red_color,
+                                    //         borderRadius: BorderRadius.circular(18)),
+                                    //     child: Padding(
+                                    //       padding: EdgeInsets.symmetric(horizontal: 30),
+                                    //       child: Center(
+                                    //           child: Text(
+                                    //             "Follow",
+                                    //             style: TextStyle(
+                                    //                 color: ColorUtils.white,
+                                    //                 fontSize: 2.t,
+                                    //                 fontFamily: FontUtils.modernistBold),
+                                    //           )),
+                                    //     ),
+                                    //   ),
+                                    // )
                                   ],
                                 ),
                                 SizedBox(

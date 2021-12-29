@@ -31,6 +31,10 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
   String? openingTimeTo;
   String? breakTimeFrom;
   String? breakTimeTo;
+  String? weekEndOpeningTimeFrom;
+  String? weekEndOpeningTimeTo;
+  String? weekEndBreakTimeFrom;
+  String? weekEndBreakTimeTo;
 
   @override
   void didChangeDependencies() {
@@ -38,6 +42,11 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
     openingTimeTo = TimeOfDay.now().format(context);
     breakTimeFrom = TimeOfDay.now().format(context);
     breakTimeTo = TimeOfDay.now().format(context);
+
+    weekEndOpeningTimeFrom = TimeOfDay.now().format(context);
+    weekEndOpeningTimeTo = TimeOfDay.now().format(context);
+    weekEndBreakTimeFrom = TimeOfDay.now().format(context);
+    weekEndBreakTimeTo = TimeOfDay.now().format(context);
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
   }
@@ -253,7 +262,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                         ///----Bar opening time-----///
                         SizedBox(height: 5.h),
                         Container(
-                          margin: EdgeInsets.symmetric(horizontal: 5.w),
+                          //margin: EdgeInsets.symmetric(horizontal: 5.w),
                           child: Row(
                             children: [
 
@@ -530,7 +539,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
 
                         SizedBox(height: 3.h),
                         Container(
-                          margin: EdgeInsets.symmetric(horizontal: 5.w),
+                         // margin: EdgeInsets.symmetric(horizontal: 5.w),
                           child: Row(
                             children: [
 
@@ -875,7 +884,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                         ///----Bar opening time-----///
                         SizedBox(height: 5.h),
                         Container(
-                          margin: EdgeInsets.symmetric(horizontal: 5.w),
+                          //margin: EdgeInsets.symmetric(horizontal: 5.w),
                           child: Row(
                             children: [
 
@@ -894,7 +903,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                             cancelText: "NOT NOW",
                                             helpText: "BOOKING TIME"
                                         ).then((value){
-                                          openingTimeFrom = value!.format(context);
+                                          weekEndOpeningTimeFrom = value!.format(context);
                                           model.notifyListeners();
                                         });
                                       },
@@ -911,7 +920,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
 
                                             Expanded(
                                               child: Text(
-                                                openingTimeFrom!,
+                                                weekEndOpeningTimeFrom!,
                                                 style: TextStyle(
                                                   color: ColorUtils.text_dark,
                                                   fontFamily: FontUtils.modernistRegular,
@@ -965,7 +974,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                             cancelText: "NOT NOW",
                                             helpText: "BOOKING TIME"
                                         ).then((value){
-                                          openingTimeTo = value!.format(context);
+                                          weekEndOpeningTimeTo = value!.format(context);
                                           model.notifyListeners();
                                         });
                                       },
@@ -982,7 +991,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
 
                                             Expanded(
                                               child: Text(
-                                                openingTimeTo!,
+                                                weekEndOpeningTimeTo!,
                                                 style: TextStyle(
                                                   color: ColorUtils.text_dark,
                                                   fontFamily: FontUtils.modernistRegular,
@@ -1152,7 +1161,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
 
                         SizedBox(height: 3.h),
                         Container(
-                          margin: EdgeInsets.symmetric(horizontal: 5.w),
+                         // margin: EdgeInsets.symmetric(horizontal: 5.w),
                           child: Row(
                             children: [
 
@@ -1171,7 +1180,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                             cancelText: "NOT NOW",
                                             helpText: "BOOKING TIME"
                                         ).then((value){
-                                          breakTimeFrom = value!.format(context);
+                                          weekEndBreakTimeFrom = value!.format(context);
                                           model.notifyListeners();
                                         });
                                       },
@@ -1188,7 +1197,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
 
                                             Expanded(
                                               child: Text(
-                                                breakTimeFrom!,
+                                                weekEndBreakTimeFrom!,
                                                 style: TextStyle(
                                                   color: ColorUtils.text_dark,
                                                   fontFamily: FontUtils.modernistRegular,
@@ -1242,7 +1251,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                             cancelText: "NOT NOW",
                                             helpText: "BOOKING TIME"
                                         ).then((value){
-                                          breakTimeTo = value!.format(context);
+                                          weekEndBreakTimeTo = value!.format(context);
                                           model.notifyListeners();
                                         });
                                       },
@@ -1259,7 +1268,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
 
                                             Expanded(
                                               child: Text(
-                                                breakTimeTo!,
+                                                weekEndBreakTimeTo!,
                                                 style: TextStyle(
                                                   color: ColorUtils.text_dark,
                                                   fontFamily: FontUtils.modernistRegular,

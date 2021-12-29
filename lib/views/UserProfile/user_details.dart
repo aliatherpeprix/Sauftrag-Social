@@ -58,6 +58,7 @@ class _UserDetailsState extends State<UserDetails> {
                                 icon: Icon(
                                   Icons.arrow_back_ios,
                                   color: ColorUtils.black,
+                                  size: 4.5.i,
                                 )),
                             SizedBox(width: 2.w),
                             Text(
@@ -65,7 +66,7 @@ class _UserDetailsState extends State<UserDetails> {
                               style: TextStyle(
                                 color: ColorUtils.black,
                                 fontFamily: FontUtils.modernistBold,
-                                fontSize: 2.5.t,
+                                fontSize: 3.t,
                               ),
                             ),
                           ],

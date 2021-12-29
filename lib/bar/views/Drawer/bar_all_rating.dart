@@ -104,7 +104,8 @@ class _BarAllRatingState extends State<BarAllRating> with TickerProviderStateMix
                 Container(
                   padding: EdgeInsets.symmetric(
                       horizontal: Dimensions.horizontalPadding),
-                  child: Row(
+                  child:
+                  Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       IconButton(
@@ -117,6 +118,7 @@ class _BarAllRatingState extends State<BarAllRating> with TickerProviderStateMix
                           icon: Icon(
                             Icons.arrow_back_ios,
                             color: ColorUtils.black,
+                            size: 4.5.i,
                           )),
                       SizedBox(width: 2.w),
                       Text(
@@ -124,7 +126,7 @@ class _BarAllRatingState extends State<BarAllRating> with TickerProviderStateMix
                         style: TextStyle(
                           color: ColorUtils.black,
                           fontFamily: FontUtils.modernistBold,
-                          fontSize: 2.5.t,
+                          fontSize: 3.t,
                         ),
                       ),
                     ],

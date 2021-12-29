@@ -44,21 +44,32 @@ class _MediaState extends State<Media> {
                         SizedBox(height: Dimensions.topMargin),
 
                         //Add Images
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            BackArrowContainer(),
-                            SizedBox(width: 4.w),
-                            Text(
-                              "Add Images",
-                              style: TextStyle(
-                                color: ColorUtils.black,
-                                fontFamily: FontUtils.modernistBold,
-                                fontSize: 3.t,
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              IconButton(
+                                  onPressed: () {
+                                    model.navigateBack();
+                                  },
+                                  iconSize: 18.0,
+                                  padding: EdgeInsets.zero,
+                                  constraints: BoxConstraints(),
+                                  icon: Icon(
+                                    Icons.arrow_back_ios,
+                                    color: ColorUtils.black,
+                                    size: 4.5.i,
+                                  )),
+                              SizedBox(width: 2.w),
+                              Text(
+                                "Add Images",
+                                style: TextStyle(
+                                  color: ColorUtils.black,
+                                  fontFamily: FontUtils.modernistBold,
+                                  fontSize: 3.t,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
+                            ],
+                          ),
                         SizedBox(height: 3.h),
 
                         Text(

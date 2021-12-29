@@ -58,6 +58,7 @@ class MainViewModel extends BaseViewModel{
   final messageScreenChatController = TextEditingController();
   bool userNewsFeed = false;
 
+
   double lowerValue = 50;
   double upperValue = 180;
   List contactChecked = [
@@ -135,6 +136,8 @@ class MainViewModel extends BaseViewModel{
       return true;
     }
   }
+
+
 
   int msgTypeValue = 1;
   String msgTypeValueStr = "Private";

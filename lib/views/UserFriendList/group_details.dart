@@ -90,19 +90,19 @@ class _GroupDetailsState extends State<GroupDetails> {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          // IconButton(
-                          //     onPressed: () {
-                          //       model.navigateBack();
-                          //     },
-                          //     iconSize: 18.0,
-                          //     padding: EdgeInsets.zero,
-                          //     constraints: BoxConstraints(),
-                          //     icon: Icon(
-                          //       Icons.arrow_back_ios,
-                          //       color: ColorUtils.black,
-                          //     )),
-                          BackArrowContainer(),
-                          SizedBox(width: 4.w),
+                          IconButton(
+                              onPressed: () {
+                                model.navigateBack();
+                              },
+                              iconSize: 18.0,
+                              padding: EdgeInsets.zero,
+                              constraints: BoxConstraints(),
+                              icon: Icon(
+                                Icons.arrow_back_ios,
+                                color: ColorUtils.black,
+                                size: 4.5.i,
+                              )),
+                          SizedBox(width: 2.w),
                           Text(
                             "Group Name",
                             style: TextStyle(

@@ -64,6 +64,7 @@ class _MatchedScreenState extends State<MatchedScreen> {
                                 icon: Icon(
                                   Icons.arrow_back_ios,
                                   color: ColorUtils.black,
+                                  size: 4.5.i,
                                 )),
                             SizedBox(width: 2.w),
                             Text(
@@ -71,7 +72,7 @@ class _MatchedScreenState extends State<MatchedScreen> {
                               style: TextStyle(
                                 color: ColorUtils.black,
                                 fontFamily: FontUtils.modernistBold,
-                                fontSize: 2.5.t,
+                                fontSize: 3.t,
                               ),
                             ),
                           ],
@@ -91,17 +92,30 @@ class _MatchedScreenState extends State<MatchedScreen> {
                                     // crossAxisSpacing: 2,
                                     mainAxisSpacing: 30),
                             itemBuilder: (BuildContext context, int index) {
-                              return Stack(
-                                children: [
-                                  Image.asset(matchedImg[index]['image']),
-                                  PositionedDirectional(
-                                    bottom: 0,
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(horizontal: 6.7.w, vertical: 1.2.h),
-                                        color: ColorUtils.transparent.withOpacity(0.2),
-                                    child: Text(matchedImg[index]['title']),
-                                  ))
-                                ],
+                              return GestureDetector(
+                                onTap: (){
+                                  model.navigateToFollowerList();
+                                },
+                                child: Stack(
+                                  children: [
+                                    Image.asset(matchedImg[index]['image'],),
+                                    PositionedDirectional(
+                                      bottom: 0,
+                                        child: Container(
+                                          width: 34.5.w,
+                                          decoration: BoxDecoration(
+                                            color: Colors.grey.withOpacity(0.7),
+                                            borderRadius: BorderRadius.only(
+                                                bottomRight: Radius.circular(10),
+                                                bottomLeft: Radius.circular(10)),
+
+                                          ),
+                                           padding: EdgeInsets.symmetric( vertical: 1.2.h, horizontal: 2.w),
+
+                                      child: Text(matchedImg[index]['title'], style: TextStyle(color: ColorUtils.white),),
+                                    ))
+                                  ],
+                                ),
                               );
                             },
                           ),

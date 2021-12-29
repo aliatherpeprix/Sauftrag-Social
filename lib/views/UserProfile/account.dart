@@ -58,6 +58,7 @@ class _AccountState extends State<Account> {
                                 icon: Icon(
                                   Icons.arrow_back_ios,
                                   color: ColorUtils.black,
+                                  size: 4.5.i,
                                 )),
                             SizedBox(width: 2.w),
                             Text(
@@ -65,7 +66,7 @@ class _AccountState extends State<Account> {
                               style: TextStyle(
                                 color: ColorUtils.black,
                                 fontFamily: FontUtils.modernistBold,
-                                fontSize: 2.5.t,
+                                fontSize: 3.t,
                               ),
                             ),
                           ],
@@ -171,9 +172,10 @@ class _AccountState extends State<Account> {
                                   borderRadius: BorderRadius.circular(15)),
                               child: Center(
                                   child: SfSlider(
-                                    showLabels: true,
+                                    thumbShape: SfThumbShape(),
+                                    thumbIcon: Center(child: Text(_value.toStringAsFixed(0), style: TextStyle(color: Colors.white, fontSize: 1.3.t),)),
+                                    showLabels: false,
                                       enableTooltip: true,
-
                                       activeColor:  ColorUtils.red_color,
                                       inactiveColor: Color(0xFFFFE4E8),
                                       min: 0.0,

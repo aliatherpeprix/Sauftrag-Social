@@ -49,7 +49,7 @@ class _BarProfileState extends State<BarProfile> {
                             style: TextStyle(
                               color: ColorUtils.black,
                               fontFamily: FontUtils.modernistBold,
-                              fontSize: 2.5.t,
+                              fontSize: 3.t,
                             ),
                           ),
                         ],

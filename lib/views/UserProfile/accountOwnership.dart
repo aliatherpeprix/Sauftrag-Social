@@ -50,7 +50,8 @@ class _OwnerShipState extends State<OwnerShip> {
                   child: Container(
                     padding: EdgeInsets.symmetric(
                         horizontal: Dimensions.horizontalPadding,
-                        vertical: Dimensions.verticalPadding),
+                        //vertical: Dimensions.verticalPadding
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -70,7 +71,7 @@ class _OwnerShipState extends State<OwnerShip> {
                                 icon: Icon(
                                   Icons.arrow_back_ios,
                                   color: ColorUtils.black,
-                                  size: 4.i,
+                                  size: 4.5.i,
                                 )),
                             SizedBox(width: 2.w),
                             Text(
@@ -78,7 +79,7 @@ class _OwnerShipState extends State<OwnerShip> {
                               style: TextStyle(
                                 color: ColorUtils.black,
                                 fontFamily: FontUtils.modernistBold,
-                                fontSize: 2.5.t,
+                                fontSize: 3.t,
                               ),
                             ),
                           ],

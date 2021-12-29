@@ -45,24 +45,24 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   Container(
                     padding: EdgeInsets.symmetric(
                         horizontal: Dimensions.horizontalPadding),
-                    child: Row(
+                    child:  Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        BackArrowContainer(),
-                        // IconButton(
-                        //     onPressed: () {
-                        //       model.navigateBack();
-                        //     },
-                        //
-                        //     padding: EdgeInsets.zero,
-                        //     constraints: BoxConstraints(),
-                        //     icon: Icon(
-                        //       Icons.arrow_back_ios,
-                        //       color: ColorUtils.black,
-                        //     )),
-                        SizedBox(width: 4.w),
+                        IconButton(
+                            onPressed: () {
+                              model.navigateBack();
+                            },
+                            iconSize: 18.0,
+                            padding: EdgeInsets.zero,
+                            constraints: BoxConstraints(),
+                            icon: Icon(
+                              Icons.arrow_back_ios,
+                              color: ColorUtils.black,
+                              size: 4.5.i,
+                            )),
+                        SizedBox(width: 2.w),
                         Text(
-                          "Forgot Password",
+                          "Forget Password",
                           style: TextStyle(
                             color: ColorUtils.black,
                             fontFamily: FontUtils.modernistBold,

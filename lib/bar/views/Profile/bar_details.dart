@@ -39,7 +39,8 @@ class _BarDetailState extends State<BarDetail> {
                   child: Container(
                     padding: EdgeInsets.symmetric(
                         horizontal: Dimensions.horizontalPadding,
-                        vertical: Dimensions.verticalPadding),
+                    //    vertical: Dimensions.verticalPadding
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -59,6 +60,7 @@ class _BarDetailState extends State<BarDetail> {
                                 icon: Icon(
                                   Icons.arrow_back_ios,
                                   color: ColorUtils.black,
+                                  size: 4.5.i,
                                 )),
                             SizedBox(width: 2.w),
                             Text(
@@ -66,7 +68,7 @@ class _BarDetailState extends State<BarDetail> {
                               style: TextStyle(
                                 color: ColorUtils.black,
                                 fontFamily: FontUtils.modernistBold,
-                                fontSize: 2.5.t,
+                                fontSize: 3.t,
                               ),
                             ),
                           ],
@@ -410,16 +412,16 @@ class _BarDetailState extends State<BarDetail> {
                                   decoration: BoxDecoration(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(20)),
-                                    image: model.imageFiles[0].path.isEmpty
+                                    image: model.imageFiles[5].path.isEmpty
                                         ? null
                                         : DecorationImage(
                                             image:
-                                                FileImage(model.imageFiles[0]),
+                                                FileImage(model.imageFiles[5]),
                                             fit: BoxFit.cover),
                                   ),
                                   child: Stack(
                                     children: [
-                                      model.imageFiles[0].path.isEmpty
+                                      model.imageFiles[5].path.isEmpty
                                           ? InkWell(
                                               onTap: () {
                                                 model.getImage(0);
@@ -441,13 +443,13 @@ class _BarDetailState extends State<BarDetail> {
                                                     ),
                                                   )))
                                           : Container(),
-                                      model.imageFiles[0].path.isEmpty
+                                      model.imageFiles[5].path.isEmpty
                                           ? Container()
                                           : Align(
                                               alignment: Alignment.bottomRight,
                                               child: IconButton(
                                                 onPressed: () {
-                                                  model.imageFiles.removeAt(0);
+                                                  model.imageFiles.removeAt(5);
                                                   model.notifyListeners();
                                                 },
                                                 icon: SvgPicture.asset(

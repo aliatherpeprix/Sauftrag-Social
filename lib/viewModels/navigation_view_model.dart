@@ -56,6 +56,7 @@ import 'package:sauftrag/views/UserProfile/legalTerm.dart';
 import 'package:sauftrag/views/UserProfile/notifications.dart';
 import 'package:sauftrag/views/UserProfile/user_details.dart';
 import 'package:sauftrag/widgets/bar_auth_viewmodel.dart';
+import 'package:sauftrag/widgets/zoom_drawer.dart';
 import 'package:stacked/stacked.dart';
 
 class NavigationViewModel extends BaseViewModel{
@@ -127,7 +128,7 @@ class NavigationViewModel extends BaseViewModel{
   }
 
   void navigateToBarHomeScreen(){
-    navigationKey.currentState!.push(PageTransition(child: BarNewsFeed(), type: PageTransitionType.rightToLeftWithFade));
+    navigationKey.currentState!.push(PageTransition(child: ZoomDrawerHome(), type: PageTransitionType.rightToLeftWithFade));
   }
 
   void navigateToHomeScreen(int index){

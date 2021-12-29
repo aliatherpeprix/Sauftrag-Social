@@ -9,8 +9,10 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/bar/widgets/my_side_menu.dart';
+import 'package:sauftrag/main.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/extensions.dart';
@@ -20,21 +22,23 @@ import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/widgets/drink_status_dialog_box.dart';
 import 'package:sauftrag/widgets/message_dialog.dart';
+import 'package:sauftrag/widgets/zoom_drawer.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
 import 'package:stacked/stacked.dart';
 import 'package:sauftrag/viewModels/navigation_view_model.dart';
 import 'dart:math' as math;
 
 class BarNewsFeed extends StatefulWidget {
-  const BarNewsFeed({Key? key}) : super(key: key);
+  const BarNewsFeed( {Key? key,}) : super(key: key);
 
   @override
   _BarNewsFeedState createState() => _BarNewsFeedState();
 }
 
 class _BarNewsFeedState extends State<BarNewsFeed> {
-  static const _actionTitles = ['Create Post', 'Upload Photo', 'Upload Video'];
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  static const _actionTitles = ['Create Post', 'Upload Photo', 'Upload Video'];
   List newsEvents = [
     {
       'image': ImageUtils.person_1,
@@ -75,6 +79,7 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
   ];
 
 
+
   void _showAction(BuildContext context, int index) {
     showDialog<void>(
       context: context,
@@ -96,305 +101,316 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
   Widget build(BuildContext context) {
     double initialBottom = 15.0;
     double backCardWidth = 0.0;
+var drawerController;
 
     return ViewModelBuilder<MainViewModel>.reactive(
-      // onModelReady: (data) {
-      //   data.buttonController = AnimationController(duration: Duration(milliseconds: 1000), vsync: this);
-      //   data.initSwipe();
-      // },
+      onModelReady: (data) {
+        // data.buttonController = AnimationController(duration: Duration(milliseconds: 1000), vsync: this);
+        // data.initSwipe();
+      },
       builder: (context, model, child) {
         return SafeArea(
           bottom: false,
           top: false,
           child: SideMenu(
             key: model.sideMenuKey,
+            closeIcon: Icon(Icons.remove,color: Colors.transparent,),
             type: SideMenuType.shrinkNSlide,
             background: ColorUtils.text_red,
             radius: BorderRadius.circular(30),
             menu: MySideMenu(),
-            child: Scaffold(
-                backgroundColor: ColorUtils.white,
-                floatingActionButton: ExpandableFab(
-                  distance: 120.0,
-                  children: [
-                    Column(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            model.navigateToCreateEventScreen();
-                          },
-                          child: Container(
-                              decoration: BoxDecoration(
-
-                                color: ColorUtils.text_red,
-                                borderRadius: BorderRadius.all(Radius.circular(25)),
-                                //border: Border.all(color: ColorUtils.red_color),
-                              ),
-                              height: 5.4.h,
-                              width: 11.5.w,
-                              child: Padding(
-                                padding: const EdgeInsets.all(11.0),
-                                child: SvgPicture.asset(
-                                  ImageUtils.calender,
-                                ),
-                              )),
-                        ),
-                        SizedBox(
-                          height: 2.h,
-                        ),
-                        GestureDetector(
-                          onTap: (){
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context){
-                                  return MessageDialog(title: "Add New Location",
-                                      btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
-                                }
-                            );
-                          },
-                          child: Container(
-                              decoration: BoxDecoration(
-
-                                color: ColorUtils.text_red,
-                                borderRadius: BorderRadius.all(Radius.circular(25)),
-                                //border: Border.all(color: ColorUtils.red_color),
-                              ),
-                              height: 5.4.h,
-                              width: 11.5.w,
-                              child: Padding(
-                                padding: const EdgeInsets.all(11.0),
-                                child: SvgPicture.asset(
-                                  ImageUtils.pen2,
-                                ),
-                              )),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                floatingActionButtonLocation:
-                    FloatingActionButtonLocation.endDocked,
-                body: Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            child: GestureDetector(
+              onTap: (){
+                final _state = model.sideMenuKey.currentState;
+                if (_state!.isOpened)
+                  _state.closeSideMenu(); // close side menu
+              },
+              child: Scaffold(
+                  key: _scaffoldKey,
+                  backgroundColor: ColorUtils.white,
+                  floatingActionButton: ExpandableFab(
+                    distance: 120.0,
                     children: [
-                      SizedBox(height: Dimensions.homeTopMargin),
-
-                      //Top bar
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 1.h),
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: Dimensions.horizontalPadding),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              ElevatedButton(
-                                onPressed: () {
-                                  final _state = model.sideMenuKey.currentState;
-                                  if (_state!.isOpened)
-                                    _state.closeSideMenu(); // close side menu
-                                  else
-                                    _state.openSideMenu();
-                                },
-                                child: SvgPicture.asset(ImageUtils.menuIcon),
-                                style: ElevatedButton.styleFrom(
-                                  primary: ColorUtils.white,
-                                  onPrimary: ColorUtils.white,
-                                  padding: EdgeInsets.symmetric(
-                                      vertical:
-                                          Dimensions.containerVerticalPadding),
-                                  elevation: 0,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          Dimensions.roundCorner),
-                                      side: BorderSide(
-                                          color: ColorUtils.divider, width: 1)),
-                                  textStyle: TextStyle(
-                                    color: ColorUtils.white,
-                                    fontFamily: FontUtils.modernistBold,
-                                    fontSize: 1.8.t,
-                                    //height: 0
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                "News Feed",
-                                style: TextStyle(
-                                  color: ColorUtils.black,
-                                  fontFamily: FontUtils.modernistBold,
-                                  fontSize: 2.5.t,
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: (){
-                                  model.navigateToBarProfile2();
-                                },
-                                child: Container(
-                                  child: Image.asset(ImageUtils.profileImg, height: 17.i,),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      //SizedBox(height: 3.h),
-
-                      SizedBox(
-                        height: SizeConfig.heightMultiplier * 2,
-                      ),
-                      Expanded(
-                        child: ListView.separated(
-                          padding: EdgeInsets.zero,
-                          scrollDirection: Axis.vertical,
-                          physics: const BouncingScrollPhysics(),
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 6.w,
-                              ),
-                              child: Container(
+                      Column(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              model.navigateToCreateEventScreen();
+                            },
+                            child: Container(
                                 decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: ColorUtils.black.withOpacity(0.1),
-                                      spreadRadius: 0,
-                                      blurRadius: 10,
-                                      offset: Offset(0, 5), // changes position of shadow
-                                    ),
-                                  ],
-                                  color: Colors.white,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(18)),
+
+                                  color: ColorUtils.text_red,
+                                  borderRadius: BorderRadius.all(Radius.circular(25)),
                                   //border: Border.all(color: ColorUtils.red_color),
                                 ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 2.5.w, vertical: 1.h),
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                child: Image.asset(
-                                                  newsEvents[index]["image"],
-                                                  width: 10.i,
-                                                  height: 10.i,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: 3.w,
-                                              ),
-                                              Text(
-                                                newsEvents[index]["barOwnerName"],
-                                                style: TextStyle(
-                                                    fontFamily:
-                                                        FontUtils.modernistBold,
-                                                    fontSize: 2.2.t,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: ColorUtils.black),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 1.h,
-                                          ),
-                                          Text(
-                                            newsEvents[index]["para"],
-                                            style: TextStyle(
-                                                fontFamily:
-                                                    FontUtils.modernistRegular,
-                                                fontSize: 1.8.t,
-                                                color: ColorUtils.black),
-                                          ),
-                                          SizedBox(
-                                            height: 1.h,
-                                          ),
-                                          if (newsEvents[index]["imgPre"] == true)
-                                            Container(
-                                                child: Image.asset(
-                                              newsEvents[index]["image2"],
-                                            )),
-                                          Divider(),
-                                          Row(
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    newsEvents[index]
-                                                        ["commentIon"],
-                                                    color: ColorUtils.icon_color,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 1.5.w,
-                                                  ),
-                                                  Text(
-                                                    newsEvents[index]["comment"],
-                                                    style: TextStyle(
-                                                        fontFamily: FontUtils
-                                                            .modernistRegular,
-                                                        fontSize: 1.5.t,
-                                                        color: ColorUtils
-                                                            .icon_color),
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(width: 7.w),
-                                              Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    newsEvents[index]
-                                                        ["likesIcon"],
-                                                    color: ColorUtils.icon_color,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 1.5.w,
-                                                  ),
-                                                  Text(
-                                                    newsEvents[index]["likes"],
-                                                    style: TextStyle(
-                                                        fontFamily: FontUtils
-                                                            .modernistRegular,
-                                                        fontSize: 1.5.t,
-                                                        color: ColorUtils
-                                                            .icon_color),
-                                                  ),
-                                                ],
-                                              )
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                          separatorBuilder: (context, index) {
-                            return SizedBox(
-                              height: SizeConfig.heightMultiplier * 2.5,
-                            );
-                          },
-                          itemCount: newsEvents.length,
-                        ),
-                      ),
+                                height: 5.4.h,
+                                width: 11.5.w,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(11.0),
+                                  child: SvgPicture.asset(
+                                    ImageUtils.calender,
+                                  ),
+                                )),
+                          ),
+                          SizedBox(
+                            height: 2.h,
+                          ),
+                          GestureDetector(
+                            onTap: (){
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context){
+                                    return MessageDialog(title: "Add New Location",
+                                        btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+                                  }
+                              );
+                            },
+                            child: Container(
+                                decoration: BoxDecoration(
 
-                      SizedBox(height: 2.h),
+                                  color: ColorUtils.text_red,
+                                  borderRadius: BorderRadius.all(Radius.circular(25)),
+                                  //border: Border.all(color: ColorUtils.red_color),
+                                ),
+                                height: 5.4.h,
+                                width: 11.5.w,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(11.0),
+                                  child: SvgPicture.asset(
+                                    ImageUtils.pen2,
+                                  ),
+                                )),
+                          ),
+                        ],
+                      )
                     ],
                   ),
-                )
+                  floatingActionButtonLocation:
+                  FloatingActionButtonLocation.endDocked,
+                  body: Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: Dimensions.homeTopMargin),
+
+                        //Top bar
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 1.h),
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: Dimensions.horizontalPadding),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: ()
+                                  {
+                                    final _state = model.sideMenuKey.currentState;
+                                    if (_state!.isOpened)
+                                      _state.closeSideMenu(); // close side menu
+                                    else
+                                       _state.openSideMenu();
+                                  },
+                                  child: SvgPicture.asset(ImageUtils.menuIcon),
+                                  style: ElevatedButton.styleFrom(
+                                    primary: ColorUtils.white,
+                                    onPrimary: ColorUtils.white,
+                                    padding: EdgeInsets.symmetric(
+                                        vertical:
+                                        Dimensions.containerVerticalPadding),
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            Dimensions.roundCorner),
+                                        side: BorderSide(
+                                            color: ColorUtils.divider, width: 1)),
+                                    textStyle: TextStyle(
+                                      color: ColorUtils.white,
+                                      fontFamily: FontUtils.modernistBold,
+                                      fontSize: 1.8.t,
+                                      //height: 0
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  "News Feed",
+                                  style: TextStyle(
+                                    color: ColorUtils.black,
+                                    fontFamily: FontUtils.modernistBold,
+                                    fontSize: 3.t,
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: (){
+                                    model.navigateToBarProfile2();
+                                  },
+                                  child: Container(
+                                    child: Image.asset(ImageUtils.profileImg, height: 17.i,),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        //SizedBox(height: 3.h),
+
+                        SizedBox(
+                          height: SizeConfig.heightMultiplier * 2,
+                        ),
+                        Expanded(
+                          child: ListView.separated(
+                            padding: EdgeInsets.zero,
+                            scrollDirection: Axis.vertical,
+                            physics: const BouncingScrollPhysics(),
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 6.w,
+                                ),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: ColorUtils.black.withOpacity(0.1),
+                                        spreadRadius: 0,
+                                        blurRadius: 10,
+                                        offset: Offset(0, 5), // changes position of shadow
+                                      ),
+                                    ],
+                                    color: Colors.white,
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(18)),
+                                    //border: Border.all(color: ColorUtils.red_color),
+                                  ),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 2.5.w, vertical: 1.h),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                              children: [
+                                                ClipRRect(
+                                                  borderRadius:
+                                                  BorderRadius.circular(10),
+                                                  child: Image.asset(
+                                                    newsEvents[index]["image"],
+                                                    width: 10.i,
+                                                    height: 10.i,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 3.w,
+                                                ),
+                                                Text(
+                                                  newsEvents[index]["barOwnerName"],
+                                                  style: TextStyle(
+                                                      fontFamily:
+                                                      FontUtils.modernistBold,
+                                                      fontSize: 2.2.t,
+                                                      fontWeight: FontWeight.bold,
+                                                      color: ColorUtils.black),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 1.h,
+                                            ),
+                                            Text(
+                                              newsEvents[index]["para"],
+                                              style: TextStyle(
+                                                  fontFamily:
+                                                  FontUtils.modernistRegular,
+                                                  fontSize: 1.8.t,
+                                                  color: ColorUtils.black),
+                                            ),
+                                            SizedBox(
+                                              height: 1.h,
+                                            ),
+                                            if (newsEvents[index]["imgPre"] == true)
+                                              Container(
+                                                  child: Image.asset(
+                                                    newsEvents[index]["image2"],
+                                                  )),
+                                            Divider(),
+                                            Row(
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                      newsEvents[index]
+                                                      ["commentIon"],
+                                                      color: ColorUtils.icon_color,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 1.5.w,
+                                                    ),
+                                                    Text(
+                                                      newsEvents[index]["comment"],
+                                                      style: TextStyle(
+                                                          fontFamily: FontUtils
+                                                              .modernistRegular,
+                                                          fontSize: 1.5.t,
+                                                          color: ColorUtils
+                                                              .icon_color),
+                                                    ),
+                                                  ],
+                                                ),
+                                                SizedBox(width: 7.w),
+                                                Row(
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                      newsEvents[index]
+                                                      ["likesIcon"],
+                                                      color: ColorUtils.icon_color,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 1.5.w,
+                                                    ),
+                                                    Text(
+                                                      newsEvents[index]["likes"],
+                                                      style: TextStyle(
+                                                          fontFamily: FontUtils
+                                                              .modernistRegular,
+                                                          fontSize: 1.5.t,
+                                                          color: ColorUtils
+                                                              .icon_color),
+                                                    ),
+                                                  ],
+                                                )
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                            separatorBuilder: (context, index) {
+                              return SizedBox(
+                                height: SizeConfig.heightMultiplier * 2.5,
+                              );
+                            },
+                            itemCount: newsEvents.length,
+                          ),
+                        ),
+
+                        SizedBox(height: 2.h),
+                      ],
+                    ),
+                  )
+              ),
             ),
           ),
         );

@@ -46,28 +46,8 @@ class _MessageDialogState extends State<MessageDialog> {
             backgroundColor: Colors.white,
             child: Stack(
               children: [
-
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-
-                    IconButton(
-                      onPressed: (){
-                        model.navigateBack();
-
-                      },
-                      iconSize: 15.0,
-                      //padding: EdgeInsets.all(20),
-                      //constraints: BoxConstraints(),
-                      icon: SvgPicture.asset(ImageUtils.cancelIcon),
-                    ),
-
-                  ],
-                ),
-
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding, ),
+                  padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding,vertical: 1.7.h ),
                   child: SingleChildScrollView(
                     physics: BouncingScrollPhysics(),
                     child: Column(
@@ -75,107 +55,115 @@ class _MessageDialogState extends State<MessageDialog> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            IconButton(
+                              onPressed: (){
+                                model.navigateBack();
+
+                              },
+                              // iconSize: 15.0,
+                              //padding: EdgeInsets.all(20),
+                              //constraints: BoxConstraints(),
+                              icon: SvgPicture.asset(ImageUtils.cancelIcon),
+                            ),
+                          ],
+                        ),
                         Container(
-                          padding: EdgeInsets.only(top: Dimensions.homeTopMargin),
+                          //padding: EdgeInsets.only(top: Dimensions.homeTopMargin),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            //crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
+                              Image.asset(ImageUtils.johnImg,
+                                width: 13.i,
+                                height: 13.i,
+                              ),
+                              SizedBox(width: 2.w,),
+                              Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Image.asset(ImageUtils.johnImg,
-                                    width: 13.i,
-                                    height: 13.i,
+                                  Text("John Milton",
+                                    style: TextStyle(
+                                      fontFamily: FontUtils.modernistBold,
+                                      fontSize: 1.9.t,
+                                      color: ColorUtils.text_dark,
+                                    ),
                                   ),
-                                  SizedBox(width: 2.w,),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text("John Milton",
-                                        style: TextStyle(
-                                          fontFamily: FontUtils.modernistBold,
-                                          fontSize: 1.9.t,
-                                          color: ColorUtils.text_dark,
-                                        ),
-                                      ),
-                                      SizedBox(height: 0.5.h,),
-                                      Container(
-                                        height: 3.h,
-                                        width: 25.w,
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 2.w),
-                                        decoration: BoxDecoration(
-                                            color: ColorUtils.white,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(Dimensions.roundCorner)),
-                                            border: Border.all(color: ColorUtils.red_color)
-                                        ),
-                                          child: Row(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          children: [
-                                            SvgPicture.asset(ImageUtils.privateIcon, height: 1.6.h,),
-                                            SizedBox(width: 1.5.w,),
-                                            Expanded(
-                                                child: DropdownButton<String>(
-                                                  value: model.msgTypeValueStr,
-                                                  items: model.msgTypeList
-                                                      .asMap()
-                                                      .values
-                                                      .map((String value) {
-                                                    return DropdownMenuItem<String>(
-                                                      value: value,
-                                                      child: Text(
-                                                        value,
-                                                        style: TextStyle(
-                                                          fontSize: 1.6.t,
-                                                          fontFamily: FontUtils
-                                                              .modernistRegular,
-                                                          color: ColorUtils.black,
-                                                          //height: 1.8
-                                                        ),
-                                                      ),
-                                                    );
-                                                  }).toList(),
-                                                  onChanged: (data) {
-                                                    setState(() {
-                                                      model.msgTypeValueStr =
-                                                      data as String;
-                                                      model.msgTypeValue =
-                                                      model.msgTypeMap[model
-                                                          .msgTypeValueStr] as int;
-                                                    });
-                                                  },
-                                                  hint: Text(
-                                                    "Select an option",
+                                  SizedBox(height: 0.5.h,),
+                                  Container(
+                                    height: 3.h,
+                                    width: 25.w,
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 2.w),
+                                    decoration: BoxDecoration(
+                                        color: ColorUtils.white,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(Dimensions.roundCorner)),
+                                        border: Border.all(color: ColorUtils.red_color)
+                                    ),
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        SvgPicture.asset(ImageUtils.privateIcon, height: 1.6.h,),
+                                        SizedBox(width: 1.5.w,),
+                                        Expanded(
+                                            child: DropdownButton<String>(
+                                              value: model.msgTypeValueStr,
+                                              items: model.msgTypeList
+                                                  .asMap()
+                                                  .values
+                                                  .map((String value) {
+                                                return DropdownMenuItem<String>(
+                                                  value: value,
+                                                  child: Text(
+                                                    value,
                                                     style: TextStyle(
-                                                      fontSize: 1.8.t,
-                                                      fontFamily: FontUtils.modernistRegular,
-                                                      color: ColorUtils.red_color,
+                                                      fontSize: 1.6.t,
+                                                      fontFamily: FontUtils
+                                                          .modernistRegular,
+                                                      color: ColorUtils.black,
+                                                      //height: 1.8
                                                     ),
                                                   ),
-                                                  isExpanded: true,
-                                                  underline: Container(
-                                                  ),
-                                                  icon: Align(
-                                                      alignment: Alignment.centerRight,
-                                                      child: Icon(
-                                                        Icons.keyboard_arrow_down_rounded,
-                                                        color: ColorUtils.black,
-                                                        size: 4.2.i,
-                                                      )
-                                                  ),
-                                                )
-                                            ),
-                                          ],
+                                                );
+                                              }).toList(),
+                                              onChanged: (data) {
+                                                setState(() {
+                                                  model.msgTypeValueStr =
+                                                  data as String;
+                                                  model.msgTypeValue =
+                                                  model.msgTypeMap[model
+                                                      .msgTypeValueStr] as int;
+                                                });
+                                              },
+                                              hint: Text(
+                                                "Select an option",
+                                                style: TextStyle(
+                                                  fontSize: 1.8.t,
+                                                  fontFamily: FontUtils.modernistRegular,
+                                                  color: ColorUtils.red_color,
+                                                ),
+                                              ),
+                                              isExpanded: true,
+                                              underline: Container(
+                                              ),
+                                              icon: Align(
+                                                  alignment: Alignment.centerRight,
+                                                  child: Icon(
+                                                    Icons.keyboard_arrow_down_rounded,
+                                                    color: ColorUtils.black,
+                                                    size: 4.2.i,
+                                                  )
+                                              ),
+                                            )
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
-
                             ],
                           ),
                         ),
@@ -653,9 +641,6 @@ class _MessageDialogState extends State<MessageDialog> {
                             ),
                           ),
                         ),
-                        SizedBox(
-                          height: 2.5.h,
-                        )
 
 
 

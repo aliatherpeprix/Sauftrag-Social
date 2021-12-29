@@ -247,8 +247,19 @@ class _GroupScreenState extends State<GroupScreen> {
                           children: [
                             Row(
                               children: [
-                                BackArrowContainer(),
-                                SizedBox(width: 4.w,),
+                                IconButton(
+                                    onPressed: () {
+                                      model.navigateBack();
+                                    },
+                                    iconSize: 18.0,
+                                    padding: EdgeInsets.zero,
+                                    constraints: BoxConstraints(),
+                                    icon: Icon(
+                                      Icons.arrow_back_ios,
+                                      color: ColorUtils.black,
+                                      size: 4.5.i,
+                                    )),
+                                SizedBox(width: 2.5.w,),
                                 Row(
                                   children: [
                                     Stack(

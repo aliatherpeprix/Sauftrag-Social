@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sauftrag/bar/views/Home/bar_news_feed.dart';
 
 import 'package:sauftrag/utils/screen_utils.dart';
@@ -7,6 +8,8 @@ import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/navigation_view_model.dart';
 import 'package:sauftrag/views/Auth/check_email.dart';
 import 'package:sauftrag/views/Auth/favorite.dart';
+import 'package:sauftrag/views/Auth/forget_password.dart';
+import 'package:sauftrag/views/Auth/login.dart';
 import 'package:sauftrag/views/Auth/media.dart';
 import 'package:sauftrag/views/Auth/resent_password.dart';
 import 'package:sauftrag/views/Auth/signup.dart';
@@ -19,9 +22,12 @@ import 'package:sauftrag/views/Home/profile.dart';
 import 'package:sauftrag/views/Home/swipe.dart';
 import 'package:sauftrag/views/MapSearch/map_screen.dart';
 import 'package:sauftrag/views/MapSearch/search.dart';
+import 'package:sauftrag/views/NewsFeed/all_event_list.dart';
 import 'package:sauftrag/views/NewsFeed/event_detail.dart';
 import 'package:sauftrag/views/NewsFeed/news_feed.dart';
 import 'package:sauftrag/views/NewsFeed/upcoming_event_list.dart';
+import 'package:sauftrag/views/UserFriendList/chat_input.dart';
+import 'package:sauftrag/views/UserFriendList/chat_item_widget.dart';
 import 'package:sauftrag/views/UserFriendList/create_group.dart';
 import 'package:sauftrag/views/UserFriendList/friend_list.dart';
 import 'package:sauftrag/views/UserFriendList/group_details.dart';
@@ -66,14 +72,18 @@ import 'bar/views/Home/barCode2.dart';
 import 'bar/widgets/bar_QR_scanner.dart';
 import 'bar/widgets/my_side_menu.dart';
 import 'views/NewsFeed/events.dart';
+import 'widgets/zoom_drawer.dart';
 
 NavigationViewModel navigationViewModel = NavigationViewModel();
 void main() async {
+
+ // Get.put<MyDrawerController>(MyDrawerController());
   WidgetsFlutterBinding.ensureInitialized();
   //SharedPreferences prefs = await SharedPreferences.getInstance();
   //var userId = prefs.getInt("user_id");
   await configure();
   runApp(MaterialApp(
+
     navigatorKey: navigationViewModel.navigationKey,
     debugShowCheckedModeBanner: false,
     home: MyApp(),
@@ -101,7 +111,7 @@ class _MyAppState extends State<MyApp> {
             SizeConfig().init(constraints, orientation);
             //var prefService = locator<PrefrencesViewModel>();
             //return MainView(index: 2);
-            return ResentPassword();
+            return Splash();
           },
         );
       },

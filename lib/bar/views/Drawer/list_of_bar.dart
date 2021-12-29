@@ -50,6 +50,7 @@ class _ListOfBarState extends State<ListOfBar> {
                           icon: Icon(
                             Icons.arrow_back_ios,
                             color: ColorUtils.black,
+                            size: 4.5.i,
                           )),
                       SizedBox(width: 2.w),
                       Text(
@@ -57,7 +58,7 @@ class _ListOfBarState extends State<ListOfBar> {
                         style: TextStyle(
                           color: ColorUtils.black,
                           fontFamily: FontUtils.modernistBold,
-                          fontSize: 2.5.t,
+                          fontSize: 3.t,
                         ),
                       ),
                     ],
