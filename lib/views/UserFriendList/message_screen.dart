@@ -173,7 +173,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                             SizedBox(width: 3.w,),
                                             ExpandTapWidget(
                                               onTap: () {
-                                                model.getImage();
+                                                //model.getImage();
                                                 setState(() {
                                                 });
                                               },

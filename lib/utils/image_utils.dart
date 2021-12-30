@@ -223,7 +223,4 @@ class ImageUtils {
 
   static String saufTragLogoGif = "assets/gifs/logo.gif";
 
-
-
-
 }

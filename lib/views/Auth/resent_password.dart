@@ -112,7 +112,7 @@ class _ResentPasswordState extends State<ResentPassword> {
                                     child: TextField(
                                       obscureText: !model.resetNewPasswordVisible,
                                       focusNode: model.resetNewPasswordFocus,
-                                      controller: model.resetNewPasswordController,
+                                      controller: model.newPasswordController,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.next,
                                       style: TextStyle(
@@ -189,7 +189,7 @@ class _ResentPasswordState extends State<ResentPassword> {
                                     child: TextField(
                                       obscureText: !model.resetConfirmPasswordVisible,
                                       focusNode: model.resetConfirmPasswordFocus,
-                                      controller: model.resetConfirmPasswordController,
+                                      controller: model.confirmNewPasswordController,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.next,
                                       style: TextStyle(

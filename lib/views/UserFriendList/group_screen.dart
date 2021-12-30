@@ -165,7 +165,7 @@ class _GroupScreenState extends State<GroupScreen> {
                                             SizedBox(width: 3.w,),
                                             ExpandTapWidget(
                                               onTap: () {
-                                                model.getImage();
+                                               // model.getImage();
                                                 setState(() {
                                                 });
                                               },

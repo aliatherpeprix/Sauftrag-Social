@@ -483,7 +483,7 @@ class _BarprofileState extends State<Barprofile> {
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
-                                      RatingBar.builder(
+                                      RatingBar.builder(ignoreGestures:  true,
                                       initialRating: 4,
                                       minRating: 1,
                                       direction: Axis.horizontal,
