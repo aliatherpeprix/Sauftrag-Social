@@ -9,6 +9,7 @@ import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
+import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:stacked/stacked.dart';
 
 class SignUp extends StatefulWidget {
@@ -21,7 +22,7 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<AuthenticationViewModel>.reactive(
+    return ViewModelBuilder<RegistrationViewModel>.reactive(
       //onModelReady: (data) => data.initializeLoginModel(),
       builder: (context, model, child) {
         return GestureDetector(
@@ -68,7 +69,7 @@ class _SignUpState extends State<SignUp> {
                             //User
                             ElevatedButton(
                               onPressed: () {
-                                model.selectRole(Constants.user);
+                                  model.selectRole(Constants.user);
                               },
                               child: const Text("User"),
                               style: ElevatedButton.styleFrom(
@@ -710,10 +711,7 @@ class _SignUpState extends State<SignUp> {
                                               margin: EdgeInsets.only(
                                                   left: 2.5.w, right: 4.w),
                                               child: Text(
-                                                model.selectedDOB == null
-                                                    ? "Date of Birth"
-                                                    : DateFormat('dd/MM/yyyy')
-                                                    .format(model.selectedDOB),
+                                                model.signUpDOBController.text,
                                                 style: model.selectedDOB == null
                                                     ? TextStyle(
                                                     color: model.signUpDOBFocus
@@ -1013,7 +1011,8 @@ class _SignUpState extends State<SignUp> {
                                 "Login",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  color: ColorUtils.text_red,
+                                  color: ColorUtils.
+                                  text_red,
                                   fontFamily: FontUtils.modernistBold,
                                   fontSize: 1.8.t,
                                 ),
@@ -1030,7 +1029,7 @@ class _SignUpState extends State<SignUp> {
           ),
         );
       },
-      viewModelBuilder: () => locator<AuthenticationViewModel>(),
+      viewModelBuilder: () => locator<RegistrationViewModel>(),
       disposeViewModel: false,
     );
   }

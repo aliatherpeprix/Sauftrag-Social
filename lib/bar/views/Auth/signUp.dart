@@ -11,6 +11,7 @@ import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
+import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:stacked/stacked.dart';
 
 class SignUpBar extends StatefulWidget {
@@ -26,7 +27,7 @@ class _SignUpBarState extends State<SignUpBar> {
   @override
   Widget build(BuildContext context) {
 
-    return ViewModelBuilder<AuthenticationViewModel>.reactive(
+    return ViewModelBuilder<RegistrationViewModel>.reactive(
       //onModelReady: (data) => data.initializeLoginModel(),
       builder: (context, model, child) {
         return GestureDetector(
@@ -241,6 +242,70 @@ class _SignUpBarState extends State<SignUpBar> {
                               color: ColorUtils.white,
                               child: Text(
                                 "Address",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: ColorUtils.text_grey,
+                                    fontFamily: FontUtils.modernistRegular,
+                                    fontSize: 1.5.t,
+                                    height: .4
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 3.h),
+
+                        //Email
+                        Stack(
+                          children: [
+
+                            Container(
+                              height: 7.h,
+                              padding: EdgeInsets.symmetric(vertical: Dimensions.containerVerticalPadding, horizontal: Dimensions.containerHorizontalPadding),
+                              decoration: BoxDecoration(
+                                  color: ColorUtils.white,
+                                  borderRadius: BorderRadius.all(Radius.circular(Dimensions.roundCorner)),
+                                  border: Border.all(color: ColorUtils.divider)
+                              ),
+                              child: Row(
+                                children: [
+
+                                  SvgPicture.asset(ImageUtils.emailIcon),
+
+                                  SizedBox(width: 4.w),
+
+                                  Expanded(
+                                    child: TextField(
+                                      focusNode: model.signUpBarEmailFocus,
+                                      controller: model.signUpBarEmailController,
+                                      //obscureText: !model.signupEmailVisible,
+                                      keyboardType: TextInputType.text,
+                                      textInputAction: TextInputAction.next,
+                                      style: TextStyle(
+                                        color: ColorUtils.red_color,
+                                        fontFamily: FontUtils.modernistRegular,
+                                        fontSize: 1.9.t,
+                                      ),
+                                      decoration: const InputDecoration(
+                                        border: InputBorder.none,
+                                        isDense:true,
+                                        contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                                      ),
+                                    ),
+                                  ),
+
+
+
+                                ],
+                              ),
+                            ),
+
+                            Container(
+                              margin: EdgeInsets.only(left: 5.w),
+                              padding: EdgeInsets.symmetric(horizontal: 1.w),
+                              color: ColorUtils.white,
+                              child: Text(
+                                "Email",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: ColorUtils.text_grey,
@@ -484,7 +549,7 @@ class _SignUpBarState extends State<SignUpBar> {
           ),
         );
       },
-      viewModelBuilder: () => locator<AuthenticationViewModel>(),
+      viewModelBuilder: () => locator<RegistrationViewModel>(),
       disposeViewModel: false,
     );
   }

@@ -10,6 +10,7 @@ import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
+import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:stacked/stacked.dart';
 
 class Login extends StatefulWidget {
@@ -22,7 +23,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<AuthenticationViewModel>.reactive(
+    return ViewModelBuilder<RegistrationViewModel>.reactive(
       //onModelReady: (data) => data.initializeLoginModel(),
       builder: (context, model, child) {
         return GestureDetector(
@@ -498,7 +499,7 @@ class _LoginState extends State<Login> {
           ),
         );
       },
-      viewModelBuilder: () => locator<AuthenticationViewModel>(),
+      viewModelBuilder: () => locator<RegistrationViewModel>(),
       disposeViewModel: false,
     );
   }
