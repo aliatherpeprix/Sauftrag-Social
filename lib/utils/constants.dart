@@ -7,5 +7,6 @@ class Constants{
   //Dev Env
   static const String BaseUrl = 'https://dev-sauftragsocial.herokuapp.com/';
   static const String SignUp = 'api/user/register/';
+  static const String Login = 'api/user/login/';
 
 }

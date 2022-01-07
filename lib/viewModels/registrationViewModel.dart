@@ -5,6 +5,10 @@ import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/user_models.dart' as userModel;
 import 'package:sauftrag/modules/dio_services.dart';
 import 'package:sauftrag/services/barSignup.dart';
+import 'package:sauftrag/services/login.dart';
+import 'package:sauftrag/services/login.dart';
+import 'package:sauftrag/services/login.dart';
+import 'package:sauftrag/services/login.dart';
 import 'package:sauftrag/services/userSignup.dart';
 import 'package:sauftrag/utils/common_functions.dart';
 import 'package:sauftrag/utils/constants.dart';
@@ -19,6 +23,7 @@ class RegistrationViewModel extends BaseViewModel{
   //var _dioService = DioService.getInstance();
   var signupUser = SignupUser();
   var signupBar = SignupBar();
+  var loginUser = LoginUser();
 
   var navigationService = navigationViewModel;
   bool isChecked = false;
@@ -146,7 +151,7 @@ class RegistrationViewModel extends BaseViewModel{
     notifyListeners();
   }
 
-  onLogIn() {
+  onLogIn() async {
     if (logInUserController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "User Name is required",
@@ -163,40 +168,33 @@ class RegistrationViewModel extends BaseViewModel{
           MyErrorWidget(error: "Password must contain 7 digit"));
       return;
     }
-    // else if (!CommonFunctions.hasOneUpperCase(
-    //     logInPasswordController.text.trim())) {
-    //   DialogUtils().showDialog(MyErrorWidget(
-    //       error: "Wrong Password"));
-    //   return;
-    // }
-    // else if (!CommonFunctions.hasOneLowerCase(
-    //     logInPasswordController.text.trim())) {
-    //   DialogUtils().showDialog(MyErrorWidget(
-    //       error: "Wrong Password"));
-    //   return;
-    // }
-    // else if (!CommonFunctions.hasOneDigit(logInPasswordController.text.trim())) {
-    //   DialogUtils().showDialog(
-    //       MyErrorWidget(error: "Wrong Password"));
-    //   return;
-    // }
-    // else if (!CommonFunctions.hasOneSpeicalCharacter(
-    //     logInPasswordController.text.trim())) {
-    //   DialogUtils().showDialog(MyErrorWidget(
-    //       error: "Wrong Password"));
-    //   return;
-    // }
+
     else {
+      notifyListeners();
+     /* var signupResponce =  await loginUser.LogInUser(
+          logInUserController.text,
+          logInPasswordController.text,
+
+      );*/
+      //print(signupResponce);
       MainViewModel  mainViewModel = locator<MainViewModel>();
+        var signupResponce =  await loginUser.LogInUser(
+        logInUserController.text,
+        logInPasswordController.text,
+          logInUserSelected? "1" : "2"
+      );
+      print(signupResponce);
       if (logInUserSelected == true) {
         mainViewModel.logInUserSelected = true;
         mainViewModel.logInBarSelected = false;
+
         navigateToHomeScreen(2);
       } else if (logInBarSelected == true) {
         mainViewModel.logInUserSelected = false;
         mainViewModel.logInBarSelected = true;
         navigateToHomeBarScreen();
       }
+
     }
   }
 
@@ -370,14 +368,16 @@ class RegistrationViewModel extends BaseViewModel{
       notifyListeners();
       return;
 
-    } else if (isChecked == false) {
+    }
+    else if (isChecked == false) {
       isSigningUp = false;
       DialogUtils().showDialog(MyErrorWidget(
         error: "Please Accept Terms and Conditions",
       ));
       notifyListeners();
       return;
-    } else
+    }
+    else
       notifyListeners();
       var user = userModel.UserModel();
 
