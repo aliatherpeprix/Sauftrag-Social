@@ -338,9 +338,6 @@ class AuthenticationViewModel extends BaseViewModel {
     }*/
   }
 
-  loginUser(){
-
-  }
 
   createUserAccount() {
     if (signUpUserController.text.isEmpty) {
@@ -500,57 +497,11 @@ class AuthenticationViewModel extends BaseViewModel {
       DialogUtils().showDialog(MyErrorWidget(error: "Email is invalid"));
       return;
     }
+
     navigateToCheckEmailScreen();
   }
 
-  resentPassword() {
-    if (confirmNewPasswordController.text.isEmpty) {
-      DialogUtils().showDialog(MyErrorWidget(
-        error: "Password is required",
-      ));
-      return;
-    }
-    if (confirmNewPasswordController.text.length < 7) {
-      DialogUtils().showDialog(
-          MyErrorWidget(error: "Password must be at least 8 characters"));
-      return;
-    }
-    if (!CommonFunctions.hasOneUpperCase(
-        confirmNewPasswordController.text.trim())) {
-      DialogUtils().showDialog(MyErrorWidget(
-          error: "Password should contain at least one upper case"));
-      return;
-    }
-    if (!CommonFunctions.hasOneLowerCase(
-        confirmNewPasswordController.text.trim())) {
-      DialogUtils().showDialog(MyErrorWidget(
-          error: "Password should contain at least one lower case"));
-      return;
-    }
-    if (!CommonFunctions.hasOneDigit(confirmNewPasswordController.text.trim())) {
-      DialogUtils().showDialog(
-          MyErrorWidget(error: "Password should contain at least one digit"));
-      return;
-    }
-    if (!CommonFunctions.hasOneSpeicalCharacter(
-        confirmNewPasswordController.text.trim())) {
-      DialogUtils().showDialog(MyErrorWidget(
-          error: "Password should contain at least one special character"));
-      return;
-    } else if (newPasswordController.text.isEmpty) {
-      DialogUtils().showDialog(MyErrorWidget(
-        error: "Verify Password is required",
-      ));
-      return;
-    } else if (newPasswordController.text !=
-        confirmNewPasswordController.text) {
-      DialogUtils().showDialog(MyErrorWidget(
-        error: "Password & Verify Password don't match",
-      ));
-      return;
-    }
-    navigateToHomeBarScreen();
-  }
+
 
   createBarAccount() {
     if (signUpBarUserController.text.isEmpty) {
@@ -782,4 +733,6 @@ class AuthenticationViewModel extends BaseViewModel {
   FocusNode AccountOwnershipFocus = new FocusNode();
   bool isAccountOwnershipInFocus = false;
   final AccountOwnershipController = TextEditingController();
+
+
 }

@@ -8,5 +8,8 @@ class Constants{
   static const String BaseUrl = 'https://dev-sauftragsocial.herokuapp.com/';
   static const String SignUp = 'api/user/register/';
   static const String Login = 'api/user/login/';
+  static const String ForgetPassword = 'api/user/password_reset_confirm/';
+  static const String ResetPassword = 'api/user/password_reset_code_confirm/';
+  static const String ConfirmNewPassword = 'api/user/forgot-password/';
 
 }

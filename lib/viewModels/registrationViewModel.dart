@@ -1,3 +1,5 @@
+
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get_utils/src/extensions/string_extensions.dart';
 import 'package:intl/intl.dart';
@@ -5,6 +7,7 @@ import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/user_models.dart' as userModel;
 import 'package:sauftrag/modules/dio_services.dart';
 import 'package:sauftrag/services/barSignup.dart';
+import 'package:sauftrag/services/forget_password.dart';
 import 'package:sauftrag/services/login.dart';
 import 'package:sauftrag/services/login.dart';
 import 'package:sauftrag/services/login.dart';
@@ -15,15 +18,15 @@ import 'package:sauftrag/utils/constants.dart';
 import 'package:sauftrag/utils/dialog_utils.dart';
 import 'package:sauftrag/widgets/error_widget.dart';
 import 'package:stacked/stacked.dart';
-
 import '../main.dart';
 import 'main_view_model.dart';
 
-class RegistrationViewModel extends BaseViewModel{
+class RegistrationViewModel extends BaseViewModel {
   //var _dioService = DioService.getInstance();
   var signupUser = SignupUser();
   var signupBar = SignupBar();
   var loginUser = LoginUser();
+  var forgetpassword = ForgetPassword();
 
   var navigationService = navigationViewModel;
   bool isChecked = false;
@@ -37,7 +40,8 @@ class RegistrationViewModel extends BaseViewModel{
   bool loginPasswordVisible = false;
   bool termsCheck = false;
   bool dataCheck = false;
-
+  bool resetNewPasswordVisible = false;
+  bool resetConfirmPasswordVisible = false;
 
   DateTime selectedDOB = DateTime.now();
 
@@ -77,6 +81,22 @@ class RegistrationViewModel extends BaseViewModel{
   final signUpRelationshipController = TextEditingController();
   bool isSignUpRelationshipInFocus = false;
   FocusNode signUpRelationshipFocus = new FocusNode();
+
+  ///----------------------Forget Password Controller ----------------///
+
+  final forgetPasswordController = TextEditingController();
+  bool isForgetPasswordInFocus = false;
+  FocusNode forgetPasswordFocus = new FocusNode();
+
+  ///----------------------Verify New Password Controller ----------------///
+
+  final confirmNewPasswordController = TextEditingController();
+  bool isConfirmNewPasswordInFocus = false;
+  FocusNode confirmNewPasswordFocus = new FocusNode();
+
+  final resetNewPasswordController = TextEditingController();
+  bool isResetNewPasswordInFocus = false;
+  FocusNode resetNewPasswordFocus = new FocusNode();
 
   ///----------------------Bar Sign Up Registration Controller ----------------///
   final signUpBarUserController = TextEditingController();
@@ -122,14 +142,19 @@ class RegistrationViewModel extends BaseViewModel{
 
   int relationStatusValue = 1;
   String relationStatusValueStr = "Single";
-  List<String> relationStatusList = ["Single", "Relationship", "Open Relationship", "It´s Complicated", "Married"];
+  List<String> relationStatusList = [
+    "Single",
+    "Relationship",
+    "Open Relationship",
+    "It´s Complicated",
+    "Married"
+  ];
   Map<String, int> relationStatusMap = {
     'Single': 1,
     'Relationship': 2,
     'Open Relationship': 3,
     'It´s Complicated': 4,
     'Married': 5,
-
   };
 
   int genderValue = 1;
@@ -146,7 +171,8 @@ class RegistrationViewModel extends BaseViewModel{
   }
 
   void openAndSelectDob(BuildContext context) async {
-    selectedDOB = await CommonFunctions.showDateOfBirthPicker(context, selectedDOB);
+    selectedDOB =
+        await CommonFunctions.showDateOfBirthPicker(context, selectedDOB);
     signUpDOBController.text = DateFormat('yyyy-MM-dd').format(selectedDOB);
     notifyListeners();
   }
@@ -162,40 +188,207 @@ class RegistrationViewModel extends BaseViewModel{
         error: "Password is required",
       ));
       return;
-    }
-    else if (logInPasswordController.text.length < 7) {
-      DialogUtils().showDialog(
-          MyErrorWidget(error: "Password must contain 7 digit"));
+    } else if (logInPasswordController.text.length < 7) {
+      DialogUtils()
+          .showDialog(MyErrorWidget(error: "Password must contain 7 digit"));
       return;
-    }
-
-    else {
+    } else {
       notifyListeners();
-     /* var signupResponce =  await loginUser.LogInUser(
+      /* var signupResponce =  await loginUser.LogInUser(
           logInUserController.text,
           logInPasswordController.text,
 
       );*/
       //print(signupResponce);
-      MainViewModel  mainViewModel = locator<MainViewModel>();
-        var signupResponce =  await loginUser.LogInUser(
-        logInUserController.text,
-        logInPasswordController.text,
-          logInUserSelected? "1" : "2"
-      );
-      print(signupResponce);
-      if (logInUserSelected == true) {
-        mainViewModel.logInUserSelected = true;
-        mainViewModel.logInBarSelected = false;
+      MainViewModel mainViewModel = locator<MainViewModel>();
+      var signupResponse = await loginUser.LogInUser(logInUserController.text,
+          logInPasswordController.text, logInUserSelected ? "1" : "2");
+      print(signupResponse);
+      if (signupResponse is userModel.UserModel) {
+        if (logInUserSelected == true) {
+          mainViewModel.logInUserSelected = true;
+          mainViewModel.logInBarSelected = false;
 
-        navigateToHomeScreen(2);
-      } else if (logInBarSelected == true) {
-        mainViewModel.logInUserSelected = false;
-        mainViewModel.logInBarSelected = true;
-        navigateToHomeBarScreen();
+          navigateToHomeScreen(2);
+        } else if (logInBarSelected == true) {
+          mainViewModel.logInUserSelected = false;
+          mainViewModel.logInBarSelected = true;
+          navigateToHomeBarScreen();
+        }
       }
-
     }
+  }
+
+  forgetPassword() async {
+    if (forgetPasswordController.text.isEmpty) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Email is required",
+      ));
+      return;
+    }
+    if (!forgetPasswordController.text.isEmail) {
+      DialogUtils().showDialog(MyErrorWidget(error: "Email is invalid"));
+      return;
+    }
+
+    var forgetPasswordResponce = await forgetpassword.Forgetpassword(
+      forgetPasswordController.text,
+    );
+    print(forgetPasswordResponce);
+    if (forgetPasswordResponce is int && forgetPasswordResponce == 200) {
+      navigateToCheckEmailScreen();
+    }
+  }
+
+  void verifyResetPasswordCode(BuildContext context, String code) async{
+
+    Dio dio = Dio();
+    try{
+      //resetOtpLoading = true;
+      notifyListeners();
+
+      var param = FormData.fromMap({
+        "email" : forgetPasswordController.text,
+        "code" : code,
+      });
+
+      var response = await dio.post(Constants.BaseUrl+Constants.ResetPassword, data: param);
+
+      if (response.statusCode == 200){
+
+        if(response.data["status"] == true){
+          //resetOtpLoading = false;
+          notifyListeners();
+          navigateToResentPasswordScreen();
+         // navigateToResentPasswordScreen();
+        }
+        else{
+         // resetOtpLoading = false;
+          notifyListeners();
+          // DialogUtils().showDialog(
+          //     MyErrorWidget(error: response.data["message"].toString()));
+          navigateToResentPasswordScreen();
+          //showErrorMessage(context, "Please enter valid verification code");
+        }
+      }
+      else{
+        //resetOtpLoading = false;
+        notifyListeners();
+        DialogUtils().showDialog(
+            MyErrorWidget(error: response.data["message"].toString()));
+      }
+    }
+    catch(e){
+     // resetOtpLoading = false;
+      notifyListeners();
+      DialogUtils().showDialog(
+          MyErrorWidget(error: (e as DioError).response!.data["message"].toString()));
+      //showErrorMessage(context, 'Unable to process your request at this time. Please try again');
+    }
+
+  }
+
+  resentPassword(BuildContext context) {
+    if (confirmNewPasswordController.text.isEmpty) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Password is required",
+      ));
+      return;
+    }
+    if (confirmNewPasswordController.text.length < 7) {
+      DialogUtils().showDialog(
+          MyErrorWidget(error: "Password must be at least 8 characters"));
+      return;
+    }
+    if (!CommonFunctions.hasOneUpperCase(
+        confirmNewPasswordController.text.trim())) {
+      DialogUtils().showDialog(MyErrorWidget(
+          error: "Password should contain at least one upper case"));
+      return;
+    }
+    if (!CommonFunctions.hasOneLowerCase(
+        confirmNewPasswordController.text.trim())) {
+      DialogUtils().showDialog(MyErrorWidget(
+          error: "Password should contain at least one lower case"));
+      return;
+    }
+    if (!CommonFunctions.hasOneDigit(confirmNewPasswordController.text.trim())) {
+      DialogUtils().showDialog(
+          MyErrorWidget(error: "Password should contain at least one digit"));
+      return;
+    }
+    if (!CommonFunctions.hasOneSpeicalCharacter(
+        confirmNewPasswordController.text.trim())) {
+      DialogUtils().showDialog(MyErrorWidget(
+          error: "Password should contain at least one special character"));
+      return;
+    } else if (resetNewPasswordController.text.isEmpty) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Verify Password is required",
+      ));
+      return;
+    } else if (resetNewPasswordController.text !=
+        confirmNewPasswordController.text) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Password & Verify Password don't match",
+      ));
+      return;
+    }
+    resetNewPassword(context);
+  }
+
+  void resetNewPassword(BuildContext context) async{
+
+    Dio dio = Dio();
+
+    try{
+      //resetPasswordLoading = true;
+      notifyListeners();
+
+      var param = FormData.fromMap({
+        "email" : forgetPasswordController.text,
+        "new_password" : confirmNewPasswordController.text,
+        "repeat_password" : confirmNewPasswordController.text,
+        'code' : codeController.text
+      });
+
+      var response = await dio.post(Constants.BaseUrl+Constants.ConfirmNewPassword, data: param);
+
+      if (response.statusCode == 200){
+
+        if(response.data["code"] == 200){
+          //resetPasswordLoading = false;
+          notifyListeners();
+          DialogUtils().showDialog(
+              MyErrorWidget(error: response.data["message"].toString()));
+          Future.delayed(Duration(seconds: 2)).then((data) {
+            navigateToLoginScreen();
+          });
+        }
+        else{
+          //resetPasswordLoading = false;
+          notifyListeners();
+          DialogUtils().showDialog(
+              MyErrorWidget(error: response.data["message"].toString()));
+          //showErrorMessage(context, "Please try again");
+        }
+      }
+      else{
+        //resetPasswordLoading = false;
+        notifyListeners();
+        DialogUtils().showDialog(
+            MyErrorWidget(error: response.data["message"].toString()));
+        //showErrorMessage(context, 'Something went wrong. Please try again');
+      }
+    }
+    catch(e){
+      //resetPasswordLoading = false;
+      notifyListeners();
+      DialogUtils().showDialog(
+          MyErrorWidget(error: (e as DioError).response!.data["message"].toString()));
+      //showErrorMessage(context, 'Unable to process your request at this time. Please try again');
+    }
+
   }
 
   termsAndCondition() {
@@ -224,44 +417,38 @@ class RegistrationViewModel extends BaseViewModel{
       ));
       notifyListeners();
       return;
-    }
-    else if (signUpEmailController.text.isEmpty) {
+    } else if (signUpEmailController.text.isEmpty) {
       isSigningUp = false;
       DialogUtils().showDialog(MyErrorWidget(
         error: "Email is required",
       ));
       notifyListeners();
       return;
-    }
-    else if (!signUpEmailController.text.isEmail) {
+    } else if (!signUpEmailController.text.isEmail) {
       isSigningUp = false;
       DialogUtils().showDialog(MyErrorWidget(error: "Email is invalid"));
       notifyListeners();
       return;
-    }
-    else if (signUpConfirmEmailController.text.isEmpty) {
+    } else if (signUpConfirmEmailController.text.isEmpty) {
       isSigningUp = false;
       DialogUtils().showDialog(MyErrorWidget(
         error: "Confirm Email is required",
       ));
       notifyListeners();
       return;
-    }
-    else if (!signUpConfirmEmailController.text.isEmail) {
+    } else if (!signUpConfirmEmailController.text.isEmail) {
       isSigningUp = false;
-      DialogUtils().showDialog(MyErrorWidget(
-          error: "Email is invalid"));
+      DialogUtils().showDialog(MyErrorWidget(error: "Email is invalid"));
       notifyListeners();
       return;
-    }
-    else if (signUpConfirmEmailController.text != signUpEmailController.text ) {
+    } else if (signUpConfirmEmailController.text !=
+        signUpEmailController.text) {
       isSigningUp = false;
-      DialogUtils().showDialog(MyErrorWidget(
-          error: "Email & Confirm don't match"));
+      DialogUtils()
+          .showDialog(MyErrorWidget(error: "Email & Confirm don't match"));
       notifyListeners();
       return;
-    }
-    else if (signUpPhoneController.text.isEmpty) {
+    } else if (signUpPhoneController.text.isEmpty) {
       isSigningUp = false;
       DialogUtils().showDialog(MyErrorWidget(
         error: "Phone Number is required",
@@ -282,7 +469,6 @@ class RegistrationViewModel extends BaseViewModel{
           MyErrorWidget(error: "Mobile number should start with zero"));
       notifyListeners();
       return;
-
     } else if (signUpPasswordController.text.isEmpty) {
       isSigningUp = false;
       DialogUtils().showDialog(MyErrorWidget(
@@ -328,7 +514,6 @@ class RegistrationViewModel extends BaseViewModel{
           error: "Password should contain at least one special character"));
       notifyListeners();
       return;
-
     } else if (signUpVerifyPasswordController.text.isEmpty) {
       isSigningUp = false;
       DialogUtils().showDialog(MyErrorWidget(
@@ -336,7 +521,6 @@ class RegistrationViewModel extends BaseViewModel{
       ));
       notifyListeners();
       return;
-
     } else if (signUpVerifyPasswordController.text !=
         signUpPasswordController.text) {
       isSigningUp = false;
@@ -345,7 +529,6 @@ class RegistrationViewModel extends BaseViewModel{
       ));
       notifyListeners();
       return;
-
     } else if (signUpAddressController.text.isEmpty) {
       isSigningUp = false;
       DialogUtils().showDialog(MyErrorWidget(
@@ -367,33 +550,28 @@ class RegistrationViewModel extends BaseViewModel{
       ));
       notifyListeners();
       return;
-
-    }
-    else if (isChecked == false) {
+    } else if (isChecked == false) {
       isSigningUp = false;
       DialogUtils().showDialog(MyErrorWidget(
         error: "Please Accept Terms and Conditions",
       ));
       notifyListeners();
       return;
-    }
-    else
+    } else
       notifyListeners();
-      var user = userModel.UserModel();
+    var user = userModel.UserModel();
 
-
-      var signupResponce =  await signupUser.SignUpUser(
-          signUpEmailController.text,
-          signUpUserController.text,
-          signUpPasswordController.text,
-          signUpVerifyPasswordController.text,
-          signUpPhoneController.text,
-          (relationStatusList.indexOf(relationStatusValueStr) + 1).toString(),
-          signUpAddressController.text,
-          (genderList.indexOf(genderValueStr)+1).toString(),
-          signUpDOBController.text
-      );
-      print(signupResponce);
+    var signupResponce = await signupUser.SignUpUser(
+        signUpEmailController.text,
+        signUpUserController.text,
+        signUpPasswordController.text,
+        signUpVerifyPasswordController.text,
+        signUpPhoneController.text,
+        (relationStatusList.indexOf(relationStatusValueStr) + 1).toString(),
+        signUpAddressController.text,
+        (genderList.indexOf(genderValueStr) + 1).toString(),
+        signUpDOBController.text);
+    print(signupResponce);
     navigateToFavoriteScreen();
   }
 
@@ -404,28 +582,24 @@ class RegistrationViewModel extends BaseViewModel{
         error: "User Name is required",
       ));
       return;
-    }
-    else if (signUpBarAddressController.text.isEmpty) {
+    } else if (signUpBarAddressController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Address is required",
       ));
       return;
-    }
-    else if (signUpBarEmailController.text.isEmpty) {
+    } else if (signUpBarEmailController.text.isEmpty) {
       isSigningUp = false;
       DialogUtils().showDialog(MyErrorWidget(
         error: "Email is required",
       ));
       notifyListeners();
       return;
-    }
-    else if (!signUpBarEmailController.text.isEmail) {
+    } else if (!signUpBarEmailController.text.isEmail) {
       isSigningUp = false;
       DialogUtils().showDialog(MyErrorWidget(error: "Email is invalid"));
       notifyListeners();
       return;
-    }
-    else if (signUpBarPasswordController.text.isEmpty) {
+    } else if (signUpBarPasswordController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Password is required",
       ));
@@ -458,8 +632,7 @@ class RegistrationViewModel extends BaseViewModel{
       DialogUtils().showDialog(MyErrorWidget(
           error: "Password should contain at least one special character"));
       return;
-    }
-    else if (signUpBarVerifyPasswordController.text.isEmpty) {
+    } else if (signUpBarVerifyPasswordController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Verify Password is required",
       ));
@@ -472,8 +645,7 @@ class RegistrationViewModel extends BaseViewModel{
       return;
     } else
       notifyListeners();
-    var signupResponce =  await signupBar.SignUpBar(
-
+    var signupResponce = await signupBar.SignUpBar(
       signUpBarUserController.text,
       signUpBarAddressController.text,
       signUpBarEmailController.text,
@@ -483,7 +655,6 @@ class RegistrationViewModel extends BaseViewModel{
     print(signupResponce);
     navigateToUploadBarMedia();
   }
-
 
   void navigateToFavoriteScreen() {
     navigationService.navigateToFavoriteScreen();
@@ -517,6 +688,16 @@ class RegistrationViewModel extends BaseViewModel{
     navigationService.navigateToUploadBarMedia();
   }
 
+  void navigateToCheckEmailScreen() {
+    navigationService.navigateToCheckEmailScreen();
+  }
 
+  void navigateBack() {
+    navigationService.navigateBack();
+  }
+
+  void navigateToResentPasswordScreen() {
+    navigationService.navigateToResentPasswordScreen();
+  }
 
 }

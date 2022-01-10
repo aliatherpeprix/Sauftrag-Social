@@ -9,6 +9,7 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:sauftrag/widgets/back_arrow_with_container.dart';
 import 'package:stacked/stacked.dart';
 
@@ -22,8 +23,8 @@ class ResentPassword extends StatefulWidget {
 class _ResentPasswordState extends State<ResentPassword> {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<AuthenticationViewModel>.reactive(
-      viewModelBuilder: () => locator<AuthenticationViewModel>(),
+    return ViewModelBuilder<RegistrationViewModel>.reactive(
+      viewModelBuilder: () => locator<RegistrationViewModel>(),
       disposeViewModel: false,
       onModelReady: (model){
         //model.initialize();
@@ -112,7 +113,7 @@ class _ResentPasswordState extends State<ResentPassword> {
                                     child: TextField(
                                       obscureText: !model.resetNewPasswordVisible,
                                       focusNode: model.resetNewPasswordFocus,
-                                      controller: model.newPasswordController,
+                                      controller: model.resetNewPasswordController,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.next,
                                       style: TextStyle(
@@ -188,7 +189,7 @@ class _ResentPasswordState extends State<ResentPassword> {
                                   Expanded(
                                     child: TextField(
                                       obscureText: !model.resetConfirmPasswordVisible,
-                                      focusNode: model.resetConfirmPasswordFocus,
+                                      focusNode: model.confirmNewPasswordFocus,
                                       controller: model.confirmNewPasswordController,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.next,
@@ -249,7 +250,7 @@ class _ResentPasswordState extends State<ResentPassword> {
                           //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                           child: ElevatedButton(
                             onPressed: () {
-                               model.resentPassword();
+                               model.resentPassword(context);
                             },
                             child: const Text("Reset Password"),
                             style: ElevatedButton.styleFrom(

@@ -9,6 +9,7 @@ import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
+import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:sauftrag/widgets/back_arrow_with_container.dart';
 import 'package:sauftrag/widgets/loader.dart';
 import 'package:stacked/stacked.dart';
@@ -19,11 +20,11 @@ class VerificationCode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return ViewModelBuilder<AuthenticationViewModel>.reactive(
-      viewModelBuilder: () => locator<AuthenticationViewModel>(),
+    return ViewModelBuilder<RegistrationViewModel>.reactive(
+      viewModelBuilder: () => locator<RegistrationViewModel>(),
       disposeViewModel: false,
       builder: (context, model, child) {
-        return model.otpLoading == true ? Center(child: Loader()) :
+        return /*model.otpLoading == true ? Center(child: Loader()) :*/
         SafeArea(
           top: false,
           bottom: false,
@@ -78,9 +79,10 @@ class VerificationCode extends StatelessWidget {
                       ),
                       PinCodeTextField(
                         onDone: (value){
-                          // model.signupVendor(phone, value);
-                          //model.verifyCode(phone, value);
-                          model.navigateToResentPasswordScreen();
+                          Future.delayed(Duration(seconds: 1)).then((data) {
+                            model.verifyResetPasswordCode(context, value);
+                          });
+                          //model.navigateToResentPasswordScreen();
                         },
                         pinBoxOuterPadding: EdgeInsets.symmetric(horizontal: 4.5.w),
                         controller: model.codeController,

@@ -9,6 +9,7 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:sauftrag/widgets/back_arrow_with_container.dart';
 import 'package:stacked/stacked.dart';
 
@@ -22,8 +23,8 @@ class ForgetPassword extends StatefulWidget {
 class _ForgetPasswordState extends State<ForgetPassword> {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<AuthenticationViewModel>.reactive(
-      viewModelBuilder: () => locator<AuthenticationViewModel>(),
+    return ViewModelBuilder<RegistrationViewModel>.reactive(
+      viewModelBuilder: () => locator<RegistrationViewModel>(),
       disposeViewModel: false,
       onModelReady: (model) {
         //model.initialize();
