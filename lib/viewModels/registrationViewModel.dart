@@ -1,12 +1,19 @@
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/string_extensions.dart';
 import 'package:intl/intl.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/user_models.dart' as userModel;
 import 'package:sauftrag/modules/dio_services.dart';
 import 'package:sauftrag/services/barSignup.dart';
+import 'package:sauftrag/services/changeUserPassword.dart';
+import 'package:sauftrag/services/changeUserPassword.dart';
+import 'package:sauftrag/services/changeUserPassword.dart';
+import 'package:sauftrag/services/changeUserPassword.dart';
+import 'package:sauftrag/services/changeUserPassword.dart';
+import 'package:sauftrag/services/checkUser.dart';
 import 'package:sauftrag/services/forget_password.dart';
 import 'package:sauftrag/services/login.dart';
 import 'package:sauftrag/services/login.dart';
@@ -16,6 +23,7 @@ import 'package:sauftrag/services/userSignup.dart';
 import 'package:sauftrag/utils/common_functions.dart';
 import 'package:sauftrag/utils/constants.dart';
 import 'package:sauftrag/utils/dialog_utils.dart';
+import 'package:sauftrag/viewModels/prefrences_view_model.dart';
 import 'package:sauftrag/widgets/error_widget.dart';
 import 'package:stacked/stacked.dart';
 import '../main.dart';
@@ -27,6 +35,8 @@ class RegistrationViewModel extends BaseViewModel {
   var signupBar = SignupBar();
   var loginUser = LoginUser();
   var forgetpassword = ForgetPassword();
+  var changepassword = Changeuserpassword();
+  var checkuser = Checkuser();
 
   var navigationService = navigationViewModel;
   bool isChecked = false;
@@ -43,6 +53,10 @@ class RegistrationViewModel extends BaseViewModel {
   bool resetNewPasswordVisible = false;
   bool resetConfirmPasswordVisible = false;
 
+  bool otpLoading = false;
+  TimeOfDay? startTime;
+
+  PrefrencesViewModel prefrencesViewModel = locator<PrefrencesViewModel>();
   DateTime selectedDOB = DateTime.now();
 
   ///----------------------User Sign Up Registration Controller ----------------///
@@ -119,6 +133,11 @@ class RegistrationViewModel extends BaseViewModel {
   bool isSignUpBarVerifyPasswordInFocus = false;
   FocusNode signUpBarVerifyPasswordFocus = new FocusNode();
 
+  FocusNode LocationFocus = new FocusNode();
+  bool isLocationInFocus = false;
+  final LocationController = TextEditingController();
+
+
   ///----------------------User Login Registration Controller ----------------///
 
   FocusNode logInUserFocus = new FocusNode();
@@ -130,6 +149,41 @@ class RegistrationViewModel extends BaseViewModel {
   final logInPasswordController = TextEditingController();
   bool isLoginPasswordInFocus = false;
   FocusNode loginPasswordFocus = new FocusNode();
+
+  ///-----------------Change Current Password Bar ------------------------------///
+
+  final changeCurrentPasswordBarController = TextEditingController();
+  bool ischangeCurrentPasswordBarInFocus = false;
+  FocusNode changeCurrentPasswordBarFocus = new FocusNode();
+  bool changeCurrentPasswordBarVisible = false;
+
+  final changeNewPasswordBarController = TextEditingController();
+  bool ischangeNewPasswordBarInFocus = false;
+  FocusNode changeNewPasswordBarFocus = new FocusNode();
+  bool changeNewPasswordBarVisible = false;
+
+  final changeNewCurrentPasswordBarController = TextEditingController();
+  bool ischangeNewCurrentPasswordBarInFocus = false;
+  FocusNode changeNewCurrentPasswordBarFocus = new FocusNode();
+  bool changeNewCurrentPasswordBarVisible = false;
+
+  ///-----------------Change Current Password User ------------------------------///
+
+  final changeCurrentPasswordUserController = TextEditingController();
+  bool ischangeCurrentPasswordUserInFocus = false;
+  FocusNode changeCurrentPasswordUserFocus = new FocusNode();
+  bool changeCurrentPasswordUserVisible = false;
+
+  final changeNewPasswordUserController = TextEditingController();
+  bool ischangeNewPasswordUserInFocus = false;
+  FocusNode changeNewPasswordUserFocus = new FocusNode();
+  bool changeNewPasswordUserVisible = false;
+
+  final changeNewCurrentPasswordUserController = TextEditingController();
+  bool ischangeNewCurrentPasswordUserInFocus = false;
+  FocusNode changeNewCurrentPasswordUserFocus = new FocusNode();
+  bool changeNewCurrentPasswordUserVisible = false;
+
 
   String? userNameError;
   String? emailError;
@@ -165,9 +219,43 @@ class RegistrationViewModel extends BaseViewModel {
     'Female': 2,
   };
 
+  List<int> selectedWeekDays = [];
+
+  List<String> weekDaysList = ["Mo", "Tu", "We", "Th", "Fr"];
+
+  List<int> selectedWeekendDays = [];
+
+  List<String> weekendDaysList = ["Su", "Sa",];
+
+  List<int> selectedBarKind = [];
+
+  List<String> barKindList = [
+    "Disco",
+    "Cocktail",
+    "Pub",
+    "Hotel Bar",
+    "Beer Hall"
+  ];
+
+
+  int kindOfBarValue = 1;
+  String kindOfBarValueStr = "Cocktail";
+  List<String> kindOfBarList = ["Beer", "Cocktail", "Long Drink", "Shot"];
+  Map<String, int> kindOfBarMap = {
+    'Beer': 1,
+    'Cocktail': 2,
+    'Long Drink': 3,
+    'Shot': 4
+  };
+
   void selectRole(int role) {
     this.role = role;
     notifyListeners();
+  }
+
+  convert (){
+    String s = "00:00";
+    startTime = TimeOfDay(hour:int.parse(s.split(":")[0]),minute: int.parse(s.split(":")[1]));
   }
 
   void openAndSelectDob(BuildContext context) async {
@@ -176,6 +264,9 @@ class RegistrationViewModel extends BaseViewModel {
     signUpDOBController.text = DateFormat('yyyy-MM-dd').format(selectedDOB);
     notifyListeners();
   }
+
+  String userId = "";
+  String userToken = "";
 
   onLogIn() async {
     if (logInUserController.text.isEmpty) {
@@ -203,8 +294,9 @@ class RegistrationViewModel extends BaseViewModel {
       MainViewModel mainViewModel = locator<MainViewModel>();
       var signupResponse = await loginUser.LogInUser(logInUserController.text,
           logInPasswordController.text, logInUserSelected ? "1" : "2");
-      print(signupResponse);
+        print(signupResponse);
       if (signupResponse is userModel.UserModel) {
+        await locator<PrefrencesViewModel>().saveUser(signupResponse);
         if (logInUserSelected == true) {
           mainViewModel.logInUserSelected = true;
           mainViewModel.logInBarSelected = false;
@@ -337,6 +429,76 @@ class RegistrationViewModel extends BaseViewModel {
     resetNewPassword(context);
   }
 
+  changePassword() async {
+
+    if (changeNewPasswordUserController.text.isEmpty) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Password is required",
+      ));
+      return;
+    }
+
+    if (changeNewPasswordUserController.text.isEmpty) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Password is required",
+      ));
+      return;
+    }
+    if (changeNewPasswordUserController.text.length < 7) {
+      DialogUtils().showDialog(
+          MyErrorWidget(error: "Password must be at least 8 characters"));
+      return;
+    }
+    if (!CommonFunctions.hasOneUpperCase(
+        changeNewPasswordUserController.text.trim())) {
+      DialogUtils().showDialog(MyErrorWidget(
+          error: "Password should contain at least one upper case"));
+      return;
+    }
+    if (!CommonFunctions.hasOneLowerCase(
+        changeNewPasswordUserController.text.trim())) {
+      DialogUtils().showDialog(MyErrorWidget(
+          error: "Password should contain at least one lower case"));
+      return;
+    }
+    if (!CommonFunctions.hasOneDigit(changeNewPasswordUserController.text.trim())) {
+      DialogUtils().showDialog(
+          MyErrorWidget(error: "Password should contain at least one digit"));
+      return;
+    }
+    if (!CommonFunctions.hasOneSpeicalCharacter(
+        changeNewPasswordUserController.text.trim())) {
+      DialogUtils().showDialog(MyErrorWidget(
+          error: "Password should contain at least one special character"));
+      return;
+    } else if (changeNewCurrentPasswordUserController.text.isEmpty) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Verify Password is required",
+      ));
+      return;
+    } else if (changeNewCurrentPasswordUserController.text !=
+        changeNewPasswordUserController.text) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Password & Verify Password don't match",
+      ));
+      return;
+    }
+    else
+      notifyListeners();
+   // var user = userModel.UserModel();
+
+    var signupResponce = await changepassword.ChangeUserPassword(
+
+        changeCurrentPasswordUserController.text,
+        changeNewCurrentPasswordUserController.text
+    );
+    print(signupResponce);
+    //navigateToFavoriteScreen();
+
+  }
+
+
+
   void resetNewPassword(BuildContext context) async{
 
     Dio dio = Dio();
@@ -408,6 +570,7 @@ class RegistrationViewModel extends BaseViewModel {
 
   //Signup User
   createUserAccount() async {
+    
     isSigningUp = true;
     notifyListeners();
     if (signUpUserController.text.isEmpty) {
@@ -699,5 +862,27 @@ class RegistrationViewModel extends BaseViewModel {
   void navigateToResentPasswordScreen() {
     navigationService.navigateToResentPasswordScreen();
   }
+
+  void navigateToChangePassword() {
+    navigationService.navigateToChangePassword();
+  }
+
+  void navigateToBarAccountOwnerShip() {
+    navigationService.navigateToBarAccountOwnerShip();
+  }
+
+  void navigateToUserProfileAccountOwnershipScreen(){
+    navigationService.navigateToUserProfileAccountOwnershipScreen();
+  }
+
+  void navigateToUserDetailSettings() {
+    navigationService.navigateToUserDetailSettings();
+  }
+
+  void navigateToBarProfileScreen() {
+    navigationService.navigateToBarProfileScreen();
+  }
+
+
 
 }

@@ -8,6 +8,7 @@ import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
+import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:stacked/stacked.dart';
 
 class BarAccount extends StatefulWidget {
@@ -48,7 +49,7 @@ class _BarAccountState extends State<BarAccount> {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<AuthenticationViewModel>.reactive(
+    return ViewModelBuilder<RegistrationViewModel>.reactive(
       onModelReady: (data) => data.convert(),
       builder: (context, model, child) {
         return GestureDetector(
@@ -1470,9 +1471,9 @@ class _BarAccountState extends State<BarAccount> {
                         ),
                         SizedBox(height: 3.h),
 
-                        ///------------Block Contacts ---------------///
+                        ///------------Change Password ---------------///
                         Text(
-                          "Block Contacts",
+                          "Password",
                           style: TextStyle(
                             color: ColorUtils.black,
                             fontFamily: FontUtils.modernistBold,
@@ -1491,7 +1492,9 @@ class _BarAccountState extends State<BarAccount> {
                                     color: ColorUtils.lightTextColor
                                 )
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              model.navigateToChangePassword();
+                            },
 
                             padding: EdgeInsets.symmetric(
                                 vertical: 2.2.h, horizontal: 4.w),
@@ -1500,8 +1503,8 @@ class _BarAccountState extends State<BarAccount> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  "Block Contact", style: TextStyle(
-                                  color: ColorUtils.lightTextColor,
+                                  "Change Password", style: TextStyle(
+                                  color: ColorUtils.black,
 
                                   fontFamily: FontUtils.modernistBold,
                                   fontSize: 2.t,
@@ -1511,6 +1514,19 @@ class _BarAccountState extends State<BarAccount> {
                             )),
 
                         SizedBox(height: 3.h),
+
+                        ///------------Account Ownership ---------------///
+
+                        Text(
+                          "Account Ownership",
+                          style: TextStyle(
+                            color: ColorUtils.black,
+                            fontFamily: FontUtils.modernistBold,
+                            fontSize: 2.5.t,
+                          ),
+                        ),
+
+                        SizedBox(height: 2.h),
 
                         MaterialButton(
 
@@ -1571,8 +1587,6 @@ class _BarAccountState extends State<BarAccount> {
                           ),
                         ),
                         SizedBox(height: 2.h),
-
-
                       ],
                     ),
                   ),
@@ -1580,7 +1594,7 @@ class _BarAccountState extends State<BarAccount> {
           ),
         );
       },
-      viewModelBuilder: () => locator<AuthenticationViewModel>(),
+      viewModelBuilder: () => locator<RegistrationViewModel>(),
       disposeViewModel: false,
     );
   }

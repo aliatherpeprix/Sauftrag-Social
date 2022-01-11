@@ -29,6 +29,7 @@ class UserModel {
   bool? data_protection;
   String? password;
   String? password2;
+  String? token;
 
 
   factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);

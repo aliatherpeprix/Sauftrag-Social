@@ -7,6 +7,7 @@ part of 'bar_model.dart';
 // **************************************************************************
 
 BarModel _$BarModelFromJson(Map<String, dynamic> json) => BarModel()
+  ..token = json['token'] as String?
   ..username = json['username'] as String?
   ..bar_name = json['bar_name'] as String?
   ..email = json['email'] as String?
@@ -34,6 +35,7 @@ BarModel _$BarModelFromJson(Map<String, dynamic> json) => BarModel()
   ..password2 = json['password2'] as String?;
 
 Map<String, dynamic> _$BarModelToJson(BarModel instance) => <String, dynamic>{
+      'token': instance.token,
       'username': instance.username,
       'bar_name': instance.bar_name,
       'email': instance.email,

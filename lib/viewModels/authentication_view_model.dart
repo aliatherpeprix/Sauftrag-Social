@@ -695,9 +695,7 @@ class AuthenticationViewModel extends BaseViewModel {
     navigationService.navigateToOrderDetailsScreen();
   }
 
-  void navigateToBarAccountOwnerShip() {
-    navigationService.navigateToBarAccountOwnerShip();
-  }
+
 
   convert (){
     String s = "00:00";

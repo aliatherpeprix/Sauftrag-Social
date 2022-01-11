@@ -11,5 +11,7 @@ class Constants{
   static const String ForgetPassword = 'api/user/password_reset_confirm/';
   static const String ResetPassword = 'api/user/password_reset_code_confirm/';
   static const String ConfirmNewPassword = 'api/user/forgot-password/';
+  static const String CheckUser = 'api/user/check/';
+  static const String ChangeUserPassword = 'api/user/change-password/';
 
 }

@@ -51,6 +51,7 @@ import 'package:sauftrag/views/UserFriendList/message_screen.dart';
 import 'package:sauftrag/views/UserFriendList/select_individual_chat.dart';
 import 'package:sauftrag/views/UserProfile/account.dart';
 import 'package:sauftrag/views/UserProfile/accountOwnership.dart';
+import 'package:sauftrag/widgets/change_password.dart';
 import 'package:sauftrag/views/UserProfile/gps.dart';
 import 'package:sauftrag/views/UserProfile/legalTerm.dart';
 import 'package:sauftrag/views/UserProfile/notifications.dart';
@@ -244,6 +245,10 @@ class NavigationViewModel extends BaseViewModel{
 
   }
 
+  void navigateToChangePassword(){
+    navigationKey.currentState!.push(PageTransition(child: ChangePassword(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
 
 ///----Drawer------////
   void navigateToRatingList(){
@@ -315,8 +320,9 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateToBarAccountOwnerShip(){
     navigationKey.currentState!.push(PageTransition(child: BarAccountOwnership(), type: PageTransitionType.rightToLeftWithFade));
-
   }
+
+
 
 
 

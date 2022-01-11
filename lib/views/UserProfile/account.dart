@@ -10,6 +10,7 @@ import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:stacked/stacked.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
@@ -25,8 +26,8 @@ class _AccountState extends State<Account> {
   double _value = 40.0;
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<MainViewModel>.reactive(
-      viewModelBuilder: () => locator<MainViewModel>(),
+    return ViewModelBuilder<RegistrationViewModel>.reactive(
+      viewModelBuilder: () => locator<RegistrationViewModel>(),
       disposeViewModel: false,
       builder: (context, model, child) {
         return GestureDetector(
@@ -42,7 +43,10 @@ class _AccountState extends State<Account> {
                 bottom: false,
                     child: Container(
                       padding:  EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding,),
-                      child: Column(children: [
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
                         SizedBox(height: Dimensions.topMargin),
                         //Add Images
                         Row(
@@ -111,7 +115,7 @@ class _AccountState extends State<Account> {
                             ),
                           ),
                           SizedBox(
-                            height: 2.h,
+                            height: 3.h,
                           ),
                           Row(
                             children: [
@@ -150,7 +154,7 @@ class _AccountState extends State<Account> {
                             ),
                           ),
                           SizedBox(
-                            height: 2.h,
+                            height: 3.h,
                           ),
                           Row(
                             children: [
@@ -188,12 +192,12 @@ class _AccountState extends State<Account> {
                                       })
                               )),
                           SizedBox(
-                            height: 2.h,
+                            height: 3.h,
                           ),
                           Row(
                             children: [
                               Text(
-                                "Block Contacts",
+                                "Password",
                                 style:
                                 TextStyle(fontSize: 2.t, fontFamily: FontUtils.modernistBold),
                               ),
@@ -203,7 +207,9 @@ class _AccountState extends State<Account> {
                             height: 2.h,
                           ),
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              model.navigateToChangePassword();
+                            },
                             child: Container(
 
                               height: 7.h,
@@ -215,8 +221,8 @@ class _AccountState extends State<Account> {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "Block Contacts",
-                                    style: TextStyle(color: Colors.grey[500], fontFamily: FontUtils.modernistBold),
+                                    "Change Password",
+                                    style: TextStyle(color: ColorUtils.black, fontFamily: FontUtils.modernistBold),
                                   ),
                                   Icon(
                                     Icons.arrow_forward_ios,
@@ -228,8 +234,19 @@ class _AccountState extends State<Account> {
                             ),
                           ),
                           SizedBox(
-                            height: 4.h,
+                            height: 3.h,
                           ),
+
+                        Text(
+                          "Account Ownership",
+                          style:
+                          TextStyle(fontSize: 2.t, fontFamily: FontUtils.modernistBold),
+                        ),
+
+                        SizedBox(
+                          height: 2.h,
+                        ),
+
                           InkWell(
                             onTap: () {
                               model.navigateToUserProfileAccountOwnershipScreen();
@@ -257,6 +274,37 @@ class _AccountState extends State<Account> {
                               ),
                             ),
                           ),
+
+                            SizedBox(height: 6.h),
+
+                            SizedBox(
+                              width: double.infinity,
+                              //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  model.navigateBack();
+                                },
+                                child: const Text("Save"),
+                                style: ElevatedButton.styleFrom(
+                                  primary: ColorUtils.text_red,
+                                  onPrimary: ColorUtils.white,
+                                  padding: EdgeInsets.symmetric(
+                                      vertical:
+                                      Dimensions.containerVerticalPadding),
+                                  elevation: 1,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          Dimensions.roundCorner)),
+                                  textStyle: TextStyle(
+                                    color: ColorUtils.white,
+                                    fontFamily: FontUtils.modernistBold,
+                                    fontSize: 1.8.t,
+                                    //height: 0
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 2.h),
 
                         ]),
                       ),

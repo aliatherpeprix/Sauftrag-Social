@@ -28,7 +28,8 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel()
   ..terms_conditions = json['terms_conditions'] as bool?
   ..data_protection = json['data_protection'] as bool?
   ..password = json['password'] as String?
-  ..password2 = json['password2'] as String?;
+  ..password2 = json['password2'] as String?
+  ..token = json['token'] as String?;
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'username': instance.username,
@@ -53,4 +54,5 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'data_protection': instance.data_protection,
       'password': instance.password,
       'password2': instance.password2,
+      'token': instance.token,
     };
