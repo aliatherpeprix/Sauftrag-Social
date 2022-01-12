@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/string_extensions.dart';
 import 'package:intl/intl.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/models/bar_model.dart';
 import 'package:sauftrag/models/user_models.dart' as userModel;
+import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/modules/dio_services.dart';
 import 'package:sauftrag/services/barSignup.dart';
 import 'package:sauftrag/services/changeUserPassword.dart';
@@ -47,6 +49,8 @@ class RegistrationViewModel extends BaseViewModel {
   bool signupCheck = false;
   bool logInUserSelected = true;
   bool logInBarSelected = false;
+  bool checkUserSelected = false;
+  //bool checkBarSelected = false;
   bool loginPasswordVisible = false;
   bool termsCheck = false;
   bool dataCheck = false;
@@ -261,7 +265,7 @@ class RegistrationViewModel extends BaseViewModel {
   void openAndSelectDob(BuildContext context) async {
     selectedDOB =
         await CommonFunctions.showDateOfBirthPicker(context, selectedDOB);
-    signUpDOBController.text = DateFormat('yyyy-MM-dd').format(selectedDOB);
+    signUpDOBController.text = DateFormat('dd-MM-yyyy').format(selectedDOB);
     notifyListeners();
   }
 
@@ -570,7 +574,6 @@ class RegistrationViewModel extends BaseViewModel {
 
   //Signup User
   createUserAccount() async {
-    
     isSigningUp = true;
     notifyListeners();
     if (signUpUserController.text.isEmpty) {
@@ -722,20 +725,35 @@ class RegistrationViewModel extends BaseViewModel {
       return;
     } else
       notifyListeners();
-    var user = userModel.UserModel();
+    //var user = userModel.UserModel();
 
-    var signupResponce = await signupUser.SignUpUser(
+    var checkuserResponce = await checkuser.CheckUser(
         signUpEmailController.text,
-        signUpUserController.text,
-        signUpPasswordController.text,
-        signUpVerifyPasswordController.text,
-        signUpPhoneController.text,
-        (relationStatusList.indexOf(relationStatusValueStr) + 1).toString(),
-        signUpAddressController.text,
-        (genderList.indexOf(genderValueStr) + 1).toString(),
-        signUpDOBController.text);
-    print(signupResponce);
-    navigateToFavoriteScreen();
+          "1"
+    );
+
+    if(checkuserResponce is UserModel)
+    {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "User Email already exist",
+      ));
+      print(checkuserResponce);
+    }
+    else
+      {
+      var signupResponce = await signupUser.SignUpUser(
+      signUpEmailController.text,
+      signUpUserController.text,
+      signUpPasswordController.text,
+      signUpVerifyPasswordController.text,
+      signUpPhoneController.text,
+      (relationStatusList.indexOf(relationStatusValueStr) + 1).toString(),
+      signUpAddressController.text,
+      (genderList.indexOf(genderValueStr) + 1).toString(),
+      signUpDOBController.text);
+      print(signupResponce);
+      navigateToFavoriteScreen();
+      }
   }
 
   //Signup Bar
@@ -808,6 +826,19 @@ class RegistrationViewModel extends BaseViewModel {
       return;
     } else
       notifyListeners();
+
+    var checkuserResponce = await checkuser.CheckUser(
+        signUpBarEmailController.text,
+         "2"
+    );
+    print(checkuserResponce);
+  if(checkuserResponce is UserModel)
+    {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Bar Email already exist",
+      ));
+    }
+  else{
     var signupResponce = await signupBar.SignUpBar(
       signUpBarUserController.text,
       signUpBarAddressController.text,
@@ -817,6 +848,7 @@ class RegistrationViewModel extends BaseViewModel {
     );
     print(signupResponce);
     navigateToUploadBarMedia();
+  }
   }
 
   void navigateToFavoriteScreen() {

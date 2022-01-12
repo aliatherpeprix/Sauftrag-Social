@@ -396,7 +396,7 @@ class _NewsFeedState extends State<NewsFeed> {
                                         ),
                                       ),
 
-                                      SizedBox(height: 2.h),
+
                                     ],
                                   ),
                                 ),
@@ -406,7 +406,7 @@ class _NewsFeedState extends State<NewsFeed> {
                               ],
                             ),
                           ),
-                          SizedBox(height: 3.h,),
+                         
                         ],
                       ),
                     ),

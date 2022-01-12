@@ -25,12 +25,12 @@ class Checkuser {
 
         'email': email,
         'role' : role,
-        'profile_picture' : ''
 
       });
 
-      var response = await dio.post(Constants.BaseUrl+Constants.SignUp, data: param);
-      if (response.statusCode == 200 || response.statusCode == 201) {
+      var response = await dio.post(Constants.BaseUrl+Constants.CheckUser, data: param);
+      if (response.
+      statusCode == 200 || response.statusCode == 201) {
         // user found
         /* if (response.data["status"] == 200) {
           var userData = UserModel.fromJson(response.data['data']);

@@ -66,7 +66,7 @@ class _MainViewState extends State<MainView> {
               animationCurve: Curves.ease,
               animationDuration: Duration(milliseconds: 300),
               height: SizeConfig.heightMultiplier * 8,
-              backgroundColor: Color(0xFFefefef),
+              //backgroundColor: Colors.redAccent,
               parentDecoration: BoxDecoration(
                   boxShadow: [BoxShadow(
                       color: Color(0xFFefefef),
