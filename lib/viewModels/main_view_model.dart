@@ -1,11 +1,15 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:sauftrag/utils/color_utils.dart';
+import 'package:sauftrag/utils/constants.dart';
 
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,6 +33,7 @@ class MainViewModel extends BaseViewModel{
   final searchScreenController = TextEditingController();
   final friendListSearchController = TextEditingController();
   bool openGroupMenu = false;
+  bool openBurgerMenu = false;
   bool privateGroupSelected = false;
   bool publicGroupSelected = false;
   bool deleteSelected = false;
@@ -57,6 +62,7 @@ class MainViewModel extends BaseViewModel{
   bool messageScreenEmojiSelected = false;
   final messageScreenChatController = TextEditingController();
   bool userNewsFeed = false;
+  var dio = Dio();
 
 
   double lowerValue = 50;
@@ -147,6 +153,82 @@ class MainViewModel extends BaseViewModel{
     'Public': 2,
   };
 
+  Future<bool> getImage1(BuildContext context, int type) async {
+    ImagePicker picker = ImagePicker();
+    var image;
+
+    if(type == Constants.camera){
+      image = await picker.pickImage(source: ImageSource.camera);
+    }
+    else{
+      image = await picker.pickImage(source: ImageSource.gallery);
+    }
+
+    _pickedFile = image;
+    //profileFileImage = File(_pickedFile!.path);
+    if (_pickedFile!.path.isEmpty) {
+      return false;
+    } else {
+      cropImage(context, _pickedFile!.path);
+      return true;
+    }
+  }
+  Future<Null> cropImage(BuildContext context, String path) async {
+    File? croppedFile = await ImageCropper.cropImage(
+        sourcePath: path,
+        cropStyle: CropStyle.circle,
+        compressFormat: ImageCompressFormat.png,
+        //compressQuality: 50,
+        maxWidth: 500,
+        maxHeight: 500,
+        androidUiSettings: AndroidUiSettings(
+            toolbarTitle: 'S',
+            toolbarColor: ColorUtils.red_color,
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: false),
+        iosUiSettings: IOSUiSettings(
+          title: 'SaufTrag',
+        ));
+    if (croppedFile != null) {
+      profileFileImage = croppedFile;
+      notifyListeners();
+      //
+      // var imageParams = FormData.fromMap({
+      //   'profile_image': profileFileImage != null ? await MultipartFile.fromFile(profileFileImage!.path,filename: basename(profileFileImage!.path)) : "",
+      // });
+
+      // var imageResponse = await dio.post("${ApiClient.editProfileImage}/${userData!.id}", data: imageParams);
+      //
+      // if (imageResponse.statusCode == 200 && imageResponse.data["status"] == true) {
+      //
+      //   showSuccessMessage(context, "Profile image updated successfully");
+      //   notifyListeners();
+      // }
+      // else {
+      //   notifyListeners();
+      //   showErrorMessage(context, imageResponse.data["message"]);
+      // }
+
+    }
+  }
+
+  Future<bool> getImage2(BuildContext context, String path) async {
+    ImagePicker picker = ImagePicker();
+    var image = await picker.pickImage(source: ImageSource.gallery);
+    _pickedFile = image;
+    if(_pickedFile != null){
+      profileFileImage = File(_pickedFile!.path);
+    }
+    if (profileFileImage==null)
+    {
+      return false;
+    }
+    else{
+      notifyListeners();
+      return true;
+    }
+  }
 
   Future<bool> getImage() async {
     ImagePicker picker = ImagePicker();

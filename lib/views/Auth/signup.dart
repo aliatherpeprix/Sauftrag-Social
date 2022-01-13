@@ -10,6 +10,7 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
 import 'package:sauftrag/viewModels/registrationViewModel.dart';
+import 'package:sauftrag/widgets/loader.dart';
 import 'package:stacked/stacked.dart';
 
 class SignUp extends StatefulWidget {
@@ -23,7 +24,6 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<RegistrationViewModel>.reactive(
-      //onModelReady: (data) => data.initializeLoginModel(),
       builder: (context, model, child) {
         return GestureDetector(
           onTap: () {
@@ -963,7 +963,7 @@ class _SignUpState extends State<SignUp> {
                               //model.navigateToFavoriteScreen();
                               model.createUserAccount();
                             },
-                            child: const Text("Sign Up"),
+                            child: model.signInUser == false ? Text("Sign Up") : Loader(),
                             style: ElevatedButton.styleFrom(
                               primary: ColorUtils.text_red,
                               onPrimary: ColorUtils.white,
@@ -1030,6 +1030,18 @@ class _SignUpState extends State<SignUp> {
         );
       },
       viewModelBuilder: () => locator<RegistrationViewModel>(),
+      onModelReady: (model) =>
+      {
+        model.signUpUserController.clear(),
+        model.signUpEmailController.clear(),
+        model.signUpConfirmEmailController.clear(),
+        model.signUpPhoneController.clear(),
+        model.signUpPasswordController.clear(),
+        model.signUpVerifyPasswordController.clear(),
+        model.signUpAddressController.clear(),
+        model.signUpDOBController.clear(),
+        model.signUpRelationshipController.clear()
+      },
       disposeViewModel: false,
     );
   }

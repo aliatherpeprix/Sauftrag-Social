@@ -81,6 +81,7 @@ class ImageUtils {
   static String userProfileGPs = "assets/userProfile_gps.svg";
   static String userProfileProfile = "assets/userProfile_profileIamge.png";
   static String levelStar = "assets/level_star.png";
+  static String galleryIcon = "assets/gallery_icon.svg";
   // static String girl1 = "assets/girl_1.png";
   // static String girl2 = "assets/girl_2.png";
   // static String girl3 = "assets/girl_3.png";

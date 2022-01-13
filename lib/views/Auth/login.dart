@@ -11,6 +11,7 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
 import 'package:sauftrag/viewModels/registrationViewModel.dart';
+import 'package:sauftrag/widgets/loader.dart';
 import 'package:stacked/stacked.dart';
 
 class Login extends StatefulWidget {
@@ -24,7 +25,6 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<RegistrationViewModel>.reactive(
-      //onModelReady: (data) => data.initializeLoginModel(),
       builder: (context, model, child) {
         return GestureDetector(
           onTap: () {
@@ -83,6 +83,8 @@ class _LoginState extends State<Login> {
                               //User
                               ElevatedButton(
                                 onPressed: () {
+                                  model.logInUserController.clear();
+                                  model.logInPasswordController.clear();
                                   model.selectRole(Constants.user);
                                   model.logInUserSelected = !model.logInUserSelected;
                                   model.logInBarSelected = false;
@@ -123,6 +125,8 @@ class _LoginState extends State<Login> {
                               //Bar
                               ElevatedButton(
                                 onPressed: () {
+                                  model.logInUserController.clear();
+                                  model.logInPasswordController.clear();
                                   model.selectRole(Constants.bar);
                                   model.logInBarSelected = !model.logInBarSelected;
                                   model.logInUserSelected = false;
@@ -323,9 +327,10 @@ class _LoginState extends State<Login> {
                             child: ElevatedButton(
                               onPressed: () {
                                 //model.navigateToHomeScreen(2);
+
                                 model.onLogIn();
                               },
-                              child: const Text("Sign In"),
+                              child: model.logIn == false ? Text("Sign In") : Loader(),
                               style: ElevatedButton.styleFrom(
                                 primary: ColorUtils.text_red,
                                 onPrimary: ColorUtils.white,
@@ -500,7 +505,12 @@ class _LoginState extends State<Login> {
         );
       },
       viewModelBuilder: () => locator<RegistrationViewModel>(),
-      disposeViewModel: false,
+        disposeViewModel: false,
+        onModelReady: (model) =>
+           {
+        model.logInUserController.clear(),
+        model.logInPasswordController.clear()
+           },
     );
   }
 }

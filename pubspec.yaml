@@ -57,6 +57,7 @@ dependencies:
   syncfusion_flutter_sliders: ^19.3.56
   flutter_rating_bar: ^4.0.0
   flutter_zoom_drawer: ^2.1.2
+  image_cropper: ^1.4.1
 
   #flutter_tindercard: ^0.2.0
 

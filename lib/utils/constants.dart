@@ -14,4 +14,11 @@ class Constants{
   static const String CheckUser = 'api/user/check/';
   static const String ChangeUserPassword = 'api/user/change-password/';
 
+  static const int profileImage = 1;
+  static const int nicFrontImage = 2;
+  static const int nicBackImage = 3;
+
+  static final int camera = 1;
+  static final int gallery = 2;
+
 }

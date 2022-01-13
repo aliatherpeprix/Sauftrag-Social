@@ -241,500 +241,566 @@ class _MessageScreenState extends State<MessageScreen> {
                 padding: EdgeInsets.symmetric(
                     horizontal: Dimensions.horizontalPadding,
                    ),
-                child: Column(
+                child: Stack(
                   children: [
-                    SizedBox(height: Dimensions.topMargin),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            IconButton(
-                                onPressed: () {
-                                  model.navigateBack();
-                                },
-                                iconSize: 18.0,
-                                padding: EdgeInsets.zero,
-                                constraints: BoxConstraints(),
-                                icon: Icon(
-                                  Icons.arrow_back_ios,
-                                  color: ColorUtils.black,
-                                  size: 4.5.i,
-                                )),
-                            SizedBox(width: 2.5.w,),
-                            GestureDetector(
-                              onTap: (){
-                                model.navigateToFollowerList();
-                              },
-                              child: Row(
-                                children: [
-                                  Stack(
-                                    alignment: Alignment.topCenter,
-                                    children: [
-                                      CircleAvatar(
-                                        radius: 26.0,
-                                        backgroundImage:
-                                        AssetImage(ImageUtils.messagePerson1),
-                                        backgroundColor: Colors.transparent,
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(width: 3.w,),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text("Athalia Putri",
-                                        style: TextStyle(
-                                            fontFamily: FontUtils.modernistBold,
-                                            fontSize: 1.9.t,
-                                            color: ColorUtils.text_dark
-                                        ),
-                                      ),
-                                      SizedBox(height: 0.5.h,),
-                                      Text("Active",
-                                        style: TextStyle(
-                                            fontFamily: FontUtils.modernistBold,
-                                            fontSize: 1.5.t,
-                                            color: ColorUtils.activeColor
-                                        ),
-                                      ),
-                                    ],
+                    if(model.openBurgerMenu == true)
+                      Positioned(
+                          right: 2.5.w,
+                          top: 12.5.h,
+                          child: GestureDetector(
+                            onTap: (){
+                              //model.navigateToMsgCreateGroupScreen();
+                            },
+                            child: Container(
+                              width: 28.w,
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.1),
+                                    spreadRadius: 0,
+                                    blurRadius: 10,
+                                    offset: Offset(0, 5), // changes position of shadow
                                   ),
                                 ],
+                                color: Colors.white,
+                                borderRadius: BorderRadius.all(Radius.circular(6)),
                               ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Report Chat",
+                                      style: TextStyle(
+                                          fontFamily: FontUtils.modernistRegular,
+                                          fontSize: 1.9.t,
+                                          color: ColorUtils.text_dark
+                                      ),
+                                    ),
+                                    SizedBox(height: 1.h,),
+                                    Text("Block",
+                                      style: TextStyle(
+                                          fontFamily: FontUtils.modernistRegular,
+                                          fontSize: 1.9.t,
+                                          color: ColorUtils.text_dark
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )
+                      ),
+                    Column(
+                      children: [
+                        SizedBox(height: Dimensions.topMargin),
+                        Stack(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+
+                                GestureDetector(
+                                  onTap: (){
+                                    model.navigateToFollowerList();
+                                  },
+                                  child: Row(
+                                    children: [
+                                      IconButton(
+                                          onPressed: () {
+                                            model.navigateBack();
+                                          },
+                                          iconSize: 18.0,
+                                          padding: EdgeInsets.zero,
+                                          constraints: BoxConstraints(),
+                                          icon: Icon(
+                                            Icons.arrow_back_ios,
+                                            color: ColorUtils.black,
+                                            size: 4.5.i,
+                                          )),
+                                      SizedBox(width: 2.5.w,),
+                                      Stack(
+                                        alignment: Alignment.topCenter,
+                                        children: [
+                                          CircleAvatar(
+                                            radius: 26.0,
+                                            backgroundImage:
+                                            AssetImage(ImageUtils.messagePerson1),
+                                            backgroundColor: Colors.transparent,
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(width: 3.w,),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Text("Athalia Putri",
+                                            style: TextStyle(
+                                                fontFamily: FontUtils.modernistBold,
+                                                fontSize: 1.9.t,
+                                                color: ColorUtils.text_dark
+                                            ),
+                                          ),
+                                          SizedBox(height: 0.5.h,),
+                                          Text("Active",
+                                            style: TextStyle(
+                                                fontFamily: FontUtils.modernistBold,
+                                                fontSize: 1.5.t,
+                                                color: ColorUtils.activeColor
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: (){
+                                    if(model.openBurgerMenu == false){
+                                      model.openBurgerMenu = true;
+                                      model.notifyListeners();
+                                    }
+                                    else if (model.openBurgerMenu == true){
+                                      model.openBurgerMenu = false;
+                                      model.notifyListeners();
+                                    }
+                                  },
+                                  icon: SvgPicture.asset(ImageUtils.chatMenuIcon),
+                                )
+                              ],
                             ),
                           ],
                         ),
-                        SvgPicture.asset(ImageUtils.chatMenuIcon),
-                      ],
-                    ),
-                    SizedBox(height: 1.h,),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        physics: BouncingScrollPhysics(),
-                        controller: scrollController,
-                        child: Container(
-                          padding: EdgeInsets.only(
-                            top: 2.h, bottom: 11.h
-                          ),
-                          child: Column(
-                            children: [
-                              //SizedBox(height: 5.h,),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width/1.7,
-                                  decoration: BoxDecoration(
-                                    color: ColorUtils.messageChat,
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(15),
-                                      topRight: Radius.circular(15),
-                                      bottomRight: Radius.circular(15),
-                                    ),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: 3.w,vertical: 1.5.h),
-                                        child: Image.asset(ImageUtils.drinkImage,
+                        SizedBox(height: 1.h,),
+                        Expanded(
+                          child: SingleChildScrollView(
+                            physics: BouncingScrollPhysics(),
+                            controller: scrollController,
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  top: 2.h, bottom: 11.h
+                              ),
+                              child: Column(
+                                children: [
+                                  //SizedBox(height: 5.h,),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width/1.7,
+                                      decoration: BoxDecoration(
+                                        color: ColorUtils.messageChat,
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(15),
+                                          topRight: Radius.circular(15),
+                                          bottomRight: Radius.circular(15),
                                         ),
                                       ),
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 3.w, right: 3.w,top: 1.5.h),
-                                        child: Text("Lorem ipsum dolor sit amet, consec tetur adipiscing elit.",
-                                          style: TextStyle(
-                                              //fontFamily: FontUtils.avertaDemoRegular,
-                                              fontSize: 1.8.t,
-                                              color: ColorUtils.text_dark
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(horizontal: 3.w,vertical: 1.5.h),
+                                            child: Image.asset(ImageUtils.drinkImage,
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                      //SizedBox(height: 1.h,),
-                                      Align(
-                                        alignment: Alignment.centerRight,
-                                        child: Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Text("02:45 pm",
-                                            style: TextStyle(
+                                          Padding(
+                                            padding: EdgeInsets.only(left: 3.w, right: 3.w,top: 1.5.h),
+                                            child: Text("Lorem ipsum dolor sit amet, consec tetur adipiscing elit.",
+                                              style: TextStyle(
                                                 //fontFamily: FontUtils.avertaDemoRegular,
-                                                fontSize: 1.5.t,
-                                                color: ColorUtils.icon_color
+                                                  fontSize: 1.8.t,
+                                                  color: ColorUtils.text_dark
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: 2.h,),
-                              //SizedBox(height: 5.h,),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width / 1.6,
-                                  decoration: BoxDecoration(
-                                    color: ColorUtils.text_red,
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(15),
-                                      topRight: Radius.circular(15),
-                                      //bottomRight: Radius.circular(0),
-                                      bottomLeft: Radius.circular(15),
-                                    ),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 3.w, right: 3.w,top: 2.h),
-                                        child: Text("Ok, I’m on my way",
-                                          style: TextStyle(
-                                            //fontFamily: FontUtils.avertaDemoRegular,
-                                              fontSize: 1.8.t,
-                                              color: Colors.white
-                                          ),
-                                        ),
-                                      ),
-                                      //SizedBox(height: 1.h,),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text("02:45 pm•Read",
-                                            style: TextStyle(
-                                              //fontFamily: FontUtils.avertaDemoRegular,
-                                              fontSize: 1.5.t,
-                                              color: Colors.white
+                                          //SizedBox(height: 1.h,),
+                                          Align(
+                                            alignment: Alignment.centerRight,
+                                            child: Padding(
+                                              padding: EdgeInsets.all(8.0),
+                                              child: Text("02:45 pm",
+                                                style: TextStyle(
+                                                  //fontFamily: FontUtils.avertaDemoRegular,
+                                                    fontSize: 1.5.t,
+                                                    color: ColorUtils.icon_color
+                                                ),
+                                              ),
                                             ),
                                           ),
-                                        ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-
-                              SizedBox(height: 2.h,),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width / 1.6,
-                                  decoration: BoxDecoration(
-                                    color: ColorUtils.messageChat,
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(15),
-                                      topRight: Radius.circular(15),
-                                      //bottomRight: Radius.circular(0),
-                                      bottomLeft: Radius.circular(15),
                                     ),
                                   ),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 3.w, right: 3.w,top: 2.h),
-                                        child: Text("Ok, I’m on my way",
-                                          style: TextStyle(
-                                            //fontFamily: FontUtils.avertaDemoRegular,
-                                              fontSize: 1.8.t,
-                                              color: ColorUtils.text_dark
-                                          ),
+                                  SizedBox(height: 2.h,),
+                                  //SizedBox(height: 5.h,),
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width / 1.6,
+                                      decoration: BoxDecoration(
+                                        color: ColorUtils.text_red,
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(15),
+                                          topRight: Radius.circular(15),
+                                          //bottomRight: Radius.circular(0),
+                                          bottomLeft: Radius.circular(15),
                                         ),
                                       ),
-                                      //SizedBox(height: 1.h,),
-                                      Align(
-                                        alignment: Alignment.centerRight,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text("02:45 pm•Read",
-                                            style: TextStyle(
-                                              //fontFamily: FontUtils.avertaDemoRegular,
-                                                fontSize: 1.5.t,
-                                                color: ColorUtils.icon_color
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.only(left: 3.w, right: 3.w,top: 2.h),
+                                            child: Text("Ok, I’m on my way",
+                                              style: TextStyle(
+                                                //fontFamily: FontUtils.avertaDemoRegular,
+                                                  fontSize: 1.8.t,
+                                                  color: Colors.white
+                                              ),
                                             ),
                                           ),
-                                        ),
+                                          //SizedBox(height: 1.h,),
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: Text("02:45 pm•Read",
+                                                style: TextStyle(
+                                                  //fontFamily: FontUtils.avertaDemoRegular,
+                                                    fontSize: 1.5.t,
+                                                    color: Colors.white
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-
-                              SizedBox(height: 2.h,),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width / 1.6,
-                                  decoration: BoxDecoration(
-                                    color: ColorUtils.text_red,
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(15),
-                                      topRight: Radius.circular(15),
-                                      //bottomRight: Radius.circular(0),
-                                      bottomLeft: Radius.circular(15),
                                     ),
                                   ),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 3.w, right: 3.w,top: 2.h),
-                                        child: Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin maximus ac arcu nec tristique. ",
-                                          style: TextStyle(
-                                            //fontFamily: FontUtils.avertaDemoRegular,
-                                              fontSize: 1.8.t,
-                                              color: Colors.white
-                                          ),
+
+                                  SizedBox(height: 2.h,),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width / 1.6,
+                                      decoration: BoxDecoration(
+                                        color: ColorUtils.messageChat,
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(15),
+                                          topRight: Radius.circular(15),
+                                          //bottomRight: Radius.circular(0),
+                                          bottomLeft: Radius.circular(15),
                                         ),
                                       ),
-                                      SizedBox(height: 1.h,),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text("02:45 pm•Read",
-                                          style: TextStyle(
-                                            //fontFamily: FontUtils.avertaDemoRegular,
-                                            fontSize: 1.5.t,
-                                            color: Colors.white
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.only(left: 3.w, right: 3.w,top: 2.h),
+                                            child: Text("Ok, I’m on my way",
+                                              style: TextStyle(
+                                                //fontFamily: FontUtils.avertaDemoRegular,
+                                                  fontSize: 1.8.t,
+                                                  color: ColorUtils.text_dark
+                                              ),
+                                            ),
                                           ),
-                                        ),
+                                          //SizedBox(height: 1.h,),
+                                          Align(
+                                            alignment: Alignment.centerRight,
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: Text("02:45 pm•Read",
+                                                style: TextStyle(
+                                                  //fontFamily: FontUtils.avertaDemoRegular,
+                                                    fontSize: 1.5.t,
+                                                    color: ColorUtils.icon_color
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: 2.h,),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width / 1.6,
-                                  decoration: BoxDecoration(
-                                    color: ColorUtils.text_red,
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(15),
-                                      topRight: Radius.circular(15),
-                                      //bottomRight: Radius.circular(0),
-                                      bottomLeft: Radius.circular(15),
                                     ),
                                   ),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 3.w, right: 3.w,top: 2.h),
-                                        child: Text("Hii....",
-                                          style: TextStyle(
-                                            //fontFamily: FontUtils.avertaDemoRegular,
-                                              fontSize: 1.8.t,
-                                              color: Colors.white
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(height: 1.h,),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text("03:00 pm•Read",
-                                          style: TextStyle(
-                                            //fontFamily: FontUtils.avertaDemoRegular,
-                                              fontSize: 1.5.t,
-                                              color: Colors.white
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
 
-                              // Row(
-                              //   mainAxisSize: MainAxisSize.min,
-                              //   //crossAxisAlignment: CrossAxisAlignment.end,
-                              //   children: [
-                              //     Expanded(
-                              //       child: Container(
-                              //         //width: 200.0,
-                              //         margin: EdgeInsets.only(
-                              //           //left: SizeConfig.widthMultiplier * 4.5,
-                              //           right: SizeConfig.widthMultiplier * 2,
-                              //           //top: SizeConfig.heightMultiplier * 3,
-                              //         ),
-                              //         decoration: BoxDecoration(
-                              //             color: Colors.white,
-                              //             borderRadius: BorderRadius.all(
-                              //               Radius.circular(15.0),
-                              //             ),
-                              //             border: Border.all(color: ColorUtils.text_red)
-                              //         ),
-                              //         child: Container(
-                              //           //color: Colors.amber,
-                              //           margin:
-                              //           EdgeInsets.symmetric(horizontal: SizeConfig.widthMultiplier * 3,),
-                              //           child: Row(
-                              //             children: [
-                              //               ExpandTapWidget(
-                              //                 onTap: () {
-                              //                   model.messageScreenEmojiShowing = !model.messageScreenEmojiShowing;
-                              //                   model.messageScreenEmojiSelected = !model.messageScreenEmojiSelected;
-                              //                   SchedulerBinding.instance!.addPostFrameCallback((_) {
-                              //                     scrollController.jumpTo(scrollController.position.maxScrollExtent);
-                              //                   });
-                              //                   setState(() {
-                              //                   });
-                              //                 },
-                              //                 tapPadding: EdgeInsets.all(25.0),
-                              //                 child: SvgPicture.asset(ImageUtils.smileyIcon),
-                              //               ),
-                              //               // GestureDetector(
-                              //               //   onTap: (){
-                              //               //     emojiShowing = !emojiShowing;
-                              //               //     emojiSelected = !emojiSelected;
-                              //               //     SchedulerBinding.instance!.addPostFrameCallback((_) {
-                              //               //       scrollController.jumpTo(scrollController.position.maxScrollExtent);
-                              //               //     });
-                              //               //     setState(() {
-                              //               //     });
-                              //               //   },
-                              //               //   child: Container(
-                              //               //     child: SvgPicture.asset(ImageUtils.smileyIcon),
-                              //               //   ),
-                              //               // ),
-                              //               SizedBox(width: 1.w,),
-                              //               Expanded(
-                              //                 child: Container(
-                              //                   margin: EdgeInsets.only(
-                              //                       left: SizeConfig.widthMultiplier * 3,
-                              //                       right: SizeConfig.widthMultiplier * 3),
-                              //                   child: TextField(
-                              //                     onTap: () {},
-                              //                     enabled: true,
-                              //                     //readOnly: true,
-                              //                     //focusNode: model.searchFocus,
-                              //                     controller: model.messageScreenChatController,
-                              //                     decoration: InputDecoration(
-                              //                       hintText: "Type your message...",
-                              //                       hintStyle: TextStyle(
-                              //                         //fontFamily: FontUtils.proximaNovaRegular,
-                              //                         //color: ColorUtils.silverColor,
-                              //                         fontSize: SizeConfig.textMultiplier * 1.9,
-                              //                       ),
-                              //                       border: InputBorder.none,
-                              //                       isDense: true,
-                              //                       contentPadding: EdgeInsets.symmetric(
-                              //                           vertical: SizeConfig.heightMultiplier * 2),
-                              //                     ),
-                              //                   ),
-                              //                 ),
-                              //               ),
-                              //               Container(
-                              //                 decoration: BoxDecoration(
-                              //                   //color: ColorUtils.text_red,
-                              //                   borderRadius: BorderRadius.all(Radius.circular(15)),
-                              //                 ),
-                              //                 child: Row(
-                              //                   children: [
-                              //                     ExpandTapWidget(
-                              //                       onTap: () {
-                              //                         model.getImage();
-                              //                         setState(() {
-                              //                         });
-                              //                       },
-                              //                       tapPadding: EdgeInsets.all(50.0),
-                              //                       child: SvgPicture.asset(ImageUtils.plusIcon),
-                              //                     ),
-                              //                     // GestureDetector(
-                              //                     //   onTap: (){
-                              //                     //     model.getImage();
-                              //                     //   },
-                              //                     //     child: SvgPicture.asset(ImageUtils.plusIcon),
-                              //                     // ),
-                              //                     SizedBox(width: 4.w,),
-                              //                     ExpandTapWidget(
-                              //                         onTap: () async{
-                              //                           // final cameras = await availableCameras();
-                              //                           // final firstCamera = cameras.first;
-                              //                           //model.navigationService.navigateTo(to: TakePictureScreen(camera: firstCamera,));
-                              //                           model.openCamera();
-                              //                         },
-                              //                         tapPadding: EdgeInsets.all(25.0),
-                              //                         child: SvgPicture.asset(ImageUtils.photoCamera)
-                              //                     ),
-                              //                     // GestureDetector(
-                              //                     //   onTap: (){
-                              //                     //   },
-                              //                     //   child: SvgPicture.asset(ImageUtils.photoCamera)
-                              //                     // ),
-                              //                   ],
-                              //                 ),
-                              //               ),
-                              //               // Text(searchHere,
-                              //               //   style: TextStyle(
-                              //               //     fontFamily: FontUtils.gibsonRegular,
-                              //               //     fontWeight: FontWeight.w400,
-                              //               //     fontSize: SizeConfig.textMultiplier * 1.8,
-                              //               //     color: ColorUtils.searchFieldText,
-                              //               //   ),
-                              //               // ),
-                              //             ],
-                              //           ),
-                              //         ),
-                              //       ),
-                              //     ),
-                              //     Container(
-                              //       decoration: BoxDecoration(
-                              //         shape: BoxShape.circle,
-                              //         color: ColorUtils.text_red,
-                              //       ),
-                              //       child: Padding(
-                              //         padding: const EdgeInsets.all(15.0),
-                              //         child: SvgPicture.asset(ImageUtils.voiceRecorder,
-                              //           color: Colors.white,
-                              //         ),
-                              //       ),
-                              //     ),
-                              //   ],
-                              // ),
-                              // SizedBox(height: 2.h,),
-                              // if(model.messageScreenEmojiSelected == true)
-                              //   Container(
-                              //     height: 30.h,
-                              //     child: Offstage(
-                              //       offstage: !model.messageScreenEmojiShowing,
-                              //       child: EmojiPicker(
-                              //           onEmojiSelected: (Category category, Emoji emoji) {
-                              //             model.messageEmojiSelected(emoji);
-                              //           },
-                              //           onBackspacePressed: model.messageScreenBackspacePressed(),
-                              //           config: Config(
-                              //               columns: 7,
-                              //               // Issue: https://github.com/flutter/flutter/issues/28894
-                              //               emojiSizeMax: 32 * (Platform.isIOS ? 1.30 : 1.0),
-                              //               verticalSpacing: 0,
-                              //               horizontalSpacing: 0,
-                              //               initCategory: Category.RECENT,
-                              //               bgColor: const Color(0xFFF2F2F2),
-                              //               indicatorColor: Colors.blue,
-                              //               iconColor: Colors.grey,
-                              //               iconColorSelected: Colors.blue,
-                              //               progressIndicatorColor: Colors.blue,
-                              //               backspaceColor: Colors.blue,
-                              //               showRecentsTab: true,
-                              //               recentsLimit: 28,
-                              //               noRecentsText: 'No Recents',
-                              //               noRecentsStyle: const TextStyle(
-                              //                   fontSize: 20, color: Colors.black26),
-                              //               tabIndicatorAnimDuration: kTabScrollDuration,
-                              //               categoryIcons: const CategoryIcons(),
-                              //               buttonMode: ButtonMode.MATERIAL)),
-                              //     ),
-                              //   ),
-                            ],
+                                  SizedBox(height: 2.h,),
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width / 1.6,
+                                      decoration: BoxDecoration(
+                                        color: ColorUtils.text_red,
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(15),
+                                          topRight: Radius.circular(15),
+                                          //bottomRight: Radius.circular(0),
+                                          bottomLeft: Radius.circular(15),
+                                        ),
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.only(left: 3.w, right: 3.w,top: 2.h),
+                                            child: Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin maximus ac arcu nec tristique. ",
+                                              style: TextStyle(
+                                                //fontFamily: FontUtils.avertaDemoRegular,
+                                                  fontSize: 1.8.t,
+                                                  color: Colors.white
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(height: 1.h,),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text("02:45 pm•Read",
+                                              style: TextStyle(
+                                                //fontFamily: FontUtils.avertaDemoRegular,
+                                                  fontSize: 1.5.t,
+                                                  color: Colors.white
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 2.h,),
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width / 1.6,
+                                      decoration: BoxDecoration(
+                                        color: ColorUtils.text_red,
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(15),
+                                          topRight: Radius.circular(15),
+                                          //bottomRight: Radius.circular(0),
+                                          bottomLeft: Radius.circular(15),
+                                        ),
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.only(left: 3.w, right: 3.w,top: 2.h),
+                                            child: Text("Hii....",
+                                              style: TextStyle(
+                                                //fontFamily: FontUtils.avertaDemoRegular,
+                                                  fontSize: 1.8.t,
+                                                  color: Colors.white
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(height: 1.h,),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text("03:00 pm•Read",
+                                              style: TextStyle(
+                                                //fontFamily: FontUtils.avertaDemoRegular,
+                                                  fontSize: 1.5.t,
+                                                  color: Colors.white
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+
+                                  // Row(
+                                  //   mainAxisSize: MainAxisSize.min,
+                                  //   //crossAxisAlignment: CrossAxisAlignment.end,
+                                  //   children: [
+                                  //     Expanded(
+                                  //       child: Container(
+                                  //         //width: 200.0,
+                                  //         margin: EdgeInsets.only(
+                                  //           //left: SizeConfig.widthMultiplier * 4.5,
+                                  //           right: SizeConfig.widthMultiplier * 2,
+                                  //           //top: SizeConfig.heightMultiplier * 3,
+                                  //         ),
+                                  //         decoration: BoxDecoration(
+                                  //             color: Colors.white,
+                                  //             borderRadius: BorderRadius.all(
+                                  //               Radius.circular(15.0),
+                                  //             ),
+                                  //             border: Border.all(color: ColorUtils.text_red)
+                                  //         ),
+                                  //         child: Container(
+                                  //           //color: Colors.amber,
+                                  //           margin:
+                                  //           EdgeInsets.symmetric(horizontal: SizeConfig.widthMultiplier * 3,),
+                                  //           child: Row(
+                                  //             children: [
+                                  //               ExpandTapWidget(
+                                  //                 onTap: () {
+                                  //                   model.messageScreenEmojiShowing = !model.messageScreenEmojiShowing;
+                                  //                   model.messageScreenEmojiSelected = !model.messageScreenEmojiSelected;
+                                  //                   SchedulerBinding.instance!.addPostFrameCallback((_) {
+                                  //                     scrollController.jumpTo(scrollController.position.maxScrollExtent);
+                                  //                   });
+                                  //                   setState(() {
+                                  //                   });
+                                  //                 },
+                                  //                 tapPadding: EdgeInsets.all(25.0),
+                                  //                 child: SvgPicture.asset(ImageUtils.smileyIcon),
+                                  //               ),
+                                  //               // GestureDetector(
+                                  //               //   onTap: (){
+                                  //               //     emojiShowing = !emojiShowing;
+                                  //               //     emojiSelected = !emojiSelected;
+                                  //               //     SchedulerBinding.instance!.addPostFrameCallback((_) {
+                                  //               //       scrollController.jumpTo(scrollController.position.maxScrollExtent);
+                                  //               //     });
+                                  //               //     setState(() {
+                                  //               //     });
+                                  //               //   },
+                                  //               //   child: Container(
+                                  //               //     child: SvgPicture.asset(ImageUtils.smileyIcon),
+                                  //               //   ),
+                                  //               // ),
+                                  //               SizedBox(width: 1.w,),
+                                  //               Expanded(
+                                  //                 child: Container(
+                                  //                   margin: EdgeInsets.only(
+                                  //                       left: SizeConfig.widthMultiplier * 3,
+                                  //                       right: SizeConfig.widthMultiplier * 3),
+                                  //                   child: TextField(
+                                  //                     onTap: () {},
+                                  //                     enabled: true,
+                                  //                     //readOnly: true,
+                                  //                     //focusNode: model.searchFocus,
+                                  //                     controller: model.messageScreenChatController,
+                                  //                     decoration: InputDecoration(
+                                  //                       hintText: "Type your message...",
+                                  //                       hintStyle: TextStyle(
+                                  //                         //fontFamily: FontUtils.proximaNovaRegular,
+                                  //                         //color: ColorUtils.silverColor,
+                                  //                         fontSize: SizeConfig.textMultiplier * 1.9,
+                                  //                       ),
+                                  //                       border: InputBorder.none,
+                                  //                       isDense: true,
+                                  //                       contentPadding: EdgeInsets.symmetric(
+                                  //                           vertical: SizeConfig.heightMultiplier * 2),
+                                  //                     ),
+                                  //                   ),
+                                  //                 ),
+                                  //               ),
+                                  //               Container(
+                                  //                 decoration: BoxDecoration(
+                                  //                   //color: ColorUtils.text_red,
+                                  //                   borderRadius: BorderRadius.all(Radius.circular(15)),
+                                  //                 ),
+                                  //                 child: Row(
+                                  //                   children: [
+                                  //                     ExpandTapWidget(
+                                  //                       onTap: () {
+                                  //                         model.getImage();
+                                  //                         setState(() {
+                                  //                         });
+                                  //                       },
+                                  //                       tapPadding: EdgeInsets.all(50.0),
+                                  //                       child: SvgPicture.asset(ImageUtils.plusIcon),
+                                  //                     ),
+                                  //                     // GestureDetector(
+                                  //                     //   onTap: (){
+                                  //                     //     model.getImage();
+                                  //                     //   },
+                                  //                     //     child: SvgPicture.asset(ImageUtils.plusIcon),
+                                  //                     // ),
+                                  //                     SizedBox(width: 4.w,),
+                                  //                     ExpandTapWidget(
+                                  //                         onTap: () async{
+                                  //                           // final cameras = await availableCameras();
+                                  //                           // final firstCamera = cameras.first;
+                                  //                           //model.navigationService.navigateTo(to: TakePictureScreen(camera: firstCamera,));
+                                  //                           model.openCamera();
+                                  //                         },
+                                  //                         tapPadding: EdgeInsets.all(25.0),
+                                  //                         child: SvgPicture.asset(ImageUtils.photoCamera)
+                                  //                     ),
+                                  //                     // GestureDetector(
+                                  //                     //   onTap: (){
+                                  //                     //   },
+                                  //                     //   child: SvgPicture.asset(ImageUtils.photoCamera)
+                                  //                     // ),
+                                  //                   ],
+                                  //                 ),
+                                  //               ),
+                                  //               // Text(searchHere,
+                                  //               //   style: TextStyle(
+                                  //               //     fontFamily: FontUtils.gibsonRegular,
+                                  //               //     fontWeight: FontWeight.w400,
+                                  //               //     fontSize: SizeConfig.textMultiplier * 1.8,
+                                  //               //     color: ColorUtils.searchFieldText,
+                                  //               //   ),
+                                  //               // ),
+                                  //             ],
+                                  //           ),
+                                  //         ),
+                                  //       ),
+                                  //     ),
+                                  //     Container(
+                                  //       decoration: BoxDecoration(
+                                  //         shape: BoxShape.circle,
+                                  //         color: ColorUtils.text_red,
+                                  //       ),
+                                  //       child: Padding(
+                                  //         padding: const EdgeInsets.all(15.0),
+                                  //         child: SvgPicture.asset(ImageUtils.voiceRecorder,
+                                  //           color: Colors.white,
+                                  //         ),
+                                  //       ),
+                                  //     ),
+                                  //   ],
+                                  // ),
+                                  // SizedBox(height: 2.h,),
+                                  // if(model.messageScreenEmojiSelected == true)
+                                  //   Container(
+                                  //     height: 30.h,
+                                  //     child: Offstage(
+                                  //       offstage: !model.messageScreenEmojiShowing,
+                                  //       child: EmojiPicker(
+                                  //           onEmojiSelected: (Category category, Emoji emoji) {
+                                  //             model.messageEmojiSelected(emoji);
+                                  //           },
+                                  //           onBackspacePressed: model.messageScreenBackspacePressed(),
+                                  //           config: Config(
+                                  //               columns: 7,
+                                  //               // Issue: https://github.com/flutter/flutter/issues/28894
+                                  //               emojiSizeMax: 32 * (Platform.isIOS ? 1.30 : 1.0),
+                                  //               verticalSpacing: 0,
+                                  //               horizontalSpacing: 0,
+                                  //               initCategory: Category.RECENT,
+                                  //               bgColor: const Color(0xFFF2F2F2),
+                                  //               indicatorColor: Colors.blue,
+                                  //               iconColor: Colors.grey,
+                                  //               iconColorSelected: Colors.blue,
+                                  //               progressIndicatorColor: Colors.blue,
+                                  //               backspaceColor: Colors.blue,
+                                  //               showRecentsTab: true,
+                                  //               recentsLimit: 28,
+                                  //               noRecentsText: 'No Recents',
+                                  //               noRecentsStyle: const TextStyle(
+                                  //                   fontSize: 20, color: Colors.black26),
+                                  //               tabIndicatorAnimDuration: kTabScrollDuration,
+                                  //               categoryIcons: const CategoryIcons(),
+                                  //               buttonMode: ButtonMode.MATERIAL)),
+                                  //     ),
+                                  //   ),
+                                ],
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
                   ],
-                ),
+                )
               ),
             ),
           ),

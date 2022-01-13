@@ -51,9 +51,10 @@ class LoginUser {
       }
 
     } catch (e) {
-      DialogUtils().showDialog(
-          MyErrorWidget(error: (e as DioError).response!.data["detail"].toString()));
-      return;
+      // DialogUtils().showDialog(
+      //     MyErrorWidget(error: (e as DioError).response!.data["detail"].toString()));
+
+      return (e as DioError).response!.data["detail"].toString();
       // dynamic exception = e;
       // return exception.message;
     }

@@ -56,6 +56,9 @@ class RegistrationViewModel extends BaseViewModel {
   bool dataCheck = false;
   bool resetNewPasswordVisible = false;
   bool resetConfirmPasswordVisible = false;
+  bool logIn = false;
+  bool signInUser = false;
+  bool signInBar = false;
 
   bool otpLoading = false;
   TimeOfDay? startTime;
@@ -288,6 +291,7 @@ class RegistrationViewModel extends BaseViewModel {
           .showDialog(MyErrorWidget(error: "Password must contain 7 digit"));
       return;
     } else {
+      logIn = true;
       notifyListeners();
       /* var signupResponce =  await loginUser.LogInUser(
           logInUserController.text,
@@ -304,13 +308,23 @@ class RegistrationViewModel extends BaseViewModel {
         if (logInUserSelected == true) {
           mainViewModel.logInUserSelected = true;
           mainViewModel.logInBarSelected = false;
+          logIn = false;
 
           navigateToHomeScreen(2);
         } else if (logInBarSelected == true) {
           mainViewModel.logInUserSelected = false;
           mainViewModel.logInBarSelected = true;
+          logIn = false;
+          notifyListeners();
           navigateToHomeBarScreen();
         }
+      }
+      else if (signupResponse is String){
+        logIn = false;
+        notifyListeners();
+        DialogUtils().showDialog(
+            MyErrorWidget(error: signupResponse));
+
       }
     }
   }
@@ -724,6 +738,7 @@ class RegistrationViewModel extends BaseViewModel {
       notifyListeners();
       return;
     } else
+      signInUser = true;
       notifyListeners();
     //var user = userModel.UserModel();
 
@@ -734,6 +749,8 @@ class RegistrationViewModel extends BaseViewModel {
 
     if(checkuserResponce is UserModel)
     {
+      signInUser = false;
+      notifyListeners();
       DialogUtils().showDialog(MyErrorWidget(
         error: "User Email already exist",
       ));
@@ -752,6 +769,10 @@ class RegistrationViewModel extends BaseViewModel {
       (genderList.indexOf(genderValueStr) + 1).toString(),
       signUpDOBController.text);
       print(signupResponce);
+      signInUser = false;
+      notifyListeners();
+        DialogUtils().showDialog(
+            MyErrorWidget(error: signupResponce));
       navigateToFavoriteScreen();
       }
   }

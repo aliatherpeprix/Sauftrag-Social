@@ -9,14 +9,12 @@ class Loader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      top: false,
-      bottom: false,
-      child: Scaffold(
-        backgroundColor: ColorUtils.white,
-        body: Center(
+    return Container(
+      child: Center(
+        child: SizedBox(
+          height: 5.i,width: 5.i,
           child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation(ColorUtils.red_color),
+            valueColor: AlwaysStoppedAnimation(Colors.white.withOpacity(.6)),
           ),
         ),
       ),

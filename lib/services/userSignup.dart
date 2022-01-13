@@ -57,8 +57,8 @@ class SignupUser {
         }
 
     } catch (e) {
-      dynamic exception = e;
-      return exception.message;
+      //dynamic exception = e;
+      return  (e as DioError).response!.data["message"].toString();
     }
   }
 }

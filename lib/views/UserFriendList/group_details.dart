@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/utils/color_utils.dart';
+import 'package:sauftrag/utils/constants.dart';
 import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
@@ -13,6 +14,7 @@ import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/widgets/back_arrow_with_container.dart';
+import 'package:sauftrag/widgets/image_edit_dialog.dart';
 import 'package:stacked/stacked.dart';
 
 class GroupDetails extends StatefulWidget {
@@ -124,7 +126,13 @@ class _GroupDetailsState extends State<GroupDetails> {
                                 children: [
                                   GestureDetector(
                                     onTap: (){
-                                      model.openCamera();
+                                      //model.openCamera();
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context){
+                                            return EditImageDialog(from: Constants.profileImage);
+                                          }
+                                      );
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(

@@ -550,6 +550,16 @@ class _SignUpBarState extends State<SignUpBar> {
         );
       },
       viewModelBuilder: () => locator<RegistrationViewModel>(),
+      onModelReady: (model) =>
+      {
+        model.signUpBarUserController.clear(),
+        model.signUpBarAddressController.clear(),
+        model.signUpBarEmailController.clear(),
+        model.signUpBarPasswordController.clear(),
+        model.signUpBarVerifyPasswordController.clear(),
+        model.LocationController.clear(),
+
+      },
       disposeViewModel: false,
     );
   }

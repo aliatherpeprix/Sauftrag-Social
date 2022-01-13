@@ -547,6 +547,7 @@ class _BarDetailState extends State<BarDetail> {
                             ),
                           ),
                         ),
+                        SizedBox(height: 2.h),
                       ],
                     ),
                   ),
