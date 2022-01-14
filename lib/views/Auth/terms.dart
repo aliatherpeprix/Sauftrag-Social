@@ -253,6 +253,12 @@ class _TermsOfServiceState extends State<TermsOfService> {
                           child: ElevatedButton(
                             onPressed: () {
                               model.termsAndCondition();
+                              model.selectedDrinkList.clear();
+                              model.selectedClubList.clear();
+                              model.selectedVacationList.clear();
+                              //model.imageFiles = [];
+                              model.dataCheck = false;
+                              model.notifyListeners();
                             },
                             child: const Text("Let’s Get Started"),
                             style: ElevatedButton.styleFrom(

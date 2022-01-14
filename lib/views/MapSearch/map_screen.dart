@@ -95,6 +95,8 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return ViewModelBuilder<MainViewModel>.reactive(
       viewModelBuilder: () => locator<MainViewModel>(),
+      onModelReady: (model) =>
+      {  },
       disposeViewModel: false,
       builder: (context, model, child) {
         return SafeArea(

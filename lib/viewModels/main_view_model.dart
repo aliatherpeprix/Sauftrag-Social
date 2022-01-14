@@ -105,6 +105,7 @@ class MainViewModel extends BaseViewModel{
     },
   ];
 
+  File imageFile = File('my initial file');
   List<File> imageFiles = [
     File(""),
     File(""),
@@ -774,6 +775,10 @@ class MainViewModel extends BaseViewModel{
 
   void navigateToListOfBar() {
     navigationService.navigateToListOfBar();
+  }
+
+  void navigateToTermsScreen() {
+    navigationService.navigateToTermsScreen();
   }
 
   void navigateToBarProfile() {

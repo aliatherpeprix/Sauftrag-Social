@@ -1406,6 +1406,19 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                           //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                           child: ElevatedButton(
                             onPressed: () {
+                              model.signUpBarUserController.clear();
+                              model.signUpBarAddressController.clear();
+                              model.signUpEmailController.clear();
+                              model.signUpBarPasswordController.clear();
+                              model.signUpBarVerifyPasswordController.clear();
+                              model.LocationController.clear();
+                              model.selectedWeekDays.clear();
+                              model.selectedWeekendDays.clear();
+                              model.selectedBarKind.clear();
+                              //model.imageFiles = [];
+                              model.dataCheck = false;
+                              model.notifyListeners();
+
                               model.navigateToHomeBarScreen();
                             },
                             child: const Text("Let's Get Started"),

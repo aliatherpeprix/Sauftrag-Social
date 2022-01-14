@@ -859,6 +859,7 @@ class RegistrationViewModel extends BaseViewModel {
       ));
       return;
     } else
+      signInBar = true;
       notifyListeners();
 
     var checkuserResponce = await checkuser.CheckUser(
@@ -868,13 +869,14 @@ class RegistrationViewModel extends BaseViewModel {
     print(checkuserResponce);
   if(checkuserResponce is UserModel)
     {
-      signInUser = false;
+      signInBar = false;
+      notifyListeners();
       DialogUtils().showDialog(MyErrorWidget(
         error: "Bar Email already exist",
       ));
     }
   else{
-    signInUser = false;
+    signInBar = false;
     notifyListeners();
     var signupResponce = await signupBar.SignUpBar(
       signUpBarUserController.text,

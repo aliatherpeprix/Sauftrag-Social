@@ -30,7 +30,6 @@ class _FavoriteState extends State<Favorite> {
     return ViewModelBuilder<AuthenticationViewModel>.reactive(
       onModelReady: (model) => {
 
-
       },
       builder: (context, model, child) {
         return GestureDetector(
