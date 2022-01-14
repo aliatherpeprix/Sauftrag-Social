@@ -42,7 +42,6 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
     openingTimeTo = TimeOfDay.now().format(context);
     breakTimeFrom = TimeOfDay.now().format(context);
     breakTimeTo = TimeOfDay.now().format(context);
-
     weekEndOpeningTimeFrom = TimeOfDay.now().format(context);
     weekEndOpeningTimeTo = TimeOfDay.now().format(context);
     weekEndBreakTimeFrom = TimeOfDay.now().format(context);

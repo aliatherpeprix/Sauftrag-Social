@@ -28,7 +28,10 @@ class _FavoriteState extends State<Favorite> {
   Widget build(BuildContext context) {
 
     return ViewModelBuilder<AuthenticationViewModel>.reactive(
-      //onModelReady: (data) => data.initializeLoginModel(),
+      onModelReady: (model) => {
+
+
+      },
       builder: (context, model, child) {
         return GestureDetector(
           onTap: () {

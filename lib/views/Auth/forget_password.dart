@@ -11,6 +11,7 @@ import 'package:sauftrag/viewModels/authentication_view_model.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:sauftrag/widgets/back_arrow_with_container.dart';
+import 'package:sauftrag/widgets/loader.dart';
 import 'package:stacked/stacked.dart';
 
 class ForgetPassword extends StatefulWidget {
@@ -28,6 +29,9 @@ class _ForgetPasswordState extends State<ForgetPassword> {
       disposeViewModel: false,
       onModelReady: (model) {
         //model.initialize();
+        model.logInUserController.clear();
+        model.logInPasswordController.clear();
+
       },
       builder: (context, model, child) {
         return SafeArea(
@@ -165,7 +169,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                             onPressed: () {
                               model.forgetPassword();
                             },
-                            child: const Text("Send Instruction"),
+                            child: model.forgetPassowrd == false ? Text("Send Instruction") : Loader(),
                             style: ElevatedButton.styleFrom(
                               primary: ColorUtils.text_red,
                               onPrimary: ColorUtils.white,

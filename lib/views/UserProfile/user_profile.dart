@@ -8,6 +8,7 @@ import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/viewModels/prefrences_view_model.dart';
 import 'package:stacked/stacked.dart';
 
 class UserProfile extends StatefulWidget {
@@ -57,8 +58,12 @@ class _UserProfileState extends State<UserProfile> {
 
                       ///--------------Event Name--------------------///
                       GestureDetector(
-                        onTap: (){
+                        onTap: ()async{
+                          PrefrencesViewModel prefs = locator<PrefrencesViewModel>();
+                          model.userModel = await prefs.getUser();
+                          model.selectedDrinkList = model.userModel!.favorite_alcohol_drinks!;
                           model.navigateToUserDetailSettings();
+
                         },
                         child: Container(
                           // padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),

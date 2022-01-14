@@ -9,6 +9,7 @@ import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
+import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:stacked/stacked.dart';
 
 class BarMedia extends StatefulWidget {
@@ -21,7 +22,7 @@ class BarMedia extends StatefulWidget {
 class _BarMediaState extends State<BarMedia> {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<AuthenticationViewModel>.reactive(
+    return ViewModelBuilder<MainViewModel>.reactive(
       //onModelReady: (data) => data.initializeLoginModel(),
       builder: (context, model, child) {
         return GestureDetector(
@@ -107,7 +108,7 @@ class _BarMediaState extends State<BarMedia> {
                                       model.imageFiles[0].path.isEmpty
                                           ? InkWell(
                                           onTap: () {
-                                            model.getImage(0);
+                                            model.getImage0(0);
                                             model.notifyListeners();
                                           },
                                           child: DottedBorder(
@@ -167,7 +168,7 @@ class _BarMediaState extends State<BarMedia> {
                                       model.imageFiles[1].path.isEmpty
                                           ? InkWell(
                                           onTap: () {
-                                            model.getImage(1);
+                                            model.getImage0(1);
                                             model.notifyListeners();
                                           },
                                           child: DottedBorder(
@@ -226,7 +227,7 @@ class _BarMediaState extends State<BarMedia> {
                                       model.imageFiles[2].path.isEmpty
                                           ? InkWell(
                                           onTap: () {
-                                            model.getImage(2);
+                                            model.getImage0(2);
                                             model.notifyListeners();
                                           },
                                           child: DottedBorder(
@@ -295,7 +296,7 @@ class _BarMediaState extends State<BarMedia> {
                                       model.imageFiles[3].path.isEmpty
                                           ? InkWell(
                                           onTap: () {
-                                            model.getImage(3);
+                                            model.getImage0(3);
                                             model.notifyListeners();
                                           },
                                           child: DottedBorder(
@@ -354,7 +355,7 @@ class _BarMediaState extends State<BarMedia> {
                                       model.imageFiles[4].path.isEmpty
                                           ? InkWell(
                                           onTap: () {
-                                            model.getImage(4);
+                                            model.getImage0(4);
                                             model.notifyListeners();
                                           },
                                           child: DottedBorder(
@@ -432,7 +433,7 @@ class _BarMediaState extends State<BarMedia> {
                                       model.imageFiles[0].path.isEmpty
                                           ? InkWell(
                                           onTap: () {
-                                            model.getImage(0);
+                                            model.getImage0(0);
                                             model.notifyListeners();
                                           },
                                           child: DottedBorder(
@@ -513,7 +514,7 @@ class _BarMediaState extends State<BarMedia> {
           ),
         );
       },
-      viewModelBuilder: () => locator<AuthenticationViewModel>(),
+      viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
     );
   }

@@ -21,6 +21,7 @@ class CheckEmail extends StatelessWidget {
       viewModelBuilder: () => locator<AuthenticationViewModel>(),
       disposeViewModel: false,
       onModelReady: (model){
+        model.forgetPasswordController.clear();
         //model.initialize();
       },
       builder: (context, model, child) {

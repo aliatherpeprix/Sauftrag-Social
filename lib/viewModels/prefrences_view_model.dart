@@ -15,7 +15,7 @@ class PrefrencesViewModel extends BaseViewModel{
     await preferences!.setString("user", jsonEncode(user.toJson()));
   }
 
-   Future<UserModel> getUser (UserModel user) async {
+   Future<UserModel> getUser () async {
     UserModel? user = UserModel.fromJson(jsonDecode(await preferences!.getString("user")!)) ?? null;
     return user!;
   }

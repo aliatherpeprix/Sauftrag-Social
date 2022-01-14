@@ -56,9 +56,12 @@ class RegistrationViewModel extends BaseViewModel {
   bool dataCheck = false;
   bool resetNewPasswordVisible = false;
   bool resetConfirmPasswordVisible = false;
+
+  //For Loader
   bool logIn = false;
   bool signInUser = false;
   bool signInBar = false;
+  bool forgetPassowrd = false;
 
   bool otpLoading = false;
   TimeOfDay? startTime;
@@ -201,6 +204,7 @@ class RegistrationViewModel extends BaseViewModel {
   String? dobError;
   String? relationshipError;
 
+
   int relationStatusValue = 1;
   String relationStatusValueStr = "Single";
   List<String> relationStatusList = [
@@ -255,6 +259,8 @@ class RegistrationViewModel extends BaseViewModel {
     'Shot': 4
   };
 
+
+
   void selectRole(int role) {
     this.role = role;
     notifyListeners();
@@ -293,6 +299,7 @@ class RegistrationViewModel extends BaseViewModel {
     } else {
       logIn = true;
       notifyListeners();
+
       /* var signupResponce =  await loginUser.LogInUser(
           logInUserController.text,
           logInPasswordController.text,
@@ -309,7 +316,7 @@ class RegistrationViewModel extends BaseViewModel {
           mainViewModel.logInUserSelected = true;
           mainViewModel.logInBarSelected = false;
           logIn = false;
-
+          notifyListeners();
           navigateToHomeScreen(2);
         } else if (logInBarSelected == true) {
           mainViewModel.logInUserSelected = false;
@@ -346,6 +353,7 @@ class RegistrationViewModel extends BaseViewModel {
     );
     print(forgetPasswordResponce);
     if (forgetPasswordResponce is int && forgetPasswordResponce == 200) {
+
       navigateToCheckEmailScreen();
     }
   }
@@ -543,6 +551,11 @@ class RegistrationViewModel extends BaseViewModel {
               MyErrorWidget(error: response.data["message"].toString()));
           Future.delayed(Duration(seconds: 2)).then((data) {
             navigateToLoginScreen();
+            forgetPasswordController.clear();
+            resetNewPasswordController.clear();
+            confirmNewPasswordController.clear();
+            codeController.clear();
+
           });
         }
         else{
@@ -771,8 +784,8 @@ class RegistrationViewModel extends BaseViewModel {
       print(signupResponce);
       signInUser = false;
       notifyListeners();
-        DialogUtils().showDialog(
-            MyErrorWidget(error: signupResponce));
+        // DialogUtils().showDialog(
+        //     MyErrorWidget(error: "Use has been created succ"));
       navigateToFavoriteScreen();
       }
   }
@@ -855,11 +868,14 @@ class RegistrationViewModel extends BaseViewModel {
     print(checkuserResponce);
   if(checkuserResponce is UserModel)
     {
+      signInUser = false;
       DialogUtils().showDialog(MyErrorWidget(
         error: "Bar Email already exist",
       ));
     }
   else{
+    signInUser = false;
+    notifyListeners();
     var signupResponce = await signupBar.SignUpBar(
       signUpBarUserController.text,
       signUpBarAddressController.text,
@@ -868,6 +884,8 @@ class RegistrationViewModel extends BaseViewModel {
       signUpBarVerifyPasswordController.text,
     );
     print(signupResponce);
+    // DialogUtils().showDialog(
+    //     MyErrorWidget(error: signupResponce));
     navigateToUploadBarMedia();
   }
   }

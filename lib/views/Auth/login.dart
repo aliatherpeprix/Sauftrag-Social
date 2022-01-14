@@ -508,8 +508,8 @@ class _LoginState extends State<Login> {
         disposeViewModel: false,
         onModelReady: (model) =>
            {
-        model.logInUserController.clear(),
-        model.logInPasswordController.clear()
+        // model.logInUserController.clear(),
+        // model.logInPasswordController.clear()
            },
     );
   }

@@ -27,7 +27,8 @@ class _ResentPasswordState extends State<ResentPassword> {
       viewModelBuilder: () => locator<RegistrationViewModel>(),
       disposeViewModel: false,
       onModelReady: (model){
-        //model.initialize();
+        // model.forgetPasswordController.clear();
+        // model.codeController.clear();
       },
       builder: (context, model, child) {
         return SafeArea(

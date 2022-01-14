@@ -12,6 +12,7 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
 import 'package:sauftrag/viewModels/registrationViewModel.dart';
+import 'package:sauftrag/widgets/loader.dart';
 import 'package:stacked/stacked.dart';
 
 class SignUpBar extends StatefulWidget {
@@ -486,9 +487,9 @@ class _SignUpBarState extends State<SignUpBar> {
                             onPressed: () {
                               model.createBarAccount();
                             },
-                            child: const Text("Sign Up"),
+                            child: model.signInBar == false ? Text("Sign Up") : Loader(),
                             style: ElevatedButton.styleFrom(
-                              primary: ColorUtils.text_red  ,
+                              primary: ColorUtils.text_red,
                               onPrimary: ColorUtils.white,
                               padding: EdgeInsets.symmetric(vertical: Dimensions.containerVerticalPadding),
                               elevation: 1,

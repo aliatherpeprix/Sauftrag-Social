@@ -29,8 +29,7 @@ class Checkuser {
       });
 
       var response = await dio.post(Constants.BaseUrl+Constants.CheckUser, data: param);
-      if (response.
-      statusCode == 200 || response.statusCode == 201) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         // user found
         /* if (response.data["status"] == 200) {
           var userData = UserModel.fromJson(response.data['data']);

@@ -7,6 +7,7 @@ part 'user_models.g.dart';
 class UserModel {
   UserModel();
 
+  int? id;
   String? username;
   String? email;
   String? country_code;
@@ -16,7 +17,7 @@ class UserModel {
   String? dob;
   dynamic relation_ship;
   dynamic role;
-  List? favorite_alcohol_drinks;
+  List?  favorite_alcohol_drinks;
   List? favorite_night_club;
   List? favorite_party_vacation;
   String? profile_picture;

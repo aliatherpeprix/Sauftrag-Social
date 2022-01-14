@@ -7,6 +7,7 @@ part 'bar_model.g.dart';
 class BarModel {
   BarModel();
 
+  int? id;
   String? token;
   String? username;
   String? bar_name;

@@ -20,6 +20,7 @@ class _TermsOfServiceState extends State<TermsOfService> {
   Widget build(BuildContext context) {
     return ViewModelBuilder<AuthenticationViewModel>.reactive(
       builder: (context, model, child) {
+
         return GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();
@@ -282,6 +283,10 @@ class _TermsOfServiceState extends State<TermsOfService> {
         );
       },
       viewModelBuilder: () => locator<AuthenticationViewModel>(),
+      onModelReady: (model) =>
+      {
+        model.imageFiles.clear()
+      },
       disposeViewModel: false,
     );
   }

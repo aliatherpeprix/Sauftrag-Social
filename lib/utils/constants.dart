@@ -13,6 +13,7 @@ class Constants{
   static const String ConfirmNewPassword = 'api/user/forgot-password/';
   static const String CheckUser = 'api/user/check/';
   static const String ChangeUserPassword = 'api/user/change-password/';
+  static const String UpdateUserProfile = 'api/user/register/';
 
   static const int profileImage = 1;
   static const int nicFrontImage = 2;

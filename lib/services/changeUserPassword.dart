@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -36,7 +35,7 @@ class Changeuserpassword {
       });
 
       UserModel user = UserModel();
-      user = await locator<PrefrencesViewModel>().getUser(user);
+      user = await locator<PrefrencesViewModel>().getUser();
       var response = await dio.post(
           Constants.BaseUrl + Constants.ChangeUserPassword, data: param,
           options: Options(

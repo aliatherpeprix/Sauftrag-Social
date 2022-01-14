@@ -10,6 +10,7 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
+import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:stacked/stacked.dart';
 
 class UserDetails extends StatefulWidget {
@@ -795,6 +796,34 @@ class _UserDetailsState extends State<UserDetails> {
                                   )
                               ),
                             ],
+                          ),
+                        ),
+                        SizedBox(height: 4.h),
+                        SizedBox(
+                          width: double.infinity,
+                          //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              //model.navigateBack();
+                            },
+                            child: const Text("Save"),
+                            style: ElevatedButton.styleFrom(
+                              primary: ColorUtils.text_red,
+                              onPrimary: ColorUtils.white,
+                              padding: EdgeInsets.symmetric(
+                                  vertical:
+                                  Dimensions.containerVerticalPadding),
+                              elevation: 1,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      Dimensions.roundCorner)),
+                              textStyle: TextStyle(
+                                color: ColorUtils.white,
+                                fontFamily: FontUtils.modernistBold,
+                                fontSize: 1.8.t,
+                                //height: 0
+                              ),
+                            ),
                           ),
                         ),
                         SizedBox(height: 2.h),

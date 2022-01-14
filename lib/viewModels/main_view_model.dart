@@ -8,6 +8,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/constants.dart';
 
@@ -23,6 +24,8 @@ class MainViewModel extends BaseViewModel{
 
   Completer<GoogleMapController> controller = Completer();
   final GlobalKey<NavigatorState> navigationKey = GlobalKey<NavigatorState>();
+
+  UserModel? userModel;
 
   bool logInUserSelected = true;
   bool logInBarSelected = false;
@@ -100,6 +103,15 @@ class MainViewModel extends BaseViewModel{
       'name': "Sidney Alvarado",
       'image': ImageUtils.messagePerson8,
     },
+  ];
+
+  List<File> imageFiles = [
+    File(""),
+    File(""),
+    File(""),
+    File(""),
+    File(""),
+    File("")
   ];
 
   List<bool>? selected;
@@ -247,6 +259,91 @@ class MainViewModel extends BaseViewModel{
     }
   }
 
+  int kindOfBarValue = 1;
+  String kindOfBarValueStr = "Cocktail";
+  List<String> kindOfBarList = ["Beer", "Cocktail", "Long Drink", "Shot"];
+  Map<String, int> kindOfBarMap = {
+    'Beer': 1,
+    'Cocktail': 2,
+    'Long Drink': 3,
+    'Shot': 4
+  };
+
+
+  int nightClubValue = 1;
+  String nightClubValueStr = "Club 1";
+  List<String> nightClubList = [
+    "Club 1",
+    "Club 2",
+    "Club 3",
+    "Club 4",
+    "Club 5",
+    "Club 6",
+    "Club 7",
+    "Club 8"
+  ];
+
+  int partyVacationValue = 1;
+  String partyVacationValueStr = "Ibiza Beach";
+  List<String> partyVacationList = [
+    "Ibiza Beach",
+    "Goldstrand",
+    "Zrce Beach",
+    "Lloret"
+  ];
+  Map<String, int> partyVacationMap = {
+    'Ibiza Beach': 1,
+    'Goldstrand': 2,
+    'Zrce Beach': 3,
+    'Lloret': 4
+  };
+
+  Map<String, int> nightClubMap = {
+    'Club 1': 1,
+    'Club 2': 2,
+    'Club 3': 3,
+    'Club 4': 4,
+    'Club 5': 5,
+    'Club 6': 6,
+    'Club 7': 7,
+    'Club 8': 8,
+  };
+
+  int genderValue = 1;
+  String genderValueStr = "Male";
+  List<String> genderList = ["Male", "Female"];
+  Map<String, int> genderMap = {
+    'Male': 1,
+    'Female': 2,
+  };
+
+  Future<bool> getImage0(int index) async {
+    ImagePicker picker = ImagePicker();
+    //List<XFile>? images = await picker.pickMultiImage();
+    XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    //imageFile = File(image!.path);
+
+    if (image == null) {
+      return false;
+    } else {
+      imageFiles.insert(index, File(image.path));
+      print(imageFiles);
+      /*for(XFile image in images){
+        imageFiles.add(File(image.path));
+      }*/
+      notifyListeners();
+      return true;
+    }
+
+    /*if (imageFile == null) {
+      return false;
+    }
+    else{
+      notifyListeners();
+      return true;
+    }*/
+  }
+
   messageEmojiSelected(Emoji emoji) {
     messageScreenChatController
       ..text += emoji.emoji
@@ -314,6 +411,30 @@ class MainViewModel extends BaseViewModel{
         )
     );
   }
+
+  List<String> drinkList = [
+    "Beer",
+    "White Wine",
+    "Radler",
+    "Red Wine",
+    "Gin",
+    "Whiskey",
+    "Hard Seltzer",
+    "Jägermeister",
+    "Tequila",
+    "Champagne"
+  ];
+
+  List<dynamic> selectedDrinkList = [];
+
+  List<String> interestList = [
+    "White Wine",
+    "Hard Seltzer",
+    "Whiskey",
+    "Club 1",
+    "Club 2",
+    "Goldstrand",
+  ];
 
   CameraPosition kGooglePlex = CameraPosition(
     target: LatLng(24.8169, 67.1118),
@@ -609,6 +730,10 @@ class MainViewModel extends BaseViewModel{
 
   void navigateToFriendListScreen1() {
     navigationService.navigateToFriendListScreen1();
+  }
+
+  void navigateToBarTimingTypeScreen() {
+    navigationService.navigateToBarTimingTypeScreen();
   }
 
 

@@ -52,7 +52,7 @@ class ForgetPassword {
 
     } catch (e) {
 
-      return;
+      return (e as DioError).response!.data["message"].toString();;
       // dynamic exception = e;
       // return exception.message;
     }

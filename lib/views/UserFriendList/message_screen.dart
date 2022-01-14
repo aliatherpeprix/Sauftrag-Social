@@ -49,7 +49,9 @@ class _MessageScreenState extends State<MessageScreen> {
             bottom: false,
             child: Scaffold(
               backgroundColor: Colors.white,
-              floatingActionButton: Container(
+              floatingActionButton:
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 1.h),
                 color: Colors.white,
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -60,7 +62,8 @@ class _MessageScreenState extends State<MessageScreen> {
                         margin: EdgeInsets.only(left:5.w),
                         padding: EdgeInsets.symmetric(
                           horizontal: 2.3.w,
-                            vertical: Dimensions.verticalPadding),
+                            //vertical: Dimensions.verticalPadding
+                        ),
                         child: Row(
                           children: [
                             Expanded(
@@ -220,7 +223,7 @@ class _MessageScreenState extends State<MessageScreen> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(bottom: 2.2.h),
+                      //margin: EdgeInsets.only(bottom: 2.2.h),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: ColorUtils.text_red,
@@ -236,7 +239,7 @@ class _MessageScreenState extends State<MessageScreen> {
                 ),
               ),
 
-              floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+              floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
               body: Container(
                 padding: EdgeInsets.symmetric(
                     horizontal: Dimensions.horizontalPadding,
