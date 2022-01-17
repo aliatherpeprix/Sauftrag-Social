@@ -805,7 +805,7 @@ class RegistrationViewModel extends BaseViewModel {
       notifyListeners();
         // DialogUtils().showDialog(
         //     MyErrorWidget(error: "Use has been created succ"));
-      //navigateToFavoriteScreen();
+      navigateToFavoriteScreen();
       }
   }
 

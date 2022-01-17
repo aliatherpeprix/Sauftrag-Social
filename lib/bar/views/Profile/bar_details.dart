@@ -477,6 +477,7 @@ class _BarDetailState extends State<BarDetail> {
                         ),
                         SizedBox(height: 2.h),
                         Container(
+
                           padding: EdgeInsets.symmetric(horizontal: 3.w),
                           decoration: BoxDecoration(
                             color: ColorUtils.searchFieldColor,
