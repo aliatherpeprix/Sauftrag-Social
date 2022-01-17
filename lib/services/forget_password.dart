@@ -44,6 +44,7 @@ class ForgetPassword {
         }
         //user not found
         else {
+
           DialogUtils().showDialog(
               MyErrorWidget(error: response.data["message"].toString()));
           //return response.data['message'];
@@ -52,7 +53,7 @@ class ForgetPassword {
 
     } catch (e) {
 
-      return (e as DioError).response!.data["message"].toString();;
+      return (e as DioError).response!.data["message"].toString();
       // dynamic exception = e;
       // return exception.message;
     }

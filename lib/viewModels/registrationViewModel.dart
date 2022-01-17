@@ -61,7 +61,8 @@ class RegistrationViewModel extends BaseViewModel {
   bool logIn = false;
   bool signInUser = false;
   bool signInBar = false;
-  bool forgetPassowrd = false;
+  bool forgetPasswordBool = false;
+  bool createNewPasswordBool = false;
 
   bool otpLoading = false;
   TimeOfDay? startTime;
@@ -337,6 +338,7 @@ class RegistrationViewModel extends BaseViewModel {
   }
 
   forgetPassword() async {
+
     if (forgetPasswordController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Email is required",
@@ -347,6 +349,8 @@ class RegistrationViewModel extends BaseViewModel {
       DialogUtils().showDialog(MyErrorWidget(error: "Email is invalid"));
       return;
     }
+    forgetPasswordBool = true;
+    notifyListeners();
 
     var forgetPasswordResponce = await forgetpassword.Forgetpassword(
       forgetPasswordController.text,
@@ -356,6 +360,8 @@ class RegistrationViewModel extends BaseViewModel {
 
       navigateToCheckEmailScreen();
     }
+    forgetPasswordBool = false;
+    notifyListeners();
   }
 
   void verifyResetPasswordCode(BuildContext context, String code) async{
@@ -540,16 +546,19 @@ class RegistrationViewModel extends BaseViewModel {
         'code' : codeController.text
       });
 
+      createNewPasswordBool = true;
       var response = await dio.post(Constants.BaseUrl+Constants.ConfirmNewPassword, data: param);
 
       if (response.statusCode == 200){
 
         if(response.data["code"] == 200){
-          //resetPasswordLoading = false;
+
           notifyListeners();
           DialogUtils().showDialog(
               MyErrorWidget(error: response.data["message"].toString()));
           Future.delayed(Duration(seconds: 2)).then((data) {
+            createNewPasswordBool = false;
+            notifyListeners();
             navigateToLoginScreen();
             forgetPasswordController.clear();
             resetNewPasswordController.clear();
@@ -559,7 +568,7 @@ class RegistrationViewModel extends BaseViewModel {
           });
         }
         else{
-          //resetPasswordLoading = false;
+
           notifyListeners();
           DialogUtils().showDialog(
               MyErrorWidget(error: response.data["message"].toString()));

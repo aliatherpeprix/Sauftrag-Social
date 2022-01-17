@@ -11,6 +11,7 @@ import 'package:sauftrag/viewModels/authentication_view_model.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:sauftrag/widgets/back_arrow_with_container.dart';
+import 'package:sauftrag/widgets/loader.dart';
 import 'package:stacked/stacked.dart';
 
 class ResentPassword extends StatefulWidget {
@@ -253,7 +254,7 @@ class _ResentPasswordState extends State<ResentPassword> {
                             onPressed: () {
                                model.resentPassword(context);
                             },
-                            child: const Text("Reset Password"),
+                            child: model.createNewPasswordBool == false ? Text("Reset Password") : Loader(),
                             style: ElevatedButton.styleFrom(
                               primary: ColorUtils.text_red,
                               onPrimary: ColorUtils.white,

@@ -169,7 +169,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                             onPressed: () {
                               model.forgetPassword();
                             },
-                            child: model.forgetPassowrd == false ? Text("Send Instruction") : Loader(),
+                            child: model.forgetPasswordBool == false ? Text("Send Instruction") : Loader(),
                             style: ElevatedButton.styleFrom(
                               primary: ColorUtils.text_red,
                               onPrimary: ColorUtils.white,
