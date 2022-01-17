@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:sauftrag/utils/extensions.dart';
 
 import 'color_utils.dart';
@@ -275,7 +276,28 @@ class CommonFunctions{
         },
         isDismissible: true);
   }
+
+  static bool isAdult(String birthDateString) {
+    String datePattern = "MM-dd-yyyy";
+
+    // Current time - at this moment
+    DateTime today = DateTime.now();
+
+    // Parsed date to check
+    DateTime birthDate = DateFormat(datePattern).parse(birthDateString);
+
+    // Date to check but moved 18 years ahead
+    DateTime adultDate = DateTime(
+      birthDate.year + 18,
+      birthDate.month,
+      birthDate.day,
+    );
+
+    return adultDate.isBefore(today);
+  }
 }
+
+
 
 extension contextExtensions on BuildContext {
   void unFocus(){

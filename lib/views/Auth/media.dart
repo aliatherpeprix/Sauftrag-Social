@@ -22,7 +22,7 @@ class Media extends StatefulWidget {
 class _MediaState extends State<Media> {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<MainViewModel>.reactive(
+    return ViewModelBuilder<AuthenticationViewModel>.reactive(
       onModelReady: (model) {
         //model.imageFiles = [];
       },
@@ -110,7 +110,7 @@ class _MediaState extends State<Media> {
                                       model.imageFiles[0].path.isEmpty
                                           ? InkWell(
                                               onTap: () {
-                                                model.getImage0(0);
+                                                model.getImage(0);
                                                 model.notifyListeners();
                                               },
                                               child: DottedBorder(
@@ -170,7 +170,7 @@ class _MediaState extends State<Media> {
                                       model.imageFiles[1].path.isEmpty
                                           ? InkWell(
                                               onTap: () {
-                                                model.getImage0(1);
+                                                model.getImage(1);
                                                 model.notifyListeners();
                                               },
                                               child: DottedBorder(
@@ -229,7 +229,7 @@ class _MediaState extends State<Media> {
                                       model.imageFiles[2].path.isEmpty
                                           ? InkWell(
                                               onTap: () {
-                                                model.getImage0(2);
+                                                model.getImage(2);
                                                 model.notifyListeners();
                                               },
                                               child: DottedBorder(
@@ -298,7 +298,7 @@ class _MediaState extends State<Media> {
                                       model.imageFiles[3].path.isEmpty
                                           ? InkWell(
                                               onTap: () {
-                                                model.getImage0(3);
+                                                model.getImage(3);
                                                 model.notifyListeners();
                                               },
                                               child: DottedBorder(
@@ -357,7 +357,7 @@ class _MediaState extends State<Media> {
                                       model.imageFiles[4].path.isEmpty
                                           ? InkWell(
                                               onTap: () {
-                                                model.getImage0(4);
+                                                model.getImage(4);
                                                 model.notifyListeners();
                                               },
                                               child: DottedBorder(
@@ -416,7 +416,7 @@ class _MediaState extends State<Media> {
                                       model.imageFiles[5].path.isEmpty
                                           ? InkWell(
                                               onTap: () {
-                                                model.getImage0(5);
+                                                model.getImage(5);
                                                 model.notifyListeners();
                                               },
                                               child: DottedBorder(
@@ -496,7 +496,7 @@ class _MediaState extends State<Media> {
           ),
         );
       },
-      viewModelBuilder: () => locator<MainViewModel>(),
+      viewModelBuilder: () => locator<AuthenticationViewModel>(),
       disposeViewModel: false,
     );
   }

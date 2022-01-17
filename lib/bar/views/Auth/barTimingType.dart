@@ -1,5 +1,7 @@
 // ignore_for_file: file_names
 
+import 'dart:io';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -1416,6 +1418,14 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                               model.selectedWeekendDays.clear();
                               model.selectedBarKind.clear();
                               //model.imageFiles = [];
+                              model.imageFiles = [
+                                File(""),
+                                File(""),
+                                File(""),
+                                File(""),
+                                File(""),
+                                File("")
+                              ];
                               model.dataCheck = false;
                               model.notifyListeners();
 

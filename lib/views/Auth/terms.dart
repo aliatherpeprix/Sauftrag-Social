@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/utils/color_utils.dart';
@@ -256,6 +258,14 @@ class _TermsOfServiceState extends State<TermsOfService> {
                               model.selectedDrinkList.clear();
                               model.selectedClubList.clear();
                               model.selectedVacationList.clear();
+                              model.imageFiles = [
+                                File(""),
+                                File(""),
+                                File(""),
+                                File(""),
+                                File(""),
+                                File("")
+                              ];
                               //model.imageFiles = [];
                               model.dataCheck = false;
                               model.notifyListeners();

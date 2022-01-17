@@ -275,7 +275,7 @@ class RegistrationViewModel extends BaseViewModel {
   void openAndSelectDob(BuildContext context) async {
     selectedDOB =
         await CommonFunctions.showDateOfBirthPicker(context, selectedDOB);
-    signUpDOBController.text = DateFormat('dd-MM-yyyy').format(selectedDOB);
+    signUpDOBController.text = DateFormat('MM-dd-yyyy').format(selectedDOB);
     notifyListeners();
   }
 
@@ -739,12 +739,20 @@ class RegistrationViewModel extends BaseViewModel {
       notifyListeners();
       return;
     }
-    // else if (signUpDOBController.text.isEmpty) {
-    //   DialogUtils().showDialog(MyErrorWidget(
-    //     error: "Date Of Birth is required",
-    //   ));
-    //   return;
-    // }
+    if (!CommonFunctions.isAdult(signUpDOBController.text.toString())) {
+      isSigningUp = false;
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "You must be 18 years old",
+      ));
+      notifyListeners();
+      return;
+    }
+    else if (signUpDOBController.text.isEmpty) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Date Of Birth is required",
+      ));
+      return;
+    }
     else if (relationStatusValueStr.isEmpty) {
       isSigningUp = false;
       DialogUtils().showDialog(MyErrorWidget(
@@ -759,7 +767,9 @@ class RegistrationViewModel extends BaseViewModel {
       ));
       notifyListeners();
       return;
-    } else
+    }
+
+    else
       signInUser = true;
       notifyListeners();
     //var user = userModel.UserModel();
@@ -795,7 +805,7 @@ class RegistrationViewModel extends BaseViewModel {
       notifyListeners();
         // DialogUtils().showDialog(
         //     MyErrorWidget(error: "Use has been created succ"));
-      navigateToFavoriteScreen();
+      //navigateToFavoriteScreen();
       }
   }
 
