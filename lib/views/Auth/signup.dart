@@ -30,7 +30,7 @@ class _SignUpState extends State<SignUp> {
             FocusScope.of(context).unfocus();
           },
           child: SafeArea(
-            top: false,
+            top: true,
             bottom: false,
             child: Scaffold(
                 backgroundColor: ColorUtils.white,
@@ -951,6 +951,7 @@ class _SignUpState extends State<SignUp> {
                               ],
                             )),
                         SizedBox(height: 3.h),
+
                         //Sign up Button
                         SizedBox(
                           width: double.infinity,

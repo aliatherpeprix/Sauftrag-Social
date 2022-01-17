@@ -37,7 +37,7 @@ class _SignUpBarState extends State<SignUpBar> {
           },
           child: SafeArea(
             bottom: false,
-            top: false,
+            top: true,
             child: Scaffold(
                 backgroundColor: ColorUtils.white,
                 body: SingleChildScrollView(
