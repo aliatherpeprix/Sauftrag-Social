@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -288,16 +290,25 @@ class RegistrationViewModel extends BaseViewModel {
         error: "User Name is required",
       ));
       return;
-    } else if (logInPasswordController.text.isEmpty) {
+    }
+    else if (!logInUserController.text.isEmail) {
+      isSigningUp = false;
+      DialogUtils().showDialog(MyErrorWidget(error: "Email is invalid"));
+      notifyListeners();
+      return;
+    }
+    else if (logInPasswordController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Password is required",
       ));
       return;
-    } else if (logInPasswordController.text.length < 7) {
+    }
+    else if (logInPasswordController.text.length < 7) {
       DialogUtils()
           .showDialog(MyErrorWidget(error: "Password must contain 7 digit"));
       return;
-    } else {
+    }
+    else {
       logIn = true;
       notifyListeners();
 
@@ -316,23 +327,29 @@ class RegistrationViewModel extends BaseViewModel {
         if (logInUserSelected == true) {
           mainViewModel.logInUserSelected = true;
           mainViewModel.logInBarSelected = false;
-          logIn = false;
-          notifyListeners();
+          //logIn = false;
+          //notifyListeners();
           navigateToHomeScreen(2);
         } else if (logInBarSelected == true) {
           mainViewModel.logInUserSelected = false;
           mainViewModel.logInBarSelected = true;
-          logIn = false;
-          notifyListeners();
+          //logIn = false;
+          //notifyListeners();
           navigateToHomeBarScreen();
         }
       }
-      else if (signupResponse is String){
+      // else if (signupResponse is String){
+      //   logIn = false;
+      //   notifyListeners();
+      //   DialogUtils().showDialog(
+      //       MyErrorWidget(error: (e as DioError).response!.data["detail"].toString()));
+      //
+      // }
+      else{
         logIn = false;
         notifyListeners();
         DialogUtils().showDialog(
-            MyErrorWidget(error: signupResponse));
-
+            MyErrorWidget(error: (signupResponse)));
       }
     }
   }
@@ -376,7 +393,7 @@ class RegistrationViewModel extends BaseViewModel {
         "code" : code,
       });
 
-      var response = await dio.post(Constants.BaseUrl+Constants.ResetPassword, data: param);
+      var response = await dio.post(Constants.BaseUrlPro+Constants.ResetPassword, data: param);
 
       if (response.statusCode == 200){
 
@@ -547,7 +564,7 @@ class RegistrationViewModel extends BaseViewModel {
       });
 
       createNewPasswordBool = true;
-      var response = await dio.post(Constants.BaseUrl+Constants.ConfirmNewPassword, data: param);
+      var response = await dio.post(Constants.BaseUrlPro+Constants.ConfirmNewPassword, data: param);
 
       if (response.statusCode == 200){
 

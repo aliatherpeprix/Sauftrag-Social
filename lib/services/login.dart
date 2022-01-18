@@ -35,7 +35,7 @@ class LoginUser {
 
       });
 
-      var response = await dio.post(Constants.BaseUrl+Constants.Login, data: param);
+      var response = await dio.post(Constants.BaseUrlPro+Constants.Login, data: param);
       if (response.statusCode == 200 || response.statusCode == 201) {
         // user found
         /* if (response.data["status"] == 200) {
@@ -51,10 +51,18 @@ class LoginUser {
       }
 
     } catch (e) {
-      // DialogUtils().showDialog(
-      //     MyErrorWidget(error: (e as DioError).response!.data["detail"].toString()));
+      if((e as DioError).response!.data is Map && (e).response!.data["detail"]!=null){
+        DialogUtils().showDialog(
+            MyErrorWidget(error: (e).response!.data["detail"].toString()));
+      }
+      else{
+        DialogUtils().showDialog(
+            MyErrorWidget(error: "Unable to login with provided credentials"));
+       //return (e).error.toString();
+      }
 
-      return (e as DioError).response!.data["detail"].toString();
+      print(e);
+      //return (e as DioError).response!.data["detail"];
       // dynamic exception = e;
       // return exception.message;
     }

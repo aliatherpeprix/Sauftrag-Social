@@ -2,7 +2,8 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 
-const String BASE_URL = "https://aiota.live/sauftrag/API/";
+//const String BASE_URL = "https://aiota.live/sauftrag/API/";
+const String BASE_URL = "https://sauftragsocial.herokuapp.com/";
 
 class DioService {
   static Dio? _dio;

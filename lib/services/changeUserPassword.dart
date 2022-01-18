@@ -37,7 +37,7 @@ class Changeuserpassword {
       UserModel user = UserModel();
       user = await locator<PrefrencesViewModel>().getUser();
       var response = await dio.post(
-          Constants.BaseUrl + Constants.ChangeUserPassword, data: param,
+          Constants.BaseUrlPro + Constants.ChangeUserPassword, data: param,
           options: Options(
               headers: {
                 "Authorization": "Token ${user.token!}"

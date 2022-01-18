@@ -509,7 +509,11 @@ class _LoginState extends State<Login> {
       },
       viewModelBuilder: () => locator<RegistrationViewModel>(),
         disposeViewModel: false,
-        onModelReady: (model) => model.logInPasswordController.clear()
+        onModelReady: (model) =>
+            {
+        model.logInPasswordController.clear(),
+        model.logIn = false,
+            }
     );
   }
 }

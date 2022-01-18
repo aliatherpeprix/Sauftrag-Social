@@ -25,7 +25,7 @@ class CommonFunctions{
     return regExp.hasMatch(password);
   }
   static bool  hasOneSpeicalCharacter(String password){
-    String  pattern = r'^(?=.*?[!@#\$&*~]).{1,}$';
+    String  pattern = r'^(?=.*?[_%=?.!@#\$&*~]).{1,}$';
     RegExp regExp = new RegExp(pattern);
     return regExp.hasMatch(password);
   }
