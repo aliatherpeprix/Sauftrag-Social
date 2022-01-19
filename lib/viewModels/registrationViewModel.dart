@@ -1,10 +1,13 @@
 
+import 'dart:io';
 import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/string_extensions.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/bar_model.dart';
@@ -23,10 +26,12 @@ import 'package:sauftrag/services/login.dart';
 import 'package:sauftrag/services/login.dart';
 import 'package:sauftrag/services/login.dart';
 import 'package:sauftrag/services/login.dart';
+import 'package:sauftrag/services/updateUserProfile.dart';
 import 'package:sauftrag/services/userSignup.dart';
 import 'package:sauftrag/utils/common_functions.dart';
 import 'package:sauftrag/utils/constants.dart';
 import 'package:sauftrag/utils/dialog_utils.dart';
+import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/prefrences_view_model.dart';
 import 'package:sauftrag/widgets/error_widget.dart';
 import 'package:stacked/stacked.dart';
@@ -41,6 +46,8 @@ class RegistrationViewModel extends BaseViewModel {
   var forgetpassword = ForgetPassword();
   var changepassword = Changeuserpassword();
   var checkuser = Checkuser();
+  var updateUser = Updateuser();
+
 
   var navigationService = navigationViewModel;
   bool isChecked = false;
@@ -58,6 +65,7 @@ class RegistrationViewModel extends BaseViewModel {
   bool dataCheck = false;
   bool resetNewPasswordVisible = false;
   bool resetConfirmPasswordVisible = false;
+  bool loading = false;
 
   //For Loader
   bool logIn = false;
@@ -206,7 +214,11 @@ class RegistrationViewModel extends BaseViewModel {
   String? addressError;
   String? dobError;
   String? relationshipError;
-
+  GoogleSignIn _googleSignIn = GoogleSignIn(
+    scopes: [
+      'email',
+    ],
+  );
 
   int relationStatusValue = 1;
   String relationStatusValueStr = "Single";
@@ -251,6 +263,58 @@ class RegistrationViewModel extends BaseViewModel {
     "Beer Hall"
   ];
 
+  List<String> clubList = [
+    "Club 1",
+    "Club 2",
+    "Club 3",
+    "Club 4",
+    "Club 5",
+    "Club 6",
+    "Club 7",
+    "Club 8",
+    "Club 9",
+    "Club 10"
+  ];
+  List<int> selectedClubList = [];
+
+  List<int> selectedVacationList = [];
+
+  List<String> drinkList = [
+    "Beer",
+    "White Wine",
+    "Radler",
+    "Red Wine",
+    "Gin",
+    "Whiskey",
+    "Hard Seltzer",
+    "Jägermeister",
+    "Tequila",
+    "Champagne"
+  ];
+
+  List<int> selectedDrinkList = [];
+
+  List<String> interestList = [
+    "White Wine",
+    "Hard Seltzer",
+    "Whiskey",
+    "Club 1",
+    "Club 2",
+    "Goldstrand",
+  ];
+
+
+
+  List<String> vacationList = [
+    "Ballermann",
+    "Goldstrand",
+    "Zrce Beach",
+    "Lloret",
+    "Ibiza",
+    "Springbreak Cancun"
+  ];
+
+
 
   int kindOfBarValue = 1;
   String kindOfBarValueStr = "Cocktail";
@@ -261,6 +325,38 @@ class RegistrationViewModel extends BaseViewModel {
     'Long Drink': 3,
     'Shot': 4
   };
+
+  List<dynamic> imageFiles = [
+   "", "", "", "", "", ""
+  ];
+
+  Future<bool> getImage(int index) async {
+    ImagePicker picker = ImagePicker();
+    //List<XFile>? images = await picker.pickMultiImage();
+    XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    //imageFile = File(image!.path);
+
+    if (image == null) {
+      return false;
+    } else {
+      imageFiles.removeAt(index);
+      imageFiles.insert(index, File(image.path));
+      print(imageFiles);
+      /*for(XFile image in images){
+        imageFiles.add(File(image.path));
+      }*/
+      notifyListeners();
+      return true;
+    }
+
+    /*if (imageFile == null) {
+      return false;
+    }
+    else{
+      notifyListeners();
+      return true;
+    }*/
+  }
 
 
 
@@ -610,7 +706,7 @@ class RegistrationViewModel extends BaseViewModel {
 
   }
 
-  termsAndCondition() {
+  termsAndCondition() async {
     if (termsCheck == false) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Please Accept Terms and Conditions",
@@ -622,7 +718,125 @@ class RegistrationViewModel extends BaseViewModel {
       ));
       return;
     }
-    navigateToHomeScreen(2);
+    else
+    {
+      userModel.UserModel usermodel = await prefrencesViewModel.getUser();
+      List<int> newDrinks = [];
+      List<int> newClubs = [];
+      List<int> newVacations = [];
+      for (int drink in selectedDrinkList){
+        newDrinks.add(drink+1);
+      }
+      for (int drink in selectedClubList){
+        newClubs.add(drink+1);
+      }
+      for (int drink in selectedVacationList){
+        newVacations.add(drink+1);
+      }
+      var userSignupResponce = await updateUser.UpdateUser(
+
+          usermodel.email!,
+          usermodel.username!,
+          usermodel.password!,
+          usermodel.password2!,
+          usermodel.phone_no!,
+          usermodel.relation_ship.toString(),
+          usermodel.address!,
+          usermodel.gender!.toString(),
+          usermodel.dob.toString(),
+          newDrinks,
+          newClubs,
+          newVacations,
+          imageFiles,
+          usermodel.id!.toString(),
+          termsCheck,
+          dataCheck
+
+      );
+      print(userSignupResponce);
+      if(userSignupResponce is UserModel)
+      {
+        userModel.UserModel user = userSignupResponce;
+        user.password = signUpPasswordController.text;
+        user.password2 = signUpVerifyPasswordController.text;
+        await locator<PrefrencesViewModel>().saveUser(user);
+      }
+      selectedDrinkList.clear();
+      selectedClubList.clear();
+      selectedVacationList.clear();
+      imageFiles = [
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ];
+      //model.imageFiles = [];
+      dataCheck = false;
+      //signInUser = false;
+      notifyListeners();
+      // DialogUtils().showDialog(
+      //     MyErrorWidget(error: "Use has been created succ"));
+      //navigateToHomeScreen(2);
+      //favorites();
+    }
+    //navigateToHomeScreen(2);
+  }
+
+  favorites() {
+    if (selectedDrinkList.isEmpty) {
+
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Select at least one favorite drink",
+      ));
+      notifyListeners();
+      return;
+    }
+    if (selectedClubList.isEmpty) {
+
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Select at least one favorite club",
+      ));
+      notifyListeners();
+      return;
+    }
+    if (selectedVacationList.isEmpty) {
+
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Select at least one favorite party vacation",
+      ));
+      notifyListeners();
+      return;
+    }
+
+    navigateToMediaScreen();
+    //navigateToMediaScreen();
+    //navigateToHomeScreen(2);
+  }
+
+  addImageUser() {
+
+    for(int i=0; i<imageFiles.length; i++){
+      bool hasImages = false;
+      if(!hasImages){
+        if( (imageFiles[i] is String &&
+            (imageFiles[i] as String).isEmpty) ||
+            imageFiles[i].path.isEmpty){
+          DialogUtils().showDialog(MyErrorWidget(
+            error: "Select at least one Image",
+          ));
+          return;
+        }
+        else {
+          hasImages = true;
+          break;
+        }
+      }
+    }
+    navigateToTermsScreen();
+    //navigateToMediaScreen();
+    //navigateToHomeScreen(2);
   }
 
   //Signup User
@@ -816,13 +1030,26 @@ class RegistrationViewModel extends BaseViewModel {
       (relationStatusList.indexOf(relationStatusValueStr) + 1).toString(),
       signUpAddressController.text,
       (genderList.indexOf(genderValueStr) + 1).toString(),
-      signUpDOBController.text);
+      DateFormat("yyyy-MM-dd").format(selectedDOB),
+          selectedDrinkList,
+          selectedClubList,
+          selectedVacationList,
+          imageFiles
+      );
       print(signupResponce);
+      if(signupResponce is UserModel)
+        {
+          userModel.UserModel user = signupResponce;
+          user.password = signUpPasswordController.text;
+          user.password2 = signUpVerifyPasswordController.text;
+          await prefrencesViewModel.saveUser(user);
+        }
       signInUser = false;
       notifyListeners();
         // DialogUtils().showDialog(
         //     MyErrorWidget(error: "Use has been created succ"));
       navigateToFavoriteScreen();
+      //favorites();
       }
   }
 
@@ -922,11 +1149,229 @@ class RegistrationViewModel extends BaseViewModel {
       signUpBarVerifyPasswordController.text,
     );
     print(signupResponce);
+    if(signupResponce is UserModel)
+    {
+      await locator<PrefrencesViewModel>().saveUser(signupResponce);
+    }
     // DialogUtils().showDialog(
     //     MyErrorWidget(error: signupResponce));
     navigateToUploadBarMedia();
   }
   }
+
+  // void doGoogleSignIn() async{
+  //   loading = true;
+  //   notifyListeners();
+  //   //notifyListeners();
+  //   try {
+  //     var result =  await _googleSignIn.signIn().catchError((error){
+  //       print(error);
+  //     });
+  //     print(result);
+  //     Dio dio = Dio();
+  //     // value.additionalUserInfo.profile['email'].toString().split('@')[0]
+  //     try{
+  //       var response = await dio.post(Constants.BaseUrlPro+Constants.Login, data: param: {
+  //         "Email" : result!.email,
+  //         "UserName" : result!.email.toString().split('@')[0]
+  //       });
+  //       if (response.statusCode==200){
+  //         var data = response.data;
+  //         if (data["status"]==200)
+  //         {
+  //           var responses = await dio.post(Constants.kSocialSignUp,data: {
+  //             "FullName" : result!.displayName,
+  //             "Email" : result!.email,
+  //             "UserName" : result!.email.toString().split('@')[0]
+  //           });
+  //           if (responses.statusCode==200)
+  //           {
+  //             var datas = responses.data;
+  //
+  //             if (datas["status"]==200){
+  //               socialLogin = true;
+  //               await _googleSignIn.signOut();
+  //               isGuest = false;
+  //               userDetails = UserModel.fromJson(responses.data["data"]);
+  //               userID = userDetails!.userId!;
+  //               userEmail = userDetails!.email!;
+  //               userName = userDetails!.username!;
+  //               name = userDetails!.name!;
+  //               password = userDetails!.password ?? "";
+  //               profileImage = userDetails!.ProfileImage ?? "";
+  //               createdDtm = userDetails!.createdDtm!;
+  //               notifications = userDetails!.notifications ?? "false";
+  //               distanceInKm = userDetails!.nearby_radius!.isEmpty?"10 km":userDetails!.nearby_radius!+ " km" ;
+  //               notificationDistanceInKm = userDetails!.notification_radius!.isEmpty ? "5 km" : userDetails!.notification_radius! +" km";
+  //               //getUserData();
+  //               //String? userId = userDetails!.userId;
+  //               String signupEmail = responses.data["data"]['email'];
+  //               SharedPreferences prefs = await SharedPreferences.getInstance();
+  //               prefs.setString('userId', userDetails!.userId!);
+  //               prefs.setString('userName', userDetails!.username!);
+  //               prefs.setString('email', signupEmail);
+  //               prefs.setString('name', userDetails!.name!);
+  //               prefs.setString('password', userDetails!.password??"");
+  //               prefs.setString('profileImage', userDetails!.ProfileImage??"");
+  //               prefs.setString('createdDtm', userDetails!.createdDtm??"");
+  //               prefs.setBool('socialLogin', socialLogin);
+  //               prefs.setString('firstTime', "true");
+  //               prefs.setString('notifications', notifications);
+  //               prefs.setString('nearByRadius', userDetails!.nearby_radius!.isEmpty ? distanceInKm : userDetails!.nearby_radius!+" km");
+  //               prefs.setString('notificationRadius', userDetails!.notification_radius!.isEmpty ? notificationDistanceInKm : userDetails!.notification_radius!+" km");
+  //               languageSelected = prefs.getInt('languageSelected');
+  //               profileNameController.text = userDetails!.name!;
+  //               profileEmailController.text = signupEmail;
+  //               //profilePasswordController.text = userDetails!.password ?? "";
+  //               //prefs.setString('signUpEmail', signUpEmailController.text);
+  //               loading = false;
+  //               //imageUrl = r['data']['ProfileImage'];
+  //               notifyListeners();
+  //               sendSignUpDetails();
+  //               if (onModelReadyCalled){
+  //                 getNotifications();
+  //                 getCurrentLocation();
+  //                 //model.getNearByNotificationPlace();
+  //                 //model.saveNearByAndNotificationRange();
+  //                 getAllCities();
+  //                 //model.saveNearByAndNotificationRange();
+  //                 gettingAllPosts();
+  //                 getPostCountryList();
+  //                 getSearchedPost();
+  //                 initializeFlutterNotifications();
+  //               }
+  //               navigateToHomeScreens();
+  //             }
+  //             else {
+  //               await _googleSignIn.signOut();
+  //               showErrorMessage(data["message"]);
+  //               loading = false;
+  //               notifyListeners();
+  //             }
+  //           }
+  //           else {
+  //             await _googleSignIn.signOut();
+  //             showErrorMessage(signupFailedTryAgain);
+  //             loading = false;
+  //             notifyListeners();
+  //           }
+  //         }
+  //         else {
+  //           try{
+  //             //loading = true;
+  //             //notifyListeners();
+  //             var url = Uri.parse(Constants.kSocialSignIn);
+  //             var response = await http.post(url, body: {
+  //               'Email': result!.email,
+  //             });
+  //
+  //             if (response.statusCode==200)
+  //             {
+  //               var r = jsonDecode(response.body);
+  //               if (r ["status"]==200)
+  //               {
+  //                 socialLogin = true;
+  //                 //Map getDetails = r["data"];
+  //                 await _googleSignIn.signOut();
+  //                 isGuest = false;
+  //                 userDetails = UserModel.fromJson(r["data"]);
+  //                 userID = userDetails!.userId!;
+  //                 userEmail = userDetails!.email!;
+  //                 userName = userDetails!.username??"";
+  //                 name = userDetails!.name!;
+  //                 password = userDetails!.password ?? "";
+  //                 profileImage = userDetails!.ProfileImage ?? "";
+  //                 createdDtm = userDetails!.createdDtm!;
+  //                 distanceInKm = userDetails!.nearby_radius!.isEmpty?"10 km":userDetails!.nearby_radius!+ " km" ;
+  //                 notificationDistanceInKm = userDetails!.notification_radius!.isEmpty ? "5 km" : userDetails!.notification_radius! +" km";
+  //                 notifications = userDetails!.notifications ?? "false";
+  //
+  //                 //getUserData();
+  //                 //String? userId = userDetails!.userId;
+  //                 String loginEmail = r['data']['email'];
+  //                 SharedPreferences prefs = await SharedPreferences.getInstance();
+  //                 prefs.setString('userId', userDetails!.userId!);
+  //                 prefs.setString('userName', userName!);
+  //                 prefs.setString('email', loginEmail);
+  //                 prefs.setString('name', userDetails!.name!);
+  //                 prefs.setString('password', userDetails!.password??"");
+  //                 prefs.setString('profileImage', userDetails!.ProfileImage??"");
+  //                 prefs.setString('createdDtm', userDetails!.createdDtm!);
+  //                 prefs.setBool('socialLogin', socialLogin);
+  //                 prefs.setString('nearByRadius', userDetails!.nearby_radius!.isEmpty ? distanceInKm : userDetails!.nearby_radius!+" km");
+  //                 prefs.setString('notificationRadius', userDetails!.notification_radius!.isEmpty ? notificationDistanceInKm : userDetails!.notification_radius!+" km");
+  //                 prefs.setString('firstTime', "true");
+  //                 prefs.setString('notifications', notifications);
+  //                 languageSelected = prefs.getInt('languageSelected');
+  //                 profileNameController.text = userDetails!.name!;
+  //                 profileEmailController.text = loginEmail;
+  //                 languageSelected = prefs.getInt('languageSelected');
+  //                 //profilePasswordController.text = userDetails!.password ?? "";
+  //                 //prefs.setString("saveModel", userDetails.toString());
+  //                 //prefs.setBool("isLoggedIn", true);
+  //                 //await saveUser(response);
+  //                 loading = false;
+  //                 //imageUrl = r['data']['ProfileImage'];
+  //                 notifyListeners();
+  //                 getUserDataOnSignIn();
+  //                 if (onModelReadyCalled){
+  //                   getNotifications();
+  //                   getCurrentLocation();
+  //                   //model.getNearByNotificationPlace();
+  //                   //model.saveNearByAndNotificationRange();
+  //                   getAllCities();
+  //                   //model.saveNearByAndNotificationRange();
+  //                   gettingAllPosts();
+  //                   getPostCountryList();
+  //                   getSearchedPost();
+  //                   initializeFlutterNotifications();
+  //                 }
+  //                 navigateToHomeScreens();
+  //                 //notifyListeners();
+  //               }
+  //               else {
+  //                 await _googleSignIn.signOut();
+  //                 showErrorMessage(r["message"]);
+  //                 loading = false;
+  //                 notifyListeners();
+  //               }
+  //             }
+  //             else{
+  //               await _googleSignIn.signOut();
+  //               showErrorMessage(loginFailedTryAgain);
+  //               loading = false;
+  //               notifyListeners();
+  //             }
+  //             notifyListeners();
+  //           }
+  //           catch(e){
+  //             await _googleSignIn.signOut();
+  //             print(e);
+  //           }
+  //         }
+  //       }
+  //       else {
+  //         await _googleSignIn.signOut();
+  //         showErrorMessage(signupFailedTryAgain);
+  //         loading = false;
+  //         notifyListeners();
+  //       }
+  //     }
+  //     catch (error){
+  //       await _googleSignIn.signOut();
+  //       showErrorMessage(signupFailedTryAgain);
+  //       loading = false;
+  //       notifyListeners();
+  //     }
+  //
+  //
+  //   } catch (error) {
+  //     isSigningIn = false;
+  //     await _googleSignIn.signOut();
+  //     notifyListeners();
+  //     print(error);
+  //   }
+  // }
 
   void navigateToFavoriteScreen() {
     navigationService.navigateToFavoriteScreen();
@@ -952,6 +1397,10 @@ class RegistrationViewModel extends BaseViewModel {
     navigationService.navigateToHomeBarScreen();
   }
 
+  void navigateToTermsScreen() {
+    navigationService.navigateToTermsScreen();
+  }
+
   void navigateToForgetPasswordScreen() {
     navigationService.navigateToForgetPasswordScreen();
   }
@@ -962,6 +1411,10 @@ class RegistrationViewModel extends BaseViewModel {
 
   void navigateToCheckEmailScreen() {
     navigationService.navigateToCheckEmailScreen();
+  }
+
+  void navigateToMediaScreen() {
+    navigationService.navigateToMediaScreen();
   }
 
   void navigateBack() {

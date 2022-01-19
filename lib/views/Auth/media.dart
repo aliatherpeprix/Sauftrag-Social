@@ -9,6 +9,7 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:sauftrag/widgets/back_arrow_with_container.dart';
 import 'package:stacked/stacked.dart';
 
@@ -22,7 +23,7 @@ class Media extends StatefulWidget {
 class _MediaState extends State<Media> {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<AuthenticationViewModel>.reactive(
+    return ViewModelBuilder<RegistrationViewModel>.reactive(
       onModelReady: (model) {
         //model.imageFiles = [];
       },
@@ -98,7 +99,9 @@ class _MediaState extends State<Media> {
                                   decoration: BoxDecoration(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(20)),
-                                    image: model.imageFiles[0].path.isEmpty
+                                    image:  (model.imageFiles[0] is String &&
+                                        (model.imageFiles[0] as String).isEmpty) ||
+                                        model.imageFiles[0].path.isEmpty
                                         ? null
                                         : DecorationImage(
                                             image:
@@ -107,7 +110,9 @@ class _MediaState extends State<Media> {
                                   ),
                                   child: Stack(
                                     children: [
-                                      model.imageFiles[0].path.isEmpty
+                                      (model.imageFiles[0] is String &&
+                                          (model.imageFiles[0] as String).isEmpty) ||
+                                          model.imageFiles[0].path.isEmpty
                                           ? InkWell(
                                               onTap: () {
                                                 model.getImage(0);
@@ -129,7 +134,9 @@ class _MediaState extends State<Media> {
                                                     ),
                                                   )))
                                           : Container(),
-                                      model.imageFiles[0].path.isEmpty
+                                      (model.imageFiles[0] is String &&
+                                          (model.imageFiles[0] as String).isEmpty) ||
+                                          model.imageFiles[0].path.isEmpty
                                           ? Container()
                                           : Align(
                                               alignment: Alignment.bottomRight,
@@ -158,7 +165,9 @@ class _MediaState extends State<Media> {
                                   decoration: BoxDecoration(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(20)),
-                                    image: model.imageFiles[1].path.isEmpty
+                                    image:    (model.imageFiles[1] is String &&
+                                        (model.imageFiles[1] as String).isEmpty) ||
+                                        model.imageFiles[1].path.isEmpty
                                         ? null
                                         : DecorationImage(
                                             image:
@@ -167,7 +176,10 @@ class _MediaState extends State<Media> {
                                   ),
                                   child: Stack(
                                     children: [
-                                      model.imageFiles[1].path.isEmpty
+                                      (model.imageFiles[1] is String &&
+                                          (model.imageFiles[1] as String).isEmpty) ||
+                                          model.imageFiles[1].path.isEmpty
+
                                           ? InkWell(
                                               onTap: () {
                                                 model.getImage(1);
@@ -188,7 +200,9 @@ class _MediaState extends State<Media> {
                                                     ),
                                                   )))
                                           : Container(),
-                                      model.imageFiles[1].path.isEmpty
+                                      (model.imageFiles[1] is String &&
+                                          (model.imageFiles[1] as String).isEmpty) ||
+                                          model.imageFiles[1].path.isEmpty
                                           ? Container()
                                           : Align(
                                               alignment: Alignment.bottomRight,
@@ -217,7 +231,9 @@ class _MediaState extends State<Media> {
                                   decoration: BoxDecoration(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(20)),
-                                    image: model.imageFiles[2].path.isEmpty
+                                    image:  (model.imageFiles[2] is String &&
+                                        (model.imageFiles[2] as String).isEmpty) ||
+                                        model.imageFiles[2].path.isEmpty
                                         ? null
                                         : DecorationImage(
                                             image:
@@ -226,7 +242,9 @@ class _MediaState extends State<Media> {
                                   ),
                                   child: Stack(
                                     children: [
-                                      model.imageFiles[2].path.isEmpty
+                                      (model.imageFiles[2] is String &&
+                                          (model.imageFiles[2] as String).isEmpty) ||
+                                          model.imageFiles[2].path.isEmpty
                                           ? InkWell(
                                               onTap: () {
                                                 model.getImage(2);
@@ -247,7 +265,9 @@ class _MediaState extends State<Media> {
                                                     ),
                                                   )))
                                           : Container(),
-                                      model.imageFiles[2].path.isEmpty
+                                      (model.imageFiles[2] is String &&
+                                          (model.imageFiles[2] as String).isEmpty) ||
+                                          model.imageFiles[2].path.isEmpty
                                           ? Container()
                                           : Align(
                                               alignment: Alignment.bottomRight,
@@ -286,7 +306,9 @@ class _MediaState extends State<Media> {
                                   decoration: BoxDecoration(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(20)),
-                                    image: model.imageFiles[3].path.isEmpty
+                                    image:   (model.imageFiles[3] is String &&
+                                        (model.imageFiles[3] as String).isEmpty) ||
+                                        model.imageFiles[3].path.isEmpty
                                         ? null
                                         : DecorationImage(
                                             image:
@@ -295,7 +317,9 @@ class _MediaState extends State<Media> {
                                   ),
                                   child: Stack(
                                     children: [
-                                      model.imageFiles[3].path.isEmpty
+                                      (model.imageFiles[3] is String &&
+                                          (model.imageFiles[3] as String).isEmpty) ||
+                                          model.imageFiles[3].path.isEmpty
                                           ? InkWell(
                                               onTap: () {
                                                 model.getImage(3);
@@ -316,7 +340,9 @@ class _MediaState extends State<Media> {
                                                     ),
                                                   )))
                                           : Container(),
-                                      model.imageFiles[3].path.isEmpty
+                                      (model.imageFiles[3] is String &&
+                                          (model.imageFiles[3] as String).isEmpty) ||
+                                          model.imageFiles[3].path.isEmpty
                                           ? Container()
                                           : Align(
                                               alignment: Alignment.bottomRight,
@@ -345,7 +371,9 @@ class _MediaState extends State<Media> {
                                   decoration: BoxDecoration(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(20)),
-                                    image: model.imageFiles[4].path.isEmpty
+                                    image:   (model.imageFiles[4] is String &&
+                                        (model.imageFiles[4] as String).isEmpty) ||
+                                        model.imageFiles[4].path.isEmpty
                                         ? null
                                         : DecorationImage(
                                             image:
@@ -354,7 +382,9 @@ class _MediaState extends State<Media> {
                                   ),
                                   child: Stack(
                                     children: [
-                                      model.imageFiles[4].path.isEmpty
+                                      (model.imageFiles[4] is String &&
+                                          (model.imageFiles[4] as String).isEmpty) ||
+                                          model.imageFiles[4].path.isEmpty
                                           ? InkWell(
                                               onTap: () {
                                                 model.getImage(4);
@@ -375,7 +405,9 @@ class _MediaState extends State<Media> {
                                                     ),
                                                   )))
                                           : Container(),
-                                      model.imageFiles[4].path.isEmpty
+                                      (model.imageFiles[4] is String &&
+                                          (model.imageFiles[4] as String).isEmpty) ||
+                                          model.imageFiles[4].path.isEmpty
                                           ? Container()
                                           : Align(
                                               alignment: Alignment.bottomRight,
@@ -404,7 +436,9 @@ class _MediaState extends State<Media> {
                                   decoration: BoxDecoration(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(20)),
-                                    image: model.imageFiles[5].path.isEmpty
+                                    image:   (model.imageFiles[5] is String &&
+                                        (model.imageFiles[5] as String).isEmpty) ||
+                                        model.imageFiles[5].path.isEmpty
                                         ? null
                                         : DecorationImage(
                                             image:
@@ -413,7 +447,7 @@ class _MediaState extends State<Media> {
                                   ),
                                   child: Stack(
                                     children: [
-                                      model.imageFiles[5].path.isEmpty
+                                      (model.imageFiles[5] is String && (model.imageFiles[5] as String).isEmpty) || model.imageFiles[5].path.isEmpty
                                           ? InkWell(
                                               onTap: () {
                                                 model.getImage(5);
@@ -434,7 +468,9 @@ class _MediaState extends State<Media> {
                                                     ),
                                                   )))
                                           : Container(),
-                                      model.imageFiles[5].path.isEmpty
+                                      (model.imageFiles[5] is String &&
+                                          (model.imageFiles[5] as String).isEmpty) ||
+                                          model.imageFiles[5].path.isEmpty
                                           ? Container()
                                           : Align(
                                               alignment: Alignment.bottomRight,
@@ -466,7 +502,8 @@ class _MediaState extends State<Media> {
                           //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                           child: ElevatedButton(
                             onPressed: () {
-                              model.navigateToTermsScreen();
+                              model.addImageUser();
+                              //model.navigateToTermsScreen();
                             },
                             child: const Text("Next"),
                             style: ElevatedButton.styleFrom(
@@ -496,7 +533,7 @@ class _MediaState extends State<Media> {
           ),
         );
       },
-      viewModelBuilder: () => locator<AuthenticationViewModel>(),
+      viewModelBuilder: () => locator<RegistrationViewModel>(),
       disposeViewModel: false,
     );
   }

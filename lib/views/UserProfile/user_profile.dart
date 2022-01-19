@@ -61,7 +61,7 @@ class _UserProfileState extends State<UserProfile> {
                         onTap: ()async{
                           PrefrencesViewModel prefs = locator<PrefrencesViewModel>();
                           model.userModel = await prefs.getUser();
-                          model.selectedDrinkList = model.userModel!.favorite_alcohol_drinks!;
+                          //model.selectedDrinkList = model.userModel!.favorite_alcohol_drinks!;
                           model.navigateToUserDetailSettings();
 
                         },

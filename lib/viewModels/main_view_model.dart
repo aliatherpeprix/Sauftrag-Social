@@ -63,6 +63,7 @@ class MainViewModel extends BaseViewModel{
   bool bottomSheetSelected = false;
   bool messageScreenEmojiShowing = false;
   bool messageScreenEmojiSelected = false;
+  List<UserModel> alcoholDrinks=[];
   final messageScreenChatController = TextEditingController();
   bool userNewsFeed = false;
   var dio = Dio();

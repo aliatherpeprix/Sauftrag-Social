@@ -459,20 +459,20 @@ class AuthenticationViewModel extends BaseViewModel {
     navigateToFavoriteScreen();
   }
 
-  termsAndCondition() {
-    if (termsCheck == false) {
-      DialogUtils().showDialog(MyErrorWidget(
-        error: "Please Accept Terms and Conditions",
-      ));
-      return;
-    } else if (dataCheck == false) {
-      DialogUtils().showDialog(MyErrorWidget(
-        error: "Please Accept Date Protection",
-      ));
-      return;
-    }
-    navigateToHomeScreen(2);
-  }
+  // termsAndCondition() {
+  //   if (termsCheck == false) {
+  //     DialogUtils().showDialog(MyErrorWidget(
+  //       error: "Please Accept Terms and Conditions",
+  //     ));
+  //     return;
+  //   } else if (dataCheck == false) {
+  //     DialogUtils().showDialog(MyErrorWidget(
+  //       error: "Please Accept Date Protection",
+  //     ));
+  //     return;
+  //   }
+  //   navigateToHomeScreen(2);
+  // }
 
   void openAndSelectDob(BuildContext context) async {
     selectedDOB =

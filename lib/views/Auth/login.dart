@@ -395,7 +395,9 @@ class _LoginState extends State<Login> {
                                   height: 16.i,
                                   width: 16.i,
                                   child: ElevatedButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      //model.doGoogleSignIn();
+                                    },
                                     child:
                                     SvgPicture.asset(ImageUtils.googleIcon),
                                     style: ElevatedButton.styleFrom(
@@ -437,27 +439,27 @@ class _LoginState extends State<Login> {
                                 ),
 
                                 //Twitter
-                                SizedBox(
-                                  height: 16.i,
-                                  width: 16.i,
-                                  child: ElevatedButton(
-                                    onPressed: () {},
-                                    child:
-                                    SvgPicture.asset(ImageUtils.twitterIcon),
-                                    style: ElevatedButton.styleFrom(
-                                      primary: ColorUtils.white,
-                                      onPrimary: ColorUtils.white,
-                                      //padding: EdgeInsets.symmetric(vertical: 5.i, horizontal: 5.i),
-                                      elevation: 0,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              Dimensions.roundCorner),
-                                          side: BorderSide(
-                                              color: ColorUtils.divider,
-                                              width: 1)),
-                                    ),
-                                  ),
-                                ),
+                                // SizedBox(
+                                //   height: 16.i,
+                                //   width: 16.i,
+                                //   child: ElevatedButton(
+                                //     onPressed: () {},
+                                //     child:
+                                //     SvgPicture.asset(ImageUtils.twitterIcon),
+                                //     style: ElevatedButton.styleFrom(
+                                //       primary: ColorUtils.white,
+                                //       onPrimary: ColorUtils.white,
+                                //       //padding: EdgeInsets.symmetric(vertical: 5.i, horizontal: 5.i),
+                                //       elevation: 0,
+                                //       shape: RoundedRectangleBorder(
+                                //           borderRadius: BorderRadius.circular(
+                                //               Dimensions.roundCorner),
+                                //           side: BorderSide(
+                                //               color: ColorUtils.divider,
+                                //               width: 1)),
+                                //     ),
+                                //   ),
+                                // ),
                               ],
                             ),
 

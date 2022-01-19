@@ -22,6 +22,10 @@ class SignupUser {
       String address,
       String gender,
       String DOB,
+      List<int> selectedDrinkList,
+      List<int> selectedClubList,
+      List<int> selectedVacationList,
+      List imageFiles,
 
       ) async {
     try {
@@ -33,10 +37,14 @@ class SignupUser {
         'password': password,
         'password2' : password2,
         'phone_no' : phone_no,
-        'relationship' : relationship,
+        'relation_ship' : relationship,
         'address' : address,
         'gender' : gender,
-        'DOB' : DOB,
+        'dob' : DOB,
+        'selectedDrinkList' : selectedDrinkList,
+        'selectedClubList' : selectedClubList,
+        'selectedVacationList' : selectedVacationList,
+
         'role' : 1,
         'profile_picture' : ''
 

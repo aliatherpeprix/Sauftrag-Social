@@ -7,6 +7,7 @@ import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
+import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:sauftrag/widgets/back_arrow_with_container.dart';
 import 'package:stacked/stacked.dart';
 
@@ -20,7 +21,7 @@ class TermsOfService extends StatefulWidget {
 class _TermsOfServiceState extends State<TermsOfService> {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<AuthenticationViewModel>.reactive(
+    return ViewModelBuilder<RegistrationViewModel>.reactive(
       builder: (context, model, child) {
 
         return GestureDetector(
@@ -255,20 +256,7 @@ class _TermsOfServiceState extends State<TermsOfService> {
                           child: ElevatedButton(
                             onPressed: () {
                               model.termsAndCondition();
-                              model.selectedDrinkList.clear();
-                              model.selectedClubList.clear();
-                              model.selectedVacationList.clear();
-                              model.imageFiles = [
-                                File(""),
-                                File(""),
-                                File(""),
-                                File(""),
-                                File(""),
-                                File("")
-                              ];
-                              //model.imageFiles = [];
-                              model.dataCheck = false;
-                              model.notifyListeners();
+
                             },
                             child: const Text("Let’s Get Started"),
                             style: ElevatedButton.styleFrom(
@@ -298,10 +286,10 @@ class _TermsOfServiceState extends State<TermsOfService> {
           ),
         );
       },
-      viewModelBuilder: () => locator<AuthenticationViewModel>(),
+      viewModelBuilder: () => locator<RegistrationViewModel>(),
       onModelReady: (model) =>
       {
-        model.imageFiles.clear()
+        //model.imageFiles.clear()
       },
       disposeViewModel: false,
     );

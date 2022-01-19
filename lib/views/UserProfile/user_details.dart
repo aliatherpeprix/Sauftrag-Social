@@ -23,7 +23,7 @@ class UserDetails extends StatefulWidget {
 class _UserDetailsState extends State<UserDetails> {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<AuthenticationViewModel>.reactive(
+    return ViewModelBuilder<MainViewModel>.reactive(
       //onModelReady: (data) => data.initializeLoginModel(),
       builder: (context, model, child) {
         return GestureDetector(
@@ -100,7 +100,7 @@ class _UserDetailsState extends State<UserDetails> {
                                       model.imageFiles[0].path.isEmpty
                                           ? InkWell(
                                           onTap: () {
-                                            model.getImage(0);
+                                            model.getImage();
                                             model.notifyListeners();
                                           },
                                           child: DottedBorder(
@@ -160,7 +160,7 @@ class _UserDetailsState extends State<UserDetails> {
                                       model.imageFiles[1].path.isEmpty
                                           ? InkWell(
                                           onTap: () {
-                                            model.getImage(1);
+                                            model.getImage();
                                             model.notifyListeners();
                                           },
                                           child: DottedBorder(
@@ -219,7 +219,7 @@ class _UserDetailsState extends State<UserDetails> {
                                       model.imageFiles[2].path.isEmpty
                                           ? InkWell(
                                           onTap: () {
-                                            model.getImage(2);
+                                            model.getImage();
                                             model.notifyListeners();
                                           },
                                           child: DottedBorder(
@@ -288,7 +288,7 @@ class _UserDetailsState extends State<UserDetails> {
                                       model.imageFiles[3].path.isEmpty
                                           ? InkWell(
                                           onTap: () {
-                                            model.getImage(3);
+                                            model.getImage();
                                             model.notifyListeners();
                                           },
                                           child: DottedBorder(
@@ -347,7 +347,7 @@ class _UserDetailsState extends State<UserDetails> {
                                       model.imageFiles[4].path.isEmpty
                                           ? InkWell(
                                           onTap: () {
-                                            model.getImage(4);
+                                            model.getImage();
                                             model.notifyListeners();
                                           },
                                           child: DottedBorder(
@@ -406,7 +406,7 @@ class _UserDetailsState extends State<UserDetails> {
                                       model.imageFiles[5].path.isEmpty
                                           ? InkWell(
                                           onTap: () {
-                                            model.getImage(5);
+                                            model.getImage();
                                             model.notifyListeners();
                                           },
                                           child: DottedBorder(
@@ -500,72 +500,50 @@ class _UserDetailsState extends State<UserDetails> {
                           ),
                         ),
                         SizedBox(height: 2.h),
-                        Container(
-                          height: 6.h,
-                          padding: EdgeInsets.symmetric(vertical: .8.h,
-                              horizontal: Dimensions
-                                  .containerHorizontalPadding),
-                          decoration: BoxDecoration(
-                              color: ColorUtils.white,
-                              borderRadius: BorderRadius.all(
-                                  Radius.circular(Dimensions.roundCorner)),
-                              border: Border.all(color: ColorUtils.red_color)
-                          ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                  child: DropdownButton<String>(
-                                    value: model.kindOfBarValueStr,
-                                    items: model.kindOfBarList
-                                        .asMap()
-                                        .values
-                                        .map((String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(
-                                          value,
-                                          style: TextStyle(
-                                            fontSize: 1.8.t,
-                                            fontFamily: FontUtils
-                                                .modernistRegular,
-                                            color: ColorUtils.red_color,
-                                            //height: 1.8
-                                          ),
-                                        ),
-                                      );
-                                    }).toList(),
-                                    onChanged: (data) {
-                                      setState(() {
-                                        model.kindOfBarValueStr =
-                                        data as String;
-                                        model.kindOfBarValue =
-                                        model.kindOfBarMap[model
-                                            .kindOfBarValueStr] as int;
-                                      });
-                                    },
-                                    hint: Text(
-                                      "Select an option",
-                                      style: TextStyle(
-                                        fontSize: 1.8.t,
-                                        fontFamily: FontUtils.modernistRegular,
-                                        color: ColorUtils.red_color,
-                                      ),
-                                    ),
-                                    isExpanded: true,
-                                    underline: Container(
-                                    ),
-                                    icon: Align(
-                                        alignment: Alignment.centerRight,
-                                        child: Icon(
-                                          Icons.keyboard_arrow_down_rounded,
-                                          color: ColorUtils.red_color,)
-                                    ),
+                        Wrap(
+                          spacing: 2.5.w,
+                          runSpacing: 1.5.h,
+                          direction: Axis.horizontal,
+                          children: model.userModel!.favorite_alcohol_drinks!
+                              .map((element) => ElevatedButton(
+                            onPressed: () {
+                              // if(model.selectedDrinkList.contains(model.drinkList.indexOf(element))){
+                              //   model.selectedDrinkList.remove(model.drinkList.indexOf(element));
+                              // }
+                              // else{
+                              //   // if(element == "Radler"){
+                              //   //   showDialog(
+                              //   //       context: context,
+                              //   //       builder: (BuildContext context){
+                              //   //         return RadlerDialogBox(title: "Add New Location", btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+                              //   //       }
+                              //   //   );
+                              //   // }
+                              //   model.selectedDrinkList.add(model.drinkList.indexOf(element));
+                              // }
+                              // model.notifyListeners();
+                            },
+                            child: Text("abc"),
+                            style: ElevatedButton.styleFrom(
+                              primary:   ColorUtils.red_color,
+                              onPrimary:  ColorUtils.text_dark,
+                              padding: EdgeInsets.symmetric(vertical: 1.8.h, horizontal: 9.w),
+                              elevation:  5 ,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(Dimensions.roundCorner),
+                                  side: BorderSide(
+                                      color:  ColorUtils.text_red,
+                                      width: 1
                                   )
                               ),
-                            ],
-                          ),
+                              textStyle: TextStyle(
+                                //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
+                                fontFamily:FontUtils.modernistBold ,
+                                fontSize: 1.8.t,
+                                //height: 0
+                              ),
+                            ),
+                          )).toList(),
                         ),
                         SizedBox(height: 2.h),
                         Text(
@@ -836,7 +814,7 @@ class _UserDetailsState extends State<UserDetails> {
           ),
         );
       },
-      viewModelBuilder: () => locator<AuthenticationViewModel>(),
+      viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
     );
   }

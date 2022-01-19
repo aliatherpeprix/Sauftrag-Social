@@ -9,6 +9,7 @@ import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
+import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:sauftrag/widgets/add_dialog_box.dart';
 import 'package:sauftrag/widgets/back_arrow_with_container.dart';
 import 'package:sauftrag/widgets/radler_dialog_box.dart';
@@ -27,7 +28,7 @@ class _FavoriteState extends State<Favorite> {
   @override
   Widget build(BuildContext context) {
 
-    return ViewModelBuilder<AuthenticationViewModel>.reactive(
+    return ViewModelBuilder<RegistrationViewModel>.reactive(
       onModelReady: (model) => {
 
       },
@@ -429,7 +430,8 @@ class _FavoriteState extends State<Favorite> {
                           //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                           child: ElevatedButton(
                             onPressed: () {
-                              model.navigateToMediaScreen();
+                              model.favorites();
+                              //model.navigateToMediaScreen();
                             },
                             child: const Text("Next"),
                             style: ElevatedButton.styleFrom(
@@ -459,7 +461,7 @@ class _FavoriteState extends State<Favorite> {
           ),
         );
       },
-      viewModelBuilder: () => locator<AuthenticationViewModel>(),
+      viewModelBuilder: () => locator<RegistrationViewModel>(),
       disposeViewModel: false,
     );
   }
