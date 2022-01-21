@@ -38,7 +38,7 @@ class _UserDetailsState extends State<UserDetails> {
             FocusScope.of(context).unfocus();
           },
           child: SafeArea(
-            top: false,
+            top: true,
             bottom: false,
             child: AbsorbPointer(
               absorbing: model.editProfile,

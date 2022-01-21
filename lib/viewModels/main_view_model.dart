@@ -210,15 +210,18 @@ class MainViewModel extends BaseViewModel{
       if(userSignupResponce is UserModel)
       {
         UserModel user = userSignupResponce;
-        if (favorite=="favorite_alcohol_drinks"){
-          user.favorite_alcohol_drinks = CommonFunctions.SubtractFromList(user.favorite_alcohol_drinks!);
-        }
-        if (favorite=="favorite_night_club"){
-          user.favorite_night_club = CommonFunctions.SubtractFromList(user.favorite_night_club!);
-        }
-        if (favorite=="favorite_party_vacation"){
-          user.favorite_party_vacation = CommonFunctions.SubtractFromList(user.favorite_party_vacation!);
-        }
+        user.favorite_alcohol_drinks = CommonFunctions.SubtractFromList(user.favorite_alcohol_drinks!);
+        user.favorite_night_club = CommonFunctions.SubtractFromList(user.favorite_night_club!);
+        user.favorite_party_vacation = CommonFunctions.SubtractFromList(user.favorite_party_vacation!);
+        // if (favorite=="favorite_alcohol_drinks"){
+        //
+        // }
+        // if (favorite=="favorite_night_club"){
+        //
+        // }
+        // if (favorite=="favorite_party_vacation"){
+        //
+        // }
         user.token = userModel!.token!;
         userModel = user;
         await prefrencesViewModel.saveUser(user);
