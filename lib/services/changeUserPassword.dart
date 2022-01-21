@@ -34,13 +34,13 @@ class Changeuserpassword {
 
       });
 
-      UserModel user = UserModel();
+      UserModel? user = UserModel();
       user = await locator<PrefrencesViewModel>().getUser();
       var response = await dio.post(
           Constants.BaseUrlPro + Constants.ChangeUserPassword, data: param,
           options: Options(
               headers: {
-                "Authorization": "Token ${user.token!}"
+                "Authorization": "Token ${user!.token!}"
               }));
           if (response.statusCode == 200 || response.statusCode == 201)
       {

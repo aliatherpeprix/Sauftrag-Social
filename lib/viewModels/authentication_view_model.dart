@@ -3,9 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/utils/constants.dart';
 import 'package:sauftrag/utils/dialog_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
+import 'package:sauftrag/viewModels/prefrences_view_model.dart';
 import 'package:sauftrag/widgets/error_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
@@ -18,6 +20,7 @@ import 'main_view_model.dart';
 class AuthenticationViewModel extends BaseViewModel {
   var navigationService = navigationViewModel;
   late SharedPreferences prefs;
+  PrefrencesViewModel prefss = locator<PrefrencesViewModel>();
 
   int role = Constants.user;
   bool signupCheck = false;
@@ -129,6 +132,9 @@ class AuthenticationViewModel extends BaseViewModel {
   final signUpBarVerifyPasswordController = TextEditingController();
   bool isSignUpBarVerifyPasswordInFocus = false;
   FocusNode signUpBarVerifyPasswordFocus = new FocusNode();
+
+
+
 
   bool loginPasswordVisible = false;
 
@@ -303,7 +309,19 @@ class AuthenticationViewModel extends BaseViewModel {
   void initializeSplash() async {
     prefs = await SharedPreferences.getInstance();
 
-    Timer(Duration(seconds: 7), () => navigateToLoginScreen());
+    Timer(Duration(seconds: 7), ()async {
+      if ((await prefss.getUser())!=null){
+        UserModel? user = await prefss.getUser();
+        if (user!.role==1){
+          navigationService.navigateToHomeScreen(0);
+        }else {
+          navigationService.navigateToHomeBarScreen();
+        }
+      }else {
+        navigateToLoginScreen();
+      }
+
+    });
   }
 
   void selectRole(int role) {
@@ -565,59 +583,59 @@ class AuthenticationViewModel extends BaseViewModel {
     navigateToUploadBarMedia();
   }
 
-  onLogIn() {
-    if (logInUserController.text.isEmpty) {
-      DialogUtils().showDialog(MyErrorWidget(
-        error: "User Name is required",
-      ));
-      return;
-    } else if (logInPasswordController.text.isEmpty) {
-      DialogUtils().showDialog(MyErrorWidget(
-        error: "Password is required",
-      ));
-      return;
-    }
-    else if (logInPasswordController.text.length < 7) {
-      DialogUtils().showDialog(
-          MyErrorWidget(error: "Password must contain 7 digit"));
-      return;
-    }
-    // else if (!CommonFunctions.hasOneUpperCase(
-    //     logInPasswordController.text.trim())) {
-    //   DialogUtils().showDialog(MyErrorWidget(
-    //       error: "Wrong Password"));
-    //   return;
-    // }
-    // else if (!CommonFunctions.hasOneLowerCase(
-    //     logInPasswordController.text.trim())) {
-    //   DialogUtils().showDialog(MyErrorWidget(
-    //       error: "Wrong Password"));
-    //   return;
-    // }
-    // else if (!CommonFunctions.hasOneDigit(logInPasswordController.text.trim())) {
-    //   DialogUtils().showDialog(
-    //       MyErrorWidget(error: "Wrong Password"));
-    //   return;
-    // }
-    // else if (!CommonFunctions.hasOneSpeicalCharacter(
-    //     logInPasswordController.text.trim())) {
-    //   DialogUtils().showDialog(MyErrorWidget(
-    //       error: "Wrong Password"));
-    //   return;
-    // }
-    else {
-      MainViewModel  mainViewModel = locator<MainViewModel>();
-      if (logInUserSelected == true) {
-        mainViewModel.logInUserSelected = true;
-        mainViewModel.logInBarSelected = false;
-        navigateToHomeScreen(2);
-      } else if (logInBarSelected == true) {
-        mainViewModel.logInUserSelected = false;
-        mainViewModel.logInBarSelected = true;
-        navigateToHomeBarScreen();
-      }
-    }
-  }
+  // onLogIn() {
+  //   if (logInUserController.text.isEmpty) {
+  //     DialogUtils().showDialog(MyErrorWidget(
+  //       error: "User Name is required",
+  //     ));
+  //     return;
+  //   } else if (logInPasswordController.text.isEmpty) {
+  //     DialogUtils().showDialog(MyErrorWidget(
+  //       error: "Password is required",
+  //     ));
+  //     return;
+  //   }
+  //   else if (logInPasswordController.text.length < 7) {
+  //     DialogUtils().showDialog(
+  //         MyErrorWidget(error: "Password must contain 7 digit"));
+  //     return;
+  //   }
+  //   // else if (!CommonFunctions.hasOneUpperCase(
+  //   //     logInPasswordController.text.trim())) {
+  //   //   DialogUtils().showDialog(MyErrorWidget(
+  //   //       error: "Wrong Password"));
+  //   //   return;
+  //   // }
+  //   // else if (!CommonFunctions.hasOneLowerCase(
+  //   //     logInPasswordController.text.trim())) {
+  //   //   DialogUtils().showDialog(MyErrorWidget(
+  //   //       error: "Wrong Password"));
+  //   //   return;
+  //   // }
+  //   // else if (!CommonFunctions.hasOneDigit(logInPasswordController.text.trim())) {
+  //   //   DialogUtils().showDialog(
+  //   //       MyErrorWidget(error: "Wrong Password"));
+  //   //   return;
+  //   // }
+  //   // else if (!CommonFunctions.hasOneSpeicalCharacter(
+  //   //     logInPasswordController.text.trim())) {
+  //   //   DialogUtils().showDialog(MyErrorWidget(
+  //   //       error: "Wrong Password"));
+  //   //   return;
+  //   // }
+  //   else {
+  //     MainViewModel  mainViewModel = locator<MainViewModel>();
+  //     if (logInUserSelected == true) {
+  //       mainViewModel.logInUserSelected = true;
+  //       mainViewModel.logInBarSelected = false;
+  //       navigateToHomeScreen(2);
+  //     } else if (logInBarSelected == true) {
+  //       mainViewModel.logInUserSelected = false;
+  //       mainViewModel.logInBarSelected = true;
+  //       navigateToHomeBarScreen();
+  //     }
+  //   }
+  // }
 
   void navigateToSignUpBar() {
     navigationService.navigateToBarSignUpScreen();

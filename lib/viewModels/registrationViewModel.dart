@@ -34,11 +34,13 @@ import 'package:sauftrag/utils/dialog_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/prefrences_view_model.dart';
 import 'package:sauftrag/widgets/error_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 import '../main.dart';
 import 'main_view_model.dart';
 
-class RegistrationViewModel extends BaseViewModel {
+class
+RegistrationViewModel extends BaseViewModel {
   //var _dioService = DioService.getInstance();
   var signupUser = SignupUser();
   var signupBar = SignupBar();
@@ -47,6 +49,7 @@ class RegistrationViewModel extends BaseViewModel {
   var changepassword = Changeuserpassword();
   var checkuser = Checkuser();
   var updateUser = Updateuser();
+
 
 
   var navigationService = navigationViewModel;
@@ -66,6 +69,7 @@ class RegistrationViewModel extends BaseViewModel {
   bool resetNewPasswordVisible = false;
   bool resetConfirmPasswordVisible = false;
   bool loading = false;
+  bool getStarted = false;
 
   //For Loader
   bool logIn = false;
@@ -116,6 +120,10 @@ class RegistrationViewModel extends BaseViewModel {
   final signUpRelationshipController = TextEditingController();
   bool isSignUpRelationshipInFocus = false;
   FocusNode signUpRelationshipFocus = new FocusNode();
+
+  final addDrinkController = TextEditingController();
+  bool isAddDrinkInFocus = false;
+  FocusNode addDrinkFocus = new FocusNode();
 
   ///----------------------Forget Password Controller ----------------///
 
@@ -327,7 +335,7 @@ class RegistrationViewModel extends BaseViewModel {
   };
 
   List<dynamic> imageFiles = [
-   "", "", "", "", "", ""
+   File(""), File(""), File(""), File(""), File(""), File("")
   ];
 
   Future<bool> getImage(int index) async {
@@ -377,8 +385,8 @@ class RegistrationViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  String userId = "";
-  String userToken = "";
+  //String userId = "";
+  //String userToken = "";
 
   onLogIn() async {
     if (logInUserController.text.isEmpty) {
@@ -419,6 +427,10 @@ class RegistrationViewModel extends BaseViewModel {
           logInPasswordController.text, logInUserSelected ? "1" : "2");
         print(signupResponse);
       if (signupResponse is userModel.UserModel) {
+        userModel.UserModel user = signupResponse;
+        user.favorite_alcohol_drinks = CommonFunctions.SubtractFromList(user.favorite_alcohol_drinks!);
+        user.favorite_night_club = CommonFunctions.SubtractFromList(user.favorite_night_club!);
+        user.favorite_party_vacation = CommonFunctions.SubtractFromList(user.favorite_party_vacation!);
         await locator<PrefrencesViewModel>().saveUser(signupResponse);
         if (logInUserSelected == true) {
           mainViewModel.logInUserSelected = true;
@@ -449,6 +461,14 @@ class RegistrationViewModel extends BaseViewModel {
       }
     }
   }
+
+  logOutUser() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.clear();
+    navigateAndRemoveSignInScreen();
+
+  }
+
 
   forgetPassword() async {
 
@@ -720,10 +740,13 @@ class RegistrationViewModel extends BaseViewModel {
     }
     else
     {
-      userModel.UserModel usermodel = await prefrencesViewModel.getUser();
+      getStarted = true;
+      notifyListeners();
+      userModel.UserModel? usermodel = await prefrencesViewModel.getUser();
       List<int> newDrinks = [];
       List<int> newClubs = [];
       List<int> newVacations = [];
+
       for (int drink in selectedDrinkList){
         newDrinks.add(drink+1);
       }
@@ -735,7 +758,7 @@ class RegistrationViewModel extends BaseViewModel {
       }
       var userSignupResponce = await updateUser.UpdateUser(
 
-          usermodel.email!,
+          usermodel!.email!,
           usermodel.username!,
           usermodel.password!,
           usermodel.password2!,
@@ -748,7 +771,7 @@ class RegistrationViewModel extends BaseViewModel {
           newClubs,
           newVacations,
           imageFiles,
-          usermodel.id!.toString(),
+          usermodel!.id!.toString(),
           termsCheck,
           dataCheck
 
@@ -757,9 +780,14 @@ class RegistrationViewModel extends BaseViewModel {
       if(userSignupResponce is UserModel)
       {
         userModel.UserModel user = userSignupResponce;
+        user.token = usermodel.token;
         user.password = signUpPasswordController.text;
         user.password2 = signUpVerifyPasswordController.text;
+        user.favorite_alcohol_drinks = CommonFunctions.SubtractFromList(user.favorite_alcohol_drinks!);
+        user.favorite_night_club = CommonFunctions.SubtractFromList(user.favorite_night_club!);
+        user.favorite_party_vacation = CommonFunctions.SubtractFromList(user.favorite_party_vacation!);
         await locator<PrefrencesViewModel>().saveUser(user);
+        dataCheck = false;
       }
       selectedDrinkList.clear();
       selectedClubList.clear();
@@ -773,14 +801,82 @@ class RegistrationViewModel extends BaseViewModel {
         ""
       ];
       //model.imageFiles = [];
-      dataCheck = false;
-      //signInUser = false;
-      notifyListeners();
       // DialogUtils().showDialog(
       //     MyErrorWidget(error: "Use has been created succ"));
-      //navigateToHomeScreen(2);
+      navigateToHomeScreen(2);
       //favorites();
     }
+    //signInUser = false;
+    getStarted = false;
+    notifyListeners();
+    //navigateToHomeScreen(2);
+  }
+
+  favoritesDrinks(List<int> selectedList,String favorite) async {
+    if (selectedList.isEmpty) {
+
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Select at least one favorite drink",
+      ));
+      notifyListeners();
+      return;
+    }
+    else
+      {
+        userModel.UserModel? usermodel = await prefrencesViewModel.getUser();
+
+        var userSignupResponce = await updateUser.UpdateUserFavorites(
+          selectedList,
+          favorite
+        );
+        print(userSignupResponce);
+        if(userSignupResponce is UserModel)
+        {
+          userModel.UserModel user = userSignupResponce;
+          if (favorite=="favorite_alcohol_drinks"){
+            user.favorite_alcohol_drinks = CommonFunctions.SubtractFromList(user.favorite_alcohol_drinks!);
+          }
+          if (favorite=="favorite_night_club"){
+            user.favorite_night_club = CommonFunctions.SubtractFromList(user.favorite_night_club!);
+          }
+          if (favorite=="favorite_party_vacation"){
+            user.favorite_party_vacation = CommonFunctions.SubtractFromList(user.favorite_party_vacation!);
+          }
+          await locator<PrefrencesViewModel>().saveUser(user);
+    }
+    selectedDrinkList.clear();
+    selectedClubList.clear();
+    selectedVacationList.clear();
+    imageFiles = [
+    File(""), File(""), File(""), File(""), File(""), File("")
+    ];
+    //model.imageFiles = [];
+    dataCheck = false;
+    //signInUser = false;
+    notifyListeners();
+    // DialogUtils().showDialog(
+    //     MyErrorWidget(error: "Use has been created succ"));
+    navigateToHomeScreen(2);
+      }
+    // if (selectedClubList.isEmpty) {
+    //
+    //   DialogUtils().showDialog(MyErrorWidget(
+    //     error: "Select at least one favorite club",
+    //   ));
+    //   notifyListeners();
+    //   return;
+    // }
+    // if (selectedVacationList.isEmpty) {
+    //
+    //   DialogUtils().showDialog(MyErrorWidget(
+    //     error: "Select at least one favorite party vacation",
+    //   ));
+    //   notifyListeners();
+    //   return;
+    // }
+
+    //navigateToMediaScreen();
+    //navigateToMediaScreen();
     //navigateToHomeScreen(2);
   }
 
@@ -1373,6 +1469,55 @@ class RegistrationViewModel extends BaseViewModel {
   //   }
   // }
 
+  void navigateAndRemoveSignInScreen() {
+    navigationService.navigateAndRemoveSignInScreen();
+  }
+
+  void navigateToFollowersListScreen() {
+    navigationService.navigateToFollowersListScreen();
+  }
+
+  ///------User Drawer -----/////
+  void navigateToRatingList() {
+    navigationService.navigateToRatingList();
+  }
+
+  void navigateToMatchedList() {
+    navigationService.navigateToMatchedList();
+  }
+
+  void navigateToFollowerList() {
+    navigationService.navigateToFollowerList();
+  }
+
+  void navigateToListOfBar() {
+    navigationService.navigateToListOfBar();
+  }
+
+  void navigateToTermsScreen() {
+    navigationService.navigateToTermsScreen();
+  }
+
+  void navigateToBarProfile() {
+    navigationService.navigateToBarProfile();
+  }
+
+  void navigateToUserBarCodeScanner() {
+    navigationService.navigateToUserBarCodeScanner();
+  }
+
+  void navigateToUpcomingEvent() {
+    navigationService.navigateToUpcomingEvent();
+  }
+
+  void navigateToMessageScreen() {
+    navigationService.navigateToMessageScreen();
+  }
+
+  void navigateToSelectIndividualChatScreen() {
+    navigationService.navigateToSelectIndividualChatScreen();
+  }
+
   void navigateToFavoriteScreen() {
     navigationService.navigateToFavoriteScreen();
   }
@@ -1397,8 +1542,8 @@ class RegistrationViewModel extends BaseViewModel {
     navigationService.navigateToHomeBarScreen();
   }
 
-  void navigateToTermsScreen() {
-    navigationService.navigateToTermsScreen();
+  void navigateToNotificationScreen() {
+    navigationService.navigateToNotificationScreen();
   }
 
   void navigateToForgetPasswordScreen() {

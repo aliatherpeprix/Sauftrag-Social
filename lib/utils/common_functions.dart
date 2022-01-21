@@ -295,6 +295,22 @@ class CommonFunctions{
 
     return adultDate.isBefore(today);
   }
+
+  static List<int> SubtractFromList(List data) {
+    List<int> temp = [];
+    for (int number in data) {
+      temp.add(number - 1);
+    }
+    return temp;
+  }
+
+  static List<int> AddFromList(List data){
+    List<int> temp = [];
+    for (int number in data){
+      temp.add(number+1);
+    }
+    return temp;
+  }
 }
 
 

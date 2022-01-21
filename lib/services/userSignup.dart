@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sauftrag/models/user_models.dart';
@@ -25,7 +27,7 @@ class SignupUser {
       List<int> selectedDrinkList,
       List<int> selectedClubList,
       List<int> selectedVacationList,
-      List imageFiles,
+      List images,
 
       ) async {
     try {
@@ -44,6 +46,7 @@ class SignupUser {
         'selectedDrinkList' : selectedDrinkList,
         'selectedClubList' : selectedClubList,
         'selectedVacationList' : selectedVacationList,
+
 
         'role' : 1,
         'profile_picture' : ''

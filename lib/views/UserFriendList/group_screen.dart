@@ -82,7 +82,7 @@ class _GroupScreenState extends State<GroupScreen> {
                                         padding: EdgeInsets.symmetric(vertical: 2.2.h, horizontal: 1.7.w),
                                         child:  ExpandTapWidget(
                                           onTap: () {
-                                            model.getImage();
+                                            model.getImagE();
                                             setState(() {
                                             });
                                           },

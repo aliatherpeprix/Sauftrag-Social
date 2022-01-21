@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/utils/color_utils.dart';
+import 'package:sauftrag/utils/common_functions.dart';
 import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
@@ -58,12 +59,47 @@ class _UserProfileState extends State<UserProfile> {
 
                       ///--------------Event Name--------------------///
                       GestureDetector(
-                        onTap: ()async{
-                          PrefrencesViewModel prefs = locator<PrefrencesViewModel>();
+                        onTap: () async {
+                          PrefrencesViewModel prefs =
+                              locator<PrefrencesViewModel>();
                           model.userModel = await prefs.getUser();
-                          //model.selectedDrinkList = model.userModel!.favorite_alcohol_drinks!;
+                          if (model.userModel!.profile_picture != null &&
+                              model.userModel!.profile_picture!.isNotEmpty) {
+                            model.imageFiles.removeAt(0);
+                            model.imageFiles
+                                .insert(0, model.userModel!.profile_picture!);
+                          }
+                          if (model.userModel!.catalogue_image1 != null &&
+                              model.userModel!.catalogue_image1!.isNotEmpty) {
+                            model.imageFiles.removeAt(1);
+                            model.imageFiles
+                                .insert(1, model.userModel!.catalogue_image1!);
+                          }
+                          if (model.userModel!.catalogue_image2 != null &&
+                              model.userModel!.catalogue_image2!.isNotEmpty) {
+                            model.imageFiles.removeAt(2);
+                            model.imageFiles
+                                .insert(2, model.userModel!.catalogue_image2!);
+                          }
+                          if (model.userModel!.catalogue_image3 != null &&
+                              model.userModel!.catalogue_image3!.isNotEmpty) {
+                            model.imageFiles.removeAt(3);
+                            model.imageFiles
+                                .insert(3, model.userModel!.catalogue_image3!);
+                          }
+                          if (model.userModel!.catalogue_image4 != null &&
+                              model.userModel!.catalogue_image4!.isNotEmpty) {
+                            model.imageFiles.removeAt(4);
+                            model.imageFiles
+                                .insert(4, model.userModel!.catalogue_image4!);
+                          }
+                          if (model.userModel!.catalogue_image5 != null &&
+                              model.userModel!.catalogue_image5!.isNotEmpty) {
+                            model.imageFiles.removeAt(5);
+                            model.imageFiles
+                                .insert(5, model.userModel!.catalogue_image5!);
+                          }
                           model.navigateToUserDetailSettings();
-
                         },
                         child: Container(
                           // padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -84,12 +120,19 @@ class _UserProfileState extends State<UserProfile> {
                                     //       }
                                     //   );*/
                                     // },
-                                    child: Image.asset(ImageUtils.userProfileProfile,
-                                    height: 15.i,
-                                    width: 15.i,
-                                    ),
+                                    child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(50),
+                                        child: Image(
+                                          image: NetworkImage(model
+                                              .userModel!.profile_picture!),
+                                          fit: BoxFit.cover,
+                                          height: 15.i,
+                                          width: 15.i,
+                                        )),
                                   ),
-                                  SizedBox(width: 2.w,),
+                                  SizedBox(
+                                    width: 2.w,
+                                  ),
                                   // Container(
                                   //   margin: EdgeInsets.only(right: 20),
                                   //   child: RoundImage(
@@ -103,19 +146,27 @@ class _UserProfileState extends State<UserProfile> {
                                   // ),
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        "John Wick",
-                                        style: TextStyle(
-                                          color: ColorUtils.black,
-                                          fontFamily: FontUtils.modernistBold,
-                                          fontSize: 2.t,
+                                      Container(
+                                        width: 35.w,
+                                        child: Text(
+                                         model.userModel!.username!,
+                                          style: TextStyle(
+                                            color: ColorUtils.black,
+                                            fontFamily: FontUtils.modernistBold,
+                                            fontSize: 2.t,
+                                          ),
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
-                                      SizedBox(height: 1.h,),
+                                      SizedBox(
+                                        height: 1.h,
+                                      ),
                                       Text(
-                                        "+62 1309 - 1710 - 1920",
+                                       model.userModel!.phone_no!,
                                         style: TextStyle(
                                           color: ColorUtils.text_grey,
                                           fontFamily: FontUtils.modernistBold,
@@ -135,37 +186,46 @@ class _UserProfileState extends State<UserProfile> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 3.h,),
+                      SizedBox(
+                        height: 3.h,
+                      ),
                       Container(
-                        padding: EdgeInsets.symmetric(vertical: 2.h,horizontal: 3.w),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 2.h, horizontal: 3.w),
                         decoration: BoxDecoration(
                           color: ColorUtils.text_red,
                           borderRadius: BorderRadius.all(Radius.circular(15)),
                         ),
                         child: Row(
                           children: [
-                            Image.asset(ImageUtils.levelStar,
-                            height: 20.i,
-                            width: 20.i,
+                            Image.asset(
+                              ImageUtils.levelStar,
+                              height: 20.i,
+                              width: 20.i,
                             ),
-                            SizedBox(width: 2.w,),
+                            SizedBox(
+                              width: 2.w,
+                            ),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Level 21",
-                                  style: TextStyle(
-                                    fontFamily: FontUtils.modernistBold,
-                                    color: Colors.white,
-                                    fontSize: 2.5.t,
-                                  ),
+                                  Text(
+                                    "Level 21",
+                                    style: TextStyle(
+                                      fontFamily: FontUtils.modernistBold,
+                                      color: Colors.white,
+                                      fontSize: 2.5.t,
+                                    ),
                                   ),
                                   // SizedBox(
                                   //   width: 2.h,
                                   // ),
                                   Container(
-                                    width: MediaQuery.of(context).size.width / 1.5,
-                                    child: Text("You are just 25 points away to reach next level",
+                                    width:
+                                        MediaQuery.of(context).size.width / 1.5,
+                                    child: Text(
+                                      "You are just 25 points away to reach next level",
                                       style: TextStyle(
                                         fontFamily: FontUtils.modernistRegular,
                                         color: Colors.white,
@@ -173,23 +233,30 @@ class _UserProfileState extends State<UserProfile> {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(height: 1.0.h,),
+                                  SizedBox(
+                                    height: 1.0.h,
+                                  ),
                                   Container(
-                                    width: MediaQuery.of(context).size.width/1.6,
+                                    width:
+                                        MediaQuery.of(context).size.width / 1.6,
                                     child: SizedBox(
                                         height: 8,
-                                        child:LiquidLinearProgressIndicator(
-                                          value: 0.45, // Defaults to 0.5.
-                                          valueColor: AlwaysStoppedAnimation(ColorUtils.settingsProgress), // Defaults to the current Theme's accentColor.
-                                          backgroundColor: Colors.white, // Defaults to the current Theme's backgroundColor.
+                                        child: LiquidLinearProgressIndicator(
+                                          value: 0.45,
+                                          // Defaults to 0.5.
+                                          valueColor: AlwaysStoppedAnimation(
+                                              ColorUtils.settingsProgress),
+                                          // Defaults to the current Theme's accentColor.
+                                          backgroundColor: Colors.white,
+                                          // Defaults to the current Theme's backgroundColor.
                                           //borderColor: Colors.red, //border color of the bar
                                           //borderWidth: 5.0, //border width of the bar
-                                          borderRadius: 12.0,//border radius
+                                          borderRadius: 12.0,
+                                          //border radius
                                           direction: Axis.horizontal,
                                           // The direction the liquid moves (Axis.vertical = bottom to top, Axis.horizontal = left to right). Defaults to Axis.horizontal.
                                           //center: Text("50%"), //text inside bar
-                                        )
-                                    ),
+                                        )),
                                   ),
                                 ],
                               ),
@@ -201,7 +268,7 @@ class _UserProfileState extends State<UserProfile> {
 
                       ///--------------Settings Options--------------------///
                       GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           model.navigateToUserProfileAccountScreen();
                         },
                         child: Row(
@@ -210,7 +277,9 @@ class _UserProfileState extends State<UserProfile> {
                             Row(
                               children: [
                                 SvgPicture.asset(ImageUtils.userProfileAccount),
-                                SizedBox(width: 1.5.h,),
+                                SizedBox(
+                                  width: 1.5.h,
+                                ),
                                 Text(
                                   "Accounts",
                                   style: TextStyle(
@@ -232,7 +301,6 @@ class _UserProfileState extends State<UserProfile> {
                                 // ),
                               ],
                             ),
-
                             Icon(
                               Icons.keyboard_arrow_right_rounded,
                               size: 30,
@@ -243,16 +311,20 @@ class _UserProfileState extends State<UserProfile> {
                       ),
                       SizedBox(height: 3.h),
                       GestureDetector(
-                        onTap: (){
-                          model.navigateToUserProfileAccountNotificationScreen();
+                        onTap: () {
+                          model
+                              .navigateToUserProfileAccountNotificationScreen();
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Row(
                               children: [
-                                SvgPicture.asset(ImageUtils.userProfileNotification),
-                                SizedBox(width: 1.5.h,),
+                                SvgPicture.asset(
+                                    ImageUtils.userProfileNotification),
+                                SizedBox(
+                                  width: 1.5.h,
+                                ),
                                 Text(
                                   "Notification",
                                   style: TextStyle(
@@ -274,7 +346,6 @@ class _UserProfileState extends State<UserProfile> {
                                 // ),
                               ],
                             ),
-
                             Icon(
                               Icons.keyboard_arrow_right_rounded,
                               size: 30,
@@ -285,7 +356,7 @@ class _UserProfileState extends State<UserProfile> {
                       ),
                       SizedBox(height: 3.h),
                       GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           model.navigateToUserProfileAccountLegalTermScreen();
                         },
                         child: Row(
@@ -293,8 +364,11 @@ class _UserProfileState extends State<UserProfile> {
                           children: [
                             Row(
                               children: [
-                                SvgPicture.asset(ImageUtils.userProfileLegalTerms),
-                                SizedBox(width: 1.5.h,),
+                                SvgPicture.asset(
+                                    ImageUtils.userProfileLegalTerms),
+                                SizedBox(
+                                  width: 1.5.h,
+                                ),
                                 Text(
                                   "Legal Terms",
                                   style: TextStyle(
@@ -316,7 +390,6 @@ class _UserProfileState extends State<UserProfile> {
                                 // ),
                               ],
                             ),
-
                             Icon(
                               Icons.keyboard_arrow_right_rounded,
                               size: 30,
@@ -331,8 +404,11 @@ class _UserProfileState extends State<UserProfile> {
                         children: [
                           Row(
                             children: [
-                              SvgPicture.asset(ImageUtils.userProfileInviteFriends),
-                              SizedBox(width: 1.5.h,),
+                              SvgPicture.asset(
+                                  ImageUtils.userProfileInviteFriends),
+                              SizedBox(
+                                width: 1.5.h,
+                              ),
                               Text(
                                 "Invite Your Friends",
                                 style: TextStyle(
@@ -354,7 +430,6 @@ class _UserProfileState extends State<UserProfile> {
                               // ),
                             ],
                           ),
-
                           Icon(
                             Icons.keyboard_arrow_right_rounded,
                             size: 30,
@@ -364,9 +439,8 @@ class _UserProfileState extends State<UserProfile> {
                       ),
                       SizedBox(height: 3.h),
                       GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           model.navigateToUserProfileAccountGpsScreen();
-
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -374,7 +448,9 @@ class _UserProfileState extends State<UserProfile> {
                             Row(
                               children: [
                                 SvgPicture.asset(ImageUtils.userProfileGPs),
-                                SizedBox(width: 1.5.h,),
+                                SizedBox(
+                                  width: 1.5.h,
+                                ),
                                 Text(
                                   "GPS",
                                   style: TextStyle(
@@ -396,7 +472,6 @@ class _UserProfileState extends State<UserProfile> {
                                 // ),
                               ],
                             ),
-
                             Icon(
                               Icons.keyboard_arrow_right_rounded,
                               size: 30,

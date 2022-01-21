@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -7,12 +8,19 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mime/mime.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/user_models.dart';
+import 'package:sauftrag/services/updateUserProfile.dart';
 import 'package:sauftrag/utils/color_utils.dart';
+import 'package:sauftrag/utils/common_functions.dart';
 import 'package:sauftrag/utils/constants.dart';
+import 'package:sauftrag/utils/dialog_utils.dart';
 
 import 'package:sauftrag/utils/image_utils.dart';
+import 'package:sauftrag/viewModels/prefrences_view_model.dart';
+import 'package:sauftrag/widgets/error_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
 import 'package:stacked/stacked.dart';
@@ -20,6 +28,10 @@ import 'package:stacked/stacked.dart';
 import '../main.dart';
 
 class MainViewModel extends BaseViewModel{
+
+  var updateUser = Updateuser();
+
+
   final GlobalKey<SideMenuState> sideMenuKey = GlobalKey<SideMenuState>();
 
   Completer<GoogleMapController> controller = Completer();
@@ -66,9 +78,27 @@ class MainViewModel extends BaseViewModel{
   List<UserModel> alcoholDrinks=[];
   final messageScreenChatController = TextEditingController();
   bool userNewsFeed = false;
+  bool favDrink = false;
+  bool favClub = false;
+  bool favVacation = false;
+  bool editProfile = false;
+
   var dio = Dio();
 
+  final addDrinkController = TextEditingController();
+  bool isAddDrinkInFocus = false;
+  FocusNode addDrinkFocus = new FocusNode();
 
+  final addClubController = TextEditingController();
+  bool isAddClubInFocus = false;
+  FocusNode addClubFocus = new FocusNode();
+
+  final addVacationController = TextEditingController();
+  bool isddVacationInFocus = false;
+  FocusNode addVacationFocus = new FocusNode();
+
+
+  PrefrencesViewModel prefrencesViewModel = locator<PrefrencesViewModel>();
   double lowerValue = 50;
   double upperValue = 180;
   List contactChecked = [
@@ -107,7 +137,7 @@ class MainViewModel extends BaseViewModel{
   ];
 
   File imageFile = File('my initial file');
-  List<File> imageFiles = [
+  List<dynamic> imageFiles = [
     File(""),
     File(""),
     File(""),
@@ -157,6 +187,87 @@ class MainViewModel extends BaseViewModel{
     }
   }
 
+  Future favoritesDrinks(List selectedList,String favorite) async {
+    if (selectedList.isEmpty) {
+
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Select at least one favorites",
+      ));
+      notifyListeners();
+      return;
+    }
+
+    else
+    {
+      favDrink = true;
+      notifyListeners();
+
+      var userSignupResponce = await updateUser.UpdateUserFavorites(
+          selectedList,
+          favorite
+      );
+      print(userSignupResponce);
+      if(userSignupResponce is UserModel)
+      {
+        UserModel user = userSignupResponce;
+        if (favorite=="favorite_alcohol_drinks"){
+          user.favorite_alcohol_drinks = CommonFunctions.SubtractFromList(user.favorite_alcohol_drinks!);
+        }
+        if (favorite=="favorite_night_club"){
+          user.favorite_night_club = CommonFunctions.SubtractFromList(user.favorite_night_club!);
+        }
+        if (favorite=="favorite_party_vacation"){
+          user.favorite_party_vacation = CommonFunctions.SubtractFromList(user.favorite_party_vacation!);
+        }
+        user.token = userModel!.token!;
+        userModel = user;
+        await prefrencesViewModel.saveUser(user);
+      }
+      favDrink = false;
+      notifyListeners();
+
+      selectedDrinkList.clear();
+      selectedClubList.clear();
+      selectedVacationList.clear();
+
+      // imageFiles = [
+      //   "",
+      //   "",
+      //   "",
+      //   "",
+      //   "",
+      //   ""
+      // ];
+      //model.imageFiles = [];
+      //dataCheck = false;
+      //signInUser = false;
+      notifyListeners();
+      // DialogUtils().showDialog(
+      //     MyErrorWidget(error: "Use has been created succ"));
+      //navigateToHomeScreen(2);
+    }
+    // if (selectedClubList.isEmpty) {
+    //
+    //   DialogUtils().showDialog(MyErrorWidget(
+    //     error: "Select at least one favorite club",
+    //   ));
+    //   notifyListeners();
+    //   return;
+    // }
+    // if (selectedVacationList.isEmpty) {
+    //
+    //   DialogUtils().showDialog(MyErrorWidget(
+    //     error: "Select at least one favorite party vacation",
+    //   ));
+    //   notifyListeners();
+    //   return;
+    // }
+
+    //navigateToMediaScreen();
+    //navigateToMediaScreen();
+    //navigateToHomeScreen(2);
+  }
+
 
 
   int msgTypeValue = 1;
@@ -187,6 +298,9 @@ class MainViewModel extends BaseViewModel{
       return true;
     }
   }
+
+
+
   Future<Null> cropImage(BuildContext context, String path) async {
     File? croppedFile = await ImageCropper.cropImage(
         sourcePath: path,
@@ -244,7 +358,35 @@ class MainViewModel extends BaseViewModel{
     }
   }
 
-  Future<bool> getImage() async {
+  Future<bool> getImage(int index) async {
+    ImagePicker picker = ImagePicker();
+    //List<XFile>? images = await picker.pickMultiImage();
+    XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    //imageFile = File(image!.path);
+
+    if (image == null) {
+      return false;
+    } else {
+      imageFiles.removeAt(index);
+      imageFiles.insert(index, File(image.path));
+      print(imageFiles);
+      /*for(XFile image in images){
+        imageFiles.add(File(image.path));
+      }*/
+      notifyListeners();
+      return true;
+    }
+
+    /*if (imageFile == null) {
+      return false;
+    }
+    else{
+      notifyListeners();
+      return true;
+    }*/
+  }
+
+  Future<bool> getImagE() async {
     ImagePicker picker = ImagePicker();
     var image = await picker.pickImage(source: ImageSource.gallery);
     _pickedFile = image;
@@ -428,6 +570,31 @@ class MainViewModel extends BaseViewModel{
   ];
 
   List<dynamic> selectedDrinkList = [];
+
+  List<String> clubList = [
+    "Club 1",
+    "Club 2",
+    "Club 3",
+    "Club 4",
+    "Club 5",
+    "Club 6",
+    "Club 7",
+    "Club 8",
+    "Club 9",
+    "Club 10"
+  ];
+  List<dynamic> selectedClubList = [];
+
+  List<String> vacationList = [
+    "Ballermann",
+    "Goldstrand",
+    "Zrce Beach",
+    "Lloret",
+    "Ibiza",
+    "Springbreak Cancun"
+  ];
+
+  List<dynamic> selectedVacationList = [];
 
   List<String> interestList = [
     "White Wine",
@@ -825,12 +992,45 @@ class MainViewModel extends BaseViewModel{
     navigationService.navigateToBarAccountOwnerShip();
   }
 
+  Future saveUserDetails()async {
+    List tempList = [];
+    // for (int i = 0;i<imageFiles.length;i++){
+    //   if (imageFiles[i] is File && (imageFiles[i] as File).path.isNotEmpty){
+    //     String image = "data:${lookupMimeType(imageFiles[0].path)};base64," +
+    //         base64Encode(imageFiles[0].readAsBytesSync());
+    //     tempList.add(image);
+    //   }
+    //   else {
+    //     tempList.add(imageFiles[i]);
+    //   }
+    // }
+    editProfile = true;
+    notifyListeners();
+    var userUpdateResponse = await updateUser.UpdateUserProfile((genderList.indexOf(genderValueStr)+1).toString(), imageFiles);
+    if (userUpdateResponse is UserModel){
+      UserModel user = userUpdateResponse;
+      user.token = userModel!.token!;
+      user.favorite_alcohol_drinks = CommonFunctions.SubtractFromList(user.favorite_alcohol_drinks!);
+      user.favorite_night_club = CommonFunctions.SubtractFromList(user.favorite_night_club!);
+      user.favorite_party_vacation = CommonFunctions.SubtractFromList(user.favorite_party_vacation!);
+      await prefrencesViewModel.saveUser(user);
+      notifyListeners();
+    }
+    editProfile = false;
+    notifyListeners();
+  }
 
+  logOutUser() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.clear();
+    navigateAndRemoveSignInScreen();
 
+  }
 
-
-
-
+  void getUserData()async {
+    userModel = await prefrencesViewModel.getUser();
+    notifyListeners();
+  }
 
 
 /*AnimationController? buttonController;

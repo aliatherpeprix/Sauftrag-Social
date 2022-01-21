@@ -7,6 +7,7 @@ import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:sauftrag/widgets/round_image.dart';
 import 'package:stacked/stacked.dart';
 
@@ -37,17 +38,30 @@ class _MySideMenuState extends State<MySideMenu> {
                   model.navigateToUserDetailSettings();
                 },
                 child: Container(
-                  padding: EdgeInsets.symmetric( vertical: Dimensions.containerVerticalPadding),
+                  padding: EdgeInsets.symmetric( vertical: Dimensions.containerVerticalPadding, horizontal: Dimensions.containerHorizontalPadding),
                   child: Row(
                     children: [
 
-                      Image.asset(ImageUtils.profileImg),
-                      Text(
-                        "John Wick",
-                        style: TextStyle(
-                          color: ColorUtils.white,
-                          fontFamily: FontUtils.modernistBold,
-                          fontSize: 2.2.t,
+                      ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: Image(
+                            image: NetworkImage(model
+                                .userModel!.profile_picture!),
+                            fit: BoxFit.cover,
+                            height: 15.i,
+                            width: 15.i,
+                          )),
+                      SizedBox(width: 2.5.w,),
+                      Flexible(
+                        child: Text(
+                          model.userModel!.username!,
+                          style: TextStyle(
+                            color: ColorUtils.white,
+                            fontFamily: FontUtils.modernistBold,
+                            fontSize: 2.2.t,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ],
@@ -248,7 +262,8 @@ class _MySideMenuState extends State<MySideMenu> {
               //Logout
               InkWell(
                 onTap: (){
-                  model.navigateAndRemoveSignInScreen();
+                  model.logOutUser();
+
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: Dimensions.containerHorizontalPadding, vertical: Dimensions.containerVerticalPadding),

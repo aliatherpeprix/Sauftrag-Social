@@ -481,7 +481,7 @@ class _MessageDialogState extends State<MessageDialog> {
                                                 children: [
                                                   ExpandTapWidget(
                                                     onTap: () {
-                                                      model.getImage();
+                                                      model.getImagE();
                                                       setState(() {
                                                       });
                                                     },

@@ -648,7 +648,7 @@ var drawerController;
                                       children: [
                                         ExpandTapWidget(
                                           onTap: () {
-                                            mainModel.getImage();
+                                            mainModel.getImagE();
                                             setState(() {
                                             });
                                           },
