@@ -732,7 +732,8 @@ RegistrationViewModel extends BaseViewModel {
         error: "Please Accept Terms and Conditions",
       ));
       return;
-    } else if (dataCheck == false) {
+    }
+    else if (dataCheck == false) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Please Accept Date Protection",
       ));
@@ -1245,11 +1246,11 @@ RegistrationViewModel extends BaseViewModel {
       signUpBarVerifyPasswordController.text,
     );
     print(signupResponce);
-    if(signupResponce is UserModel)
+    if(signupResponce is BarModel)
     {
-      await locator<PrefrencesViewModel>().saveUser(signupResponce);
+      await locator<PrefrencesViewModel>().saveBarUser(signupResponce);
     }
-    // DialogUtils().showDialog(
+    // DialogUtils().showDialog(s
     //     MyErrorWidget(error: signupResponce));
     navigateToUploadBarMedia();
   }
@@ -1261,7 +1262,7 @@ RegistrationViewModel extends BaseViewModel {
   //   //notifyListeners();
   //   try {
   //     var result =  await _googleSignIn.signIn().catchError((error){
-  //       print(error);
+  //       print(error);Bar
   //     });
   //     print(result);
   //     Dio dio = Dio();

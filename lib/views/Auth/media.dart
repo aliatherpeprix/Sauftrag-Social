@@ -96,107 +96,107 @@ class _MediaState extends State<Media> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               //Image 1
-                              model.imageFiles[0] is File
-                                  ?
-                              Container(
-                                  width:
-                                  MediaQuery.of(context).size.width / 3.4,
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(20)),
-                                    image: (model.imageFiles[0] is String &&
-                                        (model.imageFiles[0] as String).isEmpty) ||
-                                        model.imageFiles[0].path.isEmpty
-                                        ? null
-                                        : DecorationImage(
-                                        image:
-                                        FileImage(model.imageFiles[0]),
-                                        fit: BoxFit.cover),
-                                  ),
-                                  child: Stack(
-                                    children: [
-                                      (model.imageFiles[0] is String &&
+                                model.imageFiles[0] is File
+                                    ?
+                                Container(
+                                    width:
+                                    MediaQuery.of(context).size.width / 3.4,
+                                    decoration: BoxDecoration(
+                                      borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                      image: (model.imageFiles[0] is String &&
                                           (model.imageFiles[0] as String).isEmpty) ||
                                           model.imageFiles[0].path.isEmpty
-                                          ? InkWell(
-                                          onTap: () {
-                                            model.getImage(0);
-                                            model.notifyListeners();
-                                          },
-                                          child: DottedBorder(
-                                              color: ColorUtils.text_red,
-                                              strokeWidth: 1.5,
-                                              borderType: BorderType.RRect,
-                                              radius:
-                                              const Radius.circular(15),
-                                              dashPattern: [8],
-                                              child: Center(
-                                                child: Icon(
-                                                  Icons.add_rounded,
-                                                  color:
-                                                  ColorUtils.text_red,
-                                                  size: 8.i,
-                                                ),
-                                              )))
-                                          : Container(),
-                                      (model.imageFiles[0] is String &&
-                                          (model.imageFiles[0] as String).isEmpty) ||
-                                          model.imageFiles[0].path.isEmpty
-                                          ? Container()
-                                          : Align(
-                                        alignment: Alignment.bottomRight,
-                                        child: IconButton(
-                                          onPressed: () {
-                                            model.imageFiles.removeAt(0);
-                                            model.imageFiles.insert(0, File(""));
-                                            model.notifyListeners();
-                                          },
-                                          icon: SvgPicture.asset(
-                                              ImageUtils.cancelIcon),
-                                          //icon: Icon(Icons.cancel_outlined, color: ColorUtils.text_red,),
-                                          padding: EdgeInsets.zero,
-                                          constraints: BoxConstraints(),
-                                          color: ColorUtils.white,
-                                          highlightColor:
-                                          ColorUtils.white,
+                                          ? null
+                                          : DecorationImage(
+                                          image:
+                                          FileImage(model.imageFiles[0]),
+                                          fit: BoxFit.cover),
+                                    ),
+                                    child: Stack(
+                                      children: [
+                                        (model.imageFiles[0] is String &&
+                                            (model.imageFiles[0] as String).isEmpty) ||
+                                            model.imageFiles[0].path.isEmpty
+                                            ? InkWell(
+                                            onTap: () {
+                                              model.getImage(0);
+                                              model.notifyListeners();
+                                            },
+                                            child: DottedBorder(
+                                                color: ColorUtils.text_red,
+                                                strokeWidth: 1.5,
+                                                borderType: BorderType.RRect,
+                                                radius:
+                                                const Radius.circular(15),
+                                                dashPattern: [8],
+                                                child: Center(
+                                                  child: Icon(
+                                                    Icons.add_rounded,
+                                                    color:
+                                                    ColorUtils.text_red,
+                                                    size: 8.i,
+                                                  ),
+                                                )))
+                                            : Container(),
+                                        (model.imageFiles[0] is String &&
+                                            (model.imageFiles[0] as String).isEmpty) ||
+                                            model.imageFiles[0].path.isEmpty
+                                            ? Container()
+                                            : Align(
+                                          alignment: Alignment.bottomRight,
+                                          child: IconButton(
+                                            onPressed: () {
+                                              model.imageFiles.removeAt(0);
+                                              model.imageFiles.insert(0, File(""));
+                                              model.notifyListeners();
+                                            },
+                                            icon: SvgPicture.asset(
+                                                ImageUtils.cancelIcon),
+                                            //icon: Icon(Icons.cancel_outlined, color: ColorUtils.text_red,),
+                                            padding: EdgeInsets.zero,
+                                            constraints: BoxConstraints(),
+                                            color: ColorUtils.white,
+                                            highlightColor:
+                                            ColorUtils.white,
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ))
-                                  :
-                              Container(
-                                  width:
-                                  MediaQuery.of(context).size.width / 3.4,
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(20)),
-                                    image: DecorationImage(
-                                        image:
-                                        NetworkImage(model.imageFiles[0]),
-                                        fit: BoxFit.cover),
-                                  ),
-                                  child: Stack(
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.bottomRight,
-                                        child: IconButton(
-                                          onPressed: () {
-                                            model.imageFiles.removeAt(0);
-                                            model.imageFiles.insert(0, File(""));
-                                            model.notifyListeners();
-                                          },
-                                          icon: SvgPicture.asset(
-                                              ImageUtils.cancelIcon),
-                                          //icon: Icon(Icons.cancel_outlined, color: ColorUtils.text_red,),
-                                          padding: EdgeInsets.zero,
-                                          constraints: BoxConstraints(),
-                                          color: ColorUtils.white,
-                                          highlightColor:
-                                          ColorUtils.white,
+                                      ],
+                                    ))
+                                    :
+                                Container(
+                                    width:
+                                    MediaQuery.of(context).size.width / 3.4,
+                                    decoration: BoxDecoration(
+                                      borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                      image: DecorationImage(
+                                          image:
+                                          NetworkImage(model.imageFiles[0]),
+                                          fit: BoxFit.cover),
+                                    ),
+                                    child: Stack(
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.bottomRight,
+                                          child: IconButton(
+                                            onPressed: () {
+                                              model.imageFiles.removeAt(0);
+                                              model.imageFiles.insert(0, File(""));
+                                              model.notifyListeners();
+                                            },
+                                            icon: SvgPicture.asset(
+                                                ImageUtils.cancelIcon),
+                                            //icon: Icon(Icons.cancel_outlined, color: ColorUtils.text_red,),
+                                            padding: EdgeInsets.zero,
+                                            constraints: BoxConstraints(),
+                                            color: ColorUtils.white,
+                                            highlightColor:
+                                            ColorUtils.white,
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  )),
+                                      ],
+                                    )),
 
                               //Image 2
                               model.imageFiles[1] is File

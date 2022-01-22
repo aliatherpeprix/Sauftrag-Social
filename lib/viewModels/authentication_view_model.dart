@@ -3,10 +3,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/models/bar_model.dart';
 import 'package:sauftrag/models/user_models.dart';
+import 'package:sauftrag/services/updateBarProfile.dart';
+import 'package:sauftrag/services/updateUserProfile.dart';
 import 'package:sauftrag/utils/constants.dart';
 import 'package:sauftrag/utils/dialog_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
+import 'package:sauftrag/models/bar_model.dart' as barModel;
 import 'package:sauftrag/viewModels/prefrences_view_model.dart';
 import 'package:sauftrag/widgets/error_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,6 +25,8 @@ class AuthenticationViewModel extends BaseViewModel {
   var navigationService = navigationViewModel;
   late SharedPreferences prefs;
   PrefrencesViewModel prefss = locator<PrefrencesViewModel>();
+  PrefrencesViewModel prefrencesViewModel = locator<PrefrencesViewModel>();
+  var updateBar = Updatebar();
 
   int role = Constants.user;
   bool signupCheck = false;
@@ -41,6 +47,8 @@ class AuthenticationViewModel extends BaseViewModel {
 
   bool logInUserSelected = true;
   bool logInBarSelected = false;
+
+
 
   FocusNode logInUserFocus = new FocusNode();
   bool isLogInUserInFocus = false;
@@ -143,7 +151,7 @@ class AuthenticationViewModel extends BaseViewModel {
   DateTime selectedEventDate = DateTime.now();
 
   File imageFile = File('my initial file');
-  List<File> imageFiles = [
+  List<dynamic> imageFiles = [
     File(""),
     File(""),
     File(""),
@@ -356,125 +364,192 @@ class AuthenticationViewModel extends BaseViewModel {
     }*/
   }
 
+  barTiming(
+  String? openingTimeFrom,
+  String? openingTimeTo,
+  String? breakTimeFrom,
+  String? breakTimeTo,
+  String? weekEndOpeningTimeFrom,
+  String? weekEndOpeningTimeTo,
+  String? weekEndBreakTimeFrom,
+  String? weekEndBreakTimeTo
 
-  createUserAccount() {
-    if (signUpUserController.text.isEmpty) {
+  ) async {
+
+
+    if (selectedWeekDays.isEmpty) {
+
       DialogUtils().showDialog(MyErrorWidget(
-        error: "User Name is required",
+        error: "Select at least one week day",
       ));
+      notifyListeners();
       return;
     }
-    else if (signUpEmailController.text.isEmpty) {
+    if (selectedWeekendDays.isEmpty) {
+
       DialogUtils().showDialog(MyErrorWidget(
-        error: "Email is required",
+        error: "Select at least one weekend day",
       ));
+      notifyListeners();
       return;
     }
-    if (!signUpEmailController.text.isEmail) {
-      DialogUtils().showDialog(MyErrorWidget(error: "Email is invalid"));
-      return;
-    }
-    else if (signUpConfirmEmailController.text.isEmpty) {
+    if (selectedBarKind.isEmpty) {
+
       DialogUtils().showDialog(MyErrorWidget(
-        error: "Confirm Email is required",
+        error: "Select at least one Kind of Bar",
       ));
+      notifyListeners();
       return;
     }
-    else if (!signUpConfirmEmailController.text.isEmail) {
+    if (openingTimeFrom!.isEmpty) {
+
       DialogUtils().showDialog(MyErrorWidget(
-          error: "Email is invalid"));
-      return;
-    }
-    else if (signUpConfirmEmailController.text != signUpEmailController.text ) {
-      DialogUtils().showDialog(MyErrorWidget(
-          error: "Email & Confirm don't match"));
-      return;
-    }
-    else if (signUpPhoneController.text.isEmpty) {
-      DialogUtils().showDialog(MyErrorWidget(
-        error: "Phone Number is required",
+        error: "Select bar week open time",
       ));
+      notifyListeners();
       return;
     }
-    if (signUpPhoneController.text.length < 11) {
-      DialogUtils().showDialog(
-          MyErrorWidget(error: "Mobile number should contain 11 digits"));
-      return;
-    }
-    if (!signUpPhoneController.text.toString().startsWith("0")) {
-      DialogUtils().showDialog(
-          MyErrorWidget(error: "Mobile number should start with zero"));
-      return;
-    } else if (signUpPasswordController.text.isEmpty) {
+    if (openingTimeTo!.isEmpty) {
+
       DialogUtils().showDialog(MyErrorWidget(
-        error: "Password is required",
+        error: "Select bar week close time",
       ));
+      notifyListeners();
       return;
     }
-    if (signUpPasswordController.text.length < 7) {
-      DialogUtils().showDialog(
-          MyErrorWidget(error: "Password must be at least 8 characters"));
-      return;
-    }
-    if (!CommonFunctions.hasOneUpperCase(
-        signUpPasswordController.text.trim())) {
+    if (breakTimeFrom!.isEmpty) {
+
       DialogUtils().showDialog(MyErrorWidget(
-          error: "Password should contain at least one upper case"));
-      return;
-    }
-    if (!CommonFunctions.hasOneLowerCase(
-        signUpPasswordController.text.trim())) {
-      DialogUtils().showDialog(MyErrorWidget(
-          error: "Password should contain at least one lower case"));
-      return;
-    }
-    if (!CommonFunctions.hasOneDigit(signUpPasswordController.text.trim())) {
-      DialogUtils().showDialog(
-          MyErrorWidget(error: "Password should contain at least one digit"));
-      return;
-    }
-    if (!CommonFunctions.hasOneSpeicalCharacter(
-        signUpPasswordController.text.trim())) {
-      DialogUtils().showDialog(MyErrorWidget(
-          error: "Password should contain at least one special character"));
-      return;
-    } else if (signUpVerifyPasswordController.text.isEmpty) {
-      DialogUtils().showDialog(MyErrorWidget(
-        error: "Verify Password is required",
+        error: "Select bar week break open time",
       ));
-      return;
-    } else if (signUpVerifyPasswordController.text !=
-        signUpPasswordController.text) {
-      DialogUtils().showDialog(MyErrorWidget(
-        error: "Password & Verify Password don't match",
-      ));
-      return;
-    } else if (signUpAddressController.text.isEmpty) {
-      DialogUtils().showDialog(MyErrorWidget(
-        error: "Address is required",
-      ));
+      notifyListeners();
       return;
     }
-    // else if (signUpDOBController.text.isEmpty) {
-    //   DialogUtils().showDialog(MyErrorWidget(
-    //     error: "Date Of Birth is required",
-    //   ));
-    //   return;
-    // }
-    else if (relationStatusValueStr.isEmpty) {
+    if (breakTimeTo!.isEmpty) {
+
       DialogUtils().showDialog(MyErrorWidget(
-        error: "RelationShip is required",
+        error: "Select bar week break close time",
       ));
+      notifyListeners();
       return;
-    } else if (isChecked == false) {
-      DialogUtils().showDialog(MyErrorWidget(
-        error: "Please Accept Terms and Conditions",
-      ));
-      return;
-    } else {
-      //navigateToFavoriteScreen();
     }
-    navigateToFavoriteScreen();
+    if (weekEndOpeningTimeFrom!.isEmpty) {
+
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Select bar weekend open time",
+      ));
+      notifyListeners();
+      return;
+    }
+    if (weekEndOpeningTimeTo!.isEmpty) {
+
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Select bar weekend close time",
+      ));
+      notifyListeners();
+      return;
+    }
+    if (weekEndBreakTimeFrom!.isEmpty) {
+
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Select bar weekend break open time",
+      ));
+      notifyListeners();
+      return;
+    }
+    if (weekEndBreakTimeTo!.isEmpty) {
+
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Select bar weekend break open time",
+      ));
+      notifyListeners();
+      return;
+    }
+
+    else {
+
+      barModel.BarModel? barmodel = await prefrencesViewModel.getBarUser();
+
+      List<int> weekDaysTiming = CommonFunctions.AddFromList(selectedWeekDays);
+      List<int> weekendDaysTiming = CommonFunctions.AddFromList(selectedWeekendDays);
+      //List<int> barKind = CommonFunctions.AddFromList(selectedBarKind);
+
+
+      var barSignupResponse = await updateBar.UpdateBar(
+
+        barmodel!.bar_name!,
+        barmodel.address!,
+        barmodel.email!,
+        barmodel.password!,
+        barmodel.password2!,
+        imageFiles,
+        weekDaysTiming,
+        weekendDaysTiming,
+        //barKind,
+        barmodel.opening_time!,
+        barmodel.closing_time!,
+        barmodel.break_opening_time!,
+        barmodel.break_closing_time!,
+        barmodel.weekend_opening_time!,
+        barmodel.weekend_closing_time!,
+        barmodel.weekend_break_opening_time!,
+        barmodel.weekend_break_closing_time!,
+        barmodel.id!.toString(),
+
+
+      );
+      print(barSignupResponse);
+      if(barSignupResponse is BarModel)
+      {
+        barModel.BarModel user = barSignupResponse;
+        user.token = barmodel.token;
+        user.password = signUpBarPasswordController.text;
+        user.password2 = signUpBarVerifyPasswordController.text;
+        await locator<PrefrencesViewModel>().saveBarUser(user);
+
+      }
+
+    }
+
+
+    //navigateToHomeBarScreen();
+  }
+
+
+  addBarImages() {
+
+    for(int i=0; i<imageFiles.length; i++){
+      if (i == 0){
+        if( (imageFiles[i] is String &&
+            (imageFiles[i] as String).isEmpty) ||
+            imageFiles[i].path.isEmpty){
+          DialogUtils().showDialog(MyErrorWidget(
+            error: "Select Bar Logo",
+          ));
+          return;
+        }
+      }
+      bool hasImages = false;
+      if(i>0){
+        if(!hasImages){
+          if( (imageFiles[i] is String &&
+              (imageFiles[i] as String).isEmpty) ||
+              imageFiles[i].path.isEmpty){
+            DialogUtils().showDialog(MyErrorWidget(
+              error: "Select at least one Bar Image",
+            ));
+            return;
+          }
+          else {
+            hasImages = true;
+            break;
+          }
+        }
+      }
+    }
+    navigateToBarTimingTypeScreen();
+    //navigateToMediaScreen();
+    //navigateToHomeScreen(2);
   }
 
   // termsAndCondition() {
@@ -579,7 +654,9 @@ class AuthenticationViewModel extends BaseViewModel {
         error: "Password & Verify Password don't match",
       ));
       return;
-    } else {}
+    } else {
+
+    }
     navigateToUploadBarMedia();
   }
 
