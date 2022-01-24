@@ -11,9 +11,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/bar_model.dart';
+import 'package:sauftrag/models/favorites_model.dart';
 import 'package:sauftrag/models/user_models.dart' as userModel;
 import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/modules/dio_services.dart';
+import 'package:sauftrag/services/addFavorites.dart';
 import 'package:sauftrag/services/barSignup.dart';
 import 'package:sauftrag/services/changeUserPassword.dart';
 import 'package:sauftrag/services/changeUserPassword.dart';
@@ -49,6 +51,7 @@ RegistrationViewModel extends BaseViewModel {
   var changepassword = Changeuserpassword();
   var checkuser = Checkuser();
   var updateUser = Updateuser();
+  var addFavorite = Addfavorites();
 
 
 
@@ -124,6 +127,18 @@ RegistrationViewModel extends BaseViewModel {
   final addDrinkController = TextEditingController();
   bool isAddDrinkInFocus = false;
   FocusNode addDrinkFocus = new FocusNode();
+
+  final addNewDrinkController = TextEditingController();
+  bool isAddNewDrinkInFocus = false;
+  FocusNode addNewDrinkFocus = new FocusNode();
+
+  final addNewClubController = TextEditingController();
+  bool isAddNewClubInFocus = false;
+  FocusNode addNewClubFocus = new FocusNode();
+
+  final addNewPartyLocationController = TextEditingController();
+  bool isAddNewPartyLocationInFocus = false;
+  FocusNode addNewPartyLocationFocus = new FocusNode();
 
   ///----------------------Forget Password Controller ----------------///
 
@@ -309,6 +324,12 @@ RegistrationViewModel extends BaseViewModel {
     "Club 1",
     "Club 2",
     "Goldstrand",
+  ];
+
+  List<FavoritesModel> addDrinkList = [];
+
+  List<String> addFavDrinkList = [
+
   ];
 
 
@@ -936,6 +957,57 @@ RegistrationViewModel extends BaseViewModel {
     //navigateToHomeScreen(2);
   }
 
+  addFavoritedrink() async {
+    if(addNewDrinkController.text.isEmpty){
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Please add new drink",
+      ));
+      notifyListeners();
+      return;
+    }
+    else {
+      var addFavoriteResponce = await addFavorite.AddFavoritesDrink(
+        addNewDrinkController.text,
+      );
+      print(addFavoriteResponce);
+
+    }
+  }
+
+  addFavoriteclub() async {
+    if(addNewPartyLocationController.text.isEmpty){
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Please add new club",
+      ));
+      notifyListeners();
+      return;
+    }
+    else {
+      var addFavoriteResponce = await addFavorite.AddFavoritesClub(
+        addNewPartyLocationController.text,
+      );
+      print(addFavoriteResponce);
+
+    }
+  }
+
+  addFavoritePartyVacation() async {
+    if(addNewClubController.text.isEmpty){
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Please add new club",
+      ));
+      notifyListeners();
+      return;
+    }
+    else {
+      var addFavoriteResponce = await addFavorite.AddFavoritesPartyVacation(
+        addNewClubController.text,
+      );
+      print(addFavoriteResponce);
+
+    }
+  }
+
   //Signup User
   createUserAccount() async {
     isSigningUp = true;
@@ -1141,6 +1213,8 @@ RegistrationViewModel extends BaseViewModel {
           user.password2 = signUpVerifyPasswordController.text;
           await prefrencesViewModel.saveUser(user);
         }
+
+      //var responce = await Addfavorites().GetFavoritesDrink();
       signInUser = false;
       notifyListeners();
         // DialogUtils().showDialog(
@@ -1149,6 +1223,7 @@ RegistrationViewModel extends BaseViewModel {
       //favorites();
       }
   }
+
 
   //Signup Bar
   createBarAccount() async {

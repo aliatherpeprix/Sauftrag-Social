@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/models/favorites_model.dart';
+import 'package:sauftrag/services/addFavorites.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/constants.dart';
 import 'package:sauftrag/utils/dimensions.dart';
@@ -10,7 +12,8 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
 import 'package:sauftrag/viewModels/registrationViewModel.dart';
-import 'package:sauftrag/widgets/add_dialog_box.dart';
+import 'package:sauftrag/widgets/add_dialog_box_clubs.dart';
+import 'package:sauftrag/widgets/add_dialog_box_drinks.dart';
 import 'package:sauftrag/widgets/back_arrow_with_container.dart';
 import 'package:sauftrag/widgets/radler_dialog_box.dart';
 import 'package:stacked/stacked.dart';
@@ -29,8 +32,10 @@ class _FavoriteState extends State<Favorite> {
   Widget build(BuildContext context) {
 
     return ViewModelBuilder<RegistrationViewModel>.reactive(
-      onModelReady: (model) => {
-
+      onModelReady: (model) async{
+      await  Addfavorites().GetFavoritesDrink();
+      await  Addfavorites().GetFavoritesClub();
+      await  Addfavorites().GetFavoritesPartyVacation();
       },
       builder: (context, model, child) {
         return GestureDetector(
@@ -146,6 +151,43 @@ class _FavoriteState extends State<Favorite> {
                               )).toList(),
                             ),
                             SizedBox(height: 2.h),
+                            // Wrap(
+                            //   spacing: 2.5.w,
+                            //   runSpacing: 1.5.h,
+                            //   direction: Axis.horizontal,
+                            //   children: model.addDrinkList
+                            //       .map((element) => ElevatedButton(
+                            //     onPressed: () {
+                            //       if(model.addDrinkList.contains(model.addDrinkList.indexOf(element))){
+                            //         model.addDrinkList.remove(model.addDrinkList.indexOf(element));
+                            //       }
+                            //       else{
+                            //           model.addDrinkList.add(FavoritesModel[]);
+                            //       }
+                            //       model.notifyListeners();
+                            //     },
+                            //     child: Text(model.addDrinkList.toString()),
+                            //     style: ElevatedButton.styleFrom(
+                            //       primary: model.addDrinkList.contains(model.addDrinkList.indexOf(element)) ? ColorUtils.text_red : ColorUtils.white,
+                            //       onPrimary: model.addDrinkList.contains(model.addDrinkList.indexOf(element)) ? ColorUtils.white : ColorUtils.text_dark,
+                            //       padding: EdgeInsets.symmetric(vertical: 1.8.h, horizontal: 9.w),
+                            //       elevation: model.addDrinkList.contains(model.addDrinkList.indexOf(element)) ? 5 : 0,
+                            //       shape: RoundedRectangleBorder(
+                            //           borderRadius: BorderRadius.circular(Dimensions.roundCorner),
+                            //           side: BorderSide(
+                            //               color: model.addDrinkList.contains(model.addDrinkList.indexOf(element)) ? ColorUtils.text_red : ColorUtils.divider,
+                            //               width: 1
+                            //           )
+                            //       ),
+                            //       textStyle: TextStyle(
+                            //         //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
+                            //         fontFamily: model.addDrinkList.contains(model.addDrinkList.indexOf(element)) ? FontUtils.modernistBold : FontUtils.modernistRegular,
+                            //         fontSize: 1.8.t,
+                            //         //height: 0
+                            //       ),
+                            //     ),
+                            //   )).toList(),
+                            // ),
 
                             ElevatedButton(
                               onPressed: () {
@@ -272,12 +314,12 @@ class _FavoriteState extends State<Favorite> {
 
                             ElevatedButton(
                               onPressed: () {
-                                // showDialog(
-                                //     context: context,
-                                //     builder: (BuildContext context){
-                                //       return AddDialogBox(title: "Add New Club", btnTxt: "Add Club", icon: ImageUtils.addClubIcon);
-                                //     }
-                                // );
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context){
+                                      return AddDialogBoxClubs(title: "Add New Club", btnTxt: "Add Club", icon: ImageUtils.addClubIcon);
+                                    }
+                                );
                               },
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
@@ -381,12 +423,12 @@ class _FavoriteState extends State<Favorite> {
 
                             ElevatedButton(
                               onPressed: () {
-                                // showDialog(
-                                //     context: context,
-                                //     builder: (BuildContext context){
-                                //       return AddDialogBox(title: "Add New Location", btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
-                                //     }
-                                // );
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context){
+                                      return AddDialogBox(title: "Add New Location", btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+                                    }
+                                );
                               },
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,

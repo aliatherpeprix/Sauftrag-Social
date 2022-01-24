@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/bar_model.dart';
 import 'package:sauftrag/models/user_models.dart';
+import 'package:sauftrag/services/addFavorites.dart';
 import 'package:sauftrag/services/updateBarProfile.dart';
 import 'package:sauftrag/services/updateUserProfile.dart';
 import 'package:sauftrag/utils/constants.dart';
@@ -22,6 +24,8 @@ import '../main.dart';
 import 'main_view_model.dart';
 
 class AuthenticationViewModel extends BaseViewModel {
+
+  var addFavorite = Addfavorites();
   var navigationService = navigationViewModel;
   late SharedPreferences prefs;
   PrefrencesViewModel prefss = locator<PrefrencesViewModel>();
@@ -84,6 +88,18 @@ class AuthenticationViewModel extends BaseViewModel {
   bool signUpBarSelected = false;
 
   final myContactsSearchController = TextEditingController();
+
+  final addNewDrinkController = TextEditingController();
+  bool isAddNewDrinkInFocus = false;
+  FocusNode addNewDrinkFocus = new FocusNode();
+
+  final addNewClubController = TextEditingController();
+  bool isAddNewClubInFocus = false;
+  FocusNode addNewClubFocus = new FocusNode();
+
+  final addNewPartyLocationController = TextEditingController();
+  bool isAddNewPartyLocationInFocus = false;
+  FocusNode addNewPartyLocationFocus = new FocusNode();
 
   ///-----Bar Options -------------------///
   final aboutMeController = TextEditingController();

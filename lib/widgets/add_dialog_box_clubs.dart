@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/utils/color_utils.dart';
@@ -8,26 +9,27 @@ import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
+import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:stacked/stacked.dart';
 
-class AddDialogBox extends StatefulWidget {
+class AddDialogBoxClubs extends StatefulWidget {
 
   String title;
   String btnTxt;
   String icon;
 
-  AddDialogBox({Key? key, required this.title, required this.btnTxt, required this.icon}) : super(key: key);
+  AddDialogBoxClubs({Key? key, required this.title, required this.btnTxt, required this.icon}) : super(key: key);
 
   @override
-  _AddDialogBoxState createState() => _AddDialogBoxState();
+  _AddDialogBoxClubsState createState() => _AddDialogBoxClubsState();
 }
 
-class _AddDialogBoxState extends State<AddDialogBox> {
+class _AddDialogBoxClubsState extends State<AddDialogBoxClubs> {
 
   @override
   Widget build(BuildContext context) {
 
-    return ViewModelBuilder<AuthenticationViewModel>.reactive(
+    return ViewModelBuilder<RegistrationViewModel>.reactive(
       //onModelReady: (data) => data.initializeShareDialog(),
       builder: (context, model, child){
         return Dialog(
@@ -76,8 +78,11 @@ class _AddDialogBoxState extends State<AddDialogBox> {
 
                       Expanded(
                         child: TextField(
-                          //focusNode: model.logInEmailFocus,
-                          //controller: model.logInEmailController,
+                          inputFormatters: <TextInputFormatter>[
+                            LengthLimitingTextInputFormatter(18),
+                          ],
+                          focusNode: model.addNewClubFocus,
+                          controller: model.addNewClubController,
                           keyboardType: TextInputType.text,
                           textInputAction: TextInputAction.next,
                           style: TextStyle(
@@ -85,6 +90,7 @@ class _AddDialogBoxState extends State<AddDialogBox> {
                             fontFamily: FontUtils.modernistRegular,
                             fontSize: 1.8.t,
                           ),
+
                           decoration: InputDecoration(
                             hintText: "Anything you like",
                             hintStyle: TextStyle(
@@ -110,7 +116,7 @@ class _AddDialogBoxState extends State<AddDialogBox> {
                   //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                   child: ElevatedButton(
                     onPressed: () {
-                      model.navigateBack();
+                      model.addFavoriteclub();
                       //model.navigateToTermsScreen();
                     },
                     child: Text(widget.btnTxt),
@@ -136,7 +142,7 @@ class _AddDialogBoxState extends State<AddDialogBox> {
           ),
         );
       },
-      viewModelBuilder: () => locator<AuthenticationViewModel>(),
+      viewModelBuilder: () => locator<RegistrationViewModel>(),
       disposeViewModel: false,
     );
   }
