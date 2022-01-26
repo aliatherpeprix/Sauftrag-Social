@@ -21,7 +21,6 @@ class SignupBar {
 
       ) async {
     try {
-      /// just login user through phoneNumber and password
 
       var param = FormData.fromMap({
         'bar_name': bar_name,

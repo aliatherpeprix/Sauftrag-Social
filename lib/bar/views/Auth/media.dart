@@ -25,7 +25,16 @@ class _BarMediaState extends State<BarMedia> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<AuthenticationViewModel>.reactive(
-      //onModelReady: (data) => data.initializeLoginModel(),
+      onModelReady: (model) {
+        model.imageFiles = [
+          File(""),
+          File(""),
+          File(""),
+          File(""),
+          File(""),
+          File("")
+        ];
+      },
       builder: (context, model, child) {
         return GestureDetector(
           onTap: () {

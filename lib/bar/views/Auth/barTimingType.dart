@@ -17,6 +17,7 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
+import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:sauftrag/widgets/back_arrow_with_container.dart';
 import 'package:sauftrag/widgets/radler_dialog_box.dart';
 import 'package:stacked/stacked.dart';
@@ -31,14 +32,7 @@ class BarTimingAndType extends StatefulWidget {
 class _BarTimingAndTypeState extends State<BarTimingAndType> {
   DateTime _dateTime = DateTime.now();
 
-  String? openingTimeFrom = "";
-  String? openingTimeTo = "" ;
-  String? breakTimeFrom= "";
-  String? breakTimeTo = "";
-  String? weekEndOpeningTimeFrom = "";
-  String? weekEndOpeningTimeTo = "";
-  String? weekEndBreakTimeFrom = "";
-  String? weekEndBreakTimeTo = "";
+
 
   // @override
   // void didChangeDependencies() {
@@ -56,7 +50,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<AuthenticationViewModel>.reactive(
+    return ViewModelBuilder<RegistrationViewModel>.reactive(
       //onModelReady: (data) => data.initializeLoginModel(),
       builder: (context, model, child) {
         return GestureDetector(
@@ -203,7 +197,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                                 cancelText: "NOT NOW",
                                                 helpText: "BOOKING TIME")
                                             .then((value) {
-                                          openingTimeFrom =
+                                          model.openingTimeFrom =
                                               value!.format(context);
                                           setState(() {
 
@@ -224,7 +218,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                           children: [
                                             Expanded(
                                               child: Text(
-                                                openingTimeFrom!,
+                                                model.openingTimeFrom!,
                                                 style: TextStyle(
                                                   color: ColorUtils.text_dark,
                                                   fontFamily: FontUtils
@@ -283,7 +277,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                                 cancelText: "NOT NOW",
                                                 helpText: "BOOKING TIME")
                                             .then((value) {
-                                          openingTimeTo =
+                                          model.openingTimeTo =
                                               value!.format(context);
                                           model.notifyListeners();
                                         });
@@ -302,7 +296,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                           children: [
                                             Expanded(
                                               child: Text(
-                                                openingTimeTo!,
+                                                model.openingTimeTo!,
                                                 style: TextStyle(
                                                   color: ColorUtils.text_dark,
                                                   fontFamily: FontUtils
@@ -378,7 +372,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                                 cancelText: "NOT NOW",
                                                 helpText: "BOOKING TIME")
                                             .then((value) {
-                                          breakTimeFrom =
+                                          model.breakTimeFrom =
                                               value!.format(context);
                                           model.notifyListeners();
                                         });
@@ -397,7 +391,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                           children: [
                                             Expanded(
                                               child: Text(
-                                                breakTimeFrom!,
+                                                model.breakTimeFrom!,
                                                 style: TextStyle(
                                                   color: ColorUtils.text_dark,
                                                   fontFamily: FontUtils
@@ -456,7 +450,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                                 cancelText: "NOT NOW",
                                                 helpText: "BOOKING TIME")
                                             .then((value) {
-                                          breakTimeTo = value!.format(context);
+                                          model.breakTimeTo = value!.format(context);
                                           model.notifyListeners();
                                         });
                                       },
@@ -474,7 +468,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                           children: [
                                             Expanded(
                                               child: Text(
-                                                breakTimeTo!,
+                                                model.breakTimeTo!,
                                                 style: TextStyle(
                                                   color: ColorUtils.text_dark,
                                                   fontFamily: FontUtils
@@ -625,7 +619,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                                 cancelText: "NOT NOW",
                                                 helpText: "BOOKING TIME")
                                             .then((value) {
-                                          weekEndOpeningTimeFrom =
+                                          model.weekEndOpeningTimeFrom =
                                               value!.format(context);
                                           model.notifyListeners();
                                         });
@@ -644,7 +638,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                           children: [
                                             Expanded(
                                               child: Text(
-                                                weekEndOpeningTimeFrom!,
+                                                model.weekEndOpeningTimeFrom!,
                                                 style: TextStyle(
                                                   color: ColorUtils.text_dark,
                                                   fontFamily: FontUtils
@@ -703,7 +697,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                                 cancelText: "NOT NOW",
                                                 helpText: "BOOKING TIME")
                                             .then((value) {
-                                          weekEndOpeningTimeTo =
+                                          model.weekEndOpeningTimeTo =
                                               value!.format(context);
                                           model.notifyListeners();
                                         });
@@ -722,7 +716,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                           children: [
                                             Expanded(
                                               child: Text(
-                                                weekEndOpeningTimeTo!,
+                                                model.weekEndOpeningTimeTo!,
                                                 style: TextStyle(
                                                   color: ColorUtils.text_dark,
                                                   fontFamily: FontUtils
@@ -798,7 +792,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                                 cancelText: "NOT NOW",
                                                 helpText: "BOOKING TIME")
                                             .then((value) {
-                                          weekEndBreakTimeFrom =
+                                          model.weekEndBreakTimeFrom =
                                               value!.format(context);
                                           model.notifyListeners();
                                         });
@@ -817,7 +811,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                           children: [
                                             Expanded(
                                               child: Text(
-                                                weekEndBreakTimeFrom!,
+                                                model.weekEndBreakTimeFrom!,
                                                 style: TextStyle(
                                                   color: ColorUtils.text_dark,
                                                   fontFamily: FontUtils
@@ -876,7 +870,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                                 cancelText: "NOT NOW",
                                                 helpText: "BOOKING TIME")
                                             .then((value) {
-                                          weekEndBreakTimeTo =
+                                          model.weekEndBreakTimeTo =
                                               value!.format(context);
                                           model.notifyListeners();
                                         });
@@ -895,7 +889,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                           children: [
                                             Expanded(
                                               child: Text(
-                                                weekEndBreakTimeTo!,
+                                                model.weekEndBreakTimeTo!,
                                                 style: TextStyle(
                                                   color: ColorUtils.text_dark,
                                                   fontFamily: FontUtils
@@ -1051,16 +1045,16 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                               model.dataCheck = false;
                               model.notifyListeners();
 
-                              model.barTiming(
-                                  openingTimeFrom,
-                                  openingTimeTo,
-                                  breakTimeFrom,
-                                  breakTimeTo,
-                                  weekEndOpeningTimeFrom,
-                                  weekEndOpeningTimeTo,
-                                  weekEndBreakTimeFrom,
-                                  weekEndBreakTimeTo
-                              );
+                              // model.barTiming(
+                              //     openingTimeFrom,
+                              //     openingTimeTo,
+                              //     breakTimeFrom,
+                              //     breakTimeTo,
+                              //     weekEndOpeningTimeFrom,
+                              //     weekEndOpeningTimeTo,
+                              //     weekEndBreakTimeFrom,
+                              //     weekEndBreakTimeTo
+                              // );
 
                               //model.navigateToHomeBarScreen();
                             },
@@ -1092,7 +1086,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
           ),
         );
       },
-      viewModelBuilder: () => locator<AuthenticationViewModel>(),
+      viewModelBuilder: () => locator<RegistrationViewModel>(),
       disposeViewModel: false,
     );
   }

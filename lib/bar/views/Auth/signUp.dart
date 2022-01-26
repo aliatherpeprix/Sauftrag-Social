@@ -29,7 +29,6 @@ class _SignUpBarState extends State<SignUpBar> {
   Widget build(BuildContext context) {
 
     return ViewModelBuilder<RegistrationViewModel>.reactive(
-      //onModelReady: (data) => data.initializeLoginModel(),
       builder: (context, model, child) {
         return GestureDetector(
           onTap: () {
@@ -487,9 +486,9 @@ class _SignUpBarState extends State<SignUpBar> {
                             //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                             child: ElevatedButton(
                               onPressed: () {
-                                model.createBarAccount();
+                                model.signupBarScreen();
                               },
-                              child: model.signInBar == false ? Text("Sign Up") : Loader(),
+                              child: model.checkSignupUser == false ? Text("Sign Up") : Loader(),
                               style: ElevatedButton.styleFrom(
                                 primary: ColorUtils.text_red,
                                 onPrimary: ColorUtils.white,

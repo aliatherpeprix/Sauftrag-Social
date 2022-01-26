@@ -181,6 +181,16 @@ RegistrationViewModel extends BaseViewModel {
   bool isLocationInFocus = false;
   final LocationController = TextEditingController();
 
+  bool checkSignupUser = false;
+  String? openingTimeFrom = "";
+  String? openingTimeTo = "" ;
+  String? breakTimeFrom= "";
+  String? breakTimeTo = "";
+  String? weekEndOpeningTimeFrom = "";
+  String? weekEndOpeningTimeTo = "";
+  String? weekEndBreakTimeFrom = "";
+  String? weekEndBreakTimeTo = "";
+
 
   ///----------------------User Login Registration Controller ----------------///
 
@@ -1226,7 +1236,7 @@ RegistrationViewModel extends BaseViewModel {
 
 
   //Signup Bar
-  createBarAccount() async {
+  signupBarScreen() async {
     if (signUpBarUserController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "User Name is required",
@@ -1255,29 +1265,29 @@ RegistrationViewModel extends BaseViewModel {
       ));
       return;
     }
-    if (signUpBarPasswordController.text.length < 7) {
+    else if (signUpBarPasswordController.text.length < 7) {
       DialogUtils().showDialog(
           MyErrorWidget(error: "Password must be at least 8 characters"));
       return;
     }
-    if (!CommonFunctions.hasOneUpperCase(
+    else if (!CommonFunctions.hasOneUpperCase(
         signUpBarPasswordController.text.trim())) {
       DialogUtils().showDialog(MyErrorWidget(
           error: "Password should contain at least one upper case"));
       return;
     }
-    if (!CommonFunctions.hasOneLowerCase(
+    else if (!CommonFunctions.hasOneLowerCase(
         signUpBarPasswordController.text.trim())) {
       DialogUtils().showDialog(MyErrorWidget(
           error: "Password should contain at least one lower case"));
       return;
     }
-    if (!CommonFunctions.hasOneDigit(signUpBarPasswordController.text.trim())) {
+    else if (!CommonFunctions.hasOneDigit(signUpBarPasswordController.text.trim())) {
       DialogUtils().showDialog(
           MyErrorWidget(error: "Password should contain at least one digit"));
       return;
     }
-    if (!CommonFunctions.hasOneSpeicalCharacter(
+    else if (!CommonFunctions.hasOneSpeicalCharacter(
         signUpBarPasswordController.text.trim())) {
       DialogUtils().showDialog(MyErrorWidget(
           error: "Password should contain at least one special character"));
@@ -1293,42 +1303,122 @@ RegistrationViewModel extends BaseViewModel {
         error: "Password & Verify Password don't match",
       ));
       return;
-    } else
-      signInBar = true;
+    }
+    else{
+      checkSignupUser = true;
       notifyListeners();
 
-    var checkuserResponce = await checkuser.CheckUser(
-        signUpBarEmailController.text,
-         "2"
-    );
-    print(checkuserResponce);
-  if(checkuserResponce is UserModel)
-    {
-      signInBar = false;
-      notifyListeners();
-      DialogUtils().showDialog(MyErrorWidget(
-        error: "Bar Email already exist",
-      ));
+      var checkuserResponce = await checkuser.CheckUser(
+          signUpBarEmailController.text,
+          "2"
+      );
+
+      if(checkuserResponce is UserModel)
+      {
+        checkSignupUser = false;
+        notifyListeners();
+        DialogUtils().showDialog(MyErrorWidget(
+          error: "Bar Email already exist",
+        ));
+      }
+      else{
+        checkSignupUser = false;
+        notifyListeners();
+        navigateToUploadBarMedia();
+      }
     }
-  else{
-    signInBar = false;
-    notifyListeners();
-    var signupResponce = await signupBar.SignUpBar(
-      signUpBarUserController.text,
-      signUpBarAddressController.text,
-      signUpBarEmailController.text,
-      signUpBarPasswordController.text,
-      signUpBarVerifyPasswordController.text,
-    );
-    print(signupResponce);
-    if(signupResponce is BarModel)
-    {
-      await locator<PrefrencesViewModel>().saveBarUser(signupResponce);
-    }
-    // DialogUtils().showDialog(s
-    //     MyErrorWidget(error: signupResponce));
-    navigateToUploadBarMedia();
+    //print(checkuserResponce);
+  // else{
+  //   signInBar = false;
+  //   notifyListeners();
+  //   var signupResponce = await signupBar.SignUpBar(
+  //     signUpBarUserController.text,
+  //     signUpBarAddressController.text,
+  //     signUpBarEmailController.text,
+  //     signUpBarPasswordController.text,
+  //     signUpBarVerifyPasswordController.text,
+  //   );
+  //   print(signupResponce);
+  //   if(signupResponce is BarModel)
+  //   {
+  //     await locator<PrefrencesViewModel>().saveBarUser(signupResponce);
+  //   }
+  //   // DialogUtils().showDialog(s
+  //   //     MyErrorWidget(error: signupResponce));
+  //   navigateToUploadBarMedia();
+  // }
   }
+
+  createAccount() async{
+    if(selectedWeekDays.length == 0){
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Select a week day please",
+      ));
+      return;
+    }
+    else if(openingTimeFrom == ""){
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Select week days opening time",
+      ));
+      return;
+    }
+    else if(openingTimeTo == ""){
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Select week days close time",
+      ));
+      return;
+    }
+    else if(breakTimeFrom == ""){
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Select week days start break time",
+      ));
+      return;
+    }
+    else if(breakTimeTo == ""){
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Select week days end break time",
+      ));
+      return;
+    }
+    else if(selectedWeekendDays.length == 0){
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Select a weekend day please",
+      ));
+      return;
+    }
+    else if(weekEndOpeningTimeFrom == ""){
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Select weekend days opening time",
+      ));
+      return;
+    }
+    else if(weekEndOpeningTimeTo == ""){
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Select weekend days opening time",
+      ));
+      return;
+    }
+    else if(weekEndBreakTimeFrom == ""){
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Select weekend days start break time",
+      ));
+      return;
+    }
+    else if(weekEndBreakTimeTo == ""){
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Select weekend days end break time",
+      ));
+      return;
+    }
+    else if(selectedBarKind.length == 0){
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Select a bar kind",
+      ));
+      return;
+    }
+    else{
+
+    }
   }
 
   // void doGoogleSignIn() async{
