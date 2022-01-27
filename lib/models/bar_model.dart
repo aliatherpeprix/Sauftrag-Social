@@ -14,11 +14,15 @@ class BarModel {
   String? email;
   String? address;
   dynamic role;
-  List? working_days;
+  List? bar_kind;
+  List? week_days;
   String? opening_time;
   String? closing_time;
   String? break_opening_time;
   String? break_closing_time;
+  String? created_at;
+  String? updated_at;
+  String? user_id;
   List? weekend_days;
   String? weekend_opening_time;
   String? weekend_closing_time;

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sauftrag/models/user_models.dart';
@@ -6,6 +8,7 @@ import 'package:sauftrag/utils/constants.dart';
 import 'package:sauftrag/utils/convertAssetToFile.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/views/Auth/signup.dart';
+import 'package:path/path.dart' as path;
 
 class SignupBar {
   //var _dioService = DioService.getInstance();
@@ -13,9 +16,30 @@ class SignupBar {
   Dio dio = Dio();
 
   Future SignUpBar(
-      String bar_name,
-      String address,
+      String userName,
+      String barName,
       String email,
+      String address,
+      int role,
+      List<int> barKind,
+      List<int> workingDays,
+      String openingTime,
+      String closingTime,
+      String breakOpeningTime,
+      String breakClosingTime,
+      List<int> weekendDays,
+      String weekendOpeningTime,
+      String weekendClosingTime,
+      String weekendBreakOpeningTime,
+      String weekendBreakClosingTime,
+      File barLogo,
+      File catalogueImage1,
+      File catalogueImage2,
+      File catalogueImage3,
+      File catalogueImage4,
+      File catalogueImage5,
+      bool termsConditions,
+      bool dataProtection,
       String password,
       String password2,
 
@@ -23,15 +47,33 @@ class SignupBar {
     try {
 
       var param = FormData.fromMap({
-        'bar_name': bar_name,
-        'username' : bar_name,
-        'address' : address,
+        'username' : userName,
+        'bar_name': barName,
         'email' : email,
-        'password': password,
-        'password2' : password2,
+        'address' : address,
         'role' : 2,
-        'profile_picture' : ''
-
+        'bar_kind' : barKind,
+        'working_days': workingDays,
+        'opening_time': openingTime,
+        'closing_time': closingTime,
+        'break_opening_time': breakOpeningTime,
+        'break_closing_time': breakClosingTime,
+        'weekend_days': weekendDays,
+        'weekend_opening_time': weekendOpeningTime,
+        'weekend_closing_time': weekendClosingTime,
+        'weekend_break_opening_time': weekendBreakOpeningTime,
+        'weekend_break_closing_time': weekendBreakClosingTime,
+        'profile_picture' : await MultipartFile.fromFile(barLogo.path, filename: path.basename(barLogo.path)),
+        //barLogo,
+        'catalogue_image1' : await MultipartFile.fromFile(catalogueImage1.path, filename: path.basename(catalogueImage1.path)),
+        'catalogue_image2' : await MultipartFile.fromFile(catalogueImage2.path, filename: path.basename(catalogueImage2.path)),
+        'catalogue_image3' : await MultipartFile.fromFile(catalogueImage3.path, filename: path.basename(catalogueImage3.path)),
+        'catalogue_image4' : await MultipartFile.fromFile(catalogueImage4.path, filename: path.basename(catalogueImage4.path)),
+        'catalogue_image5' : await MultipartFile.fromFile(catalogueImage5.path, filename: path.basename(catalogueImage5.path)),
+        'terms_conditions' : true,
+        'data_protection' : true,
+        'password' : password,
+        'password2' : password2
       });
 
       var response = await dio.post(Constants.BaseUrlPro+Constants.SignUp, data: param);

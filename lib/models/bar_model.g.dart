@@ -14,11 +14,15 @@ BarModel _$BarModelFromJson(Map<String, dynamic> json) => BarModel()
   ..email = json['email'] as String?
   ..address = json['address'] as String?
   ..role = json['role']
-  ..working_days = json['working_days'] as List<dynamic>?
+  ..bar_kind = json['bar_kind'] as List<dynamic>?
+  ..week_days = json['week_days'] as List<dynamic>?
   ..opening_time = json['opening_time'] as String?
   ..closing_time = json['closing_time'] as String?
   ..break_opening_time = json['break_opening_time'] as String?
   ..break_closing_time = json['break_closing_time'] as String?
+  ..created_at = json['created_at'] as String?
+  ..updated_at = json['updated_at'] as String?
+  ..user_id = json['user_id'] as String?
   ..weekend_days = json['weekend_days'] as List<dynamic>?
   ..weekend_opening_time = json['weekend_opening_time'] as String?
   ..weekend_closing_time = json['weekend_closing_time'] as String?
@@ -43,11 +47,15 @@ Map<String, dynamic> _$BarModelToJson(BarModel instance) => <String, dynamic>{
       'email': instance.email,
       'address': instance.address,
       'role': instance.role,
-      'working_days': instance.working_days,
+      'bar_kind': instance.bar_kind,
+      'week_days': instance.week_days,
       'opening_time': instance.opening_time,
       'closing_time': instance.closing_time,
       'break_opening_time': instance.break_opening_time,
       'break_closing_time': instance.break_closing_time,
+      'created_at': instance.created_at,
+      'updated_at': instance.updated_at,
+      'user_id': instance.user_id,
       'weekend_days': instance.weekend_days,
       'weekend_opening_time': instance.weekend_opening_time,
       'weekend_closing_time': instance.weekend_closing_time,

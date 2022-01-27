@@ -1044,7 +1044,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                               // ];
                               model.dataCheck = false;
                               model.notifyListeners();
-
+                              model.createAccount();
                               // model.barTiming(
                               //     openingTimeFrom,
                               //     openingTimeTo,

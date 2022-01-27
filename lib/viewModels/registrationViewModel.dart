@@ -397,6 +397,42 @@ RegistrationViewModel extends BaseViewModel {
     }*/
   }
 
+  addBarImages() {
+
+    for(int i=0; i<imageFiles.length; i++){
+      if (i == 0){
+        if( (imageFiles[i] is String &&
+            (imageFiles[i] as String).isEmpty) ||
+            imageFiles[i].path.isEmpty){
+          DialogUtils().showDialog(MyErrorWidget(
+            error: "Select Bar Logo",
+          ));
+          return;
+        }
+      }
+      bool hasImages = false;
+      if(i>0){
+        if(!hasImages){
+          if( (imageFiles[i] is String &&
+              (imageFiles[i] as String).isEmpty) ||
+              imageFiles[i].path.isEmpty){
+            DialogUtils().showDialog(MyErrorWidget(
+              error: "Select at least one Bar Image",
+            ));
+            return;
+          }
+          else {
+            hasImages = true;
+            break;
+          }
+        }
+      }
+    }
+    navigateToBarTimingTypeScreen();
+    //navigateToMediaScreen();
+    //navigateToHomeScreen(2);
+  }
+
 
 
   void selectRole(int role) {
@@ -1417,7 +1453,38 @@ RegistrationViewModel extends BaseViewModel {
       return;
     }
     else{
-
+      var barKindList = CommonFunctions.AddFromList(selectedBarKind);
+      var workingDaysList = CommonFunctions.AddFromList(selectedWeekDays);
+      var weekendDaysList = CommonFunctions.AddFromList(selectedBarKind);
+      var response = await signupBar.SignUpBar(
+          signUpBarUserController.text.replaceAll(' ', ''),
+          signUpBarUserController.text,
+          signUpBarEmailController.text,
+          signUpBarAddressController.text,
+          2,
+          barKindList,
+          workingDaysList,
+          openingTimeFrom!,
+          openingTimeTo!,
+          breakTimeFrom!,
+          breakTimeTo!,
+          weekendDaysList,
+          weekEndOpeningTimeFrom!,
+          weekEndOpeningTimeTo!,
+          weekEndBreakTimeFrom!,
+          weekEndBreakTimeTo!,
+          imageFiles[0] as File,
+          imageFiles[1] as File,
+          imageFiles[2] as File,
+          imageFiles[3] as File,
+          imageFiles[4] as File,
+          imageFiles[5] as File,
+          true,
+          true,
+          signUpBarPasswordController.text,
+          signUpBarVerifyPasswordController.text,
+      );
+      print(response);
     }
   }
 
@@ -1756,6 +1823,9 @@ RegistrationViewModel extends BaseViewModel {
     navigationService.navigateToBarProfileScreen();
   }
 
+  void navigateToBarTimingTypeScreen() {
+    navigationService.navigateToBarTimingTypeScreen();
+  }
 
 
 }
