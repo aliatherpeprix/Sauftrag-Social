@@ -80,6 +80,7 @@ RegistrationViewModel extends BaseViewModel {
   bool signInBar = false;
   bool forgetPasswordBool = false;
   bool createNewPasswordBool = false;
+  bool addDrink = false;
 
   bool otpLoading = false;
   TimeOfDay? startTime;
@@ -138,7 +139,7 @@ RegistrationViewModel extends BaseViewModel {
   bool isAddNewClubInFocus = false;
   FocusNode addNewClubFocus = new FocusNode();
 
-  final addNewPartyLocationController = TextEditingController();
+    final addNewPartyLocationController = TextEditingController();
   bool isAddNewPartyLocationInFocus = false;
   FocusNode addNewPartyLocationFocus = new FocusNode();
 
@@ -300,34 +301,12 @@ RegistrationViewModel extends BaseViewModel {
     "Beer Hall"
   ];
 
-  List<String> clubList = [
-    "Club 1",
-    "Club 2",
-    "Club 3",
-    "Club 4",
-    "Club 5",
-    "Club 6",
-    "Club 7",
-    "Club 8",
-    "Club 9",
-    "Club 10"
-  ];
+  List<dynamic> clubList = [];
   List<int> selectedClubList = [];
 
   List<int> selectedVacationList = [];
 
-  List<dynamic> drinkList = [
-    "Beer",
-    "White Wine",
-    "Radler",
-    "Red Wine",
-    "Gin",
-    "Whiskey",
-    "Hard Seltzer",
-    "Jägermeister",
-    "Tequila",
-    "Champagne"
-  ];
+  List<dynamic> drinkList = [];
 
   List<int> selectedDrinkList = [];
 
@@ -348,14 +327,7 @@ RegistrationViewModel extends BaseViewModel {
 
 
 
-  List<String> vacationList = [
-    "Ballermann",
-    "Goldstrand",
-    "Zrce Beach",
-    "Lloret",
-    "Ibiza",
-    "Springbreak Cancun"
-  ];
+  List<dynamic> vacationList = [];
 
 
 
@@ -843,7 +815,7 @@ RegistrationViewModel extends BaseViewModel {
           newClubs,
           newVacations,
           imageFiles,
-          usermodel!.id!.toString(),
+          usermodel.id!.toString(),
           termsCheck,
           dataCheck
 
@@ -1008,6 +980,7 @@ RegistrationViewModel extends BaseViewModel {
   }
 
   addFavoritedrink() async {
+
     if(addNewDrinkController.text.isEmpty){
       DialogUtils().showDialog(MyErrorWidget(
         error: "Please add new drink",
@@ -1016,39 +989,28 @@ RegistrationViewModel extends BaseViewModel {
       return;
     }
     else {
+      addDrink = true;
+      notifyListeners();
       var addFavoriteResponce = await addFavorite.AddFavoritesDrink(
         addNewDrinkController.text,
       );
       if(addFavoriteResponce is FavoritesModel){
         var name = addFavoriteResponce.name;
        // drinks = addFavoriteResponce;
-        drinkList.add(name);
+        drinkList.add(addFavoriteResponce);
         notifyListeners();
       }
       print(drinkList);
       navigateBack();
+      addDrink = false;
+      addNewDrinkController.clear();
+      notifyListeners();
+
 
     }
   }
 
   addFavoriteclub() async {
-    if(addNewPartyLocationController.text.isEmpty){
-      DialogUtils().showDialog(MyErrorWidget(
-        error: "Please add new club",
-      ));
-      notifyListeners();
-      return;
-    }
-    else {
-      var addFavoriteResponce = await addFavorite.AddFavoritesClub(
-        addNewPartyLocationController.text,
-      );
-      print(addFavoriteResponce);
-
-    }
-  }
-
-  addFavoritePartyVacation() async {
     if(addNewClubController.text.isEmpty){
       DialogUtils().showDialog(MyErrorWidget(
         error: "Please add new club",
@@ -1057,10 +1019,51 @@ RegistrationViewModel extends BaseViewModel {
       return;
     }
     else {
-      var addFavoriteResponce = await addFavorite.AddFavoritesPartyVacation(
+      addDrink = true;
+      notifyListeners();
+      var addFavoriteResponce = await addFavorite.AddFavoritesClub(
         addNewClubController.text,
       );
-      print(addFavoriteResponce);
+      if(addFavoriteResponce is FavoritesModel){
+        var name = addFavoriteResponce.name;
+        // drinks = addFavoriteResponce;
+        clubList.add(addFavoriteResponce!);
+        notifyListeners();
+      }
+      print(clubList);
+      navigateBack();
+      addDrink = false;
+      addNewClubController.clear();
+      notifyListeners();
+
+    }
+  }
+
+  addFavoritePartyVacation() async {
+    if(addNewPartyLocationController.text.isEmpty){
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Please add new location",
+      ));
+      notifyListeners();
+      return;
+    }
+    else {
+      addDrink = true;
+      notifyListeners();
+      var addFavoriteResponce = await addFavorite.AddFavoritesPartyVacation(
+        addNewPartyLocationController.text,
+      );
+      if(addFavoriteResponce is FavoritesModel){
+        var name = addFavoriteResponce.name;
+        // drinks = addFavoriteResponce;
+        vacationList.add(addFavoriteResponce!);
+        notifyListeners();
+      }
+      print(vacationList);
+      navigateBack();
+      addDrink = false;
+      addNewPartyLocationController.clear();
+      notifyListeners();
 
     }
   }

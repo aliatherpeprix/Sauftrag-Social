@@ -559,7 +559,7 @@ class MainViewModel extends BaseViewModel{
     );
   }
 
-  List<String> drinkList = [
+  List<dynamic> drinkList = [
     "Beer",
     "White Wine",
     "Radler",
@@ -574,7 +574,7 @@ class MainViewModel extends BaseViewModel{
 
   List<dynamic> selectedDrinkList = [];
 
-  List<String> clubList = [
+  List<dynamic> clubList = [
     "Club 1",
     "Club 2",
     "Club 3",
@@ -588,7 +588,7 @@ class MainViewModel extends BaseViewModel{
   ];
   List<dynamic> selectedClubList = [];
 
-  List<String> vacationList = [
+  List<dynamic> vacationList = [
     "Ballermann",
     "Goldstrand",
     "Zrce Beach",

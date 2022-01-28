@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/services/addFavorites.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/common_functions.dart';
 import 'package:sauftrag/utils/dimensions.dart';
@@ -62,6 +63,11 @@ class _UserProfileState extends State<UserProfile> {
                         onTap: () async {
                           PrefrencesViewModel prefs =
                               locator<PrefrencesViewModel>();
+
+                          model.drinkList = await  Addfavorites().GetFavoritesDrink();
+                          model.clubList = await  Addfavorites().GetFavoritesClub();
+                          model.vacationList = await  Addfavorites().GetFavoritesPartyVacation();
+
                           model.userModel = await prefs.getUser();
                           if (model.userModel!.profile_picture != null &&
                               model.userModel!.profile_picture!.isNotEmpty) {

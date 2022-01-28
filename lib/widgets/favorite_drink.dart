@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/models/favorites_model.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/common_functions.dart';
 import 'package:sauftrag/utils/dimensions.dart';
@@ -110,7 +111,7 @@ class _FavoriteDrinkListState extends State<FavoriteDrinkList> {
                                   }
                                   model.notifyListeners();
                                 },
-                                child: Text(model.drinkList[model.drinkList.indexOf(element)]),
+                                child: Text((model.drinkList[model.drinkList.indexOf(element)] as FavoritesModel).name ?? ""),
                                 style: ElevatedButton.styleFrom(
                                   primary: model.selectedDrinkList.contains(model.drinkList.indexOf(element)) ? ColorUtils.text_red : ColorUtils.white,
                                   onPrimary: model.selectedDrinkList.contains(model.drinkList.indexOf(element)) ? ColorUtils.white : ColorUtils.text_dark,

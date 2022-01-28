@@ -14,6 +14,7 @@ import 'package:sauftrag/viewModels/authentication_view_model.dart';
 import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:sauftrag/widgets/add_dialog_box_clubs.dart';
 import 'package:sauftrag/widgets/add_dialog_box_drinks.dart';
+import 'package:sauftrag/widgets/add_dialog_box_partyLocations.dart';
 import 'package:sauftrag/widgets/back_arrow_with_container.dart';
 import 'package:sauftrag/widgets/radler_dialog_box.dart';
 import 'package:stacked/stacked.dart';
@@ -33,9 +34,10 @@ class _FavoriteState extends State<Favorite> {
 
     return ViewModelBuilder<RegistrationViewModel>.reactive(
       onModelReady: (model) async{
-      await  Addfavorites().GetFavoritesDrink();
-      await  Addfavorites().GetFavoritesClub();
-      await  Addfavorites().GetFavoritesPartyVacation();
+        model.drinkList = await  Addfavorites().GetFavoritesDrink();
+        model.clubList = await  Addfavorites().GetFavoritesClub();
+        model.vacationList = await  Addfavorites().GetFavoritesPartyVacation();
+        model.notifyListeners();
       },
       builder: (context, model, child) {
         return GestureDetector(
@@ -128,7 +130,7 @@ class _FavoriteState extends State<Favorite> {
                                   }
                                   model.notifyListeners();
                                 },
-                                child: Text(model.drinkList[model.drinkList.indexOf(element)]),
+                                child: Text((model.drinkList[model.drinkList.indexOf(element)] as FavoritesModel).name ?? ""),
                                 style: ElevatedButton.styleFrom(
                                   primary: model.selectedDrinkList.contains(model.drinkList.indexOf(element)) ? ColorUtils.text_red : ColorUtils.white,
                                   onPrimary: model.selectedDrinkList.contains(model.drinkList.indexOf(element)) ? ColorUtils.white : ColorUtils.text_dark,
@@ -286,7 +288,8 @@ class _FavoriteState extends State<Favorite> {
                                       }
                                       model.notifyListeners();
                                     },
-                                    child: Text(model.clubList[index]),
+                                    child:  Text((model.clubList[index] as FavoritesModel).name ?? ""),
+                                    //Text(model.clubList[index]),
                                     style: ElevatedButton.styleFrom(
                                       primary: model.selectedClubList.contains(index) ? ColorUtils.text_red : ColorUtils.white,
                                       onPrimary: model.selectedClubList.contains(index) ? ColorUtils.white : ColorUtils.text_dark,
@@ -397,7 +400,8 @@ class _FavoriteState extends State<Favorite> {
                                   }
                                   model.notifyListeners();
                                 },
-                                child: Text(model.vacationList[model.vacationList.indexOf(element)]),
+                                child: Text((model.vacationList[model.vacationList.indexOf(element)] as FavoritesModel).name ?? ""),
+                                //Text(model.vacationList[model.vacationList.indexOf(element)]),
                                 style: ElevatedButton.styleFrom(
                                   primary: model.selectedVacationList.contains(model.vacationList.indexOf(element)) ? ColorUtils.text_red : ColorUtils.white,
                                   onPrimary: model.selectedVacationList.contains(model.vacationList.indexOf(element)) ? ColorUtils.white : ColorUtils.text_dark,
@@ -426,7 +430,7 @@ class _FavoriteState extends State<Favorite> {
                                 showDialog(
                                     context: context,
                                     builder: (BuildContext context){
-                                      return AddDialogBox(title: "Add New Location", btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+                                      return AddDialogBoxPartyLocation(title: "Add New Location", btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
                                     }
                                 );
                               },

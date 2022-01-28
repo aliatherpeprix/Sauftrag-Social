@@ -46,11 +46,8 @@ class SignupUser {
         'selectedDrinkList' : selectedDrinkList,
         'selectedClubList' : selectedClubList,
         'selectedVacationList' : selectedVacationList,
-
-
         'role' : 1,
-        'profile_picture' : ''
-
+        'bar_kind' : [1]
       });
 
       var response = await dio.post(Constants.BaseUrlPro+Constants.SignUp, data: param);

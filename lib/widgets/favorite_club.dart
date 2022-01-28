@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/models/favorites_model.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/common_functions.dart';
 import 'package:sauftrag/utils/dimensions.dart';
@@ -107,7 +108,7 @@ class _FavoriteClubState extends State<FavoriteClub> {
                                   }
                                   model.notifyListeners();
                                 },
-                                child: Text(model.clubList[model.clubList.indexOf(element)]),
+                                child: Text((model.clubList[model.clubList.indexOf(element)] as FavoritesModel).name ?? ""),
                                 style: ElevatedButton.styleFrom(
                                   primary: model.selectedClubList.contains(model.clubList.indexOf(element)) ? ColorUtils.text_red : ColorUtils.white,
                                   onPrimary: model.selectedClubList.contains(model.clubList.indexOf(element)) ? ColorUtils.white : ColorUtils.text_dark,

@@ -93,6 +93,7 @@ class Addfavorites {
           return userData;
         }*/
         var favoritesData = FavoritesModel.fromJson(response.data);
+
         print(favoritesData);
 
         return favoritesData;
@@ -189,17 +190,18 @@ class Addfavorites {
 
 
 
-      var response = await dio.post(Constants.BaseUrlPro+Constants.GetFavoriteClub, );
+      var response = await dio.get(Constants.BaseUrlPro+Constants.GetFavoriteClub, );
       if (response.statusCode == 200 || response.statusCode == 201) {
         // user found
         /* if (response.data["status"] == 200) {
           var userData = UserModel.fromJson(response.data['data']);
           return userData;
         }*/
-        var favoritesData = FavoritesModel.fromJson(response.data);
-        print(favoritesData);
+        List<FavoritesModel> favsClub = ((response.data) as List).map((e) => FavoritesModel.fromJson(e)).toList();
+       // var favoritesData = FavoritesModel.fromJson(response.data);
+        //print(favoritesData);
 
-        return favoritesData;
+        return favsClub;
 
       }
 
@@ -222,15 +224,16 @@ class Addfavorites {
 
 
 
-      var response = await dio.post(Constants.BaseUrlPro+Constants.GetFavoritePartyVacation, );
+      var response = await dio.get(Constants.BaseUrlPro+Constants.GetFavoritePartyVacation, );
       if (response.statusCode == 200 || response.statusCode == 201) {
         // user found
         /* if (response.data["status"] == 200) {
           var userData = UserModel.fromJson(response.data['data']);
           return userData;
         }*/
-        var favoritesData = FavoritesModel.fromJson(response.data);
-        return favoritesData;}
+        List<FavoritesModel> favsLocation = ((response.data) as List).map((e) => FavoritesModel.fromJson(e)).toList();
+        //var favoritesData = FavoritesModel.fromJson(response.data);
+        return favsLocation;}
       //user not found
       else {
         return response.data['message'];

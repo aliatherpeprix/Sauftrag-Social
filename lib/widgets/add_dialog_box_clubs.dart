@@ -12,6 +12,8 @@ import 'package:sauftrag/viewModels/authentication_view_model.dart';
 import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:stacked/stacked.dart';
 
+import 'loader.dart';
+
 class AddDialogBoxClubs extends StatefulWidget {
 
   String title;
@@ -119,7 +121,7 @@ class _AddDialogBoxClubsState extends State<AddDialogBoxClubs> {
                       model.addFavoriteclub();
                       //model.navigateToTermsScreen();
                     },
-                    child: Text(widget.btnTxt),
+                    child: model.addDrink == false ? Text(widget.btnTxt) : Loader(),
                     style: ElevatedButton.styleFrom(
                       primary: ColorUtils.text_red ,
                       onPrimary: ColorUtils.white,

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/models/favorites_model.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/extensions.dart';
@@ -902,8 +903,7 @@ class _UserDetailsState extends State<UserDetails> {
                                 // }
                                 // model.notifyListeners();
                               },
-                              child: Text(model.
-                              drinkList[element]),
+                              child: Text((model.drinkList[element] as FavoritesModel).name ?? ""),
                               style: ElevatedButton.styleFrom(
                                 primary:   ColorUtils.red_color,
                                 onPrimary:  ColorUtils.white,
@@ -992,7 +992,7 @@ class _UserDetailsState extends State<UserDetails> {
                                 // }
                                 // model.notifyListeners();
                               },
-                              child: Text(model.clubList[element]),
+                              child: Text((model.clubList[element] as FavoritesModel).name ?? ""),
                               style: ElevatedButton.styleFrom(
                                 primary:   ColorUtils.red_color,
                                 onPrimary:  ColorUtils.white,
@@ -1081,7 +1081,7 @@ class _UserDetailsState extends State<UserDetails> {
                                 // }
                                 // model.notifyListeners();
                               },
-                              child: Text(model.vacationList[element]),
+                              child:  Text((model.vacationList[element] as FavoritesModel).name ?? ""),
                               style: ElevatedButton.styleFrom(
                                 primary:   ColorUtils.red_color,
                                 onPrimary:  ColorUtils.white,

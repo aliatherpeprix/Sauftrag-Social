@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/models/favorites_model.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/common_functions.dart';
 import 'package:sauftrag/utils/dimensions.dart';
@@ -106,7 +107,7 @@ class _FavoriteVacationState extends State<FavoriteVacation> {
                                   }
                                   model.notifyListeners();
                                 },
-                                child: Text(model.vacationList[model.vacationList.indexOf(element)]),
+                                child: Text((model.vacationList[model.vacationList.indexOf(element)] as FavoritesModel).name ?? ""),
                                 style: ElevatedButton.styleFrom(
                                   primary: model.selectedVacationList.contains(model.vacationList.indexOf(element)) ? ColorUtils.text_red : ColorUtils.white,
                                   onPrimary: model.selectedVacationList.contains(model.vacationList.indexOf(element)) ? ColorUtils.white : ColorUtils.text_dark,
