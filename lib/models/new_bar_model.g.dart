@@ -29,7 +29,9 @@ NewBarModel _$NewBarModelFromJson(Map<String, dynamic> json) => NewBarModel()
   ..catalogue_image4 = json['catalogue_image4'] as String?
   ..catalogue_image5 = json['catalogue_image5'] as String?
   ..terms_conditions = json['terms_conditions'] as bool?
-  ..data_protection = json['data_protection'] as bool?;
+  ..data_protection = json['data_protection'] as bool?
+  ..password = json['password'] as String?
+  ..password2 = json['password2'] as String?;
 
 Map<String, dynamic> _$NewBarModelToJson(NewBarModel instance) =>
     <String, dynamic>{
@@ -51,4 +53,6 @@ Map<String, dynamic> _$NewBarModelToJson(NewBarModel instance) =>
       'catalogue_image5': instance.catalogue_image5,
       'terms_conditions': instance.terms_conditions,
       'data_protection': instance.data_protection,
+      'password': instance.password,
+      'password2': instance.password2,
     };

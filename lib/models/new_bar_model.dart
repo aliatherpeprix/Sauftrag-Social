@@ -38,8 +38,8 @@ class NewBarModel {
   String? catalogue_image5;
   bool? terms_conditions;
   bool? data_protection;
-  // String? password;
-  // String? password2;
+  String? password;
+  String? password2;
 
 
   factory NewBarModel.fromJson(Map<String, dynamic> json) => _$NewBarModelFromJson(json);

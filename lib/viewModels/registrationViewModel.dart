@@ -92,6 +92,8 @@ RegistrationViewModel extends BaseViewModel {
   bool isSignUpUserInFocus = false;
   FocusNode signUpUserFocus = new FocusNode();
 
+  List<FavoritesModel> drinks = [];
+
   final signUpEmailController = TextEditingController();
   bool isSignUpEmailInFocus = false;
   FocusNode signUpEmailFocus = new FocusNode();
@@ -190,6 +192,8 @@ RegistrationViewModel extends BaseViewModel {
   String? weekEndOpeningTimeTo = "";
   String? weekEndBreakTimeFrom = "";
   String? weekEndBreakTimeTo = "";
+
+  var getFavsDrinks = Addfavorites();
 
 
   ///----------------------User Login Registration Controller ----------------///
@@ -312,7 +316,7 @@ RegistrationViewModel extends BaseViewModel {
 
   List<int> selectedVacationList = [];
 
-  List<String> drinkList = [
+  List<dynamic> drinkList = [
     "Beer",
     "White Wine",
     "Radler",
@@ -1015,7 +1019,14 @@ RegistrationViewModel extends BaseViewModel {
       var addFavoriteResponce = await addFavorite.AddFavoritesDrink(
         addNewDrinkController.text,
       );
-      print(addFavoriteResponce);
+      if(addFavoriteResponce is FavoritesModel){
+        var name = addFavoriteResponce.name;
+       // drinks = addFavoriteResponce;
+        drinkList.add(name);
+        notifyListeners();
+      }
+      print(drinkList);
+      navigateBack();
 
     }
   }
