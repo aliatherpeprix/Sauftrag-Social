@@ -28,7 +28,8 @@ class SignupUser {
       List<int> selectedClubList,
       List<int> selectedVacationList,
       List images,
-
+      bool termsCheck,
+      bool dataCheck,
       ) async {
     try {
       /// just login user through phoneNumber and password
@@ -46,8 +47,15 @@ class SignupUser {
         'selectedDrinkList' : selectedDrinkList,
         'selectedClubList' : selectedClubList,
         'selectedVacationList' : selectedVacationList,
-        'role' : 1,
-        'bar_kind' : [1]
+        'role' : "1",
+        if (images[0] is File && (images[0] as File).path.isNotEmpty)"profile_picture": await MultipartFile.fromFile((images[0] as File).path,),
+        if (images[1] is File && (images[1] as File).path.isNotEmpty)"catalogue_image1": await MultipartFile.fromFile((images[1] as File).path,),
+        if (images[2] is File && (images[2] as File).path.isNotEmpty)"catalogue_image2": await MultipartFile.fromFile((images[2] as File).path,),
+        if (images[3] is File && (images[3] as File).path.isNotEmpty)"catalogue_image3": await MultipartFile.fromFile((images[3] as File).path,),
+        if (images[4] is File && (images[4] as File).path.isNotEmpty)"catalogue_image4": await MultipartFile.fromFile((images[4] as File).path,),
+        if (images[5] is File && (images[5] as File).path.isNotEmpty)"catalogue_image5": await MultipartFile.fromFile((images[5] as File).path,),
+        'terms_conditions' : termsCheck,
+        'data_protection' :dataCheck
       });
 
       var response = await dio.post(Constants.BaseUrlPro+Constants.SignUp, data: param);

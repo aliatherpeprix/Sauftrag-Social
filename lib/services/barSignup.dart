@@ -65,7 +65,6 @@ class SignupBar {
         'weekend_break_opening_time': weekendBreakOpeningTime,
         'weekend_break_closing_time': weekendBreakClosingTime,
         'profile_picture' : await MultipartFile.fromFile(barLogo.path, filename: path.basename(barLogo.path)),
-        //barLogo,
         'catalogue_image1' : await MultipartFile.fromFile(catalogueImage1.path, filename: path.basename(catalogueImage1.path)),
         'catalogue_image2' : await MultipartFile.fromFile(catalogueImage2.path, filename: path.basename(catalogueImage2.path)),
         'catalogue_image3' : await MultipartFile.fromFile(catalogueImage3.path, filename: path.basename(catalogueImage3.path)),

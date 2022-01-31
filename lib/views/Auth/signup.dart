@@ -25,6 +25,7 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     return ViewModelBuilder<RegistrationViewModel>.reactive(
       builder: (context, model, child) {
+        // model.signInUser = false;
         return GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();

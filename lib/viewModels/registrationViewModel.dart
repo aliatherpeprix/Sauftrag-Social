@@ -800,7 +800,7 @@ RegistrationViewModel extends BaseViewModel {
       for (int drink in selectedVacationList){
         newVacations.add(drink+1);
       }
-      var userSignupResponce = await updateUser.UpdateUser(
+      var userSignupResponce = await signupUser.SignUpUser(
 
           usermodel!.email!,
           usermodel.username!,
@@ -815,7 +815,6 @@ RegistrationViewModel extends BaseViewModel {
           newClubs,
           newVacations,
           imageFiles,
-          usermodel.id!.toString(),
           termsCheck,
           dataCheck
 
@@ -832,22 +831,23 @@ RegistrationViewModel extends BaseViewModel {
         user.favorite_party_vacation = CommonFunctions.SubtractFromList(user.favorite_party_vacation!);
         await locator<PrefrencesViewModel>().saveUser(user);
         dataCheck = false;
+        selectedDrinkList.clear();
+        selectedClubList.clear();
+        selectedVacationList.clear();
+        imageFiles = [
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ];
+        //model.imageFiles = [];
+        // DialogUtils().showDialog(
+        //     MyErrorWidget(error: "Use has been created succ"));
+        navigateToHomeScreen(2);
       }
-      selectedDrinkList.clear();
-      selectedClubList.clear();
-      selectedVacationList.clear();
-      imageFiles = [
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ];
-      //model.imageFiles = [];
-      // DialogUtils().showDialog(
-      //     MyErrorWidget(error: "Use has been created succ"));
-      navigateToHomeScreen(2);
+
       //favorites();
     }
     //signInUser = false;
@@ -1250,29 +1250,33 @@ RegistrationViewModel extends BaseViewModel {
     }
     else
       {
-      var signupResponce = await signupUser.SignUpUser(
-      signUpEmailController.text,
-      signUpUserController.text,
-      signUpPasswordController.text,
-      signUpVerifyPasswordController.text,
-      signUpPhoneController.text,
-      (relationStatusList.indexOf(relationStatusValueStr) + 1).toString(),
-      signUpAddressController.text,
-      (genderList.indexOf(genderValueStr) + 1).toString(),
-      DateFormat("yyyy-MM-dd").format(selectedDOB),
-          selectedDrinkList,
-          selectedClubList,
-          selectedVacationList,
-          imageFiles
-      );
-      print(signupResponce);
-      if(signupResponce is UserModel)
-        {
-          userModel.UserModel user = signupResponce;
-          user.password = signUpPasswordController.text;
-          user.password2 = signUpVerifyPasswordController.text;
-          await prefrencesViewModel.saveUser(user);
-        }
+      userModel.UserModel user = userModel.UserModel();
+      // var signupResponce = await signupUser.SignUpUser(
+      // signUpEmailController.text,
+      // signUpUserController.text,
+      // signUpPasswordController.text,
+      // signUpVerifyPasswordController.text,
+      // signUpPhoneController.text,
+      // (relationStatusList.indexOf(relationStatusValueStr) + 1).toString(),
+      // signUpAddressController.text,
+      // (genderList.indexOf(genderValueStr) + 1).toString(),
+      // DateFormat("yyyy-MM-dd").format(selectedDOB),
+      //     selectedDrinkList,
+      //     selectedClubList,
+      //     selectedVacationList,
+      //     imageFiles
+      // );
+      user.email = signUpEmailController.text;
+      user.username = signUpUserController.text;
+      user.password = signUpPasswordController.text;
+      user.password2 = signUpVerifyPasswordController.text;
+      user.phone_no = signUpPhoneController.text;
+      user.relation_ship = (relationStatusList.indexOf(relationStatusValueStr) + 1).toString();
+      user.address = signUpAddressController.text;
+      user.gender = (genderList.indexOf(genderValueStr) + 1).toString();
+      user.dob = DateFormat("yyyy-MM-dd").format(selectedDOB);
+      await prefrencesViewModel.saveUser(user);
+      //print(signupResponce);
 
       //var responce = await Addfavorites().GetFavoritesDrink();
       signInUser = false;
