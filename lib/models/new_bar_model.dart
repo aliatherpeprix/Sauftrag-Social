@@ -17,7 +17,7 @@ class NewBarModel {
   String? address;
   dynamic role;
   List<int>? bar_kind;
-  List<WeekDaysModel>? week_days;
+  WeekDaysModel? week_days;
   // String? opening_time;
   // String? closing_time;
   // String? break_opening_time;
@@ -25,7 +25,7 @@ class NewBarModel {
   // String? created_at;
   // String? updated_at;
   // String? user_id;
-  List<WeekendDaysModel>? weekend_days;
+  WeekendDaysModel? weekend_days;
   // String? weekend_opening_time;
   // String? weekend_closing_time;
   // String? weekend_break_opening_time;

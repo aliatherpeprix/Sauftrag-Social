@@ -498,7 +498,7 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                           ],
                         ),
                       ),
-                      SizedBox(height: 4.h),
+                        SizedBox(height: 4.h),
 
                       ///------------------Event Location ------------------///
                       Stack(

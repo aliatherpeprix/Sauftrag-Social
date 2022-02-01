@@ -18,7 +18,7 @@ WeekendDaysModel _$WeekendDaysModelFromJson(Map<String, dynamic> json) =>
       ..is_weekend = json['is_weekend'] as bool?
       ..created_at = json['created_at'] as String?
       ..updated_at = json['updated_at'] as String?
-      ..user_id = json['user_id'] as String?;
+      ..user_id = json['user_id'] as int?;
 
 Map<String, dynamic> _$WeekendDaysModelToJson(WeekendDaysModel instance) =>
     <String, dynamic>{

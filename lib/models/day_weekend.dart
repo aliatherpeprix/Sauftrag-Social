@@ -7,7 +7,7 @@ part 'day_weekend.g.dart';
 class DayWeekendModel {
   DayWeekendModel();
 
-  String? day__id;
+  int? day__id;
   String? day__name;
 
   factory DayWeekendModel.fromJson(Map<String, dynamic> json) => _$DayWeekendModelFromJson(json);

@@ -16,7 +16,7 @@ class WeekDaysModel {
   bool? is_weekend;
   String? created_at;
   String? updated_at;
-  String? user_id;
+  int? user_id;
 
   factory WeekDaysModel.fromJson(Map<String, dynamic> json) => _$WeekDaysModelFromJson(json);
   Map<String, dynamic> toJson() => _$WeekDaysModelToJson(this);

@@ -21,7 +21,7 @@ import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/widgets/drink_status_dialog_box.dart';
-import 'package:sauftrag/widgets/message_dialog.dart';
+import 'package:sauftrag/bar/widgets/message_dialog.dart';
 import 'package:sauftrag/widgets/zoom_drawer.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
 import 'package:stacked/stacked.dart';
@@ -158,13 +158,14 @@ var drawerController;
                           ),
                           GestureDetector(
                             onTap: (){
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context){
-                                    return MessageDialog(title: "Add New Location",
-                                        btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
-                                  }
-                              );
+                              model.navigateToBarPostScreen();
+                              // showDialog(
+                              //     context: context,
+                              //     builder: (BuildContext context){
+                              //       return MessageDialog(title: "Add New Location",
+                              //           btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+                              //     }
+                              // );
                             },
                             child: Container(
                                 decoration: BoxDecoration(

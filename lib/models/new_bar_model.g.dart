@@ -16,12 +16,12 @@ NewBarModel _$NewBarModelFromJson(Map<String, dynamic> json) => NewBarModel()
   ..role = json['role']
   ..bar_kind =
       (json['bar_kind'] as List<dynamic>?)?.map((e) => e as int).toList()
-  ..week_days = (json['week_days'] as List<dynamic>?)
-      ?.map((e) => WeekDaysModel.fromJson(e as Map<String, dynamic>))
-      .toList()
-  ..weekend_days = (json['weekend_days'] as List<dynamic>?)
-      ?.map((e) => WeekendDaysModel.fromJson(e as Map<String, dynamic>))
-      .toList()
+  ..week_days = json['week_days'] == null
+      ? null
+      : WeekDaysModel.fromJson(json['week_days'] as Map<String, dynamic>)
+  ..weekend_days = json['weekend_days'] == null
+      ? null
+      : WeekendDaysModel.fromJson(json['weekend_days'] as Map<String, dynamic>)
   ..profile_picture = json['profile_picture'] as String?
   ..catalogue_image1 = json['catalogue_image1'] as String?
   ..catalogue_image2 = json['catalogue_image2'] as String?

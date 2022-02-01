@@ -5,6 +5,7 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/bar_model.dart';
+import 'package:sauftrag/models/new_bar_model.dart';
 import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/services/addFavorites.dart';
 import 'package:sauftrag/services/updateBarProfile.dart';
@@ -484,7 +485,7 @@ class AuthenticationViewModel extends BaseViewModel {
 
     else {
 
-      barModel.BarModel? barmodel = await prefrencesViewModel.getBarUser();
+      NewBarModel? barmodel = await prefrencesViewModel.getBarUser();
 
       List<int> weekDaysTiming = CommonFunctions.AddFromList(selectedWeekDays);
       List<int> weekendDaysTiming = CommonFunctions.AddFromList(selectedWeekendDays);
@@ -502,22 +503,22 @@ class AuthenticationViewModel extends BaseViewModel {
         weekDaysTiming,
         weekendDaysTiming,
         //barKind,
-        barmodel.opening_time!,
-        barmodel.closing_time!,
-        barmodel.break_opening_time!,
-        barmodel.break_closing_time!,
-        barmodel.weekend_opening_time!,
-        barmodel.weekend_closing_time!,
-        barmodel.weekend_break_opening_time!,
-        barmodel.weekend_break_closing_time!,
+        barmodel.week_days!.opening_time!,
+        barmodel.week_days!.closing_time!,
+        barmodel.week_days!.break_opening_time!,
+        barmodel.week_days!.break_closing_time!,
+        barmodel.weekend_days!.opening_time!,
+        barmodel.weekend_days!.closing_time!,
+        barmodel.weekend_days!.break_opening_time!,
+        barmodel.weekend_days!.break_closing_time!,
         barmodel.id!.toString(),
 
 
       );
       print(barSignupResponse);
-      if(barSignupResponse is BarModel)
+      if(barSignupResponse is NewBarModel)
       {
-        barModel.BarModel user = barSignupResponse;
+        NewBarModel user = barSignupResponse;
         user.token = barmodel.token;
         user.password = signUpBarPasswordController.text;
         user.password2 = signUpBarVerifyPasswordController.text;
@@ -805,7 +806,6 @@ class AuthenticationViewModel extends BaseViewModel {
   void navigateToOrderDetailsScreen() {
     navigationService.navigateToOrderDetailsScreen();
   }
-
 
 
   convert (){

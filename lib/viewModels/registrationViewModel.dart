@@ -11,7 +11,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/bar_model.dart';
+import 'package:sauftrag/models/create_bar_post.dart';
 import 'package:sauftrag/models/favorites_model.dart';
+import 'package:sauftrag/models/new_bar_model.dart';
 import 'package:sauftrag/models/user_models.dart' as userModel;
 import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/modules/dio_services.dart';
@@ -22,7 +24,9 @@ import 'package:sauftrag/services/changeUserPassword.dart';
 import 'package:sauftrag/services/changeUserPassword.dart';
 import 'package:sauftrag/services/changeUserPassword.dart';
 import 'package:sauftrag/services/changeUserPassword.dart';
+import 'package:sauftrag/services/checkBar.dart';
 import 'package:sauftrag/services/checkUser.dart';
+import 'package:sauftrag/services/createPost.dart';
 import 'package:sauftrag/services/forget_password.dart';
 import 'package:sauftrag/services/login.dart';
 import 'package:sauftrag/services/login.dart';
@@ -52,6 +56,8 @@ RegistrationViewModel extends BaseViewModel {
   var checkuser = Checkuser();
   var updateUser = Updateuser();
   var addFavorite = Addfavorites();
+  var createBarPost = Createpost();
+  var checkBar = Checkbar();
 
 
 
@@ -243,6 +249,15 @@ RegistrationViewModel extends BaseViewModel {
   FocusNode changeNewCurrentPasswordUserFocus = new FocusNode();
   bool changeNewCurrentPasswordUserVisible = false;
 
+  ///-------------------Create Bar Post ---------------------------------///
+
+  final barPostLocationController = TextEditingController();
+  bool isBarPostLocationInFocus = false;
+  FocusNode barPostLocationFocus = new FocusNode();
+
+  final barPostController = TextEditingController();
+  bool isBarPostInFocus = false;
+  FocusNode barPostFocus = new FocusNode();
 
   String? userNameError;
   String? emailError;
@@ -282,6 +297,17 @@ RegistrationViewModel extends BaseViewModel {
     'Male': 1,
     'Female': 2,
   };
+
+  int msgTypeValue = 1;
+  String msgTypeValueStr = "Private";
+  List<String> msgTypeList = ["Private", "Public"];
+  Map<String, int> msgTypeMap = {
+    'Private': 1,
+    'Public': 2,
+  };
+  List<dynamic> imageFilesPost = [
+    File(""),
+  ];
 
   List<int> selectedWeekDays = [];
 
@@ -1362,7 +1388,7 @@ RegistrationViewModel extends BaseViewModel {
       checkSignupUser = true;
       notifyListeners();
 
-      var checkuserResponce = await checkuser.CheckUser(
+      var checkuserResponce = await checkBar.CheckBar(
           signUpBarEmailController.text,
           "2"
       );
@@ -1503,7 +1529,70 @@ RegistrationViewModel extends BaseViewModel {
           signUpBarVerifyPasswordController.text,
       );
       print(response);
+      if(response is NewBarModel){
+        await prefrencesViewModel.saveBarUser(response);
+        navigateToHomeBarScreen();
+      }
     }
+  }
+
+  createBarPostScreen() async {
+    if (barPostLocationController.text.isEmpty) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Post Location is required",
+      ));
+      return;
+    } else if (barPostController.text.isEmpty) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Kindly write post",
+      ));
+      return;
+    }
+    else{
+
+      var createPostResponce = await createBarPost.CreatePost(
+
+          (msgTypeList.indexOf(msgTypeValueStr) + 1).toString(),
+          barPostLocationController.text,
+          barPostController.text,
+          imageFilesPost,
+      );
+      print(createPostResponce);
+
+      // if(checkuserResponce is UserModel)
+      // {
+      //   checkSignupUser = false;
+      //   notifyListeners();
+      //   DialogUtils().showDialog(MyErrorWidget(
+      //     error: "Bar Email already exist",
+      //   ));
+      // }
+      // else{
+      //   checkSignupUser = false;
+      //   notifyListeners();
+      //   navigateToUploadBarMedia();
+      // }
+    }
+    //print(checkuserResponce);
+    // else{
+    //   signInBar = false;
+    //   notifyListeners();
+    //   var signupResponce = await signupBar.SignUpBar(
+    //     signUpBarUserController.text,
+    //     signUpBarAddressController.text,
+    //     signUpBarEmailController.text,
+    //     signUpBarPasswordController.text,
+    //     signUpBarVerifyPasswordController.text,
+    //   );
+    //   print(signupResponce);
+    //   if(signupResponce is BarModel)
+    //   {
+    //     await locator<PrefrencesViewModel>().saveBarUser(signupResponce);
+    //   }
+    //   // DialogUtils().showDialog(s
+    //   //     MyErrorWidget(error: signupResponce));
+    //   navigateToUploadBarMedia();
+    // }
   }
 
   // void doGoogleSignIn() async{

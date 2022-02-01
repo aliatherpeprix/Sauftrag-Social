@@ -8,7 +8,7 @@ part of 'day_weekend.dart';
 
 DayWeekendModel _$DayWeekendModelFromJson(Map<String, dynamic> json) =>
     DayWeekendModel()
-      ..day__id = json['day__id'] as String?
+      ..day__id = json['day__id'] as int?
       ..day__name = json['day__name'] as String?;
 
 Map<String, dynamic> _$DayWeekendModelToJson(DayWeekendModel instance) =>

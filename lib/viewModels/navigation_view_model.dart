@@ -16,6 +16,7 @@ import 'package:sauftrag/bar/views/Drawer/notifications.dart';
 import 'package:sauftrag/bar/views/Drawer/qr_code_scanner.dart';
 import 'package:sauftrag/bar/views/Drawer/ranking_list.dart';
 import 'package:sauftrag/bar/views/Drawer/upcoming_event.dart';
+import 'package:sauftrag/bar/views/Home/bar_create_post.dart';
 import 'package:sauftrag/bar/views/Home/bar_news_feed.dart';
 import 'package:sauftrag/bar/views/Home/main_view.dart';
 import 'package:sauftrag/bar/views/Home/order_details.dart';
@@ -320,6 +321,10 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateToBarAccountOwnerShip(){
     navigationKey.currentState!.push(PageTransition(child: BarAccountOwnership(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToBarPostScreen(){
+    navigationKey.currentState!.push(PageTransition(child: BarCreatePost(), type: PageTransitionType.rightToLeftWithFade));
   }
 
 

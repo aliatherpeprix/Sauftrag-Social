@@ -860,6 +860,11 @@ class MainViewModel extends BaseViewModel{
     navigationService.navigateToCreateEventScreen();
   }
 
+  void navigateToBarPostScreen() {
+    navigationService.navigateToBarPostScreen();
+  }
+
+
   void navigateToBarEventScreen() {
     navigationService.navigateToBarEventScreen();
   }
