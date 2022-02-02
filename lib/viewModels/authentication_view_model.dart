@@ -487,8 +487,8 @@ class AuthenticationViewModel extends BaseViewModel {
 
       NewBarModel? barmodel = await prefrencesViewModel.getBarUser();
 
-      List<int> weekDaysTiming = CommonFunctions.AddFromList(selectedWeekDays);
-      List<int> weekendDaysTiming = CommonFunctions.AddFromList(selectedWeekendDays);
+      List<int> weekDaysTiming = selectedWeekDays;
+      List<int> weekendDaysTiming = selectedWeekendDays;
       //List<int> barKind = CommonFunctions.AddFromList(selectedBarKind);
 
 

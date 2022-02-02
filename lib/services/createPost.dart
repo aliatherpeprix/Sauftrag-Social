@@ -1,9 +1,13 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mime/mime.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/bar_model.dart';
+import 'package:sauftrag/models/create_bar_post.dart';
+import 'package:sauftrag/models/new_bar_model.dart';
 import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/modules/dio_services.dart';
 import 'package:sauftrag/utils/constants.dart';
@@ -23,27 +27,41 @@ class Createpost {
       String post_location,
       String post_content,
       List images,
+
       )
   async
   {
     try {
       /// just login user through phoneNumber and password
-
-      var param = FormData.fromMap({
-
+      List files = [];
+      for (File data in images){
+        if (data.path.isNotEmpty){
+          String media = "data:${lookupMimeType(data.path)};base64," +
+              base64Encode(data.readAsBytesSync());
+          files.add(media);
+        }
+      }
+      var param = {
         'post_type' : post_type,
         'post_location' : post_location,
         'post_content' : post_content,
-        if (images[0] is File && (images[0] as File).path.isNotEmpty)"media": await MultipartFile.fromFile((images[0] as File).path,),
+        'media' : files
+      };
+      // var param = FormData.fromMap({
+      //
+      //   'post_type' : post_type,
+      //   'post_location' : post_location,
+      //   'post_content' : post_content,
+      //   'media' : files
+      //   //if (images[0] is File && (images[0] as File).path.isNotEmpty)"media": await MultipartFile.fromFile((images[0] as File).path,),
+      // });
 
-      });
-
-      BarModel? user = (await locator<PrefrencesViewModel>().getBarUser()) as BarModel?;
+      NewBarModel? barModel = (await locator<PrefrencesViewModel>().getBarUser());
       var response = await dio.post(Constants.BaseUrlPro+Constants.CreateNewFeed, data: param,
           options: Options(
-          contentType: Headers.formUrlEncodedContentType,
+          // contentType: Headers.formUrlEncodedContentType,
           headers: {
-            "Authorization": "Token ${user!.token!}"
+            "Authorization": "Token ${barModel!.token!}"
           }
       ));
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -52,8 +70,8 @@ class Createpost {
           var userData = UserModel.fromJson(response.data['data']);
           return userData;
         }*/
-        var userData = UserModel.fromJson(response.data);
-        return userData;}
+        var postData = CreateBarPost.fromJson(response.data);
+        return postData;}
       //user not found
       else {
         return response.data['message'];

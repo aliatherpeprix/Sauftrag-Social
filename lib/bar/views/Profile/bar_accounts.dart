@@ -249,7 +249,8 @@ class _BarAccountState extends State<BarAccount> {
                                     : ColorUtils.divider,
                               ),
                               child: Text(model.weekDaysList[
-                              model.weekDaysList.indexOf(element)], style: TextStyle(
+                              model.weekDaysList.indexOf(element)].day__name!,
+                                style: TextStyle(
                                 color: model.selectedWeekDays
                                     .contains(model.weekDaysList
                                     .indexOf(element))
@@ -838,9 +839,11 @@ class _BarAccountState extends State<BarAccount> {
                               .map((element) => GestureDetector(
                             onTap: () {
                               if (model.selectedWeekendDays.contains(
-                                  model.weekendDaysList.indexOf(element))) {
+                                  //model.weekendDaysList.indexOf(element)
+                                      element.day__id!
+                              )) {
                                 model.selectedWeekendDays.remove(
-                                    model.weekendDaysList.indexOf(element));
+                                    element.day__id!);
                               }
                               else  {
                                 /* if (element == "Radler") {
@@ -858,7 +861,9 @@ class _BarAccountState extends State<BarAccount> {
 
                                         }*/
                                 model.selectedWeekendDays.add(
-                                    model.weekendDaysList.indexOf(element));
+                                  element.day__id!
+                                   // model.weekendDaysList.indexOf(element)
+                                );
                               }
                               model.notifyListeners();
                             },
@@ -878,7 +883,8 @@ class _BarAccountState extends State<BarAccount> {
                                     : ColorUtils.divider,
                               ),
                               child: Text(model.weekendDaysList[
-                              model.weekendDaysList.indexOf(element)], style: TextStyle(
+                              model.weekendDaysList.indexOf(element)].day__name!,
+                                style: TextStyle(
                                 color: model.selectedWeekendDays
                                     .contains(model.weekendDaysList
                                     .indexOf(element))

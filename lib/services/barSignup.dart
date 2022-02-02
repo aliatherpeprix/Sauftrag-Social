@@ -92,7 +92,8 @@ class SignupBar {
 
     } catch (e) {
       print(e);
-      return  (e as DioError).response!.data["message"].toString();
+      return  (e as DioError).
+      response!.data["message"].toString();
     }
   }
 }

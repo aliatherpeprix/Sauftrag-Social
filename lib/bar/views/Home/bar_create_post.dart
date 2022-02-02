@@ -307,19 +307,19 @@ class _BarCreatePostState extends State<BarCreatePost> {
                                 decoration: BoxDecoration(
                                   borderRadius:
                                   BorderRadius.all(Radius.circular(20)),
-                                  image: model.imageFiles[0].path.isEmpty
+                                  image: model.imageFilesPost[0].path.isEmpty
                                       ? null
                                       : DecorationImage(
                                       image:
-                                      FileImage(model.imageFiles[0]),
+                                      FileImage(model.imageFilesPost[0]),
                                       fit: BoxFit.cover),
                                 ),
                                 child: Stack(
                                   children: [
-                                    model.imageFiles[0].path.isEmpty
+                                    model.imageFilesPost[0].path.isEmpty
                                         ? InkWell(
                                         onTap: () {
-                                          model.getImage(0);
+                                          model.getPostImage(0);
                                           model.notifyListeners();
                                         },
                                         child: DottedBorder(
@@ -338,13 +338,13 @@ class _BarCreatePostState extends State<BarCreatePost> {
                                               ),
                                             )))
                                         : Container(),
-                                    model.imageFiles[0].path.isEmpty
+                                    model.imageFilesPost[0].path.isEmpty
                                         ? Container()
                                         : Align(
                                       alignment: Alignment.bottomRight,
                                       child: IconButton(
                                         onPressed: () {
-                                          model.imageFiles.removeAt(0);
+                                          model.imageFilesPost.removeAt(0);
                                           model.notifyListeners();
                                         },
                                         icon: SvgPicture.asset(

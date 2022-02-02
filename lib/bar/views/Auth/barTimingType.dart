@@ -120,14 +120,12 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                           children: model.weekDaysList
                               .map((element) => GestureDetector(
                                     onTap: () {
-                                      if (model.selectedWeekDays.contains(
-                                          model.weekDaysList.indexOf(element))) {
-                                        model.selectedWeekDays.remove(
-                                            model.weekDaysList.indexOf(element));
+                                      if (model.selectedWeekDays.contains(element.day__id!
+                                      )) {
+                                        model.selectedWeekDays.remove(element.day__id!);
                                       } else {
 
-                                          model.selectedWeekDays.add(
-                                              model.weekDaysList.indexOf(element));
+                                          model.selectedWeekDays.add(element.day__id!);
 
                                       }
                                       model.notifyListeners();
@@ -142,24 +140,20 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                         //     ? ColorUtils.text_red
                                         //     : ColorUtils.icon_color,),
                                         borderRadius: BorderRadius.circular(4),
-                                        color: model.selectedWeekDays.contains(
-                                                model.weekDaysList
-                                                    .indexOf(element))
+                                        color: model.selectedWeekDays.contains(element.day__id!)
                                             ? ColorUtils.text_red
                                             : ColorUtils.divider,
                                       ),
                                       child: Text(
                                         model.weekDaysList[model.weekDaysList
-                                            .indexOf(element)],
+                                            .indexOf(element)].day__name!,
                                         style: TextStyle(
                                           color: model.selectedWeekDays
-                                                  .contains(model.weekDaysList
-                                                      .indexOf(element))
+                                                  .contains(element.day__id!)
                                               ? ColorUtils.white
                                               : ColorUtils.icon_color,
                                           fontFamily: model.selectedWeekDays
-                                                  .contains(model.weekDaysList
-                                                      .indexOf(element))
+                                                  .contains(element.day__id!)
                                               ? FontUtils.modernistBold
                                               : FontUtils.modernistRegular,
                                           fontSize: 1.8.t,
@@ -524,12 +518,8 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                           children: model.weekendDaysList
                               .map((element) => GestureDetector(
                                     onTap: () {
-                                      if (model.selectedWeekendDays.contains(
-                                          model.weekendDaysList
-                                              .indexOf(element))) {
-                                        model.selectedWeekendDays.remove(model
-                                            .weekendDaysList
-                                            .indexOf(element));
+                                      if (model.selectedWeekendDays.contains(element.day__id!)) {
+                                        model.selectedWeekendDays.remove(element.day__id!);
                                       } else {
                                         /* if (element == "Radler") {
                                           showDialog(
@@ -545,9 +535,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                         /*  else {
 
                                         }*/
-                                        model.selectedWeekendDays.add(model
-                                            .weekendDaysList
-                                            .indexOf(element));
+                                        model.selectedWeekendDays.add(element.day__id!);
                                       }
                                       model.notifyListeners();
                                     },
@@ -562,26 +550,21 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                         //     : ColorUtils.icon_color,),
                                         borderRadius: BorderRadius.circular(4),
                                         color: model.selectedWeekendDays
-                                                .contains(model.weekendDaysList
-                                                    .indexOf(element))
+                                                .contains(element.day__id!)
                                             ? ColorUtils.text_red
                                             : ColorUtils.divider,
                                       ),
                                       child: Text(
                                         model.weekendDaysList[model
                                             .weekendDaysList
-                                            .indexOf(element)],
+                                            .indexOf(element)].day__name!,
                                         style: TextStyle(
                                           color: model.selectedWeekendDays
-                                                  .contains(model
-                                                      .weekendDaysList
-                                                      .indexOf(element))
+                                                  .contains(element.day__id!)
                                               ? ColorUtils.white
                                               : ColorUtils.icon_color,
                                           fontFamily: model.selectedWeekendDays
-                                                  .contains(model
-                                                      .weekendDaysList
-                                                      .indexOf(element))
+                                                  .contains(element.day__id!)
                                               ? FontUtils.modernistBold
                                               : FontUtils.modernistRegular,
                                           fontSize: 1.8.t,

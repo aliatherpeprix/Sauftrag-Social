@@ -12,10 +12,13 @@ import 'package:intl/intl.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/bar_model.dart';
 import 'package:sauftrag/models/create_bar_post.dart';
+import 'package:sauftrag/models/day_week.dart';
+import 'package:sauftrag/models/day_weekend.dart';
 import 'package:sauftrag/models/favorites_model.dart';
 import 'package:sauftrag/models/new_bar_model.dart';
 import 'package:sauftrag/models/user_models.dart' as userModel;
 import 'package:sauftrag/models/user_models.dart';
+import 'package:sauftrag/models/week_days.dart';
 import 'package:sauftrag/modules/dio_services.dart';
 import 'package:sauftrag/services/addFavorites.dart';
 import 'package:sauftrag/services/barSignup.dart';
@@ -299,11 +302,12 @@ RegistrationViewModel extends BaseViewModel {
   };
 
   int msgTypeValue = 1;
-  String msgTypeValueStr = "Private";
-  List<String> msgTypeList = ["Private", "Public"];
+  String msgTypeValueStr = "Public";
+  List<String> msgTypeList = ["Public", "Private"];
   Map<String, int> msgTypeMap = {
-    'Private': 1,
-    'Public': 2,
+    'Public': 1,
+    'Private': 2,
+
   };
   List<dynamic> imageFilesPost = [
     File(""),
@@ -311,11 +315,41 @@ RegistrationViewModel extends BaseViewModel {
 
   List<int> selectedWeekDays = [];
 
-  List<String> weekDaysList = ["Mo", "Tu", "We", "Th", "Fr"];
+  List<DayWeekModel> weekDaysList = [
+    DayWeekModel.fromJson({
+    "day__id" : 1,
+    "day__name" : "Mon"
+  }),
+    DayWeekModel.fromJson({
+      "day__id" : 2,
+      "day__name" : "Tue"
+    }),
+    DayWeekModel.fromJson({
+      "day__id" : 3,
+      "day__name" : "Wed"
+    }),
+    DayWeekModel.fromJson({
+      "day__id" : 4,
+      "day__name" : "Thu"
+    }),
+    DayWeekModel.fromJson({
+      "day__id" : 5,
+      "day__name" : "Fri"
+    }),
+  ];
 
   List<int> selectedWeekendDays = [];
 
-  List<String> weekendDaysList = ["Su", "Sa",];
+  List<DayWeekendModel> weekendDaysList = [
+    DayWeekendModel.fromJson({
+      "day__id" : 6,
+      "day__name" : "Sat"
+     }),
+    DayWeekendModel.fromJson({
+      "day__id" : 7,
+      "day__name" : "Sun"
+    })
+  ];
 
   List<int> selectedBarKind = [];
 
@@ -383,6 +417,34 @@ RegistrationViewModel extends BaseViewModel {
       imageFiles.removeAt(index);
       imageFiles.insert(index, File(image.path));
       print(imageFiles);
+      /*for(XFile image in images){
+        imageFiles.add(File(image.path));
+      }*/
+      notifyListeners();
+      return true;
+    }
+
+    /*if (imageFile == null) {
+      return false;
+    }
+    else{
+      notifyListeners();
+      return true;
+    }*/
+  }
+
+  Future<bool> getPostImage(int index) async {
+    ImagePicker picker = ImagePicker();
+    //List<XFile>? images = await picker.pickMultiImage();
+    XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    //imageFile = File(image!.path);
+
+    if (image == null) {
+      return false;
+    } else {
+      imageFilesPost.removeAt(index);
+      imageFilesPost.insert(index, File(image.path));
+      print(imageFilesPost);
       /*for(XFile image in images){
         imageFiles.add(File(image.path));
       }*/
@@ -1498,8 +1560,8 @@ RegistrationViewModel extends BaseViewModel {
     }
     else{
       var barKindList = CommonFunctions.AddFromList(selectedBarKind);
-      var workingDaysList = CommonFunctions.AddFromList(selectedWeekDays);
-      var weekendDaysList = CommonFunctions.AddFromList(selectedBarKind);
+      var workingDaysList = selectedWeekDays;
+      var weekendDaysList = selectedWeekendDays;
       var response = await signupBar.SignUpBar(
           signUpBarUserController.text.replaceAll(' ', ''),
           signUpBarUserController.text,
