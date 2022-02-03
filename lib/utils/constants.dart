@@ -24,6 +24,7 @@ class Constants{
   static const String GetFavoriteClub = 'api/favorites/night_club/';
   static const String GetFavoritePartyVacation = 'api/favorites/party_vaccation/';
   static const String CreateNewFeed = 'api/news_feed/add/';
+  static const String GetNewFeed = 'api/news_feed/add/';
 
   static const int profileImage = 1;
 

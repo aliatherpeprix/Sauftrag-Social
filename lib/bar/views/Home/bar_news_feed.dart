@@ -13,6 +13,11 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/bar/widgets/my_side_menu.dart';
 import 'package:sauftrag/main.dart';
+import 'package:sauftrag/models/create_bar_post.dart';
+import 'package:sauftrag/models/create_bar_post.dart';
+import 'package:sauftrag/models/create_bar_post.dart';
+import 'package:sauftrag/models/create_bar_post.dart';
+import 'package:sauftrag/models/create_bar_post.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/extensions.dart';
@@ -20,11 +25,13 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:sauftrag/widgets/drink_status_dialog_box.dart';
 import 'package:sauftrag/bar/widgets/message_dialog.dart';
 import 'package:sauftrag/widgets/zoom_drawer.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
 import 'package:stacked/stacked.dart';
+import 'package:sauftrag/models/create_bar_post.dart';
 import 'package:sauftrag/viewModels/navigation_view_model.dart';
 import 'dart:math' as math;
 
@@ -103,8 +110,9 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
     double backCardWidth = 0.0;
 var drawerController;
 
-    return ViewModelBuilder<MainViewModel>.reactive(
+    return ViewModelBuilder<RegistrationViewModel>.reactive(
       onModelReady: (data) {
+        data.getBarPost();
         // data.buttonController = AnimationController(duration: Duration(milliseconds: 1000), vsync: this);
         // data.initSwipe();
       },
@@ -403,7 +411,7 @@ var drawerController;
                                 height: SizeConfig.heightMultiplier * 2.5,
                               );
                             },
-                            itemCount: newsEvents.length,
+                            itemCount: 1,
                           ),
                         ),
 
@@ -416,7 +424,7 @@ var drawerController;
           ),
         );
       },
-      viewModelBuilder: () => locator<MainViewModel>(),
+      viewModelBuilder: () => locator<RegistrationViewModel>(),
       disposeViewModel: false,
     );
   }

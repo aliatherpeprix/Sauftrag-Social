@@ -860,11 +860,6 @@ class MainViewModel extends BaseViewModel{
     navigationService.navigateToCreateEventScreen();
   }
 
-  void navigateToBarPostScreen() {
-    navigationService.navigateToBarPostScreen();
-  }
-
-
   void navigateToBarEventScreen() {
     navigationService.navigateToBarEventScreen();
   }
@@ -978,9 +973,6 @@ class MainViewModel extends BaseViewModel{
   }
 
   ///-----------Bar Profile ---------------///
-  void navigateToBarProfile2() {
-    navigationService.navigateToBarProfile2();
-  }
 
   void navigateToAllBarRating() {
     navigationService.navigateToAllBarRating();

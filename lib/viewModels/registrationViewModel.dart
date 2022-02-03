@@ -44,6 +44,7 @@ import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/prefrences_view_model.dart';
 import 'package:sauftrag/widgets/error_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shrink_sidemenu/shrink_sidemenu.dart';
 import 'package:stacked/stacked.dart';
 import '../main.dart';
 import 'main_view_model.dart';
@@ -62,7 +63,7 @@ RegistrationViewModel extends BaseViewModel {
   var createBarPost = Createpost();
   var checkBar = Checkbar();
 
-
+  final GlobalKey<SideMenuState> sideMenuKey = GlobalKey<SideMenuState>();
 
   var navigationService = navigationViewModel;
   bool isChecked = false;
@@ -1598,6 +1599,11 @@ RegistrationViewModel extends BaseViewModel {
     }
   }
 
+  getBarPost() async {
+  var getNewsfeed = await  createBarPost.GetPost();
+  print(getNewsfeed);
+  }
+
   createBarPostScreen() async {
     if (barPostLocationController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
@@ -1994,6 +2000,18 @@ RegistrationViewModel extends BaseViewModel {
 
   void navigateToBarTimingTypeScreen() {
     navigationService.navigateToBarTimingTypeScreen();
+  }
+
+  void navigateToCreateEventScreen() {
+    navigationService.navigateToCreateEventScreen();
+  }
+
+  void navigateToBarPostScreen() {
+    navigationService.navigateToBarPostScreen();
+  }
+
+  void navigateToBarProfile2() {
+    navigationService.navigateToBarProfile2();
   }
 
 

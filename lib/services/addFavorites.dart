@@ -166,7 +166,8 @@ class Addfavorites {
           var userData = UserModel.fromJson(response.data['data']);
           return userData;
         }*/
-        List<FavoritesModel> favs = ((response.data) as List).map((e) => FavoritesModel.fromJson(e)).toList();
+        List<FavoritesModel> favs = ((response.data) as List).map((e) =>
+            FavoritesModel.fromJson(e)).toList();
         //var favoritesData = FavoritesModel.fromJson(response.data);
         //print(favoritesData);
         return favs;

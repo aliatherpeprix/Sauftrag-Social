@@ -7,6 +7,7 @@ import 'package:mime/mime.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/bar_model.dart';
 import 'package:sauftrag/models/create_bar_post.dart';
+import 'package:sauftrag/models/get_newsfeed.dart';
 import 'package:sauftrag/models/new_bar_model.dart';
 import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/modules/dio_services.dart';
@@ -80,6 +81,31 @@ class Createpost {
     } catch (e) {
       print(e);
       //dynamic exception = e;
+      return  (e as DioError).response!.data["message"].toString();
+    }
+  }
+
+  Future GetPost()
+  async
+  {
+    try{
+      var getResponse = await dio.get(Constants.BaseUrlPro+Constants.GetNewFeed);
+      if (getResponse.statusCode == 200 || getResponse.statusCode == 201) {
+
+        List<GetNewsFeed> getBarPost = (getResponse.data as List).map((e) => GetNewsFeed.fromJson(e)).toList();
+
+        print(getBarPost);
+        return getBarPost;
+      }
+
+      //user not found
+      else {
+        return getResponse.data['message'];
+      }
+
+    }
+    catch (e) {
+      print(e);
       return  (e as DioError).response!.data["message"].toString();
     }
   }
