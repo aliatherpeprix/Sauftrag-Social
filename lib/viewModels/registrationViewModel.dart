@@ -1626,6 +1626,7 @@ RegistrationViewModel extends BaseViewModel {
           imageFilesPost,
       );
       print(createPostResponce);
+      navigateToHomeBarScreen();
 
       // if(checkuserResponce is UserModel)
       // {

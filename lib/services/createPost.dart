@@ -9,6 +9,7 @@ import 'package:sauftrag/models/bar_model.dart';
 import 'package:sauftrag/models/create_bar_post.dart';
 import 'package:sauftrag/models/get_newsfeed.dart';
 import 'package:sauftrag/models/new_bar_model.dart';
+import 'package:sauftrag/models/newsfeed_post_id.dart';
 import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/modules/dio_services.dart';
 import 'package:sauftrag/utils/constants.dart';
@@ -89,10 +90,18 @@ class Createpost {
   async
   {
     try{
-      var getResponse = await dio.get(Constants.BaseUrlPro+Constants.GetNewFeed);
+      NewBarModel? barModel = (await locator<PrefrencesViewModel>().getBarUser());
+      var getResponse = await dio.get(Constants.BaseUrlPro+Constants.GetNewFeed,
+          options: Options(
+        // contentType: Headers.formUrlEncodedContentType,
+          headers: {
+            "Authorization": "Token ${barModel!.token!}"
+          }
+      ));
       if (getResponse.statusCode == 200 || getResponse.statusCode == 201) {
 
-        List<GetNewsFeed> getBarPost = (getResponse.data as List).map((e) => GetNewsFeed.fromJson(e)).toList();
+        List<NewsfeedPostId> getBarPost = (getResponse.data as List).map((e) =>
+            NewsfeedPostId.fromJson(e)).toList();
 
         print(getBarPost);
         return getBarPost;

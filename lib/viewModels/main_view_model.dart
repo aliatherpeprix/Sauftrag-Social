@@ -11,7 +11,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/models/create_bar_post.dart';
+import 'package:sauftrag/models/newsfeed_post_id.dart';
 import 'package:sauftrag/models/user_models.dart';
+import 'package:sauftrag/services/createPost.dart';
 import 'package:sauftrag/services/updateUserProfile.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/common_functions.dart';
@@ -30,6 +33,7 @@ import '../main.dart';
 class MainViewModel extends BaseViewModel{
 
   var updateUser = Updateuser();
+  var createBarPost = Createpost();
 
 
   final GlobalKey<SideMenuState> sideMenuKey = GlobalKey<SideMenuState>();
@@ -978,8 +982,6 @@ class MainViewModel extends BaseViewModel{
     navigationService.navigateToAllBarRating();
   }
 
-
-
 ///--------------Bar Profile ------------------///
   void navigateToBarDetails() {
     navigationService.navigateToBarDetails();
@@ -990,6 +992,14 @@ class MainViewModel extends BaseViewModel{
 
   void navigateToBarAccountOwnerShip() {
     navigationService.navigateToBarAccountOwnerShip();
+  }
+
+  void navigateToBarPostScreen() {
+    navigationService.navigateToBarPostScreen();
+  }
+
+  void navigateToBarProfile2() {
+    navigationService.navigateToBarProfile2();
   }
 
   Future saveUserDetails()async {
@@ -1027,9 +1037,19 @@ class MainViewModel extends BaseViewModel{
 
   }
 
+  List<NewsfeedPostId> posts = [];
+
   void getUserData()async {
     userModel = await prefrencesViewModel.getUser();
     notifyListeners();
+  }
+
+  getBarPost() async {
+    var getNewsfeed = await  createBarPost.GetPost();
+    if (getNewsfeed is List<NewsfeedPostId>){
+      posts = getNewsfeed;
+    }
+    print(getNewsfeed);
   }
 
 

@@ -110,7 +110,7 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
     double backCardWidth = 0.0;
 var drawerController;
 
-    return ViewModelBuilder<RegistrationViewModel>.reactive(
+    return ViewModelBuilder<MainViewModel>.reactive(
       onModelReady: (data) {
         data.getBarPost();
         // data.buttonController = AnimationController(duration: Duration(milliseconds: 1000), vsync: this);
@@ -310,8 +310,9 @@ var drawerController;
                                                 ClipRRect(
                                                   borderRadius:
                                                   BorderRadius.circular(10),
-                                                  child: Image.asset(
-                                                    newsEvents[index]["image"],
+                                                  child: Image.network(
+                                                    model.posts[index].user_id!.profile_picture!,
+                                                    //newsEvents[index]["image"],
                                                     width: 10.i,
                                                     height: 10.i,
                                                     fit: BoxFit.cover,
@@ -321,7 +322,8 @@ var drawerController;
                                                   width: 3.w,
                                                 ),
                                                 Text(
-                                                  newsEvents[index]["barOwnerName"],
+                                                  model.posts[index].user_id!.bar_name!,
+                                                  //newsEvents[index]["barOwnerName"],
                                                   style: TextStyle(
                                                       fontFamily:
                                                       FontUtils.modernistBold,
@@ -335,7 +337,8 @@ var drawerController;
                                               height: 1.h,
                                             ),
                                             Text(
-                                              newsEvents[index]["para"],
+                                              model.posts[index].post_content!,
+                                              //newsEvents[index]["para"],
                                               style: TextStyle(
                                                   fontFamily:
                                                   FontUtils.modernistRegular,
@@ -345,10 +348,10 @@ var drawerController;
                                             SizedBox(
                                               height: 1.h,
                                             ),
-                                            if (newsEvents[index]["imgPre"] == true)
+                                            if (model.posts[index].media!=null && model.posts[index].media!.length>0)
                                               Container(
-                                                  child: Image.asset(
-                                                    newsEvents[index]["image2"],
+                                                  child: Image.network(
+                                                    model.posts[index].media![0].media!,
                                                   )),
                                             Divider(),
                                             Row(
@@ -411,7 +414,7 @@ var drawerController;
                                 height: SizeConfig.heightMultiplier * 2.5,
                               );
                             },
-                            itemCount: 1,
+                            itemCount: model.posts.length,
                           ),
                         ),
 
@@ -424,7 +427,7 @@ var drawerController;
           ),
         );
       },
-      viewModelBuilder: () => locator<RegistrationViewModel>(),
+      viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
     );
   }
