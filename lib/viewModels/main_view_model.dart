@@ -15,6 +15,9 @@ import 'package:sauftrag/models/create_bar_post.dart';
 import 'package:sauftrag/models/newsfeed_post_id.dart';
 import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/services/createPost.dart';
+import 'package:sauftrag/services/dataProtection.dart';
+import 'package:sauftrag/services/privacyPolicy.dart';
+import 'package:sauftrag/services/termsAndCondition.dart';
 import 'package:sauftrag/services/updateUserProfile.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/common_functions.dart';
@@ -23,6 +26,7 @@ import 'package:sauftrag/utils/dialog_utils.dart';
 
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/prefrences_view_model.dart';
+import 'package:sauftrag/views/UserProfile/terms_condition.dart';
 import 'package:sauftrag/widgets/error_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
@@ -34,6 +38,9 @@ class MainViewModel extends BaseViewModel{
 
   var updateUser = Updateuser();
   var createBarPost = Createpost();
+  var privacyPolicy = Privacypolicy();
+  var termCondition = Termscondition();
+  var dataProtection = Dataprotection();
 
 
   final GlobalKey<SideMenuState> sideMenuKey = GlobalKey<SideMenuState>();
@@ -86,6 +93,9 @@ class MainViewModel extends BaseViewModel{
   bool favClub = false;
   bool favVacation = false;
   bool editProfile = false;
+  bool isPrivacyPolicy = false;
+  bool isTermsCondition = false;
+  bool isDataProtection = false;
 
   var dio = Dio();
 
@@ -105,6 +115,12 @@ class MainViewModel extends BaseViewModel{
   PrefrencesViewModel prefrencesViewModel = locator<PrefrencesViewModel>();
   double lowerValue = 50;
   double upperValue = 180;
+
+  List<NewsfeedPostId> posts = [];
+  String? privacy;
+  String? termsAndCondition;
+  String? protection;
+
   List contactChecked = [
     {
       'name': "Athalia Putri",
@@ -912,7 +928,6 @@ class MainViewModel extends BaseViewModel{
     navigationService.navigateToBarTimingTypeScreen();
   }
 
-
   void navigateToEventDetailsScreen() {
     navigationService.navigateToEventDetailScreen();
   }
@@ -931,6 +946,10 @@ class MainViewModel extends BaseViewModel{
 
   void navigateToAllEventListScreen() {
     navigationService.navigateToAllEventListScreen();
+  }
+
+  void navigateToDataProtectionScreen() {
+    navigationService.navigateToDataProtectionScreen();
   }
 
 
@@ -1002,6 +1021,16 @@ class MainViewModel extends BaseViewModel{
     navigationService.navigateToBarProfile2();
   }
 
+  void navigateToPrivacyAndPolicyScreen() {
+    navigationService.navigateToPrivacyAndPolicyScreen();
+  }
+
+  void navigateToTermsAndConditionScreen() {
+    navigationService.navigateToTermsAndConditionScreen();
+  }
+
+
+
   Future saveUserDetails()async {
     List tempList = [];
     // for (int i = 0;i<imageFiles.length;i++){
@@ -1037,7 +1066,8 @@ class MainViewModel extends BaseViewModel{
 
   }
 
-  List<NewsfeedPostId> posts = [];
+
+
 
   void getUserData()async {
     userModel = await prefrencesViewModel.getUser();
@@ -1052,6 +1082,71 @@ class MainViewModel extends BaseViewModel{
     print(getNewsfeed);
   }
 
+  getPrivacyPolicy() async {
+    isPrivacyPolicy = true;
+
+    var getPrivacyPolicy = await  privacyPolicy.GetPrivacyPolicy();
+    if (getPrivacyPolicy is String){
+      privacy = getPrivacyPolicy;
+      //isPrivacyPolicy = false;
+
+    }
+    else  {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Some thing went wrong",
+      ));
+      //isPrivacyPolicy = false;
+
+      return;
+    }
+    isPrivacyPolicy = false;
+    notifyListeners();
+    print(getPrivacyPolicy);
+  }
+
+  getTermsCondition() async {
+    isTermsCondition = true;
+
+    var getTerms = await  termCondition.GetTermsCondition();
+    if (getTerms is String){
+      termsAndCondition = getTerms;
+      //isPrivacyPolicy = false;
+
+    }
+    else  {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Some thing went wrong",
+      ));
+      //isPrivacyPolicy = false;
+
+      return;
+    }
+    isTermsCondition = false;
+    notifyListeners();
+    print(getPrivacyPolicy);
+  }
+
+  getDataProtection() async {
+    isDataProtection = true;
+
+    var getDaraProtection = await  dataProtection.GetDataProtection();
+    if (getDaraProtection is String){
+      protection = getDaraProtection;
+      //isPrivacyPolicy = false;
+
+    }
+    else  {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Some thing went wrong",
+      ));
+      //isPrivacyPolicy = false;
+
+      return;
+    }
+    isDataProtection = false;
+    notifyListeners();
+    print(getPrivacyPolicy);
+  }
 
 /*AnimationController? buttonController;
   Animation<double>? rotate;

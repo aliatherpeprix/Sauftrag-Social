@@ -25,6 +25,9 @@ class Constants{
   static const String GetFavoritePartyVacation = 'api/favorites/party_vaccation/';
   static const String CreateNewFeed = 'api/news_feed/add/';
   static const String GetNewFeed = 'api/news_feed/add/';
+  static const String GetPrivacyPolicy = 'api/other/privacy-policy/';
+  static const String GetTermsAndConditions = 'api/other/terms/';
+  static const String GetDataProtection = 'api/other/data-protection/';
 
   static const int profileImage = 1;
 

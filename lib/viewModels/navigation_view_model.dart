@@ -52,6 +52,9 @@ import 'package:sauftrag/views/UserFriendList/message_screen.dart';
 import 'package:sauftrag/views/UserFriendList/select_individual_chat.dart';
 import 'package:sauftrag/views/UserProfile/account.dart';
 import 'package:sauftrag/views/UserProfile/accountOwnership.dart';
+import 'package:sauftrag/views/UserProfile/data_protection.dart';
+import 'package:sauftrag/views/UserProfile/privacy_policy.dart';
+import 'package:sauftrag/views/UserProfile/terms_condition.dart';
 import 'package:sauftrag/widgets/change_password.dart';
 import 'package:sauftrag/views/UserProfile/gps.dart';
 import 'package:sauftrag/views/UserProfile/legalTerm.dart';
@@ -325,6 +328,18 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateToBarPostScreen(){
     navigationKey.currentState!.push(PageTransition(child: BarCreatePost(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToPrivacyAndPolicyScreen(){
+    navigationKey.currentState!.push(PageTransition(child: PrivacyPolicy(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToTermsAndConditionScreen(){
+    navigationKey.currentState!.push(PageTransition(child: TermsAndCondition(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToDataProtectionScreen(){
+    navigationKey.currentState!.push(PageTransition(child: DataProtection(), type: PageTransitionType.rightToLeftWithFade));
   }
 
 

@@ -91,6 +91,7 @@ RegistrationViewModel extends BaseViewModel {
   bool forgetPasswordBool = false;
   bool createNewPasswordBool = false;
   bool addDrink = false;
+  bool privacyPolicy = false;
 
   bool otpLoading = false;
   TimeOfDay? startTime;

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:date_picker_timeline/extra/dimen.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:expand_tap_area/expand_tap_area.dart';
@@ -297,6 +298,7 @@ var drawerController;
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Padding(
                                         padding: EdgeInsets.symmetric(
@@ -336,22 +338,29 @@ var drawerController;
                                             SizedBox(
                                               height: 1.h,
                                             ),
-                                            Text(
-                                              model.posts[index].post_content!,
-                                              //newsEvents[index]["para"],
-                                              style: TextStyle(
-                                                  fontFamily:
-                                                  FontUtils.modernistRegular,
-                                                  fontSize: 1.8.t,
-                                                  color: ColorUtils.black),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  model.posts[index].post_content!,
+                                                  //newsEvents[index]["para"],
+                                                  style: TextStyle(
+                                                      fontFamily:
+                                                      FontUtils.modernistRegular,
+                                                      fontSize: 1.8.t,
+                                                      color: ColorUtils.black),
+                                                ),
+                                              ],
                                             ),
                                             SizedBox(
                                               height: 1.h,
                                             ),
                                             if (model.posts[index].media!=null && model.posts[index].media!.length>0)
                                               Container(
-                                                  child: Image.network(
-                                                    model.posts[index].media![0].media!,
+                                                  child: CachedNetworkImage(
+                                                   imageUrl:  model.posts[index].media![0].media!,
+                                                    //width: 100.i,
+                                                    height: 40.i,
+                                                    fit: BoxFit.cover,
                                                   )),
                                             Divider(),
                                             Row(
