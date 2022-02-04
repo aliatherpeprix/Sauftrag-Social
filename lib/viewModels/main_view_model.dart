@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/models/bar_event_model.dart';
 import 'package:sauftrag/models/create_bar_post.dart';
 import 'package:sauftrag/models/newsfeed_post_id.dart';
 import 'package:sauftrag/models/user_models.dart';
@@ -30,7 +31,7 @@ import 'package:stacked/stacked.dart';
 
 import '../main.dart';
 
-class MainViewModel extends BaseViewModel{
+class MainViewModel extends BaseViewModel {
 
   var updateUser = Updateuser();
   var createBarPost = Createpost();
@@ -42,6 +43,7 @@ class MainViewModel extends BaseViewModel{
   final GlobalKey<NavigatorState> navigationKey = GlobalKey<NavigatorState>();
 
   UserModel? userModel;
+
 
   bool logInUserSelected = true;
   bool logInBarSelected = false;
@@ -79,7 +81,7 @@ class MainViewModel extends BaseViewModel{
   bool bottomSheetSelected = false;
   bool messageScreenEmojiShowing = false;
   bool messageScreenEmojiSelected = false;
-  List<UserModel> alcoholDrinks=[];
+  List<UserModel> alcoholDrinks = [];
   final messageScreenChatController = TextEditingController();
   bool userNewsFeed = false;
   bool favDrink = false;
@@ -154,11 +156,15 @@ class MainViewModel extends BaseViewModel{
   bool? selectedValue;
   int? currentIndex;
   List groupList = [];
-  Map<dynamic,dynamic> groupMap = {};
+  Map<dynamic, dynamic> groupMap = {};
 
   int drinkMotivationValue = 1;
   String drinkMotivationValueStr = "Drink light";
-  List<String> drinkMotivationList = ["Drink light", "Drink normal", "Drink hard"];
+  List<String> drinkMotivationList = [
+    "Drink light",
+    "Drink normal",
+    "Drink hard"
+  ];
   Map<String, int> drinkMotivationMap = {
     'Drink light': 1,
     'Drink normal': 2,
@@ -168,32 +174,40 @@ class MainViewModel extends BaseViewModel{
   int drinkIndex = -1;
   List<int> drinkIndexList = [];
 
-  List<String> favoriteAlcoholicDrink = ["White Wine", "Hard Seltzer", "Whiskey", "Jägermeister", "Champagne",];
+  List<String> favoriteAlcoholicDrink = [
+    "White Wine",
+    "Hard Seltzer",
+    "Whiskey",
+    "Jägermeister",
+    "Champagne",
+  ];
 
   List<String> favoriteNightClub = ["Club 1", "Club 6", "Club 8"];
 
-  List<String> favoritePartyVacation = ["Goldstrand", "Zrce Beach", "Springbreak Cancun",];
+  List<String> favoritePartyVacation = [
+    "Goldstrand",
+    "Zrce Beach",
+    "Springbreak Cancun",
+  ];
 
   Future<bool> openCamera() async {
     ImagePicker picker = ImagePicker();
     var image = await picker.pickImage(source: ImageSource.camera);
     _pickedFile = image;
-    if(_pickedFile != null){
+    if (_pickedFile != null) {
       profileFileImage = File(_pickedFile!.path);
     }
-    if (profileFileImage==null)
-    {
+    if (profileFileImage == null) {
       return false;
     }
-    else{
+    else {
       notifyListeners();
       return true;
     }
   }
 
-  Future favoritesDrinks(List selectedList,String favorite) async {
+  Future favoritesDrinks(List selectedList, String favorite) async {
     if (selectedList.isEmpty) {
-
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select at least one favorites",
       ));
@@ -201,8 +215,7 @@ class MainViewModel extends BaseViewModel{
       return;
     }
 
-    else
-    {
+    else {
       favDrink = true;
       notifyListeners();
 
@@ -211,12 +224,14 @@ class MainViewModel extends BaseViewModel{
           favorite
       );
       print(userSignupResponce);
-      if(userSignupResponce is UserModel)
-      {
+      if (userSignupResponce is UserModel) {
         UserModel user = userSignupResponce;
-        user.favorite_alcohol_drinks = CommonFunctions.SubtractFromList(user.favorite_alcohol_drinks!);
-        user.favorite_night_club = CommonFunctions.SubtractFromList(user.favorite_night_club!);
-        user.favorite_party_vacation = CommonFunctions.SubtractFromList(user.favorite_party_vacation!);
+        user.favorite_alcohol_drinks =
+            CommonFunctions.SubtractFromList(user.favorite_alcohol_drinks!);
+        user.favorite_night_club =
+            CommonFunctions.SubtractFromList(user.favorite_night_club!);
+        user.favorite_party_vacation =
+            CommonFunctions.SubtractFromList(user.favorite_party_vacation!);
         // if (favorite=="favorite_alcohol_drinks"){
         //
         // }
@@ -276,7 +291,6 @@ class MainViewModel extends BaseViewModel{
   }
 
 
-
   int msgTypeValue = 1;
   String msgTypeValueStr = "Private";
   List<String> msgTypeList = ["Private", "Public"];
@@ -289,10 +303,10 @@ class MainViewModel extends BaseViewModel{
     ImagePicker picker = ImagePicker();
     var image;
 
-    if(type == Constants.camera){
+    if (type == Constants.camera) {
       image = await picker.pickImage(source: ImageSource.camera);
     }
-    else{
+    else {
       image = await picker.pickImage(source: ImageSource.gallery);
     }
 
@@ -305,7 +319,6 @@ class MainViewModel extends BaseViewModel{
       return true;
     }
   }
-
 
 
   Future<Null> cropImage(BuildContext context, String path) async {
@@ -352,14 +365,13 @@ class MainViewModel extends BaseViewModel{
     ImagePicker picker = ImagePicker();
     var image = await picker.pickImage(source: ImageSource.gallery);
     _pickedFile = image;
-    if(_pickedFile != null){
+    if (_pickedFile != null) {
       profileFileImage = File(_pickedFile!.path);
     }
-    if (profileFileImage==null)
-    {
+    if (profileFileImage == null) {
       return false;
     }
-    else{
+    else {
       notifyListeners();
       return true;
     }
@@ -397,14 +409,13 @@ class MainViewModel extends BaseViewModel{
     ImagePicker picker = ImagePicker();
     var image = await picker.pickImage(source: ImageSource.gallery);
     _pickedFile = image;
-    if(_pickedFile != null){
+    if (_pickedFile != null) {
       profileFileImage = File(_pickedFile!.path);
     }
-    if (profileFileImage==null)
-    {
+    if (profileFileImage == null) {
       return false;
     }
-    else{
+    else {
       notifyListeners();
       return true;
     }
@@ -504,7 +515,8 @@ class MainViewModel extends BaseViewModel{
 
   messageScreenBackspacePressed() {
     messageScreenChatController
-      ..text = messageScreenChatController.text.characters.skipLast(1).toString()
+      ..text = messageScreenChatController.text.characters.skipLast(1)
+          .toString()
       ..selection = TextSelection.fromPosition(
           TextPosition(offset: messageScreenChatController.text.length));
   }
@@ -551,11 +563,11 @@ class MainViewModel extends BaseViewModel{
           TextPosition(offset: chatController.text.length));
   }
 
-  addMarkers(){
+  addMarkers() {
     markers.add(
         Marker(
             markerId: MarkerId('SomeId'),
-            position: LatLng(24.8169,67.1118),
+            position: LatLng(24.8169, 67.1118),
             infoWindow: InfoWindow(
                 title: 'The title of the marker'
             )
@@ -617,7 +629,7 @@ class MainViewModel extends BaseViewModel{
     zoom: 14.4746,
   );
 
-  List<String> weekDaysList = ["Su" , "Mo" , "Tu", "We" , "Th", "Fr" , "Sa"];
+  List<String> weekDaysList = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
   List placed = [];
 
@@ -627,28 +639,28 @@ class MainViewModel extends BaseViewModel{
       'eventName': 'Trivia Nights',
       'date': '1st  May- Sat -2:00 PM',
       'location': 'Lot 13 • Oakland, CA',
-      'image1' : ImageUtils.location_icon
+      'image1': ImageUtils.location_icon
     },
     {
       'image': ImageUtils.place_2,
       'eventName': 'Bar Crawl Stop',
       'date': '1st  May- Sat -2:00 PM',
       'location': 'Lot 13 • Oakland, CA',
-      'image1' : ImageUtils.location_icon
+      'image1': ImageUtils.location_icon
     },
     {
       'image': ImageUtils.place_3,
       'eventName': 'Singles Night',
       'date': '1st  May- Sat -2:00 PM',
       'location': 'Lot 13 • Oakland, CA',
-      'image1' : ImageUtils.location_icon
+      'image1': ImageUtils.location_icon
     },
     {
       'image': ImageUtils.place_4,
       'eventName': 'Bar Olympics',
       'date': '1st  May- Sat -2:00 PM',
       'location': ' Lot 13 • Oakland, CA',
-      'image1' : ImageUtils.location_icon
+      'image1': ImageUtils.location_icon
     },
   ];
 
@@ -659,49 +671,49 @@ class MainViewModel extends BaseViewModel{
       'image': ImageUtils.johnImg,
       'title': 'John Milton',
       'points': '240',
-      'image1' : ImageUtils.coinImg
+      'image1': ImageUtils.coinImg
     },
     {
       'rank': '#5',
       'image': ImageUtils.mutualfrnd1,
       'title': 'Riki Davon',
       'points': '240',
-      'image1' : ImageUtils.coinImg
+      'image1': ImageUtils.coinImg
     },
     {
       'rank': '#6',
       'image': ImageUtils.followerImg1,
       'title': 'Josefina Ward',
       'points': '240',
-      'image1' : ImageUtils.coinImg
+      'image1': ImageUtils.coinImg
     },
     {
       'rank': '#7',
       'image': ImageUtils.mutualfrnd2,
       'title': 'Andre Patterson',
       'points': '240',
-      'image1' : ImageUtils.coinImg
+      'image1': ImageUtils.coinImg
     },
     {
       'rank': '#8',
       'image': ImageUtils.followerImg2,
       'title': 'Hazel Ballard',
       'points': '240',
-      'image1' : ImageUtils.coinImg
+      'image1': ImageUtils.coinImg
     },
     {
       'rank': '#9',
       'image': ImageUtils.mutualfrnd3,
       'title': 'Nettie Parsons',
       'points': '240',
-      'image1' : ImageUtils.coinImg
+      'image1': ImageUtils.coinImg
     },
     {
       'rank': '#10',
       'image': ImageUtils.followerImg3,
       'title': 'Hazel Ballard',
       'points': '240',
-      'image1' : ImageUtils.coinImg
+      'image1': ImageUtils.coinImg
     },
   ];
 
@@ -810,8 +822,7 @@ class MainViewModel extends BaseViewModel{
 
   ];
 
-  void addRemoveDrink(int index){
-
+  void addRemoveDrink(int index) {
     drinkIndex = index + 1;
     //drinkIndexList.length = index + 1;
     notifyListeners();
@@ -820,43 +831,43 @@ class MainViewModel extends BaseViewModel{
     //notifyListeners();
   }
 
-  void navigateToProfileScreen(List<String> images){
+  void navigateToProfileScreen(List<String> images) {
     navigationService.navigateToProfileScreen(images);
   }
 
-  void navigateToMatchScreen(){
+  void navigateToMatchScreen() {
     navigationService.navigateToMatchScreen();
   }
 
-  void navigateBack(){
+  void navigateBack() {
     navigationService.navigateBack();
   }
 
-  void navigateToGroupDetails(){
+  void navigateToGroupDetails() {
     navigationService.navigateToGroupDetail();
   }
 
-  void navigateToGroupScreen(){
+  void navigateToGroupScreen() {
     navigationService.navigateToGroupScreen();
   }
 
-  void navigateToUserProfileAccountScreen(){
+  void navigateToUserProfileAccountScreen() {
     navigationService.navigateToUserProfileAccountScreen();
   }
 
-  void navigateToUserProfileAccountOwnershipScreen(){
+  void navigateToUserProfileAccountOwnershipScreen() {
     navigationService.navigateToUserProfileAccountOwnershipScreen();
   }
 
-  void navigateToUserProfileAccountNotificationScreen(){
+  void navigateToUserProfileAccountNotificationScreen() {
     navigationService.navigateToUserProfileAccountNotificationScreen();
   }
 
-  void navigateToUserProfileAccountLegalTermScreen(){
+  void navigateToUserProfileAccountLegalTermScreen() {
     navigationService.navigateToUserProfileAccountLegalTermScreen();
   }
 
-  void navigateToUserProfileAccountGpsScreen(){
+  void navigateToUserProfileAccountGpsScreen() {
     navigationService.navigateToUserProfileAccountGpsScreen();
   }
 
@@ -934,7 +945,6 @@ class MainViewModel extends BaseViewModel{
   }
 
 
-
   ///------User Drawer -----/////
   void navigateToRatingList() {
     navigationService.navigateToRatingList();
@@ -982,10 +992,11 @@ class MainViewModel extends BaseViewModel{
     navigationService.navigateToAllBarRating();
   }
 
-///--------------Bar Profile ------------------///
+  ///--------------Bar Profile ------------------///
   void navigateToBarDetails() {
     navigationService.navigateToBarDetails();
   }
+
   void navigateToBarAccounts() {
     navigationService.navigateToBarAccounts();
   }
@@ -1002,7 +1013,7 @@ class MainViewModel extends BaseViewModel{
     navigationService.navigateToBarProfile2();
   }
 
-  Future saveUserDetails()async {
+  Future saveUserDetails() async {
     List tempList = [];
     // for (int i = 0;i<imageFiles.length;i++){
     //   if (imageFiles[i] is File && (imageFiles[i] as File).path.isNotEmpty){
@@ -1016,13 +1027,17 @@ class MainViewModel extends BaseViewModel{
     // }
     editProfile = true;
     notifyListeners();
-    var userUpdateResponse = await updateUser.UpdateUserProfile((genderList.indexOf(genderValueStr)+1).toString(), imageFiles);
-    if (userUpdateResponse is UserModel){
+    var userUpdateResponse = await updateUser.UpdateUserProfile(
+        (genderList.indexOf(genderValueStr) + 1).toString(), imageFiles);
+    if (userUpdateResponse is UserModel) {
       UserModel user = userUpdateResponse;
       user.token = userModel!.token!;
-      user.favorite_alcohol_drinks = CommonFunctions.SubtractFromList(user.favorite_alcohol_drinks!);
-      user.favorite_night_club = CommonFunctions.SubtractFromList(user.favorite_night_club!);
-      user.favorite_party_vacation = CommonFunctions.SubtractFromList(user.favorite_party_vacation!);
+      user.favorite_alcohol_drinks =
+          CommonFunctions.SubtractFromList(user.favorite_alcohol_drinks!);
+      user.favorite_night_club =
+          CommonFunctions.SubtractFromList(user.favorite_night_club!);
+      user.favorite_party_vacation =
+          CommonFunctions.SubtractFromList(user.favorite_party_vacation!);
       await prefrencesViewModel.saveUser(user);
       notifyListeners();
     }
@@ -1034,116 +1049,73 @@ class MainViewModel extends BaseViewModel{
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.clear();
     navigateAndRemoveSignInScreen();
-
   }
 
   List<NewsfeedPostId> posts = [];
 
-  void getUserData()async {
+  void getUserData() async {
     userModel = await prefrencesViewModel.getUser();
     notifyListeners();
   }
 
   getBarPost() async {
-    var getNewsfeed = await  createBarPost.GetPost();
-    if (getNewsfeed is List<NewsfeedPostId>){
+    var getNewsfeed = await createBarPost.GetPost();
+    if (getNewsfeed is List<NewsfeedPostId>) {
       posts = getNewsfeed;
     }
     print(getNewsfeed);
   }
 
+  bool eventLoader = false;
 
-/*AnimationController? buttonController;
-  Animation<double>? rotate;
-  Animation<double>? right;
-  Animation<double>? bottom;
-  Animation<double>? width;
-  double backCardWidth = -10.0;
-  int flag = 0;
+  List<BarEventModel>? barEventModel = [];
 
-  List data = [ImageUtils.girl1, ImageUtils.girl2, ImageUtils.girl1, ImageUtils.girl2, ImageUtils.girl1];
-  List selectedData = [];
+  void getEvent(BuildContext context) async {
+    UserModel? user = await locator<PrefrencesViewModel>().getUser();
 
-  void initSwipe() {
-
-    rotate = Tween<double>(
-      begin: -0.0,
-      end: -40.0,
-    ).animate(
-      CurvedAnimation(
-        parent: buttonController!,
-        curve: Curves.ease,
-      ),
-    );
-    rotate!.addListener(() {
-      if (rotate!.isCompleted) {
-        var i = data.removeLast();
-        data.insert(0, i);
-        buttonController!.reset();
-      }
-      notifyListeners();
-    });
-
-    right = Tween<double>(
-      begin: 0.0,
-      end: 400.0,
-    ).animate(
-      CurvedAnimation(
-        parent: buttonController!,
-        curve: Curves.ease,
-      ),
-    );
-    bottom = Tween<double>(
-      begin: 15.0,
-      end: 100.0,
-    ).animate(
-      CurvedAnimation(
-        parent: buttonController!,
-        curve: Curves.ease,
-      ),
-    );
-    width = Tween<double>(
-      begin: 20.0,
-      end: 25.0,
-    ).animate(
-      CurvedAnimation(
-        parent: buttonController!,
-        curve: Curves.bounceOut,
-      ),
-    );
-  }
-
-  Future<Null> swipeAnimation() async {
     try {
-      await buttonController!.forward();
-    } on TickerCanceled {}
-  }
+      eventLoader = true;
+      notifyListeners();
+      var response =
+      await dio.get("${Constants.GetEvents}", options: Options(
+          contentType: Headers.formUrlEncodedContentType,
+          headers: {
+            "Authorization": "Token ${user!.token!}"
+          }
+      ));
+      print(response);
 
-  dismissImg(String img) {
-    data.remove(img);
-    notifyListeners();
-  }
+      if (response.statusCode == 200) {
+        barEventModel = (response.data as List)
+            .map((e) => BarEventModel.fromJson(e))
+            .toList();
+        eventLoader = false;
+        notifyListeners();
+      } else {
+        print(response.statusCode);
+        eventLoader = false;
+        notifyListeners();
 
-  addImg(String img) {
-    data.remove(img);
-    selectedData.add(img);
-    notifyListeners();
-  }
 
-  swipeRight() {
-    if (flag == 0){
-      flag = 1;
+        // showErrorMessage(context, 'Something went wrong. Please try again');
+      }
+    } on DioError catch (e) {
+      print(e);
+      eventLoader = false;
+      notifyListeners();
+
+
+      // if (e.response!.statusCode == 404) {
+      //   navigationService.navigateToReplacement(to: NotFound());
+      // } else if (e.response!.statusCode == 500) {
+      //   navigationService.navigateToReplacement(to: ServerError());
+      // } else {
+      //   showErrorMessage(context,
+      //       'Unable to process your request at this time. Please try again');
+      // }
     }
-    notifyListeners();
-    swipeAnimation();
   }
 
-  swipeLeft() {
-    if (flag == 1){
-      flag = 0;
-    }
-    notifyListeners();
-    swipeAnimation();
-  }*/
+
 
 }

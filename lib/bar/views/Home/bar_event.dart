@@ -36,15 +36,13 @@ class CreateBarEvent extends StatefulWidget {
 class _CreateBarEventState extends State<CreateBarEvent> {
 
   DateTime _dateTime = DateTime.now();
-  String? openingTimeFrom;
-  String? openingTimeTo;
+
   String? breakTimeFrom;
   String? breakTimeTo;
 
   @override
   void didChangeDependencies() {
-    openingTimeFrom = TimeOfDay.now().format(context);
-    openingTimeTo = TimeOfDay.now().format(context);
+
     breakTimeFrom = TimeOfDay.now().format(context);
     breakTimeTo = TimeOfDay.now().format(context);
     // TODO: implement didChangeDependencies
@@ -116,7 +114,7 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                             ),
                             child: TextField(
                               //focusNode: model.logInEmailFocus,
-                              //controller: model.logInEmailController,
+                              controller: model.titleController,
                               keyboardType: TextInputType.text,
                               textInputAction: TextInputAction.next,
                               style: TextStyle(
@@ -175,7 +173,7 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                 maxLines: 4,
                                 maxLength: 120,
                                 //focusNode: model.logInEmailFocus,
-                                //controller: model.logInEmailController,
+                                controller: model.descriptionController,
                                 keyboardType: TextInputType.text,
                                 textInputAction: TextInputAction.next,
                                 style: TextStyle(
@@ -191,7 +189,6 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                     fontSize: 1.8.t,
                                   ),
                                   border: InputBorder.none,
-
                                   isDense:true,
                                   contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                                 ),
@@ -522,7 +519,7 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                 Expanded(
                                   child: TextField(
                                     //focusNode: model.logInEmailFocus,
-                                    //controller: model.logInEmailController,
+                                    controller: model.locationController,
                                     keyboardType: TextInputType.text,
                                     textInputAction: TextInputAction.next,
                                     style: TextStyle(
@@ -534,6 +531,7 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                       border: InputBorder.none,
                                       isDense:true,
                                       contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                                      // errorText: model.locationError
                                     ),
                                   ),
                                 ),
@@ -653,7 +651,7 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                               margin: EdgeInsets.only(
                                                   left: 2.5.w, right: 4.w),
                                               child: Text(
-                                                model.selectedEventDate == null
+                                                model.selectedEventDate ==null
                                                     ? "Date of Birth"
                                                     : DateFormat('dd/MM/yyyy')
                                                     .format(model.selectedEventDate),
@@ -733,7 +731,9 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                           cancelText: "NOT NOW",
                                           helpText: "BOOKING TIME"
                                       ).then((value){
-                                        openingTimeFrom = value!.format(context);
+                                        model.openingTimeFrom = value!.format(context);
+                                        model.convertOpeningTimeFrom = value.replacing();
+
                                         model.notifyListeners();
                                       });
                                     },
@@ -750,7 +750,7 @@ class _CreateBarEventState extends State<CreateBarEvent> {
 
                                           Expanded(
                                             child: Text(
-                                              openingTimeFrom!,
+                                              model.openingTimeFrom== null?'Start Time':  model.openingTimeFrom!,
                                               style: TextStyle(
                                                 color: ColorUtils.text_red,
                                                 fontFamily: FontUtils.modernistRegular,
@@ -804,9 +804,12 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                           cancelText: "NOT NOW",
                                           helpText: "BOOKING TIME"
                                       ).then((value){
-                                        openingTimeTo = value!.format(context);
+                                        model.openingTimeTo = value!.format(context);
+                                       model.convertOpeningTimeTo = value.replacing();
+
                                         model.notifyListeners();
                                       });
+
                                     },
                                     child: Container(
                                       height: 6.h,
@@ -821,7 +824,7 @@ class _CreateBarEventState extends State<CreateBarEvent> {
 
                                           Expanded(
                                             child: Text(
-                                              openingTimeTo!,
+                                              model.openingTimeTo ==null?'End Time':model.openingTimeTo!,
                                               style: TextStyle(
                                                 color: ColorUtils.text_red,
                                                 fontFamily: FontUtils.modernistRegular,
@@ -870,7 +873,7 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                         //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                         child: ElevatedButton(
                           onPressed: () {
-                            //model.navigateToMediaScreen();
+                            model.validateCreateEvent(context);
                           },
                           child: const Text("Create Event"),
                           style: ElevatedButton.styleFrom(

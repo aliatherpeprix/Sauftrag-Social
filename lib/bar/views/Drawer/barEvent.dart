@@ -13,6 +13,7 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/widgets/loader.dart';
 import 'package:stacked/stacked.dart';
 
 class BarEvent extends StatefulWidget {
@@ -27,11 +28,13 @@ class _BarEventState extends State<BarEvent> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<MainViewModel>.reactive(
-
+      onModelReady: (model){
+        model.getEvent(context);
+      },
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
       builder: (context, model, child) {
-        return SafeArea(
+        return model.eventLoader? Center(child: Loader()): SafeArea(
           top: false,
           bottom: false,
           child: Scaffold(
@@ -102,7 +105,7 @@ class _BarEventState extends State<BarEvent> {
                                   children: [
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
-                                      child: Image.asset(model.places[index]["image"],
+                                      child: Image.network(model.barEventModel?[index].media?[0].media ??'',
                                         width: 20.i,
                                         height: 20.i,
                                         fit: BoxFit.cover,
@@ -112,7 +115,7 @@ class _BarEventState extends State<BarEvent> {
                                     Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text(model.places[index]["date"],
+                                        Text(model.barEventModel![index].eventDate +' -'+model.barEventModel![index].startTime,
                                           style: TextStyle(
                                               fontFamily: FontUtils.modernistRegular,
                                               fontSize: 1.7.t,
@@ -120,7 +123,7 @@ class _BarEventState extends State<BarEvent> {
                                           ),
                                         ),
                                         SizedBox(height: 1.h,),
-                                        Text(model.places[index]["eventName"],
+                                        Text(model.barEventModel![index].name,
                                           style: TextStyle(
                                               fontFamily: FontUtils.modernistBold,
                                               fontSize: 2.2.t,
@@ -130,9 +133,9 @@ class _BarEventState extends State<BarEvent> {
                                         SizedBox(height: 1.h,),
                                        Row(
                                          children: [
-                                           SvgPicture.asset(model.places[index]["image1"]),
+                                           SvgPicture.asset(ImageUtils.location_icon),
                                            SizedBox(width: 2.w,),
-                                           Text(model.places[index]["location"],
+                                           Text(model.barEventModel![index].location,
                                              style: TextStyle(
                                                  fontFamily: FontUtils.modernistRegular,
                                                  fontSize: 1.7.t,
@@ -154,7 +157,7 @@ class _BarEventState extends State<BarEvent> {
                     separatorBuilder: (context, index) {
                       return SizedBox(height:  SizeConfig.heightMultiplier * 2.5,);
                     },
-                    itemCount: model.places.length,
+                    itemCount: model.barEventModel!.length,
                   ),
                 ),
 
