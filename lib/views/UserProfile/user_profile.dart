@@ -61,6 +61,9 @@ class _UserProfileState extends State<UserProfile> {
                       ///--------------Event Name--------------------///
                       GestureDetector(
                         onTap: () async {
+                          model.isUserProfile = true;
+                          model.notifyListeners();
+                          model.navigateToUserDetailSettings();
                           PrefrencesViewModel prefs =
                               locator<PrefrencesViewModel>();
 
@@ -105,7 +108,9 @@ class _UserProfileState extends State<UserProfile> {
                             model.imageFiles
                                 .insert(5, model.userModel!.catalogue_image5!);
                           }
-                          model.navigateToUserDetailSettings();
+                          model.isUserProfile = false;
+                          model.notifyListeners();
+
                         },
                         child: Container(
                           // padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),

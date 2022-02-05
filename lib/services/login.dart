@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:sauftrag/models/new_bar_model.dart';
 import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/modules/dio_services.dart';
 import 'package:sauftrag/utils/constants.dart';
@@ -42,9 +43,18 @@ class LoginUser {
           var userData = UserModel.fromJson(response.data['data']);
           return userData;
         }*/
-        var userData = UserModel.fromJson(response.data["user"]);
-        userData.token = response.data["token"];
-        return userData;}
+        var user;
+        if (response.data["user"]["bar_name"]!=null){
+          user = NewBarModel.fromJson(response.data["user"]);
+          (user as NewBarModel).token = response.data["token"];
+        }
+        else {
+          user = UserModel.fromJson(response.data["user"]);
+          user.token = response.data["token"];
+        }
+
+        return user;
+      }
       //user not found
       else {
         return response.data['message'];

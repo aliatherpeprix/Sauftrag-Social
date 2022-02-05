@@ -71,6 +71,7 @@ import 'bar/views/Profile/bar_accounts.dart';
 import 'bar/views/Profile/bar_details.dart';
 import 'bar/views/Profile/bar_profile.dart';
 import 'bar/views/Home/barCode2.dart';
+import 'bar/views/Profile/faq_questions_list.dart';
 import 'bar/widgets/bar_QR_scanner.dart';
 import 'bar/widgets/my_side_menu.dart';
 import 'views/NewsFeed/events.dart';
@@ -120,7 +121,7 @@ class _MyAppState extends State<MyApp> {
             SizeConfig().init(constraints, orientation);
             //var prefService = locator<PrefrencesViewModel>();
             //return MainView(index: 2);
-            return LegalTerm();
+            return Splash();
           },
         );
       },

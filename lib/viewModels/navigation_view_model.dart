@@ -25,6 +25,8 @@ import 'package:sauftrag/bar/views/Profile/bar_accounts.dart';
 import 'package:sauftrag/bar/views/Profile/bar_details.dart';
 import 'package:sauftrag/bar/views/Profile/bar_profile.dart';
 import 'package:sauftrag/bar/views/Home/bar_event.dart';
+import 'package:sauftrag/bar/views/Profile/faq_answers.dart';
+import 'package:sauftrag/bar/views/Profile/faq_questions_list.dart';
 import 'package:sauftrag/views/Auth/check_email.dart';
 import 'package:sauftrag/views/Auth/favorite.dart';
 import 'package:sauftrag/views/Auth/forget_password.dart';
@@ -340,6 +342,14 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateToDataProtectionScreen(){
     navigationKey.currentState!.push(PageTransition(child: DataProtection(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToFaqScreen(){
+    navigationKey.currentState!.push(PageTransition(child: FaqQuestionList(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToFaqAnsScreen(){
+    navigationKey.currentState!.push(PageTransition(child: FaqAnswer(), type: PageTransitionType.rightToLeftWithFade));
   }
 
 

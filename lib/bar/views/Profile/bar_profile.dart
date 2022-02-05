@@ -207,7 +207,7 @@ class _BarProfileState extends State<BarProfile> {
                                 SvgPicture.asset(ImageUtils.terms),
                                 SizedBox(width: 1.5.h,),
                                 Text(
-                                  "Legal Terms",
+                                  "Others",
                                   style: TextStyle(
                                     color: ColorUtils.black,
                                     fontFamily: FontUtils.modernistBold,
@@ -273,6 +273,8 @@ class _BarProfileState extends State<BarProfile> {
                           )
                         ],
                       ),
+
+                      //GPS
                       SizedBox(height: 3.h),
                       GestureDetector(
                         onTap: (){
@@ -287,6 +289,50 @@ class _BarProfileState extends State<BarProfile> {
                                 SizedBox(width: 1.5.h,),
                                 Text(
                                   "GPS",
+                                  style: TextStyle(
+                                    color: ColorUtils.black,
+                                    fontFamily: FontUtils.modernistBold,
+                                    fontSize: 2.t,
+                                  ),
+                                ),
+                                // Container(
+                                //   margin: EdgeInsets.only(right: 20),
+                                //   child: RoundImage(
+                                //     url: widget.profile.imageurl,
+                                //     txtsize: 18,
+                                //     txt: widget.profile.fullName,
+                                //     width: 50,
+                                //     height: 50,
+                                //     borderRadius: 15,
+                                //   ),
+                                // ),
+                              ],
+                            ),
+
+                            Icon(
+                              Icons.keyboard_arrow_right_rounded,
+                              size: 30,
+                              color: Colors.grey,
+                            )
+                          ],
+                        ),
+                      ),
+
+                      //Faqs
+                      SizedBox(height: 3.h),
+                      GestureDetector(
+                        onTap: (){
+                          model.navigateToFaqScreen();
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                SvgPicture.asset(ImageUtils.gps),
+                                SizedBox(width: 1.5.h,),
+                                Text(
+                                  "FAQ",
                                   style: TextStyle(
                                     color: ColorUtils.black,
                                     fontFamily: FontUtils.modernistBold,

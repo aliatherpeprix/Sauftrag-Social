@@ -28,6 +28,7 @@ class Constants{
   static const String GetPrivacyPolicy = 'api/other/privacy-policy/';
   static const String GetTermsAndConditions = 'api/other/terms/';
   static const String GetDataProtection = 'api/other/data-protection/';
+  static const String GetFaqs = 'api/other/FAQs/';
 
   static const int profileImage = 1;
 

@@ -19,6 +19,7 @@ import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
 import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:sauftrag/widgets/back_arrow_with_container.dart';
+import 'package:sauftrag/widgets/loader.dart';
 import 'package:sauftrag/widgets/radler_dialog_box.dart';
 import 'package:stacked/stacked.dart';
 
@@ -1041,7 +1042,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
 
                               //model.navigateToHomeBarScreen();
                             },
-                            child: const Text("Let's Get Started"),
+                            child: model.signInBar == false ? Text("Let's Get Started") : Loader(),
                             style: ElevatedButton.styleFrom(
                               primary: ColorUtils.text_red,
                               onPrimary: ColorUtils.white,

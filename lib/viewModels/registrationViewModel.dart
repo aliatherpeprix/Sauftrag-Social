@@ -93,6 +93,7 @@ RegistrationViewModel extends BaseViewModel {
   bool addDrink = false;
   bool privacyPolicy = false;
 
+
   bool otpLoading = false;
   TimeOfDay? startTime;
 
@@ -561,24 +562,35 @@ RegistrationViewModel extends BaseViewModel {
         print(signupResponse);
       if (signupResponse is userModel.UserModel) {
         userModel.UserModel user = signupResponse;
-        user.favorite_alcohol_drinks = CommonFunctions.SubtractFromList(user.favorite_alcohol_drinks!);
-        user.favorite_night_club = CommonFunctions.SubtractFromList(user.favorite_night_club!);
-        user.favorite_party_vacation = CommonFunctions.SubtractFromList(user.favorite_party_vacation!);
+        user.favorite_alcohol_drinks = user.favorite_alcohol_drinks!;
+        user.favorite_night_club = user.favorite_night_club!;
+        user.favorite_party_vacation = user.favorite_party_vacation!;
         await locator<PrefrencesViewModel>().saveUser(signupResponse);
-        if (logInUserSelected == true) {
-          mainViewModel.logInUserSelected = true;
-          mainViewModel.logInBarSelected = false;
-          //logIn = false;
-          //notifyListeners();
-          navigateToHomeScreen(2);
-        } else if (logInBarSelected == true) {
-          mainViewModel.logInUserSelected = false;
-          mainViewModel.logInBarSelected = true;
-          //logIn = false;
-          //notifyListeners();
-          navigateToHomeBarScreen();
-        }
+        mainViewModel.logInUserSelected = true;
+        mainViewModel.logInBarSelected = false;
+        //logIn = false;
+        //notifyListeners();
+        navigateToHomeScreen(2);
+
       }
+      else if(signupResponse is NewBarModel) {
+        //NewBarModel user = signupResponse;
+        // user.favorite_alcohol_drinks = CommonFunctions.SubtractFromList(user.favorite_alcohol_drinks!);
+        // user.favorite_night_club = CommonFunctions.SubtractFromList(user.favorite_night_club!);
+        // user.favorite_party_vacation = CommonFunctions.SubtractFromList(user.favorite_party_vacation!);
+        await locator<PrefrencesViewModel>().saveBarUser(signupResponse);
+        mainViewModel.logInUserSelected = false;
+        mainViewModel.logInBarSelected = true;
+        //logIn = false;
+        //notifyListeners();
+        navigateToHomeBarScreen();
+
+      }
+      // if (logInUserSelected == true) {
+      //
+      // } else if (logInBarSelected == true) {
+      //
+      // }
       // else if (signupResponse is String){
       //   logIn = false;
       //   notifyListeners();
@@ -795,8 +807,6 @@ RegistrationViewModel extends BaseViewModel {
 
   }
 
-
-
   void resetNewPassword(BuildContext context) async{
 
     Dio dio = Dio();
@@ -877,19 +887,19 @@ RegistrationViewModel extends BaseViewModel {
       getStarted = true;
       notifyListeners();
       userModel.UserModel? usermodel = await prefrencesViewModel.getUser();
-      List<int> newDrinks = [];
-      List<int> newClubs = [];
-      List<int> newVacations = [];
+      // List<int> newDrinks = [];
+      // List<int> newClubs = [];
+      // List<int> newVacations = [];
 
-      for (int drink in selectedDrinkList){
-        newDrinks.add(drink+1);
-      }
-      for (int drink in selectedClubList){
-        newClubs.add(drink+1);
-      }
-      for (int drink in selectedVacationList){
-        newVacations.add(drink+1);
-      }
+      // for (int drink in selectedDrinkList){
+      //   newDrinks.add(drink+1);
+      // }
+      // for (int drink in selectedClubList){
+      //   newClubs.add(drink+1);
+      // }
+      // for (int drink in selectedVacationList){
+      //   newVacations.add(drink+1);
+      // }
       var userSignupResponce = await signupUser.SignUpUser(
 
           usermodel!.email!,
@@ -901,9 +911,9 @@ RegistrationViewModel extends BaseViewModel {
           usermodel.address!,
           usermodel.gender!.toString(),
           usermodel.dob.toString(),
-          newDrinks,
-          newClubs,
-          newVacations,
+          selectedDrinkList,
+          selectedClubList,
+          selectedVacationList,
           imageFiles,
           termsCheck,
           dataCheck
@@ -916,9 +926,9 @@ RegistrationViewModel extends BaseViewModel {
         user.token = usermodel.token;
         user.password = signUpPasswordController.text;
         user.password2 = signUpVerifyPasswordController.text;
-        user.favorite_alcohol_drinks = CommonFunctions.SubtractFromList(user.favorite_alcohol_drinks!);
-        user.favorite_night_club = CommonFunctions.SubtractFromList(user.favorite_night_club!);
-        user.favorite_party_vacation = CommonFunctions.SubtractFromList(user.favorite_party_vacation!);
+        user.favorite_alcohol_drinks = user.favorite_alcohol_drinks!;
+        user.favorite_night_club = user.favorite_night_club!;
+        user.favorite_party_vacation = user.favorite_party_vacation!;
         await locator<PrefrencesViewModel>().saveUser(user);
         dataCheck = false;
         selectedDrinkList.clear();
@@ -935,7 +945,7 @@ RegistrationViewModel extends BaseViewModel {
         //model.imageFiles = [];
         // DialogUtils().showDialog(
         //     MyErrorWidget(error: "Use has been created succ"));
-        navigateToHomeScreen(2);
+         navigateToHomeScreen(2);
       }
 
       //favorites();
@@ -1561,6 +1571,8 @@ RegistrationViewModel extends BaseViewModel {
       return;
     }
     else{
+      signInBar = true;
+      notifyListeners();
       var barKindList = CommonFunctions.AddFromList(selectedBarKind);
       var workingDaysList = selectedWeekDays;
       var weekendDaysList = selectedWeekendDays;
@@ -1592,6 +1604,8 @@ RegistrationViewModel extends BaseViewModel {
           signUpBarPasswordController.text,
           signUpBarVerifyPasswordController.text,
       );
+      signInBar = false;
+      notifyListeners();
       print(response);
       if(response is NewBarModel){
         await prefrencesViewModel.saveBarUser(response);

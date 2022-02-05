@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/services/addFavorites.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/viewModels/prefrences_view_model.dart';
 import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:sauftrag/widgets/round_image.dart';
 import 'package:stacked/stacked.dart';
@@ -34,8 +36,61 @@ class _MySideMenuState extends State<MySideMenu> {
 
               //User
               GestureDetector(
-                onTap: (){
+                onTap: () async {
+                  // model.isUserProfile = true;
+                  // model.notifyListeners();
+                  // model.navigateToUserDetailSettings();
+                  //model.isUserProfile = false;
+                  // model.notifyListeners();
+                  model.isUserProfile = true;
+                  model.notifyListeners();
                   model.navigateToUserDetailSettings();
+                  PrefrencesViewModel prefs =
+                  locator<PrefrencesViewModel>();
+
+                  model.drinkList = await  Addfavorites().GetFavoritesDrink();
+                  model.clubList = await  Addfavorites().GetFavoritesClub();
+                  model.vacationList = await  Addfavorites().GetFavoritesPartyVacation();
+
+                  model.userModel = await prefs.getUser();
+                  if (model.userModel!.profile_picture != null &&
+                      model.userModel!.profile_picture!.isNotEmpty) {
+                    model.imageFiles.removeAt(0);
+                    model.imageFiles
+                        .insert(0, model.userModel!.profile_picture!);
+                  }
+                  if (model.userModel!.catalogue_image1 != null &&
+                      model.userModel!.catalogue_image1!.isNotEmpty) {
+                    model.imageFiles.removeAt(1);
+                    model.imageFiles
+                        .insert(1, model.userModel!.catalogue_image1!);
+                  }
+                  if (model.userModel!.catalogue_image2 != null &&
+                      model.userModel!.catalogue_image2!.isNotEmpty) {
+                    model.imageFiles.removeAt(2);
+                    model.imageFiles
+                        .insert(2, model.userModel!.catalogue_image2!);
+                  }
+                  if (model.userModel!.catalogue_image3 != null &&
+                      model.userModel!.catalogue_image3!.isNotEmpty) {
+                    model.imageFiles.removeAt(3);
+                    model.imageFiles
+                        .insert(3, model.userModel!.catalogue_image3!);
+                  }
+                  if (model.userModel!.catalogue_image4 != null &&
+                      model.userModel!.catalogue_image4!.isNotEmpty) {
+                    model.imageFiles.removeAt(4);
+                    model.imageFiles
+                        .insert(4, model.userModel!.catalogue_image4!);
+                  }
+                  if (model.userModel!.catalogue_image5 != null &&
+                      model.userModel!.catalogue_image5!.isNotEmpty) {
+                    model.imageFiles.removeAt(5);
+                    model.imageFiles
+                        .insert(5, model.userModel!.catalogue_image5!);
+                  }
+                  model.isUserProfile = false;
+                  model.notifyListeners();
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric( vertical: Dimensions.containerVerticalPadding, horizontal: Dimensions.containerHorizontalPadding),

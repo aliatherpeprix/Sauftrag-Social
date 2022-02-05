@@ -27,6 +27,7 @@ import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/viewModels/registrationViewModel.dart';
+import 'package:sauftrag/widgets/all_page_loader.dart';
 import 'package:sauftrag/widgets/drink_status_dialog_box.dart';
 import 'package:sauftrag/bar/widgets/message_dialog.dart';
 import 'package:sauftrag/widgets/zoom_drawer.dart';
@@ -118,7 +119,8 @@ var drawerController;
         // data.initSwipe();
       },
       builder: (context, model, child) {
-        return SafeArea(
+        return model.isPost == true ? AllPageLoader() :
+        SafeArea(
           bottom: false,
           top: false,
           child: SideMenu(
@@ -221,7 +223,7 @@ var drawerController;
                                     if (_state!.isOpened)
                                       _state.closeSideMenu(); // close side menu
                                     else
-                                       _state.openSideMenu();
+                                      _state.openSideMenu();
                                   },
                                   child: SvgPicture.asset(ImageUtils.menuIcon),
                                   style: ElevatedButton.styleFrom(
@@ -293,7 +295,7 @@ var drawerController;
                                     color: Colors.white,
                                     borderRadius:
                                     BorderRadius.all(Radius.circular(18)),
-                                    //border: Border.all(color: ColorUtils.red_color),
+                                    border: Border.all(color: ColorUtils.text_grey.withOpacity(0.1)),
                                   ),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
@@ -323,16 +325,42 @@ var drawerController;
                                                 SizedBox(
                                                   width: 3.w,
                                                 ),
-                                                Text(
-                                                  model.posts[index].user_id!.bar_name!,
-                                                  //newsEvents[index]["barOwnerName"],
-                                                  style: TextStyle(
-                                                      fontFamily:
-                                                      FontUtils.modernistBold,
-                                                      fontSize: 2.2.t,
-                                                      fontWeight: FontWeight.bold,
-                                                      color: ColorUtils.black),
+                                                Column(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        Text(
+                                                          model.posts[index].user_id!.bar_name!,
+                                                          //newsEvents[index]["barOwnerName"],
+                                                          style: TextStyle(
+                                                              fontFamily:
+                                                              FontUtils.modernistBold,
+                                                              fontSize: 2.2.t,
+                                                              fontWeight: FontWeight.bold,
+                                                              color: ColorUtils.black),
+                                                        ),
+                                                        // if (model.posts[index].post_type! == '1')
+                                                        //   {
+                                                        //     Text("Abc")
+                                                        //   }
+                                                      ],
+                                                    ),
+                                                    SizedBox(height: 0.5.h,),
+                                                    Text(
+                                                      model.posts[index].post_location!,
+                                                      //newsEvents[index]["barOwnerName"],
+                                                      style: TextStyle(
+                                                          fontFamily:
+                                                          FontUtils.modernistRegular,
+                                                          fontSize: 1.7.t,
+                                                          //fontWeight: FontWeight.bold,
+                                                          color: ColorUtils.black),
+                                                    ),
+                                                  ],
                                                 ),
+
                                               ],
                                             ),
                                             SizedBox(
@@ -357,7 +385,7 @@ var drawerController;
                                             if (model.posts[index].media!=null && model.posts[index].media!.length>0)
                                               Container(
                                                   child: CachedNetworkImage(
-                                                   imageUrl:  model.posts[index].media![0].media!,
+                                                    imageUrl:  model.posts[index].media![0].media!,
                                                     //width: 100.i,
                                                     height: 40.i,
                                                     fit: BoxFit.cover,
@@ -368,15 +396,14 @@ var drawerController;
                                                 Row(
                                                   children: [
                                                     SvgPicture.asset(
-                                                      newsEvents[index]
-                                                      ["commentIon"],
+                                                      ImageUtils.msgIcon,
                                                       color: ColorUtils.icon_color,
                                                     ),
                                                     SizedBox(
                                                       width: 1.5.w,
                                                     ),
                                                     Text(
-                                                      newsEvents[index]["comment"],
+                                                      "68",
                                                       style: TextStyle(
                                                           fontFamily: FontUtils
                                                               .modernistRegular,
@@ -390,15 +417,14 @@ var drawerController;
                                                 Row(
                                                   children: [
                                                     SvgPicture.asset(
-                                                      newsEvents[index]
-                                                      ["likesIcon"],
+                                                      ImageUtils.matchedIcon,
                                                       color: ColorUtils.icon_color,
                                                     ),
                                                     SizedBox(
                                                       width: 1.5.w,
                                                     ),
                                                     Text(
-                                                      newsEvents[index]["likes"],
+                                                      "53.5 k",
                                                       style: TextStyle(
                                                           fontFamily: FontUtils
                                                               .modernistRegular,
@@ -426,8 +452,6 @@ var drawerController;
                             itemCount: model.posts.length,
                           ),
                         ),
-
-                        SizedBox(height: 2.h),
                       ],
                     ),
                   )

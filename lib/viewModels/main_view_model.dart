@@ -12,10 +12,13 @@ import 'package:mime/mime.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/create_bar_post.dart';
+import 'package:sauftrag/models/faqs_questions.dart';
 import 'package:sauftrag/models/newsfeed_post_id.dart';
 import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/services/createPost.dart';
 import 'package:sauftrag/services/dataProtection.dart';
+import 'package:sauftrag/services/faqs.dart';
+
 import 'package:sauftrag/services/privacyPolicy.dart';
 import 'package:sauftrag/services/termsAndCondition.dart';
 import 'package:sauftrag/services/updateUserProfile.dart';
@@ -41,6 +44,7 @@ class MainViewModel extends BaseViewModel{
   var privacyPolicy = Privacypolicy();
   var termCondition = Termscondition();
   var dataProtection = Dataprotection();
+  var faqList = Faqs();
 
 
   final GlobalKey<SideMenuState> sideMenuKey = GlobalKey<SideMenuState>();
@@ -96,6 +100,9 @@ class MainViewModel extends BaseViewModel{
   bool isPrivacyPolicy = false;
   bool isTermsCondition = false;
   bool isDataProtection = false;
+  bool isFaqs = false;
+  bool isPost = false;
+  bool isUserProfile = false;
 
   var dio = Dio();
 
@@ -116,10 +123,12 @@ class MainViewModel extends BaseViewModel{
   double lowerValue = 50;
   double upperValue = 180;
 
+  List<FaqsModel> faqs = [];
   List<NewsfeedPostId> posts = [];
   String? privacy;
   String? termsAndCondition;
   String? protection;
+  //String? faqs;
 
   List contactChecked = [
     {
@@ -189,6 +198,8 @@ class MainViewModel extends BaseViewModel{
   List<String> favoriteNightClub = ["Club 1", "Club 6", "Club 8"];
 
   List<String> favoritePartyVacation = ["Goldstrand", "Zrce Beach", "Springbreak Cancun",];
+
+  FaqsModel? selectedFaq;
 
   Future<bool> openCamera() async {
     ImagePicker picker = ImagePicker();
@@ -1029,6 +1040,14 @@ class MainViewModel extends BaseViewModel{
     navigationService.navigateToTermsAndConditionScreen();
   }
 
+  void navigateToFaqScreen() {
+    navigationService.navigateToFaqScreen();
+  }
+
+  void navigateToFaqAnsScreen() {
+    navigationService.navigateToFaqAnsScreen();
+  }
+
 
 
   Future saveUserDetails()async {
@@ -1075,11 +1094,14 @@ class MainViewModel extends BaseViewModel{
   }
 
   getBarPost() async {
+    isPost = true;
     var getNewsfeed = await  createBarPost.GetPost();
     if (getNewsfeed is List<NewsfeedPostId>){
       posts = getNewsfeed;
     }
+    isPost = false;
     print(getNewsfeed);
+    notifyListeners();
   }
 
   getPrivacyPolicy() async {
@@ -1146,6 +1168,33 @@ class MainViewModel extends BaseViewModel{
     isDataProtection = false;
     notifyListeners();
     print(getPrivacyPolicy);
+  }
+
+  getFaqsList() async {
+    isFaqs = true;
+
+
+    var getFaqList = await faqList.GetFaqs();
+    print(getFaqList);
+    // if (getFaqList is String){
+    //   faqs = getFaqList;
+    //   //isPrivacyPolicy = false;
+    //
+    // }
+    if (getFaqList is List<FaqsModel>){
+      faqs = getFaqList;
+    }
+    else  {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Some thing went wrong",
+      ));
+      //isPrivacyPolicy = false;
+
+      return;
+    }
+    isFaqs = false;
+    notifyListeners();
+    print(getFaqsList);
   }
 
 /*AnimationController? buttonController;
