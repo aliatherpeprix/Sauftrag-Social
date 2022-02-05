@@ -33,8 +33,6 @@ class BarTimingAndType extends StatefulWidget {
 class _BarTimingAndTypeState extends State<BarTimingAndType> {
   DateTime _dateTime = DateTime.now();
 
-
-
   // @override
   // void didChangeDependencies() {
   //   openingTimeFrom = TimeOfDay.now().format(context);
@@ -121,13 +119,13 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                           children: model.weekDaysList
                               .map((element) => GestureDetector(
                                     onTap: () {
-                                      if (model.selectedWeekDays.contains(element.day__id!
-                                      )) {
-                                        model.selectedWeekDays.remove(element.day__id!);
+                                      if (model.selectedWeekDays
+                                          .contains(element.day__id!)) {
+                                        model.selectedWeekDays
+                                            .remove(element.day__id!);
                                       } else {
-
-                                          model.selectedWeekDays.add(element.day__id!);
-
+                                        model.selectedWeekDays
+                                            .add(element.day__id!);
                                       }
                                       model.notifyListeners();
                                     },
@@ -141,13 +139,16 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                         //     ? ColorUtils.text_red
                                         //     : ColorUtils.icon_color,),
                                         borderRadius: BorderRadius.circular(4),
-                                        color: model.selectedWeekDays.contains(element.day__id!)
+                                        color: model.selectedWeekDays
+                                                .contains(element.day__id!)
                                             ? ColorUtils.text_red
                                             : ColorUtils.divider,
                                       ),
                                       child: Text(
-                                        model.weekDaysList[model.weekDaysList
-                                            .indexOf(element)].day__name!,
+                                        model
+                                            .weekDaysList[model.weekDaysList
+                                                .indexOf(element)]
+                                            .day__name!,
                                         style: TextStyle(
                                           color: model.selectedWeekDays
                                                   .contains(element.day__id!)
@@ -194,9 +195,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                             .then((value) {
                                           model.openingTimeFrom =
                                               value!.format(context);
-                                          setState(() {
-
-                                          });
+                                          setState(() {});
                                         });
                                       },
                                       child: Container(
@@ -445,7 +444,8 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                                 cancelText: "NOT NOW",
                                                 helpText: "BOOKING TIME")
                                             .then((value) {
-                                          model.breakTimeTo = value!.format(context);
+                                          model.breakTimeTo =
+                                              value!.format(context);
                                           model.notifyListeners();
                                         });
                                       },
@@ -519,8 +519,10 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                           children: model.weekendDaysList
                               .map((element) => GestureDetector(
                                     onTap: () {
-                                      if (model.selectedWeekendDays.contains(element.day__id!)) {
-                                        model.selectedWeekendDays.remove(element.day__id!);
+                                      if (model.selectedWeekendDays
+                                          .contains(element.day__id!)) {
+                                        model.selectedWeekendDays
+                                            .remove(element.day__id!);
                                       } else {
                                         /* if (element == "Radler") {
                                           showDialog(
@@ -536,7 +538,8 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                         /*  else {
 
                                         }*/
-                                        model.selectedWeekendDays.add(element.day__id!);
+                                        model.selectedWeekendDays
+                                            .add(element.day__id!);
                                       }
                                       model.notifyListeners();
                                     },
@@ -556,9 +559,11 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                             : ColorUtils.divider,
                                       ),
                                       child: Text(
-                                        model.weekendDaysList[model
-                                            .weekendDaysList
-                                            .indexOf(element)].day__name!,
+                                        model
+                                            .weekendDaysList[model
+                                                .weekendDaysList
+                                                .indexOf(element)]
+                                            .day__name!,
                                         style: TextStyle(
                                           color: model.selectedWeekendDays
                                                   .contains(element.day__id!)

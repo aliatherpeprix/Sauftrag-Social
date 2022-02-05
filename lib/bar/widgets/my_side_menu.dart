@@ -12,7 +12,6 @@ import 'package:sauftrag/widgets/round_image.dart';
 import 'package:stacked/stacked.dart';
 
 class MySideMenu extends StatefulWidget {
-
   const MySideMenu({Key? key}) : super(key: key);
 
   @override
@@ -20,10 +19,8 @@ class MySideMenu extends StatefulWidget {
 }
 
 class _MySideMenuState extends State<MySideMenu> {
-
   @override
   Widget build(BuildContext context) {
-
     return ViewModelBuilder<MainViewModel>.reactive(
       //onModelReady: (data) => data.initializeLoginModel(),
       builder: (context, model, child) {
@@ -32,20 +29,17 @@ class _MySideMenuState extends State<MySideMenu> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               //User
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   model.navigateToBarDetails();
                 },
                 child: Container(
-                  padding: EdgeInsets.symmetric( vertical: Dimensions.containerVerticalPadding),
+                  padding: EdgeInsets.symmetric(
+                      vertical: Dimensions.containerVerticalPadding),
                   child: Row(
                     children: [
-
-                    Image.asset(ImageUtils.profileImg),
-
-
+                      Image.asset(ImageUtils.profileImg),
                       Text(
                         "Jenny Sandals",
                         style: TextStyle(
@@ -62,18 +56,17 @@ class _MySideMenuState extends State<MySideMenu> {
 
               //Notification
               InkWell(
-                onTap: (){
+                onTap: () {
                   model.navigateToNotificationScreen();
                 },
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: Dimensions.containerHorizontalPadding, vertical: Dimensions.containerVerticalPadding),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: Dimensions.containerHorizontalPadding,
+                      vertical: Dimensions.containerVerticalPadding),
                   child: Row(
                     children: [
-
                       SvgPicture.asset(ImageUtils.notificationIcon),
-
                       SizedBox(width: 2.w),
-
                       Text(
                         "Notification",
                         style: TextStyle(
@@ -88,18 +81,17 @@ class _MySideMenuState extends State<MySideMenu> {
               ),
               //Followers
               InkWell(
-                onTap: (){
+                onTap: () {
                   model.navigateToFollowersListScreen();
                 },
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: Dimensions.containerHorizontalPadding, vertical: Dimensions.containerVerticalPadding),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: Dimensions.containerHorizontalPadding,
+                      vertical: Dimensions.containerVerticalPadding),
                   child: Row(
                     children: [
-
                       SvgPicture.asset(ImageUtils.followersIcon),
-
                       SizedBox(width: 2.w),
-
                       Text(
                         "Followers",
                         style: TextStyle(
@@ -115,18 +107,17 @@ class _MySideMenuState extends State<MySideMenu> {
 
               //Events
               InkWell(
-                onTap: (){
+                onTap: () {
                   model.navigateToBarEventScreen();
                 },
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: Dimensions.containerHorizontalPadding, vertical: Dimensions.containerVerticalPadding),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: Dimensions.containerHorizontalPadding,
+                      vertical: Dimensions.containerVerticalPadding),
                   child: Row(
                     children: [
-
                       SvgPicture.asset(ImageUtils.eventsIcon),
-
                       SizedBox(width: 2.w),
-
                       Text(
                         "Events",
                         style: TextStyle(
@@ -142,18 +133,17 @@ class _MySideMenuState extends State<MySideMenu> {
 
               //Logout
               InkWell(
-                onTap: (){
-                  model.navigateAndRemoveSignInScreen();
+                onTap: () {
+                  model.logOutUser();
                 },
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: Dimensions.containerHorizontalPadding, vertical: Dimensions.containerVerticalPadding),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: Dimensions.containerHorizontalPadding,
+                      vertical: Dimensions.containerVerticalPadding),
                   child: Row(
                     children: [
-
                       SvgPicture.asset(ImageUtils.logoutIcon),
-
                       SizedBox(width: 2.w),
-
                       Text(
                         "Logout",
                         style: TextStyle(
@@ -166,8 +156,6 @@ class _MySideMenuState extends State<MySideMenu> {
                   ),
                 ),
               ),
-
-
             ],
           ),
         );

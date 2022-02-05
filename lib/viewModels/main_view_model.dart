@@ -1,19 +1,24 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:mime/mime.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/create_bar_post.dart';
 import 'package:sauftrag/models/faqs_questions.dart';
+import 'package:sauftrag/models/followers.dart';
+import 'package:sauftrag/models/new_bar_model.dart';
 import 'package:sauftrag/models/newsfeed_post_id.dart';
+import 'package:sauftrag/models/rating_data.dart';
+import 'package:sauftrag/models/ratings.dart';
 import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/services/createPost.dart';
 import 'package:sauftrag/services/dataProtection.dart';
@@ -37,15 +42,13 @@ import 'package:stacked/stacked.dart';
 
 import '../main.dart';
 
-class MainViewModel extends BaseViewModel{
-
+class MainViewModel extends BaseViewModel {
   var updateUser = Updateuser();
   var createBarPost = Createpost();
   var privacyPolicy = Privacypolicy();
   var termCondition = Termscondition();
   var dataProtection = Dataprotection();
   var faqList = Faqs();
-
 
   final GlobalKey<SideMenuState> sideMenuKey = GlobalKey<SideMenuState>();
 
@@ -90,7 +93,7 @@ class MainViewModel extends BaseViewModel{
   bool bottomSheetSelected = false;
   bool messageScreenEmojiShowing = false;
   bool messageScreenEmojiSelected = false;
-  List<UserModel> alcoholDrinks=[];
+  List<UserModel> alcoholDrinks = [];
   final messageScreenChatController = TextEditingController();
   bool userNewsFeed = false;
   bool favDrink = false;
@@ -117,7 +120,6 @@ class MainViewModel extends BaseViewModel{
   final addVacationController = TextEditingController();
   bool isddVacationInFocus = false;
   FocusNode addVacationFocus = new FocusNode();
-
 
   PrefrencesViewModel prefrencesViewModel = locator<PrefrencesViewModel>();
   double lowerValue = 50;
@@ -179,11 +181,15 @@ class MainViewModel extends BaseViewModel{
   bool? selectedValue;
   int? currentIndex;
   List groupList = [];
-  Map<dynamic,dynamic> groupMap = {};
+  Map<dynamic, dynamic> groupMap = {};
 
   int drinkMotivationValue = 1;
   String drinkMotivationValueStr = "Drink light";
-  List<String> drinkMotivationList = ["Drink light", "Drink normal", "Drink hard"];
+  List<String> drinkMotivationList = [
+    "Drink light",
+    "Drink normal",
+    "Drink hard"
+  ];
   Map<String, int> drinkMotivationMap = {
     'Drink light': 1,
     'Drink normal': 2,
@@ -193,11 +199,21 @@ class MainViewModel extends BaseViewModel{
   int drinkIndex = -1;
   List<int> drinkIndexList = [];
 
-  List<String> favoriteAlcoholicDrink = ["White Wine", "Hard Seltzer", "Whiskey", "Jägermeister", "Champagne",];
+  List<String> favoriteAlcoholicDrink = [
+    "White Wine",
+    "Hard Seltzer",
+    "Whiskey",
+    "Jägermeister",
+    "Champagne",
+  ];
 
   List<String> favoriteNightClub = ["Club 1", "Club 6", "Club 8"];
 
-  List<String> favoritePartyVacation = ["Goldstrand", "Zrce Beach", "Springbreak Cancun",];
+  List<String> favoritePartyVacation = [
+    "Goldstrand",
+    "Zrce Beach",
+    "Springbreak Cancun",
+  ];
 
   FaqsModel? selectedFaq;
 
@@ -205,45 +221,39 @@ class MainViewModel extends BaseViewModel{
     ImagePicker picker = ImagePicker();
     var image = await picker.pickImage(source: ImageSource.camera);
     _pickedFile = image;
-    if(_pickedFile != null){
+    if (_pickedFile != null) {
       profileFileImage = File(_pickedFile!.path);
     }
-    if (profileFileImage==null)
-    {
+    if (profileFileImage == null) {
       return false;
-    }
-    else{
+    } else {
       notifyListeners();
       return true;
     }
   }
 
-  Future favoritesDrinks(List selectedList,String favorite) async {
+  Future favoritesDrinks(List selectedList, String favorite) async {
     if (selectedList.isEmpty) {
-
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select at least one favorites",
       ));
       notifyListeners();
       return;
-    }
-
-    else
-    {
+    } else {
       favDrink = true;
       notifyListeners();
 
-      var userSignupResponce = await updateUser.UpdateUserFavorites(
-          selectedList,
-          favorite
-      );
+      var userSignupResponce =
+          await updateUser.UpdateUserFavorites(selectedList, favorite);
       print(userSignupResponce);
-      if(userSignupResponce is UserModel)
-      {
+      if (userSignupResponce is UserModel) {
         UserModel user = userSignupResponce;
-        user.favorite_alcohol_drinks = CommonFunctions.SubtractFromList(user.favorite_alcohol_drinks!);
-        user.favorite_night_club = CommonFunctions.SubtractFromList(user.favorite_night_club!);
-        user.favorite_party_vacation = CommonFunctions.SubtractFromList(user.favorite_party_vacation!);
+        user.favorite_alcohol_drinks =
+            CommonFunctions.SubtractFromList(user.favorite_alcohol_drinks!);
+        user.favorite_night_club =
+            CommonFunctions.SubtractFromList(user.favorite_night_club!);
+        user.favorite_party_vacation =
+            CommonFunctions.SubtractFromList(user.favorite_party_vacation!);
         // if (favorite=="favorite_alcohol_drinks"){
         //
         // }
@@ -302,8 +312,6 @@ class MainViewModel extends BaseViewModel{
     //navigateToHomeScreen(2);
   }
 
-
-
   int msgTypeValue = 1;
   String msgTypeValueStr = "Private";
   List<String> msgTypeList = ["Private", "Public"];
@@ -316,10 +324,9 @@ class MainViewModel extends BaseViewModel{
     ImagePicker picker = ImagePicker();
     var image;
 
-    if(type == Constants.camera){
+    if (type == Constants.camera) {
       image = await picker.pickImage(source: ImageSource.camera);
-    }
-    else{
+    } else {
       image = await picker.pickImage(source: ImageSource.gallery);
     }
 
@@ -332,8 +339,6 @@ class MainViewModel extends BaseViewModel{
       return true;
     }
   }
-
-
 
   Future<Null> cropImage(BuildContext context, String path) async {
     File? croppedFile = await ImageCropper.cropImage(
@@ -379,14 +384,12 @@ class MainViewModel extends BaseViewModel{
     ImagePicker picker = ImagePicker();
     var image = await picker.pickImage(source: ImageSource.gallery);
     _pickedFile = image;
-    if(_pickedFile != null){
+    if (_pickedFile != null) {
       profileFileImage = File(_pickedFile!.path);
     }
-    if (profileFileImage==null)
-    {
+    if (profileFileImage == null) {
       return false;
-    }
-    else{
+    } else {
       notifyListeners();
       return true;
     }
@@ -424,14 +427,12 @@ class MainViewModel extends BaseViewModel{
     ImagePicker picker = ImagePicker();
     var image = await picker.pickImage(source: ImageSource.gallery);
     _pickedFile = image;
-    if(_pickedFile != null){
+    if (_pickedFile != null) {
       profileFileImage = File(_pickedFile!.path);
     }
-    if (profileFileImage==null)
-    {
+    if (profileFileImage == null) {
       return false;
-    }
-    else{
+    } else {
       notifyListeners();
       return true;
     }
@@ -446,7 +447,6 @@ class MainViewModel extends BaseViewModel{
     'Long Drink': 3,
     'Shot': 4
   };
-
 
   int nightClubValue = 1;
   String nightClubValueStr = "Club 1";
@@ -531,7 +531,8 @@ class MainViewModel extends BaseViewModel{
 
   messageScreenBackspacePressed() {
     messageScreenChatController
-      ..text = messageScreenChatController.text.characters.skipLast(1).toString()
+      ..text =
+          messageScreenChatController.text.characters.skipLast(1).toString()
       ..selection = TextSelection.fromPosition(
           TextPosition(offset: messageScreenChatController.text.length));
   }
@@ -578,16 +579,11 @@ class MainViewModel extends BaseViewModel{
           TextPosition(offset: chatController.text.length));
   }
 
-  addMarkers(){
-    markers.add(
-        Marker(
-            markerId: MarkerId('SomeId'),
-            position: LatLng(24.8169,67.1118),
-            infoWindow: InfoWindow(
-                title: 'The title of the marker'
-            )
-        )
-    );
+  addMarkers() {
+    markers.add(Marker(
+        markerId: MarkerId('SomeId'),
+        position: LatLng(24.8169, 67.1118),
+        infoWindow: InfoWindow(title: 'The title of the marker')));
   }
 
   List<dynamic> drinkList = [
@@ -644,7 +640,7 @@ class MainViewModel extends BaseViewModel{
     zoom: 14.4746,
   );
 
-  List<String> weekDaysList = ["Su" , "Mo" , "Tu", "We" , "Th", "Fr" , "Sa"];
+  List<String> weekDaysList = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
   List placed = [];
 
@@ -654,28 +650,28 @@ class MainViewModel extends BaseViewModel{
       'eventName': 'Trivia Nights',
       'date': '1st  May- Sat -2:00 PM',
       'location': 'Lot 13 • Oakland, CA',
-      'image1' : ImageUtils.location_icon
+      'image1': ImageUtils.location_icon
     },
     {
       'image': ImageUtils.place_2,
       'eventName': 'Bar Crawl Stop',
       'date': '1st  May- Sat -2:00 PM',
       'location': 'Lot 13 • Oakland, CA',
-      'image1' : ImageUtils.location_icon
+      'image1': ImageUtils.location_icon
     },
     {
       'image': ImageUtils.place_3,
       'eventName': 'Singles Night',
       'date': '1st  May- Sat -2:00 PM',
       'location': 'Lot 13 • Oakland, CA',
-      'image1' : ImageUtils.location_icon
+      'image1': ImageUtils.location_icon
     },
     {
       'image': ImageUtils.place_4,
       'eventName': 'Bar Olympics',
       'date': '1st  May- Sat -2:00 PM',
       'location': ' Lot 13 • Oakland, CA',
-      'image1' : ImageUtils.location_icon
+      'image1': ImageUtils.location_icon
     },
   ];
 
@@ -686,49 +682,49 @@ class MainViewModel extends BaseViewModel{
       'image': ImageUtils.johnImg,
       'title': 'John Milton',
       'points': '240',
-      'image1' : ImageUtils.coinImg
+      'image1': ImageUtils.coinImg
     },
     {
       'rank': '#5',
       'image': ImageUtils.mutualfrnd1,
       'title': 'Riki Davon',
       'points': '240',
-      'image1' : ImageUtils.coinImg
+      'image1': ImageUtils.coinImg
     },
     {
       'rank': '#6',
       'image': ImageUtils.followerImg1,
       'title': 'Josefina Ward',
       'points': '240',
-      'image1' : ImageUtils.coinImg
+      'image1': ImageUtils.coinImg
     },
     {
       'rank': '#7',
       'image': ImageUtils.mutualfrnd2,
       'title': 'Andre Patterson',
       'points': '240',
-      'image1' : ImageUtils.coinImg
+      'image1': ImageUtils.coinImg
     },
     {
       'rank': '#8',
       'image': ImageUtils.followerImg2,
       'title': 'Hazel Ballard',
       'points': '240',
-      'image1' : ImageUtils.coinImg
+      'image1': ImageUtils.coinImg
     },
     {
       'rank': '#9',
       'image': ImageUtils.mutualfrnd3,
       'title': 'Nettie Parsons',
       'points': '240',
-      'image1' : ImageUtils.coinImg
+      'image1': ImageUtils.coinImg
     },
     {
       'rank': '#10',
       'image': ImageUtils.followerImg3,
       'title': 'Hazel Ballard',
       'points': '240',
-      'image1' : ImageUtils.coinImg
+      'image1': ImageUtils.coinImg
     },
   ];
 
@@ -783,7 +779,6 @@ class MainViewModel extends BaseViewModel{
     },
   ];
 
-
   List ListOfBar = [
     {
       'image': ImageUtils.barImg1,
@@ -834,11 +829,9 @@ class MainViewModel extends BaseViewModel{
       'address': '1458 Caden Valleys, 12 kms away.',
       'type': 'Night Club',
     },
-
   ];
 
-  void addRemoveDrink(int index){
-
+  void addRemoveDrink(int index) {
     drinkIndex = index + 1;
     //drinkIndexList.length = index + 1;
     notifyListeners();
@@ -847,43 +840,93 @@ class MainViewModel extends BaseViewModel{
     //notifyListeners();
   }
 
-  void navigateToProfileScreen(List<String> images){
+  deleteAccount() async {
+    NewBarModel? user = await locator<PrefrencesViewModel>().getBarUser();
+    var response = await http
+        .delete(Uri.http(Constants.BaseUrl, Constants.accountDelete), headers: {
+      // 'content-type': 'application/json',
+      // 'accept': 'application/json',
+      'authorization': 'Token ${user!.token!}',
+    });
+
+    logOutUser();
+    print(response.body);
+  }
+
+  List<FollowersList> follower = [];
+  followers() async {
+    NewBarModel? user = await locator<PrefrencesViewModel>().getBarUser();
+    var response = await http.get(
+        Uri.http(Constants.BaseUrl, Constants.followersList),
+        headers: {'authorization': 'Token ${user!.token!}'});
+    print(response.body);
+    var jsonData = jsonDecode(response.body);
+    follower =
+        (jsonData as List).map((e) => FollowersList.fromJson(e)).toList();
+    notifyListeners();
+  }
+
+  Ratings? ratingKaData;
+  RatingData? forTime;
+  rating() async {
+    NewBarModel? user = await locator<PrefrencesViewModel>().getBarUser();
+
+    var response = await http.get(Uri.http(Constants.BaseUrl, Constants.rating),
+        headers: {'authorization': 'Token ${user!.token!}'});
+    var jsonData = jsonDecode(response.body);
+
+    ratingKaData = Ratings.fromJson(jsonData);
+    getTime();
+  }
+
+  String? timeZone;
+  getTime() {
+    var checking = ratingKaData!.data![0].created_at;
+    var dateTime = DateFormat("yyyy-MM-dd")
+        .parse(checking!.replaceAll('T', ' '), true);
+    var dateLocal = dateTime.toLocal();
+    timeZone = dateLocal.toString();
+    print(dateLocal);
+    return dateLocal;
+  }
+
+  void navigateToProfileScreen(List<String> images) {
     navigationService.navigateToProfileScreen(images);
   }
 
-  void navigateToMatchScreen(){
+  void navigateToMatchScreen() {
     navigationService.navigateToMatchScreen();
   }
 
-  void navigateBack(){
+  void navigateBack() {
     navigationService.navigateBack();
   }
 
-  void navigateToGroupDetails(){
+  void navigateToGroupDetails() {
     navigationService.navigateToGroupDetail();
   }
 
-  void navigateToGroupScreen(){
+  void navigateToGroupScreen() {
     navigationService.navigateToGroupScreen();
   }
 
-  void navigateToUserProfileAccountScreen(){
+  void navigateToUserProfileAccountScreen() {
     navigationService.navigateToUserProfileAccountScreen();
   }
 
-  void navigateToUserProfileAccountOwnershipScreen(){
+  void navigateToUserProfileAccountOwnershipScreen() {
     navigationService.navigateToUserProfileAccountOwnershipScreen();
   }
 
-  void navigateToUserProfileAccountNotificationScreen(){
+  void navigateToUserProfileAccountNotificationScreen() {
     navigationService.navigateToUserProfileAccountNotificationScreen();
   }
 
-  void navigateToUserProfileAccountLegalTermScreen(){
+  void navigateToUserProfileAccountLegalTermScreen() {
     navigationService.navigateToUserProfileAccountLegalTermScreen();
   }
 
-  void navigateToUserProfileAccountGpsScreen(){
+  void navigateToUserProfileAccountGpsScreen() {
     navigationService.navigateToUserProfileAccountGpsScreen();
   }
 
@@ -962,9 +1005,6 @@ class MainViewModel extends BaseViewModel{
   void navigateToDataProtectionScreen() {
     navigationService.navigateToDataProtectionScreen();
   }
-
-
-
   ///------User Drawer -----/////
   void navigateToRatingList() {
     navigationService.navigateToRatingList();
@@ -1012,10 +1052,11 @@ class MainViewModel extends BaseViewModel{
     navigationService.navigateToAllBarRating();
   }
 
-///--------------Bar Profile ------------------///
+  ///--------------Bar Profile ------------------///
   void navigateToBarDetails() {
     navigationService.navigateToBarDetails();
   }
+
   void navigateToBarAccounts() {
     navigationService.navigateToBarAccounts();
   }
@@ -1031,6 +1072,7 @@ class MainViewModel extends BaseViewModel{
   void navigateToBarProfile2() {
     navigationService.navigateToBarProfile2();
   }
+
 
   void navigateToPrivacyAndPolicyScreen() {
     navigationService.navigateToPrivacyAndPolicyScreen();
@@ -1048,9 +1090,7 @@ class MainViewModel extends BaseViewModel{
     navigationService.navigateToFaqAnsScreen();
   }
 
-
-
-  Future saveUserDetails()async {
+  Future saveUserDetails() async {
     List tempList = [];
     // for (int i = 0;i<imageFiles.length;i++){
     //   if (imageFiles[i] is File && (imageFiles[i] as File).path.isNotEmpty){
@@ -1064,13 +1104,17 @@ class MainViewModel extends BaseViewModel{
     // }
     editProfile = true;
     notifyListeners();
-    var userUpdateResponse = await updateUser.UpdateUserProfile((genderList.indexOf(genderValueStr)+1).toString(), imageFiles);
-    if (userUpdateResponse is UserModel){
+    var userUpdateResponse = await updateUser.UpdateUserProfile(
+        (genderList.indexOf(genderValueStr) + 1).toString(), imageFiles);
+    if (userUpdateResponse is UserModel) {
       UserModel user = userUpdateResponse;
       user.token = userModel!.token!;
-      user.favorite_alcohol_drinks = CommonFunctions.SubtractFromList(user.favorite_alcohol_drinks!);
-      user.favorite_night_club = CommonFunctions.SubtractFromList(user.favorite_night_club!);
-      user.favorite_party_vacation = CommonFunctions.SubtractFromList(user.favorite_party_vacation!);
+      user.favorite_alcohol_drinks =
+          CommonFunctions.SubtractFromList(user.favorite_alcohol_drinks!);
+      user.favorite_night_club =
+          CommonFunctions.SubtractFromList(user.favorite_night_club!);
+      user.favorite_party_vacation =
+          CommonFunctions.SubtractFromList(user.favorite_party_vacation!);
       await prefrencesViewModel.saveUser(user);
       notifyListeners();
     }
@@ -1082,13 +1126,12 @@ class MainViewModel extends BaseViewModel{
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.clear();
     navigateAndRemoveSignInScreen();
-
   }
 
 
 
 
-  void getUserData()async {
+  void getUserData() async {
     userModel = await prefrencesViewModel.getUser();
     notifyListeners();
   }
