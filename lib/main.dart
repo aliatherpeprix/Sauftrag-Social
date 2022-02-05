@@ -62,6 +62,7 @@ import 'bar/views/Drawer/notifications.dart';
 import 'bar/views/Drawer/qr_code_scanner.dart';
 import 'bar/views/Drawer/ranking_list.dart';
 import 'bar/views/Drawer/upcoming_event.dart';
+import 'bar/views/Home/bar_create_post.dart';
 import 'bar/views/Home/bar_drinks.dart';
 import 'bar/views/Home/bar_event.dart';
 import 'bar/views/Home/main_view.dart';
@@ -119,12 +120,11 @@ class _MyAppState extends State<MyApp> {
         return OrientationBuilder(
           builder: (context, orientation) {
             SizeConfig().init(constraints, orientation);
-            //var prefService = locator<PrefrencesViewModel>();
-            //return MainView(index: 2);
-            return Splash();
+            return CreateBarEvent();
           },
         );
       },
     );
   }
 }
+//CreateBarEvent()

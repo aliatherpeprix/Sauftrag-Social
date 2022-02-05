@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/bar_model.dart';
 import 'package:sauftrag/models/new_bar_model.dart';
@@ -10,8 +12,11 @@ import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/services/addFavorites.dart';
 import 'package:sauftrag/services/updateBarProfile.dart';
 import 'package:sauftrag/services/updateUserProfile.dart';
+import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/constants.dart';
 import 'package:sauftrag/utils/dialog_utils.dart';
+import 'package:sauftrag/utils/extensions.dart';
+import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/models/bar_model.dart' as barModel;
 import 'package:sauftrag/viewModels/prefrences_view_model.dart';
@@ -25,6 +30,9 @@ import '../main.dart';
 import 'main_view_model.dart';
 
 class AuthenticationViewModel extends BaseViewModel {
+
+  var dio = Dio();
+
 
   var addFavorite = Addfavorites();
   var navigationService = navigationViewModel;
@@ -174,7 +182,7 @@ class AuthenticationViewModel extends BaseViewModel {
     File(""),
     File(""),
     File(""),
-    File("")
+    File(""),
   ];
 
   int genderValue = 1;
@@ -348,6 +356,28 @@ class AuthenticationViewModel extends BaseViewModel {
 
     });
   }
+  void showErrorMessage(BuildContext context, String error) async {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(
+        error,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: ColorUtils.white,
+          fontFamily: FontUtils.modernistMono,
+          fontSize: 1.8.t,
+        ),
+      ),
+      backgroundColor: ColorUtils.red_color,
+      padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+            topRight: Radius.circular(20), topLeft: Radius.circular(20)),
+      ),
+      elevation: 10,
+      duration: Duration(seconds: 1),
+    ));
+  }
+
 
   void selectRole(int role) {
     this.role = role;
@@ -843,5 +873,135 @@ class AuthenticationViewModel extends BaseViewModel {
   bool isAccountOwnershipInFocus = false;
   final AccountOwnershipController = TextEditingController();
 
+  bool createEventLoader = false;
+  final titleController = TextEditingController();
+  final descriptionController = TextEditingController();
+  final locationController = TextEditingController();
+  final eventDateController = TextEditingController();
+  final startTimeController = TextEditingController();
+  final endTimeController = TextEditingController();
+
+  String? openingTimeFrom;
+  TimeOfDay? convertOpeningTimeFrom;
+  TimeOfDay? convertOpeningTimeTo;
+
+  String? openingTimeTo;
+
+
+  List eventDate = [];
+
+  void validateCreateEvent(BuildContext context) async{
+
+    if (titleController.text.isEmpty) {
+      showErrorMessage(
+          context, 'Title is required');
+      notifyListeners();
+      return;
+    }
+  else  if (descriptionController.text.isEmpty) {
+      showErrorMessage(
+          context, 'Description is required');
+      notifyListeners();
+      return;
+    }
+  else if (locationController.text.isEmpty) {
+      showErrorMessage(
+          context, 'Location is required');
+      notifyListeners();
+      return;
+    }
+   else if (selectedEventDate ==null) {
+      showErrorMessage(
+          context, 'Event Date is required');
+      notifyListeners();
+      return;
+    }
+   else if (openingTimeFrom ==null) {
+      showErrorMessage(
+          context, 'Start Time is required');
+      notifyListeners();
+      return;
+    }
+    else if (openingTimeTo ==null) {
+      showErrorMessage(
+          context, 'End Time is required');
+      notifyListeners();
+      return;
+    }else{
+      openingTimeTo = "${convertOpeningTimeTo!.hour.toString()}:${convertOpeningTimeTo!.minute.toString()}";
+      openingTimeFrom =  "${convertOpeningTimeFrom!.hour.toString()}:${convertOpeningTimeFrom!.minute.toString()}";
+
+      eventDate = selectedEventDate.toString().split(' ');
+
+      print(titleController.text);
+      print(descriptionController.text);
+      print(locationController.text);
+      print(eventDate);
+      print(openingTimeTo);
+
+      notifyListeners();
+
+      createEvent();
+    }
+
+  }
+
+  void createEvent() async {
+    UserModel? user = await locator<PrefrencesViewModel>().getUser();
+    try {
+      createEventLoader = true;
+      notifyListeners();
+      var createEventParams = {
+        "name": titleController.text,
+        "about": descriptionController.text,
+        "lat": "24.00075",
+        "long": "24.00075",
+        "location":locationController.text,
+        "event_date": eventDate[0],
+        "start_time": openingTimeFrom,
+        "end_time": openingTimeTo,
+        "media": [
+          "data:image/png;base64,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",
+        ]
+      };
+
+      var response = await dio.post(
+          Constants.GetEvents, data: createEventParams, options: Options(
+          headers: {
+            "Authorization": "Token ${user!.token!}"
+          }
+      ));
+      print(response);
+
+      print("-------------response----------");
+
+      if (response.statusCode == 200) {
+        if (response.data["status"] == true) {
+          createEventLoader = false;
+          notifyListeners();
+        }
+        else {
+          createEventLoader = false;
+          notifyListeners();
+          DialogUtils().showDialog(
+              MyErrorWidget(error: response.data["message"]));
+        }
+      }
+      else {
+        print(response.statusCode);
+        createEventLoader = false;
+        notifyListeners();
+        DialogUtils().showDialog(
+            MyErrorWidget(error: 'Something went wrong. Please try again'));
+        throw Exception('Failed to load');
+      }
+    }
+    catch (e) {
+      print(e);
+      DialogUtils().showDialog(MyErrorWidget(error: e.toString()));
+      createEventLoader = false;
+      notifyListeners();
+    }
+  }
 
 }

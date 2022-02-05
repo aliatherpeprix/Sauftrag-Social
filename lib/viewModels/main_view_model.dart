@@ -12,6 +12,7 @@ import 'package:intl/intl.dart';
 import 'package:mime/mime.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/models/bar_event_model.dart';
 import 'package:sauftrag/models/create_bar_post.dart';
 import 'package:sauftrag/models/faqs_questions.dart';
 import 'package:sauftrag/models/followers.dart';
@@ -43,6 +44,7 @@ import 'package:stacked/stacked.dart';
 import '../main.dart';
 
 class MainViewModel extends BaseViewModel {
+
   var updateUser = Updateuser();
   var createBarPost = Createpost();
   var privacyPolicy = Privacypolicy();
@@ -56,6 +58,7 @@ class MainViewModel extends BaseViewModel {
   final GlobalKey<NavigatorState> navigationKey = GlobalKey<NavigatorState>();
 
   UserModel? userModel;
+
 
   bool logInUserSelected = true;
   bool logInBarSelected = false;
@@ -217,6 +220,7 @@ class MainViewModel extends BaseViewModel {
 
   FaqsModel? selectedFaq;
 
+
   Future<bool> openCamera() async {
     ImagePicker picker = ImagePicker();
     var image = await picker.pickImage(source: ImageSource.camera);
@@ -227,6 +231,7 @@ class MainViewModel extends BaseViewModel {
     if (profileFileImage == null) {
       return false;
     } else {
+
       notifyListeners();
       return true;
     }
@@ -311,6 +316,7 @@ class MainViewModel extends BaseViewModel {
     //navigateToMediaScreen();
     //navigateToHomeScreen(2);
   }
+
 
   int msgTypeValue = 1;
   String msgTypeValueStr = "Private";
@@ -584,6 +590,7 @@ class MainViewModel extends BaseViewModel {
         markerId: MarkerId('SomeId'),
         position: LatLng(24.8169, 67.1118),
         infoWindow: InfoWindow(title: 'The title of the marker')));
+
   }
 
   List<dynamic> drinkList = [
@@ -1002,6 +1009,7 @@ class MainViewModel extends BaseViewModel {
     navigationService.navigateToAllEventListScreen();
   }
 
+
   void navigateToDataProtectionScreen() {
     navigationService.navigateToDataProtectionScreen();
   }
@@ -1239,98 +1247,55 @@ class MainViewModel extends BaseViewModel {
     notifyListeners();
     print(getFaqsList);
   }
+  bool eventLoader = false;
 
-/*AnimationController? buttonController;
-  Animation<double>? rotate;
-  Animation<double>? right;
-  Animation<double>? bottom;
-  Animation<double>? width;
-  double backCardWidth = -10.0;
-  int flag = 0;
+  List<BarEventModel>? barEventModel = [];
 
-  List data = [ImageUtils.girl1, ImageUtils.girl2, ImageUtils.girl1, ImageUtils.girl2, ImageUtils.girl1];
-  List selectedData = [];
+  void getEvent(BuildContext context) async {
+    UserModel? user = await locator<PrefrencesViewModel>().getUser();
 
-  void initSwipe() {
-
-    rotate = Tween<double>(
-      begin: -0.0,
-      end: -40.0,
-    ).animate(
-      CurvedAnimation(
-        parent: buttonController!,
-        curve: Curves.ease,
-      ),
-    );
-    rotate!.addListener(() {
-      if (rotate!.isCompleted) {
-        var i = data.removeLast();
-        data.insert(0, i);
-        buttonController!.reset();
-      }
-      notifyListeners();
-    });
-
-    right = Tween<double>(
-      begin: 0.0,
-      end: 400.0,
-    ).animate(
-      CurvedAnimation(
-        parent: buttonController!,
-        curve: Curves.ease,
-      ),
-    );
-    bottom = Tween<double>(
-      begin: 15.0,
-      end: 100.0,
-    ).animate(
-      CurvedAnimation(
-        parent: buttonController!,
-        curve: Curves.ease,
-      ),
-    );
-    width = Tween<double>(
-      begin: 20.0,
-      end: 25.0,
-    ).animate(
-      CurvedAnimation(
-        parent: buttonController!,
-        curve: Curves.bounceOut,
-      ),
-    );
-  }
-
-  Future<Null> swipeAnimation() async {
     try {
-      await buttonController!.forward();
-    } on TickerCanceled {}
-  }
+      eventLoader = true;
+      notifyListeners();
+      var response =
+      await dio.get("${Constants.GetEvents}", options: Options(
+          contentType: Headers.formUrlEncodedContentType,
+          headers: {
+            "Authorization": "Token ${user!.token!}"
+          }
+      ));
+      print(response);
 
-  dismissImg(String img) {
-    data.remove(img);
-    notifyListeners();
-  }
+      if (response.statusCode == 200) {
+        barEventModel = (response.data as List)
+            .map((e) => BarEventModel.fromJson(e))
+            .toList();
+        eventLoader = false;
+        notifyListeners();
+      } else {
+        print(response.statusCode);
+        eventLoader = false;
+        notifyListeners();
 
-  addImg(String img) {
-    data.remove(img);
-    selectedData.add(img);
-    notifyListeners();
-  }
+        // showErrorMessage(context, 'Something went wrong. Please try again');
+      }
+    } on DioError catch (e) {
+      print(e);
+      eventLoader = false;
+      notifyListeners();
 
-  swipeRight() {
-    if (flag == 0){
-      flag = 1;
+
+      // if (e.response!.statusCode == 404) {
+      //   navigationService.navigateToReplacement(to: NotFound());
+      // } else if (e.response!.statusCode == 500) {
+      //   navigationService.navigateToReplacement(to: ServerError());
+      // } else {
+      //   showErrorMessage(context,
+      //       'Unable to process your request at this time. Please try again');
+      // }
     }
-    notifyListeners();
-    swipeAnimation();
   }
 
-  swipeLeft() {
-    if (flag == 1){
-      flag = 0;
-    }
-    notifyListeners();
-    swipeAnimation();
-  }*/
+
 
 }
