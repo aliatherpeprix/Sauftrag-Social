@@ -22,31 +22,29 @@ class BarRating extends StatefulWidget {
 }
 
 class _BarRatingState extends State<BarRating> {
-
   List people = [
     {
       'name': "Nellie Mendez",
       'detail':
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar blandit magna.",
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar blandit magna.",
       'image': ImageUtils.Nil,
     },
     {
       'name': "Ron Wright",
       'detail':
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar blandit magna.",
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar blandit magna.",
       'image': ImageUtils.ron
     },
-
     {
       'name': "Nellie Mendez",
       'detail':
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar blandit magna.",
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar blandit magna.",
       'image': ImageUtils.Nil,
     },
     {
       'name': "Ron Wright",
       'detail':
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar blandit magna.",
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar blandit magna.",
       'image': ImageUtils.ron
     }
   ];
@@ -56,28 +54,28 @@ class _BarRatingState extends State<BarRating> {
       'name': "Nick Walker",
       'date': "10 December, 2020",
       'detail':
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar blandit magna.",
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar blandit magna.",
       'image': ImageUtils.ron,
     },
     {
       'name': "Nick Walker",
       'date': "10 December, 2020",
       'detail':
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar blandit magna.",
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar blandit magna.",
       'image': ImageUtils.ron
     },
     {
       'name': "Nick Walker",
       'date': "10 December, 2020",
       'detail':
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar blandit magna.",
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar blandit magna.",
       'image': ImageUtils.ron,
     },
     {
       'name': "Nick Walker",
       'date': "10 December, 2020",
       'detail':
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar blandit magna.",
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar blandit magna.",
       'image': ImageUtils.ron
     }
   ];
@@ -88,38 +86,40 @@ class _BarRatingState extends State<BarRating> {
       'eventName': 'Trivia Nights',
       'date': '1st  May- Sat -2:00 PM',
       'location': 'Lot 13 • Oakland, CA',
-      'locationIcon' : ImageUtils.locationPin
+      'locationIcon': ImageUtils.locationPin
     },
     {
       'image': ImageUtils.place2,
       'eventName': 'Bar Crawl Stop',
       'date': '1st  May- Sat -2:00 PM',
       'location': 'Lot 13 • Oakland, CA',
-      'locationIcon' : ImageUtils.locationPin
+      'locationIcon': ImageUtils.locationPin
     },
     {
       'image': ImageUtils.place3,
       'eventName': 'Singles Night',
       'date': '1st  May- Sat -2:00 PM',
       'location': 'Lot 13 • Oakland, CA',
-      'locationIcon' : ImageUtils.locationPin
+      'locationIcon': ImageUtils.locationPin
     },
     {
       'image': ImageUtils.place4,
       'eventName': 'Bar Olympics',
       'date': '1st  May- Sat -2:00 PM',
       'location': 'Lot 13 • Oakland, CA',
-      'locationIcon' : ImageUtils.locationPin
+      'locationIcon': ImageUtils.locationPin
     },
   ];
-
 
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<MainViewModel>.reactive(
-        viewModelBuilder: ()=> locator<MainViewModel>(),
+        viewModelBuilder: () => locator<MainViewModel>(),
+        onModelReady: (model) {
+          model.rating();
+        },
         disposeViewModel: false,
-        builder: (context, model, child){
+        builder: (context, model, child) {
           return SafeArea(
               top: false,
               bottom: false,
@@ -150,15 +150,16 @@ class _BarRatingState extends State<BarRating> {
                                       height: 6.h,
                                       decoration: BoxDecoration(
                                           color: Colors.white,
-                                          borderRadius:
-                                          BorderRadius.all(Radius.circular(10))),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10))),
                                       child: BackArrowContainer())),
                               Positioned(
                                   top: 30.6.h,
                                   child: Container(
                                     width: 16.w,
                                     height: 10.h,
-                                    decoration: BoxDecoration(shape: BoxShape.circle),
+                                    decoration:
+                                        BoxDecoration(shape: BoxShape.circle),
                                     child: Image.asset(ImageUtils.barCircle),
                                   ))
                             ],
@@ -174,7 +175,8 @@ class _BarRatingState extends State<BarRating> {
                             child: Column(
                               children: [
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
@@ -209,7 +211,8 @@ class _BarRatingState extends State<BarRating> {
                                   height: 4.h,
                                 ),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Column(
                                       children: [
@@ -218,7 +221,8 @@ class _BarRatingState extends State<BarRating> {
                                           style: TextStyle(
                                               fontSize: 2.5.t,
                                               color: ColorUtils.red_color,
-                                              fontFamily: FontUtils.modernistBold),
+                                              fontFamily:
+                                                  FontUtils.modernistBold),
                                         ),
                                         SizedBox(
                                           height: 1.5.h,
@@ -242,7 +246,8 @@ class _BarRatingState extends State<BarRating> {
                                           style: TextStyle(
                                               fontSize: 2.5.t,
                                               color: ColorUtils.red_color,
-                                              fontFamily: FontUtils.modernistBold),
+                                              fontFamily:
+                                                  FontUtils.modernistBold),
                                         ),
                                         SizedBox(
                                           height: 1.5.h,
@@ -266,7 +271,8 @@ class _BarRatingState extends State<BarRating> {
                                           style: TextStyle(
                                               fontSize: 2.5.t,
                                               color: ColorUtils.red_color,
-                                              fontFamily: FontUtils.modernistBold),
+                                              fontFamily:
+                                                  FontUtils.modernistBold),
                                         ),
                                         SizedBox(
                                           height: 1.5.h,
@@ -288,7 +294,9 @@ class _BarRatingState extends State<BarRating> {
                                       fontFamily: FontUtils.modernistRegular,
                                       fontSize: 1.8.t),
                                 ),
-                                SizedBox(height: 1.8.h,),
+                                SizedBox(
+                                  height: 1.8.h,
+                                ),
                                 TabBar(
                                   indicatorColor: ColorUtils.text_red,
                                   labelColor: ColorUtils.text_red,
@@ -311,13 +319,11 @@ class _BarRatingState extends State<BarRating> {
                                     // Tab(
                                     //   text: "",
                                     // ),
-
                                   ],
                                 ),
                                 Container(
                                   height: 100.h,
                                   child: TabBarView(children: [
-
                                     ///----New Feed Tab----///
                                     Container(
                                       margin: EdgeInsets.only(top: 1.h),
@@ -328,49 +334,61 @@ class _BarRatingState extends State<BarRating> {
                                         itemCount: 4,
                                         itemBuilder: (context, index) {
                                           return Container(
-                                            padding: EdgeInsets.symmetric(vertical: 1.5.h, horizontal: 2.w),
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 1.5.h,
+                                                horizontal: 2.w),
                                             //width: 6.h,
                                             //height: 30.h,
                                             decoration: BoxDecoration(
                                               boxShadow: [
                                                 BoxShadow(
-                                                  color: ColorUtils.black.withOpacity(0.1),
+                                                  color: ColorUtils.black
+                                                      .withOpacity(0.1),
                                                   spreadRadius: 0,
                                                   blurRadius: 10,
-                                                  offset: Offset(0, 5), // changes position of shadow
+                                                  offset: Offset(0,
+                                                      5), // changes position of shadow
                                                 ),
                                               ],
                                               color: Colors.white,
-                                              borderRadius:
-                                              BorderRadius.all(Radius.circular(18)),
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(18)),
                                               //border: Border.all(color: ColorUtils.red_color),
                                             ),
                                             child: Column(
                                               children: [
                                                 Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.end,
                                                   children: [
                                                     Row(
-
-                                                      children: [  Image.asset(
-                                                        people[index]
-                                                        ['image'], height: 10.i,),
+                                                      children: [
+                                                        Image.asset(
+                                                          people[index]
+                                                              ['image'],
+                                                          height: 10.i,
+                                                        ),
                                                         SizedBox(
                                                           width: 4.w,
                                                         ),
                                                         Text(
                                                           people[index]["name"],
                                                           style: TextStyle(
-                                                              fontFamily:
-                                                              FontUtils.modernistBold),
-                                                        ),],
+                                                              fontFamily: FontUtils
+                                                                  .modernistBold),
+                                                        ),
+                                                      ],
                                                     ),
                                                     IconButton(
                                                         onPressed: () {},
                                                         icon: Icon(
-                                                          Icons.more_vert_rounded,
-                                                          color: Colors.grey[500],
+                                                          Icons
+                                                              .more_vert_rounded,
+                                                          color:
+                                                              Colors.grey[500],
                                                         )),
                                                   ],
                                                 ),
@@ -397,7 +415,8 @@ class _BarRatingState extends State<BarRating> {
                                                     Text(
                                                       "68",
                                                       style: TextStyle(
-                                                          color: Colors.grey[400],
+                                                          color:
+                                                              Colors.grey[400],
                                                           fontFamily: FontUtils
                                                               .modernistRegular),
                                                     ),
@@ -414,7 +433,8 @@ class _BarRatingState extends State<BarRating> {
                                                     Text(
                                                       "53.5 k",
                                                       style: TextStyle(
-                                                          color: Colors.grey[400],
+                                                          color:
+                                                              Colors.grey[400],
                                                           fontFamily: FontUtils
                                                               .modernistRegular),
                                                     ),
@@ -423,194 +443,289 @@ class _BarRatingState extends State<BarRating> {
                                               ],
                                             ),
                                           );
-                                        },  separatorBuilder: (context, index) {
-                                        return SizedBox(height:  SizeConfig.heightMultiplier * 1.5,);
-                                      },
+                                        },
+                                        separatorBuilder: (context, index) {
+                                          return SizedBox(
+                                            height:
+                                                SizeConfig.heightMultiplier *
+                                                    1.5,
+                                          );
+                                        },
                                       ),
                                     ),
 
                                     ///----Rating Tab----///
-                                    Container (
+                                    Container(
                                       margin: EdgeInsets.only(top: 1.h),
-                                      child:  Column(
+                                      child: Column(
                                         children: [
                                           Container(
 
-                                            // padding: EdgeInsets.symmetric( horizontal: 2.w),
-                                              child:
-                                              Column(
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                              // padding: EdgeInsets.symmetric( horizontal: 2.w),
+                                              child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              // ElevatedButton(
+                                              //     onPressed: () {
+                                              //       model.rating();
+                                              //     },
+                                              //     child: Text("Click ,me")),
+                                              SizedBox(
+                                                height: 2.5.h,
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
                                                 children: [
-                                                  SizedBox(
-                                                    height: 2.5.h,
+                                                  Text(
+                                                    "Customer Rating",
+                                                    style: TextStyle(
+                                                        fontFamily: FontUtils
+                                                            .modernistBold,
+                                                        fontSize: 2.2.t),
                                                   ),
-                                                  Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                                    children: [
-                                                      Text(
-                                                        "Customer Rating",
-                                                        style: TextStyle(
-                                                            fontFamily: FontUtils.modernistBold,
-                                                            fontSize: 2.2.t),
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      model
+                                                          .navigateToAllBarRating();
+                                                    },
+                                                    child: Text(
+                                                      "See all",
+                                                      style: TextStyle(
+                                                        color: ColorUtils
+                                                            .red_color,
+                                                        fontFamily: FontUtils
+                                                            .modernistRegular,
+                                                        fontSize: 1.7.t,
+                                                        decoration:
+                                                            TextDecoration
+                                                                .underline,
                                                       ),
-                                                      GestureDetector(
-                                                        onTap: (){
-                                                          model.navigateToAllBarRating();
-                                                        },
-                                                        child: Text("See all",
-                                                          style: TextStyle(
-                                                            color: ColorUtils.red_color,
-                                                            fontFamily: FontUtils.modernistRegular,
-                                                            fontSize: 1.7.t,
-                                                            decoration:
-                                                            TextDecoration.underline,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),SizedBox(
-                                                    height: 2.5.h,
+                                                    ),
                                                   ),
-                                                  Container(
-                                                      padding: EdgeInsets.symmetric(vertical:0.5.h , horizontal: 3.w),
-                                                      decoration: BoxDecoration(
-                                                        // boxShadow: [
-                                                        //   BoxShadow(
-                                                        //     color: ColorUtils.black.withOpacity(0.1),
-                                                        //     spreadRadius: 0,
-                                                        //     blurRadius: 10,
-                                                        //     offset: Offset(0, 5), // changes position of shadow
-                                                        //   ),
-                                                        // ],
-                                                        color: Colors.white,
-                                                        borderRadius: BorderRadius.all(Radius.circular(18)),
-                                                        border: Border.all(color: ColorUtils.text_red),
-                                                      ),
-                                                      child: Row(
-                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                                        children: [
-                                                          RatingBar.builder(
-                                                            tapOnlyMode: false,
-                                                            initialRating: 4,
-                                                            minRating: 1,ignoreGestures: true,
-                                                            direction: Axis.horizontal,
-                                                            //allowHalfRating: true,
-                                                            itemCount: 5,
-                                                            itemSize: 10.i,
-                                                            itemPadding: EdgeInsets.symmetric(horizontal: 3.0),
-                                                            itemBuilder: (context, _) => Icon(
-                                                              Icons.star_rounded,
-                                                              color: ColorUtils.red_color,
-                                                            ),
-                                                            onRatingUpdate: (rating) {
-                                                              //print(rating);
-                                                            },
-                                                          ),
-                                                          Text("4.7 out of 5", style: TextStyle(
-                                                            color: ColorUtils.red_color,
-                                                            fontFamily: FontUtils.modernistRegular,
-                                                            fontSize: 1.7.t,
-
-                                                          ),)
-                                                        ],
-                                                      )
-                                                  )
                                                 ],
-                                              )),
+                                              ),
+                                              SizedBox(
+                                                height: 2.5.h,
+                                              ),
+                                              Container(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 0.5.h,
+                                                      horizontal: 3.w),
+                                                  decoration: BoxDecoration(
+                                                    // boxShadow: [
+                                                    //   BoxShadow(
+                                                    //     color: ColorUtils.black.withOpacity(0.1),
+                                                    //     spreadRadius: 0,
+                                                    //     blurRadius: 10,
+                                                    //     offset: Offset(0, 5), // changes position of shadow
+                                                    //   ),
+                                                    // ],
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                18)),
+                                                    border: Border.all(
+                                                        color: ColorUtils
+                                                            .text_red),
+                                                  ),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      RatingBar.builder(
+                                                        tapOnlyMode: false,
+                                                        initialRating: model
+                                                            .ratingKaData!
+                                                            .total_rating!,
+                                                        minRating: 1,
+                                                        ignoreGestures: true,
+                                                        direction:
+                                                            Axis.horizontal,
+                                                        //allowHalfRating: true,
+                                                        itemCount: 5,
+                                                        itemSize: 10.i,
+                                                        itemPadding: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal:
+                                                                    3.0),
+                                                        itemBuilder:
+                                                            (context, _) =>
+                                                                Icon(
+                                                          Icons.star_rounded,
+                                                          color: ColorUtils
+                                                              .red_color,
+                                                        ),
+                                                        onRatingUpdate:
+                                                            (rating) {
+                                                          //print(rating);
+                                                        },
+                                                      ),
+                                                      Text(
+                                                        "${model.ratingKaData!.total_rating} out of 5",
+                                                        style: TextStyle(
+                                                          color: ColorUtils
+                                                              .red_color,
+                                                          fontFamily: FontUtils
+                                                              .modernistRegular,
+                                                          fontSize: 1.7.t,
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ))
+                                            ],
+                                          )),
                                           SizedBox(
                                             height: 2.5.h,
                                           ),
                                           Container(
-
+                                            // height: 20.h,
                                             child: ListView.separated(
                                               padding: EdgeInsets.zero,
-                                              physics: NeverScrollableScrollPhysics(),
+                                              physics:
+                                                  NeverScrollableScrollPhysics(),
                                               shrinkWrap: true,
-                                              itemCount: 4,
+                                              itemCount: model
+                                                  .ratingKaData!.data!.length,
                                               itemBuilder: (context, index) {
                                                 return Container(
-                                                  padding: EdgeInsets.symmetric(vertical: 1.5.h, horizontal: 2.5.w),
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 1.5.h,
+                                                      horizontal: 2.w),
                                                   //width: 6.h,
                                                   //height: 30.h,
                                                   decoration: BoxDecoration(
                                                     boxShadow: [
                                                       BoxShadow(
-                                                        color: ColorUtils.black.withOpacity(0.1),
+                                                        color: ColorUtils.black
+                                                            .withOpacity(0.1),
                                                         spreadRadius: 0,
                                                         blurRadius: 10,
-                                                        offset: Offset(0, 5), // changes position of shadow
+                                                        offset: Offset(0,
+                                                            5), // changes position of shadow
                                                       ),
                                                     ],
                                                     color: Colors.white,
                                                     borderRadius:
-                                                    BorderRadius.all(Radius.circular(18)),
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                18)),
                                                     //border: Border.all(color: ColorUtils.red_color),
                                                   ),
                                                   child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
                                                     children: [
                                                       Row(
-                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
                                                         children: [
-                                                          Row(
-
-                                                            children: [  Image.asset(
-                                                              ratingDialog[index]
-                                                              ['image'], height: 10.i,),
-                                                              SizedBox(
-                                                                width: 4.w,
+                                                          Image.network(
+                                                            model
+                                                                .ratingKaData!
+                                                                .data![index]
+                                                                .user!
+                                                                .profile_picture
+                                                                .toString(),
+                                                            height: 10.i,
+                                                          ),
+                                                          SizedBox(
+                                                            width: 4.w,
+                                                          ),
+                                                          Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(
+                                                                model
+                                                                    .ratingKaData!
+                                                                    .data![
+                                                                        index]
+                                                                    .user!
+                                                                    .username
+                                                                    .toString(),
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 2.h,
+                                                                  fontFamily:
+                                                                      FontUtils
+                                                                          .modernistBold,
+                                                                ),
                                                               ),
-                                                              Column(
-                                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                                children: [
-                                                                  Text(
-                                                                    ratingDialog[index]["name"],
-                                                                    style: TextStyle(
-                                                                      fontSize: 2.h,
-                                                                      fontFamily:
-                                                                      FontUtils.modernistBold,
-
-                                                                    ),
-                                                                  ),
-                                                                  SizedBox(height: 0.5.h,),
-                                                                  Text(
-                                                                    ratingDialog[index]["date"],
-                                                                    style: TextStyle(
-                                                                        color: ColorUtils.text_grey,
-                                                                        fontFamily:
-                                                                        FontUtils.modernistRegular,
-                                                                        fontSize: 1.3.h
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              )
+                                                              SizedBox(
+                                                                height: 0.5.h,
+                                                              ),
+                                                              Text(
+                                                                model.timeZone!
+                                                                    .substring(
+                                                                        0, 10)
+                                                                    .toString(),
+                                                                style: TextStyle(
+                                                                    color: ColorUtils
+                                                                        .text_grey,
+                                                                    fontFamily:
+                                                                        FontUtils
+                                                                            .modernistRegular,
+                                                                    fontSize:
+                                                                        1.3.h),
+                                                              ),
                                                             ],
                                                           ),
                                                           RatingBar.builder(
-                                                            initialRating: 5,
+                                                            initialRating: model
+                                                                .ratingKaData!
+                                                                .data![index]
+                                                                .rate!,
                                                             minRating: 1,
-                                                            direction: Axis.horizontal,
-                                                            allowHalfRating: true,
+                                                            direction:
+                                                                Axis.horizontal,
+                                                            allowHalfRating:
+                                                                true,
                                                             itemCount: 5,
                                                             itemSize: 4.5.i,
-                                                            itemPadding: EdgeInsets.symmetric(horizontal: 3.0),
-                                                            itemBuilder: (context, _) => Icon(
-                                                              Icons.star_rounded,
-                                                              color: ColorUtils.red_color,
+                                                            itemPadding: EdgeInsets
+                                                                .symmetric(
+                                                                    horizontal:
+                                                                        0.3.w),
+                                                            itemBuilder:
+                                                                (context, _) =>
+                                                                    Icon(
+                                                              Icons
+                                                                  .star_rounded,
+                                                              color: ColorUtils
+                                                                  .red_color,
                                                             ),
-                                                            onRatingUpdate: (rating) {
+                                                            onRatingUpdate:
+                                                                (rating) {
                                                               print(rating);
                                                             },
                                                           ),
-
                                                         ],
                                                       ),
                                                       SizedBox(height: 2.h),
                                                       Text(
-                                                        people[index]['detail'],
+                                                        model
+                                                            .ratingKaData!
+                                                            .data![index]
+                                                            .comments
+                                                            .toString(),
                                                         style: TextStyle(
                                                             fontFamily: FontUtils
                                                                 .modernistRegular,
@@ -657,22 +772,30 @@ class _BarRatingState extends State<BarRating> {
                                                     ],
                                                   ),
                                                 );
-                                              },  separatorBuilder: (context, index) {
-                                              return SizedBox(height:  SizeConfig.heightMultiplier * 1.5,);
-                                            },
+                                              },
+                                              separatorBuilder:
+                                                  (context, index) {
+                                                return SizedBox(
+                                                  height: SizeConfig
+                                                          .heightMultiplier *
+                                                      1.5,
+                                                );
+                                              },
                                             ),
                                           ),
                                           SizedBox(height: 2.5.h),
                                           Container(
                                             //width: 200.0,
-                                            padding: EdgeInsets.symmetric(horizontal: 2.w),
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 2.w),
                                             decoration: BoxDecoration(
                                                 color: Colors.white,
                                                 borderRadius: BorderRadius.all(
                                                   Radius.circular(15.0),
                                                 ),
-                                                border: Border.all(color: ColorUtils.icon_color)
-                                            ),
+                                                border: Border.all(
+                                                    color:
+                                                        ColorUtils.icon_color)),
                                             child: TextField(
                                               onTap: () {},
                                               enabled: true,
@@ -684,19 +807,23 @@ class _BarRatingState extends State<BarRating> {
                                                 hintStyle: TextStyle(
                                                   //fontFamily: FontUtils.proximaNovaRegular,
                                                   color: ColorUtils.icon_color,
-                                                  fontSize: SizeConfig.textMultiplier * 1.9,
+                                                  fontSize: SizeConfig
+                                                          .textMultiplier *
+                                                      1.9,
                                                 ),
                                                 border: InputBorder.none,
                                                 isDense: true,
-                                                contentPadding: EdgeInsets.symmetric(
-                                                    vertical: SizeConfig.heightMultiplier * 1.8),
+                                                contentPadding:
+                                                    EdgeInsets.symmetric(
+                                                        vertical: SizeConfig
+                                                                .heightMultiplier *
+                                                            1.8),
                                               ),
                                             ),
                                           ),
                                         ],
                                       ),
                                     ),
-
 
                                     ///----Event Tab----///
                                     // Container(
@@ -796,9 +923,7 @@ class _BarRatingState extends State<BarRating> {
                     ]),
                   ),
                 ),
-              )
-          );
-        }
-    );
+              ));
+        });
   }
 }

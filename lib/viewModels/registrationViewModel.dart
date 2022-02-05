@@ -1,4 +1,3 @@
-
 import 'dart:io';
 import 'dart:math';
 
@@ -49,8 +48,7 @@ import 'package:stacked/stacked.dart';
 import '../main.dart';
 import 'main_view_model.dart';
 
-class
-RegistrationViewModel extends BaseViewModel {
+class RegistrationViewModel extends BaseViewModel {
   //var _dioService = DioService.getInstance();
   var signupUser = SignupUser();
   var signupBar = SignupBar();
@@ -149,7 +147,7 @@ RegistrationViewModel extends BaseViewModel {
   bool isAddNewClubInFocus = false;
   FocusNode addNewClubFocus = new FocusNode();
 
-    final addNewPartyLocationController = TextEditingController();
+  final addNewPartyLocationController = TextEditingController();
   bool isAddNewPartyLocationInFocus = false;
   FocusNode addNewPartyLocationFocus = new FocusNode();
 
@@ -196,8 +194,8 @@ RegistrationViewModel extends BaseViewModel {
 
   bool checkSignupUser = false;
   String? openingTimeFrom = "";
-  String? openingTimeTo = "" ;
-  String? breakTimeFrom= "";
+  String? openingTimeTo = "";
+  String? breakTimeFrom = "";
   String? breakTimeTo = "";
   String? weekEndOpeningTimeFrom = "";
   String? weekEndOpeningTimeTo = "";
@@ -205,7 +203,6 @@ RegistrationViewModel extends BaseViewModel {
   String? weekEndBreakTimeTo = "";
 
   var getFavsDrinks = Addfavorites();
-
 
   ///----------------------User Login Registration Controller ----------------///
 
@@ -308,7 +305,6 @@ RegistrationViewModel extends BaseViewModel {
   Map<String, int> msgTypeMap = {
     'Public': 1,
     'Private': 2,
-
   };
   List<dynamic> imageFilesPost = [
     File(""),
@@ -317,39 +313,18 @@ RegistrationViewModel extends BaseViewModel {
   List<int> selectedWeekDays = [];
 
   List<DayWeekModel> weekDaysList = [
-    DayWeekModel.fromJson({
-    "day__id" : 1,
-    "day__name" : "Mon"
-  }),
-    DayWeekModel.fromJson({
-      "day__id" : 2,
-      "day__name" : "Tue"
-    }),
-    DayWeekModel.fromJson({
-      "day__id" : 3,
-      "day__name" : "Wed"
-    }),
-    DayWeekModel.fromJson({
-      "day__id" : 4,
-      "day__name" : "Thu"
-    }),
-    DayWeekModel.fromJson({
-      "day__id" : 5,
-      "day__name" : "Fri"
-    }),
+    DayWeekModel.fromJson({"day__id": 1, "day__name": "Mon"}),
+    DayWeekModel.fromJson({"day__id": 2, "day__name": "Tue"}),
+    DayWeekModel.fromJson({"day__id": 3, "day__name": "Wed"}),
+    DayWeekModel.fromJson({"day__id": 4, "day__name": "Thu"}),
+    DayWeekModel.fromJson({"day__id": 5, "day__name": "Fri"}),
   ];
 
   List<int> selectedWeekendDays = [];
 
   List<DayWeekendModel> weekendDaysList = [
-    DayWeekendModel.fromJson({
-      "day__id" : 6,
-      "day__name" : "Sat"
-     }),
-    DayWeekendModel.fromJson({
-      "day__id" : 7,
-      "day__name" : "Sun"
-    })
+    DayWeekendModel.fromJson({"day__id": 6, "day__name": "Sat"}),
+    DayWeekendModel.fromJson({"day__id": 7, "day__name": "Sun"})
   ];
 
   List<int> selectedBarKind = [];
@@ -382,15 +357,9 @@ RegistrationViewModel extends BaseViewModel {
 
   List<FavoritesModel> addDrinkList = [];
 
-  List<String> addFavDrinkList = [
-
-  ];
-
-
+  List<String> addFavDrinkList = [];
 
   List<dynamic> vacationList = [];
-
-
 
   int kindOfBarValue = 1;
   String kindOfBarValueStr = "Cocktail";
@@ -403,7 +372,12 @@ RegistrationViewModel extends BaseViewModel {
   };
 
   List<dynamic> imageFiles = [
-   File(""), File(""), File(""), File(""), File(""), File("")
+    File(""),
+    File(""),
+    File(""),
+    File(""),
+    File(""),
+    File("")
   ];
 
   Future<bool> getImage(int index) async {
@@ -463,12 +437,10 @@ RegistrationViewModel extends BaseViewModel {
   }
 
   addBarImages() {
-
-    for(int i=0; i<imageFiles.length; i++){
-      if (i == 0){
-        if( (imageFiles[i] is String &&
-            (imageFiles[i] as String).isEmpty) ||
-            imageFiles[i].path.isEmpty){
+    for (int i = 0; i < imageFiles.length; i++) {
+      if (i == 0) {
+        if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
+            imageFiles[i].path.isEmpty) {
           DialogUtils().showDialog(MyErrorWidget(
             error: "Select Bar Logo",
           ));
@@ -476,17 +448,15 @@ RegistrationViewModel extends BaseViewModel {
         }
       }
       bool hasImages = false;
-      if(i>0){
-        if(!hasImages){
-          if( (imageFiles[i] is String &&
-              (imageFiles[i] as String).isEmpty) ||
-              imageFiles[i].path.isEmpty){
+      if (i > 0) {
+        if (!hasImages) {
+          if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
+              imageFiles[i].path.isEmpty) {
             DialogUtils().showDialog(MyErrorWidget(
               error: "Select at least one Bar Image",
             ));
             return;
-          }
-          else {
+          } else {
             hasImages = true;
             break;
           }
@@ -498,16 +468,15 @@ RegistrationViewModel extends BaseViewModel {
     //navigateToHomeScreen(2);
   }
 
-
-
   void selectRole(int role) {
     this.role = role;
     notifyListeners();
   }
 
-  convert (){
+  convert() {
     String s = "00:00";
-    startTime = TimeOfDay(hour:int.parse(s.split(":")[0]),minute: int.parse(s.split(":")[1]));
+    startTime = TimeOfDay(
+        hour: int.parse(s.split(":")[0]), minute: int.parse(s.split(":")[1]));
   }
 
   void openAndSelectDob(BuildContext context) async {
@@ -526,25 +495,21 @@ RegistrationViewModel extends BaseViewModel {
         error: "User Name is required",
       ));
       return;
-    }
-    else if (!logInUserController.text.isEmail) {
+    } else if (!logInUserController.text.isEmail) {
       isSigningUp = false;
       DialogUtils().showDialog(MyErrorWidget(error: "Email is invalid"));
       notifyListeners();
       return;
-    }
-    else if (logInPasswordController.text.isEmpty) {
+    } else if (logInPasswordController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Password is required",
       ));
       return;
-    }
-    else if (logInPasswordController.text.length < 7) {
+    } else if (logInPasswordController.text.length < 7) {
       DialogUtils()
           .showDialog(MyErrorWidget(error: "Password must contain 7 digit"));
       return;
-    }
-    else {
+    } else {
       logIn = true;
       notifyListeners();
 
@@ -557,12 +522,15 @@ RegistrationViewModel extends BaseViewModel {
       MainViewModel mainViewModel = locator<MainViewModel>();
       var signupResponse = await loginUser.LogInUser(logInUserController.text,
           logInPasswordController.text, logInUserSelected ? "1" : "2");
-        print(signupResponse);
+      print(signupResponse);
       if (signupResponse is userModel.UserModel) {
         userModel.UserModel user = signupResponse;
-        user.favorite_alcohol_drinks = CommonFunctions.SubtractFromList(user.favorite_alcohol_drinks!);
-        user.favorite_night_club = CommonFunctions.SubtractFromList(user.favorite_night_club!);
-        user.favorite_party_vacation = CommonFunctions.SubtractFromList(user.favorite_party_vacation!);
+        // user.favorite_alcohol_drinks =
+        //     CommonFunctions.SubtractFromList(user.favorite_alcohol_drinks!);
+        // user.favorite_night_club =
+        //     CommonFunctions.SubtractFromList(user.favorite_night_club!);
+        // user.favorite_party_vacation =
+        //     CommonFunctions.SubtractFromList(user.favorite_party_vacation!);
         await locator<PrefrencesViewModel>().saveUser(signupResponse);
         if (logInUserSelected == true) {
           mainViewModel.logInUserSelected = true;
@@ -585,11 +553,10 @@ RegistrationViewModel extends BaseViewModel {
       //       MyErrorWidget(error: (e as DioError).response!.data["detail"].toString()));
       //
       // }
-      else{
+      else {
         logIn = false;
         notifyListeners();
-        DialogUtils().showDialog(
-            MyErrorWidget(error: (signupResponse)));
+        DialogUtils().showDialog(MyErrorWidget(error: (signupResponse)));
       }
     }
   }
@@ -598,12 +565,9 @@ RegistrationViewModel extends BaseViewModel {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.clear();
     navigateAndRemoveSignInScreen();
-
   }
 
-
   forgetPassword() async {
-
     if (forgetPasswordController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Email is required",
@@ -622,59 +586,53 @@ RegistrationViewModel extends BaseViewModel {
     );
     print(forgetPasswordResponce);
     if (forgetPasswordResponce is int && forgetPasswordResponce == 200) {
-
       navigateToCheckEmailScreen();
     }
     forgetPasswordBool = false;
     notifyListeners();
   }
 
-  void verifyResetPasswordCode(BuildContext context, String code) async{
-
+  void verifyResetPasswordCode(BuildContext context, String code) async {
     Dio dio = Dio();
-    try{
+    try {
       //resetOtpLoading = true;
       notifyListeners();
 
       var param = FormData.fromMap({
-        "email" : forgetPasswordController.text,
-        "code" : code,
+        "email": forgetPasswordController.text,
+        "code": code,
       });
 
-      var response = await dio.post(Constants.BaseUrlPro+Constants.ResetPassword, data: param);
+      var response = await dio
+          .post(Constants.BaseUrlPro + Constants.ResetPassword, data: param);
 
-      if (response.statusCode == 200){
-
-        if(response.data["status"] == true){
+      if (response.statusCode == 200) {
+        if (response.data["status"] == true) {
           //resetOtpLoading = false;
           notifyListeners();
           navigateToResentPasswordScreen();
-         // navigateToResentPasswordScreen();
-        }
-        else{
-         // resetOtpLoading = false;
+          // navigateToResentPasswordScreen();
+        } else {
+          // resetOtpLoading = false;
           notifyListeners();
           // DialogUtils().showDialog(
           //     MyErrorWidget(error: response.data["message"].toString()));
           navigateToResentPasswordScreen();
           //showErrorMessage(context, "Please enter valid verification code");
         }
-      }
-      else{
+      } else {
         //resetOtpLoading = false;
         notifyListeners();
         DialogUtils().showDialog(
             MyErrorWidget(error: response.data["message"].toString()));
       }
-    }
-    catch(e){
-     // resetOtpLoading = false;
+    } catch (e) {
+      // resetOtpLoading = false;
       notifyListeners();
-      DialogUtils().showDialog(
-          MyErrorWidget(error: (e as DioError).response!.data["message"].toString()));
+      DialogUtils().showDialog(MyErrorWidget(
+          error: (e as DioError).response!.data["message"].toString()));
       //showErrorMessage(context, 'Unable to process your request at this time. Please try again');
     }
-
   }
 
   resentPassword(BuildContext context) {
@@ -701,7 +659,8 @@ RegistrationViewModel extends BaseViewModel {
           error: "Password should contain at least one lower case"));
       return;
     }
-    if (!CommonFunctions.hasOneDigit(confirmNewPasswordController.text.trim())) {
+    if (!CommonFunctions.hasOneDigit(
+        confirmNewPasswordController.text.trim())) {
       DialogUtils().showDialog(
           MyErrorWidget(error: "Password should contain at least one digit"));
       return;
@@ -727,7 +686,6 @@ RegistrationViewModel extends BaseViewModel {
   }
 
   changePassword() async {
-
     if (changeNewPasswordUserController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Password is required",
@@ -758,7 +716,8 @@ RegistrationViewModel extends BaseViewModel {
           error: "Password should contain at least one lower case"));
       return;
     }
-    if (!CommonFunctions.hasOneDigit(changeNewPasswordUserController.text.trim())) {
+    if (!CommonFunctions.hasOneDigit(
+        changeNewPasswordUserController.text.trim())) {
       DialogUtils().showDialog(
           MyErrorWidget(error: "Password should contain at least one digit"));
       return;
@@ -779,45 +738,38 @@ RegistrationViewModel extends BaseViewModel {
         error: "Password & Verify Password don't match",
       ));
       return;
-    }
-    else
+    } else
       notifyListeners();
-   // var user = userModel.UserModel();
+    // var user = userModel.UserModel();
 
     var signupResponce = await changepassword.ChangeUserPassword(
-
         changeCurrentPasswordUserController.text,
-        changeNewCurrentPasswordUserController.text
-    );
+        changeNewCurrentPasswordUserController.text);
     print(signupResponce);
     //navigateToFavoriteScreen();
-
   }
 
-
-
-  void resetNewPassword(BuildContext context) async{
-
+  void resetNewPassword(BuildContext context) async {
     Dio dio = Dio();
 
-    try{
+    try {
       //resetPasswordLoading = true;
       notifyListeners();
 
       var param = FormData.fromMap({
-        "email" : forgetPasswordController.text,
-        "new_password" : confirmNewPasswordController.text,
-        "repeat_password" : confirmNewPasswordController.text,
-        'code' : codeController.text
+        "email": forgetPasswordController.text,
+        "new_password": confirmNewPasswordController.text,
+        "repeat_password": confirmNewPasswordController.text,
+        'code': codeController.text
       });
 
       createNewPasswordBool = true;
-      var response = await dio.post(Constants.BaseUrlPro+Constants.ConfirmNewPassword, data: param);
+      var response = await dio.post(
+          Constants.BaseUrlPro + Constants.ConfirmNewPassword,
+          data: param);
 
-      if (response.statusCode == 200){
-
-        if(response.data["code"] == 200){
-
+      if (response.statusCode == 200) {
+        if (response.data["code"] == 200) {
           notifyListeners();
           DialogUtils().showDialog(
               MyErrorWidget(error: response.data["message"].toString()));
@@ -829,33 +781,27 @@ RegistrationViewModel extends BaseViewModel {
             resetNewPasswordController.clear();
             confirmNewPasswordController.clear();
             codeController.clear();
-
           });
-        }
-        else{
-
+        } else {
           notifyListeners();
           DialogUtils().showDialog(
               MyErrorWidget(error: response.data["message"].toString()));
           //showErrorMessage(context, "Please try again");
         }
-      }
-      else{
+      } else {
         //resetPasswordLoading = false;
         notifyListeners();
         DialogUtils().showDialog(
             MyErrorWidget(error: response.data["message"].toString()));
         //showErrorMessage(context, 'Something went wrong. Please try again');
       }
-    }
-    catch(e){
+    } catch (e) {
       //resetPasswordLoading = false;
       notifyListeners();
-      DialogUtils().showDialog(
-          MyErrorWidget(error: (e as DioError).response!.data["message"].toString()));
+      DialogUtils().showDialog(MyErrorWidget(
+          error: (e as DioError).response!.data["message"].toString()));
       //showErrorMessage(context, 'Unable to process your request at this time. Please try again');
     }
-
   }
 
   termsAndCondition() async {
@@ -864,15 +810,12 @@ RegistrationViewModel extends BaseViewModel {
         error: "Please Accept Terms and Conditions",
       ));
       return;
-    }
-    else if (dataCheck == false) {
+    } else if (dataCheck == false) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Please Accept Date Protection",
       ));
       return;
-    }
-    else
-    {
+    } else {
       getStarted = true;
       notifyListeners();
       userModel.UserModel? usermodel = await prefrencesViewModel.getUser();
@@ -880,17 +823,16 @@ RegistrationViewModel extends BaseViewModel {
       List<int> newClubs = [];
       List<int> newVacations = [];
 
-      for (int drink in selectedDrinkList){
-        newDrinks.add(drink+1);
+      for (int drink in selectedDrinkList) {
+        newDrinks.add(drink + 1);
       }
-      for (int drink in selectedClubList){
-        newClubs.add(drink+1);
+      for (int drink in selectedClubList) {
+        newClubs.add(drink + 1);
       }
-      for (int drink in selectedVacationList){
-        newVacations.add(drink+1);
+      for (int drink in selectedVacationList) {
+        newVacations.add(drink + 1);
       }
       var userSignupResponce = await signupUser.SignUpUser(
-
           usermodel!.email!,
           usermodel.username!,
           usermodel.password!,
@@ -905,32 +847,25 @@ RegistrationViewModel extends BaseViewModel {
           newVacations,
           imageFiles,
           termsCheck,
-          dataCheck
-
-      );
+          dataCheck);
       print(userSignupResponce);
-      if(userSignupResponce is UserModel)
-      {
+      if (userSignupResponce is UserModel) {
         userModel.UserModel user = userSignupResponce;
         user.token = usermodel.token;
         user.password = signUpPasswordController.text;
         user.password2 = signUpVerifyPasswordController.text;
-        user.favorite_alcohol_drinks = CommonFunctions.SubtractFromList(user.favorite_alcohol_drinks!);
-        user.favorite_night_club = CommonFunctions.SubtractFromList(user.favorite_night_club!);
-        user.favorite_party_vacation = CommonFunctions.SubtractFromList(user.favorite_party_vacation!);
+        user.favorite_alcohol_drinks =
+            CommonFunctions.SubtractFromList(user.favorite_alcohol_drinks!);
+        user.favorite_night_club =
+            CommonFunctions.SubtractFromList(user.favorite_night_club!);
+        user.favorite_party_vacation =
+            CommonFunctions.SubtractFromList(user.favorite_party_vacation!);
         await locator<PrefrencesViewModel>().saveUser(user);
         dataCheck = false;
         selectedDrinkList.clear();
         selectedClubList.clear();
         selectedVacationList.clear();
-        imageFiles = [
-          "",
-          "",
-          "",
-          "",
-          "",
-          ""
-        ];
+        imageFiles = ["", "", "", "", "", ""];
         //model.imageFiles = [];
         // DialogUtils().showDialog(
         //     MyErrorWidget(error: "Use has been created succ"));
@@ -945,52 +880,47 @@ RegistrationViewModel extends BaseViewModel {
     //navigateToHomeScreen(2);
   }
 
-  favoritesDrinks(List<int> selectedList,String favorite) async {
+  favoritesDrinks(List<int> selectedList, String favorite) async {
     if (selectedList.isEmpty) {
-
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select at least one favorite drink",
       ));
       notifyListeners();
       return;
-    }
-    else
-      {
-        userModel.UserModel? usermodel = await prefrencesViewModel.getUser();
+    } else {
+      userModel.UserModel? usermodel = await prefrencesViewModel.getUser();
 
-        var userSignupResponce = await updateUser.UpdateUserFavorites(
-          selectedList,
-          favorite
-        );
-        print(userSignupResponce);
-        if(userSignupResponce is UserModel)
-        {
-          userModel.UserModel user = userSignupResponce;
-          if (favorite=="favorite_alcohol_drinks"){
-            user.favorite_alcohol_drinks = CommonFunctions.SubtractFromList(user.favorite_alcohol_drinks!);
-          }
-          if (favorite=="favorite_night_club"){
-            user.favorite_night_club = CommonFunctions.SubtractFromList(user.favorite_night_club!);
-          }
-          if (favorite=="favorite_party_vacation"){
-            user.favorite_party_vacation = CommonFunctions.SubtractFromList(user.favorite_party_vacation!);
-          }
-          await locator<PrefrencesViewModel>().saveUser(user);
-    }
-    selectedDrinkList.clear();
-    selectedClubList.clear();
-    selectedVacationList.clear();
-    imageFiles = [
-    File(""), File(""), File(""), File(""), File(""), File("")
-    ];
-    //model.imageFiles = [];
-    dataCheck = false;
-    //signInUser = false;
-    notifyListeners();
-    // DialogUtils().showDialog(
-    //     MyErrorWidget(error: "Use has been created succ"));
-    navigateToHomeScreen(2);
+      var userSignupResponce =
+          await updateUser.UpdateUserFavorites(selectedList, favorite);
+      print(userSignupResponce);
+      if (userSignupResponce is UserModel) {
+        userModel.UserModel user = userSignupResponce;
+        if (favorite == "favorite_alcohol_drinks") {
+          user.favorite_alcohol_drinks =
+              CommonFunctions.SubtractFromList(user.favorite_alcohol_drinks!);
+        }
+        if (favorite == "favorite_night_club") {
+          user.favorite_night_club =
+              CommonFunctions.SubtractFromList(user.favorite_night_club!);
+        }
+        if (favorite == "favorite_party_vacation") {
+          user.favorite_party_vacation =
+              CommonFunctions.SubtractFromList(user.favorite_party_vacation!);
+        }
+        await locator<PrefrencesViewModel>().saveUser(user);
       }
+      selectedDrinkList.clear();
+      selectedClubList.clear();
+      selectedVacationList.clear();
+      imageFiles = [File(""), File(""), File(""), File(""), File(""), File("")];
+      //model.imageFiles = [];
+      dataCheck = false;
+      //signInUser = false;
+      notifyListeners();
+      // DialogUtils().showDialog(
+      //     MyErrorWidget(error: "Use has been created succ"));
+      navigateToHomeScreen(2);
+    }
     // if (selectedClubList.isEmpty) {
     //
     //   DialogUtils().showDialog(MyErrorWidget(
@@ -1015,7 +945,6 @@ RegistrationViewModel extends BaseViewModel {
 
   favorites() {
     if (selectedDrinkList.isEmpty) {
-
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select at least one favorite drink",
       ));
@@ -1023,7 +952,6 @@ RegistrationViewModel extends BaseViewModel {
       return;
     }
     if (selectedClubList.isEmpty) {
-
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select at least one favorite club",
       ));
@@ -1031,7 +959,6 @@ RegistrationViewModel extends BaseViewModel {
       return;
     }
     if (selectedVacationList.isEmpty) {
-
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select at least one favorite party vacation",
       ));
@@ -1045,19 +972,16 @@ RegistrationViewModel extends BaseViewModel {
   }
 
   addImageUser() {
-
-    for(int i=0; i<imageFiles.length; i++){
+    for (int i = 0; i < imageFiles.length; i++) {
       bool hasImages = false;
-      if(!hasImages){
-        if( (imageFiles[i] is String &&
-            (imageFiles[i] as String).isEmpty) ||
-            imageFiles[i].path.isEmpty){
+      if (!hasImages) {
+        if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
+            imageFiles[i].path.isEmpty) {
           DialogUtils().showDialog(MyErrorWidget(
             error: "Select at least one Image",
           ));
           return;
-        }
-        else {
+        } else {
           hasImages = true;
           break;
         }
@@ -1069,23 +993,21 @@ RegistrationViewModel extends BaseViewModel {
   }
 
   addFavoritedrink() async {
-
-    if(addNewDrinkController.text.isEmpty){
+    if (addNewDrinkController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Please add new drink",
       ));
       notifyListeners();
       return;
-    }
-    else {
+    } else {
       addDrink = true;
       notifyListeners();
       var addFavoriteResponce = await addFavorite.AddFavoritesDrink(
         addNewDrinkController.text,
       );
-      if(addFavoriteResponce is FavoritesModel){
+      if (addFavoriteResponce is FavoritesModel) {
         var name = addFavoriteResponce.name;
-       // drinks = addFavoriteResponce;
+        // drinks = addFavoriteResponce;
         drinkList.add(addFavoriteResponce);
         notifyListeners();
       }
@@ -1094,26 +1016,23 @@ RegistrationViewModel extends BaseViewModel {
       addDrink = false;
       addNewDrinkController.clear();
       notifyListeners();
-
-
     }
   }
 
   addFavoriteclub() async {
-    if(addNewClubController.text.isEmpty){
+    if (addNewClubController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Please add new club",
       ));
       notifyListeners();
       return;
-    }
-    else {
+    } else {
       addDrink = true;
       notifyListeners();
       var addFavoriteResponce = await addFavorite.AddFavoritesClub(
         addNewClubController.text,
       );
-      if(addFavoriteResponce is FavoritesModel){
+      if (addFavoriteResponce is FavoritesModel) {
         var name = addFavoriteResponce.name;
         // drinks = addFavoriteResponce;
         clubList.add(addFavoriteResponce!);
@@ -1124,25 +1043,23 @@ RegistrationViewModel extends BaseViewModel {
       addDrink = false;
       addNewClubController.clear();
       notifyListeners();
-
     }
   }
 
   addFavoritePartyVacation() async {
-    if(addNewPartyLocationController.text.isEmpty){
+    if (addNewPartyLocationController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Please add new location",
       ));
       notifyListeners();
       return;
-    }
-    else {
+    } else {
       addDrink = true;
       notifyListeners();
       var addFavoriteResponce = await addFavorite.AddFavoritesPartyVacation(
         addNewPartyLocationController.text,
       );
-      if(addFavoriteResponce is FavoritesModel){
+      if (addFavoriteResponce is FavoritesModel) {
         var name = addFavoriteResponce.name;
         // drinks = addFavoriteResponce;
         vacationList.add(addFavoriteResponce!);
@@ -1153,7 +1070,6 @@ RegistrationViewModel extends BaseViewModel {
       addDrink = false;
       addNewPartyLocationController.clear();
       notifyListeners();
-
     }
   }
 
@@ -1295,14 +1211,12 @@ RegistrationViewModel extends BaseViewModel {
       ));
       notifyListeners();
       return;
-    }
-    else if (signUpDOBController.text.isEmpty) {
+    } else if (signUpDOBController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Date Of Birth is required",
       ));
       return;
-    }
-    else if (relationStatusValueStr.isEmpty) {
+    } else if (relationStatusValueStr.isEmpty) {
       isSigningUp = false;
       DialogUtils().showDialog(MyErrorWidget(
         error: "RelationShip is required",
@@ -1316,29 +1230,22 @@ RegistrationViewModel extends BaseViewModel {
       ));
       notifyListeners();
       return;
-    }
-
-    else
+    } else
       signInUser = true;
-      notifyListeners();
+    notifyListeners();
     //var user = userModel.UserModel();
 
-    var checkuserResponce = await checkuser.CheckUser(
-        signUpEmailController.text,
-          "1"
-    );
+    var checkuserResponce =
+        await checkuser.CheckUser(signUpEmailController.text, "1");
 
-    if(checkuserResponce is UserModel)
-    {
+    if (checkuserResponce is UserModel) {
       signInUser = false;
       notifyListeners();
       DialogUtils().showDialog(MyErrorWidget(
         error: "User Email already exist",
       ));
       print(checkuserResponce);
-    }
-    else
-      {
+    } else {
       userModel.UserModel user = userModel.UserModel();
       // var signupResponce = await signupUser.SignUpUser(
       // signUpEmailController.text,
@@ -1360,7 +1267,8 @@ RegistrationViewModel extends BaseViewModel {
       user.password = signUpPasswordController.text;
       user.password2 = signUpVerifyPasswordController.text;
       user.phone_no = signUpPhoneController.text;
-      user.relation_ship = (relationStatusList.indexOf(relationStatusValueStr) + 1).toString();
+      user.relation_ship =
+          (relationStatusList.indexOf(relationStatusValueStr) + 1).toString();
       user.address = signUpAddressController.text;
       user.gender = (genderList.indexOf(genderValueStr) + 1).toString();
       user.dob = DateFormat("yyyy-MM-dd").format(selectedDOB);
@@ -1370,13 +1278,12 @@ RegistrationViewModel extends BaseViewModel {
       //var responce = await Addfavorites().GetFavoritesDrink();
       signInUser = false;
       notifyListeners();
-        // DialogUtils().showDialog(
-        //     MyErrorWidget(error: "Use has been created succ"));
+      // DialogUtils().showDialog(
+      //     MyErrorWidget(error: "Use has been created succ"));
       navigateToFavoriteScreen();
       //favorites();
-      }
+    }
   }
-
 
   //Signup Bar
   signupBarScreen() async {
@@ -1407,30 +1314,26 @@ RegistrationViewModel extends BaseViewModel {
         error: "Password is required",
       ));
       return;
-    }
-    else if (signUpBarPasswordController.text.length < 7) {
+    } else if (signUpBarPasswordController.text.length < 7) {
       DialogUtils().showDialog(
           MyErrorWidget(error: "Password must be at least 8 characters"));
       return;
-    }
-    else if (!CommonFunctions.hasOneUpperCase(
+    } else if (!CommonFunctions.hasOneUpperCase(
         signUpBarPasswordController.text.trim())) {
       DialogUtils().showDialog(MyErrorWidget(
           error: "Password should contain at least one upper case"));
       return;
-    }
-    else if (!CommonFunctions.hasOneLowerCase(
+    } else if (!CommonFunctions.hasOneLowerCase(
         signUpBarPasswordController.text.trim())) {
       DialogUtils().showDialog(MyErrorWidget(
           error: "Password should contain at least one lower case"));
       return;
-    }
-    else if (!CommonFunctions.hasOneDigit(signUpBarPasswordController.text.trim())) {
+    } else if (!CommonFunctions.hasOneDigit(
+        signUpBarPasswordController.text.trim())) {
       DialogUtils().showDialog(
           MyErrorWidget(error: "Password should contain at least one digit"));
       return;
-    }
-    else if (!CommonFunctions.hasOneSpeicalCharacter(
+    } else if (!CommonFunctions.hasOneSpeicalCharacter(
         signUpBarPasswordController.text.trim())) {
       DialogUtils().showDialog(MyErrorWidget(
           error: "Password should contain at least one special character"));
@@ -1446,153 +1349,137 @@ RegistrationViewModel extends BaseViewModel {
         error: "Password & Verify Password don't match",
       ));
       return;
-    }
-    else{
+    } else {
       checkSignupUser = true;
       notifyListeners();
 
-      var checkuserResponce = await checkBar.CheckBar(
-          signUpBarEmailController.text,
-          "2"
-      );
+      var checkuserResponce =
+          await checkBar.CheckBar(signUpBarEmailController.text, "2");
 
-      if(checkuserResponce is UserModel)
-      {
+      if (checkuserResponce is UserModel) {
         checkSignupUser = false;
         notifyListeners();
         DialogUtils().showDialog(MyErrorWidget(
           error: "Bar Email already exist",
         ));
-      }
-      else{
+      } else {
         checkSignupUser = false;
         notifyListeners();
         navigateToUploadBarMedia();
       }
     }
     //print(checkuserResponce);
-  // else{
-  //   signInBar = false;
-  //   notifyListeners();
-  //   var signupResponce = await signupBar.SignUpBar(
-  //     signUpBarUserController.text,
-  //     signUpBarAddressController.text,
-  //     signUpBarEmailController.text,
-  //     signUpBarPasswordController.text,
-  //     signUpBarVerifyPasswordController.text,
-  //   );
-  //   print(signupResponce);
-  //   if(signupResponce is BarModel)
-  //   {
-  //     await locator<PrefrencesViewModel>().saveBarUser(signupResponce);
-  //   }
-  //   // DialogUtils().showDialog(s
-  //   //     MyErrorWidget(error: signupResponce));
-  //   navigateToUploadBarMedia();
-  // }
+    // else{
+    //   signInBar = false;
+    //   notifyListeners();
+    //   var signupResponce = await signupBar.SignUpBar(
+    //     signUpBarUserController.text,
+    //     signUpBarAddressController.text,
+    //     signUpBarEmailController.text,
+    //     signUpBarPasswordController.text,
+    //     signUpBarVerifyPasswordController.text,
+    //   );
+    //   print(signupResponce);
+    //   if(signupResponce is BarModel)
+    //   {
+    //     await locator<PrefrencesViewModel>().saveBarUser(signupResponce);
+    //   }
+    //   // DialogUtils().showDialog(s
+    //   //     MyErrorWidget(error: signupResponce));
+    //   navigateToUploadBarMedia();
+    // }
   }
 
-  createAccount() async{
-    if(selectedWeekDays.length == 0){
+  createAccount() async {
+    if (selectedWeekDays.length == 0) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select a week day please",
       ));
       return;
-    }
-    else if(openingTimeFrom == ""){
+    } else if (openingTimeFrom == "") {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select week days opening time",
       ));
       return;
-    }
-    else if(openingTimeTo == ""){
+    } else if (openingTimeTo == "") {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select week days close time",
       ));
       return;
-    }
-    else if(breakTimeFrom == ""){
+    } else if (breakTimeFrom == "") {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select week days start break time",
       ));
       return;
-    }
-    else if(breakTimeTo == ""){
+    } else if (breakTimeTo == "") {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select week days end break time",
       ));
       return;
-    }
-    else if(selectedWeekendDays.length == 0){
+    } else if (selectedWeekendDays.length == 0) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select a weekend day please",
       ));
       return;
-    }
-    else if(weekEndOpeningTimeFrom == ""){
+    } else if (weekEndOpeningTimeFrom == "") {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select weekend days opening time",
       ));
       return;
-    }
-    else if(weekEndOpeningTimeTo == ""){
+    } else if (weekEndOpeningTimeTo == "") {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select weekend days opening time",
       ));
       return;
-    }
-    else if(weekEndBreakTimeFrom == ""){
+    } else if (weekEndBreakTimeFrom == "") {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select weekend days start break time",
       ));
       return;
-    }
-    else if(weekEndBreakTimeTo == ""){
+    } else if (weekEndBreakTimeTo == "") {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select weekend days end break time",
       ));
       return;
-    }
-    else if(selectedBarKind.length == 0){
+    } else if (selectedBarKind.length == 0) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select a bar kind",
       ));
       return;
-    }
-    else{
+    } else {
       var barKindList = CommonFunctions.AddFromList(selectedBarKind);
       var workingDaysList = selectedWeekDays;
       var weekendDaysList = selectedWeekendDays;
       var response = await signupBar.SignUpBar(
-          signUpBarUserController.text.replaceAll(' ', ''),
-          signUpBarUserController.text,
-          signUpBarEmailController.text,
-          signUpBarAddressController.text,
-          2,
-          barKindList,
-          workingDaysList,
-          openingTimeFrom!,
-          openingTimeTo!,
-          breakTimeFrom!,
-          breakTimeTo!,
-          weekendDaysList,
-          weekEndOpeningTimeFrom!,
-          weekEndOpeningTimeTo!,
-          weekEndBreakTimeFrom!,
-          weekEndBreakTimeTo!,
-          imageFiles[0] as File,
-          imageFiles[1] as File,
-          imageFiles[2] as File,
-          imageFiles[3] as File,
-          imageFiles[4] as File,
-          imageFiles[5] as File,
-          true,
-          true,
-          signUpBarPasswordController.text,
-          signUpBarVerifyPasswordController.text,
+        signUpBarUserController.text.replaceAll(' ', ''),
+        signUpBarUserController.text,
+        signUpBarEmailController.text,
+        signUpBarAddressController.text,
+        2,
+        barKindList,
+        workingDaysList,
+        openingTimeFrom!,
+        openingTimeTo!,
+        breakTimeFrom!,
+        breakTimeTo!,
+        weekendDaysList,
+        weekEndOpeningTimeFrom!,
+        weekEndOpeningTimeTo!,
+        weekEndBreakTimeFrom!,
+        weekEndBreakTimeTo!,
+        imageFiles[0] as File,
+        imageFiles[1] as File,
+        imageFiles[2] as File,
+        imageFiles[3] as File,
+        imageFiles[4] as File,
+        imageFiles[5] as File,
+        true,
+        true,
+        signUpBarPasswordController.text,
+        signUpBarVerifyPasswordController.text,
       );
       print(response);
-      if(response is NewBarModel){
+      if (response is NewBarModel) {
         await prefrencesViewModel.saveBarUser(response);
         navigateToHomeBarScreen();
       }
@@ -1600,8 +1487,8 @@ RegistrationViewModel extends BaseViewModel {
   }
 
   getBarPost() async {
-  var getNewsfeed = await  createBarPost.GetPost();
-  print(getNewsfeed);
+    var getNewsfeed = await createBarPost.GetPost();
+    print(getNewsfeed);
   }
 
   createBarPostScreen() async {
@@ -1615,15 +1502,12 @@ RegistrationViewModel extends BaseViewModel {
         error: "Kindly write post",
       ));
       return;
-    }
-    else{
-
+    } else {
       var createPostResponce = await createBarPost.CreatePost(
-
-          (msgTypeList.indexOf(msgTypeValueStr) + 1).toString(),
-          barPostLocationController.text,
-          barPostController.text,
-          imageFilesPost,
+        (msgTypeList.indexOf(msgTypeValueStr) + 1).toString(),
+        barPostLocationController.text,
+        barPostController.text,
+        imageFilesPost,
       );
       print(createPostResponce);
       navigateToHomeBarScreen();
@@ -1987,7 +1871,7 @@ RegistrationViewModel extends BaseViewModel {
     navigationService.navigateToBarAccountOwnerShip();
   }
 
-  void navigateToUserProfileAccountOwnershipScreen(){
+  void navigateToUserProfileAccountOwnershipScreen() {
     navigationService.navigateToUserProfileAccountOwnershipScreen();
   }
 
@@ -2014,6 +1898,4 @@ RegistrationViewModel extends BaseViewModel {
   void navigateToBarProfile2() {
     navigationService.navigateToBarProfile2();
   }
-
-
 }
