@@ -286,7 +286,7 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
                             itemBuilder: (context, index) {
                               return Padding(
                                 padding: EdgeInsets.symmetric(
-                                  horizontal: 6.w,
+                                  horizontal: 3.5.w,
                                 ),
                                 child: Container(
                                   decoration: BoxDecoration(

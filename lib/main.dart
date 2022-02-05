@@ -120,7 +120,7 @@ class _MyAppState extends State<MyApp> {
         return OrientationBuilder(
           builder: (context, orientation) {
             SizeConfig().init(constraints, orientation);
-            return CreateBarEvent();
+            return Splash();
           },
         );
       },
