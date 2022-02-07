@@ -253,8 +253,7 @@ class MainViewModel extends BaseViewModel {
       print(userSignupResponce);
       if (userSignupResponce is UserModel) {
         UserModel user = userSignupResponce;
-        user.favorite_alcohol_drinks =
-            CommonFunctions.SubtractFromList(user.favorite_alcohol_drinks!);
+        user.favorite_alcohol_drinks = user.favorite_alcohol_drinks!;
         user.favorite_night_club =
             CommonFunctions.SubtractFromList(user.favorite_night_club!);
         user.favorite_party_vacation =

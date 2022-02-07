@@ -128,10 +128,11 @@ class Updateuser {
       }
 
     } catch (e) {
-      print(e);
+        print(e);
       //dynamic exception = e;
       return  (e as DioError).response!.data["message"].toString();
     }
+
   }
 
   Future UpdateUserProfile(

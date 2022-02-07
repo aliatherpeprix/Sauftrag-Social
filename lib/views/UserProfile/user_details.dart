@@ -843,7 +843,7 @@ class _UserDetailsState extends State<UserDetails> {
                             ),
                             SizedBox(height: 3.h),
 
-                            //Favorite Drink
+                            //
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
