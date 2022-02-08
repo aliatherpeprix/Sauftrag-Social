@@ -110,7 +110,7 @@ class _FavoriteDrinkListState extends State<FavoriteDrinkList> {
                                   }
                                   model.notifyListeners();
                                 },
-                                child: Text((model.drinkList[model.drinkList.indexOf(element)] as FavoritesModel).name ?? ""),
+                                child: Text((element as FavoritesModel).name ?? ""),
                                 style: ElevatedButton.styleFrom(
                                   primary: model.selectedDrinkList.contains(element.id) ? ColorUtils.text_red : ColorUtils.white,
                                   onPrimary: model.selectedDrinkList.contains(element.id) ? ColorUtils.white : ColorUtils.text_dark,
@@ -190,8 +190,7 @@ class _FavoriteDrinkListState extends State<FavoriteDrinkList> {
                               //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                               child: ElevatedButton(
                                 onPressed: () async{
-                                  List temp = model.selectedDrinkList;
-                                  await model.favoritesDrinks(temp, "favorite_alcohol_drinks");
+                                  await model.favoritesDrinks(model.selectedDrinkList, "favorite_alcohol_drinks");
                                   model.navigateBack();
                                 },
                                 child: model.favDrink == false ? Text("Save") : Loader() ,

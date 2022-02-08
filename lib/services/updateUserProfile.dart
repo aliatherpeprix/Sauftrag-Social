@@ -99,11 +99,9 @@ class Updateuser {
 
       var param = FormData.fromMap({
 
-
         if(favorite=='favorite_alcohol_drinks')'favorite_alcohol_drinks' : selectedList,
         if(favorite=='favorite_night_club')'favorite_night_club' : selectedList,
         if(favorite=='favorite_party_vacation')'favorite_party_vacation' : selectedList,
-
 
       });
       UserModel? user = await locator<PrefrencesViewModel>().getUser();
@@ -128,7 +126,7 @@ class Updateuser {
       }
 
     } catch (e) {
-        print(e);
+      print(e);
       //dynamic exception = e;
       return  (e as DioError).response!.data["message"].toString();
     }

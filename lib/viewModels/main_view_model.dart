@@ -249,15 +249,14 @@ class MainViewModel extends BaseViewModel {
       notifyListeners();
 
       var userSignupResponce =
-          await updateUser.UpdateUserFavorites(selectedList, favorite);
+
+      await updateUser.UpdateUserFavorites(selectedList, favorite);
       print(userSignupResponce);
       if (userSignupResponce is UserModel) {
         UserModel user = userSignupResponce;
         user.favorite_alcohol_drinks = user.favorite_alcohol_drinks!;
-        user.favorite_night_club =
-            CommonFunctions.SubtractFromList(user.favorite_night_club!);
-        user.favorite_party_vacation =
-            CommonFunctions.SubtractFromList(user.favorite_party_vacation!);
+        user.favorite_night_club = user.favorite_night_club!;
+        user.favorite_party_vacation = user.favorite_party_vacation!;
         // if (favorite=="favorite_alcohol_drinks"){
         //
         // }
@@ -468,11 +467,8 @@ class MainViewModel extends BaseViewModel {
 
   int partyVacationValue = 1;
   String partyVacationValueStr = "Ibiza Beach";
-  List<String> partyVacationList = [
-    "Ibiza Beach",
-    "Goldstrand",
-    "Zrce Beach",
-    "Lloret"
+  List<dynamic> partyVacationList = [
+
   ];
   Map<String, int> partyVacationMap = {
     'Ibiza Beach': 1,
@@ -593,52 +589,24 @@ class MainViewModel extends BaseViewModel {
   }
 
   List<dynamic> drinkList = [
-    "Beer",
-    "White Wine",
-    "Radler",
-    "Red Wine",
-    "Gin",
-    "Whiskey",
-    "Hard Seltzer",
-    "Jägermeister",
-    "Tequila",
-    "Champagne"
+
   ];
 
   List<dynamic> selectedDrinkList = [];
 
   List<dynamic> clubList = [
-    "Club 1",
-    "Club 2",
-    "Club 3",
-    "Club 4",
-    "Club 5",
-    "Club 6",
-    "Club 7",
-    "Club 8",
-    "Club 9",
-    "Club 10"
+
   ];
   List<dynamic> selectedClubList = [];
 
   List<dynamic> vacationList = [
-    "Ballermann",
-    "Goldstrand",
-    "Zrce Beach",
-    "Lloret",
-    "Ibiza",
-    "Springbreak Cancun"
+
   ];
 
   List<dynamic> selectedVacationList = [];
 
   List<String> interestList = [
-    "White Wine",
-    "Hard Seltzer",
-    "Whiskey",
-    "Club 1",
-    "Club 2",
-    "Goldstrand",
+
   ];
 
   CameraPosition kGooglePlex = CameraPosition(
@@ -1116,12 +1084,9 @@ class MainViewModel extends BaseViewModel {
     if (userUpdateResponse is UserModel) {
       UserModel user = userUpdateResponse;
       user.token = userModel!.token!;
-      user.favorite_alcohol_drinks =
-          CommonFunctions.SubtractFromList(user.favorite_alcohol_drinks!);
-      user.favorite_night_club =
-          CommonFunctions.SubtractFromList(user.favorite_night_club!);
-      user.favorite_party_vacation =
-          CommonFunctions.SubtractFromList(user.favorite_party_vacation!);
+      user.favorite_alcohol_drinks = user.favorite_alcohol_drinks!;
+      user.favorite_night_club = user.favorite_night_club!;
+      user.favorite_party_vacation =user.favorite_party_vacation!;
       await prefrencesViewModel.saveUser(user);
       notifyListeners();
     }

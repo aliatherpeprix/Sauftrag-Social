@@ -885,6 +885,8 @@ class _UserDetailsState extends State<UserDetails> {
                               ],
                             ),
                             SizedBox(height: 2.h),
+
+                            //Drink
                             Wrap(
                               spacing: 2.5.w,
                               runSpacing: 1.5.h,
@@ -892,8 +894,8 @@ class _UserDetailsState extends State<UserDetails> {
                               children: model.userModel!.favorite_alcohol_drinks!
                                   .map((element) => ElevatedButton(
                                 onPressed: () {
-                                  // if(model.selectedDrinkList.contains(model.drinkList.indexOf(element))){
-                                  //   model.selectedDrinkList.remove(model.drinkList.indexOf(element));
+                                  // if(model.selectedDrinkList.contains(element.id)){
+                                  //   model.selectedDrinkList.remove(element.id);
                                   // }
                                   // else{
                                   //   // if(element == "Radler"){
@@ -904,7 +906,7 @@ class _UserDetailsState extends State<UserDetails> {
                                   //   //       }
                                   //   //   );
                                   //   // }
-                                  //   model.selectedDrinkList.add(model.drinkList.indexOf(element));
+                                  //   model.selectedDrinkList.add(element.id);
                                   // }
                                   // model.notifyListeners();
                                 },
@@ -968,12 +970,13 @@ class _UserDetailsState extends State<UserDetails> {
                                         fontSize: 1.8.t,
                                         decoration: TextDecoration.underline
                                     ),
-
                                   ),
                                 ),
                               ],
                             ),
                             SizedBox(height: 2.h),
+
+                            //Night Club
                             Wrap(
                               spacing: 2.5.w,
                               runSpacing: 1.5.h,
@@ -981,8 +984,8 @@ class _UserDetailsState extends State<UserDetails> {
                               children: model.userModel!.favorite_night_club!
                                   .map((element) => ElevatedButton(
                                 onPressed: () {
-                                  // if(model.selectedDrinkList.contains(model.drinkList.indexOf(element))){
-                                  //   model.selectedDrinkList.remove(model.drinkList.indexOf(element));
+                                  // if(model.selectedDrinkList.contains(element.id)){
+                                  //   model.selectedDrinkList.remove(element.id);
                                   // }
                                   // else{
                                   //   // if(element == "Radler"){
@@ -993,11 +996,11 @@ class _UserDetailsState extends State<UserDetails> {
                                   //   //       }
                                   //   //   );
                                   //   // }
-                                  //   model.selectedDrinkList.add(model.drinkList.indexOf(element));
+                                  //   model.selectedDrinkList.add(element.id);
                                   // }
                                   // model.notifyListeners();
                                 },
-                                child: Text((model.clubList.where((club) => club.id==element).first as FavoritesModel).name ?? ""),
+                                child: Text((model.clubList.where((drink) => drink.id==element).first as FavoritesModel).name ?? ""),
                                 style: ElevatedButton.styleFrom(
                                   primary:   ColorUtils.red_color,
                                   onPrimary:  ColorUtils.white,
@@ -1063,6 +1066,8 @@ class _UserDetailsState extends State<UserDetails> {
                               ],
                             ),
                             SizedBox(height: 2.h),
+
+                            //Party Vacation
                             Wrap(
                               spacing: 2.5.w,
                               runSpacing: 1.5.h,
@@ -1070,8 +1075,8 @@ class _UserDetailsState extends State<UserDetails> {
                               children: model.userModel!.favorite_party_vacation!
                                   .map((element) => ElevatedButton(
                                 onPressed: () {
-                                  // if(model.selectedDrinkList.contains(model.drinkList.indexOf(element))){
-                                  //   model.selectedDrinkList.remove(model.drinkList.indexOf(element));
+                                  // if(model.selectedDrinkList.contains(element.id)){
+                                  //   model.selectedDrinkList.remove(element.id);
                                   // }
                                   // else{
                                   //   // if(element == "Radler"){
@@ -1082,11 +1087,11 @@ class _UserDetailsState extends State<UserDetails> {
                                   //   //       }
                                   //   //   );
                                   //   // }
-                                  //   model.selectedDrinkList.add(model.drinkList.indexOf(element));
+                                  //   model.selectedDrinkList.add(element.id);
                                   // }
                                   // model.notifyListeners();
                                 },
-                                child:  Text((model.vacationList.where((vacation) => vacation.id==element).first as FavoritesModel).name ?? ""),
+                                child:  Text((model.vacationList.where((drink) => drink.id==element).first as FavoritesModel).name ?? ""),
                                 style: ElevatedButton.styleFrom(
                                   primary:   ColorUtils.red_color,
                                   onPrimary:  ColorUtils.white,

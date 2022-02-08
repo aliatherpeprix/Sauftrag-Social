@@ -90,40 +90,38 @@ class _FavoriteClubState extends State<FavoriteClub> {
                               children: model.clubList
                                   .map((element) => ElevatedButton(
                                 onPressed: () {
-                                  if(model.selectedClubList.contains(model.clubList.indexOf(element))){
-                                    model.selectedClubList.remove(model.clubList.indexOf(element));
+                                  if(model.selectedClubList.contains(element.id)){
+                                    model.selectedClubList.remove(element.id);
                                   }
                                   else{
-                                    if(element == "Radler"){
-                                      showDialog(
-                                          context: context,
-                                          builder: (BuildContext context){
-                                            return RadlerDialogBox(title: "Add New Location", btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
-                                          }
-                                      );
-                                    }
-                                    else{
-                                      model.selectedClubList.add(model.clubList.indexOf(element));
-                                    }
+                                    // if(element == "Radler"){
+                                    //   showDialog(
+                                    //       context: context,
+                                    //       builder: (BuildContext context){
+                                    //         return RadlerDialogBox(title: "Add New Location", btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+                                    //       }
+                                    //   );
+                                    // }
+                                    model.selectedClubList.add(element.id);
                                   }
                                   model.notifyListeners();
                                 },
-                                child: Text((model.clubList[model.clubList.indexOf(element)] as FavoritesModel).name ?? ""),
+                                child: Text((element as FavoritesModel).name ?? ""),
                                 style: ElevatedButton.styleFrom(
-                                  primary: model.selectedClubList.contains(model.clubList.indexOf(element)) ? ColorUtils.text_red : ColorUtils.white,
-                                  onPrimary: model.selectedClubList.contains(model.clubList.indexOf(element)) ? ColorUtils.white : ColorUtils.text_dark,
+                                  primary: model.selectedClubList.contains(element.id) ? ColorUtils.text_red : ColorUtils.white,
+                                  onPrimary: model.selectedClubList.contains(element.id) ? ColorUtils.white : ColorUtils.text_dark,
                                   padding: EdgeInsets.symmetric(vertical: 1.8.h, horizontal: 9.w),
-                                  elevation: model.selectedClubList.contains(model.clubList.indexOf(element)) ? 5 : 0,
+                                  elevation: model.selectedClubList.contains(element.id) ? 5 : 0,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(Dimensions.roundCorner),
                                       side: BorderSide(
-                                          color: model.selectedClubList.contains(model.clubList.indexOf(element)) ? ColorUtils.text_red : ColorUtils.divider,
+                                          color: model.selectedClubList.contains(element.id) ? ColorUtils.text_red : ColorUtils.divider,
                                           width: 1
                                       )
                                   ),
                                   textStyle: TextStyle(
                                     //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
-                                    fontFamily: model.selectedClubList.contains(model.clubList.indexOf(element)) ? FontUtils.modernistBold : FontUtils.modernistRegular,
+                                    fontFamily: model.selectedClubList.contains(element.id) ? FontUtils.modernistBold : FontUtils.modernistRegular,
                                     fontSize: 1.8.t,
                                     //height: 0
                                   ),
@@ -188,8 +186,8 @@ class _FavoriteClubState extends State<FavoriteClub> {
                               //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                               child: ElevatedButton(
                                 onPressed: () async{
-                                  List temp = CommonFunctions.AddFromList(model.selectedClubList);
-                                  await model.favoritesDrinks(temp, "favorite_night_club");
+                                  //List temp = CommonFunctions.AddFromList(model.selectedClubList);
+                                  await model.favoritesDrinks(model.selectedClubList, "favorite_night_club");
                                   model.navigateBack();
                                 },
                                 child: model.favDrink == false ? Text("Save") : Loader(),
