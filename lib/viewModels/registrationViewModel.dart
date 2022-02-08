@@ -862,18 +862,25 @@ class RegistrationViewModel extends BaseViewModel {
       print(userSignupResponce);
       if (userSignupResponce is UserModel) {
         userModel.UserModel user = userSignupResponce;
-        user.token = usermodel.token;
-        user.password = signUpPasswordController.text;
-        user.password2 = signUpVerifyPasswordController.text;
-        user.favorite_alcohol_drinks = user.favorite_alcohol_drinks!;
-        user.favorite_night_club = user.favorite_night_club!;
-        user.favorite_party_vacation = user.favorite_party_vacation!;
+        // user.token = usermodel.token;
+        // user.password = signUpPasswordController.text;
+        // user.password2 = signUpVerifyPasswordController.text;
+        // user.favorite_alcohol_drinks = user.favorite_alcohol_drinks!;
+        // user.favorite_night_club = user.favorite_night_club!;
+        // user.favorite_party_vacation = user.favorite_party_vacation!;
         await locator<PrefrencesViewModel>().saveUser(user);
         dataCheck = false;
         selectedDrinkList.clear();
         selectedClubList.clear();
         selectedVacationList.clear();
-        imageFiles = ["", "", "", "", "", ""];
+        imageFiles = [
+          File(""),
+          File(""),
+          File(""),
+          File(""),
+          File(""),
+          File("")];
+
         //model.imageFiles = [];
         // DialogUtils().showDialog(
         //     MyErrorWidget(error: "Use has been created succ"));
