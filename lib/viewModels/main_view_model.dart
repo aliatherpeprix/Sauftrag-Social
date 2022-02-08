@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -141,6 +142,51 @@ class MainViewModel extends BaseViewModel {
       'image': ImageUtils.messagePerson8,
     },
   ];
+
+  bool isSwitched = false;
+
+
+  Future<Position> determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      isSwitched = false;
+      notifyListeners();
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      isSwitched = false;
+      notifyListeners();
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        isSwitched = false;
+        notifyListeners();
+
+        return Future.error('Location permissions are denied');
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      isSwitched = false;
+      notifyListeners();
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+    if (permission == LocationPermission.always) {
+      isSwitched = true;
+      notifyListeners();
+    }
+    if (permission == LocationPermission.whileInUse) {
+      isSwitched = true;
+      notifyListeners();
+    }
+
+    return await Geolocator.getCurrentPosition();
+  }
 
   File imageFile = File('my initial file');
   List<dynamic> imageFiles = [

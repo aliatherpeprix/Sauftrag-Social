@@ -69,6 +69,7 @@ class _NewsFeedState extends State<NewsFeed> {
       disposeViewModel: false,
       onModelReady: (model){
         //model.userNewsFeed = true;
+        // model.getEvent(context);
       },
       builder: (context, model, child) {
         return SideMenu(

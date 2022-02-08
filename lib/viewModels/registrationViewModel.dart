@@ -463,7 +463,6 @@ RegistrationViewModel extends BaseViewModel {
   }
 
   addBarImages() {
-
     for(int i=0; i<imageFiles.length; i++){
       if (i == 0){
         if( (imageFiles[i] is String &&

@@ -52,7 +52,7 @@ dependencies:
   expand_tap_area: ^1.1.0
   another_xlider: ^1.0.0
   liquid_progress_indicator: ^0.4.0
-  google_maps:
+#  //google_maps:
   flutter_time_picker_spinner: ^2.0.0
   qr_code_scanner: ^0.6.1
   country_code_picker: ^2.0.2
@@ -60,6 +60,8 @@ dependencies:
   flutter_rating_bar: ^4.0.0
   flutter_zoom_drawer: ^2.1.2
   image_cropper: ^1.4.1
+  location: ^4.2.0
+  geolocator: ^8.1.1
 
   #flutter_tindercard: ^0.2.0
 

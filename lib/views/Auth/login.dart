@@ -323,7 +323,6 @@ class _LoginState extends State<Login> {
                                     ],
                                   ),
                                 ),
-
                                 //Sign in Button
                                 SizedBox(
                                   width: double.infinity,

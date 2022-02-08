@@ -113,6 +113,8 @@ var drawerController;
     return ViewModelBuilder<MainViewModel>.reactive(
       onModelReady: (data) {
         data.getBarPost();
+        data.getEvent(context);
+
         // data.buttonController = AnimationController(duration: Duration(milliseconds: 1000), vsync: this);
         // data.initSwipe();
       },
