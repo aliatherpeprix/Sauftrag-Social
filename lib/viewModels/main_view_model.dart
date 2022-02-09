@@ -13,6 +13,7 @@ import 'package:mime/mime.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/bar_event_model.dart';
+import 'package:sauftrag/models/bar_model.dart';
 import 'package:sauftrag/models/create_bar_post.dart';
 import 'package:sauftrag/models/faqs_questions.dart';
 import 'package:sauftrag/models/followers.dart';
@@ -27,6 +28,7 @@ import 'package:sauftrag/services/faqs.dart';
 
 import 'package:sauftrag/services/privacyPolicy.dart';
 import 'package:sauftrag/services/termsAndCondition.dart';
+import 'package:sauftrag/services/updateBarProfile.dart';
 import 'package:sauftrag/services/updateUserProfile.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/common_functions.dart';
@@ -46,6 +48,7 @@ import '../main.dart';
 class MainViewModel extends BaseViewModel {
 
   var updateUser = Updateuser();
+  var updateBar = Updatebar();
   var createBarPost = Createpost();
   var privacyPolicy = Privacypolicy();
   var termCondition = Termscondition();
@@ -58,6 +61,7 @@ class MainViewModel extends BaseViewModel {
   final GlobalKey<NavigatorState> navigationKey = GlobalKey<NavigatorState>();
 
   UserModel? userModel;
+  NewBarModel? barModel;
 
 
   bool logInUserSelected = true;
@@ -111,6 +115,9 @@ class MainViewModel extends BaseViewModel {
   bool isUserProfile = false;
 
   var dio = Dio();
+
+  final aboutMeController = TextEditingController();
+  final barNameController = TextEditingController();
 
   final addDrinkController = TextEditingController();
   bool isAddDrinkInFocus = false;
@@ -1094,17 +1101,49 @@ class MainViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  Future saveBarDetails() async {
+    List tempList = [];
+    // for (int i = 0;i<imageFiles.length;i++){
+    //   if (imageFiles[i] is File && (imageFiles[i] as File).path.isNotEmpty){
+    //     String image = "data:${lookupMimeType(imageFiles[0].path)};base64," +
+    //         base64Encode(imageFiles[0].readAsBytesSync());
+    //     tempList.add(image);
+    //   }
+    //   else {
+    //     tempList.add(imageFiles[i]);
+    //   }
+    // }
+    editProfile = true;
+    notifyListeners();
+    var barUpdateResponse = await updateBar.UpdateBarProfile(
+        //(genderList.indexOf(genderValueStr) + 1).toString(),
+        imageFiles,
+        barNameController.text,
+    );
+    if (barUpdateResponse is NewBarModel) {
+      NewBarModel user = barUpdateResponse;
+
+      await prefrencesViewModel.saveBarUser(user);
+      notifyListeners();
+    }
+    print(barUpdateResponse);
+    editProfile = false;
+    notifyListeners();
+  }
+
   logOutUser() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.clear();
     navigateAndRemoveSignInScreen();
   }
 
-
-
-
   void getUserData() async {
     userModel = await prefrencesViewModel.getUser();
+    notifyListeners();
+  }
+
+  void getBarData() async {
+    barModel = await prefrencesViewModel.getBarUser();
     notifyListeners();
   }
 

@@ -45,49 +45,56 @@ class _MainViewBarState extends State<MainViewBar> {
   @override
   Widget build(BuildContext context) {
 
-    return SafeArea(
-      top: false,
-      bottom: false,
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Column(
-          children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: Container(
-                  child: body
-              ),
-            ),
-            MyCurvedNavBar(
-              barIconColor: ColorUtils.icon_color,
-              selectedIconColor: ColorUtils.white,
-              color: ColorUtils.white,
-              buttonBackgroundColor: ColorUtils.text_red,
-              index: currentIndex,
-              animationCurve: Curves.ease,
-              animationDuration: Duration(milliseconds: 300),
-              height: SizeConfig.heightMultiplier * 8,
-              //backgroundColor: Color(0xFFefefef),
-              parentDecoration: BoxDecoration(
-                  boxShadow: [BoxShadow(
-                      color: Color(0xFFefefef),
-                      blurRadius: 3*SizeConfig.imageSizeMultiplier,
-                      offset: Offset(0,-10)
-                  )]
-              ),
-              items: <String>[
-                ImageUtils.homeIcon,
-                ImageUtils.chatIcon,
-                ImageUtils.scanner,
-                ImageUtils.profileIcon
-              ],
-              onTap: (index) {
-                currentIndex = index;
-                onClick(currentIndex);
-                setState(() {});
-              },
-            ),
-            /*CurvedNavigationBar(
+   return ViewModelBuilder<MainViewModel>.reactive(
+     onModelReady: (model) {
+       model.getBarData();
+     },
+      viewModelBuilder: () => locator<MainViewModel>(),
+      disposeViewModel: false,
+      builder: (context, model, child){
+        return SafeArea(
+          top: false,
+          bottom: false,
+          child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            body: Column(
+              children: <Widget>[
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                      child: body
+                  ),
+                ),
+                MyCurvedNavBar(
+                  barIconColor: ColorUtils.icon_color,
+                  selectedIconColor: ColorUtils.white,
+                  color: ColorUtils.white,
+                  buttonBackgroundColor: ColorUtils.text_red,
+                  index: currentIndex,
+                  animationCurve: Curves.ease,
+                  animationDuration: Duration(milliseconds: 300),
+                  height: SizeConfig.heightMultiplier * 8,
+                  //backgroundColor: Color(0xFFefefef),
+                  parentDecoration: BoxDecoration(
+                      boxShadow: [BoxShadow(
+                          color: Color(0xFFefefef),
+                          blurRadius: 3*SizeConfig.imageSizeMultiplier,
+                          offset: Offset(0,-10)
+                      )]
+                  ),
+                  items: <String>[
+                    ImageUtils.homeIcon,
+                    ImageUtils.chatIcon,
+                    ImageUtils.scanner,
+                    ImageUtils.profileIcon
+                  ],
+                  onTap: (index) {
+                    currentIndex = index;
+                    onClick(currentIndex);
+                    setState(() {});
+                  },
+                ),
+                /*CurvedNavigationBar(
             backgroundColor: ColorUtils.transparent,
             buttonBackgroundColor: ColorUtils.text_red,
             items: <Widget>[
@@ -102,11 +109,15 @@ class _MainViewBarState extends State<MainViewBar> {
               onClick(index);
             },
           ),*/
-            //BottomBar(index: currentIndex, onClick: onClick)
-          ],
-        ),
-      ),
+                //BottomBar(index: currentIndex, onClick: onClick)
+              ],
+            ),
+          ),
+        );
+      },
     );
+
+
   }
 
   onClick(int selectedIndex){
