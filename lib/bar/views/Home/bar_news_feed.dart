@@ -115,6 +115,8 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
       onModelReady: (data) {
         data.getBarPost();
         data.rating();
+        data.getEvent(context);
+
         // data.buttonController = AnimationController(duration: Duration(milliseconds: 1000), vsync: this);
         // data.initSwipe();
       },

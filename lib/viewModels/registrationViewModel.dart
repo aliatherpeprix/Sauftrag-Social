@@ -441,7 +441,8 @@ class RegistrationViewModel extends BaseViewModel {
   addBarImages() {
     for (int i = 0; i < imageFiles.length; i++) {
       if (i == 0) {
-        if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
+        if ((imageFiles[i] is String && 
+            (imageFiles[i] as String).isEmpty) ||
             imageFiles[i].path.isEmpty) {
           DialogUtils().showDialog(MyErrorWidget(
             error: "Select Bar Logo",

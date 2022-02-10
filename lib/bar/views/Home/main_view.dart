@@ -37,6 +37,7 @@ class _MainViewBarState extends State<MainViewBar> {
 
   @override
   void initState() {
+
     currentIndex = widget.index;
     onClick(currentIndex);
     super.initState();

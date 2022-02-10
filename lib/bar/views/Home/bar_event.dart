@@ -12,6 +12,7 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/widgets/loader.dart';
 import 'package:stacked/stacked.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
@@ -52,6 +53,9 @@ class _CreateBarEventState extends State<CreateBarEvent> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<AuthenticationViewModel>.reactive(
+      onModelReady: (model){
+        // model.determinePosition();
+      },
       viewModelBuilder: () => locator<AuthenticationViewModel>(),
       disposeViewModel: false,
       builder: (context, model, child) {
@@ -59,7 +63,7 @@ class _CreateBarEventState extends State<CreateBarEvent> {
           onTap: () {
             FocusScope.of(context).unfocus();
           },
-          child: SafeArea(
+          child:model.createEventLoader?Center(child: CircularProgressIndicator()): SafeArea(
             top: false,
             bottom: false,
             child: Scaffold(
@@ -654,7 +658,7 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                                 model.selectedEventDate ==null
                                                     ? "Date of Birth"
                                                     : DateFormat('dd/MM/yyyy')
-                                                    .format(model.selectedEventDate),
+                                                    .format(model.selectedEventDate!),
                                                 style: model.selectedEventDate == null
                                                     ? TextStyle(
                                                     color: model.signUpDOBFocus

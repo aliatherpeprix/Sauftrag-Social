@@ -6,6 +6,7 @@ import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:stacked/stacked.dart';
+import 'package:location/location.dart';
 
 class GPS extends StatefulWidget {
   @override
@@ -13,8 +14,10 @@ class GPS extends StatefulWidget {
 }
 
 class _GPSState extends State<GPS> {
-  bool isSwitched = false;
-
+  bool serviceEnabled =false;
+  PermissionStatus ?permissionGranted;
+  LocationData ?locationData;
+  Location location = new Location();
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<MainViewModel>.reactive(
@@ -117,12 +120,9 @@ class _GPSState extends State<GPS> {
                               fontFamily: FontUtils.modernistBold),
                         ),
                         Switch(
-                          value: isSwitched,
-                          onChanged: (value) {
-                            setState(() {
-                              isSwitched = value;
-                              print(isSwitched);
-                            });
+                          value: model.isSwitched,
+                          onChanged: (value) async{
+                            model.determinePosition();
                           },
                           activeTrackColor: ColorUtils.red_color,
                           activeColor: ColorUtils.red_color,

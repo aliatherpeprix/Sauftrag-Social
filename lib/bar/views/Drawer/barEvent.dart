@@ -79,6 +79,9 @@ class _BarEventState extends State<BarEvent> {
                     physics: const AlwaysScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
+                      dynamic time = model.barEventModel![index].startTime;
+                      time =time.toString().split(':00');
+                      print(time);
                       return Padding(
                         padding: EdgeInsets.symmetric(horizontal:SizeConfig.widthMultiplier * 4,),
                         child: Container(
@@ -115,7 +118,7 @@ class _BarEventState extends State<BarEvent> {
                                     Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text(model.barEventModel![index].eventDate +' -'+model.barEventModel![index].startTime,
+                                        Text(model.barEventModel![index].eventDate +' -'+time[0],
                                           style: TextStyle(
                                               fontFamily: FontUtils.modernistRegular,
                                               fontSize: 1.7.t,
