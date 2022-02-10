@@ -45,13 +45,13 @@ class _MainViewBarState extends State<MainViewBar> {
   @override
   Widget build(BuildContext context) {
 
-   return ViewModelBuilder<MainViewModel>.reactive(
-     onModelReady: (model) {
-       model.getBarData();
-     },
-      viewModelBuilder: () => locator<MainViewModel>(),
+    return ViewModelBuilder<MainViewModel>.reactive(
+      onModelReady: (model){
+        model.getBarData();
+      },
+      viewModelBuilder: ()=>locator<MainViewModel>(),
       disposeViewModel: false,
-      builder: (context, model, child){
+      builder: (context, model, child) {
         return SafeArea(
           top: false,
           bottom: false,
@@ -119,6 +119,7 @@ class _MainViewBarState extends State<MainViewBar> {
 
 
   }
+
 
   onClick(int selectedIndex){
     setState(() {

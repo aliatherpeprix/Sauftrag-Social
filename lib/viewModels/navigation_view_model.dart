@@ -27,6 +27,7 @@ import 'package:sauftrag/bar/views/Profile/bar_profile.dart';
 import 'package:sauftrag/bar/views/Home/bar_event.dart';
 import 'package:sauftrag/bar/views/Profile/faq_answers.dart';
 import 'package:sauftrag/bar/views/Profile/faq_questions_list.dart';
+import 'package:sauftrag/models/address_book.dart';
 import 'package:sauftrag/views/Auth/check_email.dart';
 import 'package:sauftrag/views/Auth/favorite.dart';
 import 'package:sauftrag/views/Auth/forget_password.dart';
@@ -44,6 +45,7 @@ import 'package:sauftrag/views/MapSearch/map_screen.dart';
 import 'package:sauftrag/views/MapSearch/search.dart';
 import 'package:sauftrag/views/NewsFeed/all_event_list.dart';
 import 'package:sauftrag/views/NewsFeed/upcoming_event_list.dart';
+import 'package:sauftrag/views/UserFriendList/contact_list.dart';
 import 'package:sauftrag/views/UserFriendList/create_group.dart';
 import 'package:sauftrag/views/UserFriendList/friend_list.dart';
 import 'package:sauftrag/views/NewsFeed/event_detail.dart';
@@ -350,6 +352,10 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateToFaqAnsScreen(){
     navigationKey.currentState!.push(PageTransition(child: FaqAnswer(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToAddressBookScreen(){
+    navigationKey.currentState!.push(PageTransition(child: ContactList(), type: PageTransitionType.rightToLeftWithFade));
   }
 
 

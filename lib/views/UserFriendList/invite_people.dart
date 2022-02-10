@@ -160,7 +160,7 @@ class _InvitePeopleState extends State<InvitePeople> {
                           SizedBox(height: 4.h,),
                           GestureDetector(
                             onTap: (){
-                              add(context);
+                              add(context, model);
                             },
                             child: Container(
                               width: 25.w,
@@ -201,7 +201,7 @@ class _InvitePeopleState extends State<InvitePeople> {
       disposeViewModel: false,
     );
   }
-  void add(context){
+  void add(context, model){
     showModalBottomSheet(
       backgroundColor: Colors.transparent,
         context: context,
@@ -215,46 +215,51 @@ class _InvitePeopleState extends State<InvitePeople> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
+                GestureDetector(
+                  onTap: (){
+                    model.navigateToAddressBookScreen();
+                  },
+                  child: Container(
 
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    //crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      //crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
 
-                        children: [
-                          SvgPicture.asset(ImageUtils.mobileIcon,
+                          children: [
+                            SvgPicture.asset(ImageUtils.mobileIcon,
 
-                          ),
-                          SizedBox(width: 4.w,),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Find Contacts Easily",
-                                style: TextStyle(
-                                  fontFamily: FontUtils.modernistBold,
-                                  fontSize: 2.2.t,
-                                  color: ColorUtils.text_dark,
+                            ),
+                            SizedBox(width: 4.w,),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Find Contacts Easily",
+                                  style: TextStyle(
+                                    fontFamily: FontUtils.modernistBold,
+                                    fontSize: 2.2.t,
+                                    color: ColorUtils.text_dark,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 0.5.h,),
-                              Text("Add contacts from your device",
-                                style: TextStyle(
-                                  fontFamily: FontUtils.modernistRegular,
-                                  fontSize: 1.9.t,
-                                  color: ColorUtils.text_dark,
+                                SizedBox(height: 0.5.h,),
+                                Text("Add contacts from your device",
+                                  style: TextStyle(
+                                    fontFamily: FontUtils.modernistRegular,
+                                    fontSize: 1.9.t,
+                                    color: ColorUtils.text_dark,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      SvgPicture.asset(ImageUtils.forwardIcon)
-                    ],
+                              ],
+                            ),
+                          ],
+                        ),
+                        SvgPicture.asset(ImageUtils.forwardIcon)
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(height: 4.h,),

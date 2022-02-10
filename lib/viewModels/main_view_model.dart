@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:contacts_service/contacts_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
@@ -11,7 +12,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:mime/mime.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/models/address_book.dart';
 import 'package:sauftrag/models/bar_event_model.dart';
 import 'package:sauftrag/models/bar_model.dart';
 import 'package:sauftrag/models/create_bar_post.dart';
@@ -22,6 +25,7 @@ import 'package:sauftrag/models/newsfeed_post_id.dart';
 import 'package:sauftrag/models/rating_data.dart';
 import 'package:sauftrag/models/ratings.dart';
 import 'package:sauftrag/models/user_models.dart';
+import 'package:sauftrag/services/addressBook.dart';
 import 'package:sauftrag/services/createPost.dart';
 import 'package:sauftrag/services/dataProtection.dart';
 import 'package:sauftrag/services/faqs.dart';
@@ -54,6 +58,9 @@ class MainViewModel extends BaseViewModel {
   var termCondition = Termscondition();
   var dataProtection = Dataprotection();
   var faqList = Faqs();
+  var contactList = Addressbook();
+
+  //var Permission;
 
   final GlobalKey<SideMenuState> sideMenuKey = GlobalKey<SideMenuState>();
 
@@ -114,6 +121,9 @@ class MainViewModel extends BaseViewModel {
   bool isPost = false;
   bool isUserProfile = false;
 
+  List<AddressBook> contactBook = [];
+
+
   var dio = Dio();
 
   final aboutMeController = TextEditingController();
@@ -143,38 +153,7 @@ class MainViewModel extends BaseViewModel {
   //String? faqs;
 
   List contactChecked = [
-    {
-      'name': "Athalia Putri",
-      'image': ImageUtils.messagePerson1,
-    },
-    {
-      'name': "Erlan Sadewa",
-      'image': ImageUtils.messagePerson2,
-    },
-    {
-      'name': "Raki Devon",
-      'image': ImageUtils.messagePerson3,
-    },
-    {
-      'name': "Blanca Hernandez",
-      'image': ImageUtils.messagePerson4,
-    },
-    {
-      'name': "Glen Romero",
-      'image': ImageUtils.messagePerson5,
-    },
-    {
-      'name': "Joe Floyd",
-      'image': ImageUtils.messagePerson6,
-    },
-    {
-      'name': "Carroll Cooper",
-      'image': ImageUtils.messagePerson7,
-    },
-    {
-      'name': "Sidney Alvarado",
-      'image': ImageUtils.messagePerson8,
-    },
+
   ];
 
   File imageFile = File('my initial file');
@@ -862,13 +841,13 @@ class MainViewModel extends BaseViewModel {
 
   String? timeZone;
   getTime() {
-    var checking = ratingKaData!.data![0].created_at;
-    var dateTime = DateFormat("yyyy-MM-dd")
-        .parse(checking!.replaceAll('T', ' '), true);
-    var dateLocal = dateTime.toLocal();
-    timeZone = dateLocal.toString();
-    print(dateLocal);
-    return dateLocal;
+    // var checking = ratingKaData!.data![0].created_at;
+    // var dateTime = DateFormat("yyyy-MM-dd")
+    //     .parse(checking!.replaceAll('T', ' '), true);
+    // var dateLocal = dateTime.toLocal();
+    // timeZone = dateLocal.toString();
+    // print(dateLocal);
+    // return dateLocal;
   }
 
   void navigateToProfileScreen(List<String> images) {
@@ -1072,6 +1051,10 @@ class MainViewModel extends BaseViewModel {
     navigationService.navigateToFaqAnsScreen();
   }
 
+  void navigateToAddressBookScreen() {
+    navigationService.navigateToAddressBookScreen();
+  }
+
   Future saveUserDetails() async {
     List tempList = [];
     // for (int i = 0;i<imageFiles.length;i++){
@@ -1116,17 +1099,22 @@ class MainViewModel extends BaseViewModel {
     editProfile = true;
     notifyListeners();
     var barUpdateResponse = await updateBar.UpdateBarProfile(
-        //(genderList.indexOf(genderValueStr) + 1).toString(),
-        imageFiles,
-        barNameController.text,
-    );
-    if (barUpdateResponse is NewBarModel) {
-      NewBarModel user = barUpdateResponse;
 
-      await prefrencesViewModel.saveBarUser(user);
-      notifyListeners();
+        barNameController.text,
+        imageFiles,
+    );
+
+    if (barUpdateResponse is NewBarModel) {
+      NewBarModel barUser = barUpdateResponse;
+      barUser.token = barModel!.token!;
+      // user.favorite_alcohol_drinks = user.favorite_alcohol_drinks!;
+      // user.favorite_night_club = user.favorite_night_club!;
+      // user.favorite_party_vacation =user.favorite_party_vacation!;
+      await prefrencesViewModel.saveBarUser(barUser);
+      barModel = barUser;
+      print(barModel);
+      //notifyListeners();
     }
-    print(barUpdateResponse);
     editProfile = false;
     notifyListeners();
   }
@@ -1141,6 +1129,39 @@ class MainViewModel extends BaseViewModel {
     userModel = await prefrencesViewModel.getUser();
     notifyListeners();
   }
+
+  addBarImages() {
+    for (int i = 0; i < imageFiles.length; i++) {
+      if (i == 0) {
+        if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
+            imageFiles[i].path.isEmpty) {
+          DialogUtils().showDialog(MyErrorWidget(
+            error: "Select Bar Logo",
+          ));
+          return;
+        }
+      }
+      bool hasImages = false;
+      if (i > 0) {
+        if (!hasImages) {
+          if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
+              imageFiles[i].path.isEmpty) {
+            DialogUtils().showDialog(MyErrorWidget(
+              error: "Select at least one Bar Image",
+            ));
+            return;
+          } else {
+            hasImages = true;
+            break;
+          }
+        }
+      }
+    }
+    navigateToBarTimingTypeScreen();
+    //navigateToMediaScreen();
+    //navigateToHomeScreen(2);
+  }
+
 
   void getBarData() async {
     barModel = await prefrencesViewModel.getBarUser();
@@ -1276,6 +1297,7 @@ class MainViewModel extends BaseViewModel {
         eventLoader = false;
         notifyListeners();
       } else {
+
         print(response.statusCode);
         eventLoader = false;
         notifyListeners();
@@ -1297,6 +1319,48 @@ class MainViewModel extends BaseViewModel {
       //       'Unable to process your request at this time. Please try again');
       // }
     }
+  }
+
+
+  void getContacts()async {
+    bool permissionGranted = false;
+
+    var status = await Permission.contacts.status;
+    if (status.isDenied) {
+      await Permission.contacts.request();
+    }
+    //await Permission.storage.request();
+
+    if (await Permission.contacts.isRestricted || await Permission.contacts.isDenied) {
+      permissionGranted = false;
+      //await Permission.contacts.request();
+    }
+    else {
+      permissionGranted = true;
+    }
+    if (permissionGranted){
+      List<Contact> contacts = await ContactsService.getContacts();
+      List<dynamic> contactsToSend = [];
+      for (Contact contact in contacts){
+        if (contact.displayName!=null && contact.phones!=null){
+          if (contact.phones!.isNotEmpty){
+            var data = {
+              "username" : contact.displayName,
+              "phone_no" : contact.phones!.first.value!,
+            };
+            contactsToSend.add(data);
+          }
+        }
+      }
+      var getContactList = await contactList.AddressBookList(
+        contactsToSend);
+      if(getContactList is List<AddressBook>){
+        contactBook = getContactList;
+      }
+      print(getContactList);
+
+    }
+
   }
 
 

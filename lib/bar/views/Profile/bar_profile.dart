@@ -26,6 +26,10 @@ class _BarProfileState extends State<BarProfile> {
     return ViewModelBuilder<MainViewModel>.reactive(
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
+      onModelReady: (model) {
+        // model.saveBarDetails();
+        // model.notifyListeners();
+      },
       builder: (context, model, child) {
         return GestureDetector(
           onTap: () {
@@ -61,47 +65,49 @@ class _BarProfileState extends State<BarProfile> {
                       ///--------------Event Name--------------------///
                       GestureDetector(
                         onTap: () async {
-                          model.notifyListeners();
+                          //model.notifyListeners();
                           model.navigateToBarDetails();
                           PrefrencesViewModel prefs =
                           locator<PrefrencesViewModel>();
-                         model.barModel = await prefs.getBarUser();
+                          model.barModel = await prefs.getBarUser();
                           if (model.barModel!.profile_picture != null &&
-                          model.barModel!.profile_picture!.isNotEmpty) {
-                          model.imageFiles.removeAt(0);
-                          model.imageFiles
-                              .insert(0, model.barModel!.profile_picture!);
+                              model.barModel!.profile_picture!.isNotEmpty) {
+                            model.imageFiles.removeAt(1);
+                            model.imageFiles
+                                .insert(1, model.barModel!.profile_picture!);
                           }
                           if (model.barModel!.catalogue_image1 != null &&
-                          model.barModel!.catalogue_image1!.isNotEmpty) {
-                          model.imageFiles.removeAt(1);
-                          model.imageFiles
-                              .insert(1, model.barModel!.catalogue_image1!);
+                              model.barModel!.catalogue_image1!.isNotEmpty) {
+                            model.imageFiles.removeAt(2);
+                            model.imageFiles
+                                .insert(2, model.barModel!.catalogue_image1!);
                           }
                           if (model.barModel!.catalogue_image2 != null &&
-                          model.barModel!.catalogue_image2!.isNotEmpty) {
-                          model.imageFiles.removeAt(2);
-                          model.imageFiles
-                              .insert(2, model.barModel!.catalogue_image2!);
+                              model.barModel!.catalogue_image2!.isNotEmpty) {
+                            model.imageFiles.removeAt(3);
+                            model.imageFiles
+                                .insert(3, model.barModel!.catalogue_image2!);
                           }
                           if (model.barModel!.catalogue_image3 != null &&
-                          model.barModel!.catalogue_image3!.isNotEmpty) {
-                          model.imageFiles.removeAt(3);
-                          model.imageFiles
-                              .insert(3, model.barModel!.catalogue_image3!);
+                              model.barModel!.catalogue_image3!.isNotEmpty) {
+                            model.imageFiles.removeAt(4);
+                            model.imageFiles
+                                .insert(4, model.barModel!.catalogue_image3!);
                           }
                           if (model.barModel!.catalogue_image4 != null &&
-                          model.barModel!.catalogue_image4!.isNotEmpty) {
-                          model.imageFiles.removeAt(4);
-                          model.imageFiles
-                              .insert(4, model.barModel!.catalogue_image4!);
+                              model.barModel!.catalogue_image4!.isNotEmpty) {
+                            model.imageFiles.removeAt(5);
+                            model.imageFiles
+                                .insert(5, model.barModel!.catalogue_image4!);
                           }
                           if (model.barModel!.catalogue_image5 != null &&
-                          model.barModel!.catalogue_image5!.isNotEmpty) {
-                          model.imageFiles.removeAt(5);
-                          model.imageFiles
-                              .insert(5, model.barModel!.catalogue_image5!);
+                              model.barModel!.catalogue_image5!.isNotEmpty) {
+                            model.imageFiles.removeAt(5);
+                            model.imageFiles
+                                .insert(5, model.barModel!.catalogue_image5!);
                           }
+                          model.isUserProfile = false;
+                          model.notifyListeners();
                         },
                         child: Container(
                           // padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -112,57 +118,57 @@ class _BarProfileState extends State<BarProfile> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                            Row(
-                              children: [
-                                Container(
-                                  // onPressed: () {
-                                  //  /* showDialog(
-                                  //       context: context,
-                                  //       builder: (BuildContext context){
-                                  //         return DrinkStatusDialogBox(title: "Add New Location", btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
-                                  //       }
-                                  //   );*/
-                                  // },
-                                  child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(50),
-                                      child: Image(
-                                        image: NetworkImage(model
-                                            .barModel!.profile_picture!),
-                                        fit: BoxFit.cover,
-                                        height: 15.i,
-                                        width: 15.i,
-                                      )),
-                                ),
-                                SizedBox(
-                                  width: 2.w,
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      model.barModel!.bar_name!,
-                                      style: TextStyle(
-                                        color: ColorUtils.black,
-                                        fontFamily: FontUtils.modernistBold,
-                                        fontSize: 2.t,
+                              Row(
+                                children: [
+                                  Container(
+                                    // onPressed: () {
+                                    //  /* showDialog(
+                                    //       context: context,
+                                    //       builder: (BuildContext context){
+                                    //         return DrinkStatusDialogBox(title: "Add New Location", btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+                                    //       }
+                                    //   );*/
+                                    // },
+                                    child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(50),
+                                        child: Image(
+                                          image: NetworkImage(model
+                                              .barModel!.profile_picture!),
+                                          fit: BoxFit.cover,
+                                          height: 15.i,
+                                          width: 15.i,
+                                        )),
+                                  ),
+                                  SizedBox(
+                                    width: 2.w,
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        model.barModel!.bar_name!,
+                                        style: TextStyle(
+                                          color: ColorUtils.black,
+                                          fontFamily: FontUtils.modernistBold,
+                                          fontSize: 2.t,
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 1.h,
-                                    ),
-                                    Text(
-                                      model.barModel!.address!,
-                                      style: TextStyle(
-                                        color: ColorUtils.text_grey,
-                                        fontFamily: FontUtils.modernistBold,
-                                        fontSize: 1.7.t,
+                                      SizedBox(
+                                        height: 1.h,
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                                      Text(
+                                        model.barModel!.address!,
+                                        style: TextStyle(
+                                          color: ColorUtils.text_grey,
+                                          fontFamily: FontUtils.modernistBold,
+                                          fontSize: 1.7.t,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                               Icon(
                                 Icons.keyboard_arrow_right_rounded,
                                 size: 30,

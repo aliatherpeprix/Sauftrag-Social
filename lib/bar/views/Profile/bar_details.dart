@@ -45,8 +45,8 @@ class _BarDetailState extends State<BarDetail> {
                   physics: const BouncingScrollPhysics(),
                   child: Container(
                     padding: EdgeInsets.symmetric(
-                        horizontal: Dimensions.horizontalPadding,
-                    //    vertical: Dimensions.verticalPadding
+                      horizontal: Dimensions.horizontalPadding,
+                      //    vertical: Dimensions.verticalPadding
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

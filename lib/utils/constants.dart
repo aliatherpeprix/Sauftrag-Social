@@ -19,6 +19,7 @@ class Constants {
   static const String AddFavoriteDrink = 'api/favorites/alcoholic_drink/';
   static const String AddFavoriteClub = 'api/favorites/night_club/';
   static const String AddFavoritePartyVacation = 'api/favorites/party_vaccation/';
+  static const String AddressBook = 'api/invite/by-contact/';
 
   static const String GetFavoriteDrink = 'api/favorites/alcoholic_drink/';
   static const String GetFavoriteClub = 'api/favorites/night_club/';

@@ -26,6 +26,7 @@ class _BarMediaState extends State<BarMedia> {
   Widget build(BuildContext context) {
     return ViewModelBuilder<RegistrationViewModel>.reactive(
       onModelReady: (model) {
+
         model.imageFiles = [
           File(""),
           File(""),
