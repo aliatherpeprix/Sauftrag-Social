@@ -1,4 +1,5 @@
 class BarEventModel {
+
   dynamic name;
   dynamic about;
   dynamic lat;

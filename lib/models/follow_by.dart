@@ -8,7 +8,6 @@ class FollowBy {
   String? username;
   String? profile_picture;
 
-  factory FollowBy.fromJson(Map<String, dynamic> json) =>
-      _$FollowByFromJson(json);
+  factory FollowBy.fromJson(Map<String, dynamic> json) => _$FollowByFromJson(json);
   Map<String, dynamic> toJson() => _$FollowByToJson(this);
 }

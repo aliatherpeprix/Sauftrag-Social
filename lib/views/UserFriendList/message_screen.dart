@@ -34,6 +34,9 @@ class _MessageScreenState extends State<MessageScreen> {
     return ViewModelBuilder<MainViewModel>.reactive(
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
+      onModelReady: (model) {
+        //model.userModel!.role!;
+      },
       builder: (context, model, child) {
         return GestureDetector(
           onTap: (){
