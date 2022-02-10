@@ -14,6 +14,8 @@ import 'package:intl/intl.dart';
 import 'package:mime/mime.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:pubnub/core.dart';
+import 'package:pubnub/pubnub.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/address_book.dart';
 import 'package:sauftrag/models/bar_event_model.dart';
@@ -39,6 +41,7 @@ import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/common_functions.dart';
 import 'package:sauftrag/utils/constants.dart';
 import 'package:sauftrag/utils/dialog_utils.dart';
+import 'package:sauftrag/utils/error_flash_message.dart';
 
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/prefrences_view_model.dart';
@@ -51,7 +54,6 @@ import 'package:stacked/stacked.dart';
 import '../main.dart';
 
 class MainViewModel extends BaseViewModel {
-
   var updateUser = Updateuser();
   var updateBar = Updatebar();
   var createBarPost = Createpost();
@@ -70,7 +72,6 @@ class MainViewModel extends BaseViewModel {
 
   UserModel? userModel;
   NewBarModel? barModel;
-
 
   bool logInUserSelected = true;
   bool logInBarSelected = false;
@@ -252,7 +253,6 @@ class MainViewModel extends BaseViewModel {
 
   FaqsModel? selectedFaq;
 
-
   Future<bool> openCamera() async {
     ImagePicker picker = ImagePicker();
     var image = await picker.pickImage(source: ImageSource.camera);
@@ -263,7 +263,6 @@ class MainViewModel extends BaseViewModel {
     if (profileFileImage == null) {
       return false;
     } else {
-
       notifyListeners();
       return true;
     }
@@ -346,7 +345,6 @@ class MainViewModel extends BaseViewModel {
     //navigateToMediaScreen();
     //navigateToHomeScreen(2);
   }
-
 
   int msgTypeValue = 1;
   String msgTypeValueStr = "Private";
@@ -617,7 +615,6 @@ class MainViewModel extends BaseViewModel {
         markerId: MarkerId('SomeId'),
         position: LatLng(24.8169, 67.1118),
         infoWindow: InfoWindow(title: 'The title of the marker')));
-
   }
 
   List<dynamic> drinkList = [
@@ -848,27 +845,37 @@ class MainViewModel extends BaseViewModel {
 
   deleteAccount() async {
     NewBarModel? user = await locator<PrefrencesViewModel>().getBarUser();
-    var response = await http
-        .delete(Uri.http(Constants.BaseUrl, Constants.accountDelete), headers: {
-      // 'content-type': 'application/json',
-      // 'accept': 'application/json',
-      'authorization': 'Token ${user!.token!}',
-    });
+    var response = await dio.delete(
+        Constants.BaseUrlPro + Constants.accountDelete,
+        options: Options(
+            contentType: Headers.formUrlEncodedContentType,
+            headers: {"Authorization": "Token ${user!.token!}"}));
+    // http
+    //     .delete(Uri.http(Constants.BaseUrl, Constants.accountDelete), headers: {
+    //   // 'content-type': 'application/json',
+    //   // 'accept': 'application/json',
+    //   'authorization': 'Token ${user!.token!}',
+    // });
 
     logOutUser();
-    print(response.body);
+    print(response.data);
   }
 
   List<FollowersList> follower = [];
   followers() async {
     NewBarModel? user = await locator<PrefrencesViewModel>().getBarUser();
-    var response = await http.get(
-        Uri.http(Constants.BaseUrl, Constants.followersList),
-        headers: {'authorization': 'Token ${user!.token!}'});
-    print(response.body);
-    var jsonData = jsonDecode(response.body);
+    var response = await dio.get(Constants.BaseUrlPro + Constants.followersList,
+        options:
+            Options(contentType: Headers.formUrlEncodedContentType, headers: {
+          'Authorization': 'Token ${user!.token!}',
+        }));
+    // http.get(
+    //     Uri.http(Constants.BaseUrlPro, Constants.followersList),
+    //     headers: {'authorization': 'Token ${user!.token!}'});
+    print(response.data);
+    // var jsonData = jsonDecode(response.data);
     follower =
-        (jsonData as List).map((e) => FollowersList.fromJson(e)).toList();
+        (response.data as List).map((e) => FollowersList.fromJson(e)).toList();
     notifyListeners();
   }
 
@@ -877,24 +884,97 @@ class MainViewModel extends BaseViewModel {
   rating() async {
     NewBarModel? user = await locator<PrefrencesViewModel>().getBarUser();
 
-    var response = await http.get(Uri.http(Constants.BaseUrl, Constants.rating),
-        headers: {'authorization': 'Token ${user!.token!}'});
-    var jsonData = jsonDecode(response.body);
-
-    ratingKaData = Ratings.fromJson(jsonData);
+    var response = await dio.get(Constants.BaseUrlPro + Constants.rating,
+        options: Options(
+            contentType: Headers.formUrlEncodedContentType,
+            headers: {"Authorization": "Token ${user!.token!}"})
+        // Options(headers: {'Authorization': 'Token ${user!.token!}'})
+        );
+    print(response);
+    ratingKaData = Ratings.fromJson(response.data);
     getTime();
   }
 
+  
+
+  var pubnub = PubNub(
+      defaultKeyset: Keyset(
+          subscribeKey: 'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
+          publishKey: 'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
+          uuid: UUID('getting_started')));
+  var channel = "getting_started";
+
+  List chats = [];
+  var message = '';
+
   String? timeZone;
   getTime() {
-    // var checking = ratingKaData!.data![0].created_at;
-    // var dateTime = DateFormat("yyyy-MM-dd")
-    //     .parse(checking!.replaceAll('T', ' '), true);
-    // var dateLocal = dateTime.toLocal();
-    // timeZone = dateLocal.toString();
-    // print(dateLocal);
-    // return dateLocal;
+    var checking = ratingKaData!.data![0].created_at.toString();
+    var dateTime =
+        DateFormat("yyyy-MM-dd").parse(checking.replaceAll('T', ' '), true);
+    var dateLocal = dateTime.toLocal();
+    timeZone = dateLocal.toString();
+    print(dateLocal);
+    return dateLocal;
   }
+
+  DeactivateAccount() async {
+    NewBarModel? user = await locator<PrefrencesViewModel>().getBarUser();
+    var response = await dio.post(
+        Constants.BaseUrlPro + Constants.accountDeactivate,
+        options: Options(
+            contentType: Headers.formUrlEncodedContentType,
+            headers: {'Authorization': 'Token ${user!.token!}'}));
+    //  http.post(
+    //     Uri.http(Constants.BaseUrlPro, Constants.accountDeactivate),
+    //     headers: {
+    //       // 'content-type': 'application/json',
+    //       // 'accept': 'application/json',
+    //       'authorization': 'Token ${user!.token!}',
+    //     });
+    print(response.data);
+    var jsonData = jsonDecode(response.data);
+    // DialogUtils().showDialog(MyErrorWidget(error: jsonData['detail']));
+    logOutUser();
+    // errorFlashMessage(jsonData['detail'], context);
+  }
+
+//   chat() async {
+//     var myKeyset = Keyset(
+//         subscribeKey: 'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
+//         publishKey: 'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
+//         uuid: UUID('demo'));
+//     final pubnub = PubNub(defaultKeyset: myKeyset);
+//     final myChannel =
+//         pubnub.channel(UserModel().id.toString() + BarModel().id.toString());
+//     var subscription = pubnub.subscribe(channels: {
+//       UserModel().id.toString() + BarModel().id.toString(),
+//       BarModel().id.toString() + UserModel().id.toString()
+//     });
+//     subscription.messages.listen((envelope) {
+//       print('${envelope.uuid} sent a message: ${envelope.payload}');
+//     });
+//     myChannel.publish(200);
+//     myChannel.publish({'answer': 42});
+
+//     var envelope = await subscription.messages.  ((envelope) =>
+//         envelope.channel ==
+//         BarModel().id.toString() + UserModel().id.toString());
+//     var history = myChannel.history(chunkSize: 50);
+//     pubnub.publish(UserModel().id.toString() + BarModel().id.toString(),
+//         {'content': groupScreenChatController.text});
+//     await history.more();
+//     print(history.messages.length); // 50
+//     await history.more();
+//     print(history.messages.length); // 100
+// //        pubnub.keysets.add(myKeyset1, name: 'keyset1');
+// // pubnub.keysets.add(myKeyset2, name: 'keyset2');
+//     pubnub.publish(
+//       'channel',
+//       42,
+//     );
+//     var myChannel1 = pubnub.channel('channel');
+//   }
 
   void navigateToProfileScreen(List<String> images) {
     navigationService.navigateToProfileScreen(images);
@@ -1008,10 +1088,10 @@ class MainViewModel extends BaseViewModel {
     navigationService.navigateToAllEventListScreen();
   }
 
-
   void navigateToDataProtectionScreen() {
     navigationService.navigateToDataProtectionScreen();
   }
+
   ///------User Drawer -----/////
   void navigateToRatingList() {
     navigationService.navigateToRatingList();
@@ -1079,7 +1159,6 @@ class MainViewModel extends BaseViewModel {
   void navigateToBarProfile2() {
     navigationService.navigateToBarProfile2();
   }
-
 
   void navigateToPrivacyAndPolicyScreen() {
     navigationService.navigateToPrivacyAndPolicyScreen();
@@ -1216,8 +1295,8 @@ class MainViewModel extends BaseViewModel {
 
   getBarPost() async {
     isPost = true;
-    var getNewsfeed = await  createBarPost.GetPost();
-    if (getNewsfeed is List<NewsfeedPostId>){
+    var getNewsfeed = await createBarPost.GetPost();
+    if (getNewsfeed is List<NewsfeedPostId>) {
       posts = getNewsfeed;
     }
     isPost = false;
@@ -1228,13 +1307,12 @@ class MainViewModel extends BaseViewModel {
   getPrivacyPolicy() async {
     isPrivacyPolicy = true;
 
-    var getPrivacyPolicy = await  privacyPolicy.GetPrivacyPolicy();
-    if (getPrivacyPolicy is String){
+    var getPrivacyPolicy = await privacyPolicy.GetPrivacyPolicy();
+    if (getPrivacyPolicy is String) {
       privacy = getPrivacyPolicy;
       //isPrivacyPolicy = false;
 
-    }
-    else  {
+    } else {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Some thing went wrong",
       ));
@@ -1250,13 +1328,12 @@ class MainViewModel extends BaseViewModel {
   getTermsCondition() async {
     isTermsCondition = true;
 
-    var getTerms = await  termCondition.GetTermsCondition();
-    if (getTerms is String){
+    var getTerms = await termCondition.GetTermsCondition();
+    if (getTerms is String) {
       termsAndCondition = getTerms;
       //isPrivacyPolicy = false;
 
-    }
-    else  {
+    } else {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Some thing went wrong",
       ));
@@ -1272,13 +1349,12 @@ class MainViewModel extends BaseViewModel {
   getDataProtection() async {
     isDataProtection = true;
 
-    var getDaraProtection = await  dataProtection.GetDataProtection();
-    if (getDaraProtection is String){
+    var getDaraProtection = await dataProtection.GetDataProtection();
+    if (getDaraProtection is String) {
       protection = getDaraProtection;
       //isPrivacyPolicy = false;
 
-    }
-    else  {
+    } else {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Some thing went wrong",
       ));
@@ -1294,7 +1370,6 @@ class MainViewModel extends BaseViewModel {
   getFaqsList() async {
     isFaqs = true;
 
-
     var getFaqList = await faqList.GetFaqs();
     print(getFaqList);
     // if (getFaqList is String){
@@ -1302,10 +1377,9 @@ class MainViewModel extends BaseViewModel {
     //   //isPrivacyPolicy = false;
     //
     // }
-    if (getFaqList is List<FaqsModel>){
+    if (getFaqList is List<FaqsModel>) {
       faqs = getFaqList;
-    }
-    else  {
+    } else {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Some thing went wrong",
       ));
@@ -1317,6 +1391,7 @@ class MainViewModel extends BaseViewModel {
     notifyListeners();
     print(getFaqsList);
   }
+
   bool eventLoader = false;
 
   List<BarEventModel>? barEventModel = [];
@@ -1327,13 +1402,10 @@ class MainViewModel extends BaseViewModel {
     try {
       eventLoader = true;
       notifyListeners();
-      var response =
-      await dio.get("${Constants.GetEvents}", options: Options(
-          contentType: Headers.formUrlEncodedContentType,
-          headers: {
-            "Authorization": "Token ${user!.token!}"
-          }
-      ));
+      var response = await dio.get("${Constants.GetEvents}",
+          options: Options(
+              contentType: Headers.formUrlEncodedContentType,
+              headers: {"Authorization": "Token ${user!.token!}"}));
       print(response);
 
       if (response.statusCode == 200) {
@@ -1354,7 +1426,6 @@ class MainViewModel extends BaseViewModel {
       print(e);
       eventLoader = false;
       notifyListeners();
-
 
       // if (e.response!.statusCode == 404) {
       //   navigationService.navigateToReplacement(to: NotFound());

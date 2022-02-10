@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/bar/views/Drawer/follower_profile.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/extensions.dart';
@@ -142,7 +144,17 @@ class _FollowersState extends State<Followers> {
                         ),
                         child: GestureDetector(
                           onTap: () {
-                            model.navigateToFollowerList();
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => FollowerProfile(
+                                          username: model.follower[index]
+                                              .follow_by!.username,
+                                          profilePicture: model.follower[index]
+                                              .follow_by!.profile_picture,
+                                          address: model.follower[index]
+                                              .follow_by!.address,
+                                        )));
                           },
                           child: Container(
                             padding: EdgeInsets.symmetric(horizontal: 2.w),

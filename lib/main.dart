@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:pubnub/pubnub.dart';
+import 'package:sauftrag/bar/views/Home/bar_news_feed.dart';
+
 import 'package:sauftrag/utils/screen_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/navigation_view_model.dart';
@@ -36,7 +40,9 @@ import 'widgets/zoom_drawer.dart';
 
 NavigationViewModel navigationViewModel = NavigationViewModel();
 void main() async {
+  
 
+  // Get.put<MyDrawerController>(MyDrawerController());
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.white, // For both Android + iOS
