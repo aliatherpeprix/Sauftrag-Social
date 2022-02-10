@@ -91,7 +91,6 @@ class RegistrationViewModel extends BaseViewModel {
   bool addDrink = false;
   bool privacyPolicy = false;
 
-
   bool otpLoading = false;
   TimeOfDay? startTime;
 
@@ -536,9 +535,7 @@ class RegistrationViewModel extends BaseViewModel {
         //logIn = false;
         //notifyListeners();
         navigateToHomeScreen(2);
-
-      }
-      else if(signupResponse is NewBarModel) {
+      } else if (signupResponse is NewBarModel) {
         //NewBarModel user = signupResponse;
         // user.favorite_alcohol_drinks = CommonFunctions.SubtractFromList(user.favorite_alcohol_drinks!);
         // user.favorite_night_club = CommonFunctions.SubtractFromList(user.favorite_night_club!);
@@ -549,7 +546,6 @@ class RegistrationViewModel extends BaseViewModel {
         //logIn = false;
         //notifyListeners();
         navigateToHomeBarScreen();
-
       }
       // if (logInUserSelected == true) {
       //
@@ -759,8 +755,7 @@ class RegistrationViewModel extends BaseViewModel {
     //navigateToFavoriteScreen();
   }
 
-
-  void resetNewPassword(BuildContext context) async{
+  void resetNewPassword(BuildContext context) async {
     Dio dio = Dio();
 
     try {
@@ -844,6 +839,7 @@ class RegistrationViewModel extends BaseViewModel {
       //   newVacations.add(drink+1);
       // }
       var userSignupResponce = await signupUser.SignUpUser(
+          
           usermodel!.email!,
           usermodel.username!,
           usermodel.password!,
@@ -877,7 +873,7 @@ class RegistrationViewModel extends BaseViewModel {
         //model.imageFiles = [];
         // DialogUtils().showDialog(
         //     MyErrorWidget(error: "Use has been created succ"));
-         navigateToHomeScreen(2);
+        navigateToHomeScreen(2);
       }
 
       //favorites();
@@ -1043,7 +1039,7 @@ class RegistrationViewModel extends BaseViewModel {
       if (addFavoriteResponce is FavoritesModel) {
         var name = addFavoriteResponce.name;
         // drinks = addFavoriteResponce;
-        clubList.add(addFavoriteResponce!);
+        clubList.add(addFavoriteResponce);
         notifyListeners();
       }
       print(clubList);
@@ -1070,7 +1066,7 @@ class RegistrationViewModel extends BaseViewModel {
       if (addFavoriteResponce is FavoritesModel) {
         var name = addFavoriteResponce.name;
         // drinks = addFavoriteResponce;
-        vacationList.add(addFavoriteResponce!);
+        vacationList.add(addFavoriteResponce);
         notifyListeners();
       }
       print(vacationList);
@@ -1454,8 +1450,7 @@ class RegistrationViewModel extends BaseViewModel {
         error: "Select a bar kind",
       ));
       return;
-    }
-    else{
+    } else {
       signInBar = true;
       notifyListeners();
       var barKindList = CommonFunctions.AddFromList(selectedBarKind);

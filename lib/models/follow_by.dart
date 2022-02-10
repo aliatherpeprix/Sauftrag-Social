@@ -6,6 +6,7 @@ class FollowBy {
   FollowBy();
   int? id;
   String? username;
+  String? address;
   String? profile_picture;
 
   factory FollowBy.fromJson(Map<String, dynamic> json) =>

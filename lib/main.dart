@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:pubnub/pubnub.dart';
 import 'package:sauftrag/bar/views/Home/bar_news_feed.dart';
 
 import 'package:sauftrag/utils/screen_utils.dart';
@@ -80,8 +80,9 @@ import 'widgets/zoom_drawer.dart';
 
 NavigationViewModel navigationViewModel = NavigationViewModel();
 void main() async {
+  
 
- // Get.put<MyDrawerController>(MyDrawerController());
+  // Get.put<MyDrawerController>(MyDrawerController());
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.white, // For both Android + iOS
@@ -94,7 +95,6 @@ void main() async {
   //var userId = prefs.getInt("user_id");
   await configure();
   runApp(MaterialApp(
-
     navigatorKey: navigationViewModel.navigationKey,
     debugShowCheckedModeBanner: false,
     home: MyApp(),

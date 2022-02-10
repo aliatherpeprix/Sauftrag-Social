@@ -15,7 +15,11 @@ import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:stacked/stacked.dart';
 
 class FollowerProfile extends StatefulWidget {
-  const FollowerProfile({Key? key}) : super(key: key);
+  String? username;
+  String? address;
+  String? profilePicture;
+  FollowerProfile({Key? key, this.username, this.address, this.profilePicture})
+      : super(key: key);
 
   @override
   _FollowerProfileState createState() => _FollowerProfileState();
@@ -113,7 +117,7 @@ class _FollowerProfileState extends State<FollowerProfile> {
                     slivers: [
                       SliverAppBar(
                         leading: GestureDetector(
-                          onTap: (){
+                          onTap: () {
                             model.navigateBack();
                           },
                           child: Container(
@@ -145,8 +149,10 @@ class _FollowerProfileState extends State<FollowerProfile> {
                         shadowColor: Colors.white.withOpacity(0.9),
                         expandedHeight: 280,
                         flexibleSpace: FlexibleSpaceBar(
-
-                          background: Image.asset(ImageUtils.followerProfile,fit: BoxFit.cover,),
+                          background: Image.network(
+                            widget.profilePicture.toString(),
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                       SliverToBoxAdapter(
@@ -174,11 +180,10 @@ class _FollowerProfileState extends State<FollowerProfile> {
                         child: SingleChildScrollView(
                           physics: NeverScrollableScrollPhysics(),
                           child: Column(
-                            crossAxisAlignment:
-                            CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Blanca Hernandez, 24",
+                                widget.username.toString(),
                                 style: TextStyle(
                                   fontFamily: FontUtils.modernistBold,
                                   fontSize: 2.5.t,
@@ -189,8 +194,7 @@ class _FollowerProfileState extends State<FollowerProfile> {
                               Text(
                                 "Professional Dancer",
                                 style: TextStyle(
-                                  fontFamily:
-                                  FontUtils.modernistRegular,
+                                  fontFamily: FontUtils.modernistRegular,
                                   fontSize: 1.8.t,
                                   color: ColorUtils.black,
                                 ),
@@ -198,14 +202,12 @@ class _FollowerProfileState extends State<FollowerProfile> {
                               SizedBox(height: 1.h),
                               Row(
                                 children: [
-                                  SvgPicture.asset(
-                                      ImageUtils.location_icon),
+                                  SvgPicture.asset(ImageUtils.location_icon),
                                   SizedBox(width: 2.w),
                                   Text(
-                                    "California, Western US",
+                                    widget.address.toString(),
                                     style: TextStyle(
-                                      fontFamily:
-                                      FontUtils.modernistRegular,
+                                      fontFamily: FontUtils.modernistRegular,
                                       fontSize: 2.t,
                                       color: ColorUtils.black,
                                     ),
@@ -225,8 +227,7 @@ class _FollowerProfileState extends State<FollowerProfile> {
                               Text(
                                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar blandit magna. Donec bibendum velit vitae lacus rutrum mollis tempus vitae leo. Ut commodo, elit sit amet pretium dapibus, arcu orci tempor massa, nec condimentum turpis nisi eu urna. Morbi non gravida ipsum, quis cursus turpis. Suspendisse sit amet est nunc. ",
                                 style: TextStyle(
-                                  fontFamily:
-                                  FontUtils.modernistRegular,
+                                  fontFamily: FontUtils.modernistRegular,
                                   fontSize: 1.8.t,
                                   color: ColorUtils.black,
                                 ),
@@ -247,89 +248,71 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                 direction: Axis.horizontal,
                                 children: model.interestList
                                     .map((element) => ElevatedButton(
-                                  onPressed: () {
-                                    if (model
-                                        .selectedInterestList
-                                        .contains(model
-                                        .interestList
-                                        .indexOf(
-                                        element))) {
-                                      model.selectedInterestList
-                                          .remove(model
-                                          .interestList
-                                          .indexOf(
-                                          element));
-                                    } else {
-                                      //model.selectedInterestList.add(model.interestList.indexOf(element));
-                                    }
-                                    model.notifyListeners();
-                                  },
-                                  child: Text(
-                                      model.interestList[model
-                                          .interestList
-                                          .indexOf(element)]),
-                                  style:
-                                  ElevatedButton.styleFrom(
-                                    primary: model
-                                        .selectedInterestList
-                                        .contains(model
-                                        .interestList
-                                        .indexOf(
-                                        element))
-                                        ? ColorUtils.white
-                                        : ColorUtils.white,
-                                    onPrimary: model
-                                        .selectedInterestList
-                                        .contains(model
-                                        .interestList
-                                        .indexOf(
-                                        element))
-                                        ? ColorUtils.red_color
-                                        : ColorUtils.red_color,
-                                    padding:
-                                    EdgeInsets.symmetric(
-                                        vertical: 1.8.h,
-                                        horizontal: 9.w),
-                                    elevation: model
-                                        .selectedInterestList
-                                        .contains(model
-                                        .interestList
-                                        .indexOf(
-                                        element))
-                                        ? 5
-                                        : 0,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius
-                                            .circular(Dimensions
-                                            .roundCorner),
-                                        side: BorderSide(
-                                            color: ColorUtils
-                                                .text_red,
-                                            width: 1)),
-                                    textStyle: TextStyle(
-                                      //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
-                                      fontFamily: FontUtils
-                                          .modernistBold,
+                                          onPressed: () {
+                                            if (model.selectedInterestList
+                                                .contains(model.interestList
+                                                    .indexOf(element))) {
+                                              model.selectedInterestList.remove(
+                                                  model.interestList
+                                                      .indexOf(element));
+                                            } else {
+                                              //model.selectedInterestList.add(model.interestList.indexOf(element));
+                                            }
+                                            model.notifyListeners();
+                                          },
+                                          child: Text(model.interestList[model
+                                              .interestList
+                                              .indexOf(element)]),
+                                          style: ElevatedButton.styleFrom(
+                                            primary: model.selectedInterestList
+                                                    .contains(model.interestList
+                                                        .indexOf(element))
+                                                ? ColorUtils.white
+                                                : ColorUtils.white,
+                                            onPrimary: model
+                                                    .selectedInterestList
+                                                    .contains(model.interestList
+                                                        .indexOf(element))
+                                                ? ColorUtils.red_color
+                                                : ColorUtils.red_color,
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 1.8.h,
+                                                horizontal: 9.w),
+                                            elevation: model
+                                                    .selectedInterestList
+                                                    .contains(model.interestList
+                                                        .indexOf(element))
+                                                ? 5
+                                                : 0,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        Dimensions.roundCorner),
+                                                side: BorderSide(
+                                                    color: ColorUtils.text_red,
+                                                    width: 1)),
+                                            textStyle: TextStyle(
+                                              //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
+                                              fontFamily:
+                                                  FontUtils.modernistBold,
 
-                                      fontSize: 1.5.t,
-                                      //height: 0
-                                    ),
-                                  ),
-                                ))
+                                              fontSize: 1.5.t,
+                                              //height: 0
+                                            ),
+                                          ),
+                                        ))
                                     .toList(),
                               ),
                               SizedBox(height: 3.h),
                               Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment:
-                                CrossAxisAlignment.center,
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
                                     "Image",
                                     style: TextStyle(
-                                      fontFamily:
-                                      FontUtils.modernistBold,
+                                      fontFamily: FontUtils.modernistBold,
                                       fontSize: 2.3.t,
                                       color: ColorUtils.black,
                                     ),
@@ -338,12 +321,10 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                   Text(
                                     "See all",
                                     style: TextStyle(
-                                        fontFamily:
-                                        FontUtils.modernistRegular,
+                                        fontFamily: FontUtils.modernistRegular,
                                         fontSize: 1.8.t,
                                         color: ColorUtils.red_color,
-                                        decoration:
-                                        TextDecoration.underline),
+                                        decoration: TextDecoration.underline),
                                   ),
                                 ],
                               ),
@@ -352,11 +333,10 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                 child: GridView.builder(
                                   padding: EdgeInsets.zero,
                                   shrinkWrap: true,
-                                  physics:
-                                  NeverScrollableScrollPhysics(),
+                                  physics: NeverScrollableScrollPhysics(),
                                   itemCount: followerImg.length,
                                   gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                      SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 5,
 
                                     //mainAxisSpacing: 18,
@@ -364,7 +344,7 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                   itemBuilder: (context, index) {
                                     return Column(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                       //mainAxisAlignment: MainAxisAlignment.center,
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
@@ -391,15 +371,13 @@ class _FollowerProfileState extends State<FollowerProfile> {
                               SizedBox(height: 3.h),
                               Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment:
-                                CrossAxisAlignment.center,
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
                                     "Friends",
                                     style: TextStyle(
-                                      fontFamily:
-                                      FontUtils.modernistBold,
+                                      fontFamily: FontUtils.modernistBold,
                                       fontSize: 2.3.t,
                                       color: ColorUtils.black,
                                     ),
@@ -408,53 +386,48 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                   Text(
                                     "See all",
                                     style: TextStyle(
-                                        fontFamily:
-                                        FontUtils.modernistRegular,
+                                        fontFamily: FontUtils.modernistRegular,
                                         fontSize: 1.8.t,
                                         color: ColorUtils.red_color,
-                                        decoration:
-                                        TextDecoration.underline),
+                                        decoration: TextDecoration.underline),
                                   ),
                                 ],
                               ),
                               SizedBox(height: 2.h),
                               Container(
-
                                 child: GridView.builder(
                                   padding: EdgeInsets.zero,
                                   shrinkWrap: true,
-                                  physics:
-                                  NeverScrollableScrollPhysics(),
+                                  physics: NeverScrollableScrollPhysics(),
                                   itemCount: friendsList.length,
                                   gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 4,
-                                      mainAxisSpacing: 25,
-                                      crossAxisSpacing: 15
-                                  ),
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 4,
+                                          mainAxisSpacing: 25,
+                                          crossAxisSpacing: 15),
                                   itemBuilder: (context, index) {
                                     return Center(
                                       child: Column(
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           Image.asset(
-                                            friendsList[index]
-                                            ['image'],
+                                            friendsList[index]['image'],
                                             height: 15.i,
                                           ),
                                           Expanded(
                                               child: Text(
-                                                (friendsList[index]
-                                                ['title']),
-                                                maxLines: 2,
-                                                style: TextStyle(
-                                                    fontFamily: FontUtils.modernistBold,
-                                                    fontSize: 1.7.t
-                                                ),textAlign: TextAlign.center,
-                                              ))
+                                            (friendsList[index]['title']),
+                                            maxLines: 2,
+                                            style: TextStyle(
+                                                fontFamily:
+                                                    FontUtils.modernistBold,
+                                                fontSize: 1.7.t),
+                                            textAlign: TextAlign.center,
+                                          ))
                                         ],
                                       ),
                                     );
@@ -464,15 +437,13 @@ class _FollowerProfileState extends State<FollowerProfile> {
                               SizedBox(height: 3.h),
                               Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment:
-                                CrossAxisAlignment.center,
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
                                     "Mutual Friends",
                                     style: TextStyle(
-                                      fontFamily:
-                                      FontUtils.modernistBold,
+                                      fontFamily: FontUtils.modernistBold,
                                       fontSize: 2.3.t,
                                       color: ColorUtils.black,
                                     ),
@@ -481,53 +452,48 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                   Text(
                                     "See all",
                                     style: TextStyle(
-                                        fontFamily:
-                                        FontUtils.modernistRegular,
+                                        fontFamily: FontUtils.modernistRegular,
                                         fontSize: 1.8.t,
                                         color: ColorUtils.red_color,
-                                        decoration:
-                                        TextDecoration.underline),
+                                        decoration: TextDecoration.underline),
                                   ),
                                 ],
                               ),
                               SizedBox(height: 2.h),
                               Container(
-
                                 child: GridView.builder(
                                   padding: EdgeInsets.zero,
                                   shrinkWrap: true,
-                                  physics:
-                                  NeverScrollableScrollPhysics(),
+                                  physics: NeverScrollableScrollPhysics(),
                                   itemCount: friendsList.length,
                                   gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 4,
-                                      mainAxisSpacing: 25,
-                                      crossAxisSpacing: 15
-                                  ),
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 4,
+                                          mainAxisSpacing: 25,
+                                          crossAxisSpacing: 15),
                                   itemBuilder: (context, index) {
                                     return Center(
                                       child: Column(
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           Image.asset(
-                                            mutualFriendList[index]
-                                            ['image'],
+                                            mutualFriendList[index]['image'],
                                             height: 15.i,
                                           ),
                                           Expanded(
                                               child: Text(
-                                                (mutualFriendList[index]
-                                                ['title']),
-                                                maxLines: 2,
-                                                style: TextStyle(
-                                                    fontFamily: FontUtils.modernistBold,
-                                                    fontSize: 1.7.t
-                                                ),textAlign: TextAlign.center,
-                                              ))
+                                            (mutualFriendList[index]['title']),
+                                            maxLines: 2,
+                                            style: TextStyle(
+                                                fontFamily:
+                                                    FontUtils.modernistBold,
+                                                fontSize: 1.7.t),
+                                            textAlign: TextAlign.center,
+                                          ))
                                         ],
                                       ),
                                     );
