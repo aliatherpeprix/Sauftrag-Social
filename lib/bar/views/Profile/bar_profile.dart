@@ -66,39 +66,41 @@ class _BarProfileState extends State<BarProfile> {
                       GestureDetector(
                         onTap: () async {
                           //model.notifyListeners();
+                          model.isUserProfile = true;
+                          model.notifyListeners();
                           model.navigateToBarDetails();
                           PrefrencesViewModel prefs =
                           locator<PrefrencesViewModel>();
                           model.barModel = await prefs.getBarUser();
                           if (model.barModel!.profile_picture != null &&
                               model.barModel!.profile_picture!.isNotEmpty) {
-                            model.imageFiles.removeAt(1);
+                            model.imageFiles.removeAt(0);
                             model.imageFiles
-                                .insert(1, model.barModel!.profile_picture!);
+                                .insert(0, model.barModel!.profile_picture!);
                           }
                           if (model.barModel!.catalogue_image1 != null &&
                               model.barModel!.catalogue_image1!.isNotEmpty) {
-                            model.imageFiles.removeAt(2);
+                            model.imageFiles.removeAt(1);
                             model.imageFiles
-                                .insert(2, model.barModel!.catalogue_image1!);
+                                .insert(1, model.barModel!.catalogue_image1!);
                           }
                           if (model.barModel!.catalogue_image2 != null &&
                               model.barModel!.catalogue_image2!.isNotEmpty) {
-                            model.imageFiles.removeAt(3);
+                            model.imageFiles.removeAt(2);
                             model.imageFiles
-                                .insert(3, model.barModel!.catalogue_image2!);
+                                .insert(2, model.barModel!.catalogue_image2!);
                           }
                           if (model.barModel!.catalogue_image3 != null &&
                               model.barModel!.catalogue_image3!.isNotEmpty) {
-                            model.imageFiles.removeAt(4);
+                            model.imageFiles.removeAt(3);
                             model.imageFiles
-                                .insert(4, model.barModel!.catalogue_image3!);
+                                .insert(3, model.barModel!.catalogue_image3!);
                           }
                           if (model.barModel!.catalogue_image4 != null &&
                               model.barModel!.catalogue_image4!.isNotEmpty) {
-                            model.imageFiles.removeAt(5);
+                            model.imageFiles.removeAt(4);
                             model.imageFiles
-                                .insert(5, model.barModel!.catalogue_image4!);
+                                .insert(4, model.barModel!.catalogue_image4!);
                           }
                           if (model.barModel!.catalogue_image5 != null &&
                               model.barModel!.catalogue_image5!.isNotEmpty) {

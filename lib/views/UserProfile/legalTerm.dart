@@ -90,7 +90,7 @@ class _LegalTermState extends State<LegalTerm> {
                     child: Container(
                       padding: EdgeInsets.symmetric(
                           horizontal: Dimensions.horizontalPadding),
-                      height: 18.h,
+                      //height: 18.h,
                       decoration: BoxDecoration(
                           border: Border.all(color: ColorUtils.red_color),
                           borderRadius: BorderRadius.circular(15)),

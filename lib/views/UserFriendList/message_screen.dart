@@ -67,9 +67,7 @@ class _MessageScreenState extends State<MessageScreen> {
         // await subscription.dispose();
       },
       disposeViewModel: false,
-      onModelReady: (model) {
-        //model.userModel!.role!;
-      },
+
       builder: (context, model, child) {
         return GestureDetector(
           onTap: () {

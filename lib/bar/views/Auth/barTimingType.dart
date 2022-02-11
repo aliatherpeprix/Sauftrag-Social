@@ -113,8 +113,8 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                         SizedBox(height: 3.h),
 
                         Wrap(
-                          spacing: 3.w,
-                          //runSpacing: 1.5.h,
+                          spacing: 1.8.w,
+                          runSpacing: 1.5.h,
                           direction: Axis.horizontal,
                           children: model.weekDaysList
                               .map((element) => GestureDetector(

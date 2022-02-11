@@ -66,7 +66,7 @@ dependencies:
   pubnub: ^4.1.0
   # permission_handler: ^8.3.0
   location: ^4.2.0
-  geolocator: ^8.1.1
+  geolocator:
 
   #flutter_tindercard: ^0.2.0
 
