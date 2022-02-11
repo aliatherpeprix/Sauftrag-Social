@@ -926,8 +926,6 @@ class AuthenticationViewModel extends BaseViewModel {
   void createEvent() async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
 
-
-
     try {
       createEventLoader = true;
       notifyListeners();
@@ -969,14 +967,6 @@ class AuthenticationViewModel extends BaseViewModel {
           DialogUtils()
               .showDialog(MyErrorWidget(error: response.data["message"]));
         }
-      } else {
-        print(response.statusCode);
-        createEventLoader = false;
-        notifyListeners();
-        // DialogUtils().showDialog(
-        //     MyErrorWidget(error: 'Something went wrong. Please try again'));
-        throw Exception('Failed to load');
-      }
     } catch (e) {
       print(e);
       DialogUtils().showDialog(MyErrorWidget(error: e.toString()));

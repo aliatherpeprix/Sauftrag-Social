@@ -111,10 +111,10 @@ class _MainViewBarState extends State<MainViewBar> {
                   //BottomBar(index: currentIndex, onClick: onClick)
                 ],
               ),
+            )
             );
           },
-          disposeViewModel: false,
-        ),);
+        );
   }
 
   onClick(int selectedIndex) {
