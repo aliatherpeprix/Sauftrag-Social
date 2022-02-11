@@ -840,7 +840,6 @@ class RegistrationViewModel extends BaseViewModel {
       //   newVacations.add(drink+1);
       // }
       var userSignupResponce = await signupUser.SignUpUser(
-          
           usermodel!.email!,
           usermodel.username!,
           usermodel.password!,

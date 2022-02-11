@@ -24,30 +24,26 @@ class Createpost {
   Dio dio = Dio();
 
   Future CreatePost(
-
-      dynamic post_type,
-      String post_location,
-      String post_content,
-      List images,
-
-      )
-  async
-  {
+    dynamic post_type,
+    String post_location,
+    String post_content,
+    List images,
+  ) async {
     try {
       /// just login user through phoneNumber and password
       List files = [];
-      for (File data in images){
-        if (data.path.isNotEmpty){
+      for (File data in images) {
+        if (data.path.isNotEmpty) {
           String media = "data:${lookupMimeType(data.path)};base64," +
               base64Encode(data.readAsBytesSync());
           files.add(media);
         }
       }
       var param = {
-        'post_type' : post_type,
-        'post_location' : post_location,
-        'post_content' : post_content,
-        'media' : files
+        'post_type': post_type,
+        'post_location': post_location,
+        'post_content': post_content,
+        'media': files
       };
       // var param = FormData.fromMap({
       //
@@ -58,14 +54,14 @@ class Createpost {
       //   //if (images[0] is File && (images[0] as File).path.isNotEmpty)"media": await MultipartFile.fromFile((images[0] as File).path,),
       // });
 
-      NewBarModel? barModel = (await locator<PrefrencesViewModel>().getBarUser());
-      var response = await dio.post(Constants.BaseUrlPro+Constants.CreateNewFeed, data: param,
+      NewBarModel? barModel =
+          (await locator<PrefrencesViewModel>().getBarUser());
+      var response = await dio.post(
+          Constants.BaseUrlPro + Constants.CreateNewFeed,
+          data: param,
           options: Options(
-          // contentType: Headers.formUrlEncodedContentType,
-          headers: {
-            "Authorization": "Token ${barModel!.token!}"
-          }
-      ));
+              // contentType: Headers.formUrlEncodedContentType,
+              headers: {"Authorization": "Token ${barModel!.token!}"}));
       if (response.statusCode == 200 || response.statusCode == 201) {
         // user found
         /* if (response.data["status"] == 200) {
@@ -73,35 +69,31 @@ class Createpost {
           return userData;
         }*/
         var postData = CreateBarPost.fromJson(response.data);
-        return postData;}
+        return postData;
+      }
       //user not found
       else {
         return response.data['message'];
       }
-
     } catch (e) {
       print(e);
       //dynamic exception = e;
-      return  (e as DioError).response!.data["message"].toString();
+      return (e as DioError).response!.data["message"].toString();
     }
   }
 
-  Future GetPost()
-  async
-  {
-    try{
-      NewBarModel? barModel = (await locator<PrefrencesViewModel>().getBarUser());
-      var getResponse = await dio.get(Constants.BaseUrlPro+Constants.GetNewFeed,
-          options: Options(
-        // contentType: Headers.formUrlEncodedContentType,
-          headers: {
-            "Authorization": "Token ${barModel!.token!}"
-          }
-      ));
+  Future GetPost() async {
+    try {
+      NewBarModel? barModel =
+          (await locator<PrefrencesViewModel>().getBarUser());
+      var getResponse = await dio
+          .get(Constants.BaseUrlPro + Constants.GetNewFeed, options: Options(
+              // contentType: Headers.formUrlEncodedContentType,
+              headers: {"Authorization": "Token ${barModel!.token!}"}));
       if (getResponse.statusCode == 200 || getResponse.statusCode == 201) {
-
-        List<NewsfeedPostId> getBarPost = (getResponse.data as List).map((e) =>
-            NewsfeedPostId.fromJson(e)).toList();
+        List<NewsfeedPostId> getBarPost = (getResponse.data as List)
+            .map((e) => NewsfeedPostId.fromJson(e))
+            .toList();
 
         print(getBarPost);
         return getBarPost;
@@ -111,11 +103,9 @@ class Createpost {
       else {
         return getResponse.data['message'];
       }
-
-    }
-    catch (e) {
+    } catch (e) {
       print(e);
-      return  (e as DioError).response!.data["message"].toString();
+      return (e as DioError).response!.data["message"].toString();
     }
   }
 }

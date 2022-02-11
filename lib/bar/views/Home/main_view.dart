@@ -22,7 +22,6 @@ import 'barCode2.dart';
 import 'bar_news_feed.dart';
 
 class MainViewBar extends StatefulWidget {
-
   int index;
   MainViewBar({Key? key, required this.index}) : super(key: key);
 
@@ -31,7 +30,6 @@ class MainViewBar extends StatefulWidget {
 }
 
 class _MainViewBarState extends State<MainViewBar> {
-
   int currentIndex = 0;
   Widget body = Swipe();
 
@@ -110,22 +108,19 @@ class _MainViewBarState extends State<MainViewBar> {
               onClick(index);
             },
           ),*/
-                //BottomBar(index: currentIndex, onClick: onClick)
-              ],
-            ),
-          ),
-        );
-      },
-    );
-
-
+                  //BottomBar(index: currentIndex, onClick: onClick)
+                ],
+              ),
+            );
+          },
+          disposeViewModel: false,
+        ),);
   }
 
-
-  onClick(int selectedIndex){
+  onClick(int selectedIndex) {
     setState(() {
       currentIndex = selectedIndex;
-      switch(currentIndex){
+      switch (currentIndex) {
         case 0:
           body = BarNewsFeed();
           break;

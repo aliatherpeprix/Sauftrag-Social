@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/bar/views/Drawer/follower_profile.dart';
+import 'package:sauftrag/models/bar_model.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/extensions.dart';
@@ -27,6 +28,7 @@ class _FollowersState extends State<Followers> {
       viewModelBuilder: () => locator<MainViewModel>(),
       onModelReady: (model) {
         model.followers();
+        model.barModel;
       },
       disposeViewModel: false,
       builder: (context, model, child) {

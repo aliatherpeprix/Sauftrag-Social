@@ -895,14 +895,7 @@ class MainViewModel extends BaseViewModel {
     getTime();
   }
 
-  
-
-  var pubnub = PubNub(
-      defaultKeyset: Keyset(
-          subscribeKey: 'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
-          publishKey: 'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
-          uuid: UUID('getting_started')));
-  var channel = "getting_started";
+  // var channel = "getting_started";
 
   List chats = [];
   var message = '';
@@ -1251,7 +1244,8 @@ class MainViewModel extends BaseViewModel {
   }
 
   void getUserData() async {
-    userModel = await prefrencesViewModel.getUser();
+    userModel = (await prefrencesViewModel.getUser())!;
+    barModel = (await prefrencesViewModel.getBarUser())!;
     notifyListeners();
   }
 
