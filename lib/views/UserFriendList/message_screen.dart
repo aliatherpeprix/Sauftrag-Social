@@ -9,6 +9,7 @@ import 'package:pubnub/core.dart';
 import 'package:pubnub/pubnub.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/bar_model.dart';
+import 'package:sauftrag/models/new_bar_model.dart';
 import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
@@ -17,6 +18,7 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/viewModels/prefrences_view_model.dart';
 import 'package:sauftrag/views/UserFriendList/chat_input.dart';
 import 'package:sauftrag/views/UserFriendList/chat_list_widget.dart';
 import 'package:sauftrag/widgets/back_arrow_with_container.dart';
@@ -38,19 +40,39 @@ class _MessageScreenState extends State<MessageScreen> {
       viewModelBuilder: () => locator<MainViewModel>(),
       onModelReady: (model) async {
         // model.chat();
-
+        model.chats.clear();
+        NewBarModel barUser =
+            (await locator<PrefrencesViewModel>().getBarUser())!;
+        UserModel user = (await locator<PrefrencesViewModel>().getUser())!;
+        var pubnub = PubNub(
+            defaultKeyset: Keyset(
+                subscribeKey: 'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
+                publishKey: 'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
+                uuid: UUID("${barUser.id.toString()}109")));
         // Subscribe to a channel
-        print(UserModel().id);
-        var subscription = model.pubnub.subscribe(
-            channels: {UserModel().id.toString() + BarModel().id.toString()});
-        print(model.userModel!.role);
+        var subscription =
+            pubnub.subscribe(channels: {"${barUser.id.toString()}109"});
+
+        var channel = pubnub.channel("${barUser.id.toString()}109");
+        var chat = await channel.messages();
+        var data = await chat.count();
+        await chat.fetch().whenComplete(() {
+          print(chat.messages.length);
+          for (var data in chat.messages) {
+            model.chats.add(data.content);
+          }
+          model.notifyListeners();
+        });
+
+        //print("Testing");
         // Print every message
         subscription.messages.listen((message) async {
-          print(message.content);
-          model.message = message.content;
+          //print(message.content);
+          //model.message = message.content;
           model.chats.add(message.content);
-          message.uuid;
-          print(message.flags);
+          // message.uuid;
+          // print(message.flags);
+          model.notifyListeners();
           // model.chats = (message.content['content'] as List)
           //     .map((e) => Envelope.fromJson(e))
           //     .toList();
@@ -278,12 +300,24 @@ class _MessageScreenState extends State<MessageScreen> {
                       ),
                     ),
                     InkWell(
-                      onTap: () {
+                      onTap: () async {
+                        NewBarModel barUser =
+                            (await locator<PrefrencesViewModel>()
+                                .getBarUser())!;
+                        UserModel user =
+                            (await locator<PrefrencesViewModel>().getUser())!;
                         // model.chat();
-                        model.pubnub.publish(
-                            UserModel().id.toString() +
-                                UserModel().id.toString(),
-                            model.groupScreenChatController.text);
+                        var pubnub = PubNub(
+                            defaultKeyset: Keyset(
+                                subscribeKey:
+                                    'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
+                                publishKey:
+                                    'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
+                                uuid: UUID(barUser.id.toString() + "109")));
+                        pubnub.publish(barUser.id.toString() + "109", {
+                          "content": model.groupScreenChatController.text,
+                          "userID": barUser.id!.toString()
+                        });
                         model.groupScreenChatController.clear();
                         model.notifyListeners();
                       },
@@ -475,22 +509,38 @@ class _MessageScreenState extends State<MessageScreen> {
                                   physics: BouncingScrollPhysics(),
                                   itemBuilder: (context, index) {
                                     return Align(
-                                      alignment: Alignment.centerLeft,
+                                      alignment: model.chats[index]["userID"] ==
+                                              model.barModel!.id!.toString()
+                                          ? Alignment.centerRight
+                                          : Alignment.centerLeft,
                                       child: Container(
                                         width:
                                             MediaQuery.of(context).size.width /
                                                 1.7,
                                         decoration: BoxDecoration(
                                           color: ColorUtils.messageChat,
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(15),
-                                            topRight: Radius.circular(15),
-                                            bottomRight: Radius.circular(15),
-                                          ),
+                                          borderRadius: model.chats[index]
+                                                      ["userID"] ==
+                                                  model.barModel!.id!.toString()
+                                              ? BorderRadius.only(
+                                                  topLeft: Radius.circular(15),
+                                                  topRight: Radius.circular(15),
+                                                  bottomLeft:
+                                                      Radius.circular(15),
+                                                )
+                                              : BorderRadius.only(
+                                                  topLeft: Radius.circular(15),
+                                                  topRight: Radius.circular(15),
+                                                  bottomRight:
+                                                      Radius.circular(15),
+                                                ),
                                         ),
                                         child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          crossAxisAlignment: model.chats[index]
+                                                      ["userID"] ==
+                                                  model.barModel!.id!.toString()
+                                              ? CrossAxisAlignment.end
+                                              : CrossAxisAlignment.start,
                                           children: [
                                             // Padding(
                                             //   padding: EdgeInsets.symmetric(
@@ -506,7 +556,8 @@ class _MessageScreenState extends State<MessageScreen> {
                                                   right: 3.w,
                                                   top: 1.5.h),
                                               child: Text(
-                                                model.chats[index].toString(),
+                                                model.chats[index]["content"]
+                                                    .toString(),
                                                 style: TextStyle(
                                                     //fontFamily: FontUtils.avertaDemoRegular,
                                                     fontSize: 1.8.t,
@@ -516,7 +567,12 @@ class _MessageScreenState extends State<MessageScreen> {
                                             ),
                                             //SizedBox(height: 1.h,),
                                             Align(
-                                              alignment: Alignment.centerRight,
+                                              alignment: model.chats[index]
+                                                          ["userID"] ==
+                                                      model.barModel!.id!
+                                                          .toString()
+                                                  ? Alignment.centerLeft
+                                                  : Alignment.centerRight,
                                               child: Padding(
                                                 padding: EdgeInsets.all(8.0),
                                                 child: Text(

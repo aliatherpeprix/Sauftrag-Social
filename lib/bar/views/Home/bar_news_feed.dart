@@ -119,362 +119,403 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
         // data.initSwipe();
       },
       builder: (context, model, child) {
-        return model.isPost == true ? AllPageLoader() :
-        SafeArea(
-          bottom: false,
-          top: false,
-          child: SideMenu(
-            key: model.sideMenuKey,
-            closeIcon: Icon(
-              Icons.remove,
-              color: Colors.transparent,
-            ),
-            type: SideMenuType.shrinkNSlide,
-            background: ColorUtils.text_red,
-            radius: BorderRadius.circular(30),
-            menu: MySideMenu(),
-            child: GestureDetector(
-              onTap: () {
-                final _state = model.sideMenuKey.currentState;
-                if (_state!.isOpened) _state.closeSideMenu(); // close side menu
-              },
-              child: Scaffold(
-                  key: _scaffoldKey,
-                  backgroundColor: ColorUtils.white,
-                  floatingActionButton: ExpandableFab(
-                    distance: 120.0,
-                    children: [
-                      Column(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              model.navigateToCreateEventScreen();
-                            },
-                            child: Container(
-                                decoration: BoxDecoration(
-                                  color: ColorUtils.text_red,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(25)),
-                                  //border: Border.all(color: ColorUtils.red_color),
-                                ),
-                                height: 5.4.h,
-                                width: 11.5.w,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(11.0),
-                                  child: SvgPicture.asset(
-                                    ImageUtils.calender,
-                                  ),
-                                )),
-                          ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              model.navigateToBarPostScreen();
-                              // showDialog(
-                              //     context: context,
-                              //     builder: (BuildContext context){
-                              //       return MessageDialog(title: "Add New Location",
-                              //           btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
-                              //     }
-                              // );
-                            },
-                            child: Container(
-                                decoration: BoxDecoration(
-                                  color: ColorUtils.text_red,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(25)),
-                                  //border: Border.all(color: ColorUtils.red_color),
-                                ),
-                                height: 5.4.h,
-                                width: 11.5.w,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(11.0),
-                                  child: SvgPicture.asset(
-                                    ImageUtils.pen2,
-                                  ),
-                                )),
-                          ),
-                        ],
-                      )
-                    ],
+        return model.isPost == true
+            ? AllPageLoader()
+            : SafeArea(
+                bottom: false,
+                top: false,
+                child: SideMenu(
+                  key: model.sideMenuKey,
+                  closeIcon: Icon(
+                    Icons.remove,
+                    color: Colors.transparent,
                   ),
-                  floatingActionButtonLocation:
-                      FloatingActionButtonLocation.endDocked,
-                  body: Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: Dimensions.homeTopMargin),
-
-                        //Top bar
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 1.h),
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: Dimensions.horizontalPadding),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                  type: SideMenuType.shrinkNSlide,
+                  background: ColorUtils.text_red,
+                  radius: BorderRadius.circular(30),
+                  menu: MySideMenu(),
+                  child: GestureDetector(
+                    onTap: () {
+                      final _state = model.sideMenuKey.currentState;
+                      if (_state!.isOpened)
+                        _state.closeSideMenu(); // close side menu
+                    },
+                    child: Scaffold(
+                        key: _scaffoldKey,
+                        backgroundColor: ColorUtils.white,
+                        floatingActionButton: ExpandableFab(
+                          distance: 120.0,
+                          children: [
+                            Column(
                               children: [
-                                ElevatedButton(
-                                  onPressed: () {
-                                    final _state =
-                                        model.sideMenuKey.currentState;
-                                    if (_state!.isOpened)
-                                      _state.closeSideMenu(); // close side menu
-                                    else
-                                      _state.openSideMenu();
+                                GestureDetector(
+                                  onTap: () {
+                                    model.navigateToCreateEventScreen();
                                   },
-                                  child: SvgPicture.asset(ImageUtils.menuIcon),
-                                  style: ElevatedButton.styleFrom(
-                                    primary: ColorUtils.white,
-                                    onPrimary: ColorUtils.white,
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: Dimensions
-                                            .containerVerticalPadding),
-                                    elevation: 0,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            Dimensions.roundCorner),
-                                        side: BorderSide(
-                                            color: ColorUtils.divider,
-                                            width: 1)),
-                                    textStyle: TextStyle(
-                                      color: ColorUtils.white,
-                                      fontFamily: FontUtils.modernistBold,
-                                      fontSize: 1.8.t,
-                                      //height: 0
-                                    ),
-                                  ),
+                                  child: Container(
+                                      decoration: BoxDecoration(
+                                        color: ColorUtils.text_red,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(25)),
+                                        //border: Border.all(color: ColorUtils.red_color),
+                                      ),
+                                      height: 5.4.h,
+                                      width: 11.5.w,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(11.0),
+                                        child: SvgPicture.asset(
+                                          ImageUtils.calender,
+                                        ),
+                                      )),
                                 ),
-                                Text(
-                                  "News Feed",
-                                  style: TextStyle(
-                                    color: ColorUtils.black,
-                                    fontFamily: FontUtils.modernistBold,
-                                    fontSize: 3.t,
-                                  ),
+                                SizedBox(
+                                  height: 2.h,
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    model.navigateToBarProfile2();
+                                    model.navigateToBarPostScreen();
+                                    // showDialog(
+                                    //     context: context,
+                                    //     builder: (BuildContext context){
+                                    //       return MessageDialog(title: "Add New Location",
+                                    //           btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+                                    //     }
+                                    // );
                                   },
                                   child: Container(
-                                    child: Image.asset(
-                                      ImageUtils.profileImg,
-                                      height: 17.i,
-                                    ),
-                                  ),
+                                      decoration: BoxDecoration(
+                                        color: ColorUtils.text_red,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(25)),
+                                        //border: Border.all(color: ColorUtils.red_color),
+                                      ),
+                                      height: 5.4.h,
+                                      width: 11.5.w,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(11.0),
+                                        child: SvgPicture.asset(
+                                          ImageUtils.pen2,
+                                        ),
+                                      )),
                                 ),
                               ],
-                            ),
-                          ),
+                            )
+                          ],
                         ),
-                        //SizedBox(height: 3.h),
+                        floatingActionButtonLocation:
+                            FloatingActionButtonLocation.endDocked,
+                        body: Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(height: Dimensions.homeTopMargin),
 
-                        SizedBox(
-                          height: SizeConfig.heightMultiplier * 2,
-                        ),
-                        Expanded(
-                          child: ListView.separated(
-                            padding: EdgeInsets.zero,
-                            scrollDirection: Axis.vertical,
-                            physics: const BouncingScrollPhysics(),
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 3.5.w,
-                                ),
+                              //Top bar
+                              Padding(
+                                padding: EdgeInsets.symmetric(vertical: 1.h),
                                 child: Container(
-                                  decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color:
-                                            ColorUtils.black.withOpacity(0.1),
-                                        spreadRadius: 0,
-                                        blurRadius: 10,
-                                        offset: Offset(
-                                            0, 5), // changes position of shadow
-                                      ),
-                                    ],
-                                    color: Colors.white,
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(18)),
-                                    border: Border.all(color: ColorUtils.text_grey.withOpacity(0.1)),
-                                  ),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: Dimensions.horizontalPadding),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 2.5.w, vertical: 1.h),
-                                        child: Column(
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  child: Image.network(
-                                                    model.posts[index].user_id!
-                                                        .profile_picture!,
-                                                    //newsEvents[index]["image"],
-                                                    width: 10.i,
-                                                    height: 10.i,
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 3.w,
-                                                ),
-                                                Column(
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Row(
-                                                      children: [
-                                                        Text(
-                                                          model.posts[index].user_id!.bar_name!,
-                                                          //newsEvents[index]["barOwnerName"],
-                                                          style: TextStyle(
-                                                              fontFamily:
-                                                              FontUtils.modernistBold,
-                                                              fontSize: 2.2.t,
-                                                              fontWeight: FontWeight.bold,
-                                                              color: ColorUtils.black),
-                                                        ),
-                                                        // if (model.posts[index].post_type! == '1')
-                                                        //   {
-                                                        //     Text("Abc")
-                                                        //   }
-                                                      ],
-                                                    ),
-                                                    SizedBox(height: 0.5.h,),
-                                                    Text(
-                                                      model.posts[index].post_location!,
-                                                      //newsEvents[index]["barOwnerName"],
-                                                      style: TextStyle(
-                                                          fontFamily:
-                                                          FontUtils.modernistRegular,
-                                                          fontSize: 1.7.t,
-                                                          //fontWeight: FontWeight.bold,
-                                                          color: ColorUtils.black),
-                                                    ),
-                                                  ],
-
-                                                ),
-
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: 1.h,
-                                            ),
-
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  model.posts[index].post_content!,
-                                                  //newsEvents[index]["para"],
-                                                  style: TextStyle(
-                                                      fontFamily:
-                                                      FontUtils.modernistRegular,
-                                                      fontSize: 1.8.t,
-                                                      color: ColorUtils.black),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: 1.h,
-                                            ),
-                                            if (model.posts[index].media !=
-                                                    null &&
-                                                model.posts[index].media!
-                                                        .length >
-                                                    0)
-                                              Container(
-
-                                                  child: CachedNetworkImage(
-                                                    imageUrl:  model.posts[index].media![0].media!,
-                                                    //width: 100.i,
-                                                    height: 40.i,
-                                                    fit: BoxFit.cover,
-                                                  )),
-                                            Divider(),
-                                            Row(
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    SvgPicture.asset(
-                                                      ImageUtils.msgIcon,
-                                                      color: ColorUtils.icon_color,
-                                                    ),
-                                                    SizedBox(
-                                                      width: 1.5.w,
-                                                    ),
-                                                    Text(
-                                                      "68",
-                                                      style: TextStyle(
-                                                          fontFamily: FontUtils
-                                                              .modernistRegular,
-                                                          fontSize: 1.5.t,
-                                                          color: ColorUtils
-                                                              .icon_color),
-                                                    ),
-                                                  ],
-                                                ),
-                                                SizedBox(width: 7.w),
-                                                Row(
-                                                  children: [
-                                                    SvgPicture.asset(
-                                                      ImageUtils.matchedIcon,
-                                                      color: ColorUtils.icon_color,
-                                                    ),
-                                                    SizedBox(
-                                                      width: 1.5.w,
-                                                    ),
-                                                    Text(
-                                                      "53.5 k",
-                                                      style: TextStyle(
-                                                          fontFamily: FontUtils
-                                                              .modernistRegular,
-                                                          fontSize: 1.5.t,
-                                                          color: ColorUtils
-                                                              .icon_color),
-                                                    ),
-                                                  ],
-                                                )
-                                              ],
-                                            )
-                                          ],
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          final _state =
+                                              model.sideMenuKey.currentState;
+                                          if (_state!.isOpened)
+                                            _state
+                                                .closeSideMenu(); // close side menu
+                                          else
+                                            _state.openSideMenu();
+                                        },
+                                        child: SvgPicture.asset(
+                                            ImageUtils.menuIcon),
+                                        style: ElevatedButton.styleFrom(
+                                          primary: ColorUtils.white,
+                                          onPrimary: ColorUtils.white,
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: Dimensions
+                                                  .containerVerticalPadding),
+                                          elevation: 0,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      Dimensions.roundCorner),
+                                              side: BorderSide(
+                                                  color: ColorUtils.divider,
+                                                  width: 1)),
+                                          textStyle: TextStyle(
+                                            color: ColorUtils.white,
+                                            fontFamily: FontUtils.modernistBold,
+                                            fontSize: 1.8.t,
+                                            //height: 0
+                                          ),
+                                        ),
+                                      ),
+                                      Text(
+                                        "News Feed",
+                                        style: TextStyle(
+                                          color: ColorUtils.black,
+                                          fontFamily: FontUtils.modernistBold,
+                                          fontSize: 3.t,
+                                        ),
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          model.navigateToBarProfile2();
+                                        },
+                                        child: Container(
+                                          child: Image.asset(
+                                            ImageUtils.profileImg,
+                                            height: 17.i,
+                                          ),
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
-                              );
-                            },
-                            separatorBuilder: (context, index) {
-                              return SizedBox(
-                                height: SizeConfig.heightMultiplier * 2.5,
-                              );
-                            },
-                            itemCount: model.posts.length,
+                              ),
+                              //SizedBox(height: 3.h),
+
+                              SizedBox(
+                                height: SizeConfig.heightMultiplier * 2,
+                              ),
+                              Expanded(
+                                child: ListView.separated(
+                                  padding: EdgeInsets.zero,
+                                  scrollDirection: Axis.vertical,
+                                  physics: const BouncingScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 3.5.w,
+                                      ),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: ColorUtils.black
+                                                  .withOpacity(0.1),
+                                              spreadRadius: 0,
+                                              blurRadius: 10,
+                                              offset: Offset(0,
+                                                  5), // changes position of shadow
+                                            ),
+                                          ],
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(18)),
+                                          border: Border.all(
+                                              color: ColorUtils.text_grey
+                                                  .withOpacity(0.1)),
+                                        ),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 2.5.w,
+                                                  vertical: 1.h),
+                                              child: Column(
+                                                children: [
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                        child: Image.network(
+                                                          model
+                                                              .posts[index]
+                                                              .user_id!
+                                                              .profile_picture!,
+                                                          //newsEvents[index]["image"],
+                                                          width: 10.i,
+                                                          height: 10.i,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 3.w,
+                                                      ),
+                                                      Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Row(
+                                                            children: [
+                                                              Text(
+                                                                model
+                                                                    .posts[
+                                                                        index]
+                                                                    .user_id!
+                                                                    .bar_name!,
+                                                                //newsEvents[index]["barOwnerName"],
+                                                                style: TextStyle(
+                                                                    fontFamily:
+                                                                        FontUtils
+                                                                            .modernistBold,
+                                                                    fontSize:
+                                                                        2.2.t,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color: ColorUtils
+                                                                        .black),
+                                                              ),
+                                                              // if (model.posts[index].post_type! == '1')
+                                                              //   {
+                                                              //     Text("Abc")
+                                                              //   }
+                                                            ],
+                                                          ),
+                                                          SizedBox(
+                                                            height: 0.5.h,
+                                                          ),
+                                                          Text(
+                                                            model.posts[index]
+                                                                .post_location!,
+                                                            //newsEvents[index]["barOwnerName"],
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                    FontUtils
+                                                                        .modernistRegular,
+                                                                fontSize: 1.7.t,
+                                                                //fontWeight: FontWeight.bold,
+                                                                color:
+                                                                    ColorUtils
+                                                                        .black),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    height: 1.h,
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                        model.posts[index]
+                                                            .post_content!,
+                                                        //newsEvents[index]["para"],
+                                                        style: TextStyle(
+                                                            fontFamily: FontUtils
+                                                                .modernistRegular,
+                                                            fontSize: 1.8.t,
+                                                            color: ColorUtils
+                                                                .black),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    height: 1.h,
+                                                  ),
+                                                  if (model.posts[index]
+                                                              .media !=
+                                                          null &&
+                                                      model.posts[index].media!
+                                                              .length >
+                                                          0)
+                                                    Container(
+                                                        child:
+                                                            CachedNetworkImage(
+                                                      imageUrl: model
+                                                          .posts[index]
+                                                          .media![0]
+                                                          .media!,
+                                                      //width: 100.i,
+                                                      height: 40.i,
+                                                      fit: BoxFit.cover,
+                                                    )),
+                                                  Divider(),
+                                                  Row(
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          SvgPicture.asset(
+                                                            ImageUtils.msgIcon,
+                                                            color: ColorUtils
+                                                                .icon_color,
+                                                          ),
+                                                          SizedBox(
+                                                            width: 1.5.w,
+                                                          ),
+                                                          Text(
+                                                            "68",
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                    FontUtils
+                                                                        .modernistRegular,
+                                                                fontSize: 1.5.t,
+                                                                color: ColorUtils
+                                                                    .icon_color),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      SizedBox(width: 7.w),
+                                                      Row(
+                                                        children: [
+                                                          SvgPicture.asset(
+                                                            ImageUtils
+                                                                .matchedIcon,
+                                                            color: ColorUtils
+                                                                .icon_color,
+                                                          ),
+                                                          SizedBox(
+                                                            width: 1.5.w,
+                                                          ),
+                                                          Text(
+                                                            "53.5 k",
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                    FontUtils
+                                                                        .modernistRegular,
+                                                                fontSize: 1.5.t,
+                                                                color: ColorUtils
+                                                                    .icon_color),
+                                                          ),
+                                                        ],
+                                                      )
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  separatorBuilder: (context, index) {
+                                    return SizedBox(
+                                      height: SizeConfig.heightMultiplier * 2.5,
+                                    );
+                                  },
+                                  itemCount: model.posts.length,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
-                  )),
-            ),
-          ),
-        );
+                        )),
+                  ),
+                ),
+              );
       },
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,

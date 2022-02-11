@@ -92,6 +92,9 @@ class _BarAllRatingState extends State<BarAllRating>
   Widget build(BuildContext context) {
     return ViewModelBuilder<MainViewModel>.reactive(
       viewModelBuilder: () => locator<MainViewModel>(),
+      onModelReady: (model) {
+        model.rating();
+      },
       disposeViewModel: false,
       builder: (context, model, child) {
         return SafeArea(
@@ -110,6 +113,7 @@ class _BarAllRatingState extends State<BarAllRating>
                     children: [
                       IconButton(
                           onPressed: () {
+                            model.rating();
                             model.navigateBack();
                           },
                           iconSize: 18.0,
@@ -626,11 +630,13 @@ class _BarAllRatingState extends State<BarAllRating>
                                 ],
                               ),
                               RatingBar.builder(
+                                tapOnlyMode: false,
                                 initialRating:
-                                    model.ratingKaData!.data![index].rate!,
+                                    model.ratingKaData!.total_rating ?? 0,
                                 minRating: 1,
+                                ignoreGestures: true,
                                 direction: Axis.horizontal,
-                                allowHalfRating: true,
+                                //allowHalfRating: true,
                                 itemCount: 5,
                                 itemSize: 4.5.i,
                                 itemPadding:
@@ -640,7 +646,7 @@ class _BarAllRatingState extends State<BarAllRating>
                                   color: ColorUtils.red_color,
                                 ),
                                 onRatingUpdate: (rating) {
-                                  print(rating);
+                                  //print(rating);
                                 },
                               ),
                             ],
