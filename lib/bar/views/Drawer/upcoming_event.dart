@@ -23,8 +23,6 @@ class UpcomingEvent extends StatefulWidget {
 class _UpcomingEventState extends State<UpcomingEvent> with TickerProviderStateMixin {
 
   late TabController tabController;
-
-
   int tabSlelected = 0;
 
   @override

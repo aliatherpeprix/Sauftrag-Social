@@ -189,7 +189,7 @@ class _EventsState extends State<Events> {
                                 itemBuilder: (context, index) {
                                   return GestureDetector(
                                     onTap: (){
-                                      model.navigateToEventDetailsScreen();
+                                      //model.navigateToEventDetailScreen();
                                     },
                                     child: Padding(
                                       padding: EdgeInsets.only(left: 4.w, bottom: 2.h,),
@@ -378,7 +378,7 @@ class _EventsState extends State<Events> {
                             itemBuilder: (context, index) {
                               return GestureDetector(
                                 onTap: (){
-                                  model.navigateToEventDetailsScreen();
+                                  //model.navigateToEventDetailsScreen();
                                 },
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(horizontal:SizeConfig.widthMultiplier * 4,),

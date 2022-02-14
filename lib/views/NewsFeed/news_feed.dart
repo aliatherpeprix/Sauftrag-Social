@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sauftrag/app/locator.dart';
@@ -239,7 +240,7 @@ class _NewsFeedState extends State<NewsFeed> {
                                       Expanded(
                                         child: Container(
                                           padding: EdgeInsets.symmetric(
-                                            horizontal: Dimensions.horizontalPadding,
+                                            //horizontal: Dimensions.horizontalPadding,
                                               //vertical: Dimensions.verticalPadding
                                           ),
                                           child: ListView.separated(
@@ -250,86 +251,155 @@ class _NewsFeedState extends State<NewsFeed> {
                                             itemBuilder: (context, index) {
                                               return Padding(
                                                 padding: EdgeInsets.symmetric(
-                                                  horizontal: 0.w,
+                                                  horizontal: 3.5.w,
                                                 ),
                                                 child: Container(
                                                   decoration: BoxDecoration(
                                                     boxShadow: [
                                                       BoxShadow(
-                                                        color: ColorUtils.black.withOpacity(0.1),
+                                                        color: ColorUtils.black
+                                                            .withOpacity(0.1),
                                                         spreadRadius: 0,
                                                         blurRadius: 10,
-                                                        offset: Offset(0, 5), // changes position of shadow
+                                                        offset: Offset(0,
+                                                            5), // changes position of shadow
                                                       ),
                                                     ],
                                                     color: Colors.white,
-                                                    borderRadius:
-                                                    BorderRadius.all(Radius.circular(18)),
-                                                    //border: Border.all(color: ColorUtils.red_color),
+                                                    borderRadius: BorderRadius.all(
+                                                        Radius.circular(18)),
+                                                    border: Border.all(
+                                                        color: ColorUtils.text_grey
+                                                            .withOpacity(0.1)),
                                                   ),
                                                   child: Column(
                                                     mainAxisSize: MainAxisSize.min,
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                    mainAxisAlignment:
+                                                    MainAxisAlignment.start,
                                                     children: [
                                                       Padding(
                                                         padding: EdgeInsets.symmetric(
-                                                            horizontal: 2.5.w, vertical: 1.h),
+                                                            horizontal: 2.5.w,
+                                                            vertical: 1.h),
                                                         child: Column(
                                                           children: [
                                                             Row(
-                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                              mainAxisAlignment:
+                                                              MainAxisAlignment.start,
                                                               children: [
-                                                                Row(
+                                                                ClipRRect(
+                                                                  borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(10),
+                                                                  child: Image.network(
+                                                                    model
+                                                                        .posts[index]
+                                                                        .user_id!
+                                                                        .profile_picture!,
+                                                                    //newsEvents[index]["image"],
+                                                                    width: 10.i,
+                                                                    height: 10.i,
+                                                                    fit: BoxFit.cover,
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                  width: 3.w,
+                                                                ),
+                                                                Column(
                                                                   mainAxisAlignment:
-                                                                  MainAxisAlignment.start,
+                                                                  MainAxisAlignment
+                                                                      .start,
+                                                                  crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
                                                                   children: [
-                                                                    ClipRRect(
-                                                                      borderRadius:
-                                                                      BorderRadius.circular(10),
-                                                                      child: Image.asset(
-                                                                        newsEvents[index]["image"],
-                                                                        width: 10.i,
-                                                                        height: 10.i,
-                                                                        fit: BoxFit.cover,
-                                                                      ),
+                                                                    Row(
+                                                                      children: [
+                                                                        Text(
+                                                                          model
+                                                                              .posts[
+                                                                          index]
+                                                                              .user_id!
+                                                                              .bar_name!,
+                                                                          //newsEvents[index]["barOwnerName"],
+                                                                          style: TextStyle(
+                                                                              fontFamily:
+                                                                              FontUtils
+                                                                                  .modernistBold,
+                                                                              fontSize:
+                                                                              2.2.t,
+                                                                              fontWeight:
+                                                                              FontWeight
+                                                                                  .bold,
+                                                                              color: ColorUtils
+                                                                                  .black),
+                                                                        ),
+                                                                        // if (model.posts[index].post_type! == '1')
+                                                                        //   {
+                                                                        //     Text("Abc")
+                                                                        //   }
+                                                                      ],
                                                                     ),
                                                                     SizedBox(
-                                                                      width: 3.w,
+                                                                      height: 0.5.h,
                                                                     ),
                                                                     Text(
-                                                                      newsEvents[index]["barOwnerName"],
+                                                                      model.posts[index]
+                                                                          .post_location!,
+                                                                      //newsEvents[index]["barOwnerName"],
                                                                       style: TextStyle(
                                                                           fontFamily:
-                                                                          FontUtils.modernistBold,
-                                                                          fontSize: 2.2.t,
-                                                                          fontWeight: FontWeight.bold,
-                                                                          color: ColorUtils.black),
+                                                                          FontUtils
+                                                                              .modernistRegular,
+                                                                          fontSize: 1.7.t,
+                                                                          //fontWeight: FontWeight.bold,
+                                                                          color:
+                                                                          ColorUtils
+                                                                              .black),
                                                                     ),
                                                                   ],
-                                                                ),
-                                                                Icon(Icons.more_vert,
-                                                                color: ColorUtils.icon_color,
                                                                 ),
                                                               ],
                                                             ),
                                                             SizedBox(
                                                               height: 1.h,
                                                             ),
-                                                            Text(
-                                                              newsEvents[index]["para"],
-                                                              style: TextStyle(
-                                                                  fontFamily:
-                                                                  FontUtils.modernistRegular,
-                                                                  fontSize: 1.8.t,
-                                                                  color: ColorUtils.black),
+                                                            Row(
+                                                              children: [
+                                                                Text(
+                                                                  model.posts[index]
+                                                                      .post_content!,
+                                                                  //newsEvents[index]["para"],
+                                                                  style: TextStyle(
+                                                                      fontFamily: FontUtils
+                                                                          .modernistRegular,
+                                                                      fontSize: 1.8.t,
+                                                                      color: ColorUtils
+                                                                          .black),
+                                                                ),
+                                                              ],
                                                             ),
                                                             SizedBox(
                                                               height: 1.h,
                                                             ),
-                                                            if (newsEvents[index]["imgPre"] == true)
+                                                            if (model.posts[index]
+                                                                .media !=
+                                                                null &&
+                                                                model.posts[index].media!
+                                                                    .length >
+                                                                    0)
                                                               Container(
-                                                                  child: Image.asset(
-                                                                    newsEvents[index]["image2"],
+                                                                  child:
+                                                                  CachedNetworkImage(
+                                                                    imageUrl: model
+                                                                        .posts[index]
+                                                                        .media![0]
+                                                                        .media!,
+                                                                    //width: 100.i,
+                                                                    height: 40.i,
+                                                                    fit: BoxFit.cover,
                                                                   )),
                                                             Divider(),
                                                             Row(
@@ -337,17 +407,18 @@ class _NewsFeedState extends State<NewsFeed> {
                                                                 Row(
                                                                   children: [
                                                                     SvgPicture.asset(
-                                                                      newsEvents[index]
-                                                                      ["commentIon"],
-                                                                      color: ColorUtils.icon_color,
+                                                                      ImageUtils.msgIcon,
+                                                                      color: ColorUtils
+                                                                          .icon_color,
                                                                     ),
                                                                     SizedBox(
                                                                       width: 1.5.w,
                                                                     ),
                                                                     Text(
-                                                                      newsEvents[index]["comment"],
+                                                                      "68",
                                                                       style: TextStyle(
-                                                                          fontFamily: FontUtils
+                                                                          fontFamily:
+                                                                          FontUtils
                                                                               .modernistRegular,
                                                                           fontSize: 1.5.t,
                                                                           color: ColorUtils
@@ -359,17 +430,19 @@ class _NewsFeedState extends State<NewsFeed> {
                                                                 Row(
                                                                   children: [
                                                                     SvgPicture.asset(
-                                                                      newsEvents[index]
-                                                                      ["likesIcon"],
-                                                                      color: ColorUtils.icon_color,
+                                                                      ImageUtils
+                                                                          .matchedIcon,
+                                                                      color: ColorUtils
+                                                                          .icon_color,
                                                                     ),
                                                                     SizedBox(
                                                                       width: 1.5.w,
                                                                     ),
                                                                     Text(
-                                                                      newsEvents[index]["likes"],
+                                                                      "53.5 k",
                                                                       style: TextStyle(
-                                                                          fontFamily: FontUtils
+                                                                          fontFamily:
+                                                                          FontUtils
                                                                               .modernistRegular,
                                                                           fontSize: 1.5.t,
                                                                           color: ColorUtils
@@ -392,7 +465,7 @@ class _NewsFeedState extends State<NewsFeed> {
                                                 height: SizeConfig.heightMultiplier * 2.5,
                                               );
                                             },
-                                            itemCount: newsEvents.length,
+                                            itemCount: model.posts.length,
                                           ),
                                         ),
                                       ),

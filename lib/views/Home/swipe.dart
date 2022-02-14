@@ -68,13 +68,29 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
   late Animation<double> width;
   int flag = 0;
 
-  List<String> welcomeImages = [ImageUtils.girl1, ImageUtils.girl2, ImageUtils.girl3, ImageUtils.girl4, ImageUtils.girl5, ImageUtils.girl6, ImageUtils.girl7, ImageUtils.girl8, ImageUtils.girl9, ImageUtils.girl10, ImageUtils.girl11, ImageUtils.girl12];
+  List<String> welcomeImages = [
+    ImageUtils.girl1,
+    ImageUtils.girl2,
+    ImageUtils.girl3,
+    ImageUtils.girl4,
+    ImageUtils.girl5,
+    ImageUtils.girl6,
+    ImageUtils.girl7,
+    ImageUtils.girl8,
+    ImageUtils.girl9,
+    ImageUtils.girl10,
+    ImageUtils.girl11,
+    ImageUtils.girl12
+  ];
   //List data = [ImageUtils.girl1, ImageUtils.girl2, ImageUtils.girl3, ImageUtils.girl4, ImageUtils.girl5, ImageUtils.girl6];
 
   List<List<String>> data = [
-    [ImageUtils.girl11, ImageUtils.girl12, ImageUtils.girl13, ImageUtils.girl14, ImageUtils.girl15],
-    [ImageUtils.girl6, ImageUtils.girl7, ImageUtils.girl8, ImageUtils.girl9, ImageUtils.girl10],
-    [ImageUtils.girl1, ImageUtils.girl2, ImageUtils.girl3, ImageUtils.girl4, ImageUtils.girl5],
+    [ImageUtils.boy_4, ImageUtils.boy_5, ImageUtils.boy_6,],
+    [ImageUtils.boy1, ImageUtils.boy_2, ImageUtils.boy_3,],
+    [ImageUtils.girl10, ImageUtils.girl11, ImageUtils.girl12, ImageUtils.girl13],
+    [ImageUtils.girl7, ImageUtils.girl8, ImageUtils.girl9,],
+    [ImageUtils.girl4, ImageUtils.girl5, ImageUtils.girl6,],
+    [ImageUtils.girl1, ImageUtils.girl2, ImageUtils.girl3,],
     /*[ImageUtils.girl2, ImageUtils.girl4, ImageUtils.girl6, ImageUtils.girl8, ImageUtils.girl10, ImageUtils.girl12],
     [ImageUtils.girl12, ImageUtils.girl11, ImageUtils.girl10, ImageUtils.girl9, ImageUtils.girl8, ImageUtils.girl7],
     [ImageUtils.girl6, ImageUtils.girl5, ImageUtils.girl4, ImageUtils.girl3, ImageUtils.girl2, ImageUtils.girl1],*/

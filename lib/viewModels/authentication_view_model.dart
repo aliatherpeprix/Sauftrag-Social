@@ -961,6 +961,7 @@ class AuthenticationViewModel extends BaseViewModel {
       if (response.statusCode == 201) {
           createEventLoader = false;
           notifyListeners();
+          navigateBack();
         } else {
           createEventLoader = false;
           notifyListeners();

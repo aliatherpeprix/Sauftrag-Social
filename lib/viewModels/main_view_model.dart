@@ -45,6 +45,7 @@ import 'package:sauftrag/utils/error_flash_message.dart';
 
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/prefrences_view_model.dart';
+import 'package:sauftrag/views/NewsFeed/event_detail.dart';
 import 'package:sauftrag/views/UserProfile/terms_condition.dart';
 import 'package:sauftrag/widgets/error_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -1061,8 +1062,26 @@ class MainViewModel extends BaseViewModel {
     navigationService.navigateToBarTimingTypeScreen();
   }
 
-  void navigateToEventDetailsScreen() {
-    navigationService.navigateToEventDetailScreen();
+  // void navigateToEventDetailsScreen( dynamic image,
+  //       dynamic eventName,
+  //       dynamic eventDate,
+  //       dynamic eventStartTime,
+  //       dynamic eventEndTime,
+  //       dynamic location,
+  //       dynamic about) {
+  //   navigationService.navigateToEventDetailScreen(image: image,eventName: eventName,eventDate: eventDate,eventStartTime: eventStartTime,eventEndTime: eventEndTime,location: location,about: about);
+  // }
+
+  void navigateToEventDetailScreen(
+      dynamic image,
+      dynamic eventName,
+      dynamic eventDate,
+      dynamic eventStartTime,
+      dynamic eventEndTime,
+      dynamic location,
+      dynamic about){
+    navigationKey.currentState!.push(PageTransition(child: EventDetails(image: image,eventName: eventName,eventDate: eventDate,eventStartTime: eventStartTime,eventEndTime: eventEndTime,location: location,about: about,), type: PageTransitionType.rightToLeftWithFade));
+
   }
 
   void navigateToMapSearchScreen() {
@@ -1390,7 +1409,7 @@ class MainViewModel extends BaseViewModel {
 
   List<BarEventModel>? barEventModel = [];
 
-  void getEvent(BuildContext context) async {
+    void getEvent(BuildContext context) async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
 
     try {

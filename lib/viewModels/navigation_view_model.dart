@@ -228,8 +228,28 @@ class NavigationViewModel extends BaseViewModel{
   void navigateAndRemoveSignInScreen(){
     navigationKey.currentState!.pushAndRemoveUntil(PageTransition(child: Login(), type: PageTransitionType.rightToLeftWithFade), (route) => false);
   }
-  void navigateToEventDetailScreen(){
-    navigationKey.currentState!.push(PageTransition(child: EventDetails(), type: PageTransitionType.rightToLeftWithFade));
+  // void navigateToEventDetailScreen([param0]){
+  //   navigationKey.currentState!.push(PageTransition(child: EventDetails(), type: PageTransitionType.rightToLeftWithFade));
+  //
+  // }
+
+  void navigateToEventDetailScreen(
+      dynamic image,
+      dynamic eventName,
+      dynamic eventDate,
+      dynamic eventStartTime,
+      dynamic eventEndTime,
+      dynamic location,
+      dynamic about){
+    navigationKey.currentState!.push(PageTransition(child: EventDetails(
+      image: image,
+      eventName: eventName,
+      eventDate: eventDate,
+      eventStartTime: eventStartTime,
+      eventEndTime: eventEndTime,
+      location: location,
+      about: about,
+    ), type: PageTransitionType.rightToLeftWithFade));
 
   }
 

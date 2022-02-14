@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +65,7 @@ class _CreateBarEventState extends State<CreateBarEvent> {
           onTap: () {
             FocusScope.of(context).unfocus();
           },
-          child:model.createEventLoader?Center(child: CircularProgressIndicator()): SafeArea(
+          child:SafeArea(
             top: false,
             bottom: false,
             child: Scaffold(
@@ -305,6 +307,7 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                       child: IconButton(
                                         onPressed: () {
                                           model.imageFiles.removeAt(0);
+                                          model.imageFiles.insert(0, File(""));
                                           model.notifyListeners();
                                         },
                                         icon: SvgPicture.asset(
@@ -364,6 +367,7 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                       child: IconButton(
                                         onPressed: () {
                                           model.imageFiles.removeAt(1);
+                                          model.imageFiles.insert(1, File(""));
                                           model.notifyListeners();
                                         },
                                         icon: SvgPicture.asset(
@@ -422,7 +426,8 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                       alignment: Alignment.bottomRight,
                                       child: IconButton(
                                         onPressed: () {
-                                          model.imageFiles.removeAt(0);
+                                          model.imageFiles.removeAt(2);
+                                          model.imageFiles.insert(2, File(""));
                                           model.notifyListeners();
                                         },
                                         icon: SvgPicture.asset(
@@ -481,7 +486,8 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                       alignment: Alignment.bottomRight,
                                       child: IconButton(
                                         onPressed: () {
-                                          model.imageFiles.removeAt(0);
+                                          model.imageFiles.removeAt(3);
+                                          model.imageFiles.insert(3, File(""));
                                           model.notifyListeners();
                                         },
                                         icon: SvgPicture.asset(
@@ -879,7 +885,7 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                           onPressed: () {
                             model.validateCreateEvent(context);
                           },
-                          child: const Text("Create Event"),
+                          child: model.createEventLoader ? Loader() : Text("Create Event"),
                           style: ElevatedButton.styleFrom(
                             primary: ColorUtils.text_red  ,
                             onPrimary: ColorUtils.white,
