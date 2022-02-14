@@ -10,17 +10,18 @@ import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/views/UserFriendList/message_screen.dart';
+import 'package:sauftrag/views/UserFriendList/message_screen_for_user.dart';
 import 'package:sauftrag/widgets/all_page_loader.dart';
 import 'package:stacked/stacked.dart';
 
-class FriendList extends StatefulWidget {
-  const FriendList({Key? key}) : super(key: key);
+class FriendListForUser extends StatefulWidget {
+  const FriendListForUser({Key? key}) : super(key: key);
 
   @override
-  _FriendListState createState() => _FriendListState();
+  _FriendListForUserState createState() => _FriendListForUserState();
 }
 
-class _FriendListState extends State<FriendList> {
+class _FriendListForUserState extends State<FriendListForUser> {
   String dropdownValue = 'hi';
 
   List friendsList = [
@@ -343,7 +344,7 @@ class _FriendListState extends State<FriendList> {
                                                   PageTransition(
                                                       type: PageTransitionType
                                                           .fade,
-                                                      child: MessageScreen(
+                                                      child: MessageScreenForUser(
                                                         id: model
                                                             .userForChats[index]
                                                             .id,

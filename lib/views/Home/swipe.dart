@@ -86,7 +86,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
 
   List<List<String>> data = [
     [ImageUtils.boy_4, ImageUtils.boy_5, ImageUtils.boy_6,],
-    [ImageUtils.boy1, ImageUtils.boy_2, ImageUtils.boy_3,],
+    [ImageUtils.boy_1, ImageUtils.boy_2, ImageUtils.boy_3,],
     [ImageUtils.girl10, ImageUtils.girl11, ImageUtils.girl12, ImageUtils.girl13],
     [ImageUtils.girl7, ImageUtils.girl8, ImageUtils.girl9,],
     [ImageUtils.girl4, ImageUtils.girl5, ImageUtils.girl6,],

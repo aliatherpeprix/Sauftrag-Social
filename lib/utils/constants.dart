@@ -35,6 +35,7 @@ class Constants {
   static const String accountDeactivate = 'api/account/deactivate/';
   static const String followersList = 'api/followers/list/';
   static const String rating = 'api/rating/add/';
+  static const String allUserForChat = 'api/user/all/';
   static const String GetEvents = BaseUrlPro + 'api/event/add/';
 
   static const int profileImage = 1;

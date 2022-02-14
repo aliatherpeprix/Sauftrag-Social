@@ -12,6 +12,7 @@ import 'package:sauftrag/views/MapSearch/map_screen.dart';
 import 'package:sauftrag/views/MapSearch/search.dart';
 import 'package:sauftrag/views/NewsFeed/news_feed.dart';
 import 'package:sauftrag/views/UserFriendList/friend_list.dart';
+import 'package:sauftrag/views/UserFriendList/friend_list_for_user.dart';
 import 'package:sauftrag/views/UserProfile/user_profile.dart';
 import 'package:sauftrag/widgets/my_curved_nav_bar.dart';
 import 'package:sauftrag/utils/dimensions.dart';
@@ -21,7 +22,6 @@ import 'package:shrink_sidemenu/shrink_sidemenu.dart';
 import 'package:stacked/stacked.dart';
 
 class MainView extends StatefulWidget {
-
   int index;
   MainView({Key? key, required this.index}) : super(key: key);
 
@@ -30,7 +30,6 @@ class MainView extends StatefulWidget {
 }
 
 class _MainViewState extends State<MainView> {
-
   int currentIndex = 0;
   Widget body = MapScreen();
 
@@ -43,59 +42,55 @@ class _MainViewState extends State<MainView> {
 
   @override
   Widget build(BuildContext context) {
-
     return ViewModelBuilder<MainViewModel>.reactive(
-      onModelReady: (model){
+      onModelReady: (model) {
         model.getUserData();
       },
-        viewModelBuilder: ()=>locator<MainViewModel>(),
+      viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
-        builder: (context, model, child) {
-          return SafeArea(
-            top: false,
-            bottom: false,
-            child: Scaffold(
-              resizeToAvoidBottomInset: false,
-              body: Column(
-                children: <Widget>[
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                        child: body
-                    ),
-                  ),
-                  MyCurvedNavBar(
-                    barIconColor: ColorUtils.icon_color,
-                    selectedIconColor: ColorUtils.white,
-                    color: ColorUtils.white,
-                    buttonBackgroundColor: ColorUtils.text_red,
-                    index: currentIndex,
-                    animationCurve: Curves.ease,
-                    animationDuration: Duration(milliseconds: 300),
-                    height: SizeConfig.heightMultiplier * 8,
-                    //backgroundColor: Colors.redAccent,
-                    parentDecoration: BoxDecoration(
-                        boxShadow: [BoxShadow(
-                            color: Color(0xFFefefef),
-                            blurRadius: 3*SizeConfig.imageSizeMultiplier,
-                            offset: Offset(0,-10)
-                        )]
-                    ),
-                    items: <String>[
-                      ImageUtils.homeIcon,
-                      ImageUtils.chatIcon,
-                      ImageUtils.swipeIcon,
-                      ImageUtils.mapIcon,
-                      ImageUtils.profileIcon
-                    ],
-                    onTap: (index) {
-                      currentIndex = index;
-                      //MainView(index: 3,);
-                      onClick(currentIndex);
-                      setState(() {});
-                    },
-                  ),
-                  /*CurvedNavigationBar(
+      builder: (context, model, child) {
+        return SafeArea(
+          top: false,
+          bottom: false,
+          child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            body: Column(
+              children: <Widget>[
+                Expanded(
+                  flex: 1,
+                  child: Container(child: body),
+                ),
+                MyCurvedNavBar(
+                  barIconColor: ColorUtils.icon_color,
+                  selectedIconColor: ColorUtils.white,
+                  color: ColorUtils.white,
+                  buttonBackgroundColor: ColorUtils.text_red,
+                  index: currentIndex,
+                  animationCurve: Curves.ease,
+                  animationDuration: Duration(milliseconds: 300),
+                  height: SizeConfig.heightMultiplier * 8,
+                  //backgroundColor: Colors.redAccent,
+                  parentDecoration: BoxDecoration(boxShadow: [
+                    BoxShadow(
+                        color: Color(0xFFefefef),
+                        blurRadius: 3 * SizeConfig.imageSizeMultiplier,
+                        offset: Offset(0, -10))
+                  ]),
+                  items: <String>[
+                    ImageUtils.homeIcon,
+                    ImageUtils.chatIcon,
+                    ImageUtils.swipeIcon,
+                    ImageUtils.mapIcon,
+                    ImageUtils.profileIcon
+                  ],
+                  onTap: (index) {
+                    currentIndex = index;
+                    //MainView(index: 3,);
+                    onClick(currentIndex);
+                    setState(() {});
+                  },
+                ),
+                /*CurvedNavigationBar(
             backgroundColor: ColorUtils.transparent,
             buttonBackgroundColor: ColorUtils.text_red,
             items: <Widget>[
@@ -110,24 +105,24 @@ class _MainViewState extends State<MainView> {
               onClick(index);
             },
           ),*/
-                  //BottomBar(index: currentIndex, onClick: onClick)
-                ],
-              ),
+                //BottomBar(index: currentIndex, onClick: onClick)
+              ],
             ),
-          );
-        },
+          ),
+        );
+      },
     );
   }
 
-  onClick(int selectedIndex){
+  onClick(int selectedIndex) {
     setState(() {
       currentIndex = selectedIndex;
-      switch(currentIndex){
+      switch (currentIndex) {
         case 0:
           body = NewsFeed();
           break;
         case 1:
-          body = FriendList();
+          body = FriendListForUser();
           break;
         case 2:
           body = Swipe();

@@ -18,6 +18,7 @@ import 'package:pubnub/core.dart';
 import 'package:pubnub/pubnub.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/address_book.dart';
+import 'package:sauftrag/models/all_user_for_chat.dart';
 import 'package:sauftrag/models/bar_event_model.dart';
 import 'package:sauftrag/models/bar_model.dart';
 import 'package:sauftrag/models/create_bar_post.dart';
@@ -126,12 +127,11 @@ class MainViewModel extends BaseViewModel {
 
   List<AddressBook> contactBook = [];
 
-
   var dio = Dio();
 
   final aboutMeController = TextEditingController();
   final barNameController = TextEditingController();
-
+  ScrollController chatScroll = ScrollController();
   final addDrinkController = TextEditingController();
   bool isAddDrinkInFocus = false;
   FocusNode addDrinkFocus = new FocusNode();
@@ -155,12 +155,9 @@ class MainViewModel extends BaseViewModel {
   String? protection;
   //String? faqs;
 
-  List contactChecked = [
-
-  ];
+  List contactChecked = [];
 
   bool isSwitched = false;
-
 
   Future<Position> determinePosition() async {
     bool serviceEnabled;
@@ -227,6 +224,16 @@ class MainViewModel extends BaseViewModel {
     "Drink normal",
     "Drink hard"
   ];
+
+  List<String> matchName = [
+    "Sabine, 24",
+    "Clara, 26",
+    "Mayra, "
+    "Chaline, ",
+    "Chris, 30"
+    "Leandro, 18"
+  ];
+
   Map<String, int> drinkMotivationMap = {
     'Drink light': 1,
     'Drink normal': 2,
@@ -281,8 +288,7 @@ class MainViewModel extends BaseViewModel {
       notifyListeners();
 
       var userSignupResponce =
-
-      await updateUser.UpdateUserFavorites(selectedList, favorite);
+          await updateUser.UpdateUserFavorites(selectedList, favorite);
       print(userSignupResponce);
       if (userSignupResponce is UserModel) {
         UserModel user = userSignupResponce;
@@ -498,9 +504,7 @@ class MainViewModel extends BaseViewModel {
 
   int partyVacationValue = 1;
   String partyVacationValueStr = "Ibiza Beach";
-  List<dynamic> partyVacationList = [
-
-  ];
+  List<dynamic> partyVacationList = [];
   Map<String, int> partyVacationMap = {
     'Ibiza Beach': 1,
     'Goldstrand': 2,
@@ -618,26 +622,18 @@ class MainViewModel extends BaseViewModel {
         infoWindow: InfoWindow(title: 'The title of the marker')));
   }
 
-  List<dynamic> drinkList = [
-
-  ];
+  List<dynamic> drinkList = [];
 
   List<dynamic> selectedDrinkList = [];
 
-  List<dynamic> clubList = [
-
-  ];
+  List<dynamic> clubList = [];
   List<dynamic> selectedClubList = [];
 
-  List<dynamic> vacationList = [
-
-  ];
+  List<dynamic> vacationList = [];
 
   List<dynamic> selectedVacationList = [];
 
-  List<String> interestList = [
-
-  ];
+  List<String> interestList = [];
 
   CameraPosition kGooglePlex = CameraPosition(
     target: LatLng(24.8169, 67.1118),
@@ -933,42 +929,27 @@ class MainViewModel extends BaseViewModel {
     // errorFlashMessage(jsonData['detail'], context);
   }
 
-//   chat() async {
-//     var myKeyset = Keyset(
-//         subscribeKey: 'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
-//         publishKey: 'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
-//         uuid: UUID('demo'));
-//     final pubnub = PubNub(defaultKeyset: myKeyset);
-//     final myChannel =
-//         pubnub.channel(UserModel().id.toString() + BarModel().id.toString());
-//     var subscription = pubnub.subscribe(channels: {
-//       UserModel().id.toString() + BarModel().id.toString(),
-//       BarModel().id.toString() + UserModel().id.toString()
-//     });
-//     subscription.messages.listen((envelope) {
-//       print('${envelope.uuid} sent a message: ${envelope.payload}');
-//     });
-//     myChannel.publish(200);
-//     myChannel.publish({'answer': 42});
+  List<UserForChat> userForChats = [];
+  bool userComing = false;
+  getAllUserForChat() async {
+    userComing = true;
+    notifyListeners();
+    NewBarModel? user = await locator<PrefrencesViewModel>().getBarUser();
+    var response = await dio.get(
+        Constants.BaseUrlPro + Constants.allUserForChat,
+        options: Options(
+            contentType: Headers.formUrlEncodedContentType,
+            headers: {'Authorization': 'Token ${user!.token!}'}));
+    print(response.data);
+    userForChats =
+        (response.data as List).map((e) => UserForChat.fromJson(e)).toList();
+    userComing = false;
+    notifyListeners();
+  }
 
-//     var envelope = await subscription.messages.  ((envelope) =>
-//         envelope.channel ==
-//         BarModel().id.toString() + UserModel().id.toString());
-//     var history = myChannel.history(chunkSize: 50);
-//     pubnub.publish(UserModel().id.toString() + BarModel().id.toString(),
-//         {'content': groupScreenChatController.text});
-//     await history.more();
-//     print(history.messages.length); // 50
-//     await history.more();
-//     print(history.messages.length); // 100
-// //        pubnub.keysets.add(myKeyset1, name: 'keyset1');
-// // pubnub.keysets.add(myKeyset2, name: 'keyset2');
-//     pubnub.publish(
-//       'channel',
-//       42,
-//     );
-//     var myChannel1 = pubnub.channel('channel');
-//   }
+  void scrollDown() {
+    chatScroll.jumpTo(chatScroll.position.maxScrollExtent);
+  }
 
   void navigateToProfileScreen(List<String> images) {
     navigationService.navigateToProfileScreen(images);
@@ -1213,7 +1194,7 @@ class MainViewModel extends BaseViewModel {
       user.token = userModel!.token!;
       user.favorite_alcohol_drinks = user.favorite_alcohol_drinks!;
       user.favorite_night_club = user.favorite_night_club!;
-      user.favorite_party_vacation =user.favorite_party_vacation!;
+      user.favorite_party_vacation = user.favorite_party_vacation!;
       await prefrencesViewModel.saveUser(user);
       notifyListeners();
     }
@@ -1236,9 +1217,8 @@ class MainViewModel extends BaseViewModel {
     editProfile = true;
     notifyListeners();
     var barUpdateResponse = await updateBar.UpdateBarProfile(
-
-        barNameController.text,
-        imageFiles,
+      barNameController.text,
+      imageFiles,
     );
 
     if (barUpdateResponse is NewBarModel) {
@@ -1299,7 +1279,6 @@ class MainViewModel extends BaseViewModel {
     //navigateToMediaScreen();
     //navigateToHomeScreen(2);
   }
-
 
   void getBarData() async {
     barModel = await prefrencesViewModel.getBarUser();
@@ -1428,7 +1407,6 @@ class MainViewModel extends BaseViewModel {
         eventLoader = false;
         notifyListeners();
       } else {
-
         print(response.statusCode);
         eventLoader = false;
         notifyListeners();
@@ -1451,8 +1429,7 @@ class MainViewModel extends BaseViewModel {
     }
   }
 
-
-  void getContacts()async {
+  void getContacts() async {
     bool permissionGranted = false;
 
     var status = await Permission.contacts.status;
@@ -1461,38 +1438,32 @@ class MainViewModel extends BaseViewModel {
     }
     //await Permission.storage.request();
 
-    if (await Permission.contacts.isRestricted || await Permission.contacts.isDenied) {
+    if (await Permission.contacts.isRestricted ||
+        await Permission.contacts.isDenied) {
       permissionGranted = false;
       //await Permission.contacts.request();
-    }
-    else {
+    } else {
       permissionGranted = true;
     }
-    if (permissionGranted){
+    if (permissionGranted) {
       List<Contact> contacts = await ContactsService.getContacts();
       List<dynamic> contactsToSend = [];
-      for (Contact contact in contacts){
-        if (contact.displayName!=null && contact.phones!=null){
-          if (contact.phones!.isNotEmpty){
+      for (Contact contact in contacts) {
+        if (contact.displayName != null && contact.phones != null) {
+          if (contact.phones!.isNotEmpty) {
             var data = {
-              "username" : contact.displayName,
-              "phone_no" : contact.phones!.first.value!,
+              "username": contact.displayName,
+              "phone_no": contact.phones!.first.value!,
             };
             contactsToSend.add(data);
           }
         }
       }
-      var getContactList = await contactList.AddressBookList(
-        contactsToSend);
-      if(getContactList is List<AddressBook>){
+      var getContactList = await contactList.AddressBookList(contactsToSend);
+      if (getContactList is List<AddressBook>) {
         contactBook = getContactList;
       }
       print(getContactList);
-
     }
-
   }
-
-
-
 }

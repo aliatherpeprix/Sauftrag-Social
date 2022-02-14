@@ -64,7 +64,6 @@ dependencies:
   contacts_service:
   permission_handler:
   pubnub: ^4.1.0
-  # permission_handler: ^8.3.0
   location: ^4.2.0
   geolocator:
 
