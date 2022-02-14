@@ -29,8 +29,10 @@ class SwipeCard extends StatefulWidget {
   Function details;
   Function swipeLeft;
   Function swipeRight;
+  String? name;
 
-  SwipeCard({Key? key, required this.img, required this.bottom, required this.right, required this.left, required this.cardWidth, required this.rotation, required this.skew, required this.flag, required this.dismissImg, required this.addImg, required this.details, required this.swipeLeft, required this.swipeRight}) : super(key: key);
+
+  SwipeCard({Key? key, required this.img, required this.bottom, required this.right, required this.left, required this.cardWidth, required this.rotation, required this.skew, required this.flag, required this.dismissImg, required this.addImg, required this.details, required this.swipeLeft, required this.swipeRight,required this.name}) : super(key: key);
 
   @override
   _SwipeCardState createState() => _SwipeCardState();
@@ -252,7 +254,7 @@ class _SwipeCardState extends State<SwipeCard> {
                                         children: [
                                           SizedBox(height: 0.8.h),
                                           Text(
-                                            "Stella Christensen, 24",
+                                            widget.name!,
                                             style: TextStyle(
                                               color: ColorUtils.white,
                                               fontFamily: FontUtils.modernistBold,

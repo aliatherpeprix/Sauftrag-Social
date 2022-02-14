@@ -84,7 +84,7 @@ class _FavoriteState extends State<Favorite> {
                                 SizedBox(width: 2.w),
 
                                 Text(
-                                  "Favorite Alcoholic Drink",
+                                  "Beliebtestes alkoholisches Getränk",
                                   style: TextStyle(
                                     color: ColorUtils.black,
                                     fontFamily: FontUtils.modernistBold,
@@ -96,7 +96,7 @@ class _FavoriteState extends State<Favorite> {
                             SizedBox(height: 2.h),
 
                             Text(
-                              "Favorite alcoholic drink makes it easier to find who shares your interests. Add up to 5 drinks to your profile to make better connections. ",
+                              "Das alkoholische Lieblingsgetränk macht es einfacher zu finden, wer Ihre Interessen teilt. Fügen Sie Ihrem Profil bis zu 5 Getränke hinzu, um bessere Verbindungen herzustellen. ",
                               style: TextStyle(
                                 color: ColorUtils.text_dark,
                                 fontFamily: FontUtils.modernistRegular,
@@ -210,7 +210,7 @@ class _FavoriteState extends State<Favorite> {
 
                                   SizedBox(width: 10),
 
-                                  Text("Add Drink")
+                                  Text("Getränk hinzufügen")
                                 ],
                               ),
                               style: ElevatedButton.styleFrom(
@@ -242,7 +242,7 @@ class _FavoriteState extends State<Favorite> {
                           children: [
 
                             Text(
-                              "Favorite Night Clubs",
+                              "Lieblings Nachtclubs",
                               style: TextStyle(
                                 color: ColorUtils.black,
                                 fontFamily: FontUtils.modernistBold,
@@ -252,7 +252,7 @@ class _FavoriteState extends State<Favorite> {
                             SizedBox(height: 2.h),
 
                             Text(
-                              "What are your favorite night clubs & bars. Add location to your profile to make better connections.",
+                              "Was sind Ihre Lieblings-Nachtclubs und -bars? Fügen Sie Ihrem Profil einen Standort hinzu, um bessere Verbindungen herzustellen.",
                               style: TextStyle(
                                 color: ColorUtils.text_dark,
                                 fontFamily: FontUtils.modernistRegular,
@@ -334,7 +334,7 @@ class _FavoriteState extends State<Favorite> {
 
                                   SizedBox(width: 10),
 
-                                  Text("Add Club")
+                                  Text("Verein hinzufügen")
                                 ],
                               ),
                               style: ElevatedButton.styleFrom(
@@ -366,7 +366,7 @@ class _FavoriteState extends State<Favorite> {
                           children: [
 
                             Text(
-                              "Favorite Party Vacation",
+                              "Lieblings-Party-Urlaub",
                               style: TextStyle(
                                 color: ColorUtils.black,
                                 fontFamily: FontUtils.modernistBold,
@@ -376,7 +376,7 @@ class _FavoriteState extends State<Favorite> {
                             SizedBox(height: 2.h),
 
                             Text(
-                              "Where do you like to do party vacation. Add location to your profile to make better connections.",
+                              "Wo macht ihr gerne Partyurlaub. Fügen Sie Ihrem Profil einen Standort hinzu, um bessere Verbindungen herzustellen.",
                               style: TextStyle(
                                 color: ColorUtils.text_dark,
                                 fontFamily: FontUtils.modernistRegular,
@@ -444,7 +444,7 @@ class _FavoriteState extends State<Favorite> {
 
                                   SizedBox(width: 10),
 
-                                  Text("Add Location")
+                                  Text("Ort hinzufügen")
                                 ],
                               ),
                               style: ElevatedButton.styleFrom(

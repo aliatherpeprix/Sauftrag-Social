@@ -840,11 +840,9 @@ class _MessageScreenForUserState extends State<MessageScreenForUser> {
                                           barUser.id.toString() +
                                               widget.id.toString(),
                                           {
-                                            "content": model
-                                                .groupScreenChatController.text,
+                                            "content": model.groupScreenChatController.text,
                                             "userID": barUser.id!.toString()
                                           });
-                                          pubnub
                                       model.groupScreenChatController.clear();
                                       model.notifyListeners();
                                       Future.delayed(Duration(seconds: 2), () {

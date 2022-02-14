@@ -16,8 +16,9 @@ import 'package:stacked/stacked.dart';
 
 class Profile extends StatefulWidget {
   List<String> images;
+  String? name;
 
-  Profile({Key? key, required this.images}) : super(key: key);
+  Profile({Key? key, required this.images,required this.name}) : super(key: key);
 
   @override
   _ProfileState createState() => _ProfileState();
@@ -218,7 +219,7 @@ class _ProfileState extends State<Profile> {
                           padding: EdgeInsets.symmetric(
                               horizontal: Dimensions.horizontalPadding),
                           child: Text(
-                            "Stella Christensen, 24",
+                            widget.name!,
                             style: TextStyle(
                               color: ColorUtils.black,
                               fontFamily: FontUtils.modernistBold,
@@ -259,7 +260,7 @@ class _ProfileState extends State<Profile> {
                           padding: EdgeInsets.symmetric(
                               horizontal: Dimensions.horizontalPadding),
                           child: Text(
-                            "Favorite Alcoholic Drink",
+                            "Lieblingsalkoholisches Getränk",
                             style: TextStyle(
                               color: ColorUtils.black,
                               fontFamily: FontUtils.modernistBold,
@@ -310,7 +311,7 @@ class _ProfileState extends State<Profile> {
                           padding: EdgeInsets.symmetric(
                               horizontal: Dimensions.horizontalPadding),
                           child: Text(
-                            "Favorite Night Club",
+                            "Lieblings Nachtclub",
                             style: TextStyle(
                               color: ColorUtils.black,
                               fontFamily: FontUtils.modernistBold,
@@ -361,7 +362,7 @@ class _ProfileState extends State<Profile> {
                           padding: EdgeInsets.symmetric(
                               horizontal: Dimensions.horizontalPadding),
                           child: Text(
-                            "Favorite Party Vacation",
+                            "Lieblings-Party-Urlaub",
                             style: TextStyle(
                               color: ColorUtils.black,
                               fontFamily: FontUtils.modernistBold,

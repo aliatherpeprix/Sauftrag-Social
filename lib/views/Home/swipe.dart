@@ -448,11 +448,12 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                             alignment: AlignmentDirectional.center,
                             children: data.map((item) {
                               return SwipeCard(
+                                  name: model.matchName[data.indexOf(item)],
                                   img: item,
                                   cardWidth: backCardWidth + 0,
                                   rotation: rotate.value,
                                   skew: rotate.value < -10 ? 0.1 : 0.0,
-                                  details: (){model.navigateToProfileScreen(item);},
+                                  details: (){model.navigateToProfileScreen(item,model.matchName[data.indexOf(item)]);},
                                   right: right.value,
                                   left: 0.0,
                                   addImg: addImg,

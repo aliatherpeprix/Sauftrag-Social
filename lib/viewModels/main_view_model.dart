@@ -226,12 +226,12 @@ class MainViewModel extends BaseViewModel {
   ];
 
   List<String> matchName = [
-    "Sabine, 24",
+    "Leandro, 18",
+    "Chris, 30",
+    "Chaline, 22",
+    "Mayra, 19",
     "Clara, 26",
-    "Mayra, "
-    "Chaline, ",
-    "Chris, 30"
-    "Leandro, 18"
+    "Sabine, 24",
   ];
 
   Map<String, int> drinkMotivationMap = {
@@ -244,19 +244,19 @@ class MainViewModel extends BaseViewModel {
   List<int> drinkIndexList = [];
 
   List<String> favoriteAlcoholicDrink = [
-    "White Wine",
-    "Hard Seltzer",
+    "Weißwein",
+    "Harter Seltzer",
     "Whiskey",
     "Jägermeister",
-    "Champagne",
+    "Champagner",
   ];
 
   List<String> favoriteNightClub = ["Club 1", "Club 6", "Club 8"];
 
   List<String> favoritePartyVacation = [
     "Goldstrand",
-    "Zrce Beach",
-    "Springbreak Cancun",
+    "Zrce-Strand",
+    "Springbreak Cancún",
   ];
 
   FaqsModel? selectedFaq;
@@ -951,8 +951,8 @@ class MainViewModel extends BaseViewModel {
     chatScroll.jumpTo(chatScroll.position.maxScrollExtent);
   }
 
-  void navigateToProfileScreen(List<String> images) {
-    navigationService.navigateToProfileScreen(images);
+  void navigateToProfileScreen(List<String> images,String? name) {
+    navigationService.navigateToProfileScreen(images,name);
   }
 
   void navigateToMatchScreen() {
