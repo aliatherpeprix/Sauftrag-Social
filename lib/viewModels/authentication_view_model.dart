@@ -950,6 +950,7 @@ class AuthenticationViewModel extends BaseViewModel {
         "end_time": openingTimeTo,
         "media":files
         };
+      print(createEventParams);
       var response = await dio.post(
           Constants.GetEvents, data: createEventParams, options: Options(
           headers: {
@@ -960,9 +961,21 @@ class AuthenticationViewModel extends BaseViewModel {
 
       if (response.statusCode == 201) {
           createEventLoader = false;
+          imageFiles.clear();
+          files.clear();
+          imageFiles = [
+            File(""),
+            File(""),
+            File(""),
+            File(""),
+            File(""),
+            File(""),
+          ];
+          print('image:${imageFiles}');
           notifyListeners();
           navigateBack();
-        } else {
+
+      } else {
           createEventLoader = false;
           notifyListeners();
           DialogUtils()

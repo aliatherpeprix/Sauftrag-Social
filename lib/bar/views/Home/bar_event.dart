@@ -56,7 +56,12 @@ class _CreateBarEventState extends State<CreateBarEvent> {
   Widget build(BuildContext context) {
     return ViewModelBuilder<AuthenticationViewModel>.reactive(
       onModelReady: (model){
-        // model.determinePosition();
+       model.titleController.clear();
+        model.descriptionController.clear();
+        model.locationController.clear();
+        model.eventDate.clear();
+        model.openingTimeTo = null;
+        model.openingTimeFrom = null;
       },
       viewModelBuilder: () => locator<AuthenticationViewModel>(),
       disposeViewModel: false,
