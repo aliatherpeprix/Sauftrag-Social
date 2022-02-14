@@ -3,10 +3,10 @@ class Constants {
   static const int user = 1;
   static const int bar = 2;
   //Pro Env
-  static const String BaseUrlPro =
-      'http://sauftragpro-environment.eba-4pafy8hm.ap-southeast-1.elasticbeanstalk.com/';
+  // static const String BaseUrlPro =
+  //     'http://sauftragpro-environment.eba-4pafy8hm.ap-southeast-1.elasticbeanstalk.com/';
   //Dev Env
-  //static const String BaseUrlPro ='http://sauftragdev-environment.eba-yb3ya83i.ap-southeast-1.elasticbeanstalk.com/';
+  static const String BaseUrlPro ='http://sauftragdev-environment.eba-yb3ya83i.ap-southeast-1.elasticbeanstalk.com/';
   static const String BaseUrl = 'sauftragdev-environment.eba-yb3ya83i.ap-southeast-1.elasticbeanstalk.com';
   static const String SignUp = 'api/user/register/';
   static const String Login = 'api/user/login/';
@@ -36,6 +36,7 @@ class Constants {
   static const String accountDeactivate = 'api/account/deactivate/';
   static const String followersList = 'api/followers/list/';
   static const String rating = 'api/rating/add/';
+  static const String allUserForChat = 'api/user/all/';
   static const String GetEvents = BaseUrlPro + 'api/event/add/';
 
   static const int profileImage = 1;

@@ -24,18 +24,18 @@ import 'package:sauftrag/views/UserFriendList/chat_list_widget.dart';
 import 'package:sauftrag/widgets/back_arrow_with_container.dart';
 import 'package:stacked/stacked.dart';
 
-class MessageScreen extends StatefulWidget {
+class MessageScreenForUser extends StatefulWidget {
   int? id;
   String? username;
   String? profilePic;
-  MessageScreen({Key? key, this.id, this.username, this.profilePic})
+  MessageScreenForUser({Key? key, this.id, this.username, this.profilePic})
       : super(key: key);
 
   @override
-  _MessageScreenState createState() => _MessageScreenState();
+  _MessageScreenForUserState createState() => _MessageScreenForUserState();
 }
 
-class _MessageScreenState extends State<MessageScreen> {
+class _MessageScreenForUserState extends State<MessageScreenForUser> {
   final scrollController = ScrollController();
 
   @override
@@ -53,13 +53,12 @@ class _MessageScreenState extends State<MessageScreen> {
             defaultKeyset: Keyset(
                 subscribeKey: 'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
                 publishKey: 'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
-                uuid: UUID("${widget.id.toString() + user.id.toString()}")));
+                uuid: UUID("${barUser.id.toString() + widget.id.toString()}")));
         // Subscribe to a channel
         var subscription = pubnub.subscribe(
-            channels: {"${widget.id.toString() + user.id.toString()}"});
+            channels: {"${barUser.id.toString() + widget.id.toString()}"});
         var channel =
-            pubnub.channel("${widget.id.toString() + user.id.toString()}");
-        // pubnub.channelGroups.addChannels(group, channels)
+            pubnub.channel("${barUser.id.toString() + widget.id.toString()}");
         var chat = await channel.messages();
         var data = await chat.count();
         await chat.fetch().whenComplete(() {
@@ -305,12 +304,12 @@ class _MessageScreenState extends State<MessageScreen> {
               //                       'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
               //                   publishKey:
               //                       'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
-              //                   uuid: UUID(widget.id.toString() +
-              //                       user.id.toString())));
+              //                   uuid: UUID(barUser.id.toString() +
+              //                       widget.id.toString())));
               //           pubnub.publish(
-              //               widget.id.toString() + user.id.toString(), {
+              //               barUser.id.toString() + widget.id.toString(), {
               //             "content": model.groupScreenChatController.text,
-              //             "userID": user.id!.toString()
+              //             "userID": barUser.id!.toString()
               //           });
               //           model.groupScreenChatController.clear();
               //           model.notifyListeners();
@@ -499,9 +498,10 @@ class _MessageScreenState extends State<MessageScreen> {
                             ),
                             Container(
                               padding: EdgeInsets.only(bottom: 2.h, top: 3.h),
-                              height: 80.h,
+                              height: 75.h,
                               child: ListView.separated(
                                   physics: BouncingScrollPhysics(),
+                                  controller: model.chatScroll,
                                   itemBuilder: (context, index) {
                                     return Align(
                                       alignment: model.chats[index]["userID"] ==
@@ -834,18 +834,22 @@ class _MessageScreenState extends State<MessageScreen> {
                                                   'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
                                               publishKey:
                                                   'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
-                                              uuid: UUID(widget.id.toString() +
-                                                  user.id.toString())));
+                                              uuid: UUID(barUser.id.toString() +
+                                                  widget.id.toString())));
                                       pubnub.publish(
-                                          widget.id.toString() +
-                                              user.id.toString(),
+                                          barUser.id.toString() +
+                                              widget.id.toString(),
                                           {
                                             "content": model
                                                 .groupScreenChatController.text,
-                                            "userID": user.id!.toString()
+                                            "userID": barUser.id!.toString()
                                           });
+                                          pubnub
                                       model.groupScreenChatController.clear();
                                       model.notifyListeners();
+                                      Future.delayed(Duration(seconds: 2), () {
+                                      model.scrollDown();
+                                      });
                                     },
                                     child: Container(
                                       //margin: EdgeInsets.only(bottom: 2.2.h),

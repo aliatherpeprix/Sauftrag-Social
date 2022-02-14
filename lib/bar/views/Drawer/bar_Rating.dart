@@ -663,6 +663,7 @@ class _BarRatingState extends State<BarRating> {
                                                         ],
                                                       ),
                                                       RatingBar.builder(
+                                                        ignoreGestures: true,
                                                         initialRating: model
                                                             .ratingKaData!
                                                             .data![index]
