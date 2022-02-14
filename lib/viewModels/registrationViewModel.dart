@@ -984,19 +984,27 @@ class RegistrationViewModel extends BaseViewModel {
 
   addImageUser() {
     for (int i = 0; i < imageFiles.length; i++) {
-      bool hasImages = false;
-      if (!hasImages) {
-        if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
-            imageFiles[i].path.isEmpty) {
-          DialogUtils().showDialog(MyErrorWidget(
-            error: "Select at least one Image",
-          ));
-          return;
-        } else {
-          hasImages = true;
-          break;
-        }
+      if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
+          imageFiles[i].path.isEmpty) {
+        DialogUtils().showDialog(MyErrorWidget(
+          error: "Select Image No "+i.toString(),
+        ));
+        return;
       }
+
+      // bool hasImages = false;
+      // if (!hasImages) {
+      //   if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
+      //       imageFiles[i].path.isEmpty) {
+      //     DialogUtils().showDialog(MyErrorWidget(
+      //       error: "Select at least one Image",
+      //     ));
+      //     return;
+      //   } else {
+      //     hasImages = true;
+      //     break;
+      //   }
+      // }
     }
     navigateToTermsScreen();
     //navigateToMediaScreen();

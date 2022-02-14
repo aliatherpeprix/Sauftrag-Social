@@ -83,12 +83,14 @@ class _FavoriteState extends State<Favorite> {
                                     )),
                                 SizedBox(width: 2.w),
 
-                                Text(
-                                  "Beliebtestes alkoholisches Getränk",
-                                  style: TextStyle(
-                                    color: ColorUtils.black,
-                                    fontFamily: FontUtils.modernistBold,
-                                    fontSize: 3.t,
+                                Expanded(
+                                  child: Text(
+                                    "Beliebtestes alkoholisches Getränk",
+                                    style: TextStyle(
+                                      color: ColorUtils.black,
+                                      fontFamily: FontUtils.modernistBold,
+                                      fontSize: 3.t,
+                                    ),
                                   ),
                                 ),
                               ],
