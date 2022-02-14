@@ -227,6 +227,16 @@ class MainViewModel extends BaseViewModel {
     "Drink normal",
     "Drink hard"
   ];
+
+  List<String> matchName = [
+    "Sabine, 24",
+    "Clara, 26",
+    "Mayra, "
+    "Chaline, ",
+    "Chris, 30"
+    "Leandro, 18"
+  ];
+
   Map<String, int> drinkMotivationMap = {
     'Drink light': 1,
     'Drink normal': 2,
