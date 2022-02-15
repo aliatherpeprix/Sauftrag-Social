@@ -64,6 +64,11 @@ dependencies:
   contacts_service:
   permission_handler:
   # permission_handler: ^8.3.0
+  pubnub: ^4.1.0
+  location: ^4.2.0
+  geolocator:
+  qr_flutter: ^4.0.0
+
 
   #flutter_tindercard: ^0.2.0
 

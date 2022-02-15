@@ -13,6 +13,7 @@ import 'package:intl/intl.dart';
 import 'package:mime/mime.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/address_book.dart';
 import 'package:sauftrag/models/bar_event_model.dart';
@@ -1364,6 +1365,12 @@ class MainViewModel extends BaseViewModel {
     }
 
   }
+
+  // QrImage(
+  // data: "123457890",
+  // version: QrVersions.auto,
+  // size: 200.0,
+  // ),
 
 
 
