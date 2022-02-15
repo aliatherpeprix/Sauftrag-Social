@@ -36,7 +36,6 @@ dependencies:
   percent_indicator: ^3.0.1
   google_sign_in:
   mime:
-  #Date Time Pickers
   flutter_datetime_picker: ^1.5.1
   date_picker_timeline: ^1.2.3
   month_picker_dialog: ^0.4.0
@@ -53,7 +52,6 @@ dependencies:
   expand_tap_area: ^1.1.0
   another_xlider: ^1.0.0
   liquid_progress_indicator: ^0.4.0
-#  //google_maps:
   flutter_time_picker_spinner: ^2.0.0
   qr_code_scanner: ^0.6.1
   country_code_picker: ^2.0.2
@@ -66,8 +64,10 @@ dependencies:
   pubnub: ^4.1.0
   location: ^4.2.0
   geolocator:
+  qr_flutter: ^4.0.0
 
-  #flutter_tindercard: ^0.2.0
+
+
 
 dev_dependencies:
   flutter_test:

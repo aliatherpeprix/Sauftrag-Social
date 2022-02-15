@@ -1466,4 +1466,11 @@ class MainViewModel extends BaseViewModel {
       print(getContactList);
     }
   }
+
+
+  // QrImage(
+  // data: "123457890",
+  // version: QrVersions.auto,
+  // size: 200.0,
+  // ),
 }
