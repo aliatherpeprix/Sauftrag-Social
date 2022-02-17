@@ -16,6 +16,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pubnub/core.dart';
 import 'package:pubnub/pubnub.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/address_book.dart';
 import 'package:sauftrag/models/all_user_for_chat.dart';
@@ -64,6 +65,8 @@ class MainViewModel extends BaseViewModel {
   var dataProtection = Dataprotection();
   var faqList = Faqs();
   var contactList = Addressbook();
+
+  Barcode? result;
 
   //var Permission;
 
@@ -1171,6 +1174,10 @@ class MainViewModel extends BaseViewModel {
 
   void navigateToAddressBookScreen() {
     navigationService.navigateToAddressBookScreen();
+  }
+
+  void navigateToChooseDrinkScreen() {
+    navigationService.navigateToChooseDrinkScreen();
   }
 
   Future saveUserDetails() async {

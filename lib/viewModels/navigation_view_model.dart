@@ -17,6 +17,7 @@ import 'package:sauftrag/bar/views/Drawer/qr_code_scanner.dart';
 import 'package:sauftrag/bar/views/Drawer/ranking_list.dart';
 import 'package:sauftrag/bar/views/Drawer/upcoming_event.dart';
 import 'package:sauftrag/bar/views/Home/bar_create_post.dart';
+import 'package:sauftrag/bar/views/Home/bar_drinks.dart';
 import 'package:sauftrag/bar/views/Home/bar_news_feed.dart';
 import 'package:sauftrag/bar/views/Home/main_view.dart';
 import 'package:sauftrag/bar/views/Home/order_details.dart';
@@ -378,14 +379,9 @@ class NavigationViewModel extends BaseViewModel{
     navigationKey.currentState!.push(PageTransition(child: ContactList(), type: PageTransitionType.rightToLeftWithFade));
   }
 
-
-
-
-
-
-
-
-
+  void navigateToChooseDrinkScreen(){
+    navigationKey.currentState!.push(PageTransition(child: BarDrinks(), type: PageTransitionType.rightToLeftWithFade));
+  }
 
 
 /*void navigateToWelcomeScreen(){
