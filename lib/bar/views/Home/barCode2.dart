@@ -12,6 +12,8 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/bar/views/Auth/media.dart';
 import 'package:sauftrag/bar/views/Home/bar_drinks.dart';
+import 'package:sauftrag/models/favorites_model.dart';
+import 'package:sauftrag/models/qr_scanner.dart';
 import 'package:sauftrag/services/barQRcode.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/constants.dart';
@@ -257,7 +259,7 @@ class _QRViewExampleState extends State<QRViewExample> {
     setState(() {
       this.controller = controller;
     });
-    controller.scannedDataStream.listen((scanData) {
+    controller.scannedDataStream.listen((scanData) async {
 
       setState(() {
         model.result = scanData;
@@ -266,9 +268,10 @@ class _QRViewExampleState extends State<QRViewExample> {
       });
       if (count==0){
         count = count + 1;
-        BarQrcode().BarQrCode(model.result!.code);
-        controller.dispose();
-        super.dispose();
+        var getQRDrinkList = await BarQrcode().BarQrCode(model.result!.code);;
+        if (getQRDrinkList is List<FavoritesModel>) {1
+          model.barQRcode = getQRDrinkList;
+        }
         // Navigator.pushReplacement(context, PageTransition(child: BarDrinks(),
         //     type: PageTransitionType.rightToLeftWithFade));
       }
@@ -286,6 +289,7 @@ class _QRViewExampleState extends State<QRViewExample> {
 
   @override
   void dispose() {
-
+    controller!.dispose();
+    super.dispose();
   }
 }

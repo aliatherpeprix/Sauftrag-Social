@@ -24,6 +24,7 @@ import 'package:sauftrag/models/bar_event_model.dart';
 import 'package:sauftrag/models/bar_model.dart';
 import 'package:sauftrag/models/create_bar_post.dart';
 import 'package:sauftrag/models/faqs_questions.dart';
+import 'package:sauftrag/models/favorites_model.dart';
 import 'package:sauftrag/models/followers.dart';
 import 'package:sauftrag/models/new_bar_model.dart';
 import 'package:sauftrag/models/newsfeed_post_id.dart';
@@ -31,6 +32,8 @@ import 'package:sauftrag/models/rating_data.dart';
 import 'package:sauftrag/models/ratings.dart';
 import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/services/addressBook.dart';
+import 'package:sauftrag/services/barQRcode.dart';
+import 'package:sauftrag/services/bar_order.dart';
 import 'package:sauftrag/services/createPost.dart';
 import 'package:sauftrag/services/dataProtection.dart';
 import 'package:sauftrag/services/faqs.dart';
@@ -65,6 +68,9 @@ class MainViewModel extends BaseViewModel {
   var dataProtection = Dataprotection();
   var faqList = Faqs();
   var contactList = Addressbook();
+  var barQRCode = BarQrcode();
+
+
 
   Barcode? result;
 
@@ -127,9 +133,6 @@ class MainViewModel extends BaseViewModel {
   bool isFaqs = false;
   bool isPost = false;
   bool isUserProfile = false;
-
-  List<AddressBook> contactBook = [];
-
   var dio = Dio();
 
   final aboutMeController = TextEditingController();
@@ -156,6 +159,8 @@ class MainViewModel extends BaseViewModel {
   String? privacy;
   String? termsAndCondition;
   String? protection;
+  List<FavoritesModel> barQRcode = [];
+  List<AddressBook> contactBook = [];
   //String? faqs;
 
   List contactChecked = [];

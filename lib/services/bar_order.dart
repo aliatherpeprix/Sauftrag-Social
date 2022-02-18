@@ -1,4 +1,4 @@
- import 'package:dio/dio.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:page_transition/page_transition.dart';
@@ -16,21 +16,25 @@ import 'package:sauftrag/viewModels/prefrences_view_model.dart';
 import 'package:sauftrag/views/Auth/signup.dart';
 import 'package:sauftrag/views/Home/main_view.dart';
 
-class BarQrcode {
+class Barorder {
   //var _dioService = DioService.getInstance();
 
   Dio dio = Dio();
 
-  Future BarQrCode(
+  Future BarOrder(
 
-      dynamic user_id
+      dynamic user_id,
+      List<int> selectedDrinkList,
 
       ) async {
     try {
       /// just login user through phoneNumber and password
 
       var param = FormData.fromMap({
-        'user_id': user_id ,
+
+        'user_id' : user_id,
+
+
       });
 
       NewBarModel? barModel = (await locator<PrefrencesViewModel>().getBarUser());
@@ -44,14 +48,17 @@ class BarQrcode {
 
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
+
+
+
         Navigator.pushReplacement(navigationViewModel.navigationKey.currentContext!, PageTransition(child: BarDrinks(),
             type: PageTransitionType.rightToLeftWithFade));
 
         // navigateToChooseDrinkScreen(context)  {
         //   Navigator.push(context, MaterialPageRoute(builder: (context) => BarDrinks()));
         // }
-        return response.data;
-        var userData = BarModel.fromJson(response.data);
+        return response.data['message'];
+        var userData = BarModel.fromJson(response.data) ;
         return userData;}
 
       //user not found

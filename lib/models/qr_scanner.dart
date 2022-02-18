@@ -8,7 +8,7 @@ part 'qr_scanner.g.dart';
 class BarQRCode {
   BarQRCode();
 
-  int? user_id;
+  dynamic user_id;
 
   factory BarQRCode.fromJson(Map<String, dynamic> json) => _$BarQRCodeFromJson(json);
   Map<String, dynamic> toJson() => _$BarQRCodeToJson(this);
