@@ -29,8 +29,11 @@ class SwipeCard extends StatefulWidget {
   Function details;
   Function swipeLeft;
   Function swipeRight;
+  String? name;
+  String?address;
 
-  SwipeCard({Key? key, required this.img, required this.bottom, required this.right, required this.left, required this.cardWidth, required this.rotation, required this.skew, required this.flag, required this.dismissImg, required this.addImg, required this.details, required this.swipeLeft, required this.swipeRight}) : super(key: key);
+
+  SwipeCard({Key? key, required this.img, required this.bottom, required this.right, required this.left, required this.cardWidth, required this.rotation, required this.skew, required this.flag, required this.dismissImg, required this.addImg, required this.details, required this.swipeLeft, required this.swipeRight,required this.name,required this.address}) : super(key: key);
 
   @override
   _SwipeCardState createState() => _SwipeCardState();
@@ -73,7 +76,8 @@ class _SwipeCardState extends State<SwipeCard> {
     Size screenSize = MediaQuery.of(context).size;
 
     return ViewModelBuilder<MainViewModel>.reactive(
-      /*onModelReady: (data){
+      /*onModelReady: (
+      ){
         //data.initSwipe();
       },*/
       builder: (context, model, child) {
@@ -122,7 +126,7 @@ class _SwipeCardState extends State<SwipeCard> {
                                   return Container(
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.all(Radius.circular(20)),
-                                      image: DecorationImage(image: AssetImage(widget.img[position]), fit: BoxFit.cover),
+                                      image: DecorationImage(image: NetworkImage(widget.img[position]), fit: BoxFit.cover),
                                     ),
                                     alignment: Alignment.center,
                                   );
@@ -267,7 +271,7 @@ class _SwipeCardState extends State<SwipeCard> {
                                               Icon(Icons.location_pin, color: ColorUtils.white, size: 5.i,),
 
                                               Text(
-                                                "Germany",
+                                               widget.address!,
                                                 style: TextStyle(
                                                   color: ColorUtils.white,
                                                   fontFamily: FontUtils.modernistRegular,

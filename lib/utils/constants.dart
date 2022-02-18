@@ -25,9 +25,18 @@ class Constants{
   static const String GetFavoritePartyVacation = 'api/favorites/party_vaccation/';
   static const String CreateNewFeed = 'api/news_feed/add/';
   static const String GetNewFeed = 'api/news_feed/add/';
-  static const String GetEvents = BaseUrlPro+'api/event/add/';
+  static const String GetPrivacyPolicy = 'api/other/privacy-policy/';
+  static const String GetTermsAndConditions = 'api/other/terms/';
+  static const String GetDataProtection = 'api/other/data-protection/';
+  static const String GetFaqs = 'api/other/FAQs/';
 
-
+  static const String accountDelete = 'api/account/delete/';
+  static const String accountDeactivate = 'api/account/deactivate/';
+  static const String followersList = 'api/followers/list/';
+  static const String rating = 'api/rating/add/';
+  static const String allUserForChat = 'api/user/all/';
+  static const String GetEvents = BaseUrlPro + 'api/event/add/';
+  static const String GetDiscover = BaseUrlPro + 'api/user/discover/';
 
   static const int profileImage = 1;
 

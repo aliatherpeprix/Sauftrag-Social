@@ -13,7 +13,13 @@ import 'package:mime/mime.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/bar_event_model.dart';
+import 'package:sauftrag/models/bar_model.dart';
+import 'package:sauftrag/models/catalog_model.dart';
 import 'package:sauftrag/models/create_bar_post.dart';
+import 'package:sauftrag/models/discover_model.dart';
+import 'package:sauftrag/models/faqs_questions.dart';
+import 'package:sauftrag/models/followers.dart';
+import 'package:sauftrag/models/new_bar_model.dart';
 import 'package:sauftrag/models/newsfeed_post_id.dart';
 import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/services/createPost.dart';
@@ -33,10 +39,8 @@ import 'package:stacked/stacked.dart';
 import '../main.dart';
 
 class MainViewModel extends BaseViewModel {
-
   var updateUser = Updateuser();
   var createBarPost = Createpost();
-
 
   final GlobalKey<SideMenuState> sideMenuKey = GlobalKey<SideMenuState>();
 
@@ -44,7 +48,6 @@ class MainViewModel extends BaseViewModel {
   final GlobalKey<NavigatorState> navigationKey = GlobalKey<NavigatorState>();
 
   UserModel? userModel;
-
 
   bool logInUserSelected = true;
   bool logInBarSelected = false;
@@ -104,47 +107,21 @@ class MainViewModel extends BaseViewModel {
   bool isddVacationInFocus = false;
   FocusNode addVacationFocus = new FocusNode();
 
-
   PrefrencesViewModel prefrencesViewModel = locator<PrefrencesViewModel>();
   double lowerValue = 50;
   double upperValue = 180;
-  List contactChecked = [
-    {
-      'name': "Athalia Putri",
-      'image': ImageUtils.messagePerson1,
-    },
-    {
-      'name': "Erlan Sadewa",
-      'image': ImageUtils.messagePerson2,
-    },
-    {
-      'name': "Raki Devon",
-      'image': ImageUtils.messagePerson3,
-    },
-    {
-      'name': "Blanca Hernandez",
-      'image': ImageUtils.messagePerson4,
-    },
-    {
-      'name': "Glen Romero",
-      'image': ImageUtils.messagePerson5,
-    },
-    {
-      'name': "Joe Floyd",
-      'image': ImageUtils.messagePerson6,
-    },
-    {
-      'name': "Carroll Cooper",
-      'image': ImageUtils.messagePerson7,
-    },
-    {
-      'name': "Sidney Alvarado",
-      'image': ImageUtils.messagePerson8,
-    },
-  ];
+
+  List<FaqsModel> faqs = [];
+  List<NewsfeedPostId> posts = [];
+  String? privacy;
+  String? termsAndCondition;
+  String? protection;
+
+  //String? faqs;
+
+  List contactChecked = [];
 
   bool isSwitched = false;
-
 
   Future<Position> determinePosition() async {
     bool serviceEnabled;
@@ -211,6 +188,9 @@ class MainViewModel extends BaseViewModel {
     "Drink normal",
     "Drink hard"
   ];
+
+  List<String> matchName = [];
+
   Map<String, int> drinkMotivationMap = {
     'Drink light': 1,
     'Drink normal': 2,
@@ -245,8 +225,7 @@ class MainViewModel extends BaseViewModel {
     }
     if (profileFileImage == null) {
       return false;
-    }
-    else {
+    } else {
       notifyListeners();
       return true;
     }
@@ -259,16 +238,12 @@ class MainViewModel extends BaseViewModel {
       ));
       notifyListeners();
       return;
-    }
-
-    else {
+    } else {
       favDrink = true;
       notifyListeners();
 
-      var userSignupResponce = await updateUser.UpdateUserFavorites(
-          selectedList,
-          favorite
-      );
+      var userSignupResponce =
+          await updateUser.UpdateUserFavorites(selectedList, favorite);
       print(userSignupResponce);
       if (userSignupResponce is UserModel) {
         UserModel user = userSignupResponce;
@@ -336,7 +311,6 @@ class MainViewModel extends BaseViewModel {
     //navigateToHomeScreen(2);
   }
 
-
   int msgTypeValue = 1;
   String msgTypeValueStr = "Private";
   List<String> msgTypeList = ["Private", "Public"];
@@ -351,8 +325,7 @@ class MainViewModel extends BaseViewModel {
 
     if (type == Constants.camera) {
       image = await picker.pickImage(source: ImageSource.camera);
-    }
-    else {
+    } else {
       image = await picker.pickImage(source: ImageSource.gallery);
     }
 
@@ -365,7 +338,6 @@ class MainViewModel extends BaseViewModel {
       return true;
     }
   }
-
 
   Future<Null> cropImage(BuildContext context, String path) async {
     File? croppedFile = await ImageCropper.cropImage(
@@ -416,8 +388,7 @@ class MainViewModel extends BaseViewModel {
     }
     if (profileFileImage == null) {
       return false;
-    }
-    else {
+    } else {
       notifyListeners();
       return true;
     }
@@ -460,8 +431,7 @@ class MainViewModel extends BaseViewModel {
     }
     if (profileFileImage == null) {
       return false;
-    }
-    else {
+    } else {
       notifyListeners();
       return true;
     }
@@ -476,7 +446,6 @@ class MainViewModel extends BaseViewModel {
     'Long Drink': 3,
     'Shot': 4
   };
-
 
   int nightClubValue = 1;
   String nightClubValueStr = "Club 1";
@@ -561,8 +530,8 @@ class MainViewModel extends BaseViewModel {
 
   messageScreenBackspacePressed() {
     messageScreenChatController
-      ..text = messageScreenChatController.text.characters.skipLast(1)
-          .toString()
+      ..text =
+          messageScreenChatController.text.characters.skipLast(1).toString()
       ..selection = TextSelection.fromPosition(
           TextPosition(offset: messageScreenChatController.text.length));
   }
@@ -610,15 +579,10 @@ class MainViewModel extends BaseViewModel {
   }
 
   addMarkers() {
-    markers.add(
-        Marker(
-            markerId: MarkerId('SomeId'),
-            position: LatLng(24.8169, 67.1118),
-            infoWindow: InfoWindow(
-                title: 'The title of the marker'
-            )
-        )
-    );
+    markers.add(Marker(
+        markerId: MarkerId('SomeId'),
+        position: LatLng(24.8169, 67.1118),
+        infoWindow: InfoWindow(title: 'The title of the marker')));
   }
 
   List<dynamic> drinkList = [
@@ -814,7 +778,6 @@ class MainViewModel extends BaseViewModel {
     },
   ];
 
-
   List ListOfBar = [
     {
       'image': ImageUtils.barImg1,
@@ -865,7 +828,6 @@ class MainViewModel extends BaseViewModel {
       'address': '1458 Caden Valleys, 12 kms away.',
       'type': 'Night Club',
     },
-
   ];
 
   void addRemoveDrink(int index) {
@@ -877,8 +839,125 @@ class MainViewModel extends BaseViewModel {
     //notifyListeners();
   }
 
-  void navigateToProfileScreen(List<String> images) {
-    navigationService.navigateToProfileScreen(images);
+  deleteAccount() async {
+    NewBarModel? user = await locator<PrefrencesViewModel>().getBarUser();
+    var response = await dio.delete(
+        Constants.BaseUrlPro + Constants.accountDelete,
+        options: Options(
+            contentType: Headers.formUrlEncodedContentType,
+            headers: {"Authorization": "Token ${user!.token!}"}));
+    // http
+    //     .delete(Uri.http(Constants.BaseUrl, Constants.accountDelete), headers: {
+    //   // 'content-type': 'application/json',
+    //   // 'accept': 'application/json',
+    //   'authorization': 'Token ${user!.token!}',
+    // });
+
+    logOutUser();
+    print(response.data);
+  }
+
+  List<FollowersList> follower = [];
+
+  followers() async {
+    NewBarModel? user = await locator<PrefrencesViewModel>().getBarUser();
+    var response = await dio.get(Constants.BaseUrlPro + Constants.followersList,
+        options:
+            Options(contentType: Headers.formUrlEncodedContentType, headers: {
+          'Authorization': 'Token ${user!.token!}',
+        }));
+    // http.get(
+    //     Uri.http(Constants.BaseUrlPro, Constants.followersList),
+    //     headers: {'authorization': 'Token ${user!.token!}'});
+    print(response.data);
+    // var jsonData = jsonDecode(response.data);
+    follower =
+        (response.data as List).map((e) => FollowersList.fromJson(e)).toList();
+    notifyListeners();
+  }
+
+  Ratings? ratingKaData;
+  RatingData? forTime;
+
+  rating() async {
+    NewBarModel? user = await locator<PrefrencesViewModel>().getBarUser();
+
+    var response = await dio.get(Constants.BaseUrlPro + Constants.rating,
+        options: Options(
+            contentType: Headers.formUrlEncodedContentType,
+            headers: {"Authorization": "Token ${user!.token!}"})
+        // Options(headers: {'Authorization': 'Token ${user!.token!}'})
+        );
+    print(response);
+    ratingKaData = Ratings.fromJson(response.data);
+    getTime();
+  }
+
+  // var channel = "getting_started";
+
+  List chats = [];
+  var message = '';
+
+  String? timeZone;
+
+  getTime() {
+    var checking = ratingKaData!.data![0].created_at.toString();
+    var dateTime =
+        DateFormat("yyyy-MM-dd").parse(checking.replaceAll('T', ' '), true);
+    var dateLocal = dateTime.toLocal();
+    timeZone = dateLocal.toString();
+    print(dateLocal);
+    return dateLocal;
+  }
+
+  DeactivateAccount() async {
+    NewBarModel? user = await locator<PrefrencesViewModel>().getBarUser();
+    var response = await dio.post(
+        Constants.BaseUrlPro + Constants.accountDeactivate,
+        options: Options(
+            contentType: Headers.formUrlEncodedContentType,
+            headers: {'Authorization': 'Token ${user!.token!}'}));
+    //  http.post(
+    //     Uri.http(Constants.BaseUrlPro, Constants.accountDeactivate),
+    //     headers: {
+    //       // 'content-type': 'application/json',
+    //       // 'accept': 'application/json',
+    //       'authorization': 'Token ${user!.token!}',
+    //     });
+    print(response.data);
+    var jsonData = jsonDecode(response.data);
+    // DialogUtils().showDialog(MyErrorWidget(error: jsonData['detail']));
+    logOutUser();
+    // errorFlashMessage(jsonData['detail'], context);
+  }
+
+  List<UserForChat> userForChats = [];
+  bool userComing = false;
+
+  getAllUserForChat() async {
+    userComing = true;
+    notifyListeners();
+    NewBarModel? user = await locator<PrefrencesViewModel>().getBarUser();
+    var response = await dio.get(
+        Constants.BaseUrlPro + Constants.allUserForChat,
+        options: Options(
+            contentType: Headers.formUrlEncodedContentType,
+            headers: {'Authorization': 'Token ${user!.token!}'}));
+    print(response.data);
+    userForChats =
+        (response.data as List).map((e) => UserForChat.fromJson(e)).toList();
+    userComing = false;
+    notifyListeners();
+  }
+
+  void scrollDown() {
+    chatScroll.jumpTo(chatScroll.position.maxScrollExtent);
+  }
+
+  void navigateToProfileScreen(List<String> images, String? name,
+      String address, List alcoholDrink, List nightClub, List partyVacation) {
+    navigationService.navigateToProfileScreen(
+        images, name, address, alcoholDrink, nightClub, partyVacation);
   }
 
   void navigateToMatchScreen() {
@@ -969,9 +1048,35 @@ class MainViewModel extends BaseViewModel {
     navigationService.navigateToBarTimingTypeScreen();
   }
 
+  // void navigateToEventDetailsScreen( dynamic image,
+  //       dynamic eventName,
+  //       dynamic eventDate,
+  //       dynamic eventStartTime,
+  //       dynamic eventEndTime,
+  //       dynamic location,
+  //       dynamic about) {
+  //   navigationService.navigateToEventDetailScreen(image: image,eventName: eventName,eventDate: eventDate,eventStartTime: eventStartTime,eventEndTime: eventEndTime,location: location,about: about);
+  // }
 
-  void navigateToEventDetailsScreen() {
-    navigationService.navigateToEventDetailScreen();
+  void navigateToEventDetailScreen(
+      dynamic image,
+      dynamic eventName,
+      dynamic eventDate,
+      dynamic eventStartTime,
+      dynamic eventEndTime,
+      dynamic location,
+      dynamic about) {
+    navigationKey.currentState!.push(PageTransition(
+        child: EventDetails(
+          image: image,
+          eventName: eventName,
+          eventDate: eventDate,
+          eventStartTime: eventStartTime,
+          eventEndTime: eventEndTime,
+          location: location,
+          about: about,
+        ),
+        type: PageTransitionType.rightToLeftWithFade));
   }
 
   void navigateToMapSearchScreen() {
@@ -989,7 +1094,6 @@ class MainViewModel extends BaseViewModel {
   void navigateToAllEventListScreen() {
     navigationService.navigateToAllEventListScreen();
   }
-
 
   ///------User Drawer -----/////
   void navigateToRatingList() {
@@ -1122,13 +1226,10 @@ class MainViewModel extends BaseViewModel {
     try {
       eventLoader = true;
       notifyListeners();
-      var response =
-      await dio.get("${Constants.GetEvents}", options: Options(
-          contentType: Headers.formUrlEncodedContentType,
-          headers: {
-            "Authorization": "Token ${user!.token!}"
-          }
-      ));
+      var response = await dio.get("${Constants.GetEvents}",
+          options: Options(
+              contentType: Headers.formUrlEncodedContentType,
+              headers: {"Authorization": "Token ${user!.token!}"}));
       print(response);
 
       if (response.statusCode == 200) {
@@ -1142,14 +1243,12 @@ class MainViewModel extends BaseViewModel {
         eventLoader = false;
         notifyListeners();
 
-
         // showErrorMessage(context, 'Something went wrong. Please try again');
       }
     } on DioError catch (e) {
       print(e);
       eventLoader = false;
       notifyListeners();
-
 
       // if (e.response!.statusCode == 404) {
       //   navigationService.navigateToReplacement(to: NotFound());
@@ -1162,6 +1261,72 @@ class MainViewModel extends BaseViewModel {
     }
   }
 
+  List<UserModel>? discoverModel = [];
+  List catalogImages = [];
+  bool discoverLoader = false;
 
+  void getDiscover(BuildContext context) async {
+    UserModel? user = await locator<PrefrencesViewModel>().getUser();
+    catalogImages = [];
 
+    try {
+      discoverLoader = true;
+      notifyListeners();
+      var response = await dio.get("${Constants.GetDiscover}",
+          options: Options(
+              contentType: Headers.formUrlEncodedContentType,
+              headers: {"Authorization": "Token ${user!.token!}"}));
+      print(response);
+
+      if (response.statusCode == 200) {
+        discoverModel =
+            (response.data as List).map((e) => UserModel.fromJson(e)).toList();
+
+        for (UserModel userName in discoverModel!) {
+          matchName.add(userName.toJson()['username']);
+        }
+
+        for (UserModel user in discoverModel!) {
+          List<String> images = [];
+          for (int i = 1; i < 6; i++) {
+            if (user.toJson()["catalogue_image${i}"] != null) {
+              images.add(user.toJson()["catalogue_image${i}"]);
+            }
+          }
+          catalogImages.add(images);
+          print(images);
+        }
+
+        print(discoverModel!.length);
+
+        discoverLoader = false;
+        notifyListeners();
+      } else {
+        print(response.statusCode);
+        discoverLoader = false;
+        notifyListeners();
+
+        // showErrorMessage(context, 'Something went wrong. Please try again');
+      }
+    } on DioError catch (e) {
+      print(e);
+      discoverLoader = false;
+      notifyListeners();
+
+      // if (e.response!.statusCode == 404) {
+      //   navigationService.navigateToReplacement(to: NotFound());
+      // } else if (e.response!.statusCode == 500) {
+      //   navigationService.navigateToReplacement(to: ServerError());
+      // } else {
+      //   showErrorMessage(context,
+      //       'Unable to process your request at this time. Please try again');
+      // }
+    }
+  }
+
+// QrImage(
+// data: "123457890",
+// version: QrVersions.auto,
+// size: 200.0,
+// ),
 }
