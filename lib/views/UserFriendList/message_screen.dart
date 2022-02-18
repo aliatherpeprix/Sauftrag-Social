@@ -502,6 +502,7 @@ class _MessageScreenState extends State<MessageScreen> {
                               height: 80.h,
                               child: ListView.separated(
                                   physics: BouncingScrollPhysics(),
+                                  controller: model.chatScroll,
                                   itemBuilder: (context, index) {
                                     return Align(
                                       alignment: model.chats[index]["userID"] ==
@@ -845,6 +846,9 @@ class _MessageScreenState extends State<MessageScreen> {
                                             "userID": user.id!.toString()
                                           });
                                       model.groupScreenChatController.clear();
+                                      Future.delayed(Duration(seconds: 2), () {
+                                        model.scrollDown();
+                                      });
                                       model.notifyListeners();
                                     },
                                     child: Container(

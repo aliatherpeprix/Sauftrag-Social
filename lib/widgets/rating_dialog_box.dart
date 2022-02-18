@@ -13,12 +13,13 @@ import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:stacked/stacked.dart';
 
 class RatingDialogBox extends StatefulWidget {
-
   String title;
   String btnTxt;
   String icon;
 
-   RatingDialogBox({Key? key,  required this.title, required this.btnTxt, required this.icon}) : super(key: key);
+  RatingDialogBox(
+      {Key? key, required this.title, required this.btnTxt, required this.icon})
+      : super(key: key);
 
   @override
   _RatingDialogBoxState createState() => _RatingDialogBoxState();
@@ -27,10 +28,9 @@ class RatingDialogBox extends StatefulWidget {
 class _RatingDialogBoxState extends State<RatingDialogBox> {
   @override
   Widget build(BuildContext context) {
-
     return ViewModelBuilder<MainViewModel>.reactive(
       //onModelReady: (data) => data.initializeShareDialog(),
-      builder: (context, model, child){
+      builder: (context, model, child) {
         return Dialog(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
@@ -39,14 +39,12 @@ class _RatingDialogBoxState extends State<RatingDialogBox> {
             backgroundColor: Colors.white,
             child: Stack(
               children: [
-
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-
                     IconButton(
-                      onPressed: (){
+                      onPressed: () {
                         model.navigateBack();
                       },
                       iconSize: 15.0,
@@ -54,12 +52,12 @@ class _RatingDialogBoxState extends State<RatingDialogBox> {
                       //constraints: BoxConstraints(),
                       icon: SvgPicture.asset(ImageUtils.cancelIcon),
                     ),
-
                   ],
                 ),
-
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding, vertical: Dimensions.verticalPadding),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: Dimensions.horizontalPadding,
+                      vertical: Dimensions.verticalPadding),
                   child: SingleChildScrollView(
                     physics: BouncingScrollPhysics(),
                     child: Column(
@@ -67,18 +65,20 @@ class _RatingDialogBoxState extends State<RatingDialogBox> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-
                         SizedBox(height: 1.h),
-                        Text("How did we do it?", style: TextStyle(
-                          color: ColorUtils.black,
-                          fontFamily: FontUtils.modernistBold,
-                          fontSize: 2.5.t,
-                        ),),
+                        Text(
+                          "How did we do it?",
+                          style: TextStyle(
+                            color: ColorUtils.black,
+                            fontFamily: FontUtils.modernistBold,
+                            fontSize: 2.5.t,
+                          ),
+                        ),
                         SizedBox(height: 3.h),
                         Container(
                           alignment: Alignment.center,
-                          child:  RatingBar.builder(
-                            initialRating: 2,
+                          child: RatingBar.builder(
+                            initialRating: 1,
                             minRating: 1,
                             direction: Axis.horizontal,
                             allowHalfRating: true,
@@ -91,6 +91,7 @@ class _RatingDialogBoxState extends State<RatingDialogBox> {
                             ),
                             onRatingUpdate: (rating) {
                               print(rating);
+                              model.rate = rating;
                             },
                           ),
                         ),
@@ -103,14 +104,13 @@ class _RatingDialogBoxState extends State<RatingDialogBox> {
                               borderRadius: BorderRadius.all(
                                 Radius.circular(15.0),
                               ),
-                              border: Border.all(color: ColorUtils.red_color)
-                          ),
+                              border: Border.all(color: ColorUtils.red_color)),
                           child: TextField(
                             onTap: () {},
                             enabled: true,
                             //readOnly: true,
                             //focusNode: model.searchFocus,
-                            //controller: model.groupScreenChatController,
+                            controller: model.barGiveRating,
                             decoration: InputDecoration(
                               hintText: "Write your comment",
                               hintStyle: TextStyle(
@@ -125,17 +125,19 @@ class _RatingDialogBoxState extends State<RatingDialogBox> {
                             ),
                             maxLines: 6,
                             maxLength: 150,
-
                           ),
-
                         ),
-                        SizedBox(height: 5.h,),
+                        SizedBox(
+                          height: 5.h,
+                        ),
                         SizedBox(
                           width: double.infinity,
                           //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                           child: ElevatedButton(
                             onPressed: () {
+                              model.giveRatingToBar();
                               model.navigateBack();
+                              print(model.rate);
                             },
                             child: const Text("Submit"),
                             style: ElevatedButton.styleFrom(
@@ -143,7 +145,7 @@ class _RatingDialogBoxState extends State<RatingDialogBox> {
                               onPrimary: ColorUtils.white,
                               padding: EdgeInsets.symmetric(
                                   vertical:
-                                  Dimensions.containerVerticalPadding),
+                                      Dimensions.containerVerticalPadding),
                               elevation: 1,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(
@@ -157,16 +159,12 @@ class _RatingDialogBoxState extends State<RatingDialogBox> {
                             ),
                           ),
                         ),
-
-
-
                       ],
                     ),
                   ),
                 ),
               ],
-            )
-        );
+            ));
       },
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,

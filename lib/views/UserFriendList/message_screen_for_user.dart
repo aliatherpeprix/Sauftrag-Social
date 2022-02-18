@@ -73,7 +73,7 @@ class _MessageScreenForUserState extends State<MessageScreenForUser> {
           model.chats.add(message.content);
           model.notifyListeners();
         });
-
+        
         // Send a message every second for 5 seconds
 
         // Unsubscribe and quit
@@ -844,7 +844,7 @@ class _MessageScreenForUserState extends State<MessageScreenForUser> {
                                                 .groupScreenChatController.text,
                                             "userID": barUser.id!.toString()
                                           });
-                                          pubnub
+                                          
                                       model.groupScreenChatController.clear();
                                       model.notifyListeners();
                                       Future.delayed(Duration(seconds: 2), () {

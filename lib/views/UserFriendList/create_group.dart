@@ -227,8 +227,11 @@ class _CreateGroupState extends State<CreateGroup> {
                                               .userForChats[index].username;
                                           //print(groupMap);
                                           model.groupList.add({
-                                            "image": model.groupMap["image"],
-                                            "name": model.groupMap["name"]
+                                            'id': model.userForChats[index].id,
+                                            "image": model.userForChats[index]
+                                                .profile_picture,
+                                            "name": model
+                                                .userForChats[index].username
                                           });
                                           print(model.groupList);
                                           //containerBorder = ColorUtils.greenColor;
@@ -249,7 +252,7 @@ class _CreateGroupState extends State<CreateGroup> {
                     ],
                   ),
                 )),
-          ),
+          ),  
         );
       },
       viewModelBuilder: () => locator<MainViewModel>(),

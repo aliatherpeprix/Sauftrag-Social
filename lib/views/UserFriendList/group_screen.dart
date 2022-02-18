@@ -302,6 +302,9 @@ class _GroupScreenState extends State<GroupScreen> {
                           "userID": barUser.id!.toString()
                         });
                         model.groupScreenChatController.clear();
+                        Future.delayed(Duration(seconds: 2), () {
+                          model.scrollDown();
+                        });
                         model.notifyListeners();
                       },
                       child: Container(
@@ -425,6 +428,7 @@ class _GroupScreenState extends State<GroupScreen> {
                       height: 70.h,
                       child: ListView.separated(
                           physics: BouncingScrollPhysics(),
+                          controller: model.chatScroll,
                           itemBuilder: (context, index) {
                             return Align(
                               alignment: model.chats[index]["userID"] ==
