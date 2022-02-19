@@ -1326,6 +1326,55 @@ class MainViewModel extends BaseViewModel {
     }
   }
 
+  bool userMatchLoader = false;
+
+
+  void UserMatches(BuildContext context,dynamic id) async {
+    UserModel? user = await locator<PrefrencesViewModel>().getUser();
+    catalogImages = [];
+
+    try {
+      userMatchLoader = true;
+      notifyListeners();
+
+      var matchParams = FormData.fromMap({
+        'customer2':id
+      });
+      print(matchParams);
+
+      var response = await dio.post("${Constants.matchUser}",data: matchParams,
+          options: Options(
+              contentType: Headers.formUrlEncodedContentType,
+              headers: {"Authorization": "Token ${user!.token}"}));
+      print(response);
+
+      if (response.statusCode == 201) {
+        DialogUtils().showDialog(MyErrorWidget(
+          error: "Request Send Successfully",
+        ));
+        getDiscover(context);
+        userMatchLoader = false;
+        notifyListeners();
+      } else {
+        print(response.statusCode);
+        userMatchLoader = false;
+        notifyListeners();
+      }
+    } on DioError catch (e) {
+      var errorResponse =e.response!.data['customer2'][0];
+      if(errorResponse == "This field must be unique."){
+        DialogUtils().showDialog(MyErrorWidget(
+          error: "Request Already Send",
+        ));
+      }
+      print(e.response!.data['customer2'][0]);
+      getDiscover(context);
+      userMatchLoader = false;
+      notifyListeners();
+    }
+  }
+
+
 // QrImage(
 // data: "123457890",
 // version: QrVersions.auto,

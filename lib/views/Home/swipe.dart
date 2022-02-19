@@ -340,7 +340,8 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                   flag: flag,
                                   dismissImg: dismissImg,
                                   swipeRight: swipeRight,
-                                  swipeLeft: swipeLeft
+                                  swipeLeft: swipeLeft,
+                                id: model.discoverModel![model.catalogImages.indexOf(item)].id,
                                   );
                             }).toList(),
                           ),

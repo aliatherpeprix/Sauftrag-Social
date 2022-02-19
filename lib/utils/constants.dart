@@ -37,6 +37,7 @@ class Constants{
   static const String allUserForChat = 'api/user/all/';
   static const String GetEvents = BaseUrlPro + 'api/event/add/';
   static const String GetDiscover = BaseUrlPro + 'api/user/discover/';
+  static const String matchUser = BaseUrlPro + 'api/user/match/';
 
   static const int profileImage = 1;
 

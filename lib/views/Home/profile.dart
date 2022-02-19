@@ -232,7 +232,7 @@ class _ProfileState extends State<Profile> {
                           padding: EdgeInsets.symmetric(
                               horizontal: Dimensions.horizontalPadding),
                           child: Text(
-                            "Stella Christensen, 24",
+                            widget.name!,
                             style: TextStyle(
                               color: ColorUtils.black,
                               fontFamily: FontUtils.modernistBold,
