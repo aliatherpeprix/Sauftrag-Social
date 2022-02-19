@@ -17,8 +17,8 @@ import 'package:sauftrag/models/bar_model.dart';
 import 'package:sauftrag/models/catalog_model.dart';
 import 'package:sauftrag/models/create_bar_post.dart';
 import 'package:sauftrag/models/discover_model.dart';
-import 'package:sauftrag/models/faqs_questions.dart';
-import 'package:sauftrag/models/followers.dart';
+// import 'package:sauftrag/models/faqs_questions.dart';
+// import 'package:sauftrag/models/followers.dart';
 import 'package:sauftrag/models/new_bar_model.dart';
 import 'package:sauftrag/models/newsfeed_post_id.dart';
 import 'package:sauftrag/models/user_models.dart';
@@ -31,6 +31,7 @@ import 'package:sauftrag/utils/dialog_utils.dart';
 
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/prefrences_view_model.dart';
+import 'package:sauftrag/views/NewsFeed/event_detail.dart';
 import 'package:sauftrag/widgets/error_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
@@ -111,7 +112,7 @@ class MainViewModel extends BaseViewModel {
   double lowerValue = 50;
   double upperValue = 180;
 
-  List<FaqsModel> faqs = [];
+  // List<FaqsModel> faqs = [];
   List<NewsfeedPostId> posts = [];
   String? privacy;
   String? termsAndCondition;
@@ -857,7 +858,7 @@ class MainViewModel extends BaseViewModel {
     print(response.data);
   }
 
-  List<FollowersList> follower = [];
+  // List<FollowersList> follower = [];
 
   followers() async {
     NewBarModel? user = await locator<PrefrencesViewModel>().getBarUser();
@@ -871,13 +872,13 @@ class MainViewModel extends BaseViewModel {
     //     headers: {'authorization': 'Token ${user!.token!}'});
     print(response.data);
     // var jsonData = jsonDecode(response.data);
-    follower =
-        (response.data as List).map((e) => FollowersList.fromJson(e)).toList();
+    // follower =
+    //     (response.data as List).map((e) => FollowersList.fromJson(e)).toList();
     notifyListeners();
   }
 
-  Ratings? ratingKaData;
-  RatingData? forTime;
+  // Ratings? ratingKaData;
+  // RatingData? forTime;
 
   rating() async {
     NewBarModel? user = await locator<PrefrencesViewModel>().getBarUser();
@@ -889,7 +890,7 @@ class MainViewModel extends BaseViewModel {
         // Options(headers: {'Authorization': 'Token ${user!.token!}'})
         );
     print(response);
-    ratingKaData = Ratings.fromJson(response.data);
+    // ratingKaData = Ratings.fromJson(response.data);
     getTime();
   }
 
@@ -901,13 +902,13 @@ class MainViewModel extends BaseViewModel {
   String? timeZone;
 
   getTime() {
-    var checking = ratingKaData!.data![0].created_at.toString();
-    var dateTime =
-        DateFormat("yyyy-MM-dd").parse(checking.replaceAll('T', ' '), true);
-    var dateLocal = dateTime.toLocal();
-    timeZone = dateLocal.toString();
-    print(dateLocal);
-    return dateLocal;
+    // var checking = ratingKaData!.data![0].created_at.toString();
+    // var dateTime =
+    //     DateFormat("yyyy-MM-dd").parse(checking.replaceAll('T', ' '), true);
+    // var dateLocal = dateTime.toLocal();
+    // timeZone = dateLocal.toString();
+    // print(dateLocal);
+    // return dateLocal;
   }
 
   DeactivateAccount() async {
@@ -931,7 +932,7 @@ class MainViewModel extends BaseViewModel {
     // errorFlashMessage(jsonData['detail'], context);
   }
 
-  List<UserForChat> userForChats = [];
+  // List<UserForChat> userForChats = [];
   bool userComing = false;
 
   getAllUserForChat() async {
@@ -944,14 +945,14 @@ class MainViewModel extends BaseViewModel {
             contentType: Headers.formUrlEncodedContentType,
             headers: {'Authorization': 'Token ${user!.token!}'}));
     print(response.data);
-    userForChats =
-        (response.data as List).map((e) => UserForChat.fromJson(e)).toList();
+    // userForChats =
+    //     (response.data as List).map((e) => UserForChat.fromJson(e)).toList();
     userComing = false;
     notifyListeners();
   }
 
   void scrollDown() {
-    chatScroll.jumpTo(chatScroll.position.maxScrollExtent);
+    // chatScroll.jumpTo(chatScroll.position.maxScrollExtent);
   }
 
   void navigateToProfileScreen(List<String> images, String? name,
@@ -1201,7 +1202,7 @@ class MainViewModel extends BaseViewModel {
     navigateAndRemoveSignInScreen();
   }
 
-  List<NewsfeedPostId> posts = [];
+  // List<NewsfeedPostId> posts = [];
 
   void getUserData() async {
     userModel = await prefrencesViewModel.getUser();
@@ -1272,10 +1273,11 @@ class MainViewModel extends BaseViewModel {
     try {
       discoverLoader = true;
       notifyListeners();
+      // user!.token!
       var response = await dio.get("${Constants.GetDiscover}",
           options: Options(
               contentType: Headers.formUrlEncodedContentType,
-              headers: {"Authorization": "Token ${user!.token!}"}));
+              headers: {"Authorization": "Token bf81edc04639288e058e4b41c6ee098eb7e8042b"}));
       print(response);
 
       if (response.statusCode == 200) {

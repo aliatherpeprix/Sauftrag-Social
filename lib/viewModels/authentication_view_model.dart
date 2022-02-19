@@ -1022,8 +1022,25 @@ class AuthenticationViewModel extends BaseViewModel {
       print("-------------response----------");
 
       if (response.statusCode == 201) {
+        titleController.clear();
+        descriptionController.clear();
+        locationController.clear();
           createEventLoader = false;
+        files.clear();
+        imageFiles.clear();
+        selectedEventDate = null;
+        openingTimeTo= null;
+        openingTimeFrom ==null;
+        imageFiles = [
+          File(""),
+          File(""),
+          File(""),
+          File(""),
+          File(""),
+          File(""),
+        ];
           notifyListeners();
+          navigationService.navigateBack();
       }
       else {
         print(response.statusCode);
@@ -1041,7 +1058,6 @@ class AuthenticationViewModel extends BaseViewModel {
       notifyListeners();
     }
   }
-
 }
 
 

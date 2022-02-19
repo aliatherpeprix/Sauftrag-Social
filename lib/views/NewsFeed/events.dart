@@ -156,7 +156,7 @@ class _EventsState extends State<Events> {
                                       fontFamily: FontUtils.modernistRegular,
                                       fontSize: 1.7.t,
                                       color: ColorUtils.text_red,
-                                        decoration: TextDecoration.underline,
+                                      decoration: TextDecoration.underline,
 
                                       // shadows: [
                                       //   Shadow(
@@ -182,14 +182,14 @@ class _EventsState extends State<Events> {
                             height: 35.h,
                             //width: 70.w,
                             child: ListView.separated(
-                              padding: EdgeInsets.zero,
+                                padding: EdgeInsets.zero,
                                 scrollDirection: Axis.horizontal,
                                 shrinkWrap: true,
                                 //padding: EdgeInsets.zero,
                                 itemBuilder: (context, index) {
                                   return GestureDetector(
                                     onTap: (){
-                                      model.navigateToEventDetailsScreen();
+                                      // model.navigateToEventDetailsScreen();
                                     },
                                     child: Padding(
                                       padding: EdgeInsets.only(left: 4.w, bottom: 2.h,),
@@ -378,7 +378,7 @@ class _EventsState extends State<Events> {
                             itemBuilder: (context, index) {
                               return GestureDetector(
                                 onTap: (){
-                                  model.navigateToEventDetailsScreen();
+                                  // model.navigateToEventDetailsScreen();
                                 },
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(horizontal:SizeConfig.widthMultiplier * 4,),

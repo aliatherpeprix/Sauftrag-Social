@@ -63,7 +63,7 @@ class _CreateBarEventState extends State<CreateBarEvent> {
           onTap: () {
             FocusScope.of(context).unfocus();
           },
-          child:model.createEventLoader?Center(child: CircularProgressIndicator()): SafeArea(
+          child: SafeArea(
             top: false,
             bottom: false,
             child: Scaffold(
@@ -879,7 +879,7 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                           onPressed: () {
                             model.validateCreateEvent(context);
                           },
-                          child: const Text("Create Event"),
+                          child: model.createEventLoader?Center(child: Loader()): Text("Create Event"),
                           style: ElevatedButton.styleFrom(
                             primary: ColorUtils.text_red  ,
                             onPrimary: ColorUtils.white,
