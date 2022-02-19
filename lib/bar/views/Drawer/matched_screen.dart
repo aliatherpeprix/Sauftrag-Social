@@ -1,12 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/bar/views/Drawer/matched_people.dart';
+import 'package:sauftrag/bar/views/Drawer/request_people.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
+import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
+import 'package:sauftrag/widgets/FadedScaleAnimation.dart';
 import 'package:stacked/stacked.dart';
 
 class MatchedScreen extends StatefulWidget {
@@ -16,15 +20,32 @@ class MatchedScreen extends StatefulWidget {
   _MatchedScreenState createState() => _MatchedScreenState();
 }
 
-class _MatchedScreenState extends State<MatchedScreen> {
+class _MatchedScreenState extends State<MatchedScreen>
+    with TickerProviderStateMixin {
   List matchedImg = [
-    {'image': ImageUtils.matchedImg1, 'title' : 'Leona Mathis'},
-    {'image': ImageUtils.matchedImg2, 'title' : 'Josefina Ward'},
-    {'image': ImageUtils.matchedImg3, 'title' : 'Andre Patterson'},
-    {'image': ImageUtils.matchedImg4, 'title' : 'Nick Hoffman'},
-    {'image': ImageUtils.matchedImg5, 'title' : 'Henrietta Hall'},
-    {'image': ImageUtils.matchedImg6, 'title' : 'Hazel Ballard'},
+    {'image': ImageUtils.matchedImg1, 'title': 'Leona Mathis'},
+    {'image': ImageUtils.matchedImg2, 'title': 'Josefina Ward'},
+    {'image': ImageUtils.matchedImg3, 'title': 'Andre Patterson'},
+    {'image': ImageUtils.matchedImg4, 'title': 'Nick Hoffman'},
+    {'image': ImageUtils.matchedImg5, 'title': 'Henrietta Hall'},
+    {'image': ImageUtils.matchedImg6, 'title': 'Hazel Ballard'},
   ];
+  late TabController tabController1;
+
+  int tabSlelected1 = 0;
+
+  @override
+  void initState() {
+    tabController1 = TabController(
+      length: 2,
+      vsync: this,
+    );
+    tabController1.addListener(() {
+      setState(() {});
+    });
+    super.initState();
+    // init();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,48 +98,154 @@ class _MatchedScreenState extends State<MatchedScreen> {
                             ),
                           ],
                         ),
+                        SizedBox(
+                          height: 4.h,
+                        ),
                         Container(
-                          margin: EdgeInsets.only(left: 5.w),
-                          child: GridView.builder(
-                            itemCount: matchedImg.length,
-                            scrollDirection: Axis.vertical,
-                            physics: BouncingScrollPhysics(),
-                            shrinkWrap: true,
-                            primary: true,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                    // childAspectRatio: 2.5,
-                                    crossAxisCount: 2,
-                                    // crossAxisSpacing: 2,
-                                    mainAxisSpacing: 30),
-                            itemBuilder: (BuildContext context, int index) {
-                              return GestureDetector(
-                                onTap: (){
-                                  model.navigateToFollowerList();
+                            padding: EdgeInsets.symmetric(horizontal: 10.w),
+                            child: Container(
+                              padding: EdgeInsets.symmetric(vertical: 0.4.h),
+                              decoration: BoxDecoration(
+                                color: ColorUtils.divider,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15)),
+                              ),
+                              child: TabBar(
+                                onTap: (value) {
+                                  tabSlelected1 = value;
                                 },
-                                child: Stack(
-                                  children: [
-                                    Image.asset(matchedImg[index]['image'],),
-                                    PositionedDirectional(
-                                      bottom: 0,
-                                        child: Container(
-                                          width: 34.5.w,
-                                          decoration: BoxDecoration(
-                                            color: Colors.grey.withOpacity(0.7),
-                                            borderRadius: BorderRadius.only(
-                                                bottomRight: Radius.circular(10),
-                                                bottomLeft: Radius.circular(10)),
-
+                                isScrollable: false,
+                                indicatorSize: TabBarIndicatorSize.label,
+                                controller: tabController1,
+                                indicatorColor: Colors.transparent,
+                                tabs: [
+                                  Container(
+                                      // margin: EdgeInsets.only(
+                                      //   // top: 3 * SizeConfig.heightMultiplier,
+                                      //     left: 3 * SizeConfig.widthMultiplier),
+                                      padding: EdgeInsets.symmetric(
+                                          vertical:
+                                              2 * SizeConfig.widthMultiplier),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15)),
+                                        color: tabSlelected1 == 0
+                                            ? ColorUtils.white
+                                            : ColorUtils.divider,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: tabSlelected1 == 0
+                                                ? ColorUtils.shadowColor
+                                                    .withOpacity(0.15)
+                                                : ColorUtils.divider,
+                                            spreadRadius: 3,
+                                            blurRadius: 8,
+                                            offset: Offset(0,
+                                                3), // changes position of shadow
                                           ),
-                                           padding: EdgeInsets.symmetric( vertical: 1.2.h, horizontal: 2.w),
-
-                                      child: Text(matchedImg[index]['title'], style: TextStyle(color: ColorUtils.white),),
-                                    ))
-                                  ],
+                                        ],
+                                        // border: Border.all(
+                                        //   color: tabSlelected == 0
+                                        //       ? Colors.blue
+                                        //       : Colors.grey,
+                                        // )
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "MATCHED",
+                                            style: TextStyle(
+                                              fontSize: 1.8.t,
+                                              color: tabSlelected1 == 0
+                                                  ? Colors.blue
+                                                  : ColorUtils.icon_color,
+                                              fontFamily:
+                                                  FontUtils.modernistBold,
+                                              fontWeight: tabSlelected1 == 0
+                                                  ? FontWeight.bold
+                                                  : FontWeight.w500,
+                                            ),
+                                          )
+                                        ],
+                                      )),
+                                  Container(
+                                      // margin: EdgeInsets.only(
+                                      //   //top: 3 * SizeConfig.heightMultiplier,
+                                      //     right: 3 * SizeConfig.widthMultiplier),
+                                      padding: EdgeInsets.symmetric(
+                                          vertical:
+                                              2 * SizeConfig.widthMultiplier),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(18)),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: tabSlelected1 == 1
+                                                ? ColorUtils.shadowColor
+                                                    .withOpacity(0.15)
+                                                : ColorUtils.divider,
+                                            spreadRadius: 3,
+                                            blurRadius: 8,
+                                            offset: Offset(0,
+                                                3), // changes position of shadow
+                                          ),
+                                        ],
+                                        color: tabSlelected1 == 1
+                                            ? ColorUtils.white
+                                            : ColorUtils.divider,
+                                        // border: Border.all(
+                                        //   color: tabSlelected == 1
+                                        //       ? Colors.blue
+                                        //       : Colors.grey,
+                                        // )
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "REQUESTS",
+                                            style: TextStyle(
+                                                fontSize: 1.8.t,
+                                                color: tabSlelected1 == 1
+                                                    ? Colors.blue
+                                                    : ColorUtils.icon_color,
+                                                fontWeight: tabSlelected1 == 1
+                                                    ? FontWeight.bold
+                                                    : FontWeight.w500,
+                                                fontFamily:
+                                                    FontUtils.modernistBold),
+                                          )
+                                        ],
+                                      )),
+                                ],
+                              ),
+                            )),
+                        Container(
+                          height: 75 * SizeConfig.heightMultiplier,
+                          child: TabBarView(
+                              physics: NeverScrollableScrollPhysics(),
+                              controller: tabController1,
+                              children: [
+                                FadedScaleAnimation(
+                                  MatchedPeople(),
+                                  beginOffset: Offset(0, 0.3),
+                                  endOffset: Offset(0, 0),
+                                  slideCurve: Curves.linearToEaseOut,
                                 ),
-                              );
-                            },
-                          ),
+                                FadedScaleAnimation(
+                                  RequestedPeople(),
+                                  beginOffset: Offset(0, 0.3),
+                                  endOffset: Offset(0, 0),
+                                  slideCurve: Curves.linearToEaseOut,
+                                ),
+                              ]),
                         ),
                       ],
                     ),

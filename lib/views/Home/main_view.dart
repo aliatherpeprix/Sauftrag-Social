@@ -45,6 +45,7 @@ class _MainViewState extends State<MainView> {
     return ViewModelBuilder<MainViewModel>.reactive(
       onModelReady: (model) {
         model.getUserData();
+        model.getDrinkStatus();
       },
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,

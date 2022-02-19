@@ -27,6 +27,7 @@ import 'package:sauftrag/models/discover.dart';
 import 'package:sauftrag/models/faqs_questions.dart';
 import 'package:sauftrag/models/favorites_model.dart';
 import 'package:sauftrag/models/followers.dart';
+import 'package:sauftrag/models/get_drink_status.dart';
 import 'package:sauftrag/models/new_bar_model.dart';
 import 'package:sauftrag/models/newsfeed_post_id.dart';
 import 'package:sauftrag/models/pubnub_channel.dart';
@@ -38,6 +39,7 @@ import 'package:sauftrag/services/barQRcode.dart';
 import 'package:sauftrag/services/bar_order.dart';
 import 'package:sauftrag/services/createPost.dart';
 import 'package:sauftrag/services/dataProtection.dart';
+import 'package:sauftrag/services/drinksOrder.dart';
 import 'package:sauftrag/services/faqs.dart';
 
 import 'package:sauftrag/services/privacyPolicy.dart';
@@ -163,6 +165,7 @@ class MainViewModel extends BaseViewModel {
   String? termsAndCondition;
   String? protection;
   List<FavoritesModel> barQRcode = [];
+  List drinksSelected = [];
   List<AddressBook> contactBook = [];
   //String? faqs;
 
@@ -244,6 +247,7 @@ class MainViewModel extends BaseViewModel {
   };
 
   int drinkIndex = -1;
+  int updatedrinkIndex = -1;
   List<int> drinkIndexList = [];
 
   List<String> favoriteAlcoholicDrink = [
@@ -843,6 +847,15 @@ class MainViewModel extends BaseViewModel {
     //notifyListeners();
   }
 
+  void UpdateaddRemoveDrink(int index) {
+    updatedrinkIndex = index + 1;
+    //drinkIndexList.length = index + 1;
+    notifyListeners();
+
+    //drinkIndex = index + 1;
+    //notifyListeners();
+  }
+
   deleteAccount() async {
     NewBarModel? user = await locator<PrefrencesViewModel>().getBarUser();
     var response = await dio.delete(
@@ -1019,7 +1032,7 @@ class MainViewModel extends BaseViewModel {
 
   String? drinkingFrom;
   String? drinkingTo;
-
+  bool updateStatus = false;
   drinkStatus() async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
 
@@ -1034,6 +1047,67 @@ class MainViewModel extends BaseViewModel {
             contentType: Headers.formUrlEncodedContentType,
             headers: {'Authorization': 'Token ${user!.token!}'}));
     print(response.data);
+    getStatus = DrinkStatus.fromJson(response.data);
+    getStatus!.start_time = TimeOfDay(
+            hour: int.parse(getStatus!.start_time!.split(":")[0]),
+            minute: int.parse(getStatus!.start_time!.split(":")[1]))
+        .format(navigationService.navigationKey.currentContext!);
+    getStatus!.end_time = TimeOfDay(
+            hour: int.parse(getStatus!.end_time!.split(":")[0]),
+            minute: int.parse(getStatus!.end_time!.split(":")[1]))
+        .format(navigationService.navigationKey.currentContext!);
+    updatedrinkIndex = getStatus!.quantity!;
+    notifyListeners();
+  }
+  updateDrinkStatus() async {
+    UserModel? user = await locator<PrefrencesViewModel>().getUser();
+
+    var data = {
+      'quantity': updatedrinkIndex,
+      'start_time': drinkingFrom,
+      'end_time': drinkingTo,
+    };
+    var response = await dio.post(Constants.BaseUrlPro + Constants.drinkStatus,
+        data: data,
+        options: Options(
+            contentType: Headers.formUrlEncodedContentType,
+            headers: {'Authorization': 'Token ${user!.token!}'}));
+    print(response.data);
+    getStatus = DrinkStatus.fromJson(response.data);
+    getStatus!.start_time = TimeOfDay(
+            hour: int.parse(getStatus!.start_time!.split(":")[0]),
+            minute: int.parse(getStatus!.start_time!.split(":")[1]))
+        .format(navigationService.navigationKey.currentContext!);
+    getStatus!.end_time = TimeOfDay(
+            hour: int.parse(getStatus!.end_time!.split(":")[0]),
+            minute: int.parse(getStatus!.end_time!.split(":")[1]))
+        .format(navigationService.navigationKey.currentContext!);
+    updatedrinkIndex = getStatus!.quantity!;
+    notifyListeners();
+  }
+
+  DrinkStatus? getStatus;
+  getDrinkStatus() async {
+    UserModel? user = await locator<PrefrencesViewModel>().getUser();
+    var response = await dio.get(
+        Constants.BaseUrlPro + "api/user/drinkStatus/${user!.id!}/",
+        // queryParameters: {'user_id': user!.id!},
+        options: Options(
+            // contentType: Headers.formUrlEncodedContentType,
+            headers: {'Authorization': 'Token ${user.token!}'}));
+    print(response.data);
+    getStatus = DrinkStatus.fromJson(response.data);
+    getStatus!.start_time = TimeOfDay(
+            hour: int.parse(getStatus!.start_time!.split(":")[0]),
+            minute: int.parse(getStatus!.start_time!.split(":")[1]))
+        .format(navigationService.navigationKey.currentContext!);
+    getStatus!.end_time = TimeOfDay(
+            hour: int.parse(getStatus!.end_time!.split(":")[0]),
+            minute: int.parse(getStatus!.end_time!.split(":")[1]))
+        .format(navigationService.navigationKey.currentContext!);
+    updatedrinkIndex = getStatus!.quantity!;
+    notifyListeners();
+    // print(getStatus);
   }
 
   void scrollDown() {
@@ -1347,6 +1421,7 @@ class MainViewModel extends BaseViewModel {
   logOutUser() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.clear();
+    getStatus = null;
     navigateAndRemoveSignInScreen();
   }
 
@@ -1685,6 +1760,10 @@ class MainViewModel extends BaseViewModel {
       userMatchLoader = false;
       notifyListeners();
     }
+  }
+
+  Future orderDrinks() async{
+    Drinkorder().DrinkOrder(int.parse(result!.code!), drinksSelected);
   }
 
 
