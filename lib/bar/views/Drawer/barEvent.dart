@@ -82,77 +82,82 @@ class _BarEventState extends State<BarEvent> {
                       dynamic time = model.barEventModel![index].startTime;
                       time =time.toString().split(':00');
                       print(time);
-                      return Padding(
-                        padding: EdgeInsets.symmetric(horizontal:SizeConfig.widthMultiplier * 4,),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: ColorUtils.black.withOpacity(0.1),
-                                spreadRadius: 0,
-                                blurRadius: 10,
-                                offset: Offset(0, 5), // changes position of shadow
-                              ),
-                            ],
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(18)),
-                            border: Border.all(color: ColorUtils.red_color),
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 2.w,vertical: 2.h),
-                                child: Row(
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: Image.network(model.barEventModel?[index].media?[0].media ??'',
-                                        width: 20.i,
-                                        height: 20.i,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    SizedBox(width: 3.w,),
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(model.barEventModel![index].eventDate +' -'+time[0],
-                                          style: TextStyle(
-                                              fontFamily: FontUtils.modernistRegular,
-                                              fontSize: 1.7.t,
-                                              color: ColorUtils.text_red
-                                          ),
-                                        ),
-                                        SizedBox(height: 1.h,),
-                                        Text(model.barEventModel![index].name,
-                                          style: TextStyle(
-                                              fontFamily: FontUtils.modernistBold,
-                                              fontSize: 2.2.t,
-                                              color: ColorUtils.black
-                                          ),
-                                        ),
-                                        SizedBox(height: 1.h,),
-                                        Row(
-                                          children: [
-                                            SvgPicture.asset(ImageUtils.location_icon),
-                                            SizedBox(width: 2.w,),
-                                            Text(model.barEventModel![index].location,
-                                              style: TextStyle(
-                                                  fontFamily: FontUtils.modernistRegular,
-                                                  fontSize: 1.7.t,
-                                                  color: ColorUtils.text_dark
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ],
+                      return GestureDetector(
+                        onTap: (){
+                          model.navigationService.navigateToEventDetailScreen(model.barEventModel?[index].media?[index].media ??'',model.barEventModel![index].name,model.barEventModel![index].eventDate,model.barEventModel![index].startTime,model.barEventModel![index].endTime,model.barEventModel![index].location,model.barEventModel![index].about);
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal:SizeConfig.widthMultiplier * 4,),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: ColorUtils.black.withOpacity(0.1),
+                                  spreadRadius: 0,
+                                  blurRadius: 10,
+                                  offset: Offset(0, 5), // changes position of shadow
                                 ),
-                              ),
-                            ],
+                              ],
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all(Radius.circular(18)),
+                              border: Border.all(color: ColorUtils.red_color),
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 2.w,vertical: 2.h),
+                                  child: Row(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Image.network(model.barEventModel?[index].media?[index].media ??'',
+                                          width: 20.i,
+                                          height: 20.i,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      SizedBox(width: 3.w,),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(model.barEventModel![index].eventDate +' -'+time[0],
+                                            style: TextStyle(
+                                                fontFamily: FontUtils.modernistRegular,
+                                                fontSize: 1.7.t,
+                                                color: ColorUtils.text_red
+                                            ),
+                                          ),
+                                          SizedBox(height: 1.h,),
+                                          Text(model.barEventModel![index].name,
+                                            style: TextStyle(
+                                                fontFamily: FontUtils.modernistBold,
+                                                fontSize: 2.2.t,
+                                                color: ColorUtils.black
+                                            ),
+                                          ),
+                                          SizedBox(height: 1.h,),
+                                          Row(
+                                            children: [
+                                              SvgPicture.asset(ImageUtils.location_icon),
+                                              SizedBox(width: 2.w,),
+                                              Text(model.barEventModel![index].location,
+                                                style: TextStyle(
+                                                    fontFamily: FontUtils.modernistRegular,
+                                                    fontSize: 1.7.t,
+                                                    color: ColorUtils.text_dark
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       );
@@ -172,3 +177,4 @@ class _BarEventState extends State<BarEvent> {
     );
   }
 }
+

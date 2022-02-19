@@ -205,6 +205,13 @@ class AuthenticationViewModel extends BaseViewModel {
     File(""),
   ];
 
+  List<dynamic> eventFiles = [
+    File(""),
+    File(""),
+    File(""),
+    File(""),
+  ];
+
   int genderValue = 1;
   String genderValueStr = "Male";
   List<String> genderList = ["Male", "Female"];
@@ -417,6 +424,33 @@ class AuthenticationViewModel extends BaseViewModel {
     } else {
       imageFiles.insert(index, File(image.path));
       print(imageFiles);
+
+
+      notifyListeners();
+      return true;
+    }
+
+    /*if (imageFile == null) {
+      return false;
+    }
+    else{
+      notifyListeners();
+      return true;
+    }*/
+  }
+
+  Future<bool> getEventImage(int index) async {
+    ImagePicker picker = ImagePicker();
+    //List<XFile>? images = await picker.pickMultiImage();
+    XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    //imageFile = File(image!.path);
+
+    if (image == null) {
+      return false;
+    } else {
+      eventFiles.removeAt(index);
+      eventFiles.insert(index, File(image.path));
+      print(eventFiles);
 
 
       notifyListeners();
@@ -910,7 +944,7 @@ class AuthenticationViewModel extends BaseViewModel {
 
   String? openingTimeTo;
 
-  List files = [];
+
   List eventDate = [];
 
   void validateCreateEvent(BuildContext context) async{
@@ -985,7 +1019,7 @@ class AuthenticationViewModel extends BaseViewModel {
 
   void createEvent() async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
-
+    List files = [];
 
 
     try {
@@ -993,7 +1027,7 @@ class AuthenticationViewModel extends BaseViewModel {
       notifyListeners();
 
 
-      for (File data in imageFiles){
+      for (File data in eventFiles){
         if (data.path.isNotEmpty){
           String media = "data:${lookupMimeType(data.path)};base64," +
               base64Encode(data.readAsBytesSync());
@@ -1031,9 +1065,7 @@ class AuthenticationViewModel extends BaseViewModel {
         selectedEventDate = null;
         openingTimeTo= null;
         openingTimeFrom ==null;
-        imageFiles = [
-          File(""),
-          File(""),
+        eventFiles = [
           File(""),
           File(""),
           File(""),
