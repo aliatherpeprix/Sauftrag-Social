@@ -153,8 +153,8 @@ class NavigationViewModel extends BaseViewModel{
     navigationKey.currentState!.pushAndRemoveUntil(PageTransition(child: MainView(index: index), type: PageTransitionType.rightToLeftWithFade),(Route<dynamic> route) => false);
   }
 
-  void navigateToProfileScreen(List<String> images,String? name){
-    navigationKey.currentState!.push(PageTransition(child: Profile(images: images,name: name!,), type: PageTransitionType.rightToLeftWithFade));
+  void navigateToProfileScreen(List<String> images,String? name,String? address,List alcoholDrink,List nightClub, List partyVacation){
+    navigationKey.currentState!.push(PageTransition(child: Profile(images: images,name: name!,address: address,alcoholDrink: alcoholDrink,nightClub:nightClub,partyVacation: partyVacation), type: PageTransitionType.rightToLeftWithFade));
   }
 
   void navigateToMatchScreen(){
@@ -229,10 +229,6 @@ class NavigationViewModel extends BaseViewModel{
   void navigateAndRemoveSignInScreen(){
     navigationKey.currentState!.pushAndRemoveUntil(PageTransition(child: Login(), type: PageTransitionType.rightToLeftWithFade), (route) => false);
   }
-  // void navigateToEventDetailScreen([param0]){
-  //   navigationKey.currentState!.push(PageTransition(child: EventDetails(), type: PageTransitionType.rightToLeftWithFade));
-  //
-  // }
 
   void navigateToEventDetailScreen(
       dynamic image,
@@ -241,17 +237,18 @@ class NavigationViewModel extends BaseViewModel{
       dynamic eventStartTime,
       dynamic eventEndTime,
       dynamic location,
-      dynamic about){
-    navigationKey.currentState!.push(PageTransition(child: EventDetails(
-      image: image,
-      eventName: eventName,
-      eventDate: eventDate,
-      eventStartTime: eventStartTime,
-      eventEndTime: eventEndTime,
-      location: location,
-      about: about,
-    ), type: PageTransitionType.rightToLeftWithFade));
-
+      dynamic about) {
+    navigationKey.currentState!.push(PageTransition(
+        child: EventDetails(
+          image: image,
+          eventName: eventName,
+          eventDate: eventDate,
+          eventStartTime: eventStartTime,
+          eventEndTime: eventEndTime,
+          location: location,
+          about: about,
+        ),
+        type: PageTransitionType.rightToLeftWithFade));
   }
 
   void navigateToMapSearchScreen(){

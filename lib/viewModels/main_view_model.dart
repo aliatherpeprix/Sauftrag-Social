@@ -236,14 +236,7 @@ class MainViewModel extends BaseViewModel {
     "Drink hard"
   ];
 
-  List<String> matchName = [
-    "Leandro, 18",
-    "Chris, 30",
-    "Chaline, 22",
-    "Mayra, 19",
-    "Clara, 26",
-    "Sabine, 24",
-  ];
+  List<String> matchName = [];
 
   Map<String, int> drinkMotivationMap = {
     'Drink light': 1,
@@ -1157,9 +1150,18 @@ class MainViewModel extends BaseViewModel {
       dynamic eventStartTime,
       dynamic eventEndTime,
       dynamic location,
-      dynamic about){
-    navigationKey.currentState!.push(PageTransition(child: EventDetails(image: image,eventName: eventName,eventDate: eventDate,eventStartTime: eventStartTime,eventEndTime: eventEndTime,location: location,about: about,), type: PageTransitionType.rightToLeftWithFade));
-
+      dynamic about) {
+    navigationKey.currentState!.push(PageTransition(
+        child: EventDetails(
+          image: image,
+          eventName: eventName,
+          eventDate: eventDate,
+          eventStartTime: eventStartTime,
+          eventEndTime: eventEndTime,
+          location: location,
+          about: about,
+        ),
+        type: PageTransitionType.rightToLeftWithFade));
   }
 
   void navigateToMapSearchScreen() {
@@ -1342,6 +1344,8 @@ class MainViewModel extends BaseViewModel {
     await sharedPreferences.clear();
     navigateAndRemoveSignInScreen();
   }
+
+  // List<NewsfeedPostId> posts = [];
 
   void getUserData() async {
     userModel = (await prefrencesViewModel.getUser())!;
@@ -1567,11 +1571,73 @@ class MainViewModel extends BaseViewModel {
       print(getContactList);
     }
   }
+  List<UserModel>? discoverModel = [];
+  List catalogImages = [];
+  bool discoverLoader = false;
 
+  void getDiscover(BuildContext context) async {
+    UserModel? user = await locator<PrefrencesViewModel>().getUser();
+    catalogImages = [];
 
-  // QrImage(
-  // data: "123457890",
-  // version: QrVersions.auto,
-  // size: 200.0,
-  // ),
+    try {
+      discoverLoader = true;
+      notifyListeners();
+      // user!.token!
+      var response = await dio.get("${Constants.GetDiscover}",
+          options: Options(
+              contentType: Headers.formUrlEncodedContentType,
+              headers: {"Authorization": "Token bf81edc04639288e058e4b41c6ee098eb7e8042b"}));
+      print(response);
+
+      if (response.statusCode == 200) {
+        discoverModel =
+            (response.data as List).map((e) => UserModel.fromJson(e)).toList();
+
+        for (UserModel userName in discoverModel!) {
+          matchName.add(userName.toJson()['username']);
+        }
+
+        for (UserModel user in discoverModel!) {
+          List<String> images = [];
+          for (int i = 1; i < 6; i++) {
+            if (user.toJson()["catalogue_image${i}"] != null) {
+              images.add(user.toJson()["catalogue_image${i}"]);
+            }
+          }
+          catalogImages.add(images);
+          print(images);
+        }
+
+        print(discoverModel!.length);
+
+        discoverLoader = false;
+        notifyListeners();
+      } else {
+        print(response.statusCode);
+        discoverLoader = false;
+        notifyListeners();
+
+        // showErrorMessage(context, 'Something went wrong. Please try again');
+      }
+    } on DioError catch (e) {
+      print(e);
+      discoverLoader = false;
+      notifyListeners();
+
+      // if (e.response!.statusCode == 404) {
+      //   navigationService.navigateToReplacement(to: NotFound());
+      // } else if (e.response!.statusCode == 500) {
+      //   navigationService.navigateToReplacement(to: ServerError());
+      // } else {
+      //   showErrorMessage(context,
+      //       'Unable to process your request at this time. Please try again');
+      // }
+    }
+  }
+
+// QrImage(
+// data: "123457890",
+// version: QrVersions.auto,
+// size: 200.0,
+// ),
 }

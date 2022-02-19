@@ -159,7 +159,7 @@ class _EventsState extends State<Events> {
                                       fontFamily: FontUtils.modernistRegular,
                                       fontSize: 1.7.t,
                                       color: ColorUtils.text_red,
-                                        decoration: TextDecoration.underline,
+                                      decoration: TextDecoration.underline,
 
                                       // shadows: [
                                       //   Shadow(
@@ -185,14 +185,14 @@ class _EventsState extends State<Events> {
                             height: 35.h,
                             //width: 70.w,
                             child: ListView.separated(
-                              padding: EdgeInsets.zero,
+                                padding: EdgeInsets.zero,
                                 scrollDirection: Axis.horizontal,
                                 shrinkWrap: true,
                                 //padding: EdgeInsets.zero,
                                 itemBuilder: (context, index) {
                                   return GestureDetector(
                                     onTap: (){
-                                      //model.navigateToEventDetailScreen();
+                                     model.navigationService.navigateToEventDetailScreen(model.barEventModel?[subIndex].media?[0].media ??'',model.barEventModel![subIndex].name,model.barEventModel![subIndex].eventDate,model.barEventModel![subIndex].startTime,model.barEventModel![subIndex].endTime,model.barEventModel![subIndex].location,model.barEventModel![subIndex].about);
                                     },
                                     child: Padding(
                                       padding: EdgeInsets.only(left: 4.w, bottom: 2.h,),

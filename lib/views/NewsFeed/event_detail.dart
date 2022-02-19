@@ -30,7 +30,6 @@ class EventDetails extends StatefulWidget {
         required this.location,
         required this.about});
 
-
   @override
   _EventDetailsState createState() => _EventDetailsState();
 }

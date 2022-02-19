@@ -960,28 +960,36 @@ class AuthenticationViewModel extends BaseViewModel {
       print("-------------response----------");
 
       if (response.statusCode == 201) {
+        titleController.clear();
+        descriptionController.clear();
+        locationController.clear();
           createEventLoader = false;
-          imageFiles.clear();
-          files.clear();
-          imageFiles = [
-            File(""),
-            File(""),
-            File(""),
-            File(""),
-            File(""),
-            File(""),
-          ];
-          print('image:${imageFiles}');
+        files.clear();
+        imageFiles.clear();
+        selectedEventDate = null;
+        openingTimeTo= null;
+        openingTimeFrom ==null;
+        imageFiles = [
+          File(""),
+          File(""),
+          File(""),
+          File(""),
+          File(""),
+          File(""),
+        ];
           notifyListeners();
-          navigateBack();
-
-      } else {
-          createEventLoader = false;
-          notifyListeners();
-          DialogUtils()
-              .showDialog(MyErrorWidget(error: response.data["message"]));
-        }
-    } catch (e) {
+          navigationService.navigateBack();
+      }
+      else {
+        print(response.statusCode);
+        createEventLoader = false;
+        notifyListeners();
+        // DialogUtils().showDialog(
+        //     MyErrorWidget(error: 'Something went wrong. Please try again'));
+        throw Exception('Failed to load');
+      }
+    }
+    catch (e) {
       print(e);
       DialogUtils().showDialog(MyErrorWidget(error: e.toString()));
       createEventLoader = false;

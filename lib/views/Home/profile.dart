@@ -17,8 +17,20 @@ import 'package:stacked/stacked.dart';
 class Profile extends StatefulWidget {
   List<String> images;
   String? name;
+  String? address;
+  List alcoholDrink;
+  List nightClub;
+  List partyVacation;
 
-  Profile({Key? key, required this.images,required this.name}) : super(key: key);
+  Profile({
+    Key? key,
+    required this.images,
+    required this.name,
+    required this.address,
+    required this.alcoholDrink,
+    required this.nightClub,
+    required this.partyVacation,
+  }) : super(key: key);
 
   @override
   _ProfileState createState() => _ProfileState();
@@ -74,7 +86,7 @@ class _ProfileState extends State<Profile> {
                                             decoration: BoxDecoration(
                                               //borderRadius: BorderRadius.all(Radius.circular(20)),
                                               image: DecorationImage(
-                                                  image: AssetImage(
+                                                  image: NetworkImage(
                                                       widget.images[position]),
                                                   fit: BoxFit.cover),
                                             ),
@@ -239,7 +251,7 @@ class _ProfileState extends State<Profile> {
                               Icon(Icons.location_pin,
                                   color: ColorUtils.text_dark),
                               Text(
-                                "Germany",
+                                widget.address!,
                                 style: TextStyle(
                                   color: ColorUtils.text_dark,
                                   fontFamily: FontUtils.modernistRegular,
@@ -277,12 +289,11 @@ class _ProfileState extends State<Profile> {
                             spacing: 2.5.w,
                             runSpacing: 1.5.h,
                             direction: Axis.horizontal,
-                            children: model.favoriteAlcoholicDrink
+                            children: widget.alcoholDrink
                                 .map((element) => ElevatedButton(
                                       onPressed: () {},
-                                      child: Text(model.favoriteAlcoholicDrink[
-                                          model.favoriteAlcoholicDrink
-                                              .indexOf(element)]),
+                                      child: Text(
+                                          "${widget.alcoholDrink[widget.alcoholDrink.indexOf(element)]}"),
                                       style: ElevatedButton.styleFrom(
                                         primary: ColorUtils.white,
                                         onPrimary: ColorUtils.text_red,
@@ -330,12 +341,11 @@ class _ProfileState extends State<Profile> {
                             spacing: 2.5.w,
                             runSpacing: 1.5.h,
                             direction: Axis.horizontal,
-                            children: model.favoriteNightClub
+                            children: widget.nightClub
                                 .map((element) => ElevatedButton(
                                       onPressed: () {},
-                                      child: Text(model.favoriteNightClub[model
-                                          .favoriteNightClub
-                                          .indexOf(element)]),
+                                      child: Text(
+                                          "${widget.nightClub[widget.nightClub.indexOf(element)]}"),
                                       style: ElevatedButton.styleFrom(
                                         primary: ColorUtils.white,
                                         onPrimary: ColorUtils.text_red,
@@ -383,12 +393,11 @@ class _ProfileState extends State<Profile> {
                             spacing: 2.5.w,
                             runSpacing: 1.5.h,
                             direction: Axis.horizontal,
-                            children: model.favoritePartyVacation
+                            children: widget.partyVacation
                                 .map((element) => ElevatedButton(
                                       onPressed: () {},
-                                      child: Text(model.favoritePartyVacation[
-                                          model.favoritePartyVacation
-                                              .indexOf(element)]),
+                                      child: Text(
+                                          "${widget.partyVacation[widget.partyVacation.indexOf(element)]}"),
                                       style: ElevatedButton.styleFrom(
                                         primary: ColorUtils.white,
                                         onPrimary: ColorUtils.text_red,
