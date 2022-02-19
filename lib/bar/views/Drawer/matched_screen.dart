@@ -157,7 +157,7 @@ class _MatchedScreenState extends State<MatchedScreen>
                                             CrossAxisAlignment.center,
                                         children: [
                                           Text(
-                                            "UPCOMING",
+                                            "MATCHED",
                                             style: TextStyle(
                                               fontSize: 1.8.t,
                                               color: tabSlelected1 == 0
@@ -210,7 +210,7 @@ class _MatchedScreenState extends State<MatchedScreen>
                                             CrossAxisAlignment.center,
                                         children: [
                                           Text(
-                                            "PAST EVENT",
+                                            "REQUESTS",
                                             style: TextStyle(
                                                 fontSize: 1.8.t,
                                                 color: tabSlelected1 == 1

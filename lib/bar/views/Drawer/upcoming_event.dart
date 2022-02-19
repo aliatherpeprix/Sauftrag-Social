@@ -147,7 +147,7 @@ class _UpcomingEventState extends State<UpcomingEvent>
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "MATCHED",
+                                    "UPCOMING",
                                     style: TextStyle(
                                       fontSize: 1.8.t,
                                       color: tabSlelected == 0
@@ -196,7 +196,7 @@ class _UpcomingEventState extends State<UpcomingEvent>
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "REQUESTS",
+                                    "PAST EVENT",
                                     style: TextStyle(
                                         fontSize: 1.8.t,
                                         color: tabSlelected == 1
