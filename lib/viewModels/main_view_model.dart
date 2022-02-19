@@ -1134,6 +1134,10 @@ class MainViewModel extends BaseViewModel {
     navigationService.navigateToBarTimingTypeScreen();
   }
 
+  void navigateToOrderDetailsScreen() {
+    navigationService.navigateToOrderDetailsScreen();
+  }
+
   // void navigateToEventDetailsScreen( dynamic image,
   //       dynamic eventName,
   //       dynamic eventDate,

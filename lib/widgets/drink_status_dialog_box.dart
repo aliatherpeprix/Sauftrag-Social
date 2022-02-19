@@ -398,8 +398,8 @@ class _DrinkStatusDialogBoxState extends State<DrinkStatusDialogBox> {
                       //Save Button
                       ElevatedButton(
                         onPressed: () {
-                          // model.navigateBack();
                           model.drinkStatus();
+                          model.navigateBack();
                         },
                         child: const Text("Save"),
                         style: ElevatedButton.styleFrom(

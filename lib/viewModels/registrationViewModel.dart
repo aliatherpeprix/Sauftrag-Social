@@ -568,11 +568,11 @@ class RegistrationViewModel extends BaseViewModel {
     }
   }
 
-  double? longitude;
-  double? latitude;
+  double longitude = 0.0;
+  double latitude = 0.0;
   // var currentPosition;
-  getCurrentLocation() {
-    Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+  getCurrentLocation() async{
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
         .then((Position position) {
       // currentPosition = position;
       notifyListeners();
@@ -910,8 +910,8 @@ class RegistrationViewModel extends BaseViewModel {
           imageFiles,
           termsCheck,
           dataCheck,
-           latitude!,
-        longitude!);
+          latitude,
+          longitude);
       print(userSignupResponce);
       if (userSignupResponce is UserModel) {
         userModel.UserModel user = userSignupResponce;
@@ -1556,8 +1556,8 @@ class RegistrationViewModel extends BaseViewModel {
         true,
         signUpBarPasswordController.text,
         signUpBarVerifyPasswordController.text,
-        latitude!,
-        longitude!,
+        latitude,
+        longitude,
       );
       signInBar = false;
       notifyListeners();

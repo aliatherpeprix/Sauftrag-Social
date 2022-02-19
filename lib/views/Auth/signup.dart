@@ -964,7 +964,9 @@ class _SignUpState extends State<SignUp> {
                             ElevatedButton(
                               onPressed: () {
                                 //model.navigateToFavoriteScreen();
+                                model.getCurrentLocation();
                                 model.createUserAccount();
+
                               },
                               child: model.signInUser == false ? Text("Sign Up") : Loader(),
                               style: ElevatedButton.styleFrom(

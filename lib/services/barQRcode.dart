@@ -6,6 +6,7 @@ import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/bar/views/Home/bar_drinks.dart';
 import 'package:sauftrag/main.dart';
 import 'package:sauftrag/models/bar_model.dart';
+import 'package:sauftrag/models/favorites_model.dart';
 import 'package:sauftrag/models/new_bar_model.dart';
 import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/modules/dio_services.dart';
@@ -44,13 +45,14 @@ class BarQrcode {
 
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
-        Navigator.pushReplacement(navigationViewModel.navigationKey.currentContext!, PageTransition(child: BarDrinks(),
+        Navigator.push(navigationViewModel.navigationKey.currentContext!, PageTransition(child: BarDrinks(),
             type: PageTransitionType.rightToLeftWithFade));
 
         // navigateToChooseDrinkScreen(context)  {
         //   Navigator.push(context, MaterialPageRoute(builder: (context) => BarDrinks()));
         // }
-        return response.data;
+        List<FavoritesModel> drinks = (response.data as List).map((e) => FavoritesModel.fromJson(e)).toList();
+        return drinks;
         var userData = BarModel.fromJson(response.data);
         return userData;}
 

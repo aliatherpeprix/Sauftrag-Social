@@ -271,6 +271,7 @@ class _QRViewExampleState extends State<QRViewExample> {
         var getQRDrinkList = await BarQrcode().BarQrCode(model.result!.code);;
         if (getQRDrinkList is List<FavoritesModel>) {
           model.barQRcode = getQRDrinkList;
+          //print(model.barQRcode);
         }
         // Navigator.pushReplacement(context, PageTransition(child: BarDrinks(),
         //     type: PageTransitionType.rightToLeftWithFade));

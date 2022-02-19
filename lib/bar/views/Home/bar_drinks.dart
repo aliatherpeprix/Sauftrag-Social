@@ -8,7 +8,10 @@ import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
+import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
+import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/views/Home/main_view.dart';
 import 'package:stacked/stacked.dart';
 
 class BarDrinks extends StatefulWidget {
@@ -40,8 +43,8 @@ class _BarDrinksState extends State<BarDrinks> {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<AuthenticationViewModel>.reactive(
-      viewModelBuilder: () => locator<AuthenticationViewModel>(),
+    return ViewModelBuilder<MainViewModel>.reactive(
+      viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
       builder: (context, model, child) {
         return GestureDetector(
@@ -624,6 +627,54 @@ class _BarDrinksState extends State<BarDrinks> {
                         ],
                       ),
                       SizedBox(height: 3.h),
+
+                      Container(
+                        margin: EdgeInsets.only(top: 1.h),
+                        child: ListView.separated(
+                          physics: BouncingScrollPhysics(),
+                          padding: EdgeInsets.zero,
+                          // physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: model.barQRcode.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 1.5.h, horizontal: 2.w),
+                              //width: 6.h,
+                              //height: 30.h,
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: ColorUtils.black
+                                        .withOpacity(0.1),
+                                    spreadRadius: 0,
+                                    blurRadius: 10,
+                                    offset: Offset(0,
+                                        5), // changes position of shadow
+                                  ),
+                                ],
+                                color: Colors.white,
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(18)),
+                                //border: Border.all(color: ColorUtils.red_color),
+                              ),
+                              child: Text(
+                                model.barQRcode[index].name!,
+                                style: TextStyle(
+                                    fontFamily:
+                                    FontUtils.modernistRegular,
+                                    fontSize: 1.7.t),
+                              ),
+                            );
+                          },
+                          separatorBuilder: (context, index) {
+                            return SizedBox(
+                              height: SizeConfig.heightMultiplier * 1.5,
+                            );
+                          },
+                        ),
+                      ),
+
                       Stack(
                         children: [
                           Container(
