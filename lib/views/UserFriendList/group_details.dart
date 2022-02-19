@@ -55,6 +55,7 @@ class _GroupDetailsState extends State<GroupDetails> {
                   horizontal: Dimensions.horizontalPadding,
                 ),
                 child: ElevatedButton(
+
                   onPressed: () async {
                     NewBarModel barUser =
                         (await locator<PrefrencesViewModel>().getBarUser())!;
@@ -71,12 +72,14 @@ class _GroupDetailsState extends State<GroupDetails> {
                     var subscription =
                         pubnub.subscribe(channels: {model.chatController.text});
                     var channel = pubnub.channel(model.chatController.text);
+
                     // if(model.logInUserSelected == true){
                     //   model.navigateToFriendListScreen();
                     // }
                     // else if(model.logInBarSelected == true){
                     //   model.navigateToFriendListScreen1();
                     // }
+
                     List<ChannelMemberMetadataInput> setMetadata = [];
                     for (var data in model.groupList) {
                       var user =
@@ -87,6 +90,7 @@ class _GroupDetailsState extends State<GroupDetails> {
                         model.chatController.text, setMetadata);
                     print(setMetadata);
                     model.navigateToFriendListScreen1();
+
                   },
                   child: const Text("Create Group"),
                   style: ElevatedButton.styleFrom(

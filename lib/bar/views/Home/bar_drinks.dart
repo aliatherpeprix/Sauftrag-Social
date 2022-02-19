@@ -639,25 +639,12 @@ class _BarDrinksState extends State<BarDrinks> {
                           itemBuilder: (context, index) {
                             return Container(
                               padding: EdgeInsets.symmetric(
-                                  vertical: 1.5.h, horizontal: 2.w),
-                              //width: 6.h,
-                              //height: 30.h,
+                                  vertical: 0.h, horizontal: 2.w),
                               decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: ColorUtils.black
-                                        .withOpacity(0.1),
-                                    spreadRadius: 0,
-                                    blurRadius: 10,
-                                    offset: Offset(0,
-                                        5), // changes position of shadow
-                                  ),
-                                ],
-                                color: Colors.white,
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(18)),
-                                //border: Border.all(color: ColorUtils.red_color),
-                              ),
+                                  color: ColorUtils.white,
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(Dimensions.roundCorner)),
+                                  border: Border.all(color: ColorUtils.text_red)),
                               child: Text(
                                 model.barQRcode[index].name!,
                                 style: TextStyle(

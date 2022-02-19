@@ -40,11 +40,11 @@ class _GroupScreenState extends State<GroupScreen> {
             defaultKeyset: Keyset(
                 subscribeKey: 'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
                 publishKey: 'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
-                uuid: UUID("Cosmos")));
+                uuid: UUID(user.id.toString())));
         // Subscribe to a channel
-        var subscription = pubnub.subscribe(channels: {"Cosmos"});
+        var subscription = pubnub.subscribe(channels: {model.chatController.text});
 
-        var channel = pubnub.channel("Cosmos");
+        var channel = pubnub.channel(model.chatController.text);
         var chat = await channel.messages();
         var data = await chat.count();
         await chat.fetch().whenComplete(() {

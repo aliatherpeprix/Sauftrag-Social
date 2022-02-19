@@ -315,7 +315,7 @@ class NavigationViewModel extends BaseViewModel{
   }
 
   void navigateToSelectIndividualChatScreen(){
-    navigationKey.currentState!.push(PageTransition(child: SelectIndividualChat(), type: PageTransitionType.rightToLeftWithFade));
+    navigationKey.currentState!.push(PageTransition(child: CreateGroup1(), type: PageTransitionType.rightToLeftWithFade));
   }
 
 

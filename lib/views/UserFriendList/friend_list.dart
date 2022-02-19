@@ -10,6 +10,8 @@ import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/views/UserFriendList/group_screen_user.dart';
+
+import 'package:sauftrag/views/UserFriendList/groupScreen.dart';
 import 'package:sauftrag/views/UserFriendList/message_screen.dart';
 import 'package:sauftrag/widgets/all_page_loader.dart';
 import 'package:stacked/stacked.dart';
@@ -516,7 +518,10 @@ class _FriendListState extends State<FriendList> {
                                         itemCount: model.userForChats.length),
 
                                     // second tab bar viiew widget
-                                    GroupScreenUser()
+
+                                    GroupScreenUser(),
+                                    GroupScreenChat()
+
                                   ],
                                 ),
                               ),

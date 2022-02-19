@@ -204,6 +204,7 @@ class _CreateGroupState extends State<CreateGroup> {
                                       ),
                                     ],
                                   ),
+
                                   Checkbox(
                                     checkColor: Colors.white,
                                     shape: RoundedRectangleBorder(
@@ -239,6 +240,39 @@ class _CreateGroupState extends State<CreateGroup> {
                                       });
                                     },
                                   ),
+
+                                  // Checkbox(
+                                  //   checkColor: Colors.white,
+                                  //   shape: RoundedRectangleBorder(
+                                  //       borderRadius: BorderRadius.circular(4)),
+                                  //   fillColor:
+                                  //       MaterialStateProperty.resolveWith(
+                                  //           getColor),
+                                  //   value: model.selected![index],
+                                  //   onChanged: (val) {
+                                  //     setState(() {
+                                  //       model.selected![index] = val!;
+                                  //       model.selectedValue = val;
+                                  //       //model.groupMap["image"] =
+                                  //       print(model.selectedValue);
+                                  //       if (model.selectedValue == true) {
+                                  //         model.currentIndex = index;
+                                  //         model.groupMap["image"] = model
+                                  //             .userForChats[index]
+                                  //             .profile_picture;
+                                  //         model.groupMap["name"] = model
+                                  //             .userForChats[index].username;
+                                  //         //print(groupMap);
+                                  //         model.groupList.add({
+                                  //           "image": model.groupMap["image"],
+                                  //           "name": model.groupMap["name"]
+                                  //         });
+                                  //         print(model.groupList);
+                                  //         //containerBorder = ColorUtils.greenColor;
+                                  //       }
+                                  //     });
+                                  //   },
+                                  // ),
                                 ],
                               );
                             },
