@@ -21,6 +21,8 @@ class Constants {
   static const String AddFavoritePartyVacation = 'api/favorites/party_vaccation/';
   static const String AddressBook = 'api/invite/by-contact/';
   static const String QRCode = 'api/order/scan_qrcode/';
+  static const String drinkStatus = 'api/user/drinkStatus/';
+  static const String discover = 'api/user/discover/';
 
   static const String GetFavoriteDrink = 'api/favorites/alcoholic_drink/';
   static const String GetFavoriteClub = 'api/favorites/night_club/';
@@ -39,7 +41,7 @@ class Constants {
   static const String allUserForChat = 'api/user/all/';
   static const String GetEvents = BaseUrlPro + 'api/event/add/';
   static const String GetDiscover = BaseUrlPro + 'api/user/discover/';
-
+  static const String matchUser = BaseUrlPro + 'api/user/match/';
   static const int profileImage = 1;
 
   static final int camera = 1;

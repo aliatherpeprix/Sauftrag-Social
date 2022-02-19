@@ -167,7 +167,6 @@ class MainViewModel extends BaseViewModel {
   //String? faqs;
 
   List contactChecked = [];
-
   bool isSwitched = false;
 
   Future<Position> determinePosition() async {
@@ -1041,8 +1040,10 @@ class MainViewModel extends BaseViewModel {
     chatScroll.jumpTo(chatScroll.position.maxScrollExtent);
   }
 
-  void navigateToProfileScreen(List<String> images,String? name) {
-    navigationService.navigateToProfileScreen(images,name);
+  void navigateToProfileScreen(List<String> images, String? name,
+      String address, List alcoholDrink, List nightClub, List partyVacation) {
+    navigationService.navigateToProfileScreen(
+        images, name, address, alcoholDrink, nightClub, partyVacation);
   }
 
   void navigateToMatchScreen() {
@@ -1634,6 +1635,54 @@ class MainViewModel extends BaseViewModel {
       // }
     }
   }
+  bool userMatchLoader = false;
+
+
+  void UserMatches(BuildContext context,dynamic id) async {
+    UserModel? user = await locator<PrefrencesViewModel>().getUser();
+    catalogImages = [];
+
+    try {
+      userMatchLoader = true;
+      notifyListeners();
+
+      var matchParams = FormData.fromMap({
+        'customer2':id
+      });
+      print(matchParams);
+
+      var response = await dio.post("${Constants.matchUser}",data: matchParams,
+          options: Options(
+              contentType: Headers.formUrlEncodedContentType,
+              headers: {"Authorization": "Token ${user!.token}"}));
+      print(response);
+
+      if (response.statusCode == 201) {
+        DialogUtils().showDialog(MyErrorWidget(
+          error: "Request Send Successfully",
+        ));
+        getDiscover(context);
+        userMatchLoader = false;
+        notifyListeners();
+      } else {
+        print(response.statusCode);
+        userMatchLoader = false;
+        notifyListeners();
+      }
+    } on DioError catch (e) {
+      var errorResponse =e.response!.data['customer2'][0];
+      if(errorResponse == "This field must be unique."){
+        DialogUtils().showDialog(MyErrorWidget(
+          error: "Request Already Send",
+        ));
+      }
+      print(e.response!.data['customer2'][0]);
+      getDiscover(context);
+      userMatchLoader = false;
+      notifyListeners();
+    }
+  }
+
 
 // QrImage(
 // data: "123457890",

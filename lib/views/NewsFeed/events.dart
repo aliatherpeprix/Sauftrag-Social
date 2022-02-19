@@ -6,8 +6,6 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
-import 'package:sauftrag/widgets/all_page_loader.dart';
-import 'package:sauftrag/widgets/loader.dart';
 import 'package:stacked/stacked.dart';
 import 'package:sauftrag/utils/extensions.dart';
 
@@ -72,10 +70,9 @@ class _EventsState extends State<Events> {
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
       onModelReady: (model){
-        model.getEvent(context);
       },
       builder: (context, model, child) {
-        return model.eventLoader? Center(child: AllPageLoader()): SafeArea(
+        return SafeArea(
           top: false,
           bottom: false,
           child: Scaffold(
@@ -192,7 +189,7 @@ class _EventsState extends State<Events> {
                                 itemBuilder: (context, index) {
                                   return GestureDetector(
                                     onTap: (){
-                                     model.navigationService.navigateToEventDetailScreen(model.barEventModel?[subIndex].media?[0].media ??'',model.barEventModel![subIndex].name,model.barEventModel![subIndex].eventDate,model.barEventModel![subIndex].startTime,model.barEventModel![subIndex].endTime,model.barEventModel![subIndex].location,model.barEventModel![subIndex].about);
+                                      // model.navigateToEventDetailsScreen();
                                     },
                                     child: Padding(
                                       padding: EdgeInsets.only(left: 4.w, bottom: 2.h,),
@@ -378,14 +375,10 @@ class _EventsState extends State<Events> {
                             scrollDirection: Axis.vertical,
                             physics: BouncingScrollPhysics(),
                             shrinkWrap: true,
-                            itemBuilder: (context, subIndex) {
-                              dynamic time = model.barEventModel![subIndex].startTime;
-                              time =time.toString().split(':00');
-                              dynamic images = model.barEventModel?[subIndex].media?[0].media;
-                              print(time);
+                            itemBuilder: (context, index) {
                               return GestureDetector(
                                 onTap: (){
-                                  model.navigationService.navigateToEventDetailScreen(model.barEventModel?[subIndex].media?[0].media ??'',model.barEventModel![subIndex].name,model.barEventModel![subIndex].eventDate,model.barEventModel![subIndex].startTime,model.barEventModel![subIndex].endTime,model.barEventModel![subIndex].location,model.barEventModel![subIndex].about);
+                                  // model.navigateToEventDetailsScreen();
                                 },
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(horizontal:SizeConfig.widthMultiplier * 4,),
@@ -413,7 +406,7 @@ class _EventsState extends State<Events> {
                                             children: [
                                               ClipRRect(
                                                 borderRadius: BorderRadius.circular(10),
-                                                child: Image.network(images,
+                                                child: Image.asset(places[index]["image"],
                                                   width: 20.i,
                                                   height: 20.i,
                                                   fit: BoxFit.cover,
@@ -423,7 +416,7 @@ class _EventsState extends State<Events> {
                                               Column(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(model.barEventModel![subIndex].eventDate +' -'+time[0],
+                                                  Text(places[index]["date"],
                                                     style: TextStyle(
                                                         fontFamily: FontUtils.modernistRegular,
                                                         fontSize: 1.7.t,
@@ -431,7 +424,7 @@ class _EventsState extends State<Events> {
                                                     ),
                                                   ),
                                                   SizedBox(height: 1.h,),
-                                                  Text(model.barEventModel![subIndex].name,
+                                                  Text(places[index]["eventName"],
                                                     style: TextStyle(
                                                         fontFamily: FontUtils.modernistBold,
                                                         fontSize: 2.2.t,
@@ -439,7 +432,7 @@ class _EventsState extends State<Events> {
                                                     ),
                                                   ),
                                                   SizedBox(height: 1.h,),
-                                                  Text(model.barEventModel![subIndex].location,
+                                                  Text(places[index]["location"],
                                                     style: TextStyle(
                                                         fontFamily: FontUtils.modernistRegular,
                                                         fontSize: 1.7.t,
@@ -460,8 +453,9 @@ class _EventsState extends State<Events> {
                             separatorBuilder: (context, index) {
                               return SizedBox(height:  SizeConfig.heightMultiplier * 2.5,);
                             },
-                            itemCount: model.barEventModel!.length,
+                            itemCount: places.length,
                           ),
+
                         ],
                       ),
                     ),

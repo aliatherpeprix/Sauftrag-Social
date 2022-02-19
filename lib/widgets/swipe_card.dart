@@ -11,6 +11,7 @@ import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/widgets/loader.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:stacked/stacked.dart';
 
@@ -31,9 +32,10 @@ class SwipeCard extends StatefulWidget {
   Function swipeRight;
   String? name;
   String?address;
+  dynamic id;
 
 
-  SwipeCard({Key? key, required this.img, required this.bottom, required this.right, required this.left, required this.cardWidth, required this.rotation, required this.skew, required this.flag, required this.dismissImg, required this.addImg, required this.details, required this.swipeLeft, required this.swipeRight,required this.name,required this.address}) : super(key: key);
+  SwipeCard({Key? key, required this.img, required this.bottom, required this.right, required this.left, required this.cardWidth, required this.rotation, required this.skew, required this.flag, required this.dismissImg, required this.addImg, required this.details, required this.swipeLeft, required this.swipeRight,required this.name,required this.address,required this.id}) : super(key: key);
 
   @override
   _SwipeCardState createState() => _SwipeCardState();
@@ -99,245 +101,245 @@ class _SwipeCardState extends State<SwipeCard> {
               }
             },
             child: StreamBuilder(
-              stream: stream,
-              initialData: 0.0,
-              builder: (context, snapshot){
-                return Listener(
-                  child: Transform(
-                    alignment: widget.flag == 0 ? Alignment.bottomRight : Alignment.bottomLeft,
-                    //transform: null,
-                    transform: new Matrix4.skewX(widget.skew),
-                    //transform: new Matrix4.rotationX(flag == 0 ? rotation / 360 : -rotation / 360),
-                    //..rotateX(-math.pi / rotation),
-                    child: RotationTransition(turns: AlwaysStoppedAnimation(widget.flag == 0 ? widget.rotation / 360 : -widget.rotation / 360),
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: screenSize.width / 1.1 + widget.cardWidth,
-                        height: screenSize.height / 1.4,
-                        child: Stack(
-                          children: [
+                stream: stream,
+                initialData: 0.0,
+                builder: (context, snapshot){
+                  return Listener(
+                    child: Transform(
+                      alignment: widget.flag == 0 ? Alignment.bottomRight : Alignment.bottomLeft,
+                      //transform: null,
+                      transform: new Matrix4.skewX(widget.skew),
+                      //transform: new Matrix4.rotationX(flag == 0 ? rotation / 360 : -rotation / 360),
+                      //..rotateX(-math.pi / rotation),
+                      child: RotationTransition(turns: AlwaysStoppedAnimation(widget.flag == 0 ? widget.rotation / 360 : -widget.rotation / 360),
+                        child: Container(
+                          alignment: Alignment.center,
+                          width: screenSize.width / 1.1 + widget.cardWidth,
+                          height: screenSize.height / 1.4,
+                          child: Stack(
+                            children: [
 
-                            GestureDetector(
-                              onTap: () {
-                                widget.details();
-                              },
-                              child: PageView.builder(
-                                itemBuilder: (context, position) {
-                                  return Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                                      image: DecorationImage(image: NetworkImage(widget.img[position]), fit: BoxFit.cover),
-                                    ),
-                                    alignment: Alignment.center,
-                                  );
+                              GestureDetector(
+                                onTap: () {
+                                  widget.details();
                                 },
-                                itemCount: widget.img.length,
-                                scrollDirection: Axis.vertical,
-                                controller: controller,
-                                onPageChanged: (int index){
-                                  currentPageNotifier.value = index;
-                                },// Can be null
-                              ),
-                            ),
-
-                            Align(
-                                alignment: Alignment.topRight,
-                                child: Container(
-                                  margin: EdgeInsets.only(top: 8.h),
-                                  padding: EdgeInsets.symmetric(horizontal: 2.5.w, vertical: 2.h),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(15), bottomLeft: Radius.circular(15)),
-                                    color: ColorUtils.white.withOpacity(0.6),
-
-                                  ),
-                                  child: SmoothPageIndicator(
-                                      controller: controller,  // PageController
-                                      count:  widget.img.length,
-                                      effect:  WormEffect(
-                                          spacing:  10,
-                                          dotWidth:  5,
-                                          dotHeight:  5,
-                                          dotColor:  ColorUtils.white.withOpacity(0.5),
-                                          activeDotColor:  ColorUtils.white
+                                child: PageView.builder(
+                                  itemBuilder: (context, position) {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                                        image: DecorationImage(image: NetworkImage(widget.img[position]), fit: BoxFit.cover),
                                       ),
-                                      axisDirection: Axis.vertical,
-                                      onDotClicked: (index){
+                                      alignment: Alignment.center,
+                                    );
+                                  },
+                                  itemCount: widget.img.length,
+                                  scrollDirection: Axis.vertical,
+                                  controller: controller,
+                                  onPageChanged: (int index){
+                                    currentPageNotifier.value = index;
+                                  },// Can be null
+                                ),
+                              ),
 
-                                      }
-                                  ),
-                                )
-                            ),
+                              Align(
+                                  alignment: Alignment.topRight,
+                                  child: Container(
+                                    margin: EdgeInsets.only(top: 8.h),
+                                    padding: EdgeInsets.symmetric(horizontal: 2.5.w, vertical: 2.h),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.only(topLeft: Radius.circular(15), bottomLeft: Radius.circular(15)),
+                                      color: ColorUtils.white.withOpacity(0.6),
 
-                            Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
+                                    ),
+                                    child: SmoothPageIndicator(
+                                        controller: controller,  // PageController
+                                        count:  widget.img.length,
+                                        effect:  WormEffect(
+                                            spacing:  10,
+                                            dotWidth:  5,
+                                            dotHeight:  5,
+                                            dotColor:  ColorUtils.white.withOpacity(0.5),
+                                            activeDotColor:  ColorUtils.white
+                                        ),
+                                        axisDirection: Axis.vertical,
+                                        onDotClicked: (index){
 
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        }
+                                    ),
+                                  )
+                              ),
+
+                              Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
                                     children: [
 
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          widget.swipeLeft();
-                                        },
-                                        child: SvgPicture.asset(ImageUtils.dislikeIcon),
-                                        style: ElevatedButton.styleFrom(
-                                          shadowColor: ColorUtils.red_color,
-                                          primary: ColorUtils.red_color.withOpacity(0.9),
-                                          onPrimary: ColorUtils.white,
-                                          //padding: EdgeInsets.symmetric(vertical: Dimensions.containerVerticalPadding),
-                                          padding: EdgeInsets.symmetric(horizontal: 0),
-                                          elevation: 3,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(35),
-                                            //side: BorderSide(color: ColorUtils.divider, width: 1)
-                                          ),
-                                          textStyle: TextStyle(
-                                            color: ColorUtils.white,
-                                            fontFamily: FontUtils.modernistBold,
-                                            fontSize: 1.8.t,
-                                            //height: 0
-                                          ),
-                                        ),
-                                      ),
-
-                                      FloatingActionButton(
-                                        onPressed: (){
-                                          //_matchEngine.rewindMatch();
-                                        },
-                                        child: SvgPicture.asset(ImageUtils.repeatIcon),
-                                        backgroundColor: ColorUtils.white,
-
-                                      ),
-
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          widget.swipeRight();
-                                        },
-                                        child: SvgPicture.asset(ImageUtils.likeIcon),
-                                        style: ElevatedButton.styleFrom(
-                                          shadowColor: Colors.green,
-                                          primary: Colors.green.withOpacity(0.9),
-                                          onPrimary: ColorUtils.white,
-                                          //padding: EdgeInsets.symmetric(vertical: Dimensions.containerVerticalPadding),
-                                          padding: EdgeInsets.symmetric(horizontal: 0),
-                                          elevation: 3,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(35),
-                                            //side: BorderSide(color: ColorUtils.divider, width: 1)
-                                          ),
-                                          textStyle: TextStyle(
-                                            color: ColorUtils.white,
-                                            fontFamily: FontUtils.modernistBold,
-                                            fontSize: 1.8.t,
-                                            //height: 0
-                                          ),
-                                        ),
-                                      ),
-
-                                    ],
-                                  ),
-
-                                  SizedBox(height: 2.h),
-
-                                  Container(
-                                    padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
-                                    clipBehavior: Clip.hardEdge,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
-                                    ),
-                                    child: BackdropFilter(
-                                      filter: ImageFilter.blur(sigmaX: 8.0, sigmaY: 8.0),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.min,
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          SizedBox(height: 0.8.h),
-                                          Text(
-                                            widget.name!,
-                                            style: TextStyle(
-                                              color: ColorUtils.white,
-                                              fontFamily: FontUtils.modernistBold,
-                                              fontSize: 2.2.t,
+
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              widget.swipeLeft();
+                                            },
+                                            child: SvgPicture.asset(ImageUtils.dislikeIcon),
+                                            style: ElevatedButton.styleFrom(
+                                              shadowColor: ColorUtils.red_color,
+                                              primary: ColorUtils.red_color.withOpacity(0.9),
+                                              onPrimary: ColorUtils.white,
+                                              //padding: EdgeInsets.symmetric(vertical: Dimensions.containerVerticalPadding),
+                                              padding: EdgeInsets.symmetric(horizontal: 0),
+                                              elevation: 3,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(35),
+                                                //side: BorderSide(color: ColorUtils.divider, width: 1)
+                                              ),
+                                              textStyle: TextStyle(
+                                                color: ColorUtils.white,
+                                                fontFamily: FontUtils.modernistBold,
+                                                fontSize: 1.8.t,
+                                                //height: 0
+                                              ),
                                             ),
                                           ),
-                                          SizedBox(height: 1.h),
 
-                                          Row(
-                                            children: [
-
-                                              Icon(Icons.location_pin, color: ColorUtils.white, size: 5.i,),
-
-                                              Text(
-                                               widget.address!,
-                                                style: TextStyle(
-                                                  color: ColorUtils.white,
-                                                  fontFamily: FontUtils.modernistRegular,
-                                                  fontSize: 1.5.t,
-                                                ),
-                                              ),
-                                            ],
+                                          FloatingActionButton(
+                                            onPressed: (){
+                                              //_matchEngine.rewindMatch();
+                                            },
+                                            child: SvgPicture.asset(ImageUtils.repeatIcon),
+                                            backgroundColor: ColorUtils.white,
                                           ),
-                                          SizedBox(height: 1.h),
+
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              model.UserMatches(context,widget.id!);
+                                              model.notifyListeners();
+                                            },
+                                            child:model.userMatchLoader?Center(child: Loader()): SvgPicture.asset(ImageUtils.likeIcon),
+                                            style: ElevatedButton.styleFrom(
+                                              shadowColor: Colors.green,
+                                              primary: Colors.green.withOpacity(0.9),
+                                              onPrimary: ColorUtils.white,
+                                              //padding: EdgeInsets.symmetric(vertical: Dimensions.containerVerticalPadding),
+                                              padding: EdgeInsets.symmetric(horizontal: 0),
+                                              elevation: 3,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(35),
+                                                //side: BorderSide(color: ColorUtils.divider, width: 1)
+                                              ),
+                                              textStyle: TextStyle(
+                                                color: ColorUtils.white,
+                                                fontFamily: FontUtils.modernistBold,
+                                                fontSize: 1.8.t,
+                                                //height: 0
+                                              ),
+                                            ),
+                                          ),
+
                                         ],
                                       ),
-                                    ),
-                                  ),
-                                ],
+
+                                      SizedBox(height: 2.h),
+
+                                      Container(
+                                        padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
+                                        clipBehavior: Clip.hardEdge,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+                                        ),
+                                        child: BackdropFilter(
+                                          filter: ImageFilter.blur(sigmaX: 8.0, sigmaY: 8.0),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              SizedBox(height: 0.8.h),
+                                              Text(
+                                                widget.name!,
+                                                style: TextStyle(
+                                                  color: ColorUtils.white,
+                                                  fontFamily: FontUtils.modernistBold,
+                                                  fontSize: 2.2.t,
+                                                ),
+                                              ),
+                                              SizedBox(height: 1.h),
+
+                                              Row(
+                                                children: [
+
+                                                  Icon(Icons.location_pin, color: ColorUtils.white, size: 5.i,),
+
+                                                  Text(
+                                                    widget.address!,
+                                                    style: TextStyle(
+                                                      color: ColorUtils.white,
+                                                      fontFamily: FontUtils.modernistRegular,
+                                                      fontSize: 1.5.t,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(height: 1.h),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                              ),
+
+                              Center(
+                                child: Opacity(
+                                    opacity: isLike ? snapshot.data as double : 0 ,
+                                    child: SvgPicture.asset(ImageUtils.likeCenterIcon)
+                                ),
+                              ),
+
+                              Center(
+                                child: Opacity(
+                                    opacity: isLike ? 0 : snapshot.data as double,
+                                    child: SvgPicture.asset(ImageUtils.dislikeCenterIcon)
+                                ),
                               )
-                            ),
-
-                            Center(
-                              child: Opacity(
-                                  opacity: isLike ? snapshot.data as double : 0 ,
-                                  child: SvgPicture.asset(ImageUtils.likeCenterIcon)
-                              ),
-                            ),
-
-                            Center(
-                              child: Opacity(
-                                  opacity: isLike ? 0 : snapshot.data as double,
-                                  child: SvgPicture.asset(ImageUtils.dislikeCenterIcon)
-                              ),
-                            )
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  onPointerDown: (event) {
-                    startPosition = event.position.dx;
-                    isLike = false;
-                  },
-                  onPointerUp: (event) {
-                    likeOpacity = 0.0;
-                    dislikeOpacity = 0.0;
-                    streamController.add(0);
-                  },
-                  onPointerMove: (details) {
-                    if (details.position.dx > startPosition) {
-                      var move = details.position.dx - startPosition;
-                      move = move / MediaQuery.of(context).size.width;
-
-                      isLike = true;
-                      likeOpacity = move;
-
-                      streamController.add(likeOpacity);
-                    }
-                    else if (details.position.dx < startPosition) {
-                      var move = startPosition - details.position.dx;
-                      move = move / MediaQuery.of(context).size.width;
-
+                    onPointerDown: (event) {
+                      startPosition = event.position.dx;
                       isLike = false;
-                      dislikeOpacity = move;
+                    },
+                    onPointerUp: (event) {
+                      likeOpacity = 0.0;
+                      dislikeOpacity = 0.0;
+                      streamController.add(0);
+                    },
+                    onPointerMove: (details) {
+                      if (details.position.dx > startPosition) {
+                        var move = details.position.dx - startPosition;
+                        move = move / MediaQuery.of(context).size.width;
 
-                      streamController.add(dislikeOpacity);
-                    }
-                  },
-                );
-              }
+                        isLike = true;
+                        likeOpacity = move;
+
+                        streamController.add(likeOpacity);
+                      }
+                      else if (details.position.dx < startPosition) {
+                        var move = startPosition - details.position.dx;
+                        move = move / MediaQuery.of(context).size.width;
+
+                        isLike = false;
+                        dislikeOpacity = move;
+
+                        streamController.add(dislikeOpacity);
+                      }
+                    },
+                  );
+                }
             ),
           ),
         );
