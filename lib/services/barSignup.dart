@@ -43,6 +43,8 @@ class SignupBar {
     bool dataProtection,
     String password,
     String password2,
+    double latitude,
+    double longitude,
   ) async {
     try {
       var param = FormData.fromMap({
@@ -71,7 +73,9 @@ class SignupBar {
         'terms_conditions': true,
         'data_protection': true,
         'password': password,
-        'password2': password2
+        'password2': password2,
+        'latitude': latitude,
+        'longitude':longitude
       });
 
       var response =

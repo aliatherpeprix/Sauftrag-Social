@@ -33,6 +33,8 @@ class SignupUser {
     List images,
     bool termsCheck,
     bool dataCheck,
+    double latitude,
+    double longitude, 
   ) async {
     try {
       // if (images[0].path.isNotEmpty){

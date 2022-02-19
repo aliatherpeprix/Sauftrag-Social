@@ -38,6 +38,9 @@ class BarModel {
   bool? data_protection;
   String? password;
   String? password2;
+  double? latitude;
+  double? longitude;
+  
 
 
   factory BarModel.fromJson(Map<String, dynamic> json) => _$BarModelFromJson(json);

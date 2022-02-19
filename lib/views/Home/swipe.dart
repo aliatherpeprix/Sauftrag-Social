@@ -21,7 +21,6 @@ import 'package:stacked/stacked.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 
 class Swipe extends StatefulWidget {
-
   const Swipe({Key? key}) : super(key: key);
 
   @override
@@ -29,7 +28,6 @@ class Swipe extends StatefulWidget {
 }
 
 class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
-
   /*List<SwipeItem> _swipeItems = [];
   late MatchEngine _matchEngine;
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
@@ -105,7 +103,8 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
   void initState() {
     super.initState();
 
-    _buttonController = new AnimationController(duration: new Duration(milliseconds: 1000), vsync: this);
+    _buttonController = new AnimationController(
+        duration: new Duration(milliseconds: 1000), vsync: this);
 
     pageController = PageController(initialPage: 0);
 
@@ -202,17 +201,17 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-
     double initialBottom = 15.0;
     var dataLength = data.length;
     double backCardPosition = initialBottom + (dataLength - 1) * 10 + 10;
     double backCardWidth = 0.0;
 
     return ViewModelBuilder<MainViewModel>.reactive(
-      // onModelReady: (data) {
-      //   data.buttonController = AnimationController(duration: Duration(milliseconds: 1000), vsync: this);
-      //   data.initSwipe();
-      // },
+      onModelReady: (data) {
+        // data.DiscoverPeople();
+        // data.buttonController = AnimationController(duration: Duration(milliseconds: 1000), vsync: this);
+        // data.initSwipe();
+      },
       builder: (context, model, child) {
         return SafeArea(
           top: false,
@@ -226,21 +225,21 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
             child: Scaffold(
                 backgroundColor: ColorUtils.white,
                 body: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 0, vertical: Dimensions.verticalPadding),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 0, vertical: Dimensions.verticalPadding),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
                       SizedBox(height: Dimensions.homeTopMargin),
 
                       //Top bar
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: Dimensions.horizontalPadding),
                         //margin: EdgeInsets.only(bottom: 1.h),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-
                             ElevatedButton(
                               onPressed: () {
                                 final _state = model.sideMenuKey.currentState;
@@ -253,12 +252,15 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                               style: ElevatedButton.styleFrom(
                                 primary: ColorUtils.white,
                                 onPrimary: ColorUtils.white,
-                                padding: EdgeInsets.symmetric(vertical: Dimensions.containerVerticalPadding),
+                                padding: EdgeInsets.symmetric(
+                                    vertical:
+                                        Dimensions.containerVerticalPadding),
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(Dimensions.roundCorner),
-                                  side: BorderSide(color: ColorUtils.divider, width: 1)
-                                ),
+                                    borderRadius: BorderRadius.circular(
+                                        Dimensions.roundCorner),
+                                    side: BorderSide(
+                                        color: ColorUtils.divider, width: 1)),
                                 textStyle: TextStyle(
                                   color: ColorUtils.white,
                                   fontFamily: FontUtils.modernistBold,
@@ -267,7 +269,6 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                 ),
                               ),
                             ),
-
                             Column(
                               children: [
                                 Text(
@@ -288,26 +289,30 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                 ),
                               ],
                             ),
-
                             ElevatedButton(
                               onPressed: () {
                                 showDialog(
                                     context: context,
-                                    builder: (BuildContext context){
-                                      return DrinkStatusDialogBox(title: "Add New Location", btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
-                                    }
-                                );
+                                    builder: (BuildContext context) {
+                                      return DrinkStatusDialogBox(
+                                          title: "Add New Location",
+                                          btnTxt: "Add Location",
+                                          icon: ImageUtils.addLocationIcon);
+                                    });
                               },
                               child: SvgPicture.asset(ImageUtils.setStatusIcon),
                               style: ElevatedButton.styleFrom(
                                 primary: ColorUtils.white,
                                 //onPrimary: ColorUtils.white,
-                                padding: EdgeInsets.symmetric(vertical: Dimensions.containerVerticalPadding),
+                                padding: EdgeInsets.symmetric(
+                                    vertical:
+                                        Dimensions.containerVerticalPadding),
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(Dimensions.roundCorner),
-                                    side: BorderSide(color: ColorUtils.divider, width: 1)
-                                ),
+                                    borderRadius: BorderRadius.circular(
+                                        Dimensions.roundCorner),
+                                    side: BorderSide(
+                                        color: ColorUtils.divider, width: 1)),
                                 textStyle: TextStyle(
                                   color: ColorUtils.white,
                                   fontFamily: FontUtils.modernistBold,
@@ -461,8 +466,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                   flag: flag,
                                   dismissImg: dismissImg,
                                   swipeRight: swipeRight,
-                                  swipeLeft: swipeLeft
-                                  );
+                                  swipeLeft: swipeLeft);
 
                               return swipeCardNew(
                                   item,
@@ -478,8 +482,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                   model.navigateToProfileScreen,
                                   swipeLeft,
                                   swipeRight,
-                                  context
-                              );
+                                  context);
                             }).toList(),
                           ),
                         ),
@@ -766,12 +769,9 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                         ],
                       ),*/
                       SizedBox(height: 2.h),
-
-
                     ],
                   ),
-                )
-            ),
+                )),
           ),
         );
       },

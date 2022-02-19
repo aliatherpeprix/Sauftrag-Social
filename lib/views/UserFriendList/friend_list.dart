@@ -9,6 +9,7 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/views/UserFriendList/group_screen_user.dart';
 import 'package:sauftrag/views/UserFriendList/message_screen.dart';
 import 'package:sauftrag/widgets/all_page_loader.dart';
 import 'package:stacked/stacked.dart';
@@ -119,6 +120,14 @@ class _FriendListState extends State<FriendList> {
                           )),
                     Column(
                       children: [
+                        // SizedBox(
+                        //   height: 20.h,
+                        // ),
+                        // ElevatedButton(
+                        //     onPressed: () {
+                        //       model.getGroupChannelFromPubnub();
+                        //     },
+                        //     child: Text("click me")),
                         SizedBox(height: 6.h),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -507,90 +516,7 @@ class _FriendListState extends State<FriendList> {
                                         itemCount: model.userForChats.length),
 
                                     // second tab bar viiew widget
-                                    GestureDetector(
-                                      onTap: () {
-                                        model.navigateToGroupScreen();
-                                      },
-                                      child: Container(
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 4.h),
-                                        //margin: EdgeInsets.only(top: 3.h),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                CircleAvatar(
-                                                  radius: 30.0,
-                                                  backgroundImage: AssetImage(
-                                                      ImageUtils.cosmos),
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                ),
-                                                SizedBox(
-                                                  width: 3.w,
-                                                ),
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      "Cosmos",
-                                                      style: TextStyle(
-                                                          fontFamily: FontUtils
-                                                              .modernistBold,
-                                                          fontSize: 1.9.t,
-                                                          color: ColorUtils
-                                                              .text_dark),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 1.h,
-                                                    ),
-                                                    Container(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width /
-                                                              2,
-                                                      child: Text(
-                                                        "Did you see the last episode of cosmos?",
-                                                        style: TextStyle(
-                                                            fontFamily: FontUtils
-                                                                .modernistRegular,
-                                                            fontSize: 1.8.t,
-                                                            color: ColorUtils
-                                                                .lightTextColor),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                            Column(
-                                              children: [
-                                                Text(
-                                                  "Today",
-                                                  style: TextStyle(
-                                                    fontFamily: FontUtils
-                                                        .modernistRegular,
-                                                    fontSize: 1.6.t,
-                                                    color: ColorUtils.chatTime,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 1.h,
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
+                                    GroupScreenUser()
                                   ],
                                 ),
                               ),

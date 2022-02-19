@@ -57,7 +57,7 @@ class _ProfileState extends State<Profile> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                           //SizedBox(height: 4.3.h),
+                        //SizedBox(height: 4.3.h),
                         Container(
                           height: 53.5.h,
                           //color: Colors.red,
@@ -71,14 +71,12 @@ class _ProfileState extends State<Profile> {
                                       PageView.builder(
                                         itemBuilder: (context, position) {
                                           return Container(
-
                                             decoration: BoxDecoration(
                                               //borderRadius: BorderRadius.all(Radius.circular(20)),
                                               image: DecorationImage(
-                                                image: AssetImage(
-                                                    widget.images[position]),
-                                                 fit: BoxFit.cover
-                                              ),
+                                                  image: AssetImage(
+                                                      widget.images[position]),
+                                                  fit: BoxFit.cover),
                                             ),
                                             alignment: Alignment.center,
                                           );
@@ -98,18 +96,21 @@ class _ProfileState extends State<Profile> {
                                             borderRadius: BorderRadius.only(
                                                 topLeft: Radius.circular(15),
                                                 topRight: Radius.circular(15)),
-                                            color: ColorUtils.white.withOpacity(0.6),
+                                            color: ColorUtils.white
+                                                .withOpacity(0.6),
                                           ),
                                           child: SmoothPageIndicator(
-                                              controller: controller, // PageController
+                                              controller:
+                                                  controller, // PageController
                                               count: widget.images.length,
                                               effect: WormEffect(
                                                   spacing: 10,
                                                   dotWidth: 5,
                                                   dotHeight: 5,
-                                                  dotColor:
-                                                  ColorUtils.white.withOpacity(0.5),
-                                                  activeDotColor: ColorUtils.white),
+                                                  dotColor: ColorUtils.white
+                                                      .withOpacity(0.5),
+                                                  activeDotColor:
+                                                      ColorUtils.white),
                                               axisDirection: Axis.horizontal,
                                               onDotClicked: (index) {}),
                                         ),
@@ -139,8 +140,8 @@ class _ProfileState extends State<Profile> {
                                         height: 6.h,
                                         decoration: BoxDecoration(
                                             color: Colors.white,
-                                            borderRadius:
-                                            BorderRadius.all(Radius.circular(10))),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10))),
                                         child: BackArrowContainer())),
                               ],
                             ),
@@ -280,7 +281,8 @@ class _ProfileState extends State<Profile> {
                                 .map((element) => ElevatedButton(
                                       onPressed: () {},
                                       child: Text(model.favoriteAlcoholicDrink[
-                                          model.favoriteAlcoholicDrink.indexOf(element)]),
+                                          model.favoriteAlcoholicDrink
+                                              .indexOf(element)]),
                                       style: ElevatedButton.styleFrom(
                                         primary: ColorUtils.white,
                                         onPrimary: ColorUtils.text_red,
@@ -295,7 +297,8 @@ class _ProfileState extends State<Profile> {
                                                 width: 1)),
                                         textStyle: TextStyle(
                                           //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
-                                          fontFamily: FontUtils.modernistRegular,
+                                          fontFamily:
+                                              FontUtils.modernistRegular,
                                           fontSize: 1.7.t,
                                           //height: 0
                                         ),
@@ -329,29 +332,31 @@ class _ProfileState extends State<Profile> {
                             direction: Axis.horizontal,
                             children: model.favoriteNightClub
                                 .map((element) => ElevatedButton(
-                              onPressed: () {},
-                              child: Text(model.favoriteNightClub[
-                              model.favoriteNightClub.indexOf(element)]),
-                              style: ElevatedButton.styleFrom(
-                                primary: ColorUtils.white,
-                                onPrimary: ColorUtils.text_red,
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 1.8.h, horizontal: 5.w),
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                        Dimensions.roundCorner),
-                                    side: BorderSide(
-                                        color: ColorUtils.text_red,
-                                        width: 1)),
-                                textStyle: TextStyle(
-                                  //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
-                                  fontFamily: FontUtils.modernistRegular,
-                                  fontSize: 1.7.t,
-                                  //height: 0
-                                ),
-                              ),
-                            ))
+                                      onPressed: () {},
+                                      child: Text(model.favoriteNightClub[model
+                                          .favoriteNightClub
+                                          .indexOf(element)]),
+                                      style: ElevatedButton.styleFrom(
+                                        primary: ColorUtils.white,
+                                        onPrimary: ColorUtils.text_red,
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 1.8.h, horizontal: 5.w),
+                                        elevation: 0,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                Dimensions.roundCorner),
+                                            side: BorderSide(
+                                                color: ColorUtils.text_red,
+                                                width: 1)),
+                                        textStyle: TextStyle(
+                                          //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
+                                          fontFamily:
+                                              FontUtils.modernistRegular,
+                                          fontSize: 1.7.t,
+                                          //height: 0
+                                        ),
+                                      ),
+                                    ))
                                 .toList(),
                           ),
                         ),
@@ -380,29 +385,31 @@ class _ProfileState extends State<Profile> {
                             direction: Axis.horizontal,
                             children: model.favoritePartyVacation
                                 .map((element) => ElevatedButton(
-                              onPressed: () {},
-                              child: Text(model.favoritePartyVacation[
-                              model.favoritePartyVacation.indexOf(element)]),
-                              style: ElevatedButton.styleFrom(
-                                primary: ColorUtils.white,
-                                onPrimary: ColorUtils.text_red,
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 1.8.h, horizontal: 5.w),
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                        Dimensions.roundCorner),
-                                    side: BorderSide(
-                                        color: ColorUtils.text_red,
-                                        width: 1)),
-                                textStyle: TextStyle(
-                                  //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
-                                  fontFamily: FontUtils.modernistRegular,
-                                  fontSize: 1.7.t,
-                                  //height: 0
-                                ),
-                              ),
-                            ))
+                                      onPressed: () {},
+                                      child: Text(model.favoritePartyVacation[
+                                          model.favoritePartyVacation
+                                              .indexOf(element)]),
+                                      style: ElevatedButton.styleFrom(
+                                        primary: ColorUtils.white,
+                                        onPrimary: ColorUtils.text_red,
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 1.8.h, horizontal: 5.w),
+                                        elevation: 0,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                Dimensions.roundCorner),
+                                            side: BorderSide(
+                                                color: ColorUtils.text_red,
+                                                width: 1)),
+                                        textStyle: TextStyle(
+                                          //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
+                                          fontFamily:
+                                              FontUtils.modernistRegular,
+                                          fontSize: 1.7.t,
+                                          //height: 0
+                                        ),
+                                      ),
+                                    ))
                                 .toList(),
                           ),
                         ),

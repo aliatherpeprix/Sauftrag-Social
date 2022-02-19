@@ -613,57 +613,63 @@ class _BarRatingState extends State<BarRating> {
                                                         CrossAxisAlignment
                                                             .center,
                                                     children: [
-                                                      Image.network(
-                                                        model
-                                                            .ratingKaData!
-                                                            .data![index]
-                                                            .user!
-                                                            .profile_picture
-                                                            .toString(),
-                                                        height: 10.i,
-                                                      ),
-                                                      SizedBox(
-                                                        width: 4.w,
-                                                      ),
-                                                      Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
+                                                      Row(
                                                         children: [
-                                                          Text(
+                                                          Image.network(
                                                             model
                                                                 .ratingKaData!
                                                                 .data![index]
                                                                 .user!
-                                                                .username
+                                                                .profile_picture
                                                                 .toString(),
-                                                            style: TextStyle(
-                                                              fontSize: 2.h,
-                                                              fontFamily: FontUtils
-                                                                  .modernistBold,
-                                                            ),
+                                                            height: 10.i,
                                                           ),
                                                           SizedBox(
-                                                            height: 0.5.h,
+                                                            width: 4.w,
                                                           ),
-                                                          Text(
-                                                            model.timeZone!
-                                                                .substring(
-                                                                    0, 10)
-                                                                .toString(),
-                                                            style: TextStyle(
-                                                                color: ColorUtils
-                                                                    .text_grey,
-                                                                fontFamily:
-                                                                    FontUtils
-                                                                        .modernistRegular,
-                                                                fontSize:
-                                                                    1.3.h),
-                                                          ),
+                                                          Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(
+                                                                model
+                                                                    .ratingKaData!
+                                                                    .data![
+                                                                        index]
+                                                                    .user!
+                                                                    .username
+                                                                    .toString(),
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 2.h,
+                                                                  fontFamily:
+                                                                      FontUtils
+                                                                          .modernistBold,
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                height: 0.5.h,
+                                                              ),
+                                                              Text(
+                                                                model.timeZone!
+                                                                    .substring(
+                                                                        0, 10)
+                                                                    .toString(),
+                                                                style: TextStyle(
+                                                                    color: ColorUtils
+                                                                        .text_grey,
+                                                                    fontFamily:
+                                                                        FontUtils
+                                                                            .modernistRegular,
+                                                                    fontSize:
+                                                                        1.3.h),
+                                                              ),
+                                                            ],
+                                                          )
                                                         ],
                                                       ),
                                                       RatingBar.builder(
-                                                        ignoreGestures: true,
                                                         initialRating: model
                                                             .ratingKaData!
                                                             .data![index]
@@ -677,7 +683,7 @@ class _BarRatingState extends State<BarRating> {
                                                         itemPadding: EdgeInsets
                                                             .symmetric(
                                                                 horizontal:
-                                                                    0.3.w),
+                                                                    3.0),
                                                         itemBuilder:
                                                             (context, _) =>
                                                                 Icon(

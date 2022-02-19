@@ -33,10 +33,12 @@ class _SelectIndividualChatState extends State<SelectIndividualChat> {
       }
       return ColorUtils.text_red;
     }
+
     return ViewModelBuilder<MainViewModel>.reactive(
-      onModelReady: (model){
+      onModelReady: (model) {
         model.groupList.clear();
-        model.selected = List<bool>.filled(model.contactChecked.length, false);
+        model.getAllUserForChat();
+        model.selected = List<bool>.filled(model.userForChats.length, false);
       },
       builder: (context, model, child) {
         return GestureDetector(
@@ -47,25 +49,24 @@ class _SelectIndividualChatState extends State<SelectIndividualChat> {
             top: false,
             bottom: false,
             child: Scaffold(
-                // floatingActionButton: GestureDetector(
-                //   onTap: (){
-                //     //model.groupList.add(value);
-                //     //model.navigationService.navigateTo(to: ServiceCategory());
-                //     model.navigateToGroupDetails();
-                //   },
-                //   child: Container(
-                //     margin: EdgeInsets.only(bottom: 3.h,right: 2.w),
-                //     decoration: BoxDecoration(
-                //       shape: BoxShape.circle,
-                //       color: ColorUtils.text_red,
-                //     ),
-                //     child: Padding(
-                //       padding: const EdgeInsets.all(20.0),
-                //       child: SvgPicture.asset(ImageUtils.floatingForwardIcon),
-                //     ),
-                //   ),
-                // ),
-
+                floatingActionButton: GestureDetector(
+                  onTap: () {
+                    //model.groupList.add(value);
+                    //model.navigationService.navigateTo(to: ServiceCategory());
+                    model.navigateToGroupDetails();
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(bottom: 3.h, right: 2.w),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: ColorUtils.text_red,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: SvgPicture.asset(ImageUtils.floatingForwardIcon),
+                    ),
+                  ),
+                ),
                 backgroundColor: ColorUtils.white,
                 body: Container(
                   padding: EdgeInsets.symmetric(
@@ -138,21 +139,20 @@ class _SelectIndividualChatState extends State<SelectIndividualChat> {
                                     //readOnly: true,
                                     //focusNode: model.searchFocus,
                                     controller:
-                                    model.friendListSearchController,
+                                        model.friendListSearchController,
                                     decoration: InputDecoration(
                                       hintText: "Search",
                                       hintStyle: TextStyle(
                                         //fontFamily: FontUtils.proximaNovaRegular,
                                         color: ColorUtils.icon_color,
                                         fontSize:
-                                        SizeConfig.textMultiplier * 1.9,
+                                            SizeConfig.textMultiplier * 1.9,
                                       ),
                                       border: InputBorder.none,
                                       isDense: true,
                                       contentPadding: EdgeInsets.symmetric(
                                           vertical:
-                                          SizeConfig.heightMultiplier *
-                                              2),
+                                              SizeConfig.heightMultiplier * 2),
                                     ),
                                   ),
                                 ),
@@ -161,8 +161,9 @@ class _SelectIndividualChatState extends State<SelectIndividualChat> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 3.h,),
-
+                      SizedBox(
+                        height: 3.h,
+                      ),
                       Expanded(
                         child: ListView.separated(
                             padding: EdgeInsets.zero,
@@ -170,53 +171,102 @@ class _SelectIndividualChatState extends State<SelectIndividualChat> {
                             shrinkWrap: true,
                             itemBuilder: (context, index) {
                               return GestureDetector(
-                                onTap: (){
+                                onTap: () {
                                   model.navigateToMessageScreen();
                                 },
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
                                       children: [
                                         CircleAvatar(
                                           radius: 26.5,
-                                          backgroundImage: AssetImage(
-                                              model.contactChecked[index]["image"]),
+                                          backgroundImage: NetworkImage(model
+                                              .userForChats[index]
+                                              .profile_picture
+                                              .toString()),
                                           backgroundColor: Colors.transparent,
                                         ),
-                                        SizedBox(width: 3.w,),
+                                        SizedBox(
+                                          width: 3.w,
+                                        ),
                                         Text(
-                                          model.contactChecked[index]["name"],
+                                          model.userForChats[index].username
+                                              .toString(),
                                           style: TextStyle(
-                                              fontFamily: FontUtils.modernistBold,
+                                              fontFamily:
+                                                  FontUtils.modernistBold,
                                               fontSize: 1.8.t,
-                                              color: ColorUtils.text_dark
-                                          ),
+                                              color: ColorUtils.text_dark),
                                         ),
                                       ],
+                                    ),
+                                    Checkbox(
+                                      checkColor: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(4)),
+                                      fillColor:
+                                          MaterialStateProperty.resolveWith(
+                                              getColor),
+                                      value: model.selected![index],
+                                      onChanged: (val) {
+                                        setState(() {
+                                          model.selected![index] = val!;
+                                          model.selectedValue = val;
+                                          //model.groupMap["image"] =
+                                          print(model.selectedValue);
+                                          if (model.selectedValue == true) {
+                                            model.currentIndex = index;
+                                            model.groupMap["image"] = model
+                                                .userForChats[index]
+                                                .profile_picture;
+                                            model.groupMap["name"] = model
+                                                .userForChats[index].username;
+                                            //print(groupMap);
+                                            model.groupList.add({
+                                              'id':
+                                                  model.userForChats[index].id,
+                                              "image": model.userForChats[index]
+                                                  .profile_picture,
+                                              "name": model
+                                                  .userForChats[index].username
+                                            });
+                                            print(model.groupList);
+                                            //containerBorder = ColorUtils.greenColor;
+                                          }
+                                        });
+                                      },
                                     ),
                                     // Checkbox(
                                     //   checkColor: Colors.white,
                                     //   shape: RoundedRectangleBorder(
-                                    //       borderRadius: BorderRadius.circular(4)
-                                    //   ),
-                                    //
-                                    //   fillColor: MaterialStateProperty.resolveWith(getColor),
-                                    //   value: model.selected![index],
+                                    //       borderRadius:
+                                    //           BorderRadius.circular(4)),
+                                    //   fillColor:
+                                    //       MaterialStateProperty.resolveWith(
+                                    //           getColor),
+                                    //   value: false,
                                     //   onChanged: (val) {
                                     //     setState(() {
                                     //       model.selected![index] = val!;
                                     //       model.selectedValue = val;
                                     //       //model.groupMap["image"] =
                                     //       print(model.selectedValue);
-                                    //       if(model.selectedValue == true){
+                                    //       if (model.selectedValue == true) {
                                     //         model.currentIndex = index;
-                                    //         model.groupMap["image"] = model.contactChecked[index]["image"];
-                                    //         model.groupMap["name"] = model.contactChecked[index]["name"];
+                                    //         model.userForChats[index]
+                                    //             .profile_picture;
+                                    //         model.userForChats[index].username;
                                     //         //print(groupMap);
                                     //         model.groupList.add({
-                                    //           "image": model.groupMap["image"],
-                                    //           "name" : model.groupMap["name"]
+                                    //           'id':
+                                    //               model.userForChats[index].id,
+                                    //           "image": model.userForChats[index]
+                                    //               .profile_picture,
+                                    //           "name": model
+                                    //               .userForChats[index].username
                                     //         });
                                     //         print(model.groupList);
                                     //         //containerBorder = ColorUtils.greenColor;
@@ -233,7 +283,7 @@ class _SelectIndividualChatState extends State<SelectIndividualChat> {
                                 height: 3.h,
                               );
                             },
-                            itemCount: model.contactChecked.length),
+                            itemCount: model.userForChats.length),
                       ),
                     ],
                   ),

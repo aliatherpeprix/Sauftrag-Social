@@ -9,6 +9,7 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/views/UserFriendList/create_group.dart';
 import 'package:sauftrag/views/UserFriendList/message_screen.dart';
 import 'package:sauftrag/views/UserFriendList/message_screen_for_user.dart';
 import 'package:sauftrag/widgets/all_page_loader.dart';
@@ -155,8 +156,12 @@ class _FriendListForUserState extends State<FriendListForUser> {
                                 IconButton(
                                   padding: EdgeInsets.zero,
                                   onPressed: () {
-                                    model
-                                        .navigateToSelectIndividualChatScreen();
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CreateGroup()));
+                                    // .navigateToSelectIndividualChatScreen();Navigat
                                     // if(model.openGroupMenu == false){
                                     //   model.openGroupMenu = true;
                                     //   model.notifyListeners();
@@ -344,7 +349,8 @@ class _FriendListForUserState extends State<FriendListForUser> {
                                                   PageTransition(
                                                       type: PageTransitionType
                                                           .fade,
-                                                      child: MessageScreenForUser(
+                                                      child:
+                                                          MessageScreenForUser(
                                                         id: model
                                                             .userForChats[index]
                                                             .id,

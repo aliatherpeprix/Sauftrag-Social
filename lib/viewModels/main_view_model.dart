@@ -23,11 +23,13 @@ import 'package:sauftrag/models/all_user_for_chat.dart';
 import 'package:sauftrag/models/bar_event_model.dart';
 import 'package:sauftrag/models/bar_model.dart';
 import 'package:sauftrag/models/create_bar_post.dart';
+import 'package:sauftrag/models/discover.dart';
 import 'package:sauftrag/models/faqs_questions.dart';
 import 'package:sauftrag/models/favorites_model.dart';
 import 'package:sauftrag/models/followers.dart';
 import 'package:sauftrag/models/new_bar_model.dart';
 import 'package:sauftrag/models/newsfeed_post_id.dart';
+import 'package:sauftrag/models/pubnub_channel.dart';
 import 'package:sauftrag/models/rating_data.dart';
 import 'package:sauftrag/models/ratings.dart';
 import 'package:sauftrag/models/user_models.dart';
@@ -106,6 +108,7 @@ class MainViewModel extends BaseViewModel {
   bool groupScreenEmojiShowing = false;
   bool groupScreenEmojiSelected = false;
   final groupScreenChatController = TextEditingController();
+  final barGiveRating = TextEditingController();
   final myContactsSearchController = TextEditingController();
   bool myContactEmojiShowing = false;
   bool myContactEmojiSelected = false;
@@ -900,6 +903,18 @@ class MainViewModel extends BaseViewModel {
     getTime();
   }
 
+  var currentPosition;
+  getCurrentLocation() {
+    Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+        .then((Position position) {
+      currentPosition = position;
+      notifyListeners();
+      print(currentPosition);
+    }).catchError((e) {
+      print(e);
+    });
+  }
+
   // var channel = "getting_started";
 
   List chats = [];
@@ -941,7 +956,7 @@ class MainViewModel extends BaseViewModel {
   bool userComing = false;
   getAllUserForChat() async {
     userComing = true;
-    notifyListeners();
+    // notifyListeners();
     NewBarModel? user = await locator<PrefrencesViewModel>().getBarUser();
     var response = await dio.get(
         Constants.BaseUrlPro + Constants.allUserForChat,
@@ -953,6 +968,80 @@ class MainViewModel extends BaseViewModel {
         (response.data as List).map((e) => UserForChat.fromJson(e)).toList();
     userComing = false;
     notifyListeners();
+  }
+
+  List<PubnubChannel>? pnChannel = [];
+  getGroupChannelFromPubnub() async {
+    UserModel? user = await locator<PrefrencesViewModel>().getUser();
+    var response = await dio.get('https://ps.pndsn.com/' +
+        'v2/presence/sub-key/sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4/uuid/${user!.id}');
+    print(response.data);
+    var encodedData = jsonEncode(response.data);
+    print(encodedData);
+    var jsonData = jsonDecode(encodedData);
+    print(jsonData);
+    pnChannel = (jsonData['channels'] as List)
+        .map((e) => PubnubChannel.fromJson(e))
+        .toList();
+  }
+
+  List<Discover> discoverPeople = [];
+  DiscoverPeople() async {
+    UserModel? user = await locator<PrefrencesViewModel>().getUser();
+    var response = await dio.get(Constants.BaseUrlPro + Constants.discover,
+        options: Options(
+            contentType: Headers.formUrlEncodedContentType,
+            headers: {'Authorization': 'Token ${user!.token!}'}));
+    print(response.data);
+    discoverPeople =
+        (response.data as List).map((e) => Discover.fromJson(e)).toList();
+  }
+
+  double? rate;
+  var barId = "";
+
+  giveRatingToBar() async {
+    UserModel? user = await locator<PrefrencesViewModel>().getUser();
+    var data = {'rate': rate, 'comments': barGiveRating.text, 'bar': 78};
+    var encodedData = jsonEncode(data);
+    var response = await http.post(
+        Uri.http(Constants.BaseUrl, '/api/rating/add/'),
+        body: encodedData,
+        headers: {
+          'content-type': 'application/json',
+          'accept': 'application/json',
+          'Authorization': 'Token ${user!.token!}'
+        });
+
+    var jsonData = jsonDecode(response.body);
+    print(jsonData);
+
+    // dio.post(Constants.BaseUrlPro + Constants.giveRating,
+    //     data: FormData.fromMap(
+    //         {'rate': rate, 'comments': barGiveRating.text, 'bar': 78}),
+    //     options: Options(
+    //         contentType: Headers.formUrlEncodedContentType,
+    //         headers: {'Authentication': 'Token ${user!.token!}'}));
+    // print(response.data);
+  }
+
+  String? drinkingFrom;
+  String? drinkingTo;
+
+  drinkStatus() async {
+    UserModel? user = await locator<PrefrencesViewModel>().getUser();
+
+    var data = {
+      'quantity': drinkIndex,
+      'start_time': drinkingFrom,
+      'end_time': drinkingTo,
+    };
+    var response = await dio.post(Constants.BaseUrlPro + Constants.drinkStatus,
+        data: data,
+        options: Options(
+            contentType: Headers.formUrlEncodedContentType,
+            headers: {'Authorization': 'Token ${user!.token!}'}));
+    print(response.data);
   }
 
   void scrollDown() {
