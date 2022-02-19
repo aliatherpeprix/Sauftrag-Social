@@ -39,6 +39,10 @@ class Constants {
   static const String followersList = 'api/followers/list/';
   static const String rating = 'api/rating/add/';
   static const String allUserForChat = 'api/user/all/';
+  // static const String discover = 'api/user/discover/';
+  static const String giveRating = 'api/rating/add/';
+  // static const String drinkStatus = 'api/user/drinkStatus/';
+  static const String GETdrinkStatus = 'api/user/drinkStatus/';
   static const String GetEvents = BaseUrlPro + 'api/event/add/';
   static const String GetDiscover = BaseUrlPro + 'api/user/discover/';
   static const String matchUser = BaseUrlPro + 'api/user/match/';

@@ -13,29 +13,30 @@ import 'package:sauftrag/viewModels/authentication_view_model.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:stacked/stacked.dart';
 
-class DrinkStatusDialogBox extends StatefulWidget {
+class DrinkUpdateStatusDialogBox extends StatefulWidget {
   String title;
   String btnTxt;
   String icon;
 
-  DrinkStatusDialogBox(
+  DrinkUpdateStatusDialogBox(
       {Key? key, required this.title, required this.btnTxt, required this.icon})
       : super(key: key);
 
   @override
-  _DrinkStatusDialogBoxState createState() => _DrinkStatusDialogBoxState();
+  _DrinkUpdateStatusDialogBoxState createState() =>
+      _DrinkUpdateStatusDialogBoxState();
 }
 
-class _DrinkStatusDialogBoxState extends State<DrinkStatusDialogBox> {
+class _DrinkUpdateStatusDialogBoxState
+    extends State<DrinkUpdateStatusDialogBox> {
   String? drinkingFrom;
   String? drinkingTo;
 
   @override
   void didChangeDependencies() {
-    drinkingFrom =
-        TimeOfDay(hour: TimeOfDay.now().hour, minute: 0).format(context);
-    drinkingTo =
-        TimeOfDay(hour: TimeOfDay.now().hour, minute: 0).format(context);
+    MainViewModel model = locator<MainViewModel>();
+    drinkingFrom = model.getStatus!.start_time;
+    drinkingTo = model.getStatus!.end_time;
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
   }
@@ -150,13 +151,13 @@ class _DrinkStatusDialogBoxState extends State<DrinkStatusDialogBox> {
                                     }
                                     model.notifyListeners();*/
 
-                                        model.addRemoveDrink(index);
+                                        model.UpdateaddRemoveDrink(index);
                                       },
                                       child: Container(
                                           margin: EdgeInsets.symmetric(
                                               horizontal: 10),
                                           child: SvgPicture.asset(
-                                              model.drinkIndex <= index
+                                              model.updatedrinkIndex <= index
                                                   ? ImageUtils.bottleUnselected
                                                   : ImageUtils
                                                       .bottleSelected)));
@@ -178,8 +179,13 @@ class _DrinkStatusDialogBoxState extends State<DrinkStatusDialogBox> {
                                           .showCustomTimePicker(
                                               context: context,
                                               initialTime: TimeOfDay(
-                                                  hour: TimeOfDay.now().hour,
-                                                  minute: 0),
+                                                  hour: int.parse(model
+                                                      .getStatus!.start_time!
+                                                      .split(":")[0]),
+                                                  minute: int.parse(model
+                                                      .getStatus!.start_time!
+                                                      .split(":")[1]
+                                                      .split(" ")[0])),
                                               initialEntryMode: customDatePicker
                                                   .TimePickerEntryMode.dial,
                                               confirmText: "CONFIRM",
@@ -254,8 +260,13 @@ class _DrinkStatusDialogBoxState extends State<DrinkStatusDialogBox> {
                                           .showCustomTimePicker(
                                               context: context,
                                               initialTime: TimeOfDay(
-                                                  hour: TimeOfDay.now().hour,
-                                                  minute: 0),
+                                                  hour: int.parse(model
+                                                      .getStatus!.end_time!
+                                                      .split(":")[0]),
+                                                  minute: int.parse(model
+                                                      .getStatus!.end_time!
+                                                      .split(":")[1]
+                                                      .split(" ")[0])),
                                               initialEntryMode: customDatePicker
                                                   .TimePickerEntryMode.dial,
                                               confirmText: "CONFIRM",
@@ -399,10 +410,10 @@ class _DrinkStatusDialogBoxState extends State<DrinkStatusDialogBox> {
                       //Save Button
                       ElevatedButton(
                         onPressed: () {
-                          model.drinkStatus();
+                          model.updateDrinkStatus();
                           model.navigateBack();
                         },
-                        child: const Text("Save"),
+                        child: const Text("Update"),
                         style: ElevatedButton.styleFrom(
                           primary: ColorUtils.text_red,
                           onPrimary: ColorUtils.white,
