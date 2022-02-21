@@ -1,7 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-//import 'package:flutter_tindercard/flutter_tindercard.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
@@ -9,49 +8,17 @@ import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
-import 'package:sauftrag/widgets/back_swipe_card.dart';
 import 'package:sauftrag/widgets/drink_status_dialog_box.dart';
 import 'package:sauftrag/widgets/my_side_menu.dart';
 import 'package:sauftrag/widgets/swipe_card.dart';
-import 'package:sauftrag/widgets/swipe_card_new.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:stacked/stacked.dart';
-import 'package:swipe_cards/swipe_cards.dart';
 class Swipe extends StatefulWidget {
   const Swipe({Key? key}) : super(key: key);
   @override
   _SwipeState createState() => _SwipeState();
 }
 class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
-  /*List<SwipeItem> _swipeItems = [];
-  late MatchEngine _matchEngine;
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-  List<String> _names = [ImageUtils.girl1, ImageUtils.girl2, ImageUtils.girl1, ImageUtils.girl2, ImageUtils.girl1];
-  List<Color> _colors = [
-    Colors.red,
-    Colors.blue,
-    Colors.green,
-    Colors.yellow,
-    Colors.orange
-  ];
-  @override
-  void initState() {
-    for (int i = 0; i < _names.length; i++) {
-      _swipeItems.add(SwipeItem(
-          content: Content(text: _names[i], color: _colors[i]),
-          likeAction: () {
-          },
-          nopeAction: () {
-          },
-          superlikeAction: () {
-          }
-          )
-      );
-    }
-    _matchEngine = MatchEngine(swipeItems: _swipeItems);
-    super.initState();
-  }*/
   late AnimationController _buttonController;
   late Animation<double> rotate;
   late Animation<double> right;
@@ -80,8 +47,10 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
     [ImageUtils.girl4, ImageUtils.girl5, ImageUtils.girl6,],
     [ImageUtils.girl1, ImageUtils.girl2, ImageUtils.girl3,],
   ];
+
+
   List selectedData = [];
-  //late CardController controller;
+
   late PageController pageController;
   final currentPageNotifier = ValueNotifier<int>(0);
   void initState() {

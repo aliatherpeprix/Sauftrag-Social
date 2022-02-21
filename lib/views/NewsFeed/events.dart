@@ -6,6 +6,7 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/widgets/all_page_loader.dart';
 import 'package:stacked/stacked.dart';
 import 'package:sauftrag/utils/extensions.dart';
 
@@ -70,9 +71,11 @@ class _EventsState extends State<Events> {
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
       onModelReady: (model){
+        model.getEvent(context);
+
       },
       builder: (context, model, child) {
-        return SafeArea(
+        return model.eventLoader? Center(child: AllPageLoader()):SafeArea(
           top: false,
           bottom: false,
           child: Scaffold(
@@ -376,9 +379,12 @@ class _EventsState extends State<Events> {
                             physics: BouncingScrollPhysics(),
                             shrinkWrap: true,
                             itemBuilder: (context, index) {
+                              dynamic time = model.barEventModel![index].startTime;
+                              time =time.toString().split(':00');
+                              print(time);
                               return GestureDetector(
                                 onTap: (){
-                                  // model.navigateToEventDetailsScreen();
+                                  model.navigationService.navigateToEventDetailScreen(model.barEventModel?[index].media?[0].media ??'',model.barEventModel![index].name,model.barEventModel![index].eventDate,model.barEventModel![index].startTime,model.barEventModel![index].endTime,model.barEventModel![index].location,model.barEventModel![index].about);
                                 },
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(horizontal:SizeConfig.widthMultiplier * 4,),
@@ -406,7 +412,7 @@ class _EventsState extends State<Events> {
                                             children: [
                                               ClipRRect(
                                                 borderRadius: BorderRadius.circular(10),
-                                                child: Image.asset(places[index]["image"],
+                                                child: Image.network(model.barEventModel?[index].media?[0].media,
                                                   width: 20.i,
                                                   height: 20.i,
                                                   fit: BoxFit.cover,
@@ -416,7 +422,7 @@ class _EventsState extends State<Events> {
                                               Column(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(places[index]["date"],
+                                                  Text(model.barEventModel![index].eventDate +' -'+time[0],
                                                     style: TextStyle(
                                                         fontFamily: FontUtils.modernistRegular,
                                                         fontSize: 1.7.t,
@@ -424,7 +430,7 @@ class _EventsState extends State<Events> {
                                                     ),
                                                   ),
                                                   SizedBox(height: 1.h,),
-                                                  Text(places[index]["eventName"],
+                                                  Text(model.barEventModel![index].name,
                                                     style: TextStyle(
                                                         fontFamily: FontUtils.modernistBold,
                                                         fontSize: 2.2.t,
@@ -432,7 +438,7 @@ class _EventsState extends State<Events> {
                                                     ),
                                                   ),
                                                   SizedBox(height: 1.h,),
-                                                  Text(places[index]["location"],
+                                                  Text(model.barEventModel![index].location,
                                                     style: TextStyle(
                                                         fontFamily: FontUtils.modernistRegular,
                                                         fontSize: 1.7.t,
@@ -453,7 +459,7 @@ class _EventsState extends State<Events> {
                             separatorBuilder: (context, index) {
                               return SizedBox(height:  SizeConfig.heightMultiplier * 2.5,);
                             },
-                            itemCount: places.length,
+                            itemCount: model.barEventModel!.length,
                           ),
 
                         ],

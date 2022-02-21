@@ -112,7 +112,7 @@ class _BarEventState extends State<BarEvent> {
                                     children: [
                                       ClipRRect(
                                         borderRadius: BorderRadius.circular(10),
-                                        child: Image.network(model.barEventModel?[index].media?[index].media ??'',
+                                        child: Image.network(model.barEventModel?[index].media?[0].media ??'',
                                           width: 20.i,
                                           height: 20.i,
                                           fit: BoxFit.cover,

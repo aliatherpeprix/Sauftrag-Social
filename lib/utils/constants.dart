@@ -45,6 +45,9 @@ class Constants {
   static const String GetEvents = BaseUrlPro + 'api/event/add/';
   static const String GetDiscover = BaseUrlPro + 'api/user/discover/';
   static const String matchUser = BaseUrlPro + 'api/user/match/';
+  static const String requestMatchUser = BaseUrlPro + 'api/user/requestedMatch/';
+  static const String requestAccept = BaseUrlPro + 'api/user/acceptMatchRequest/';
+
 
   static const int profileImage = 1;
 
