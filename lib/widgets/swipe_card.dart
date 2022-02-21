@@ -184,7 +184,7 @@ class _SwipeCardState extends State<SwipeCard> {
                                         onPressed: () {
                                           widget.swipeLeft();
                                         },
-                                        child: SvgPicture.asset(ImageUtils.dislikeIcon),
+                                          child: SvgPicture.asset(ImageUtils.dislikeIcon),
                                         style: ElevatedButton.styleFrom(
                                           shadowColor: ColorUtils.red_color,
                                           primary: ColorUtils.red_color.withOpacity(0.9),

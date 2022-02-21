@@ -1,8 +1,6 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-//import 'package:flutter_tindercard/flutter_tindercard.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
@@ -10,16 +8,11 @@ import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
-import 'package:sauftrag/widgets/back_swipe_card.dart';
 import 'package:sauftrag/widgets/drink_status_dialog_box.dart';
-import 'package:sauftrag/widgets/drink_update_status_dialog_box.dart';
 import 'package:sauftrag/widgets/my_side_menu.dart';
 import 'package:sauftrag/widgets/swipe_card.dart';
-import 'package:sauftrag/widgets/swipe_card_new.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:stacked/stacked.dart';
-import 'package:swipe_cards/swipe_cards.dart';
 
 class Swipe extends StatefulWidget {
 
@@ -30,37 +23,6 @@ class Swipe extends StatefulWidget {
 }
 
 class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
-
-  /*List<SwipeItem> _swipeItems = [];
-  late MatchEngine _matchEngine;
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-  List<String> _names = [ImageUtils.girl1, ImageUtils.girl2, ImageUtils.girl1, ImageUtils.girl2, ImageUtils.girl1];
-  List<Color> _colors = [
-    Colors.red,
-    Colors.blue,
-    Colors.green,
-    Colors.yellow,
-    Colors.orange
-  ];
-
-  @override
-  void initState() {
-    for (int i = 0; i < _names.length; i++) {
-      _swipeItems.add(SwipeItem(
-          content: Content(text: _names[i], color: _colors[i]),
-          likeAction: () {
-          },
-          nopeAction: () {
-          },
-          superlikeAction: () {
-          }
-          )
-      );
-    }
-    _matchEngine = MatchEngine(swipeItems: _swipeItems);
-
-    super.initState();
-  }*/
 
   late AnimationController _buttonController;
   late Animation<double> rotate;
@@ -95,11 +57,8 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
   ];
 
 
-
-
   List selectedData = [];
 
-  //late CardController controller;
   late PageController pageController;
   final currentPageNotifier = ValueNotifier<int>(0);
 
@@ -203,16 +162,13 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-
     double initialBottom = 15.0;
     var dataLength = data.length;
     double backCardPosition = initialBottom + (dataLength - 1) * 10 + 10;
     double backCardWidth = 0.0;
-
     return ViewModelBuilder<MainViewModel>.reactive(
       onModelReady: (data) {
         data.getDiscover(context);
-
       },
       builder: (context, model, child) {
         return SafeArea(
@@ -289,71 +245,21 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                 ),
                               ],
                             ),
-                            // ElevatedButton(
-                            //     onPressed: () {
-                            //       model.getDrinkStatus();
-                            //     },
-                            //     child: Text('click me')),
 
                             ElevatedButton(
                               onPressed: () {
-                                if (model.getStatus != null) {
-                                  showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return DrinkUpdateStatusDialogBox(
-                                            title: "Add New Location",
-                                            btnTxt: "Add Location",
-                                            icon: ImageUtils.addLocationIcon);
-                                      });
-                                } else {
-                                  showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return DrinkStatusDialogBox(
-                                            title: "Add New Location",
-                                            btnTxt: "Add Location",
-                                            icon: ImageUtils.addLocationIcon);
-                                      });
-                                }
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context){
+                                      return DrinkStatusDialogBox(title: "Add New Location", btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+                                    }
+                                );
                               },
-                              child: model.getStatus == null
-                                  ? SvgPicture.asset(ImageUtils.setStatusIcon)
-                                  : Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                          ImageUtils.bottleSelected,
-                                          height: 3.5.h,
-                                        ),
-                                        Text(
-                                          "x${model.getStatus!.quantity}",
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 1.2.t,
-                                              height: 0.5.h),
-                                          textAlign: TextAlign.end,
-                                        ),
-                                        Container(
-                                          width: 15.w,
-                                          alignment: Alignment.center,
-                                          child: Text(
-                                            "Motor anwärmen",
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              color: ColorUtils.text_red,
-                                              fontFamily:
-                                                  FontUtils.modernistBold,
-                                              fontSize: 1.2.t,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                              child: SvgPicture.asset(ImageUtils.setStatusIcon),
                               style: ElevatedButton.styleFrom(
                                 primary: ColorUtils.white,
                                 //onPrimary: ColorUtils.white,
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 0.5.h, horizontal: 3.3.w),
+                                padding: EdgeInsets.symmetric(vertical: Dimensions.containerVerticalPadding),
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(Dimensions.roundCorner),
@@ -377,24 +283,24 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                             alignment: AlignmentDirectional.center,
                             children: model.catalogImages.map((item) {
                               return SwipeCard(
-
-                                    name: model.discoverModel![model.catalogImages.indexOf(item)].username,
-                                  img: item,
-                                  cardWidth: backCardWidth + 0,
-                                  rotation: rotate.value,
-                                  skew: rotate.value < -10 ? 0.1 : 0.0,
-                                  address: model.discoverModel![model.catalogImages.indexOf(item)].address,
-                                  details: (){model.navigateToProfileScreen(item,model.matchName[model.catalogImages.indexOf(item)],model.discoverModel![model.catalogImages.indexOf(item)].address!,model.discoverModel![model.catalogImages.indexOf(item)].favorite_alcohol_drinks!,model.discoverModel![model.catalogImages.indexOf(item)].favorite_night_club!,model.discoverModel![model.catalogImages.indexOf(item)].favorite_party_vacation!);},
-                                  right: right.value,
-                                  left: 0.0,
-                                  addImg: addImg,
-                                  bottom: bottom.value,
-                                  flag: flag,
-                                  dismissImg: dismissImg,
-                                  swipeRight: swipeRight,
-                                  swipeLeft: swipeLeft,
+                                name: model.discoverModel![model.catalogImages.indexOf(item)].username,
+                                img: item,
+                                cardWidth: backCardWidth + 0,
+                                rotation: rotate.value,
+                                skew: rotate.value < -10 ? 0.1 : 0.0,
+                                address: model.discoverModel![model.catalogImages.indexOf(item)].address,
+                                details: (){model.navigateToProfileScreen(item,model.matchName[model.catalogImages.indexOf(item)],model.discoverModel![model.catalogImages.indexOf(item)].address!,model.discoverModel![model.catalogImages.indexOf(item)].favorite_alcohol_drinks!,model.discoverModel![model.catalogImages.indexOf(item)].favorite_night_club!,model.discoverModel![model.catalogImages.indexOf(item)].favorite_party_vacation!);},
+                                right: right.value,
+                                left: 0.0,
+                                addImg: addImg,
+                                bottom: bottom.value,
+                                flag: flag,
+                                dismissImg: dismissImg,
+                                swipeRight: swipeRight,
+                                swipeLeft: swipeLeft,
                                 id: model.discoverModel![model.catalogImages.indexOf(item)].id,
-                                  );
+                              );
+                            }).toList(),
                           ),
                         ),
                       ),

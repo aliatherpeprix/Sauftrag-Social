@@ -4,6 +4,8 @@ import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
+import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/widgets/all_page_loader.dart';
 import 'package:stacked/stacked.dart';
 
 class MatchedPeople extends StatefulWidget {
@@ -24,14 +26,16 @@ class _MatchedPeopleState extends State<MatchedPeople> {
   ];
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<AuthenticationViewModel>.reactive(
+    return ViewModelBuilder<MainViewModel>.reactive(
       //onModelReady: (data) => data.initializeLoginModel(),
       builder: (context, model, child) {
         return GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();
           },
-          child: SafeArea(
+          child: model.matched
+              ? Center(child: AllPageLoader())
+              : SafeArea(
               top: false,
               bottom: false,
               child: Scaffold(  
@@ -41,7 +45,7 @@ class _MatchedPeopleState extends State<MatchedPeople> {
                       child: Container(
                         margin: EdgeInsets.only(left: 5.w),
                         child: GridView.builder(
-                          itemCount: matchedImg.length,
+                          itemCount: model.requestModel.length,
                           scrollDirection: Axis.vertical,
                           physics: BouncingScrollPhysics(),
                           shrinkWrap: true,
@@ -55,12 +59,13 @@ class _MatchedPeopleState extends State<MatchedPeople> {
                           itemBuilder: (BuildContext context, int index) {
                             return GestureDetector(
                               onTap: () {
-                                model.navigateToFollowerList();
+                                // model.navigateToFollowerList();
                               },
                               child: Stack(
                                 children: [
-                                  Image.asset(
-                                    matchedImg[index]['image'],
+                                  Image.network(
+                                    model.requestModel[index].user!
+                                        .profilePicture,
                                   ),
                                   PositionedDirectional(
                                       bottom: 0,
@@ -75,7 +80,8 @@ class _MatchedPeopleState extends State<MatchedPeople> {
                                         padding: EdgeInsets.symmetric(
                                             vertical: 1.2.h, horizontal: 2.w),
                                         child: Text(
-                                          matchedImg[index]['title'],
+                                          model.requestModel[index].user!
+                                              .username,
                                           style: TextStyle(
                                               color: ColorUtils.white),
                                         ),
@@ -88,7 +94,7 @@ class _MatchedPeopleState extends State<MatchedPeople> {
                       )))),
         );
       },
-      viewModelBuilder: () => locator<AuthenticationViewModel>(),
+      viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
     );
   }
