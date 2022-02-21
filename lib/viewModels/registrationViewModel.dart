@@ -874,7 +874,7 @@ class RegistrationViewModel extends BaseViewModel {
       return;
     } else if (dataCheck == false) {
       DialogUtils().showDialog(MyErrorWidget(
-        error: "Please Accept Date Protection",
+        error: "Please Accept Data Protection",
       ));
       return;
     } else {
