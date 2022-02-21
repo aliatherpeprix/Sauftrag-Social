@@ -1277,7 +1277,7 @@ class MainViewModel extends BaseViewModel {
       var response = await dio.get("${Constants.GetDiscover}",
           options: Options(
               contentType: Headers.formUrlEncodedContentType,
-              headers: {"Authorization": "Token bf81edc04639288e058e4b41c6ee098eb7e8042b"}));
+              headers: {"Authorization": "Token ${user!.token}"}));
       print(response);
 
       if (response.statusCode == 200) {

@@ -34,12 +34,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    //ScreenUtil.instance = ScreenUtil.getInstance()..init(context);
     ScreenUtil.getInstance()..init(context);
-    /*ScreenUtil.instance = ScreenUtil(
-        width: MediaQuery.of(context).size.width.round(),
-        height: MediaQuery.of(context).size.height.round(),
-        allowFontScaling: true);*/
     return LayoutBuilder(
       builder: (context, constraints) {
         return OrientationBuilder(
@@ -52,5 +47,3 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-//BarEvent
-//CreateBarEvent()
