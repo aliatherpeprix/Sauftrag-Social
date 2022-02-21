@@ -274,19 +274,19 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                 decoration: BoxDecoration(
                                   borderRadius:
                                   BorderRadius.all(Radius.circular(20)),
-                                  image: model.imageFiles[0].path.isEmpty
+                                  image: model.eventFiles[0].path.isEmpty
                                       ? null
                                       : DecorationImage(
                                       image:
-                                      FileImage(model.imageFiles[0]),
+                                      FileImage(model.eventFiles[0]),
                                       fit: BoxFit.cover),
                                 ),
                                 child: Stack(
                                   children: [
-                                    model.imageFiles[0].path.isEmpty
+                                    model.eventFiles[0].path.isEmpty
                                         ? InkWell(
                                         onTap: () {
-                                          model.getImage(0);
+                                          model.getEventImage(0);
                                           model.notifyListeners();
                                         },
                                         child: DottedBorder(
@@ -305,14 +305,16 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                               ),
                                             )))
                                         : Container(),
-                                    model.imageFiles[0].path.isEmpty
+                                    model.eventFiles[0].path.isEmpty
                                         ? Container()
                                         : Align(
                                       alignment: Alignment.bottomRight,
                                       child: IconButton(
                                         onPressed: () {
-                                          model.imageFiles.removeAt(0);
-                                          model.imageFiles.insert(0, File(""));
+
+                                          model.eventFiles.removeAt(0);
+                                          model.eventFiles.insert(0, File(""));
+
                                           model.notifyListeners();
                                         },
                                         icon: SvgPicture.asset(
@@ -335,19 +337,19 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                 decoration: BoxDecoration(
                                   borderRadius:
                                   BorderRadius.all(Radius.circular(20)),
-                                  image: model.imageFiles[1].path.isEmpty
+                                  image: model.eventFiles[1].path.isEmpty
                                       ? null
                                       : DecorationImage(
                                       image:
-                                      FileImage(model.imageFiles[1]),
+                                      FileImage(model.eventFiles[1]),
                                       fit: BoxFit.cover),
                                 ),
                                 child: Stack(
                                   children: [
-                                    model.imageFiles[1].path.isEmpty
+                                    model.eventFiles[1].path.isEmpty
                                         ? InkWell(
                                         onTap: () {
-                                          model.getImage(1);
+                                          model.getEventImage(1);
                                           model.notifyListeners();
                                         },
                                         child: DottedBorder(
@@ -365,14 +367,15 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                               ),
                                             )))
                                         : Container(),
-                                    model.imageFiles[1].path.isEmpty
+                                    model.eventFiles[1].path.isEmpty
                                         ? Container()
                                         : Align(
                                       alignment: Alignment.bottomRight,
                                       child: IconButton(
                                         onPressed: () {
-                                          model.imageFiles.removeAt(1);
-                                          model.imageFiles.insert(1, File(""));
+                                          model.eventFiles.removeAt(1);
+                                          model.eventFiles.insert(1, File(""));
+
                                           model.notifyListeners();
                                         },
                                         icon: SvgPicture.asset(
@@ -395,19 +398,19 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                 decoration: BoxDecoration(
                                   borderRadius:
                                   BorderRadius.all(Radius.circular(20)),
-                                  image: model.imageFiles[2].path.isEmpty
+                                  image: model.eventFiles[2].path.isEmpty
                                       ? null
                                       : DecorationImage(
                                       image:
-                                      FileImage(model.imageFiles[2]),
+                                      FileImage(model.eventFiles[2]),
                                       fit: BoxFit.cover),
                                 ),
                                 child: Stack(
                                   children: [
-                                    model.imageFiles[2].path.isEmpty
+                                    model.eventFiles[2].path.isEmpty
                                         ? InkWell(
                                         onTap: () {
-                                          model.getImage(2);
+                                          model.getEventImage(2);
                                           model.notifyListeners();
                                         },
                                         child: DottedBorder(
@@ -425,14 +428,16 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                               ),
                                             )))
                                         : Container(),
-                                    model.imageFiles[2].path.isEmpty
+                                    model.eventFiles[2].path.isEmpty
                                         ? Container()
                                         : Align(
                                       alignment: Alignment.bottomRight,
                                       child: IconButton(
                                         onPressed: () {
-                                          model.imageFiles.removeAt(2);
-                                          model.imageFiles.insert(2, File(""));
+
+                                          model.eventFiles.removeAt(2);
+                                          model.eventFiles.insert(2, File(""));
+
                                           model.notifyListeners();
                                         },
                                         icon: SvgPicture.asset(
@@ -455,19 +460,19 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                 decoration: BoxDecoration(
                                   borderRadius:
                                   BorderRadius.all(Radius.circular(20)),
-                                  image: model.imageFiles[3].path.isEmpty
+                                  image: model.eventFiles[3].path.isEmpty
                                       ? null
                                       : DecorationImage(
                                       image:
-                                      FileImage(model.imageFiles[3]),
+                                      FileImage(model.eventFiles[3]),
                                       fit: BoxFit.cover),
                                 ),
                                 child: Stack(
                                   children: [
-                                    model.imageFiles[3].path.isEmpty
+                                    model.eventFiles[3].path.isEmpty
                                         ? InkWell(
                                         onTap: () {
-                                          model.getImage(3);
+                                          model.getEventImage(3);
                                           model.notifyListeners();
                                         },
                                         child: DottedBorder(
@@ -485,14 +490,16 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                               ),
                                             )))
                                         : Container(),
-                                    model.imageFiles[3].path.isEmpty
+                                    model.eventFiles[3].path.isEmpty
                                         ? Container()
                                         : Align(
                                       alignment: Alignment.bottomRight,
                                       child: IconButton(
                                         onPressed: () {
-                                          model.imageFiles.removeAt(3);
-                                          model.imageFiles.insert(3, File(""));
+
+                                          model.eventFiles.removeAt(3);
+                                          model.eventFiles.insert(3, File(""));
+
                                           model.notifyListeners();
                                         },
                                         icon: SvgPicture.asset(
@@ -667,7 +674,7 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                                   left: 2.5.w, right: 4.w),
                                               child: Text(
                                                 model.selectedEventDate ==null
-                                                    ? "Date of Birth"
+                                                    ? "Event Date"
                                                     : DateFormat('dd/MM/yyyy')
                                                     .format(model.selectedEventDate!),
                                                 style: model.selectedEventDate == null
@@ -735,7 +742,6 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                             Expanded(
                               child: Stack(
                                 children: [
-
                                   GestureDetector(
                                     onTap: (){
                                       showTimePicker(
@@ -748,7 +754,6 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                       ).then((value){
                                         model.openingTimeFrom = value!.format(context);
                                         model.convertOpeningTimeFrom = value.replacing();
-
                                         model.notifyListeners();
                                       });
                                     },
