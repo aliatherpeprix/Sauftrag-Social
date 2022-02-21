@@ -1656,7 +1656,7 @@ class MainViewModel extends BaseViewModel {
   bool discoverLoader = false;
 
   void getDiscover(BuildContext context) async {
-    UserModel? user = await locator<PrefrencesViewModel>().getUser();
+    UserModel? user = UserModel();
     catalogImages = [];
     try {
       discoverLoader = true;
@@ -1770,7 +1770,7 @@ class MainViewModel extends BaseViewModel {
 
 
   void UserMatches(BuildContext context,dynamic id) async {
-    UserModel? user = UserModel();
+    UserModel? user = await locator<PrefrencesViewModel>().getUser();
     catalogImages = [];
 
     try {
