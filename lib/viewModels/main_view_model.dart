@@ -48,6 +48,7 @@ import 'package:sauftrag/services/privacyPolicy.dart';
 import 'package:sauftrag/services/termsAndCondition.dart';
 import 'package:sauftrag/services/updateBarProfile.dart';
 import 'package:sauftrag/services/updateUserProfile.dart';
+import 'package:sauftrag/services/update_location.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/common_functions.dart';
 import 'package:sauftrag/utils/constants.dart';
@@ -75,6 +76,7 @@ class MainViewModel extends BaseViewModel {
   var faqList = Faqs();
   var contactList = Addressbook();
   var barQRCode = BarQrcode();
+  var updateLocation = Updatelocation();
 
 
 
@@ -181,38 +183,33 @@ class MainViewModel extends BaseViewModel {
     // Test if location services are enabled.
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      isSwitched = false;
-      notifyListeners();
+      // Location services are not enabled don't continue
+      // accessing the position and request users of the
+      // App to enable the location services.
       return Future.error('Location services are disabled.');
     }
 
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
-      isSwitched = false;
-      notifyListeners();
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        isSwitched = false;
-        notifyListeners();
-
+        // Permissions are denied, next time you could try
+        // requesting permissions again (this is also where
+        // Android's shouldShowRequestPermissionRationale
+        // returned true. According to Android guidelines
+        // your App should show an explanatory UI now.
         return Future.error('Location permissions are denied');
       }
     }
+
     if (permission == LocationPermission.deniedForever) {
-      isSwitched = false;
-      notifyListeners();
+      // Permissions are denied forever, handle appropriately.
       return Future.error(
           'Location permissions are permanently denied, we cannot request permissions.');
     }
-    if (permission == LocationPermission.always) {
-      isSwitched = true;
-      notifyListeners();
-    }
-    if (permission == LocationPermission.whileInUse) {
-      isSwitched = true;
-      notifyListeners();
-    }
 
+    // When we reach here, permissions are granted and we can
+    // continue accessing the position of the device.
     return await Geolocator.getCurrentPosition();
   }
 
@@ -911,17 +908,29 @@ class MainViewModel extends BaseViewModel {
   }
 
   var currentPosition;
-  getCurrentLocation() {
-    Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
-        .then((Position position) {
-      currentPosition = position;
+  double longitude = 0.0;
+  double latitude = 0.0;
+  // var currentPosition;
+  Future updateCurrentLocation() async{
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+        .then((Position position) async {
+      // currentPosition = position;
       notifyListeners();
-      print(currentPosition);
+      // currentPosition;
+      longitude = position.longitude;
+      latitude = position.latitude;
+      notifyListeners();
+      var updatelocationResponse = await updateLocation.UpdateLocation(
+
+          latitude.toString(),
+          longitude.toString(),
+          userModel!.id.toString()
+      );
+       print(updatelocationResponse);
     }).catchError((e) {
       print(e);
     });
   }
-
   // var channel = "getting_started";
 
   List chats = [];

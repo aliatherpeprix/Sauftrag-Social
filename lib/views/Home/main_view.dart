@@ -46,6 +46,8 @@ class _MainViewState extends State<MainView> {
       onModelReady: (model) {
         model.getUserData();
         model.getDrinkStatus();
+        model.determinePosition();
+        model.updateCurrentLocation();
       },
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,

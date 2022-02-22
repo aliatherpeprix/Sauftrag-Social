@@ -12,6 +12,7 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:sauftrag/widgets/radler_dialog_box.dart';
 import 'package:stacked/stacked.dart';
 
@@ -33,7 +34,7 @@ class _FavoriteDrinkListState extends State<FavoriteDrinkList> {
   @override
   Widget build(BuildContext context) {
 
-    return ViewModelBuilder<MainViewModel>.reactive(
+    return ViewModelBuilder<RegistrationViewModel>.reactive(
       //onModelReady: (data) => data.initializeShareDialog(),
       builder: (context, model, child){
         // model.favDrink = false;
@@ -134,6 +135,8 @@ class _FavoriteDrinkListState extends State<FavoriteDrinkList> {
                             ),
 
                             SizedBox(height: 5.h,),
+
+
                             Stack(
                               children: [
                                 Container(
@@ -190,6 +193,7 @@ class _FavoriteDrinkListState extends State<FavoriteDrinkList> {
                               //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                               child: ElevatedButton(
                                 onPressed: () async{
+
                                   await model.favoritesDrinks(model.selectedDrinkList, "favorite_alcohol_drinks");
                                   model.navigateBack();
                                 },
@@ -226,7 +230,7 @@ class _FavoriteDrinkListState extends State<FavoriteDrinkList> {
             )
         );
       },
-      viewModelBuilder: () => locator<MainViewModel>(),
+      viewModelBuilder: () => locator<RegistrationViewModel>(),
       disposeViewModel: false,
     );
   }

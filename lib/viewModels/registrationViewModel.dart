@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 
@@ -6,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get_utils/src/extensions/string_extensions.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -82,6 +84,17 @@ class RegistrationViewModel extends BaseViewModel {
   bool resetConfirmPasswordVisible = false;
   bool loading = false;
   bool getStarted = false;
+  bool favDrink = false;
+  bool eventSelected = false;
+  int? currentEventSelected;
+  bool timeSelected = false;
+  int? timeValue;
+  double lowerValue = 50;
+  double upperValue = 180;
+  String? lowValue = "50";
+  String? highValue = "180";
+  List<Marker> markers = <Marker>[];
+  Completer<GoogleMapController> controller = Completer();
 
   //For Loader
   bool logIn = false;
@@ -104,6 +117,8 @@ class RegistrationViewModel extends BaseViewModel {
   FocusNode signUpUserFocus = new FocusNode();
 
   List<FavoritesModel> drinks = [];
+
+  final mapSearchController = TextEditingController();
 
   final signUpEmailController = TextEditingController();
   bool isSignUpEmailInFocus = false;
@@ -438,6 +453,18 @@ class RegistrationViewModel extends BaseViewModel {
     }*/
   }
 
+  addMarkers() {
+    markers.add(Marker(
+        markerId: MarkerId('SomeId'),
+        position: LatLng(24.8169, 67.1118),
+        infoWindow: InfoWindow(title: 'The title of the marker')));
+  }
+
+  CameraPosition kGooglePlex = CameraPosition(
+    target: LatLng(24.8169, 67.1118),
+    zoom: 14.4746,
+  );
+
   addBarImages() {
     for (int i = 0; i < imageFiles.length; i++) {
       if (i == 0) {
@@ -571,7 +598,7 @@ class RegistrationViewModel extends BaseViewModel {
   double longitude = 0.0;
   double latitude = 0.0;
   // var currentPosition;
-  getCurrentLocation() async{
+  Future getCurrentLocation() async{
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
         .then((Position position) {
       // currentPosition = position;
@@ -1982,5 +2009,9 @@ class RegistrationViewModel extends BaseViewModel {
 
   void navigateToBarProfile2() {
     navigationService.navigateToBarProfile2();
+  }
+
+  void navigateToMapSearchScreen() {
+    navigationService.navigateToMapSearchScreen();
   }
 }
