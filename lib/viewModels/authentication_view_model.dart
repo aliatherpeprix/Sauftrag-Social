@@ -902,7 +902,7 @@ class AuthenticationViewModel extends BaseViewModel {
       notifyListeners();
       return;
     }
-    else  if (imageFiles[0].path.isEmpty) {
+    else  if (eventFiles[0].path.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Image is required",
       ));
