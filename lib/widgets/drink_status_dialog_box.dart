@@ -404,6 +404,7 @@ class _DrinkStatusDialogBoxState extends State<DrinkStatusDialogBox> {
                           model.navigateBack();
                           model.updateStatus = true;
                           model.notifyListeners();
+
                         },
                         child: const Text("Save"),
                         style: ElevatedButton.styleFrom(

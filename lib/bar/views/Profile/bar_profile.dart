@@ -23,7 +23,7 @@ class BarProfile extends StatefulWidget {
 class _BarProfileState extends State<BarProfile> {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<MainViewModel>.reactive(
+    return  ViewModelBuilder<MainViewModel>.reactive(
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
       onModelReady: (model) {

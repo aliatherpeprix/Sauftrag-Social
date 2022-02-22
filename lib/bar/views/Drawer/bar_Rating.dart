@@ -675,6 +675,7 @@ class _BarRatingState extends State<BarRating> {
                                                             .data![index]
                                                             .rate!,
                                                         minRating: 1,
+                                                        ignoreGestures: true,
                                                         direction:
                                                             Axis.horizontal,
                                                         allowHalfRating: true,

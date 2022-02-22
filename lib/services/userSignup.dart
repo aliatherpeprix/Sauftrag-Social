@@ -17,13 +17,14 @@ class SignupUser {
   Dio dio = Dio();
 
   Future SignUpUser(
-    
     String email,
     String username,
     String password,
     String password2,
     String phone_no,
     String relationship,
+    String latitude,
+    String longitude,
     String address,
     String gender,
     String DOB,
@@ -33,8 +34,7 @@ class SignupUser {
     List images,
     bool termsCheck,
     bool dataCheck,
-    double latitude,
-    double longitude, 
+
   ) async {
     try {
       // if (images[0].path.isNotEmpty){
@@ -49,6 +49,8 @@ class SignupUser {
         'password2': password2,
         'phone_no': phone_no,
         'relation_ship': relationship,
+        'latitude' : latitude,
+        'longitude' : longitude,
         'address': address,
         'gender': gender,
         'dob': DOB,
@@ -81,7 +83,8 @@ class SignupUser {
             (images[5] as File).path,
           ),
         'terms_conditions': termsCheck,
-        'data_protection': dataCheck
+        'data_protection': dataCheck,
+
       });
 
       // var param = {

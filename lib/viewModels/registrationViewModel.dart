@@ -895,12 +895,15 @@ class RegistrationViewModel extends BaseViewModel {
       //   newVacations.add(drink+1);
       // }
       var userSignupResponce = await signupUser.SignUpUser(
+
           usermodel!.email!,
           usermodel.username!,
           usermodel.password!,
           usermodel.password2!,
           usermodel.phone_no!,
           usermodel.relation_ship.toString(),
+          latitude.toString(),
+          longitude.toString(),
           usermodel.address!,
           usermodel.gender!.toString(),
           usermodel.dob.toString(),
@@ -910,8 +913,7 @@ class RegistrationViewModel extends BaseViewModel {
           imageFiles,
           termsCheck,
           dataCheck,
-          latitude,
-          longitude);
+          );
       print(userSignupResponce);
       if (userSignupResponce is UserModel) {
         userModel.UserModel user = userSignupResponce;
