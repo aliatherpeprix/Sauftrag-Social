@@ -3,6 +3,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_google_places/flutter_google_places.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 // import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
@@ -23,7 +27,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 import 'package:sauftrag/utils/common_functions.dart';
 import 'package:get/get_utils/src/extensions/string_extensions.dart';
-
+import "package:google_maps_webservice/geocoding.dart";
+import "package:google_maps_webservice/places.dart";
+import 'package:google_api_headers/google_api_headers.dart';
 import '../main.dart';
 import 'main_view_model.dart';
 
@@ -957,6 +963,8 @@ class AuthenticationViewModel extends BaseViewModel {
     }
   }
 
+
+
   void createEvent() async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
 
@@ -1031,6 +1039,156 @@ class AuthenticationViewModel extends BaseViewModel {
       notifyListeners();
     }
   }
+  List<Marker> marker = <Marker>[];
+  String address = "";
+  GoogleMapController? mapController;
+  double? lat;
+  double? lng;
+  Position? currentPosition;
+
+  double longitude = 0.0;
+  double latitude = 0.0;
+
+  Future getCurrentLocation() async{
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+        .then((Position position) {
+      // currentPosition = position;
+      notifyListeners();
+      // currentPosition;
+      longitude = position.longitude;
+      latitude = position.latitude;
+      notifyListeners();
+      // print(currentPosition);
+    }).catchError((e) {
+      print(e);
+    });
+  }
+
+  Future<Position> determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled don't continue
+      // accessing the position and request users of the
+      // App to enable the location services.
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Please turn on your device location",
+      ));
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // Permissions are denied, next time you could try
+        // requesting permissions again (this is also where
+        // Android's shouldShowRequestPermissionRationale
+        // returned true. According to Android guidelines
+        // your App should show an explanatory UI now.
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    // When we reach here, permissions are granted and we can
+    // continue accessing the position of the device.
+    return await Geolocator.getCurrentPosition();
+  }
+  Completer<GoogleMapController> controller = Completer();
+
+
+  Future navigateToPosition(LatLng latLng) async {
+
+
+
+    List<Marker> markers = <Marker>[];
+    Completer<GoogleMapController> controller = Completer();
+    List<Placemark> placemarks = await placemarkFromCoordinates(latLng.latitude, latLng.longitude);
+
+    address = "${placemarks[0].name} ${placemarks[0].street} ${placemarks[0].subLocality} ${placemarks[0].locality} ${placemarks[0].country}";
+    lat = latLng.latitude;
+    lng = latLng.longitude;
+
+    marker.clear();
+    marker.add(
+        Marker(
+            markerId: MarkerId(placemarks[0].name!),
+            position: LatLng(latLng.latitude, latLng.longitude),
+            infoWindow: InfoWindow(
+                title: placemarks[0].name
+            )
+        )
+    );
+
+    notifyListeners();
+  }
+
+
+
+  Future<void> searchAddress(BuildContext context) async {
+
+    Prediction? p = await PlacesAutocomplete.show(
+        offset: 0,
+        radius: 1000,
+        types: [],
+        strictbounds: false,
+        context: context,
+        apiKey: Constants.kGoogleApiKey,
+        mode: Mode.overlay, // Mode.fullscreen
+        language: "en",
+        components: [new Component(Component.country, "pk")]);
+
+    GoogleMapsPlaces _places = GoogleMapsPlaces(
+      apiKey: Constants.kGoogleApiKey,
+      apiHeaders: await GoogleApiHeaders().getHeaders(),
+    );
+
+    PlacesDetailsResponse detail = await _places.getDetailsByPlaceId(p!.placeId!);
+    final lat = detail.result.geometry!.location.lat;
+    final lng = detail.result.geometry!.location.lng;
+
+    print(p.description);
+
+    address = p.description!;
+    this.lat = lat;
+    this.lng = lng;
+
+    marker.clear();
+    marker.add(
+        Marker(
+            markerId: MarkerId(p.placeId.toString()),
+            position: LatLng(lat, lng),
+            infoWindow: InfoWindow(
+                title: ""
+            )
+        )
+    );
+
+    kGooglePlex = CameraPosition(
+      target: LatLng(lat, lng),
+      zoom: 18,
+    );
+
+    mapController!.animateCamera(CameraUpdate.newCameraPosition(kGooglePlex));
+
+    notifyListeners();
+  }
+  CameraPosition kGooglePlex = CameraPosition(
+    target: LatLng(24.8169, 67.1118),
+    zoom: 14.4746,
+  );
+
+
+
 }
 
 

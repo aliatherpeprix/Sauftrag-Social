@@ -72,24 +72,41 @@ class _RequestedPeopleState extends State<RequestedPeople> {
                                       Image.network(
                                         model.requestModel[index].user!
                                             .profilePicture,
+                                        height: 20.h,
+                                        width: 34.w,
                                       ),
                                       PositionedDirectional(
                                         bottom: 6.h,
                                         child: Row(
                                           children: [
-                                            SizedBox(width: 3.w,),
-                                            SvgPicture.asset(
-                                                ImageUtils.dislikeIcon,
-                                              height: 5.h,
+                                            SizedBox(
+                                              width: 3.w,
                                             ),
-                                            SizedBox(width: 8.w,),
                                             GestureDetector(
-                                              onTap: (){
-                                                model.acceptRequest(context,model.requestModel[index].id);
-                                                print(model.requestModel[index].id);
+                                              onTap: () {
+                                                model.requestModel
+                                                    .removeAt(index);
+                                                model.notifyListeners();
                                               },
                                               child: SvgPicture.asset(
-                                                  ImageUtils.likeIcon,
+                                                ImageUtils.dislikeIcon,
+                                                height: 5.h,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 8.w,
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {
+                                                model.acceptRequest(
+                                                    context,
+                                                    model.requestModel[index]
+                                                        .id);
+                                                print(model
+                                                    .requestModel[index].id);
+                                              },
+                                              child: SvgPicture.asset(
+                                                ImageUtils.likeIcon,
                                                 height: 5.h,
                                               ),
                                             ),

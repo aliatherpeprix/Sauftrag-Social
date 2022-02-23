@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:contacts_service/contacts_service.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
@@ -12,6 +13,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:sauftrag/models/request_match_model.dart';
+import 'package:sauftrag/models/user_matched.dart';
 import 'package:sauftrag/models/user_models.dart' as userModel;
 import 'package:mime/mime.dart';
 import 'package:page_transition/page_transition.dart';
@@ -78,8 +80,6 @@ class MainViewModel extends BaseViewModel {
   var contactList = Addressbook();
   var barQRCode = BarQrcode();
   var updateLocation = Updatelocation();
-
-
 
   Barcode? result;
 
@@ -951,7 +951,7 @@ class MainViewModel extends BaseViewModel {
   double longitude = 0.0;
   double latitude = 0.0;
   // var currentPosition;
-  Future updateCurrentLocation() async{
+  Future updateCurrentLocation() async {
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
         .then((Position position) async {
       // currentPosition = position;
@@ -961,12 +961,8 @@ class MainViewModel extends BaseViewModel {
       latitude = position.latitude;
       notifyListeners();
       var updatelocationResponse = await updateLocation.UpdateLocation(
-
-          latitude.toString(),
-          longitude.toString(),
-          userModel!.id.toString()
-      );
-       print(updatelocationResponse);
+          latitude.toString(), longitude.toString(), userModel!.id.toString());
+      print(updatelocationResponse);
     }).catchError((e) {
       print(e);
     });
@@ -1078,7 +1074,7 @@ class MainViewModel extends BaseViewModel {
     var data = {'rate': rate, 'comments': barGiveRating.text, 'bar': 78};
     var encodedData = jsonEncode(data);
     var response = await http.post(
-        Uri.http(Constants.BaseUrl, '/api/rating/add/'),
+        Uri.http(Constants.BaseUrlPro, '/api/rating/add/'),
         body: encodedData,
         headers: {
           'content-type': 'application/json',
@@ -1127,6 +1123,7 @@ class MainViewModel extends BaseViewModel {
     updatedrinkIndex = getStatus!.quantity!;
     notifyListeners();
   }
+
   updateDrinkStatus() async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
 
@@ -1641,7 +1638,7 @@ class MainViewModel extends BaseViewModel {
 
   List<BarEventModel>? barEventModel = [];
 
-    void getEvent(BuildContext context) async {
+  void getEvent(BuildContext context) async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
 
     try {
@@ -1719,12 +1716,12 @@ class MainViewModel extends BaseViewModel {
       print(getContactList);
     }
   }
+
   List<UserModel>? discoverModel = [];
   List catalogImages = [];
   bool discoverLoader = false;
 
   void getDiscover(BuildContext context) async {
-
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
 
     catalogImages = [];
@@ -1783,10 +1780,10 @@ class MainViewModel extends BaseViewModel {
       // }
     }
   }
+
   bool userMatchLoader = false;
 
-
-  void UserMatches(BuildContext context,dynamic id) async {
+  void UserMatches(BuildContext context, dynamic id) async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
     catalogImages = [];
 
@@ -1794,12 +1791,11 @@ class MainViewModel extends BaseViewModel {
       userMatchLoader = true;
       notifyListeners();
 
-      var matchParams = FormData.fromMap({
-        'customer2':id
-      });
+      var matchParams = FormData.fromMap({'customer2': id});
       print(matchParams);
 
-      var response = await dio.post("${Constants.matchUser}",data: matchParams,
+      var response = await dio.post("${Constants.matchUser}",
+          data: matchParams,
           options: Options(
               contentType: Headers.formUrlEncodedContentType,
               headers: {"Authorization": "Token ${user!.token}"}));
@@ -1818,15 +1814,16 @@ class MainViewModel extends BaseViewModel {
         notifyListeners();
       }
     } on DioError catch (e) {
-      var errorResponse =e.response!.data['customer2'][0];
+      print(e.response!.data['details']);
+      var errorResponse = e.response!.data['details'];
       userMatchLoader = false;
       notifyListeners();
-      if(errorResponse == "This field must be unique."){
+      if (errorResponse == "Match Request Already sent") {
         DialogUtils().showDialog(MyErrorWidget(
           error: "Request Already Send",
         ));
       }
-      print(e.response!.data['customer2'][0]);
+      // print(e.response!.data['customer2'][0]);
       getDiscover(context);
       userMatchLoader = false;
       notifyListeners();
@@ -1837,7 +1834,6 @@ class MainViewModel extends BaseViewModel {
   bool matchesLoader = false;
 
   void requestMatches(BuildContext context) async {
-
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
 
     catalogImages = [];
@@ -1852,8 +1848,9 @@ class MainViewModel extends BaseViewModel {
       print(response);
 
       if (response.statusCode == 200) {
-        requestModel =
-            (response.data as List).map((e) => RequestMatchModel.fromJson(e)).toList();
+        requestModel = (response.data as List)
+            .map((e) => RequestMatchModel.fromJson(e))
+            .toList();
 
         for (UserModel userName in discoverModel!) {
           matchName.add(userName.toJson()['username']);
@@ -1877,7 +1874,6 @@ class MainViewModel extends BaseViewModel {
         print(response.statusCode);
         matchesLoader = false;
         notifyListeners();
-
         // showErrorMessage(context, 'Something went wrong. Please try again');
       }
     } on DioError catch (e) {
@@ -1896,33 +1892,31 @@ class MainViewModel extends BaseViewModel {
     }
   }
 
-
-  Future orderDrinks() async{
+  Future orderDrinks() async {
     Drinkorder().DrinkOrder(int.parse(result!.code!), drinksSelected);
   }
 
   bool acceptRequestLoader = false;
 
-  void acceptRequest(BuildContext context,dynamic id) async {
+  void acceptRequest(BuildContext context, dynamic id) async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
     catalogImages = [];
     try {
       matchesLoader = true;
       notifyListeners();
 
-      var requestAccept = FormData.fromMap({
-        'id':id
-      });
+      var requestAccept = FormData.fromMap({'id': id});
 
       print(requestAccept);
 
-      var response = await dio.post("${Constants.requestAccept}",data: requestAccept,
+      var response = await dio.post("${Constants.requestAccept}",
+          data: requestAccept,
           options: Options(
               contentType: Headers.formUrlEncodedContentType,
               headers: {"Authorization": "Token ${user!.token}"}));
       print(response);
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         DialogUtils().showDialog(MyErrorWidget(
           error: "Request Send Successfully",
         ));
@@ -1946,33 +1940,38 @@ class MainViewModel extends BaseViewModel {
       print(e);
       matchesLoader = false;
       notifyListeners();
-
     }
   }
 
   bool matched = false;
 
-  void acceptMatched(BuildContext context) async {
+  List<UserMatchedModel> acceptMatchedtModel = [];
+  bool acceptMatchesLoader = false;
 
+  List matcheImages = [];
+  List matcheName = [];
+
+  void acceptMatched(BuildContext context) async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
 
-    catalogImages = [];
+    matcheImages = [];
     try {
-      matched = true;
+      acceptMatchesLoader = true;
       notifyListeners();
       // user!.token!
-      var response = await dio.get("${Constants.requestMatchUser}",
+      var response = await dio.get("${Constants.matchUser}",
           options: Options(
               contentType: Headers.formUrlEncodedContentType,
               headers: {"Authorization": "Token ${user!.token!}"}));
       print(response);
 
       if (response.statusCode == 200) {
-        requestModel =
-            (response.data as List).map((e) => RequestMatchModel.fromJson(e)).toList();
+        acceptMatchedtModel = (response.data as List)
+            .map((e) => UserMatchedModel.fromJson(e))
+            .toList();
 
         for (UserModel userName in discoverModel!) {
-          matchName.add(userName.toJson()['username']);
+          matcheName.add(userName.toJson()['username']);
         }
 
         for (UserModel user in discoverModel!) {
@@ -1982,33 +1981,27 @@ class MainViewModel extends BaseViewModel {
               images.add(user.toJson()["catalogue_image${i}"]);
             }
           }
-          catalogImages.add(images);
+          matcheImages.add(images);
           print(images);
         }
 
         print(discoverModel!.length);
 
-        matched = false;
+        acceptMatchesLoader = false;
         notifyListeners();
       } else {
         print(response.statusCode);
-        matched = false;
+        acceptMatchesLoader = false;
         notifyListeners();
 
         // showErrorMessage(context, 'Something went wrong. Please try again');
       }
     } on DioError catch (e) {
       print(e);
-      matched = false;
+      acceptMatchesLoader = false;
       notifyListeners();
-
     }
   }
-
-
-
-
-
 
 // QrImage(
 // data: "123457890",

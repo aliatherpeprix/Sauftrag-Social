@@ -102,7 +102,7 @@ class RegistrationViewModel extends BaseViewModel {
   List<Marker> markers = <Marker>[];
   Completer<GoogleMapController> controller = Completer();
 
-  //For Loader
+  //For LoaderdeterminePosition
   bool logIn = false;
   bool signInUser = false;
   bool signInBar = false;
