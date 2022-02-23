@@ -10,7 +10,8 @@ UserForChat _$UserForChatFromJson(Map<String, dynamic> json) => UserForChat()
   ..id = json['id'] as int?
   ..username = json['username'] as String?
   ..email = json['email'] as String?
-  ..profile_picture = json['profile_picture'] as String?;
+  ..profile_picture = json['profile_picture'] as String?
+  ..role = json['role'] as int?;
 
 Map<String, dynamic> _$UserForChatToJson(UserForChat instance) =>
     <String, dynamic>{
@@ -18,4 +19,5 @@ Map<String, dynamic> _$UserForChatToJson(UserForChat instance) =>
       'username': instance.username,
       'email': instance.email,
       'profile_picture': instance.profile_picture,
+      'role': instance.role,
     };
