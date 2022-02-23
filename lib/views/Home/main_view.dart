@@ -43,10 +43,11 @@ class _MainViewState extends State<MainView> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<MainViewModel>.reactive(
-      onModelReady: (model) {
+      onModelReady: (model)async {
         model.getUserData();
         model.getDrinkStatus();
-        model.determinePosition();
+        // var position = await model.determinePosition();
+        // print(position);
         model.updateCurrentLocation();
       },
       viewModelBuilder: () => locator<MainViewModel>(),

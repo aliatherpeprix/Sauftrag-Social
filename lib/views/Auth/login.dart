@@ -376,9 +376,11 @@ class _LoginState extends State<Login> {
                                       width: double.infinity,
                                       //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                                       child: ElevatedButton(
-                                        onPressed: () {
+                                        onPressed: () async {
                                           //model.navigateToHomeScreen(2);
-
+                                          var position = await model.determinePosition();
+                                          model.latitude = position.latitude;
+                                          model.latitude = position.longitude;
                                           model.onLogIn();
                                         },
                                         child: model.logIn == false
@@ -541,7 +543,7 @@ class _LoginState extends State<Login> {
                                           ),
                                         ),
                                         InkWell(
-                                          onTap: () {
+                                          onTap: () async {
                                             if (model.logInUserSelected ==
                                                 true) {
                                               model.navigateToSignUpScreen();
@@ -574,8 +576,8 @@ class _LoginState extends State<Login> {
         viewModelBuilder: () => locator<RegistrationViewModel>(),
         disposeViewModel: false,
         onModelReady: (model) {
-          model.determinePosition();
-          model.getCurrentLocation();
+          // model.determinePosition();
+          // model.getCurrentLocation();
           model.logInPasswordController.clear();
           model.logIn = false;
         });

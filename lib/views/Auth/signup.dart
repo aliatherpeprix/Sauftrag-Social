@@ -10,6 +10,7 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
 import 'package:sauftrag/viewModels/registrationViewModel.dart';
+import 'package:sauftrag/views/Auth/signup_map.dart';
 import 'package:sauftrag/widgets/loader.dart';
 import 'package:stacked/stacked.dart';
 
@@ -639,7 +640,12 @@ class _SignUpState extends State<SignUp> {
                                     Border.all(color: ColorUtils.divider)),
                                 child: Row(
                                   children: [
-                                    SvgPicture.asset(ImageUtils.locationIcon),
+                                    GestureDetector(
+                                      onTap: (){
+                                        model.navigateToAddAddressScreen();
+                                      },
+                                        child: Container(child: SvgPicture.asset(ImageUtils.locationIcon)
+                                        )),
                                     SizedBox(width: 4.w),
                                     Expanded(
                                       child: TextField(
@@ -919,41 +925,41 @@ class _SignUpState extends State<SignUp> {
                             ],
                           ),
 
-                          GestureDetector(
-                              onTap: () {
-                                model.signupCheck = true ;
-                                model.notifyListeners();
-                              },
-                              child: Row(
-                                children: <Widget>[
-                                  Theme(
-                                    data: Theme.of(context).copyWith(
-                                      unselectedWidgetColor: ColorUtils.text_grey,
-                                    ),
-                                    child: Checkbox(
-                                      checkColor: ColorUtils.white,
-                                      activeColor: ColorUtils.text_red,
-                                      value: model.isChecked,
-                                      onChanged: (bool? value) {
-                                        setState(() {
-                                          model.isChecked = value!;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                  Flexible(
-                                    child: Text(
-                                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                                      style: TextStyle(
-                                        color: ColorUtils.text_grey,
-                                        fontFamily: FontUtils.modernistRegular,
-                                        fontSize: 1.5.t,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              )),
-                          SizedBox(height: 3.h),
+                          // GestureDetector(
+                          //     onTap: () {
+                          //       model.signupCheck = true ;
+                          //       model.notifyListeners();
+                          //     },
+                          //     child: Row(
+                          //       children: <Widget>[
+                          //         Theme(
+                          //           data: Theme.of(context).copyWith(
+                          //             unselectedWidgetColor: ColorUtils.text_grey,
+                          //           ),
+                          //           child: Checkbox(
+                          //             checkColor: ColorUtils.white,
+                          //             activeColor: ColorUtils.text_red,
+                          //             value: model.isChecked,
+                          //             onChanged: (bool? value) {
+                          //               setState(() {
+                          //                 model.isChecked = value!;
+                          //               });
+                          //             },
+                          //           ),
+                          //         ),
+                          //         Flexible(
+                          //           child: Text(
+                          //             "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                          //             style: TextStyle(
+                          //               color: ColorUtils.text_grey,
+                          //               fontFamily: FontUtils.modernistRegular,
+                          //               fontSize: 1.5.t,
+                          //             ),
+                          //           ),
+                          //         ),
+                          //       ],
+                          //     )),
+                          SizedBox(height: 6.h),
 
                           //Sign up Button
                           SizedBox(
@@ -962,13 +968,15 @@ class _SignUpState extends State<SignUp> {
                             //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                             child:
                             ElevatedButton(
-                              onPressed: () {
+                              onPressed: () async {
                                 //model.navigateToFavoriteScreen();
-                                model.getCurrentLocation();
+                                var position = await model.determinePosition();
+                                model.latitude = position.latitude;
+                                model.latitude = position.longitude;
                                 model.createUserAccount();
 
                               },
-                              child: model.signInUser == false ? Text("Sign Up") : Loader(),
+                              child: model.signInUser == false ? Text("Next") : Loader(),
                               style: ElevatedButton.styleFrom(
                                 primary: ColorUtils.text_red,
                                 onPrimary: ColorUtils.white,

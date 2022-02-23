@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:math';
+
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -50,6 +50,8 @@ import 'package:shrink_sidemenu/shrink_sidemenu.dart';
 import 'package:stacked/stacked.dart';
 import '../main.dart';
 import 'main_view_model.dart';
+import 'package:flutter_google_places/flutter_google_places.dart';
+
 
 class RegistrationViewModel extends BaseViewModel {
   //var _dioService = DioService.getInstance();
@@ -107,6 +109,14 @@ class RegistrationViewModel extends BaseViewModel {
 
   bool otpLoading = false;
   TimeOfDay? startTime;
+
+  List<Marker> marker = <Marker>[];
+  String address = "";
+  GoogleMapController? mapController;
+  double? lat;
+  double? lng;
+  Position? currentPosition;
+
 
   PrefrencesViewModel prefrencesViewModel = locator<PrefrencesViewModel>();
   DateTime selectedDOB = DateTime.now();
@@ -425,6 +435,7 @@ class RegistrationViewModel extends BaseViewModel {
     }*/
   }
 
+
   Future<bool> getPostImage(int index) async {
     ImagePicker picker = ImagePicker();
     //List<XFile>? images = await picker.pickMultiImage();
@@ -506,6 +517,84 @@ class RegistrationViewModel extends BaseViewModel {
     String s = "00:00";
     startTime = TimeOfDay(
         hour: int.parse(s.split(":")[0]), minute: int.parse(s.split(":")[1]));
+  }
+
+  Future navigateToPosition(LatLng latLng) async {
+
+    kGooglePlex = CameraPosition(
+      target: LatLng(latLng.latitude, latLng.longitude),
+      zoom: 18,
+    );
+
+    mapController!.animateCamera(CameraUpdate.newCameraPosition(kGooglePlex));
+
+    List<Placemark> placemarks = await placemarkFromCoordinates(latLng.latitude, latLng.longitude);
+
+    address = "${placemarks[0].name} ${placemarks[0].street} ${placemarks[0].subLocality} ${placemarks[0].locality} ${placemarks[0].country}";
+    lat = latLng.latitude;
+    lng = latLng.longitude;
+
+    marker.clear();
+    marker.add(
+        Marker(
+            markerId: MarkerId(placemarks[0].name!),
+            position: LatLng(latLng.latitude, latLng.longitude),
+            infoWindow: InfoWindow(
+                title: placemarks[0].name
+            )
+        )
+    );
+
+    notifyListeners();
+  }
+
+  Future<void> searchAddress(BuildContext context) async {
+
+    Prediction? p = await PlacesAutocomplete.show(
+        offset: 0,
+        radius: 1000,
+        types: [],
+        strictbounds: false,
+        context: context,
+        apiKey: Constants.kGoogleApiKey,
+        mode: Mode.overlay, // Mode.fullscreen
+        language: "en",
+        components: [new Component(Component.country, "pk")]);
+
+    GoogleMapsPlaces _places = GoogleMapsPlaces(
+      apiKey: Constants.kGoogleApiKey,
+      apiHeaders: await GoogleApiHeaders().getHeaders(),
+    );
+
+    PlacesDetailsResponse detail = await _places.getDetailsByPlaceId(p!.placeId!);
+    final lat = detail.result.geometry!.location.lat;
+    final lng = detail.result.geometry!.location.lng;
+
+    print(p.description);
+
+    address = p.description!;
+    this.lat = lat;
+    this.lng = lng;
+
+    marker.clear();
+    marker.add(
+        Marker(
+            markerId: MarkerId(p.placeId.toString()),
+            position: LatLng(lat, lng),
+            infoWindow: InfoWindow(
+                title: ""
+            )
+        )
+    );
+
+    kGooglePlex = CameraPosition(
+      target: LatLng(lat, lng),
+      zoom: 18,
+    );
+
+    mapController!.animateCamera(CameraUpdate.newCameraPosition(kGooglePlex));
+
+    notifyListeners();
   }
 
   void openAndSelectDob(BuildContext context) async {
@@ -623,6 +712,9 @@ class RegistrationViewModel extends BaseViewModel {
       // Location services are not enabled don't continue
       // accessing the position and request users of the
       // App to enable the location services.
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Please turn on your device location",
+      ));
       return Future.error('Location services are disabled.');
     }
 
@@ -1074,7 +1166,7 @@ class RegistrationViewModel extends BaseViewModel {
       if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
           imageFiles[i].path.isEmpty) {
         DialogUtils().showDialog(MyErrorWidget(
-          error: "Select Image No "+i.toString(),
+          error: "Select All Images"/*+i.toString()*/,
         ));
         return;
       }
@@ -1329,14 +1421,14 @@ class RegistrationViewModel extends BaseViewModel {
       ));
       notifyListeners();
       return;
-    } else if (isChecked == false) {
+    } /*else if (isChecked == false) {
       isSigningUp = false;
       DialogUtils().showDialog(MyErrorWidget(
         error: "Please Accept Terms and Conditions",
       ));
       notifyListeners();
       return;
-    } else
+    }*/ else
       signInUser = true;
     notifyListeners();
     //var user = userModel.UserModel();
@@ -2013,5 +2105,9 @@ class RegistrationViewModel extends BaseViewModel {
 
   void navigateToMapSearchScreen() {
     navigationService.navigateToMapSearchScreen();
+  }
+
+  void navigateToAddAddressScreen() {
+    navigationService.navigateToAddAddressScreen();
   }
 }

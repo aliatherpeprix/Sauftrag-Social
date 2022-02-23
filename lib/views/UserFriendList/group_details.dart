@@ -89,7 +89,7 @@ class _GroupDetailsState extends State<GroupDetails> {
                     pubnub.objects.setChannelMembers(
                         model.chatController.text, setMetadata);
                     print(setMetadata);
-                    model.navigateToFriendListScreen1();
+                    //model.navigateToFriendListScreen1();
 
                   },
                   child: const Text("Create Group"),

@@ -62,11 +62,12 @@ dependencies:
   contacts_service:
   permission_handler:
   pubnub: ^4.1.0
-  location: ^4.2.0
-  geolocator:
+  location:
+  geolocator: ^8.0.1
   qr_flutter: ^4.0.0
-
-
+  flutter_google_places: ^0.3.0
+  geocoding: ^2.0.1
+  tutorial_coach_mark: ^1.2.1
 
 
 dev_dependencies:

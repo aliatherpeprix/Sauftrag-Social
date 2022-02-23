@@ -36,6 +36,7 @@ import 'package:sauftrag/views/Auth/login.dart';
 import 'package:sauftrag/views/Auth/media.dart';
 import 'package:sauftrag/views/Auth/resent_password.dart';
 import 'package:sauftrag/views/Auth/signup.dart';
+import 'package:sauftrag/views/Auth/signup_map.dart';
 import 'package:sauftrag/views/Auth/terms.dart';
 import 'package:sauftrag/views/Auth/verification_code.dart';
 import 'package:sauftrag/views/Home/main_view.dart';
@@ -378,6 +379,10 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateToChooseDrinkScreen(){
     navigationKey.currentState!.push(PageTransition(child: BarDrinks(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToAddAddressScreen(){
+    navigationKey.currentState!.push(PageTransition(child: SignupMap(), type: PageTransitionType.rightToLeftWithFade));
   }
 
 

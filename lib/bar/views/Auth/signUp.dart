@@ -72,7 +72,6 @@ class _SignUpBarState extends State<SignUpBar> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-
                               //User
                               ElevatedButton(
                                 onPressed: () {
@@ -478,17 +477,20 @@ class _SignUpBarState extends State<SignUpBar> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 5.h),
+                          SizedBox(height: 6.h),
 
                           //Sign up Button
                           SizedBox(
                             width: double.infinity,
                             //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                             child: ElevatedButton(
-                              onPressed: () {
+                              onPressed: () async {
+                                var position = await model.determinePosition();
+                                model.latitude = position.latitude;
+                                model.latitude = position.longitude;
                                 model.signupBarScreen();
                               },
-                              child: model.checkSignupUser == false ? Text("Sign Up") : Loader(),
+                              child: model.checkSignupUser == false ? Text("Next") : Loader(),
                               style: ElevatedButton.styleFrom(
                                 primary: ColorUtils.text_red,
                                 onPrimary: ColorUtils.white,
