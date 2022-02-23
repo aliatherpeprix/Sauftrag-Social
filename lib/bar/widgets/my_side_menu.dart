@@ -93,7 +93,8 @@ class _MySideMenuState extends State<MySideMenu> {
                             width: 15.i,
                           )),
                       SizedBox(width: 2.5.w,),
-                      Flexible(
+                      Container(
+                        width: 30.w,
                         child: Text(
                           model.barModel!.username!,
                           style: TextStyle(

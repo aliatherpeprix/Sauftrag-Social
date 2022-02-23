@@ -644,8 +644,12 @@ class _SignUpState extends State<SignUp> {
                                   },
                                   child: Row(
                                     children: [
-                                      Container(child: SvgPicture.asset(ImageUtils.locationIcon)
-                                      ),
+                                      GestureDetector(
+                                        onTap: (){
+
+                                        },
+                                          child: Container(child: SvgPicture.asset(ImageUtils.locationIcon)
+                                          )),
                                       SizedBox(width: 4.w),
                                       Expanded(
                                         child: TextField(

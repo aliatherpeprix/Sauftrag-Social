@@ -145,6 +145,7 @@ class _BarProfileState extends State<BarProfile> {
                                     width: 2.w,
                                   ),
                                   Column(
+                                    mainAxisSize: MainAxisSize.min,
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
@@ -159,12 +160,17 @@ class _BarProfileState extends State<BarProfile> {
                                       SizedBox(
                                         height: 1.h,
                                       ),
-                                      Text(
-                                        model.barModel!.address!,
-                                        style: TextStyle(
-                                          color: ColorUtils.text_grey,
-                                          fontFamily: FontUtils.modernistBold,
-                                          fontSize: 1.7.t,
+                                      Container(
+                                        width: 50.w,
+                                        child: Text(
+                                          model.barModel!.address!,
+                                          style: TextStyle(
+                                            overflow: TextOverflow.ellipsis,
+                                            color: ColorUtils.text_grey,
+                                            fontFamily: FontUtils.modernistBold,
+                                            fontSize: 1.7.t,
+                                          ),
+                                          maxLines: 2,
                                         ),
                                       ),
                                     ],
