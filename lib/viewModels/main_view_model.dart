@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:contacts_service/contacts_service.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,10 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
+import 'package:sauftrag/models/request_match_model.dart';
+import 'package:sauftrag/models/user_matched.dart';
+import 'package:sauftrag/models/user_models.dart' as userModel;
 import 'package:mime/mime.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:sauftrag/app/locator.dart';
@@ -1327,8 +1333,7 @@ class MainViewModel extends BaseViewModel {
 
   bool userMatchLoader = false;
 
-
-  void UserMatches(BuildContext context,dynamic id) async {
+  void UserMatches(BuildContext context, dynamic id) async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
     catalogImages = [];
 
@@ -1336,12 +1341,11 @@ class MainViewModel extends BaseViewModel {
       userMatchLoader = true;
       notifyListeners();
 
-      var matchParams = FormData.fromMap({
-        'customer2':id
-      });
+      var matchParams = FormData.fromMap({'customer2': id});
       print(matchParams);
 
-      var response = await dio.post("${Constants.matchUser}",data: matchParams,
+      var response = await dio.post("${Constants.matchUser}",
+          data: matchParams,
           options: Options(
               contentType: Headers.formUrlEncodedContentType,
               headers: {"Authorization": "Token ${user!.token}"}));
@@ -1360,19 +1364,194 @@ class MainViewModel extends BaseViewModel {
         notifyListeners();
       }
     } on DioError catch (e) {
-      var errorResponse =e.response!.data['customer2'][0];
-      if(errorResponse == "This field must be unique."){
+      print(e.response!.data['details']);
+      var errorResponse = e.response!.data['details'];
+      userMatchLoader = false;
+      notifyListeners();
+      if (errorResponse == "Match Request Already sent") {
         DialogUtils().showDialog(MyErrorWidget(
           error: "Request Already Send",
         ));
       }
-      print(e.response!.data['customer2'][0]);
+      // print(e.response!.data['customer2'][0]);
       getDiscover(context);
       userMatchLoader = false;
       notifyListeners();
     }
   }
 
+  List<RequestMatchModel> requestModel = [];
+  bool matchesLoader = false;
+
+  void requestMatches(BuildContext context) async {
+    UserModel? user = await locator<PrefrencesViewModel>().getUser();
+
+    catalogImages = [];
+    try {
+      matchesLoader = true;
+      notifyListeners();
+      // user!.token!
+      var response = await dio.get("${Constants.requestMatchUser}",
+          options: Options(
+              contentType: Headers.formUrlEncodedContentType,
+              headers: {"Authorization": "Token ${user!.token!}"}));
+      print(response);
+
+      if (response.statusCode == 200) {
+        requestModel = (response.data as List)
+            .map((e) => RequestMatchModel.fromJson(e))
+            .toList();
+
+        for (UserModel userName in discoverModel!) {
+          matchName.add(userName.toJson()['username']);
+        }
+        for (UserModel user in discoverModel!) {
+          List<String> images = [];
+          for (int i = 1; i < 6; i++) {
+            if (user.toJson()["catalogue_image${i}"] != null) {
+              images.add(user.toJson()["catalogue_image${i}"]);
+            }
+          }
+          catalogImages.add(images);
+          print(images);
+        }
+
+        print(discoverModel!.length);
+
+        matchesLoader = false;
+        notifyListeners();
+      } else {
+        print(response.statusCode);
+        matchesLoader = false;
+        notifyListeners();
+        // showErrorMessage(context, 'Something went wrong. Please try again');
+      }
+    } on DioError catch (e) {
+      print(e);
+      matchesLoader = false;
+      notifyListeners();
+
+      // if (e.response!.statusCode == 404) {
+      //   navigationService.navigateToReplacement(to: NotFound());
+      // } else if (e.response!.statusCode == 500) {
+      //   navigationService.navigateToReplacement(to: ServerError());
+      // } else {
+      //   showErrorMessage(context,
+      //       'Unable to process your request at this time. Please try again');
+      // }
+    }
+  }
+
+  Future orderDrinks() async {
+    Drinkorder().DrinkOrder(int.parse(result!.code!), drinksSelected);
+  }
+
+  bool acceptRequestLoader = false;
+
+  void acceptRequest(BuildContext context, dynamic id) async {
+    UserModel? user = await locator<PrefrencesViewModel>().getUser();
+    catalogImages = [];
+    try {
+      matchesLoader = true;
+      notifyListeners();
+
+      var requestAccept = FormData.fromMap({'id': id});
+
+      print(requestAccept);
+
+      var response = await dio.post("${Constants.requestAccept}",
+          data: requestAccept,
+          options: Options(
+              contentType: Headers.formUrlEncodedContentType,
+              headers: {"Authorization": "Token ${user!.token}"}));
+      print(response);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        DialogUtils().showDialog(MyErrorWidget(
+          error: "Request Send Successfully",
+        ));
+        matchesLoader = false;
+        notifyListeners();
+      } else {
+        DialogUtils().showDialog(MyErrorWidget(
+          error: "Something went wrong",
+        ));
+        print(response.statusCode);
+
+        matchesLoader = false;
+        notifyListeners();
+        matchesLoader = false;
+        notifyListeners();
+      }
+    } on DioError catch (e) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Something went wrong",
+      ));
+      print(e);
+      matchesLoader = false;
+      notifyListeners();
+    }
+  }
+
+  bool matched = false;
+
+  List<UserMatchedModel> acceptMatchedtModel = [];
+  bool acceptMatchesLoader = false;
+
+  List matcheImages = [];
+  List matcheName = [];
+
+  void acceptMatched(BuildContext context) async {
+    UserModel? user = await locator<PrefrencesViewModel>().getUser();
+
+    matcheImages = [];
+    try {
+      acceptMatchesLoader = true;
+      notifyListeners();
+      // user!.token!
+      var response = await dio.get("${Constants.matchUser}",
+          options: Options(
+              contentType: Headers.formUrlEncodedContentType,
+              headers: {"Authorization": "Token ${user!.token!}"}));
+      print(response);
+
+      if (response.statusCode == 200) {
+        acceptMatchedtModel = (response.data as List)
+            .map((e) => UserMatchedModel.fromJson(e))
+            .toList();
+
+        for (UserModel userName in discoverModel!) {
+          matcheName.add(userName.toJson()['username']);
+        }
+
+        for (UserModel user in discoverModel!) {
+          List<String> images = [];
+          for (int i = 1; i < 6; i++) {
+            if (user.toJson()["catalogue_image${i}"] != null) {
+              images.add(user.toJson()["catalogue_image${i}"]);
+            }
+          }
+          matcheImages.add(images);
+          print(images);
+        }
+
+        print(discoverModel!.length);
+
+        acceptMatchesLoader = false;
+        notifyListeners();
+      } else {
+        print(response.statusCode);
+        acceptMatchesLoader = false;
+        notifyListeners();
+
+        // showErrorMessage(context, 'Something went wrong. Please try again');
+      }
+    } on DioError catch (e) {
+      print(e);
+      acceptMatchesLoader = false;
+      notifyListeners();
+    }
+  }
 
 // QrImage(
 // data: "123457890",

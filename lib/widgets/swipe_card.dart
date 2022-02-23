@@ -95,9 +95,10 @@ class _SwipeCardState extends State<SwipeCard> {
             onDismissed: (DismissDirection direction) {
               //_swipeAnimation();
               if (direction == DismissDirection.endToStart) {
-                widget.dismissImg(widget.img);
+                widget.dismissImg(widget.img,model);
               } else {
-                widget.addImg(widget.img);
+
+                widget.addImg(widget.img,model);
               }
             },
             child: StreamBuilder(
@@ -111,7 +112,8 @@ class _SwipeCardState extends State<SwipeCard> {
                     transform: new Matrix4.skewX(widget.skew),
                     //transform: new Matrix4.rotationX(flag == 0 ? rotation / 360 : -rotation / 360),
                     //..rotateX(-math.pi / rotation),
-                    child: RotationTransition(turns: AlwaysStoppedAnimation(widget.flag == 0 ? widget.rotation / 360 : -widget.rotation / 360),
+                    child: RotationTransition(turns:
+                    AlwaysStoppedAnimation(widget.flag == 0 ? widget.rotation / 360 : -widget.rotation / 360),
                       child: Container(
                         alignment: Alignment.center,
                         width: screenSize.width / 1.1 + widget.cardWidth,
@@ -164,7 +166,6 @@ class _SwipeCardState extends State<SwipeCard> {
                                       ),
                                       axisDirection: Axis.vertical,
                                       onDotClicked: (index){
-
                                       }
                                   ),
                                 )
@@ -175,14 +176,15 @@ class _SwipeCardState extends State<SwipeCard> {
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
-
                                       ElevatedButton(
                                         onPressed: () {
-                                          widget.swipeLeft();
+                                          // widget.swipeLeft(0);
+                                          // print(model.catalogImages[]);
+                                          model.catalogImages!.remove(widget.img);
+                                          model.notifyListeners();
                                         },
                                         child: SvgPicture.asset(ImageUtils.dislikeIcon),
                                         style: ElevatedButton.styleFrom(
@@ -208,17 +210,20 @@ class _SwipeCardState extends State<SwipeCard> {
                                       FloatingActionButton(
                                         onPressed: (){
                                           //_matchEngine.rewindMatch();
+                                          controller.animateToPage(0, duration: Duration(milliseconds: 200), curve: Curves.easeIn);
                                         },
                                         child: SvgPicture.asset(ImageUtils.repeatIcon),
                                         backgroundColor: ColorUtils.white,
                                       ),
 
+
                                       ElevatedButton(
                                         onPressed: () {
+                                          // widget.swipeRight(0);
                                           model.UserMatches(context,widget.id!);
                                           model.notifyListeners();
                                         },
-                                        child:model.userMatchLoader?Center(child: Loader()): SvgPicture.asset(ImageUtils.likeIcon),
+                                        child:SvgPicture.asset(ImageUtils.likeIcon),
                                         style: ElevatedButton.styleFrom(
                                           shadowColor: Colors.green,
                                           primary: Colors.green.withOpacity(0.9),

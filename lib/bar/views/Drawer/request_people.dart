@@ -31,46 +31,71 @@ class _RequestedPeopleState extends State<RequestedPeople> {
           onTap: () {
             FocusScope.of(context).unfocus();
           },
-          child: SafeArea(
-              top: false,
-              bottom: false,
-              child: Scaffold(
-                  backgroundColor: ColorUtils.white,
-                  body: SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      child: Container(
-                        margin: EdgeInsets.only(left: 5.w),
-                        child: GridView.builder(
-                          itemCount: matchedImg.length,
-                          scrollDirection: Axis.vertical,
-                          physics: BouncingScrollPhysics(),
-                          shrinkWrap: true,
-                          primary: true,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  // childAspectRatio: 2.5,
-                                  crossAxisCount: 2,
-                                  // crossAxisSpacing: 2,
-                                  mainAxisSpacing: 30),
-                          itemBuilder: (BuildContext context, int index) {
-                            return GestureDetector(
-                              onTap: () {
-                                model.navigateToFollowerList();
-                              },
-                              child: Stack(
-                                children: [
-                                  Image.asset(
-                                    matchedImg[index]['image'],
-                                  ),
-                                  PositionedDirectional(
-                                      bottom: 0,
-                                      child: Container(
-                                        width: 34.5.w,
-                                        decoration: BoxDecoration(
-                                          color: Colors.grey.withOpacity(0.7),
-                                          borderRadius: BorderRadius.only(
-                                              bottomRight: Radius.circular(10),
-                                              bottomLeft: Radius.circular(10)),
+          child: model.matchesLoader
+              ? Center(child: AllPageLoader())
+              : SafeArea(
+                  top: false,
+                  bottom: false,
+                  child: Scaffold(
+                      backgroundColor: ColorUtils.white,
+                      body: SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(),
+                          child: Container(
+                            margin: EdgeInsets.only(left: 5.w),
+                            child: GridView.builder(
+                              itemCount: model.requestModel.length,
+                              scrollDirection: Axis.vertical,
+                              physics: BouncingScrollPhysics(),
+                              shrinkWrap: true,
+                              primary: true,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                      // childAspectRatio: 2.5,
+                                      crossAxisCount: 2,
+                                      // crossAxisSpacing: 2,
+                                      mainAxisSpacing: 30),
+                              itemBuilder: (BuildContext context, int index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    // model.navigationService.navigateToEventDetailScreen(model.barEventModel?[index].media?[index].media ??'',model.barEventModel![index].name,model.barEventModel![index].eventDate,model.barEventModel![index].startTime,model.barEventModel![index].endTime,model.barEventModel![index].location,model.barEventModel![index].about);
+
+                                    // model.navigateToFollowerList();
+                                  },
+                                  child: Stack(
+                                    children: [
+                                      Image.network(
+                                        model.requestModel[index].user!
+                                            .profilePicture,
+                                        height: 20.h,
+                                        width: 34.w,
+                                      ),
+                                      PositionedDirectional(
+                                        bottom: 6.h,
+                                        child: Row(
+                                          children: [
+                                            SizedBox(width: 3.w,),
+                                            GestureDetector(
+                                              onTap: (){
+                                               model.requestModel.removeAt(index);
+                                               model.notifyListeners();
+                                              },
+                                              child: SvgPicture.asset(
+                                                  ImageUtils.dislikeIcon,
+                                                height: 5.h,
+                                              ),
+                                            ),
+                                            SizedBox(width: 8.w,),
+                                            GestureDetector(
+                                              onTap: (){
+                                                model.acceptRequest(context,model.requestModel[index].id);
+                                                print(model.requestModel[index].id);
+                                              },
+                                              child: SvgPicture.asset(
+                                                  ImageUtils.likeIcon,
+                                                height: 5.h,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                         padding: EdgeInsets.symmetric(
                                             vertical: 1.2.h, horizontal: 2.w),
