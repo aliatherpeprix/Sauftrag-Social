@@ -43,6 +43,7 @@ import 'package:sauftrag/services/createPost.dart';
 import 'package:sauftrag/services/dataProtection.dart';
 import 'package:sauftrag/services/drinksOrder.dart';
 import 'package:sauftrag/services/faqs.dart';
+import 'package:sauftrag/services/get_match_users.dart';
 
 import 'package:sauftrag/services/privacyPolicy.dart';
 import 'package:sauftrag/services/termsAndCondition.dart';
@@ -1008,6 +1009,19 @@ class MainViewModel extends BaseViewModel {
   }
 
   List<UserForChat> userForChats = [];
+  List<UserForChat> usersList = [];
+  List<UserForChat> barsList = [];
+
+  /// Get Match
+  var matchUser = MatchUsers();
+  List<UserModel> matchedUsers = [];
+
+  matchingUsers() async{
+   var response =  await matchUser.GetMatchedUsers();
+   matchedUsers = response;
+   notifyListeners();
+  }
+
   bool userComing = false;
   getAllUserForChat() async {
     userComing = true;
@@ -1021,6 +1035,10 @@ class MainViewModel extends BaseViewModel {
     print(response.data);
     userForChats =
         (response.data as List).map((e) => UserForChat.fromJson(e)).toList();
+    //usersList.add(userForChats.where((element) => element.id == 1).toList());
+    usersList = userForChats.where((element) => element.role == 1).toList();
+    barsList = userForChats.where((element) => element.role == 2).toList();
+    print(usersList);
     userComing = false;
     notifyListeners();
   }

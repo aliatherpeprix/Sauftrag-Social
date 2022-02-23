@@ -35,6 +35,7 @@ class Constants {
   static const String GetDataProtection = 'api/other/data-protection/';
   static const String GetFaqs = 'api/other/FAQs/';
   static const String order = 'api/order/create/';
+  static const String GetMatches = 'api/user/match/';
 
   static const String accountDelete = 'api/account/delete/';
   static const String accountDeactivate = 'api/account/deactivate/';

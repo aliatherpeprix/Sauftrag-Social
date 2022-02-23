@@ -9,6 +9,7 @@ class UserForChat {
   String? username;
   String? email;
   String? profile_picture;
+  int? role;
 
   factory UserForChat.fromJson(Map<String, dynamic> json) =>
       _$UserForChatFromJson(json);

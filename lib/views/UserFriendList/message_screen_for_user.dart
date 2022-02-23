@@ -821,33 +821,37 @@ class _MessageScreenForUserState extends State<MessageScreenForUser> {
                                   ),
                                   InkWell(
                                     onTap: () async {
-                                      NewBarModel barUser =
-                                          (await locator<PrefrencesViewModel>()
-                                              .getBarUser())!;
-                                      UserModel user =
-                                          (await locator<PrefrencesViewModel>()
-                                              .getUser())!;
-                                      // model.chat();
-                                      var pubnub = PubNub(
-                                          defaultKeyset: Keyset(
-                                              subscribeKey:
-                                                  'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
-                                              publishKey:
-                                                  'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
-                                              uuid: UUID(barUser.id.toString() +
-                                                  widget.id.toString())));
-                                      pubnub.publish(
-                                          barUser.id.toString() +
-                                              widget.id.toString(),
-                                          {
-                                            "content": model.groupScreenChatController.text,
-                                            "userID": barUser.id!.toString()
-                                          });
-                                      model.groupScreenChatController.clear();
-                                      model.notifyListeners();
-                                      Future.delayed(Duration(seconds: 2), () {
-                                      model.scrollDown();
-                                      });
+                                      if(model.groupScreenChatController.text.length != 0){
+                                        NewBarModel barUser =
+                                        (await locator<PrefrencesViewModel>()
+                                            .getBarUser())!;
+                                        UserModel user =
+                                        (await locator<PrefrencesViewModel>()
+                                            .getUser())!;
+                                        // model.chat();
+                                        var pubnub = PubNub(
+                                            defaultKeyset: Keyset(
+                                                subscribeKey:
+                                                'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
+                                                publishKey:
+                                                'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
+                                                uuid: UUID(barUser.id.toString() +
+                                                    widget.id.toString())));
+                                        pubnub.publish(
+                                            barUser.id.toString() +
+                                                widget.id.toString(),
+                                            {
+                                              "content": model
+                                                  .groupScreenChatController.text,
+                                              "userID": barUser.id!.toString()
+                                            });
+
+                                        model.groupScreenChatController.clear();
+                                        model.notifyListeners();
+                                        Future.delayed(Duration(seconds: 2), () {
+                                          model.scrollDown();
+                                        });
+                                      }
                                     },
                                     child: Container(
                                       //margin: EdgeInsets.only(bottom: 2.2.h),

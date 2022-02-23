@@ -55,7 +55,8 @@ class _FriendListForUserState extends State<FriendListForUser> {
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
       onModelReady: (model) {
-        model.getAllUserForChat();
+        //model.getAllUserForChat();
+        model.matchingUsers();
       },
       builder: (context, model, child) {
         return GestureDetector(
@@ -332,7 +333,8 @@ class _FriendListForUserState extends State<FriendListForUser> {
                                   ),
                                 ),
                               )
-                            : Expanded(
+                            :
+                        Expanded(
                                 child: TabBarView(
                                   children: [
                                     // first tab bar view widget
@@ -344,23 +346,44 @@ class _FriendListForUserState extends State<FriendListForUser> {
                                         itemBuilder: (context, index) {
                                           return GestureDetector(
                                             onTap: () {
-                                              Navigator.push(
-                                                  context,
-                                                  PageTransition(
-                                                      type: PageTransitionType
-                                                          .fade,
-                                                      child:
-                                                          MessageScreenForUser(
-                                                        id: model
-                                                            .userForChats[index]
-                                                            .id,
-                                                        username: model
-                                                            .userForChats[index]
-                                                            .username,
-                                                        profilePic: model
-                                                            .userForChats[index]
-                                                            .profile_picture,
-                                                      )));
+                                              if(model.userModel!.role == 1){
+                                                Navigator.push(
+                                                    context,
+                                                    PageTransition(
+                                                        type: PageTransitionType
+                                                            .fade,
+                                                        child:
+                                                        MessageScreenForUser(
+                                                          id: model
+                                                              .matchedUsers[index]
+                                                              .id,
+                                                          username: model
+                                                              .matchedUsers[index]
+                                                              .username,
+                                                          profilePic: model
+                                                              .matchedUsers[index]
+                                                              .profile_picture,
+                                                        )));
+                                              }
+                                              else{
+                                                Navigator.push(
+                                                    context,
+                                                    PageTransition(
+                                                        type: PageTransitionType
+                                                            .fade,
+                                                        child:
+                                                        MessageScreenForUser(
+                                                          id: model
+                                                              .barsList[index]
+                                                              .id,
+                                                          username: model
+                                                              .barsList[index]
+                                                              .username,
+                                                          profilePic: model
+                                                              .barsList[index]
+                                                              .profile_picture,
+                                                        )));
+                                              }
                                             },
                                             child: Column(
                                               children: [
@@ -380,10 +403,18 @@ class _FriendListForUserState extends State<FriendListForUser> {
                                                         CircleAvatar(
                                                           radius: 30.0,
                                                           backgroundImage:
-                                                              NetworkImage(model
-                                                                      .userForChats[
+                                                              model.userModel!.role == 1 ?
+                                                              NetworkImage(
+                                                                  model
+                                                                      .matchedUsers[
                                                                           index]
                                                                       .profile_picture ??
+                                                                  "https://tse2.mm.bing.net/th?id=OIP.4gcGG1F0z6LjVlJjYWGGcgHaHa&pid=Api&P=0&w=164&h=164")
+                                                              :
+                                                              NetworkImage(model
+                                                                  .matchedUsers[
+                                                              index]
+                                                                  .profile_picture ??
                                                                   "https://tse2.mm.bing.net/th?id=OIP.4gcGG1F0z6LjVlJjYWGGcgHaHa&pid=Api&P=0&w=164&h=164"),
                                                           backgroundColor:
                                                               Colors
@@ -417,9 +448,10 @@ class _FriendListForUserState extends State<FriendListForUser> {
                                                               CrossAxisAlignment
                                                                   .start,
                                                           children: [
+                                                            model.userModel!.role == 1 ?
                                                             Text(
                                                               model
-                                                                  .userForChats[
+                                                                  .matchedUsers[
                                                                       index]
                                                                   .username
                                                                   .toString(),
@@ -429,6 +461,21 @@ class _FriendListForUserState extends State<FriendListForUser> {
                                                                           .modernistBold,
                                                                   fontSize:
                                                                       1.9.t,
+                                                                  color: ColorUtils
+                                                                      .text_dark),
+                                                            ):
+                                                            Text(
+                                                              model
+                                                                  .barsList[
+                                                              index]
+                                                                  .username
+                                                                  .toString(),
+                                                              style: TextStyle(
+                                                                  fontFamily:
+                                                                  FontUtils
+                                                                      .modernistBold,
+                                                                  fontSize:
+                                                                  1.9.t,
                                                                   color: ColorUtils
                                                                       .text_dark),
                                                             ),
@@ -511,7 +558,10 @@ class _FriendListForUserState extends State<FriendListForUser> {
                                             height: 2.h,
                                           );
                                         },
-                                        itemCount: model.userForChats.length),
+                                        itemCount: model.userModel!.role == 1 ?
+                                        model.matchedUsers.length :
+                                        model.barsList.length
+                                    ),
 
                                     // second tab bar viiew widget
                                     GestureDetector(
