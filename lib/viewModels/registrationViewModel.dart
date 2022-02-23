@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get_utils/src/extensions/string_extensions.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -51,6 +52,9 @@ import 'package:stacked/stacked.dart';
 import '../main.dart';
 import 'main_view_model.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
+import "package:google_maps_webservice/geocoding.dart";
+import "package:google_maps_webservice/places.dart";
+import 'package:google_api_headers/google_api_headers.dart';
 
 
 class RegistrationViewModel extends BaseViewModel {
@@ -98,7 +102,7 @@ class RegistrationViewModel extends BaseViewModel {
   List<Marker> markers = <Marker>[];
   Completer<GoogleMapController> controller = Completer();
 
-  //For Loader
+  //For LoaderdeterminePosition
   bool logIn = false;
   bool signInUser = false;
   bool signInBar = false;

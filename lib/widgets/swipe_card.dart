@@ -184,6 +184,9 @@ class _SwipeCardState extends State<SwipeCard> {
                                           // widget.swipeLeft(0);
                                           // print(model.catalogImages[]);
                                           model.catalogImages!.remove(widget.img);
+                                          if (model.catalogImages.isEmpty) {
+                                            model.getDiscover(context);
+                                          }
                                           model.notifyListeners();
                                         },
                                           child: SvgPicture.asset(ImageUtils.dislikeIcon),
