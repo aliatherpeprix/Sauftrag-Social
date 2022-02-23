@@ -19,6 +19,7 @@ import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
 import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:sauftrag/widgets/back_arrow_with_container.dart';
+import 'package:sauftrag/widgets/loader.dart';
 import 'package:sauftrag/widgets/radler_dialog_box.dart';
 import 'package:stacked/stacked.dart';
 
@@ -31,8 +32,6 @@ class BarTimingAndType extends StatefulWidget {
 
 class _BarTimingAndTypeState extends State<BarTimingAndType> {
   DateTime _dateTime = DateTime.now();
-
-
 
   // @override
   // void didChangeDependencies() {
@@ -114,19 +113,19 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                         SizedBox(height: 3.h),
 
                         Wrap(
-                          spacing: 3.w,
-                          //runSpacing: 1.5.h,
+                          spacing: 1.8.w,
+                          runSpacing: 1.5.h,
                           direction: Axis.horizontal,
                           children: model.weekDaysList
                               .map((element) => GestureDetector(
                                     onTap: () {
-                                      if (model.selectedWeekDays.contains(element.day__id!
-                                      )) {
-                                        model.selectedWeekDays.remove(element.day__id!);
+                                      if (model.selectedWeekDays
+                                          .contains(element.day__id!)) {
+                                        model.selectedWeekDays
+                                            .remove(element.day__id!);
                                       } else {
-
-                                          model.selectedWeekDays.add(element.day__id!);
-
+                                        model.selectedWeekDays
+                                            .add(element.day__id!);
                                       }
                                       model.notifyListeners();
                                     },
@@ -140,13 +139,16 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                         //     ? ColorUtils.text_red
                                         //     : ColorUtils.icon_color,),
                                         borderRadius: BorderRadius.circular(4),
-                                        color: model.selectedWeekDays.contains(element.day__id!)
+                                        color: model.selectedWeekDays
+                                                .contains(element.day__id!)
                                             ? ColorUtils.text_red
                                             : ColorUtils.divider,
                                       ),
                                       child: Text(
-                                        model.weekDaysList[model.weekDaysList
-                                            .indexOf(element)].day__name!,
+                                        model
+                                            .weekDaysList[model.weekDaysList
+                                                .indexOf(element)]
+                                            .day__name!,
                                         style: TextStyle(
                                           color: model.selectedWeekDays
                                                   .contains(element.day__id!)
@@ -193,9 +195,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                             .then((value) {
                                           model.openingTimeFrom =
                                               value!.format(context);
-                                          setState(() {
-
-                                          });
+                                          setState(() {});
                                         });
                                       },
                                       child: Container(
@@ -444,7 +444,8 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                                 cancelText: "NOT NOW",
                                                 helpText: "BOOKING TIME")
                                             .then((value) {
-                                          model.breakTimeTo = value!.format(context);
+                                          model.breakTimeTo =
+                                              value!.format(context);
                                           model.notifyListeners();
                                         });
                                       },
@@ -518,8 +519,10 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                           children: model.weekendDaysList
                               .map((element) => GestureDetector(
                                     onTap: () {
-                                      if (model.selectedWeekendDays.contains(element.day__id!)) {
-                                        model.selectedWeekendDays.remove(element.day__id!);
+                                      if (model.selectedWeekendDays
+                                          .contains(element.day__id!)) {
+                                        model.selectedWeekendDays
+                                            .remove(element.day__id!);
                                       } else {
                                         /* if (element == "Radler") {
                                           showDialog(
@@ -535,7 +538,8 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                         /*  else {
 
                                         }*/
-                                        model.selectedWeekendDays.add(element.day__id!);
+                                        model.selectedWeekendDays
+                                            .add(element.day__id!);
                                       }
                                       model.notifyListeners();
                                     },
@@ -555,9 +559,11 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                                             : ColorUtils.divider,
                                       ),
                                       child: Text(
-                                        model.weekendDaysList[model
-                                            .weekendDaysList
-                                            .indexOf(element)].day__name!,
+                                        model
+                                            .weekendDaysList[model
+                                                .weekendDaysList
+                                                .indexOf(element)]
+                                            .day__name!,
                                         style: TextStyle(
                                           color: model.selectedWeekendDays
                                                   .contains(element.day__id!)
@@ -1041,7 +1047,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
 
                               //model.navigateToHomeBarScreen();
                             },
-                            child: const Text("Let's Get Started"),
+                            child: model.signInBar == false ? Text("Let's Get Started") : Loader(),
                             style: ElevatedButton.styleFrom(
                               primary: ColorUtils.text_red,
                               onPrimary: ColorUtils.white,

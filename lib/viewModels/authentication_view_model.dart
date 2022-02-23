@@ -28,9 +28,7 @@ import '../main.dart';
 import 'main_view_model.dart';
 
 class AuthenticationViewModel extends BaseViewModel {
-
   var dio = Dio();
-
 
   var addFavorite = Addfavorites();
   var navigationService = navigationViewModel;
@@ -58,6 +56,7 @@ class AuthenticationViewModel extends BaseViewModel {
 
   bool logInUserSelected = true;
   bool logInBarSelected = false;
+
   FocusNode logInUserFocus = new FocusNode();
   bool isLogInUserInFocus = false;
   final logInUserController = TextEditingController();
@@ -161,34 +160,6 @@ class AuthenticationViewModel extends BaseViewModel {
   bool isSignUpBarVerifyPasswordInFocus = false;
   FocusNode signUpBarVerifyPasswordFocus = new FocusNode();
 
-  // Future<Position> determinePosition() async {
-  //   bool serviceEnabled;
-  //   LocationPermission permission;
-  //
-  //   serviceEnabled = await Geolocator.isLocationServiceEnabled();
-  //   if (!serviceEnabled) {
-  //     await Geolocator.openLocationSettings();
-  //     return Future.error('Location services are disabled.');
-  //   }
-  //
-  //   permission = await Geolocator.checkPermission();
-  //   if (permission == LocationPermission.denied) {
-  //     permission = await Geolocator.requestPermission();
-  //     if (permission == LocationPermission.denied) {
-  //       return Future.error('Location permissions are denied');
-  //     }
-  //   }
-  //   if (permission == LocationPermission.deniedForever) {
-  //     await Geolocator.openAppSettings();
-  //
-  //     return Future.error('Location permissions are permanently denied, we cannot request permissions');
-  //   }
-  //
-  //   return await Geolocator.getCurrentPosition();
-  // }
-
-
-
   bool loginPasswordVisible = false;
 
   DateTime selectedDOB = DateTime.now();
@@ -220,10 +191,15 @@ class AuthenticationViewModel extends BaseViewModel {
     'Female': 2,
   };
 
-
   int relationStatusValue = 1;
   String relationStatusValueStr = "Single";
-  List<String> relationStatusList = ["Single", "Relationship", "Open Relationship", "It´s Complicated", "Married"];
+  List<String> relationStatusList = [
+    "Single",
+    "Relationship",
+    "Open Relationship",
+    "It´s Complicated",
+    "Married"
+  ];
   Map<String, int> relationStatusMap = {
     'Single': 1,
     'Relationship': 2,
@@ -231,7 +207,6 @@ class AuthenticationViewModel extends BaseViewModel {
     'It´s Complicated': 2,
     'Married': 1,
   };
-
 
   int kindOfBarValue = 1;
   String kindOfBarValueStr = "Cocktail";
@@ -328,7 +303,10 @@ class AuthenticationViewModel extends BaseViewModel {
 
   List<int> selectedWeekendDays = [];
 
-  List<String> weekendDaysList = ["Su", "Sa",];
+  List<String> weekendDaysList = [
+    "Su",
+    "Sa",
+  ];
 
   List<int> selectedBarKind = [];
 
@@ -369,20 +347,21 @@ class AuthenticationViewModel extends BaseViewModel {
   void initializeSplash() async {
     prefs = await SharedPreferences.getInstance();
 
-    Timer(Duration(seconds: 7), ()async {
-      if ((await prefss.getUser())!=null){
+    Timer(Duration(seconds: 7), () async {
+      if ((await prefss.getUser()) != null) {
         UserModel? user = await prefss.getUser();
-        if (user!.role==1){
+        NewBarModel? barUser = await prefss.getBarUser();
+        if (user!.role == 1) {
           navigationService.navigateToHomeScreen(0);
-        }else {
+        } else {
           navigationService.navigateToHomeBarScreen();
         }
-      }else {
+      } else {
         navigateToLoginScreen();
       }
-
     });
   }
+
   void showErrorMessage(BuildContext context, String error) async {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(
@@ -404,7 +383,6 @@ class AuthenticationViewModel extends BaseViewModel {
       duration: Duration(seconds: 1),
     ));
   }
-
 
   void selectRole(int role) {
     this.role = role;
@@ -467,20 +445,15 @@ class AuthenticationViewModel extends BaseViewModel {
   }
 
   barTiming(
-  String? openingTimeFrom,
-  String? openingTimeTo,
-  String? breakTimeFrom,
-  String? breakTimeTo,
-  String? weekEndOpeningTimeFrom,
-  String? weekEndOpeningTimeTo,
-  String? weekEndBreakTimeFrom,
-  String? weekEndBreakTimeTo
-
-  ) async {
-
-
+      String? openingTimeFrom,
+      String? openingTimeTo,
+      String? breakTimeFrom,
+      String? breakTimeTo,
+      String? weekEndOpeningTimeFrom,
+      String? weekEndOpeningTimeTo,
+      String? weekEndBreakTimeFrom,
+      String? weekEndBreakTimeTo) async {
     if (selectedWeekDays.isEmpty) {
-
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select at least one week day",
       ));
@@ -488,7 +461,6 @@ class AuthenticationViewModel extends BaseViewModel {
       return;
     }
     if (selectedWeekendDays.isEmpty) {
-
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select at least one weekend day",
       ));
@@ -496,7 +468,6 @@ class AuthenticationViewModel extends BaseViewModel {
       return;
     }
     if (selectedBarKind.isEmpty) {
-
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select at least one Kind of Bar",
       ));
@@ -504,7 +475,6 @@ class AuthenticationViewModel extends BaseViewModel {
       return;
     }
     if (openingTimeFrom!.isEmpty) {
-
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select bar week open time",
       ));
@@ -512,7 +482,6 @@ class AuthenticationViewModel extends BaseViewModel {
       return;
     }
     if (openingTimeTo!.isEmpty) {
-
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select bar week close time",
       ));
@@ -520,7 +489,6 @@ class AuthenticationViewModel extends BaseViewModel {
       return;
     }
     if (breakTimeFrom!.isEmpty) {
-
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select bar week break open time",
       ));
@@ -528,7 +496,6 @@ class AuthenticationViewModel extends BaseViewModel {
       return;
     }
     if (breakTimeTo!.isEmpty) {
-
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select bar week break close time",
       ));
@@ -536,7 +503,6 @@ class AuthenticationViewModel extends BaseViewModel {
       return;
     }
     if (weekEndOpeningTimeFrom!.isEmpty) {
-
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select bar weekend open time",
       ));
@@ -544,7 +510,6 @@ class AuthenticationViewModel extends BaseViewModel {
       return;
     }
     if (weekEndOpeningTimeTo!.isEmpty) {
-
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select bar weekend close time",
       ));
@@ -552,7 +517,6 @@ class AuthenticationViewModel extends BaseViewModel {
       return;
     }
     if (weekEndBreakTimeFrom!.isEmpty) {
-
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select bar weekend break open time",
       ));
@@ -560,25 +524,19 @@ class AuthenticationViewModel extends BaseViewModel {
       return;
     }
     if (weekEndBreakTimeTo!.isEmpty) {
-
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select bar weekend break open time",
       ));
       notifyListeners();
       return;
-    }
-
-    else {
-
+    } else {
       NewBarModel? barmodel = await prefrencesViewModel.getBarUser();
 
       List<int> weekDaysTiming = selectedWeekDays;
       List<int> weekendDaysTiming = selectedWeekendDays;
       //List<int> barKind = CommonFunctions.AddFromList(selectedBarKind);
 
-
       var barSignupResponse = await updateBar.UpdateBar(
-
         barmodel!.bar_name!,
         barmodel.address!,
         barmodel.email!,
@@ -597,34 +555,25 @@ class AuthenticationViewModel extends BaseViewModel {
         barmodel.weekend_days!.break_opening_time!,
         barmodel.weekend_days!.break_closing_time!,
         barmodel.id!.toString(),
-
-
       );
       print(barSignupResponse);
-      if(barSignupResponse is NewBarModel)
-      {
+      if (barSignupResponse is NewBarModel) {
         NewBarModel user = barSignupResponse;
         user.token = barmodel.token;
         user.password = signUpBarPasswordController.text;
         user.password2 = signUpBarVerifyPasswordController.text;
         await locator<PrefrencesViewModel>().saveBarUser(user);
-
       }
-
     }
-
 
     //navigateToHomeBarScreen();
   }
 
-
   addBarImages() {
-
-    for(int i=0; i<imageFiles.length; i++){
-      if (i == 0){
-        if( (imageFiles[i] is String &&
-            (imageFiles[i] as String).isEmpty) ||
-            imageFiles[i].path.isEmpty){
+    for (int i = 0; i < imageFiles.length; i++) {
+      if (i == 0) {
+        if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
+            imageFiles[i].path.isEmpty) {
           DialogUtils().showDialog(MyErrorWidget(
             error: "Select Bar Logo",
           ));
@@ -632,17 +581,15 @@ class AuthenticationViewModel extends BaseViewModel {
         }
       }
       bool hasImages = false;
-      if(i>0){
-        if(!hasImages){
-          if( (imageFiles[i] is String &&
-              (imageFiles[i] as String).isEmpty) ||
-              imageFiles[i].path.isEmpty){
+      if (i > 0) {
+        if (!hasImages) {
+          if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
+              imageFiles[i].path.isEmpty) {
             DialogUtils().showDialog(MyErrorWidget(
               error: "Select at least one Bar Image",
             ));
             return;
-          }
-          else {
+          } else {
             hasImages = true;
             break;
           }
@@ -697,22 +644,18 @@ class AuthenticationViewModel extends BaseViewModel {
     navigateToCheckEmailScreen();
   }
 
-
-
   createBarAccount() {
     if (signUpBarUserController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "User Name is required",
       ));
       return;
-    }
-    else if (signUpBarAddressController.text.isEmpty) {
+    } else if (signUpBarAddressController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Address is required",
       ));
       return;
-    }
-    else if (signUpBarPasswordController.text.isEmpty) {
+    } else if (signUpBarPasswordController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Password is required",
       ));
@@ -745,8 +688,7 @@ class AuthenticationViewModel extends BaseViewModel {
       DialogUtils().showDialog(MyErrorWidget(
           error: "Password should contain at least one special character"));
       return;
-    }
-    else if (signUpBarVerifyPasswordController.text.isEmpty) {
+    } else if (signUpBarVerifyPasswordController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Verify Password is required",
       ));
@@ -757,9 +699,7 @@ class AuthenticationViewModel extends BaseViewModel {
         error: "Password & Verify Password don't match",
       ));
       return;
-    } else {
-
-    }
+    } else {}
     navigateToUploadBarMedia();
   }
 
@@ -893,12 +833,11 @@ class AuthenticationViewModel extends BaseViewModel {
     navigationService.navigateToOrderDetailsScreen();
   }
 
-
-  convert (){
+  convert() {
     String s = "00:00";
-    startTime = TimeOfDay(hour:int.parse(s.split(":")[0]),minute: int.parse(s.split(":")[1]));
+    startTime = TimeOfDay(
+        hour: int.parse(s.split(":")[0]), minute: int.parse(s.split(":")[1]));
   }
-
 
   void navigateToFollowerList() {
     navigationService.navigateToFollowerList();
@@ -947,8 +886,7 @@ class AuthenticationViewModel extends BaseViewModel {
 
   List eventDate = [];
 
-  void validateCreateEvent(BuildContext context) async{
-
+  void validateCreateEvent(BuildContext context) async {
     if (titleController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Title is required",
@@ -964,7 +902,7 @@ class AuthenticationViewModel extends BaseViewModel {
       notifyListeners();
       return;
     }
-    else  if (imageFiles[0].path.isEmpty) {
+    else  if (eventFiles[0].path.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Image is required",
       ));
@@ -999,9 +937,11 @@ class AuthenticationViewModel extends BaseViewModel {
       ));
       notifyListeners();
       return;
-    }else{
-      openingTimeTo = "${convertOpeningTimeTo!.hour.toString()}:${convertOpeningTimeTo!.minute.toString()}";
-      openingTimeFrom =  "${convertOpeningTimeFrom!.hour.toString()}:${convertOpeningTimeFrom!.minute.toString()}";
+    } else {
+      openingTimeTo =
+          "${convertOpeningTimeTo!.hour.toString()}:${convertOpeningTimeTo!.minute.toString()}";
+      openingTimeFrom =
+          "${convertOpeningTimeFrom!.hour.toString()}:${convertOpeningTimeFrom!.minute.toString()}";
 
       eventDate = selectedEventDate.toString().split(' ');
 
@@ -1019,6 +959,7 @@ class AuthenticationViewModel extends BaseViewModel {
 
   void createEvent() async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
+
     List files = [];
 
 
@@ -1040,19 +981,19 @@ class AuthenticationViewModel extends BaseViewModel {
         "about": descriptionController.text,
         "lat": "24.00075",
         "long": "24.00075",
-        "location":locationController.text,
+        "location": locationController.text,
         "event_date": eventDate[0],
         "start_time": openingTimeFrom,
         "end_time": openingTimeTo,
         "media":files
         };
+      print(createEventParams);
       var response = await dio.post(
           Constants.GetEvents, data: createEventParams, options: Options(
           headers: {
             "Authorization": "Token ${user!.token!}"
           }
       ));
-
       print("-------------response----------");
 
       if (response.statusCode == 201) {

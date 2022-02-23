@@ -10,6 +10,7 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:stacked/stacked.dart';
 
 class MapScreen extends StatefulWidget {
@@ -93,10 +94,10 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<MainViewModel>.reactive(
-      viewModelBuilder: () => locator<MainViewModel>(),
-      onModelReady: (model) =>
-      {  },
+    return ViewModelBuilder<RegistrationViewModel>.reactive(
+      viewModelBuilder: () => locator<RegistrationViewModel>(),
+      onModelReady: (model) {
+      },
       disposeViewModel: false,
       builder: (context, model, child) {
         return SafeArea(
@@ -399,7 +400,7 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
-  void filter(context, MainViewModel mainModel) {
+  void filter(context, RegistrationViewModel mainModel) {
     showModalBottomSheet(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(25.0),
@@ -410,7 +411,7 @@ class _MapScreenState extends State<MapScreen> {
         builder: (BuildContext context) {
           return ViewModelBuilder.reactive(
             disposeViewModel: false,
-            viewModelBuilder: () => locator<MainViewModel>(),
+            viewModelBuilder: () => locator<RegistrationViewModel>(),
             builder: (context, model, child) {
               return Container(
                 // decoration: BoxDecoration(

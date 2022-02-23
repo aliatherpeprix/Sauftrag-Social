@@ -56,7 +56,12 @@ class _CreateBarEventState extends State<CreateBarEvent> {
   Widget build(BuildContext context) {
     return ViewModelBuilder<AuthenticationViewModel>.reactive(
       onModelReady: (model){
-        // model.determinePosition();
+       model.titleController.clear();
+        model.descriptionController.clear();
+        model.locationController.clear();
+        model.eventDate.clear();
+        model.openingTimeTo = null;
+        model.openingTimeFrom = null;
       },
       viewModelBuilder: () => locator<AuthenticationViewModel>(),
       disposeViewModel: false,
@@ -306,8 +311,10 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                       alignment: Alignment.bottomRight,
                                       child: IconButton(
                                         onPressed: () {
+
                                           model.eventFiles.removeAt(0);
                                           model.eventFiles.insert(0, File(""));
+
                                           model.notifyListeners();
                                         },
                                         icon: SvgPicture.asset(
@@ -368,6 +375,7 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                         onPressed: () {
                                           model.eventFiles.removeAt(1);
                                           model.eventFiles.insert(1, File(""));
+
                                           model.notifyListeners();
                                         },
                                         icon: SvgPicture.asset(
@@ -426,8 +434,10 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                       alignment: Alignment.bottomRight,
                                       child: IconButton(
                                         onPressed: () {
+
                                           model.eventFiles.removeAt(2);
                                           model.eventFiles.insert(2, File(""));
+
                                           model.notifyListeners();
                                         },
                                         icon: SvgPicture.asset(
@@ -486,8 +496,10 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                       alignment: Alignment.bottomRight,
                                       child: IconButton(
                                         onPressed: () {
+
                                           model.eventFiles.removeAt(3);
                                           model.eventFiles.insert(3, File(""));
+
                                           model.notifyListeners();
                                         },
                                         icon: SvgPicture.asset(

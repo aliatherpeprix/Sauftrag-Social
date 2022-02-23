@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/bar/views/Drawer/follower_profile.dart';
+import 'package:sauftrag/models/bar_model.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/extensions.dart';
@@ -22,8 +25,11 @@ class _FollowersState extends State<Followers> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<MainViewModel>.reactive(
-
       viewModelBuilder: () => locator<MainViewModel>(),
+      onModelReady: (model) {
+        model.followers();
+        model.barModel;
+      },
       disposeViewModel: false,
       builder: (context, model, child) {
         return SafeArea(
@@ -35,8 +41,9 @@ class _FollowersState extends State<Followers> {
               children: [
                 SizedBox(height: Dimensions.topMargin),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding),
-                  child:  Row(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: Dimensions.horizontalPadding),
+                  child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       IconButton(
@@ -63,9 +70,13 @@ class _FollowersState extends State<Followers> {
                     ],
                   ),
                 ),
-                SizedBox(height: 2.5.h,),
+                SizedBox(
+                  height: 2.5.h,
+                ),
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding, ),
+                  margin: EdgeInsets.symmetric(
+                    horizontal: Dimensions.horizontalPadding,
+                  ),
                   //width: 200.0,
                   // margin: EdgeInsets.only(
                   //     left: SizeConfig.widthMultiplier * 4.5,
@@ -109,8 +120,7 @@ class _FollowersState extends State<Followers> {
                                 border: InputBorder.none,
                                 isDense: true,
                                 contentPadding: EdgeInsets.symmetric(
-                                    vertical:
-                                    SizeConfig.heightMultiplier * 2),
+                                    vertical: SizeConfig.heightMultiplier * 2),
                               ),
                             ),
                           ),
@@ -119,7 +129,11 @@ class _FollowersState extends State<Followers> {
                     ),
                   ),
                 ),
-
+                // ElevatedButton(
+                //     onPressed: () {
+                //       model.followers();
+                //     },
+                //     child: Text("data")),
                 Expanded(
                   child: ListView.separated(
                     scrollDirection: Axis.vertical,
@@ -127,13 +141,25 @@ class _FollowersState extends State<Followers> {
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return Padding(
-                        padding: EdgeInsets.symmetric(horizontal:SizeConfig.widthMultiplier * 4,),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: SizeConfig.widthMultiplier * 4,
+                        ),
                         child: GestureDetector(
-                          onTap: (){
-                            model.navigateToFollowerList();
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => FollowerProfile(
+                                          username: model.follower[index]
+                                              .follow_by!.username,
+                                          profilePicture: model.follower[index]
+                                              .follow_by!.profile_picture,
+                                          address: model.follower[index]
+                                              .follow_by!.address,
+                                        )));
                           },
                           child: Container(
-                            padding: EdgeInsets.symmetric( horizontal: 2.w),
+                            padding: EdgeInsets.symmetric(horizontal: 2.w),
                             decoration: BoxDecoration(
                               // boxShadow: [
                               //   BoxShadow(
@@ -144,7 +170,8 @@ class _FollowersState extends State<Followers> {
                               //   ),
                               // ],
                               color: Colors.white,
-                              borderRadius: BorderRadius.all(Radius.circular(18)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(18)),
                               // border: Border.all(color: ColorUtils.text_red),
                             ),
                             child: Row(
@@ -155,41 +182,47 @@ class _FollowersState extends State<Followers> {
                                   children: [
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
-                                      child: Image.asset(model.notifications[index]["image"],
+                                      child: Image.network(
+                                        model.follower[index].follow_by!
+                                            .profile_picture
+                                            .toString(),
                                         width: 15.i,
                                         height: 15.i,
                                         fit: BoxFit.cover,
                                       ),
                                     ),
-                                    SizedBox(width: 3.w,),
-                                    Text(model.notifications[index]["title"],
+                                    SizedBox(
+                                      width: 3.w,
+                                    ),
+                                    Text(
+                                      model.follower[index].follow_by!.username
+                                          .toString(),
                                       style: TextStyle(
                                           fontFamily: FontUtils.modernistBold,
                                           fontSize: 2.2.t,
-                                          color: ColorUtils.black
-                                      ),
+                                          color: ColorUtils.black),
                                     ),
-
                                   ],
                                 ),
-                                SizedBox(width: 2.w,),
+                                SizedBox(
+                                  width: 2.w,
+                                ),
                                 Container(
                                   child: ElevatedButton(
-                                    onPressed: () {
-                                    },
+                                    onPressed: () {},
                                     child: Text("Followers"),
                                     style: ElevatedButton.styleFrom(
                                       primary: ColorUtils.text_red,
                                       onPrimary: ColorUtils.white,
-                                      padding: EdgeInsets.symmetric(vertical: 1.2.h, horizontal: 4.w),
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 1.2.h, horizontal: 4.w),
                                       elevation: 0,
                                       shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(Dimensions.roundCorner),
+                                          borderRadius: BorderRadius.circular(
+                                              Dimensions.roundCorner),
                                           side: BorderSide(
                                               color: ColorUtils.text_red,
-                                              width: 1
-                                          )
-                                      ),
+                                              width: 1)),
                                       textStyle: TextStyle(
                                         //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
                                         fontFamily: FontUtils.modernistBold,
@@ -206,12 +239,13 @@ class _FollowersState extends State<Followers> {
                       );
                     },
                     separatorBuilder: (context, index) {
-                      return SizedBox(height:  SizeConfig.heightMultiplier * 2.5,);
+                      return SizedBox(
+                        height: SizeConfig.heightMultiplier * 2.5,
+                      );
                     },
-                    itemCount: model.notifications.length,
+                    itemCount: model.follower.length,
                   ),
                 ),
-
               ],
             ),
           ),

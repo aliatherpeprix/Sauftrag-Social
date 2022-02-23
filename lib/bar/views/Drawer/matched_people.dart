@@ -4,6 +4,8 @@ import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
+import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/widgets/all_page_loader.dart';
 import 'package:stacked/stacked.dart';
 
 class MatchedPeople extends StatefulWidget {
@@ -101,7 +103,7 @@ class _MatchedPeopleState extends State<MatchedPeople> {
                           )))),
         );
       },
-      viewModelBuilder: () => locator<AuthenticationViewModel>(),
+      viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
     );
   }

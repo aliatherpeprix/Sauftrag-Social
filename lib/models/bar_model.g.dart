@@ -37,7 +37,9 @@ BarModel _$BarModelFromJson(Map<String, dynamic> json) => BarModel()
   ..terms_conditions = json['terms_conditions'] as bool?
   ..data_protection = json['data_protection'] as bool?
   ..password = json['password'] as String?
-  ..password2 = json['password2'] as String?;
+  ..password2 = json['password2'] as String?
+  ..latitude = (json['latitude'] as num?)?.toDouble()
+  ..longitude = (json['longitude'] as num?)?.toDouble();
 
 Map<String, dynamic> _$BarModelToJson(BarModel instance) => <String, dynamic>{
       'id': instance.id,
@@ -71,4 +73,6 @@ Map<String, dynamic> _$BarModelToJson(BarModel instance) => <String, dynamic>{
       'data_protection': instance.data_protection,
       'password': instance.password,
       'password2': instance.password2,
+      'latitude': instance.latitude,
+      'longitude': instance.longitude,
     };

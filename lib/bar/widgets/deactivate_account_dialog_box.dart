@@ -11,24 +11,25 @@ import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:stacked/stacked.dart';
 
 class DeactivateAccountDialog extends StatefulWidget {
-
   String title;
   String btnTxt;
   String icon;
 
-   DeactivateAccountDialog({Key? key, required this.title, required this.btnTxt, required this.icon}) : super(key: key);
+  DeactivateAccountDialog(
+      {Key? key, required this.title, required this.btnTxt, required this.icon})
+      : super(key: key);
 
   @override
-  _DeactivateAccountDialogState createState() => _DeactivateAccountDialogState();
+  _DeactivateAccountDialogState createState() =>
+      _DeactivateAccountDialogState();
 }
 
 class _DeactivateAccountDialogState extends State<DeactivateAccountDialog> {
   @override
   Widget build(BuildContext context) {
-
     return ViewModelBuilder<MainViewModel>.reactive(
       //onModelReady: (data) => data.initializeShareDialog(),
-      builder: (context, model, child){
+      builder: (context, model, child) {
         return Dialog(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
@@ -37,14 +38,12 @@ class _DeactivateAccountDialogState extends State<DeactivateAccountDialog> {
             backgroundColor: Colors.white,
             child: Stack(
               children: [
-
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-
                     IconButton(
-                      onPressed: (){
+                      onPressed: () {
                         model.navigateBack();
                       },
                       iconSize: 15.0,
@@ -52,26 +51,27 @@ class _DeactivateAccountDialogState extends State<DeactivateAccountDialog> {
                       //constraints: BoxConstraints(),
                       icon: SvgPicture.asset(ImageUtils.cancelIcon),
                     ),
-
                   ],
                 ),
-
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding, vertical: Dimensions.verticalPadding),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: Dimensions.horizontalPadding,
+                      vertical: Dimensions.verticalPadding),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-
                       SizedBox(height: 1.h),
-
-                      SvgPicture.asset(ImageUtils.deactivateIcon, height: 18.i,),
+                      SvgPicture.asset(
+                        ImageUtils.deactivateIcon,
+                        height: 18.i,
+                      ),
                       SizedBox(height: 3.h),
                       Container(
                         alignment: Alignment.center,
                         child: Text(
-                          "Do you really want to delete your account and make the radler lobby win???",
+                          "Do you really want to deactivate your account and make the radler lobby win???",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: ColorUtils.black,
@@ -86,24 +86,31 @@ class _DeactivateAccountDialogState extends State<DeactivateAccountDialog> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             GestureDetector(
-                              onTap: (){
+                              onTap: () {
                                 model.deleteSelected = true;
                                 model.deleteUnselected = false;
                                 model.notifyListeners();
+                                model.DeactivateAccount();
+                                model.navigateBack();
                               },
                               child: Container(
-                                padding: EdgeInsets.symmetric(vertical: 1.5.h, horizontal: 12.w),
-
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 1.5.h, horizontal: 12.w),
                                 decoration: BoxDecoration(
                                   shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                                  border: Border.all(color: ColorUtils.text_red),
-                                  color: model.deleteSelected == true ? ColorUtils.text_red
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15)),
+                                  border:
+                                      Border.all(color: ColorUtils.text_red),
+                                  color: model.deleteSelected == true
+                                      ? ColorUtils.text_red
                                       : Colors.white,
                                 ),
-                                child: Text("Yes",
+                                child: Text(
+                                  "Yes",
                                   style: TextStyle(
-                                    color: model.deleteSelected == true ? Colors.white
+                                    color: model.deleteSelected == true
+                                        ? Colors.white
                                         : ColorUtils.text_red,
                                     fontFamily: FontUtils.modernistRegular,
                                     fontSize: 1.8.t,
@@ -111,26 +118,34 @@ class _DeactivateAccountDialogState extends State<DeactivateAccountDialog> {
                                 ),
                               ),
                             ),
-                            SizedBox(width: 4.w,),
+                            SizedBox(
+                              width: 4.w,
+                            ),
                             GestureDetector(
-                              onTap: (){
+                              onTap: () {
                                 model.deleteUnselected = true;
                                 model.deleteSelected = false;
                                 model.notifyListeners();
+                                model.navigateBack();
                               },
                               child: Container(
-                                padding: EdgeInsets.symmetric(vertical: 1.5.h, horizontal: 12.w),
-
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 1.5.h, horizontal: 12.w),
                                 decoration: BoxDecoration(
-                                  color: model.deleteUnselected == true ? ColorUtils.text_red
+                                  color: model.deleteUnselected == true
+                                      ? ColorUtils.text_red
                                       : Colors.white,
                                   shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                                  border: Border.all(color: ColorUtils.text_red),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15)),
+                                  border:
+                                      Border.all(color: ColorUtils.text_red),
                                 ),
-                                child: Text("No",
+                                child: Text(
+                                  "No",
                                   style: TextStyle(
-                                    color: model.deleteUnselected == true ? Colors.white
+                                    color: model.deleteUnselected == true
+                                        ? Colors.white
                                         : ColorUtils.text_red,
                                     fontFamily: FontUtils.modernistRegular,
                                     fontSize: 1.8.t,
@@ -141,13 +156,11 @@ class _DeactivateAccountDialogState extends State<DeactivateAccountDialog> {
                           ],
                         ),
                       ),
-
                     ],
                   ),
                 ),
               ],
-            )
-        );
+            ));
       },
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,

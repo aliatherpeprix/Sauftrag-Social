@@ -6,11 +6,15 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/bar/views/Auth/media.dart';
 import 'package:sauftrag/bar/views/Home/bar_drinks.dart';
+import 'package:sauftrag/models/favorites_model.dart';
+import 'package:sauftrag/models/qr_scanner.dart';
+import 'package:sauftrag/services/barQRcode.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/constants.dart';
 import 'package:sauftrag/utils/dimensions.dart';
@@ -18,6 +22,7 @@ import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
+import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/views/Auth/favorite.dart';
 import 'package:stacked/stacked.dart';
 
@@ -54,7 +59,7 @@ class QRViewExample extends StatefulWidget {
 }
 
 class _QRViewExampleState extends State<QRViewExample> {
-  Barcode? result;
+
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   int count = 0;
@@ -73,8 +78,8 @@ class _QRViewExampleState extends State<QRViewExample> {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<AuthenticationViewModel>.reactive(
-      viewModelBuilder: () =>locator<AuthenticationViewModel>(),
+    return ViewModelBuilder<MainViewModel>.reactive(
+      viewModelBuilder: () =>locator<MainViewModel>(),
       disposeViewModel: false,
       builder : (context, model, child) {
         var navigationKey;
@@ -250,17 +255,35 @@ class _QRViewExampleState extends State<QRViewExample> {
 
   void _onQRViewCreated(QRViewController controller) {
 
+    MainViewModel model = locator<MainViewModel>();
     setState(() {
       this.controller = controller;
     });
-    controller.scannedDataStream.listen((scanData) {
+    controller.scannedDataStream.listen((scanData) async {
+
+      setState(() {
+        model.result = scanData;
+        model.notifyListeners();
+        print(model.result);
+      });
       if (count==0){
         count = count + 1;
-        Navigator.push(context, PageTransition(child: BarDrinks(), type: PageTransitionType.rightToLeftWithFade));
+        var getQRDrinkList = await BarQrcode().BarQrCode(model.result!.code);;
+        if (getQRDrinkList is List<FavoritesModel>) {
+          model.barQRcode = getQRDrinkList;
+          model.drinksSelected = [];
+          for (FavoritesModel drink in getQRDrinkList){
+            var order = {
+              drink.name : 0
+            };
+            model.drinksSelected.add(order);
+          }
+
+          //print(model.barQRcode);
+        }
+        // Navigator.pushReplacement(context, PageTransition(child: BarDrinks(),
+        //     type: PageTransitionType.rightToLeftWithFade));
       }
-      setState(() {
-        result = scanData;
-      });
     });
   }
 
@@ -275,7 +298,7 @@ class _QRViewExampleState extends State<QRViewExample> {
 
   @override
   void dispose() {
-    controller?.dispose();
+    controller!.dispose();
     super.dispose();
   }
 }

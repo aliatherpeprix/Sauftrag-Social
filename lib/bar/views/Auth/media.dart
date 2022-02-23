@@ -26,6 +26,7 @@ class _BarMediaState extends State<BarMedia> {
   Widget build(BuildContext context) {
     return ViewModelBuilder<RegistrationViewModel>.reactive(
       onModelReady: (model) {
+
         model.imageFiles = [
           File(""),
           File(""),
@@ -100,6 +101,109 @@ class _BarMediaState extends State<BarMedia> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
+
+                              model.imageFiles[0] is File
+                                  ?
+                              Container(
+                                  width:
+                                  MediaQuery.of(context).size.width / 3.4,
+                                  decoration: BoxDecoration(
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(20)),
+                                    image: (model.imageFiles[0] is String &&
+                                        (model.imageFiles[0] as String).isEmpty) ||
+                                        model.imageFiles[0].path.isEmpty
+                                        ? null
+                                        : DecorationImage(
+                                        image:
+                                        FileImage(model.imageFiles[0]),
+                                        fit: BoxFit.cover),
+                                  ),
+                                  child: Stack(
+                                    children: [
+                                      (model.imageFiles[0] is String &&
+                                          (model.imageFiles[0] as String).isEmpty) ||
+                                          model.imageFiles[0].path.isEmpty
+                                          ? InkWell(
+                                          onTap: () {
+                                            model.getImage(0);
+                                            model.notifyListeners();
+                                          },
+                                          child: DottedBorder(
+                                              color: ColorUtils.text_red,
+                                              strokeWidth: 1.5,
+                                              borderType: BorderType.RRect,
+                                              radius:
+                                              const Radius.circular(15),
+                                              dashPattern: [8],
+                                              child: Center(
+                                                child: Icon(
+                                                  Icons.add_rounded,
+                                                  color:
+                                                  ColorUtils.text_red,
+                                                  size: 8.i,
+                                                ),
+                                              )))
+                                          : Container(),
+                                      (model.imageFiles[0] is String &&
+                                          (model.imageFiles[0] as String).isEmpty) ||
+                                          model.imageFiles[0].path.isEmpty
+                                          ? Container()
+                                          : Align(
+                                        alignment: Alignment.bottomRight,
+                                        child: IconButton(
+                                          onPressed: () {
+                                            model.imageFiles.removeAt(0);
+                                            model.imageFiles.insert(0, File(""));
+                                            model.notifyListeners();
+                                          },
+                                          icon: SvgPicture.asset(
+                                              ImageUtils.cancelIcon),
+                                          //icon: Icon(Icons.cancel_outlined, color: ColorUtils.text_red,),
+                                          padding: EdgeInsets.zero,
+                                          constraints: BoxConstraints(),
+                                          color: ColorUtils.white,
+                                          highlightColor:
+                                          ColorUtils.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ))
+                                  :
+                              Container(
+                                  width:
+                                  MediaQuery.of(context).size.width / 3.4,
+                                  decoration: BoxDecoration(
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(20)),
+                                    image: DecorationImage(
+                                        image:
+                                        NetworkImage(model.imageFiles[0]),
+                                        fit: BoxFit.cover),
+                                  ),
+                                  child: Stack(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.bottomRight,
+                                        child: IconButton(
+                                          onPressed: () {
+                                            model.imageFiles.removeAt(0);
+                                            model.imageFiles.insert(0, File(""));
+                                            model.notifyListeners();
+                                          },
+                                          icon: SvgPicture.asset(
+                                              ImageUtils.cancelIcon),
+                                          //icon: Icon(Icons.cancel_outlined, color: ColorUtils.text_red,),
+                                          padding: EdgeInsets.zero,
+                                          constraints: BoxConstraints(),
+                                          color: ColorUtils.white,
+                                          highlightColor:
+                                          ColorUtils.white,
+                                        ),
+                                      ),
+                                    ],
+                                  )),
+
                               //Image 1
                               model.imageFiles[1] is File
                                   ?
@@ -306,6 +410,19 @@ class _BarMediaState extends State<BarMedia> {
                                     ],
                                   )),
 
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 3.h),
+
+                        //Images
+                        SizedBox(
+                          height: 20.h,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+
+
                               //Image 3
                               model.imageFiles[3] is File
                                   ?
@@ -408,18 +525,10 @@ class _BarMediaState extends State<BarMedia> {
                                       ),
                                     ],
                                   )),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: 3.h),
 
-                        //Images
-                        SizedBox(
-                          height: 20.h,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              //Image 5
+                              SizedBox(width: 2.2.w,),
+
+                              //Image 4
                               model.imageFiles[4] is File
                                   ?
                               Container(
@@ -522,7 +631,27 @@ class _BarMediaState extends State<BarMedia> {
                                     ],
                                   )),
 
-                              //Image 6
+
+                            ],
+                          ),
+                        ),
+
+                        SizedBox(height: 5.h),
+                        Text(
+                          "Bar Logo",
+                          style: TextStyle(
+                            color: ColorUtils.black,
+                            fontFamily: FontUtils.modernistBold,
+                            fontSize: 2.5.t,
+                          ),
+                        ),
+                        SizedBox(height: 3.h),
+                        SizedBox(
+                          height: 20.h,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              //Image 5
                               model.imageFiles[5] is File
                                   ?
                               Container(
@@ -610,127 +739,6 @@ class _BarMediaState extends State<BarMedia> {
                                           onPressed: () {
                                             model.imageFiles.removeAt(5);
                                             model.imageFiles.insert(5, File(""));
-                                            model.notifyListeners();
-                                          },
-                                          icon: SvgPicture.asset(
-                                              ImageUtils.cancelIcon),
-                                          //icon: Icon(Icons.cancel_outlined, color: ColorUtils.text_red,),
-                                          padding: EdgeInsets.zero,
-                                          constraints: BoxConstraints(),
-                                          color: ColorUtils.white,
-                                          highlightColor:
-                                          ColorUtils.white,
-                                        ),
-                                      ),
-                                    ],
-                                  )),
-                            ],
-                          ),
-                        ),
-
-                        SizedBox(height: 5.h),
-                        Text(
-                          "Bar Logo",
-                          style: TextStyle(
-                            color: ColorUtils.black,
-                            fontFamily: FontUtils.modernistBold,
-                            fontSize: 2.5.t,
-                          ),
-                        ),
-                        SizedBox(height: 3.h),
-                        SizedBox(
-                          height: 20.h,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              //Image 1
-                              model.imageFiles[0] is File
-                                  ?
-                              Container(
-                                  width:
-                                  MediaQuery.of(context).size.width / 3.4,
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(20)),
-                                    image: (model.imageFiles[0] is String &&
-                                        (model.imageFiles[0] as String).isEmpty) ||
-                                        model.imageFiles[0].path.isEmpty
-                                        ? null
-                                        : DecorationImage(
-                                        image:
-                                        FileImage(model.imageFiles[0]),
-                                        fit: BoxFit.cover),
-                                  ),
-                                  child: Stack(
-                                    children: [
-                                      (model.imageFiles[0] is String &&
-                                          (model.imageFiles[0] as String).isEmpty) ||
-                                          model.imageFiles[0].path.isEmpty
-                                          ? InkWell(
-                                          onTap: () {
-                                            model.getImage(0);
-                                            model.notifyListeners();
-                                          },
-                                          child: DottedBorder(
-                                              color: ColorUtils.text_red,
-                                              strokeWidth: 1.5,
-                                              borderType: BorderType.RRect,
-                                              radius:
-                                              const Radius.circular(15),
-                                              dashPattern: [8],
-                                              child: Center(
-                                                child: Icon(
-                                                  Icons.add_rounded,
-                                                  color:
-                                                  ColorUtils.text_red,
-                                                  size: 8.i,
-                                                ),
-                                              )))
-                                          : Container(),
-                                      (model.imageFiles[0] is String &&
-                                          (model.imageFiles[0] as String).isEmpty) ||
-                                          model.imageFiles[0].path.isEmpty
-                                          ? Container()
-                                          : Align(
-                                        alignment: Alignment.bottomRight,
-                                        child: IconButton(
-                                          onPressed: () {
-                                            model.imageFiles.removeAt(0);
-                                            model.imageFiles.insert(0, File(""));
-                                            model.notifyListeners();
-                                          },
-                                          icon: SvgPicture.asset(
-                                              ImageUtils.cancelIcon),
-                                          //icon: Icon(Icons.cancel_outlined, color: ColorUtils.text_red,),
-                                          padding: EdgeInsets.zero,
-                                          constraints: BoxConstraints(),
-                                          color: ColorUtils.white,
-                                          highlightColor:
-                                          ColorUtils.white,
-                                        ),
-                                      ),
-                                    ],
-                                  ))
-                                  :
-                              Container(
-                                  width:
-                                  MediaQuery.of(context).size.width / 3.4,
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(20)),
-                                    image: DecorationImage(
-                                        image:
-                                        NetworkImage(model.imageFiles[0]),
-                                        fit: BoxFit.cover),
-                                  ),
-                                  child: Stack(
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.bottomRight,
-                                        child: IconButton(
-                                          onPressed: () {
-                                            model.imageFiles.removeAt(0);
-                                            model.imageFiles.insert(0, File(""));
                                             model.notifyListeners();
                                           },
                                           icon: SvgPicture.asset(

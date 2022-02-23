@@ -12,25 +12,24 @@ import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:stacked/stacked.dart';
 
 class DeleteAcountDialogbox extends StatefulWidget {
-
   String title;
   String btnTxt;
   String icon;
 
-   DeleteAcountDialogbox({Key? key, required this.title, required this.btnTxt, required this.icon}) : super(key: key);
+  DeleteAcountDialogbox(
+      {Key? key, required this.title, required this.btnTxt, required this.icon})
+      : super(key: key);
 
   @override
   _DeleteAcountDialogboxState createState() => _DeleteAcountDialogboxState();
 }
 
 class _DeleteAcountDialogboxState extends State<DeleteAcountDialogbox> {
-
   @override
   Widget build(BuildContext context) {
-
     return ViewModelBuilder<MainViewModel>.reactive(
       //onModelReady: (data) => data.initializeShareDialog(),
-      builder: (context, model, child){
+      builder: (context, model, child) {
         return Dialog(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
@@ -39,14 +38,12 @@ class _DeleteAcountDialogboxState extends State<DeleteAcountDialogbox> {
             backgroundColor: Colors.white,
             child: Stack(
               children: [
-
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-
                     IconButton(
-                      onPressed: (){
+                      onPressed: () {
                         model.navigateBack();
                       },
                       iconSize: 15.0,
@@ -54,25 +51,20 @@ class _DeleteAcountDialogboxState extends State<DeleteAcountDialogbox> {
                       //constraints: BoxConstraints(),
                       icon: SvgPicture.asset(ImageUtils.cancelIcon),
                     ),
-
                   ],
                 ),
-
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding, vertical: Dimensions.verticalPadding),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: Dimensions.horizontalPadding,
+                      vertical: Dimensions.verticalPadding),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-
                       SizedBox(height: 1.h),
-
-
                       SvgPicture.asset(ImageUtils.binIcon),
                       SizedBox(height: 3.h),
-
-
                       Container(
                         alignment: Alignment.center,
                         child: Text(
@@ -91,24 +83,30 @@ class _DeleteAcountDialogboxState extends State<DeleteAcountDialogbox> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             GestureDetector(
-                              onTap: (){
+                              onTap: () {
+                                model.deleteAccount();
                                 model.deleteSelected = true;
                                 model.deleteUnselected = false;
                                 model.notifyListeners();
                               },
                               child: Container(
-                                padding: EdgeInsets.symmetric(vertical: 1.5.h, horizontal: 12.w),
-
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 1.5.h, horizontal: 12.w),
                                 decoration: BoxDecoration(
                                   shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                                  border: Border.all(color: ColorUtils.text_red),
-                                  color: model.deleteSelected == true ? ColorUtils.text_red
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15)),
+                                  border:
+                                      Border.all(color: ColorUtils.text_red),
+                                  color: model.deleteSelected == true
+                                      ? ColorUtils.text_red
                                       : Colors.white,
                                 ),
-                                child: Text("Yes",
+                                child: Text(
+                                  "Yes",
                                   style: TextStyle(
-                                    color: model.deleteSelected == true ? Colors.white
+                                    color: model.deleteSelected == true
+                                        ? Colors.white
                                         : ColorUtils.text_red,
                                     fontFamily: FontUtils.modernistRegular,
                                     fontSize: 1.8.t,
@@ -116,26 +114,35 @@ class _DeleteAcountDialogboxState extends State<DeleteAcountDialogbox> {
                                 ),
                               ),
                             ),
-                            SizedBox(width: 4.w,),
+                            SizedBox(
+                              width: 4.w,
+                            ),
                             GestureDetector(
-                              onTap: (){
+                              onTap: () {
+                                model.navigateBack();
+
                                 model.deleteUnselected = true;
                                 model.deleteSelected = false;
                                 model.notifyListeners();
                               },
                               child: Container(
-                                padding: EdgeInsets.symmetric(vertical: 1.5.h, horizontal: 12.w),
-
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 1.5.h, horizontal: 12.w),
                                 decoration: BoxDecoration(
-                                  color: model.deleteUnselected == true ? ColorUtils.text_red
+                                  color: model.deleteUnselected == true
+                                      ? ColorUtils.text_red
                                       : Colors.white,
                                   shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                                  border: Border.all(color: ColorUtils.text_red),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15)),
+                                  border:
+                                      Border.all(color: ColorUtils.text_red),
                                 ),
-                                child: Text("No",
+                                child: Text(
+                                  "No",
                                   style: TextStyle(
-                                    color: model.deleteUnselected == true ? Colors.white
+                                    color: model.deleteUnselected == true
+                                        ? Colors.white
                                         : ColorUtils.text_red,
                                     fontFamily: FontUtils.modernistRegular,
                                     fontSize: 1.8.t,
@@ -146,13 +153,11 @@ class _DeleteAcountDialogboxState extends State<DeleteAcountDialogbox> {
                           ],
                         ),
                       ),
-
                     ],
                   ),
                 ),
               ],
-            )
-        );
+            ));
       },
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,

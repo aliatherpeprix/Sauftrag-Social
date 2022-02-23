@@ -17,6 +17,7 @@ import 'package:sauftrag/bar/views/Drawer/qr_code_scanner.dart';
 import 'package:sauftrag/bar/views/Drawer/ranking_list.dart';
 import 'package:sauftrag/bar/views/Drawer/upcoming_event.dart';
 import 'package:sauftrag/bar/views/Home/bar_create_post.dart';
+import 'package:sauftrag/bar/views/Home/bar_drinks.dart';
 import 'package:sauftrag/bar/views/Home/bar_news_feed.dart';
 import 'package:sauftrag/bar/views/Home/main_view.dart';
 import 'package:sauftrag/bar/views/Home/order_details.dart';
@@ -25,6 +26,9 @@ import 'package:sauftrag/bar/views/Profile/bar_accounts.dart';
 import 'package:sauftrag/bar/views/Profile/bar_details.dart';
 import 'package:sauftrag/bar/views/Profile/bar_profile.dart';
 import 'package:sauftrag/bar/views/Home/bar_event.dart';
+import 'package:sauftrag/bar/views/Profile/faq_answers.dart';
+import 'package:sauftrag/bar/views/Profile/faq_questions_list.dart';
+import 'package:sauftrag/models/address_book.dart';
 import 'package:sauftrag/views/Auth/check_email.dart';
 import 'package:sauftrag/views/Auth/favorite.dart';
 import 'package:sauftrag/views/Auth/forget_password.dart';
@@ -32,6 +36,7 @@ import 'package:sauftrag/views/Auth/login.dart';
 import 'package:sauftrag/views/Auth/media.dart';
 import 'package:sauftrag/views/Auth/resent_password.dart';
 import 'package:sauftrag/views/Auth/signup.dart';
+import 'package:sauftrag/views/Auth/signup_map.dart';
 import 'package:sauftrag/views/Auth/terms.dart';
 import 'package:sauftrag/views/Auth/verification_code.dart';
 import 'package:sauftrag/views/Home/main_view.dart';
@@ -42,6 +47,7 @@ import 'package:sauftrag/views/MapSearch/map_screen.dart';
 import 'package:sauftrag/views/MapSearch/search.dart';
 import 'package:sauftrag/views/NewsFeed/all_event_list.dart';
 import 'package:sauftrag/views/NewsFeed/upcoming_event_list.dart';
+import 'package:sauftrag/views/UserFriendList/contact_list.dart';
 import 'package:sauftrag/views/UserFriendList/create_group.dart';
 import 'package:sauftrag/views/UserFriendList/friend_list.dart';
 import 'package:sauftrag/views/NewsFeed/event_detail.dart';
@@ -52,6 +58,9 @@ import 'package:sauftrag/views/UserFriendList/message_screen.dart';
 import 'package:sauftrag/views/UserFriendList/select_individual_chat.dart';
 import 'package:sauftrag/views/UserProfile/account.dart';
 import 'package:sauftrag/views/UserProfile/accountOwnership.dart';
+import 'package:sauftrag/views/UserProfile/data_protection.dart';
+import 'package:sauftrag/views/UserProfile/privacy_policy.dart';
+import 'package:sauftrag/views/UserProfile/terms_condition.dart';
 import 'package:sauftrag/widgets/change_password.dart';
 import 'package:sauftrag/views/UserProfile/gps.dart';
 import 'package:sauftrag/views/UserProfile/legalTerm.dart';
@@ -307,7 +316,7 @@ class NavigationViewModel extends BaseViewModel{
   }
 
   void navigateToSelectIndividualChatScreen(){
-    navigationKey.currentState!.push(PageTransition(child: SelectIndividualChat(), type: PageTransitionType.rightToLeftWithFade));
+    navigationKey.currentState!.push(PageTransition(child: CreateGroup1(), type: PageTransitionType.rightToLeftWithFade));
   }
 
 
@@ -344,14 +353,37 @@ class NavigationViewModel extends BaseViewModel{
     navigationKey.currentState!.push(PageTransition(child: BarCreatePost(), type: PageTransitionType.rightToLeftWithFade));
   }
 
+  void navigateToPrivacyAndPolicyScreen(){
+    navigationKey.currentState!.push(PageTransition(child: PrivacyPolicy(), type: PageTransitionType.rightToLeftWithFade));
+  }
 
+  void navigateToTermsAndConditionScreen(){
+    navigationKey.currentState!.push(PageTransition(child: TermsAndCondition(), type: PageTransitionType.rightToLeftWithFade));
+  }
 
+  void navigateToDataProtectionScreen(){
+    navigationKey.currentState!.push(PageTransition(child: DataProtection(), type: PageTransitionType.rightToLeftWithFade));
+  }
 
+  void navigateToFaqScreen(){
+    navigationKey.currentState!.push(PageTransition(child: FaqQuestionList(), type: PageTransitionType.rightToLeftWithFade));
+  }
 
+  void navigateToFaqAnsScreen(){
+    navigationKey.currentState!.push(PageTransition(child: FaqAnswer(), type: PageTransitionType.rightToLeftWithFade));
+  }
 
+  void navigateToAddressBookScreen(){
+    navigationKey.currentState!.push(PageTransition(child: ContactList(), type: PageTransitionType.rightToLeftWithFade));
+  }
 
+  void navigateToChooseDrinkScreen(){
+    navigationKey.currentState!.push(PageTransition(child: BarDrinks(), type: PageTransitionType.rightToLeftWithFade));
+  }
 
-
+  void navigateToAddAddressScreen(){
+    navigationKey.currentState!.push(PageTransition(child: SignupMap(), type: PageTransitionType.rightToLeftWithFade));
+  }
 
 
 /*void navigateToWelcomeScreen(){

@@ -8,6 +8,7 @@ import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
+import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:stacked/stacked.dart';
 
 class OrderDetails extends StatefulWidget {
@@ -20,8 +21,8 @@ class OrderDetails extends StatefulWidget {
 class _OrderDetailsState extends State<OrderDetails> {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<AuthenticationViewModel>.reactive(
-      viewModelBuilder: () => locator<AuthenticationViewModel>(),
+    return ViewModelBuilder<MainViewModel>.reactive(
+      viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
       builder: (context, model, child) {
         return GestureDetector(
@@ -51,7 +52,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                             children: [
                               IconButton(
                                   onPressed: () {
-                                    model.navigateBack();
+                                    model.navigateToHomeBarScreen();
                                   },
                                   iconSize: 18.0,
                                   padding: EdgeInsets.zero,
@@ -84,170 +85,56 @@ class _OrderDetailsState extends State<OrderDetails> {
                         ],
                       ),
                       SizedBox(height: 2.h),
-
-                      Stack(
-                        children: [
-                          Container(
-                            height: 8.h,
-                            width: double.infinity,
-                            padding: EdgeInsets.symmetric(
-                                vertical: Dimensions.containerVerticalPadding,
-                                horizontal:
-                                Dimensions.containerHorizontalPadding),
-                            decoration: BoxDecoration(
-                                color: ColorUtils.white,
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(Dimensions.roundCorner)),
-                                border: Border.all(color: ColorUtils.text_red)),
-                            child: Row(
-                              children: [
-                                SvgPicture.asset(ImageUtils.beer, height: 5.h,),
-                                SizedBox(width: 2.w,),
-                                Text(
-                                  'Beer ( 1 Liter)',
-                                  style: TextStyle(
-                                      color: ColorUtils.black,
-                                      fontSize: 2.h,
-                                      fontFamily: FontUtils.modernistBold),
-                                ),
-                              ],
-                            ),
-                          ),
-                          PositionedDirectional(
-                              bottom: 12,
-                              end: 20,
-                              child:  Text(
-                                'x2',
-                                style: TextStyle(
-                                    color: ColorUtils.black,
-                                    fontSize: 2.h,
-                                    fontFamily: FontUtils.modernistBold),
-                              ),)
-                        ],
-                      ),
-                      SizedBox(height: 2.h),
-                      Stack(
-                        children: [
-                          Container(
-                            height: 8.h,
-                            width: double.infinity,
-                            padding: EdgeInsets.symmetric(
-                                vertical: Dimensions.containerVerticalPadding,
-                                horizontal:
-                                Dimensions.containerHorizontalPadding),
-                            decoration: BoxDecoration(
-                                color: ColorUtils.white,
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(Dimensions.roundCorner)),
-                                border: Border.all(color: ColorUtils.text_red)),
-                            child: Row(
-                              children: [
-                                SvgPicture.asset(ImageUtils.cocktail, height: 5.h,),
-                                SizedBox(width: 2.w,),
-                                Text(
-                                  'Coctail',
-                                  style: TextStyle(
-                                      color: ColorUtils.black,
-                                      fontSize: 2.h,
-                                      fontFamily: FontUtils.modernistBold),
-                                ),
-                              ],
-                            ),
-                          ),
-                          PositionedDirectional(
-                            bottom: 12,
-                            end: 20,
-                            child:  Text(
-                              'x2',
-                              style: TextStyle(
-                                  color: ColorUtils.black,
-                                  fontSize: 2.h,
-                                  fontFamily: FontUtils.modernistBold),
-                            ),)
-                        ],
-                      ),
-                      SizedBox(height: 2.h),
-                      Stack(
-                        children: [
-                          Container(
-                            height: 8.h,
-                            width: double.infinity,
-                            padding: EdgeInsets.symmetric(
-                                vertical: Dimensions.containerVerticalPadding,
-                                horizontal:
-                                Dimensions.containerHorizontalPadding),
-                            decoration: BoxDecoration(
-                                color: ColorUtils.white,
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(Dimensions.roundCorner)),
-                                border: Border.all(color: ColorUtils.text_red)),
-                            child: Row(
-                              children: [
-                                SvgPicture.asset(ImageUtils.longDrink, height: 5.h,),
-                                SizedBox(width: 2.w,),
-                                Text(
-                                  'Long Drink',
-                                  style: TextStyle(
-                                      color: ColorUtils.black,
-                                      fontSize: 2.h,
-                                      fontFamily: FontUtils.modernistBold),
-                                ),
-                              ],
-                            ),
-                          ),
-                          PositionedDirectional(
-                            bottom: 12,
-                            end: 20,
-                            child:  Text(
-                              'x2',
-                              style: TextStyle(
-                                  color: ColorUtils.black,
-                                  fontSize: 2.h,
-                                  fontFamily: FontUtils.modernistBold),
-                            ),)
-                        ],
-                      ),
-                      SizedBox(height: 2.h),
-                      Stack(
-                        children: [
-                          Container(
-                            height: 8.h,
-                            width: double.infinity,
-                            padding: EdgeInsets.symmetric(
-                                vertical: Dimensions.containerVerticalPadding,
-                                horizontal:
-                                Dimensions.containerHorizontalPadding),
-                            decoration: BoxDecoration(
-                                color: ColorUtils.white,
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(Dimensions.roundCorner)),
-                                border: Border.all(color: ColorUtils.text_red)),
-                            child: Row(
-                              children: [
-                                SvgPicture.asset(ImageUtils.shorts, height: 5.h,),
-                                SizedBox(width: 2.w,),
-                                Text(
-                                  'Shot',
-                                  style: TextStyle(
-                                      color: ColorUtils.black,
-                                      fontSize: 2.h,
-                                      fontFamily: FontUtils.modernistBold),
-                                ),
-                              ],
-                            ),
-                          ),
-                          PositionedDirectional(
-                            bottom: 12,
-                            end: 20,
-                            child:  Text(
-                              'x2',
-                              style: TextStyle(
-                                  color: ColorUtils.black,
-                                  fontSize: 2.h,
-                                  fontFamily: FontUtils.modernistBold),
-                            ),)
-                        ],
-                      ),
+                      Container(
+                        child: ListView.separated(
+                            shrinkWrap: true,
+                            padding: EdgeInsets.zero,
+                            physics: BouncingScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return  Stack(
+                                children: [
+                                  Container(
+                                    height: 8.h,
+                                    width: double.infinity,
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: Dimensions.containerVerticalPadding,
+                                        horizontal:
+                                        Dimensions.containerHorizontalPadding),
+                                    decoration: BoxDecoration(
+                                        color: ColorUtils.white,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(Dimensions.roundCorner)),
+                                        border: Border.all(color: ColorUtils.text_red)),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          model.barQRcode[index].name!,
+                                          style: TextStyle(
+                                              color: ColorUtils.black,
+                                              fontSize: 2.h,
+                                              fontFamily: FontUtils.modernistBold),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  PositionedDirectional(
+                                    bottom: 12,
+                                    end: 20,
+                                    child:  Text(
+                                      'x${model.drinksSelected[index][model.barQRcode[index].name]}',
+                                      style: TextStyle(
+                                          color: ColorUtils.black,
+                                          fontSize: 2.h,
+                                          fontFamily: FontUtils.modernistBold),
+                                    ),)
+                                ],
+                              );
+                            },
+                            separatorBuilder: (context, index) {
+                              return  SizedBox(height: 2.h);
+                            },
+                            itemCount: model.drinksSelected.length),
+                      )
 
 
 

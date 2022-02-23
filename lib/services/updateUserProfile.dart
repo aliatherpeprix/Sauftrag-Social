@@ -99,11 +99,9 @@ class Updateuser {
 
       var param = FormData.fromMap({
 
-
         if(favorite=='favorite_alcohol_drinks')'favorite_alcohol_drinks' : selectedList,
         if(favorite=='favorite_night_club')'favorite_night_club' : selectedList,
         if(favorite=='favorite_party_vacation')'favorite_party_vacation' : selectedList,
-
 
       });
       UserModel? user = await locator<PrefrencesViewModel>().getUser();
@@ -132,6 +130,7 @@ class Updateuser {
       //dynamic exception = e;
       return  (e as DioError).response!.data["message"].toString();
     }
+
   }
 
   Future UpdateUserProfile(
@@ -142,12 +141,37 @@ class Updateuser {
       /// just login user through phoneNumber and password
 
       var param = FormData.fromMap({
-        if (images[0] is File && (images[0] as File).path.isNotEmpty)"profile_picture": await MultipartFile.fromFile((images[0] as File).path,),
-        if (images[1] is File && (images[1] as File).path.isNotEmpty)"catalogue_image1": await MultipartFile.fromFile((images[1] as File).path,),
-        if (images[2] is File && (images[2] as File).path.isNotEmpty)"catalogue_image2": await MultipartFile.fromFile((images[2] as File).path,),
-        if (images[3] is File && (images[3] as File).path.isNotEmpty)"catalogue_image3": await MultipartFile.fromFile((images[3] as File).path,),
-        if (images[4] is File && (images[4] as File).path.isNotEmpty)"catalogue_image4": await MultipartFile.fromFile((images[4] as File).path,),
-        if (images[5] is File && (images[5] as File).path.isNotEmpty)"catalogue_image5": await MultipartFile.fromFile((images[5] as File).path,),
+
+        if (images[0] is File && (images[0] as File).path.isNotEmpty)
+          "profile_picture": await MultipartFile.fromFile((images[0] as File).path,)
+        else "profile_picture" : "",
+
+        if (images[1] is File && (images[1] as File).path.isNotEmpty)
+          "catalogue_image1": await MultipartFile.fromFile((images[1] as File).path,)
+        else if (images[1] is String) "catalogue_image1" : null
+        else "catalogue_image1" : "",
+
+        if (images[2] is File && (images[2] as File).path.isNotEmpty)
+          "catalogue_image2": await MultipartFile.fromFile((images[2] as File).path,)
+        else if (images[2] is String) "catalogue_image2" : null
+      else "catalogue_image2" : "",
+
+        if (images[3] is File && (images[3] as File).path.isNotEmpty)
+          "catalogue_image3": await MultipartFile.fromFile((images[3] as File).path,)
+        else if (images[3] is String) "catalogue_image3" : null
+        else "catalogue_image3" : "",
+
+        if (images[4] is File && (images[4] as File).path.isNotEmpty)
+          "catalogue_image4": await MultipartFile.fromFile((images[4] as File).path,)
+        else if (images[4] is String) "catalogue_image4" : null
+        else "catalogue_image4" : "",
+
+        if (images[5] is File && (images[5] as File).path.isNotEmpty)
+          "catalogue_image5": await MultipartFile.fromFile((images[5] as File).path,)
+        else if (images[5] is String) "catalogue_image5" : null
+        else "catalogue_image5" : "",
+
+
         'gender' : gender
       });
       UserModel? user = await locator<PrefrencesViewModel>().getUser();

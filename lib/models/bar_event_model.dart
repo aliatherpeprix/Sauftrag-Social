@@ -1,4 +1,5 @@
 class BarEventModel {
+  dynamic id;
   dynamic name;
   dynamic about;
   dynamic lat;
@@ -11,7 +12,8 @@ class BarEventModel {
   List<Media>? media;
 
   BarEventModel(
-      {this.name,
+      {this.id,
+        this.name,
         this.about,
         this.lat,
         this.long,
@@ -23,14 +25,15 @@ class BarEventModel {
         this.media});
 
   BarEventModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'] as dynamic;
     name = json['name'] as dynamic;
-    about = json['about']as dynamic;
-    lat = json['lat']as dynamic;
-    long = json['long']as dynamic;
-    location = json['location']as dynamic;
-    eventDate = json['event_date']as dynamic;
-    startTime = json['start_time']as dynamic;
-    endTime = json['end_time']as dynamic;
+    about = json['about'] as dynamic;
+    lat = json['lat'] as dynamic;
+    long = json['long'] as dynamic;
+    location = json['location'] as dynamic;
+    eventDate = json['event_date'] as dynamic;
+    startTime = json['start_time'] as dynamic;
+    endTime = json['end_time'] as dynamic;
     userId =
     json['user_id'] != null ? new UserId.fromJson(json['user_id']) : null;
     if (json['media'] != null) {
@@ -43,6 +46,7 @@ class BarEventModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
     data['name'] = this.name;
     data['about'] = this.about;
     data['lat'] = this.lat;
@@ -112,20 +116,20 @@ class UserId {
         this.catalogueImage5});
 
   UserId.fromJson(Map<String, dynamic> json) {
-    id = json['id']as dynamic;
+    id = json['id'] as dynamic;
     username = json['username']as dynamic;
     barName = json['bar_name']as dynamic;
     email = json['email']as dynamic;
     phoneNo = json['phone_no']as dynamic;
-    countryCode = json['country_code']as dynamic;
+    countryCode = json['country_code'] as dynamic;
     gender = json['gender']as dynamic;
     address = json['address']as dynamic;
-    dob = json['dob']as dynamic;
-    relationShip = json['relation_ship']as dynamic;
-    role = json['role']as dynamic;
-    termsConditions = json['terms_conditions']as dynamic;
-    dataProtection = json['data_protection']as dynamic;
-    profilePicture = json['profile_picture']as dynamic;
+    dob = json['dob'] as dynamic;
+    relationShip = json['relation_ship'] as dynamic;
+    role = json['role'] as dynamic;
+    termsConditions = json['terms_conditions'] as dynamic;
+    dataProtection = json['data_protection'] as dynamic;
+    profilePicture = json['profile_picture'] as dynamic;
     if (json['favorite_alcohol_drinks'] != null) {
       favoriteAlcoholDrinks = <dynamic>[];
       json['favorite_alcohol_drinks'].forEach((v) {

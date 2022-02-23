@@ -273,7 +273,7 @@ class _ProfileState extends State<Profile> {
                           padding: EdgeInsets.symmetric(
                               horizontal: Dimensions.horizontalPadding),
                           child: Text(
-                            "Favorite Alcoholic Drink",
+                            "Lieblingsalkoholisches Getränk",
                             style: TextStyle(
                               color: ColorUtils.black,
                               fontFamily: FontUtils.modernistBold,
@@ -325,7 +325,7 @@ class _ProfileState extends State<Profile> {
                           padding: EdgeInsets.symmetric(
                               horizontal: Dimensions.horizontalPadding),
                           child: Text(
-                            "Favorite Night Club",
+                            "Lieblings Nachtclub",
                             style: TextStyle(
                               color: ColorUtils.black,
                               fontFamily: FontUtils.modernistBold,
@@ -377,7 +377,7 @@ class _ProfileState extends State<Profile> {
                           padding: EdgeInsets.symmetric(
                               horizontal: Dimensions.horizontalPadding),
                           child: Text(
-                            "Favorite Party Vacation",
+                            "Lieblings-Party-Urlaub",
                             style: TextStyle(
                               color: ColorUtils.black,
                               fontFamily: FontUtils.modernistBold,

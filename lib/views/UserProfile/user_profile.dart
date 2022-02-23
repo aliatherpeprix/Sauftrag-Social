@@ -61,14 +61,19 @@ class _UserProfileState extends State<UserProfile> {
                       ///--------------Event Name--------------------///
                       GestureDetector(
                         onTap: () async {
+                          model.isUserProfile = true;
+                          model.notifyListeners();
+                          model.navigateToUserDetailSettings();
                           PrefrencesViewModel prefs =
                               locator<PrefrencesViewModel>();
-
-                          model.drinkList = await  Addfavorites().GetFavoritesDrink();
-                          model.clubList = await  Addfavorites().GetFavoritesClub();
-                          model.vacationList = await  Addfavorites().GetFavoritesPartyVacation();
-
-                          model.userModel = await prefs.getUser();
+                          model.drinkList =
+                              await Addfavorites().GetFavoritesDrink();
+                          model.clubList =
+                              await Addfavorites().GetFavoritesClub();
+                          model.vacationList =
+                              await Addfavorites().GetFavoritesPartyVacation();
+                          model.userModel = (await prefs.
+                          getUser())!;
                           if (model.userModel!.profile_picture != null &&
                               model.userModel!.profile_picture!.isNotEmpty) {
                             model.imageFiles.removeAt(0);
@@ -105,7 +110,8 @@ class _UserProfileState extends State<UserProfile> {
                             model.imageFiles
                                 .insert(5, model.userModel!.catalogue_image5!);
                           }
-                          model.navigateToUserDetailSettings();
+                          model.isUserProfile = false;
+                          model.notifyListeners();
                         },
                         child: Container(
                           // padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -158,7 +164,7 @@ class _UserProfileState extends State<UserProfile> {
                                       Container(
                                         width: 35.w,
                                         child: Text(
-                                         model.userModel!.username!,
+                                          model.userModel!.username!,
                                           style: TextStyle(
                                             color: ColorUtils.black,
                                             fontFamily: FontUtils.modernistBold,
@@ -172,7 +178,7 @@ class _UserProfileState extends State<UserProfile> {
                                         height: 1.h,
                                       ),
                                       Text(
-                                       model.userModel!.phone_no!,
+                                        model.userModel!.phone_no!,
                                         style: TextStyle(
                                           color: ColorUtils.text_grey,
                                           fontFamily: FontUtils.modernistBold,

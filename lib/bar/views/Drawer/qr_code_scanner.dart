@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
@@ -77,7 +80,12 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
                               color: Colors.white),
-                          child: Image.asset(ImageUtils.qrCodeImg, height: 25.h,)
+                          child:
+                            QrImage(
+                              data: jsonEncode(model.userModel!.id),
+                              size: 200
+                            )
+                          // Image.asset(ImageUtils.qrCodeImg, height: 25.h,)
                         ),
                       ),
                       SizedBox(height: 5.h,),

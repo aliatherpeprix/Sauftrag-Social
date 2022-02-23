@@ -7,6 +7,8 @@ import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/widgets/all_page_loader.dart';
+import 'package:sauftrag/widgets/loader.dart';
 import 'package:stacked/stacked.dart';
 
 class LegalTerm extends StatefulWidget {
@@ -21,7 +23,8 @@ class _LegalTermState extends State<LegalTerm> {
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
       builder: (context, model, child) {
-        return Scaffold(
+        return
+        Scaffold(
           // appBar: AppBar(
           //   elevation: 0,
           //   leading: IconButton(
@@ -50,35 +53,35 @@ class _LegalTermState extends State<LegalTerm> {
                 children: [
                   SizedBox(height: Dimensions.topMargin),
                   Container(
-                      padding: EdgeInsets.symmetric(
-                    horizontal: Dimensions.horizontalPadding,
-                  ),
-                  child:  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      IconButton(
-                          onPressed: () {
-                            model.navigateBack();
-                          },
-                          iconSize: 18.0,
-                          padding: EdgeInsets.zero,
-                          constraints: BoxConstraints(),
-                          icon: Icon(
-                            Icons.arrow_back_ios,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: Dimensions.horizontalPadding,
+                    ),
+                    child:  Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        IconButton(
+                            onPressed: () {
+                              model.navigateBack();
+                            },
+                            iconSize: 18.0,
+                            padding: EdgeInsets.zero,
+                            constraints: BoxConstraints(),
+                            icon: Icon(
+                              Icons.arrow_back_ios,
+                              color: ColorUtils.black,
+                              size: 4.5.i,
+                            )),
+                        SizedBox(width: 2.w),
+                        Text(
+                          "Legal Terms",
+                          style: TextStyle(
                             color: ColorUtils.black,
-                            size: 4.5.i,
-                          )),
-                      SizedBox(width: 2.w),
-                      Text(
-                        "Legal Terms",
-                        style: TextStyle(
-                          color: ColorUtils.black,
-                          fontFamily: FontUtils.modernistBold,
-                          fontSize: 3.t,
+                            fontFamily: FontUtils.modernistBold,
+                            fontSize: 3.t,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
                   ),
                   Container(
                     margin: EdgeInsets.only(top: Dimensions.topMargin),
@@ -87,7 +90,7 @@ class _LegalTermState extends State<LegalTerm> {
                     child: Container(
                       padding: EdgeInsets.symmetric(
                           horizontal: Dimensions.horizontalPadding),
-                      height: 20.h,
+                      //height: 18.h,
                       decoration: BoxDecoration(
                           border: Border.all(color: ColorUtils.red_color),
                           borderRadius: BorderRadius.circular(15)),
@@ -98,14 +101,16 @@ class _LegalTermState extends State<LegalTerm> {
                           children: [
                             InkWell(
                               onTap: () {
+
+                                model.navigateToTermsAndConditionScreen();
                                 // Navigator.push(context, MaterialPageRoute(builder: (Context)=>GPS()));
                               },
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "Legal Terms",
+                                    "Terms and Condition",
                                     style: TextStyle(
                                         fontSize: 2.t,
                                         color: ColorUtils.red_color),
@@ -118,42 +123,52 @@ class _LegalTermState extends State<LegalTerm> {
                                 ],
                               ),
                             ),
-                            Divider(),
                             SizedBox(
-                              height: 1.8.h,
-                            ),
-                            InkWell(
-                              onTap: () {},
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Contact",
-                                    style: TextStyle(
-                                        fontSize: 2.t,
-                                        color: ColorUtils.red_color),
-                                  ),
-                                  Icon(
-                                    Icons.arrow_forward_ios_sharp,
-                                    color: Colors.black,
-                                    size: 17,
-                                  )
-                                ],
-                              ),
+                              height: 1.h,
                             ),
                             Divider(),
                             SizedBox(
                               height: 1.h,
                             ),
                             InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                model.navigateToPrivacyAndPolicyScreen();
+                              },
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "Imprint",
+                                    "Privacy Policy",
+                                    style: TextStyle(
+                                        fontSize: 2.t,
+                                        color: ColorUtils.red_color),
+                                  ),
+                                  Icon(
+                                    Icons.arrow_forward_ios_sharp,
+                                    color: Colors.black,
+                                    size: 17,
+                                  )
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 1.h,
+                            ),
+                            Divider(),
+                            SizedBox(
+                              height: 1.h,
+                            ),
+                            InkWell(
+                              onTap: () {
+                                model.navigateToDataProtectionScreen();
+                              },
+                              child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Data Protection",
                                     style: TextStyle(
                                         fontSize: 2.t,
                                         color: ColorUtils.red_color),

@@ -83,12 +83,14 @@ class _FavoriteState extends State<Favorite> {
                                     )),
                                 SizedBox(width: 2.w),
 
-                                Text(
-                                  "Favorite Alcoholic Drink",
-                                  style: TextStyle(
-                                    color: ColorUtils.black,
-                                    fontFamily: FontUtils.modernistBold,
-                                    fontSize: 3.t,
+                                Expanded(
+                                  child: Text(
+                                    "Beliebtestes alkoholisches Getränk",
+                                    style: TextStyle(
+                                      color: ColorUtils.black,
+                                      fontFamily: FontUtils.modernistBold,
+                                      fontSize: 3.t,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -96,7 +98,7 @@ class _FavoriteState extends State<Favorite> {
                             SizedBox(height: 2.h),
 
                             Text(
-                              "Favorite alcoholic drink makes it easier to find who shares your interests. Add up to 5 drinks to your profile to make better connections. ",
+                              "Das alkoholische Lieblingsgetränk macht es einfacher zu finden, wer Ihre Interessen teilt. Fügen Sie Ihrem Profil bis zu 5 Getränke hinzu, um bessere Verbindungen herzustellen. ",
                               style: TextStyle(
                                 color: ColorUtils.text_dark,
                                 fontFamily: FontUtils.modernistRegular,
@@ -112,8 +114,8 @@ class _FavoriteState extends State<Favorite> {
                               children: model.drinkList
                                   .map((element) => ElevatedButton(
                                 onPressed: () {
-                                  if(model.selectedDrinkList.contains(model.drinkList.indexOf(element))){
-                                    model.selectedDrinkList.remove(model.drinkList.indexOf(element));
+                                  if(model.selectedDrinkList.contains(element.id)){
+                                    model.selectedDrinkList.remove(element.id);
                                   }
                                   else{
                                     if(element == "Radler"){
@@ -125,27 +127,27 @@ class _FavoriteState extends State<Favorite> {
                                       );
                                     }
                                     else{
-                                      model.selectedDrinkList.add(model.drinkList.indexOf(element));
+                                      model.selectedDrinkList.add(element.id);
                                     }
                                   }
                                   model.notifyListeners();
                                 },
                                 child: Text((model.drinkList[model.drinkList.indexOf(element)] as FavoritesModel).name ?? ""),
                                 style: ElevatedButton.styleFrom(
-                                  primary: model.selectedDrinkList.contains(model.drinkList.indexOf(element)) ? ColorUtils.text_red : ColorUtils.white,
-                                  onPrimary: model.selectedDrinkList.contains(model.drinkList.indexOf(element)) ? ColorUtils.white : ColorUtils.text_dark,
+                                  primary: model.selectedDrinkList.contains(element.id) ? ColorUtils.text_red : ColorUtils.white,
+                                  onPrimary: model.selectedDrinkList.contains(element.id) ? ColorUtils.white : ColorUtils.text_dark,
                                   padding: EdgeInsets.symmetric(vertical: 1.8.h, horizontal: 9.w),
-                                  elevation: model.selectedDrinkList.contains(model.drinkList.indexOf(element)) ? 5 : 0,
+                                  elevation: model.selectedDrinkList.contains(element.id) ? 5 : 0,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(Dimensions.roundCorner),
                                       side: BorderSide(
-                                          color: model.selectedDrinkList.contains(model.drinkList.indexOf(element)) ? ColorUtils.text_red : ColorUtils.divider,
+                                          color: model.selectedDrinkList.contains(element.id) ? ColorUtils.text_red : ColorUtils.divider,
                                           width: 1
                                       )
                                   ),
                                   textStyle: TextStyle(
                                     //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
-                                    fontFamily: model.selectedDrinkList.contains(model.drinkList.indexOf(element)) ? FontUtils.modernistBold : FontUtils.modernistRegular,
+                                    fontFamily: model.selectedDrinkList.contains(element.id) ? FontUtils.modernistBold : FontUtils.modernistRegular,
                                     fontSize: 1.8.t,
                                     //height: 0
                                   ),
@@ -210,7 +212,7 @@ class _FavoriteState extends State<Favorite> {
 
                                   SizedBox(width: 10),
 
-                                  Text("Add Drink")
+                                  Text("Getränk hinzufügen")
                                 ],
                               ),
                               style: ElevatedButton.styleFrom(
@@ -242,7 +244,7 @@ class _FavoriteState extends State<Favorite> {
                           children: [
 
                             Text(
-                              "Favorite Night Clubs",
+                              "Lieblings Nachtclubs",
                               style: TextStyle(
                                 color: ColorUtils.black,
                                 fontFamily: FontUtils.modernistBold,
@@ -252,7 +254,7 @@ class _FavoriteState extends State<Favorite> {
                             SizedBox(height: 2.h),
 
                             Text(
-                              "What are your favorite night clubs & bars. Add location to your profile to make better connections.",
+                              "Was sind Ihre Lieblings-Nachtclubs und -bars? Fügen Sie Ihrem Profil einen Standort hinzu, um bessere Verbindungen herzustellen.",
                               style: TextStyle(
                                 color: ColorUtils.text_dark,
                                 fontFamily: FontUtils.modernistRegular,
@@ -280,31 +282,31 @@ class _FavoriteState extends State<Favorite> {
                                 itemBuilder: (BuildContext context, int index){
                                   return ElevatedButton(
                                     onPressed: () {
-                                      if(model.selectedClubList.contains(index)){
-                                        model.selectedClubList.remove(index);
+                                      if(model.selectedClubList.contains((model.clubList[index] as FavoritesModel).id)){
+                                        model.selectedClubList.remove((model.clubList[index] as FavoritesModel).id);
                                       }
                                       else{
-                                        model.selectedClubList.add(index);
+                                        model.selectedClubList.add((model.clubList[index] as FavoritesModel).id!);
                                       }
                                       model.notifyListeners();
                                     },
                                     child:  Text((model.clubList[index] as FavoritesModel).name ?? ""),
                                     //Text(model.clubList[index]),
                                     style: ElevatedButton.styleFrom(
-                                      primary: model.selectedClubList.contains(index) ? ColorUtils.text_red : ColorUtils.white,
-                                      onPrimary: model.selectedClubList.contains(index) ? ColorUtils.white : ColorUtils.text_dark,
+                                      primary: model.selectedClubList.contains((model.clubList[index] as FavoritesModel).id) ? ColorUtils.text_red : ColorUtils.white,
+                                      onPrimary: model.selectedClubList.contains((model.clubList[index] as FavoritesModel).id) ? ColorUtils.white : ColorUtils.text_dark,
                                       padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 5.w),
-                                      elevation: model.selectedClubList.contains(index) ? 5 : 0,
+                                      elevation: model.selectedClubList.contains((model.clubList[index] as FavoritesModel).id) ? 5 : 0,
                                       shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(Dimensions.roundCorner),
                                           side: BorderSide(
-                                              color: model.selectedClubList.contains(index) ? ColorUtils.text_red : ColorUtils.divider,
+                                              color: model.selectedClubList.contains((model.clubList[index] as FavoritesModel).id) ? ColorUtils.text_red : ColorUtils.divider,
                                               width: 1
                                           )
                                       ),
                                       textStyle: TextStyle(
                                         //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
-                                        fontFamily: model.selectedClubList.contains(index) ? FontUtils.modernistBold : FontUtils.modernistRegular,
+                                        fontFamily: model.selectedClubList.contains((model.clubList[index] as FavoritesModel).id) ? FontUtils.modernistBold : FontUtils.modernistRegular,
                                         fontSize: 1.8.t,
                                         //height: 0
                                       ),
@@ -334,7 +336,7 @@ class _FavoriteState extends State<Favorite> {
 
                                   SizedBox(width: 10),
 
-                                  Text("Add Club")
+                                  Text("Verein hinzufügen")
                                 ],
                               ),
                               style: ElevatedButton.styleFrom(
@@ -366,7 +368,7 @@ class _FavoriteState extends State<Favorite> {
                           children: [
 
                             Text(
-                              "Favorite Party Vacation",
+                              "Lieblings-Party-Urlaub",
                               style: TextStyle(
                                 color: ColorUtils.black,
                                 fontFamily: FontUtils.modernistBold,
@@ -376,7 +378,7 @@ class _FavoriteState extends State<Favorite> {
                             SizedBox(height: 2.h),
 
                             Text(
-                              "Where do you like to do party vacation. Add location to your profile to make better connections.",
+                              "Wo macht ihr gerne Partyurlaub. Fügen Sie Ihrem Profil einen Standort hinzu, um bessere Verbindungen herzustellen.",
                               style: TextStyle(
                                 color: ColorUtils.text_dark,
                                 fontFamily: FontUtils.modernistRegular,
@@ -392,31 +394,31 @@ class _FavoriteState extends State<Favorite> {
                               children: model.vacationList
                                   .map((element) => ElevatedButton(
                                 onPressed: () {
-                                  if(model.selectedVacationList.contains(model.vacationList.indexOf(element))){
-                                    model.selectedVacationList.remove(model.vacationList.indexOf(element));
+                                  if(model.selectedVacationList.contains(element.id)){
+                                    model.selectedVacationList.remove(element.id);
                                   }
                                   else{
-                                    model.selectedVacationList.add(model.vacationList.indexOf(element));
+                                    model.selectedVacationList.add(element.id);
                                   }
                                   model.notifyListeners();
                                 },
-                                child: Text((model.vacationList[model.vacationList.indexOf(element)] as FavoritesModel).name ?? ""),
+                                child: Text((element as FavoritesModel).name ?? ""),
                                 //Text(model.vacationList[model.vacationList.indexOf(element)]),
                                 style: ElevatedButton.styleFrom(
-                                  primary: model.selectedVacationList.contains(model.vacationList.indexOf(element)) ? ColorUtils.text_red : ColorUtils.white,
-                                  onPrimary: model.selectedVacationList.contains(model.vacationList.indexOf(element)) ? ColorUtils.white : ColorUtils.text_dark,
+                                  primary: model.selectedVacationList.contains(element.id) ? ColorUtils.text_red : ColorUtils.white,
+                                  onPrimary: model.selectedVacationList.contains(element.id) ? ColorUtils.white : ColorUtils.text_dark,
                                   padding: EdgeInsets.symmetric(vertical: 1.8.h, horizontal: 9.w),
-                                  elevation: model.selectedVacationList.contains(model.vacationList.indexOf(element)) ? 5 : 0,
+                                  elevation: model.selectedVacationList.contains(element.id) ? 5 : 0,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(Dimensions.roundCorner),
                                       side: BorderSide(
-                                          color: model.selectedVacationList.contains(model.vacationList.indexOf(element)) ? ColorUtils.text_red : ColorUtils.divider,
+                                          color: model.selectedVacationList.contains(element.id) ? ColorUtils.text_red : ColorUtils.divider,
                                           width: 1
                                       )
                                   ),
                                   textStyle: TextStyle(
                                     //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
-                                    fontFamily: model.selectedVacationList.contains(model.vacationList.indexOf(element)) ? FontUtils.modernistBold : FontUtils.modernistRegular,
+                                    fontFamily: model.selectedVacationList.contains(element.id) ? FontUtils.modernistBold : FontUtils.modernistRegular,
                                     fontSize: 1.8.t,
                                     //height: 0
                                   ),
@@ -444,7 +446,7 @@ class _FavoriteState extends State<Favorite> {
 
                                   SizedBox(width: 10),
 
-                                  Text("Add Location")
+                                  Text("Ort hinzufügen")
                                 ],
                               ),
                               style: ElevatedButton.styleFrom(

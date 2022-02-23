@@ -12,6 +12,7 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:sauftrag/widgets/radler_dialog_box.dart';
 import 'package:stacked/stacked.dart';
 
@@ -33,9 +34,10 @@ class _FavoriteDrinkListState extends State<FavoriteDrinkList> {
   @override
   Widget build(BuildContext context) {
 
-    return ViewModelBuilder<MainViewModel>.reactive(
+    return ViewModelBuilder<RegistrationViewModel>.reactive(
       //onModelReady: (data) => data.initializeShareDialog(),
       builder: (context, model, child){
+        // model.favDrink = false;
         return Dialog(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
@@ -93,40 +95,38 @@ class _FavoriteDrinkListState extends State<FavoriteDrinkList> {
                               children: model.drinkList
                                   .map((element) => ElevatedButton(
                                 onPressed: () {
-                                  if(model.selectedDrinkList.contains(model.drinkList.indexOf(element))){
-                                    model.selectedDrinkList.remove(model.drinkList.indexOf(element));
+                                  if(model.selectedDrinkList.contains(element.id)){
+                                    model.selectedDrinkList.remove(element.id);
                                   }
                                   else{
-                                    if(element == "Radler"){
-                                      showDialog(
-                                          context: context,
-                                          builder: (BuildContext context){
-                                            return RadlerDialogBox(title: "Add New Location", btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
-                                          }
-                                      );
-                                    }
-                                    else{
-                                      model.selectedDrinkList.add(model.drinkList.indexOf(element));
-                                    }
+                                    // if(element == "Radler"){
+                                    //   showDialog(
+                                    //       context: context,
+                                    //       builder: (BuildContext context){
+                                    //         return RadlerDialogBox(title: "Add New Location", btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+                                    //       }
+                                    //   );
+                                    // }
+                                    model.selectedDrinkList.add(element.id);
                                   }
                                   model.notifyListeners();
                                 },
-                                child: Text((model.drinkList[model.drinkList.indexOf(element)] as FavoritesModel).name ?? ""),
+                                child: Text((element as FavoritesModel).name ?? ""),
                                 style: ElevatedButton.styleFrom(
-                                  primary: model.selectedDrinkList.contains(model.drinkList.indexOf(element)) ? ColorUtils.text_red : ColorUtils.white,
-                                  onPrimary: model.selectedDrinkList.contains(model.drinkList.indexOf(element)) ? ColorUtils.white : ColorUtils.text_dark,
+                                  primary: model.selectedDrinkList.contains(element.id) ? ColorUtils.text_red : ColorUtils.white,
+                                  onPrimary: model.selectedDrinkList.contains(element.id) ? ColorUtils.white : ColorUtils.text_dark,
                                   padding: EdgeInsets.symmetric(vertical: 1.8.h, horizontal: 9.w),
-                                  elevation: model.selectedDrinkList.contains(model.drinkList.indexOf(element)) ? 5 : 0,
+                                  elevation: model.selectedDrinkList.contains(element.id) ? 5 : 0,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(Dimensions.roundCorner),
                                       side: BorderSide(
-                                          color: model.selectedDrinkList.contains(model.drinkList.indexOf(element)) ? ColorUtils.text_red : ColorUtils.divider,
+                                          color: model.selectedDrinkList.contains(element.id) ? ColorUtils.text_red : ColorUtils.divider,
                                           width: 1
                                       )
                                   ),
                                   textStyle: TextStyle(
                                     //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
-                                    fontFamily: model.selectedDrinkList.contains(model.drinkList.indexOf(element)) ? FontUtils.modernistBold : FontUtils.modernistRegular,
+                                    fontFamily: model.selectedDrinkList.contains(element.id) ? FontUtils.modernistBold : FontUtils.modernistRegular,
                                     fontSize: 1.8.t,
                                     //height: 0
                                   ),
@@ -135,6 +135,8 @@ class _FavoriteDrinkListState extends State<FavoriteDrinkList> {
                             ),
 
                             SizedBox(height: 5.h,),
+
+
                             Stack(
                               children: [
                                 Container(
@@ -191,8 +193,8 @@ class _FavoriteDrinkListState extends State<FavoriteDrinkList> {
                               //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                               child: ElevatedButton(
                                 onPressed: () async{
-                                  List temp = CommonFunctions.AddFromList(model.selectedDrinkList);
-                                  await model.favoritesDrinks(temp, "favorite_alcohol_drinks");
+
+                                  await model.favoritesDrinks(model.selectedDrinkList, "favorite_alcohol_drinks");
                                   model.navigateBack();
                                 },
                                 child: model.favDrink == false ? Text("Save") : Loader() ,
@@ -228,7 +230,7 @@ class _FavoriteDrinkListState extends State<FavoriteDrinkList> {
             )
         );
       },
-      viewModelBuilder: () => locator<MainViewModel>(),
+      viewModelBuilder: () => locator<RegistrationViewModel>(),
       disposeViewModel: false,
     );
   }

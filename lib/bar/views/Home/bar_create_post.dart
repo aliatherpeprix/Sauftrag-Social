@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:expand_tap_area/expand_tap_area.dart';
 import 'package:flutter/cupertino.dart';
@@ -345,6 +347,7 @@ class _BarCreatePostState extends State<BarCreatePost> {
                                       child: IconButton(
                                         onPressed: () {
                                           model.imageFilesPost.removeAt(0);
+                                          model.imageFilesPost.insert(0, File(""));
                                           model.notifyListeners();
                                         },
                                         icon: SvgPicture.asset(

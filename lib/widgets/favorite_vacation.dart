@@ -89,8 +89,8 @@ class _FavoriteVacationState extends State<FavoriteVacation> {
                               children: model.vacationList
                                   .map((element) => ElevatedButton(
                                 onPressed: () {
-                                  if(model.selectedVacationList.contains(model.vacationList.indexOf(element))){
-                                    model.selectedVacationList.remove(model.vacationList.indexOf(element));
+                                  if(model.selectedVacationList.contains(element.id)){
+                                    model.selectedVacationList.remove(element.id);
                                   }
                                   else{
                                     if(element == "Radler"){
@@ -102,27 +102,27 @@ class _FavoriteVacationState extends State<FavoriteVacation> {
                                       );
                                     }
                                     else{
-                                      model.selectedVacationList.add(model.vacationList.indexOf(element));
+                                      model.selectedVacationList.add(element.id);
                                     }
                                   }
                                   model.notifyListeners();
                                 },
-                                child: Text((model.vacationList[model.vacationList.indexOf(element)] as FavoritesModel).name ?? ""),
+                                child: Text((element as FavoritesModel).name ?? ""),
                                 style: ElevatedButton.styleFrom(
-                                  primary: model.selectedVacationList.contains(model.vacationList.indexOf(element)) ? ColorUtils.text_red : ColorUtils.white,
-                                  onPrimary: model.selectedVacationList.contains(model.vacationList.indexOf(element)) ? ColorUtils.white : ColorUtils.text_dark,
+                                  primary: model.selectedVacationList.contains(element.id) ? ColorUtils.text_red : ColorUtils.white,
+                                  onPrimary: model.selectedVacationList.contains(element.id) ? ColorUtils.white : ColorUtils.text_dark,
                                   padding: EdgeInsets.symmetric(vertical: 1.8.h, horizontal: 9.w),
-                                  elevation: model.selectedVacationList.contains(model.vacationList.indexOf(element)) ? 5 : 0,
+                                  elevation: model.selectedVacationList.contains(element.id) ? 5 : 0,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(Dimensions.roundCorner),
                                       side: BorderSide(
-                                          color: model.selectedVacationList.contains(model.vacationList.indexOf(element)) ? ColorUtils.text_red : ColorUtils.divider,
+                                          color: model.selectedVacationList.contains(element.id) ? ColorUtils.text_red : ColorUtils.divider,
                                           width: 1
                                       )
                                   ),
                                   textStyle: TextStyle(
                                     //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
-                                    fontFamily: model.selectedVacationList.contains(model.vacationList.indexOf(element)) ? FontUtils.modernistBold : FontUtils.modernistRegular,
+                                    fontFamily: model.selectedVacationList.contains(element.id) ? FontUtils.modernistBold : FontUtils.modernistRegular,
                                     fontSize: 1.8.t,
                                     //height: 0
                                   ),
@@ -187,8 +187,8 @@ class _FavoriteVacationState extends State<FavoriteVacation> {
                               //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                               child: ElevatedButton(
                                 onPressed: () async{
-                                  List temp = CommonFunctions.AddFromList(model.selectedVacationList);
-                                  await model.favoritesDrinks(temp, "favorite_party_vacation");
+                                  //List temp = CommonFunctions.AddFromList(model.selectedVacationList);
+                                  await model.favoritesDrinks(model.selectedVacationList, "favorite_party_vacation");
                                   model.navigateBack();
                                 },
                                 child: model.favDrink == false ? Text("Save") : Loader(),

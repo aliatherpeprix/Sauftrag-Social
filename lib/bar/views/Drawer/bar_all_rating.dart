@@ -21,7 +21,8 @@ class BarAllRating extends StatefulWidget {
   _BarAllRatingState createState() => _BarAllRatingState();
 }
 
-class _BarAllRatingState extends State<BarAllRating> with TickerProviderStateMixin {
+class _BarAllRatingState extends State<BarAllRating>
+    with TickerProviderStateMixin {
   late TabController tabController;
 
   List ratingDialog = [
@@ -29,35 +30,35 @@ class _BarAllRatingState extends State<BarAllRating> with TickerProviderStateMix
       'name': "Nick Walker",
       'date': "10 December, 2020",
       'detail':
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar blandit magna.",
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar blandit magna.",
       'image': ImageUtils.nickWalkerImg,
     },
     {
       'name': "Nick Walker",
       'date': "10 December, 2020",
       'detail':
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar blandit magna.",
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar blandit magna.",
       'image': ImageUtils.nickWalkerImg
     },
     {
       'name': "Nick Walker",
       'date': "10 December, 2020",
       'detail':
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar blandit magna.",
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar blandit magna.",
       'image': ImageUtils.nickWalkerImg,
     },
     {
       'name': "Nick Walker",
       'date': "10 December, 2020",
       'detail':
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar blandit magna.",
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar blandit magna.",
       'image': ImageUtils.nickWalkerImg
     },
     {
       'name': "Nick Walker",
       'date': "10 December, 2020",
       'detail':
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar blandit magna.",
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar blandit magna.",
       'image': ImageUtils.nickWalkerImg
     }
   ];
@@ -91,6 +92,9 @@ class _BarAllRatingState extends State<BarAllRating> with TickerProviderStateMix
   Widget build(BuildContext context) {
     return ViewModelBuilder<MainViewModel>.reactive(
       viewModelBuilder: () => locator<MainViewModel>(),
+      onModelReady: (model) {
+        model.rating();
+      },
       disposeViewModel: false,
       builder: (context, model, child) {
         return SafeArea(
@@ -104,12 +108,12 @@ class _BarAllRatingState extends State<BarAllRating> with TickerProviderStateMix
                 Container(
                   padding: EdgeInsets.symmetric(
                       horizontal: Dimensions.horizontalPadding),
-                  child:
-                  Row(
+                  child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       IconButton(
                           onPressed: () {
+                            model.rating();
                             model.navigateBack();
                           },
                           iconSize: 18.0,
@@ -209,28 +213,28 @@ class _BarAllRatingState extends State<BarAllRating> with TickerProviderStateMix
                           padding: EdgeInsets.symmetric(
                               vertical: 1.5.h, horizontal: 3.w),
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                            // boxShadow: [
-                            //   BoxShadow(
-                            //     color: tabSlelected == 1
-                            //         ? ColorUtils.shadowColor.withOpacity(0.15)
-                            //         : ColorUtils.divider,
-                            //     spreadRadius: 3,
-                            //     blurRadius: 8,
-                            //     offset:
-                            //         Offset(0, 3), // changes position of shadow
-                            //   ),
-                            // ],
-                            color: tabSlelected == 1
-                                ? ColorUtils.ratingBoxColor
-                                : ColorUtils.white,
-                            border: Border.all(
-                              width: 0.4.w,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
+                              // boxShadow: [
+                              //   BoxShadow(
+                              //     color: tabSlelected == 1
+                              //         ? ColorUtils.shadowColor.withOpacity(0.15)
+                              //         : ColorUtils.divider,
+                              //     spreadRadius: 3,
+                              //     blurRadius: 8,
+                              //     offset:
+                              //         Offset(0, 3), // changes position of shadow
+                              //   ),
+                              // ],
                               color: tabSlelected == 1
                                   ? ColorUtils.ratingBoxColor
-                                  : ColorUtils.divider,
-                            )
-                          ),
+                                  : ColorUtils.white,
+                              border: Border.all(
+                                width: 0.4.w,
+                                color: tabSlelected == 1
+                                    ? ColorUtils.ratingBoxColor
+                                    : ColorUtils.divider,
+                              )),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -241,7 +245,9 @@ class _BarAllRatingState extends State<BarAllRating> with TickerProviderStateMix
                                     ? ColorUtils.red_color
                                     : ColorUtils.icon_color,
                               ),
-                              SizedBox(width: 1.5.w,),
+                              SizedBox(
+                                width: 1.5.w,
+                              ),
                               Text(
                                 "1",
                                 style: TextStyle(
@@ -257,13 +263,14 @@ class _BarAllRatingState extends State<BarAllRating> with TickerProviderStateMix
                             ],
                           )),
                       Container(
-                        // margin: EdgeInsets.only(
-                        //   //top: 3 * SizeConfig.heightMultiplier,
-                        //     right: 3 * SizeConfig.widthMultiplier),
+                          // margin: EdgeInsets.only(
+                          //   //top: 3 * SizeConfig.heightMultiplier,
+                          //     right: 3 * SizeConfig.widthMultiplier),
                           padding: EdgeInsets.symmetric(
                               vertical: 1.5.h, horizontal: 3.w),
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(5)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
                               // boxShadow: [
                               //   BoxShadow(
                               //     color: tabSlelected == 1
@@ -283,8 +290,7 @@ class _BarAllRatingState extends State<BarAllRating> with TickerProviderStateMix
                                 color: tabSlelected == 2
                                     ? ColorUtils.ratingBoxColor
                                     : ColorUtils.divider,
-                              )
-                          ),
+                              )),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -295,7 +301,9 @@ class _BarAllRatingState extends State<BarAllRating> with TickerProviderStateMix
                                     ? ColorUtils.red_color
                                     : ColorUtils.icon_color,
                               ),
-                              SizedBox(width: 1.5.w,),
+                              SizedBox(
+                                width: 1.5.w,
+                              ),
                               Text(
                                 "2",
                                 style: TextStyle(
@@ -311,13 +319,14 @@ class _BarAllRatingState extends State<BarAllRating> with TickerProviderStateMix
                             ],
                           )),
                       Container(
-                        // margin: EdgeInsets.only(
-                        //   //top: 3 * SizeConfig.heightMultiplier,
-                        //     right: 3 * SizeConfig.widthMultiplier),
+                          // margin: EdgeInsets.only(
+                          //   //top: 3 * SizeConfig.heightMultiplier,
+                          //     right: 3 * SizeConfig.widthMultiplier),
                           padding: EdgeInsets.symmetric(
                               vertical: 1.5.h, horizontal: 3.w),
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(5)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
                               // boxShadow: [
                               //   BoxShadow(
                               //     color: tabSlelected == 1
@@ -337,8 +346,7 @@ class _BarAllRatingState extends State<BarAllRating> with TickerProviderStateMix
                                 color: tabSlelected == 3
                                     ? ColorUtils.ratingBoxColor
                                     : ColorUtils.divider,
-                              )
-                          ),
+                              )),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -349,7 +357,9 @@ class _BarAllRatingState extends State<BarAllRating> with TickerProviderStateMix
                                     ? ColorUtils.red_color
                                     : ColorUtils.icon_color,
                               ),
-                              SizedBox(width: 1.5.w,),
+                              SizedBox(
+                                width: 1.5.w,
+                              ),
                               Text(
                                 "3",
                                 style: TextStyle(
@@ -365,13 +375,14 @@ class _BarAllRatingState extends State<BarAllRating> with TickerProviderStateMix
                             ],
                           )),
                       Container(
-                        // margin: EdgeInsets.only(
-                        //   //top: 3 * SizeConfig.heightMultiplier,
-                        //     right: 3 * SizeConfig.widthMultiplier),
+                          // margin: EdgeInsets.only(
+                          //   //top: 3 * SizeConfig.heightMultiplier,
+                          //     right: 3 * SizeConfig.widthMultiplier),
                           padding: EdgeInsets.symmetric(
                               vertical: 1.5.h, horizontal: 3.w),
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(5)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
                               // boxShadow: [
                               //   BoxShadow(
                               //     color: tabSlelected == 1
@@ -391,8 +402,7 @@ class _BarAllRatingState extends State<BarAllRating> with TickerProviderStateMix
                                 color: tabSlelected == 4
                                     ? ColorUtils.ratingBoxColor
                                     : ColorUtils.divider,
-                              )
-                          ),
+                              )),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -403,7 +413,9 @@ class _BarAllRatingState extends State<BarAllRating> with TickerProviderStateMix
                                     ? ColorUtils.red_color
                                     : ColorUtils.icon_color,
                               ),
-                              SizedBox(width: 1.5.w,),
+                              SizedBox(
+                                width: 1.5.w,
+                              ),
                               Text(
                                 "4",
                                 style: TextStyle(
@@ -419,13 +431,14 @@ class _BarAllRatingState extends State<BarAllRating> with TickerProviderStateMix
                             ],
                           )),
                       Container(
-                        // margin: EdgeInsets.only(
-                        //   //top: 3 * SizeConfig.heightMultiplier,
-                        //     right: 3 * SizeConfig.widthMultiplier),
+                          // margin: EdgeInsets.only(
+                          //   //top: 3 * SizeConfig.heightMultiplier,
+                          //     right: 3 * SizeConfig.widthMultiplier),
                           padding: EdgeInsets.symmetric(
                               vertical: 1.5.h, horizontal: 3.w),
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(5)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
                               // boxShadow: [
                               //   BoxShadow(
                               //     color: tabSlelected == 1
@@ -445,8 +458,7 @@ class _BarAllRatingState extends State<BarAllRating> with TickerProviderStateMix
                                 color: tabSlelected == 5
                                     ? ColorUtils.ratingBoxColor
                                     : ColorUtils.divider,
-                              )
-                          ),
+                              )),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -457,7 +469,9 @@ class _BarAllRatingState extends State<BarAllRating> with TickerProviderStateMix
                                     ? ColorUtils.red_color
                                     : ColorUtils.icon_color,
                               ),
-                              SizedBox(width: 1.5.w,),
+                              SizedBox(
+                                width: 1.5.w,
+                              ),
                               Text(
                                 "5",
                                 style: TextStyle(
@@ -476,44 +490,47 @@ class _BarAllRatingState extends State<BarAllRating> with TickerProviderStateMix
                   ),
                 )),
                 Expanded(
-                  child: TabBarView(controller: tabController,physics: NeverScrollableScrollPhysics(), children: [
-                    FadedScaleAnimation(
-                      AllRating(),
-                      beginOffset: Offset(0, 0.3),
-                      endOffset: Offset(0, 0),
-                      slideCurve: Curves.linearToEaseOut,
-                    ),
-                    FadedScaleAnimation(
-                      AllRating(),
-                      beginOffset: Offset(0, 0.3),
-                      endOffset: Offset(0, 0),
-                      slideCurve: Curves.linearToEaseOut,
-                    ),
-                    FadedScaleAnimation(
-                      AllRating(),
-                      beginOffset: Offset(0, 0.3),
-                      endOffset: Offset(0, 0),
-                      slideCurve: Curves.linearToEaseOut,
-                    ),
-                    FadedScaleAnimation(
-                      AllRating(),
-                      beginOffset: Offset(0, 0.3),
-                      endOffset: Offset(0, 0),
-                      slideCurve: Curves.linearToEaseOut,
-                    ),
-                    FadedScaleAnimation(
-                      AllRating(),
-                      beginOffset: Offset(0, 0.3),
-                      endOffset: Offset(0, 0),
-                      slideCurve: Curves.linearToEaseOut,
-                    ),
-                    FadedScaleAnimation(
-                      AllRating(),
-                      beginOffset: Offset(0, 0.3),
-                      endOffset: Offset(0, 0),
-                      slideCurve: Curves.linearToEaseOut,
-                    ),
-                  ]),
+                  child: TabBarView(
+                      controller: tabController,
+                      physics: NeverScrollableScrollPhysics(),
+                      children: [
+                        FadedScaleAnimation(
+                          AllRating(),
+                          beginOffset: Offset(0, 0.3),
+                          endOffset: Offset(0, 0),
+                          slideCurve: Curves.linearToEaseOut,
+                        ),
+                        FadedScaleAnimation(
+                          AllRating(),
+                          beginOffset: Offset(0, 0.3),
+                          endOffset: Offset(0, 0),
+                          slideCurve: Curves.linearToEaseOut,
+                        ),
+                        FadedScaleAnimation(
+                          AllRating(),
+                          beginOffset: Offset(0, 0.3),
+                          endOffset: Offset(0, 0),
+                          slideCurve: Curves.linearToEaseOut,
+                        ),
+                        FadedScaleAnimation(
+                          AllRating(),
+                          beginOffset: Offset(0, 0.3),
+                          endOffset: Offset(0, 0),
+                          slideCurve: Curves.linearToEaseOut,
+                        ),
+                        FadedScaleAnimation(
+                          AllRating(),
+                          beginOffset: Offset(0, 0.3),
+                          endOffset: Offset(0, 0),
+                          slideCurve: Curves.linearToEaseOut,
+                        ),
+                        FadedScaleAnimation(
+                          AllRating(),
+                          beginOffset: Offset(0, 0.3),
+                          endOffset: Offset(0, 0),
+                          slideCurve: Curves.linearToEaseOut,
+                        ),
+                      ]),
                 ),
               ],
             ),
@@ -534,14 +551,21 @@ class _BarAllRatingState extends State<BarAllRating> with TickerProviderStateMix
             physics: BouncingScrollPhysics(),
             child: Column(
               children: [
+                // ElevatedButton(
+                //     onPressed: () {
+                //       model.rating();
+                //       // model.getTime();
+                //     },
+                //     child: Text("data")),
                 ListView.separated(
                   padding: EdgeInsets.symmetric(vertical: 3.h),
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: 5,
+                  itemCount: model.ratingKaData!.data!.length,
                   itemBuilder: (context, index) {
                     return Container(
-                      padding: EdgeInsets.symmetric(vertical: 1.5.h, horizontal: 2.5.w),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 1.5.h, horizontal: 2.5.w),
                       //width: 6.h,
                       //height: 30.h,
                       decoration: BoxDecoration(
@@ -554,75 +578,85 @@ class _BarAllRatingState extends State<BarAllRating> with TickerProviderStateMix
                                       ),
                                     ],*/
                         color: Colors.white,
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(18)),
+                        borderRadius: BorderRadius.all(Radius.circular(18)),
                         //border: Border.all(color: ColorUtils.red_color),
                       ),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Row(
-
-                                children: [  Image.asset(
-                                  ratingDialog[index]
-                                  ['image'], height: 10.i,),
+                                children: [
+                                  Image.network(
+                                    model.ratingKaData!.data![index].user!
+                                        .profile_picture
+                                        .toString(),
+                                    height: 10.i,
+                                  ),
                                   SizedBox(
                                     width: 4.w,
                                   ),
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        ratingDialog[index]["name"],
+                                        model.ratingKaData!.data![index].user!
+                                            .username
+                                            .toString(),
                                         style: TextStyle(
                                           fontSize: 2.h,
-                                          fontFamily:
-                                          FontUtils.modernistBold,
-
+                                          fontFamily: FontUtils.modernistBold,
                                         ),
                                       ),
-                                      SizedBox(height: 0.5.h,),
+                                      SizedBox(
+                                        height: 0.5.h,
+                                      ),
                                       Text(
-                                        ratingDialog[index]["date"],
+                                        model.timeZone!
+                                            .substring(0, 11)
+                                            .toString(),
                                         style: TextStyle(
                                             color: ColorUtils.text_grey,
                                             fontFamily:
-                                            FontUtils.modernistRegular,
-                                            fontSize: 1.3.h
-                                        ),
+                                                FontUtils.modernistRegular,
+                                            fontSize: 1.3.h),
                                       ),
                                     ],
                                   )
                                 ],
                               ),
                               RatingBar.builder(
-                                initialRating: 5,
+                                tapOnlyMode: false,
+                                initialRating:
+                                    model.ratingKaData!.total_rating ?? 0,
                                 minRating: 1,
+                                ignoreGestures: true,
                                 direction: Axis.horizontal,
-                                allowHalfRating: true,
+                                //allowHalfRating: true,
                                 itemCount: 5,
                                 itemSize: 4.5.i,
-                                itemPadding: EdgeInsets.symmetric(horizontal: 3.0),
+                                itemPadding:
+                                    EdgeInsets.symmetric(horizontal: 3.0),
                                 itemBuilder: (context, _) => Icon(
                                   Icons.star_rounded,
                                   color: ColorUtils.red_color,
                                 ),
                                 onRatingUpdate: (rating) {
-                                  print(rating);
+                                  //print(rating);
                                 },
                               ),
-
                             ],
                           ),
                           SizedBox(height: 2.h),
                           Text(
-                            ratingDialog[index]['detail'],
+                            model.ratingKaData!.data![index].comments
+                                .toString(),
                             style: TextStyle(
-                                fontFamily: FontUtils
-                                    .modernistRegular,
+                                fontFamily: FontUtils.modernistRegular,
                                 fontSize: 1.7.t),
                           ),
                           // Divider(
@@ -666,9 +700,12 @@ class _BarAllRatingState extends State<BarAllRating> with TickerProviderStateMix
                         ],
                       ),
                     );
-                  },  separatorBuilder: (context, index) {
-                  return SizedBox(height:  SizeConfig.heightMultiplier * 1.5,);
-                },
+                  },
+                  separatorBuilder: (context, index) {
+                    return SizedBox(
+                      height: SizeConfig.heightMultiplier * 1.5,
+                    );
+                  },
                 ),
                 SizedBox(height: 2.5.h),
               ],

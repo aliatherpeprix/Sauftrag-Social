@@ -1,8 +1,6 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-//import 'package:flutter_tindercard/flutter_tindercard.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
@@ -14,15 +12,11 @@ import 'package:sauftrag/widgets/all_page_loader.dart';
 import 'package:sauftrag/widgets/drink_status_dialog_box.dart';
 import 'package:sauftrag/widgets/my_side_menu.dart';
 import 'package:sauftrag/widgets/swipe_card.dart';
-import 'package:sauftrag/widgets/swipe_card_new.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:stacked/stacked.dart';
-import 'package:swipe_cards/swipe_cards.dart';
 
 class Swipe extends StatefulWidget {
   const Swipe({Key? key}) : super(key: key);
-
   @override
   _SwipeState createState() => _SwipeState();
 }
@@ -65,7 +59,6 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
   late Animation<double> bottom;
   late Animation<double> width;
   int flag = 0;
-
   List<String> welcomeImages = [
     ImageUtils.girl1,
     ImageUtils.girl2,
@@ -80,7 +73,6 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
     ImageUtils.girl11,
     ImageUtils.girl12
   ];
-
   List<List<String>> data = [
     [
       ImageUtils.girl4,
@@ -117,10 +109,8 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
 
   List selectedData = [];
 
-  //late CardController controller;
   late PageController pageController;
   final currentPageNotifier = ValueNotifier<int>(0);
-
   void initState() {
     super.initState();
     MainViewModel model = locator<MainViewModel>();
@@ -128,7 +118,6 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
         duration: new Duration(milliseconds: 1000), vsync: this);
 
     pageController = PageController(initialPage: 0);
-
     rotate = new Tween<double>(
       begin: -0.0,
       end: -40.0,
@@ -143,12 +132,10 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
         if (rotate.isCompleted) {
           var i = model.catalogImages.removeLast();
           model.catalogImages.insert(0, i);
-
           _buttonController.reset();
         }
       });
     });
-
     right = new Tween<double>(
       begin: 0.0,
       end: 400.0,
@@ -232,7 +219,6 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
     var dataLength = data.length;
     double backCardPosition = initialBottom + (dataLength - 1) * 10 + 10;
     double backCardWidth = 0.0;
-
     return ViewModelBuilder<MainViewModel>.reactive(
       onModelReady: (data) {
         data.getDiscover(context);
@@ -430,6 +416,5 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
 class Content {
   final String text;
   final Color color;
-
   Content({required this.text, required this.color});
 }

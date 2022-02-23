@@ -24,7 +24,7 @@ class _TermsOfServiceState extends State<TermsOfService> {
   Widget build(BuildContext context) {
     return ViewModelBuilder<RegistrationViewModel>.reactive(
       builder: (context, model, child) {
-        // model.getStarted = false;
+        //model.getStarted = false;
         return GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();

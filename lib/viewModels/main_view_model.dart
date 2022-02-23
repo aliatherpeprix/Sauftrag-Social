@@ -17,27 +17,50 @@ import 'package:sauftrag/models/user_matched.dart';
 import 'package:sauftrag/models/user_models.dart' as userModel;
 import 'package:mime/mime.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:pubnub/core.dart';
+import 'package:pubnub/pubnub.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/models/address_book.dart';
+import 'package:sauftrag/models/all_user_for_chat.dart';
 import 'package:sauftrag/models/bar_event_model.dart';
 import 'package:sauftrag/models/bar_model.dart';
-import 'package:sauftrag/models/catalog_model.dart';
 import 'package:sauftrag/models/create_bar_post.dart';
-import 'package:sauftrag/models/discover_model.dart';
-// import 'package:sauftrag/models/faqs_questions.dart';
-// import 'package:sauftrag/models/followers.dart';
+import 'package:sauftrag/models/discover.dart';
+import 'package:sauftrag/models/faqs_questions.dart';
+import 'package:sauftrag/models/favorites_model.dart';
+import 'package:sauftrag/models/followers.dart';
+import 'package:sauftrag/models/get_drink_status.dart';
 import 'package:sauftrag/models/new_bar_model.dart';
 import 'package:sauftrag/models/newsfeed_post_id.dart';
+import 'package:sauftrag/models/pubnub_channel.dart';
+import 'package:sauftrag/models/rating_data.dart';
+import 'package:sauftrag/models/ratings.dart';
 import 'package:sauftrag/models/user_models.dart';
+import 'package:sauftrag/services/addressBook.dart';
+import 'package:sauftrag/services/barQRcode.dart';
+import 'package:sauftrag/services/bar_order.dart';
 import 'package:sauftrag/services/createPost.dart';
+import 'package:sauftrag/services/dataProtection.dart';
+import 'package:sauftrag/services/drinksOrder.dart';
+import 'package:sauftrag/services/faqs.dart';
+
+import 'package:sauftrag/services/privacyPolicy.dart';
+import 'package:sauftrag/services/termsAndCondition.dart';
+import 'package:sauftrag/services/updateBarProfile.dart';
 import 'package:sauftrag/services/updateUserProfile.dart';
+import 'package:sauftrag/services/update_location.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/common_functions.dart';
 import 'package:sauftrag/utils/constants.dart';
 import 'package:sauftrag/utils/dialog_utils.dart';
+import 'package:sauftrag/utils/error_flash_message.dart';
 
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/prefrences_view_model.dart';
 import 'package:sauftrag/views/NewsFeed/event_detail.dart';
+import 'package:sauftrag/views/UserProfile/terms_condition.dart';
 import 'package:sauftrag/widgets/error_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
@@ -47,7 +70,19 @@ import '../main.dart';
 
 class MainViewModel extends BaseViewModel {
   var updateUser = Updateuser();
+  var updateBar = Updatebar();
   var createBarPost = Createpost();
+  var privacyPolicy = Privacypolicy();
+  var termCondition = Termscondition();
+  var dataProtection = Dataprotection();
+  var faqList = Faqs();
+  var contactList = Addressbook();
+  var barQRCode = BarQrcode();
+  var updateLocation = Updatelocation();
+
+  Barcode? result;
+
+  //var Permission;
 
   final GlobalKey<SideMenuState> sideMenuKey = GlobalKey<SideMenuState>();
 
@@ -55,6 +90,7 @@ class MainViewModel extends BaseViewModel {
   final GlobalKey<NavigatorState> navigationKey = GlobalKey<NavigatorState>();
 
   UserModel? userModel;
+  NewBarModel? barModel;
 
   bool logInUserSelected = true;
   bool logInBarSelected = false;
@@ -78,6 +114,7 @@ class MainViewModel extends BaseViewModel {
   bool groupScreenEmojiShowing = false;
   bool groupScreenEmojiSelected = false;
   final groupScreenChatController = TextEditingController();
+  final barGiveRating = TextEditingController();
   final myContactsSearchController = TextEditingController();
   bool myContactEmojiShowing = false;
   bool myContactEmojiSelected = false;
@@ -99,9 +136,17 @@ class MainViewModel extends BaseViewModel {
   bool favClub = false;
   bool favVacation = false;
   bool editProfile = false;
-
+  bool isPrivacyPolicy = false;
+  bool isTermsCondition = false;
+  bool isDataProtection = false;
+  bool isFaqs = false;
+  bool isPost = false;
+  bool isUserProfile = false;
   var dio = Dio();
 
+  final aboutMeController = TextEditingController();
+  final barNameController = TextEditingController();
+  ScrollController chatScroll = ScrollController();
   final addDrinkController = TextEditingController();
   bool isAddDrinkInFocus = false;
   FocusNode addDrinkFocus = new FocusNode();
@@ -118,18 +163,55 @@ class MainViewModel extends BaseViewModel {
   double lowerValue = 50;
   double upperValue = 180;
 
-  // List<FaqsModel> faqs = [];
+  List<FaqsModel> faqs = [];
   List<NewsfeedPostId> posts = [];
   String? privacy;
   String? termsAndCondition;
   String? protection;
-
+  List<FavoritesModel> barQRcode = [];
+  List drinksSelected = [];
+  List<AddressBook> contactBook = [];
   //String? faqs;
 
   List contactChecked = [];
-
   bool isSwitched = false;
 
+  // Future<Position> determinePosition() async {
+  //   bool serviceEnabled;
+  //   LocationPermission permission;
+  //
+  //   // Test if location services are enabled.
+  //   serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  //   if (!serviceEnabled) {
+  //     // Location services are not enabled don't continue
+  //     // accessing the position and request users of the
+  //     // App to enable the location services.
+  //     return Future.error('Location services are disabled.');
+  //   }
+  //
+  //   permission = await Geolocator.checkPermission();
+  //   if (permission == LocationPermission.denied) {
+  //     permission = await Geolocator.requestPermission();
+  //     if (permission == LocationPermission.denied) {
+  //       // Permissions are denied, next time you could try
+  //       // requesting permissions again (this is also where
+  //       // Android's shouldShowRequestPermissionRationale
+  //       // returned true. According to Android guidelines
+  //       // your App should show an explanatory UI now.
+  //       return Future.error('Location permissions are denied');
+  //     }
+  //   }
+  //
+  //   if (permission == LocationPermission.deniedForever) {
+  //     // Permissions are denied forever, handle appropriately.
+  //     return Future.error(
+  //         'Location permissions are permanently denied, we cannot request permissions.');
+  //   }
+  //
+  //   // When we reach here, permissions are granted and we can
+  //   // continue accessing the position of the device.
+  //   return await Geolocator.getCurrentPosition();
+  // }
   Future<Position> determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -137,38 +219,36 @@ class MainViewModel extends BaseViewModel {
     // Test if location services are enabled.
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      isSwitched = false;
-      notifyListeners();
+      // Location services are not enabled don't continue
+      // accessing the position and request users of the
+      // App to enable the location services.
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Please turn on your device location",
+      ));
       return Future.error('Location services are disabled.');
     }
 
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
-      isSwitched = false;
-      notifyListeners();
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        isSwitched = false;
-        notifyListeners();
-
+        // Permissions are denied, next time you could try
+        // requesting permissions again (this is also where
+        // Android's shouldShowRequestPermissionRationale
+        // returned true. According to Android guidelines
+        // your App should show an explanatory UI now.
         return Future.error('Location permissions are denied');
       }
     }
+
     if (permission == LocationPermission.deniedForever) {
-      isSwitched = false;
-      notifyListeners();
+      // Permissions are denied forever, handle appropriately.
       return Future.error(
           'Location permissions are permanently denied, we cannot request permissions.');
     }
-    if (permission == LocationPermission.always) {
-      isSwitched = true;
-      notifyListeners();
-    }
-    if (permission == LocationPermission.whileInUse) {
-      isSwitched = true;
-      notifyListeners();
-    }
 
+    // When we reach here, permissions are granted and we can
+    // continue accessing the position of the device.
     return await Geolocator.getCurrentPosition();
   }
 
@@ -205,23 +285,26 @@ class MainViewModel extends BaseViewModel {
   };
 
   int drinkIndex = -1;
+  int updatedrinkIndex = -1;
   List<int> drinkIndexList = [];
 
   List<String> favoriteAlcoholicDrink = [
-    "White Wine",
-    "Hard Seltzer",
+    "Weißwein",
+    "Harter Seltzer",
     "Whiskey",
     "Jägermeister",
-    "Champagne",
+    "Champagner",
   ];
 
   List<String> favoriteNightClub = ["Club 1", "Club 6", "Club 8"];
 
   List<String> favoritePartyVacation = [
     "Goldstrand",
-    "Zrce Beach",
-    "Springbreak Cancun",
+    "Zrce-Strand",
+    "Springbreak Cancún",
   ];
+
+  FaqsModel? selectedFaq;
 
   Future<bool> openCamera() async {
     ImagePicker picker = ImagePicker();
@@ -254,12 +337,9 @@ class MainViewModel extends BaseViewModel {
       print(userSignupResponce);
       if (userSignupResponce is UserModel) {
         UserModel user = userSignupResponce;
-        user.favorite_alcohol_drinks =
-            CommonFunctions.SubtractFromList(user.favorite_alcohol_drinks!);
-        user.favorite_night_club =
-            CommonFunctions.SubtractFromList(user.favorite_night_club!);
-        user.favorite_party_vacation =
-            CommonFunctions.SubtractFromList(user.favorite_party_vacation!);
+        user.favorite_alcohol_drinks = user.favorite_alcohol_drinks!;
+        user.favorite_night_club = user.favorite_night_club!;
+        user.favorite_party_vacation = user.favorite_party_vacation!;
         // if (favorite=="favorite_alcohol_drinks"){
         //
         // }
@@ -469,12 +549,7 @@ class MainViewModel extends BaseViewModel {
 
   int partyVacationValue = 1;
   String partyVacationValueStr = "Ibiza Beach";
-  List<String> partyVacationList = [
-    "Ibiza Beach",
-    "Goldstrand",
-    "Zrce Beach",
-    "Lloret"
-  ];
+  List<dynamic> partyVacationList = [];
   Map<String, int> partyVacationMap = {
     'Ibiza Beach': 1,
     'Goldstrand': 2,
@@ -592,54 +667,18 @@ class MainViewModel extends BaseViewModel {
         infoWindow: InfoWindow(title: 'The title of the marker')));
   }
 
-  List<dynamic> drinkList = [
-    "Beer",
-    "White Wine",
-    "Radler",
-    "Red Wine",
-    "Gin",
-    "Whiskey",
-    "Hard Seltzer",
-    "Jägermeister",
-    "Tequila",
-    "Champagne"
-  ];
+  List<dynamic> drinkList = [];
 
   List<dynamic> selectedDrinkList = [];
 
-  List<dynamic> clubList = [
-    "Club 1",
-    "Club 2",
-    "Club 3",
-    "Club 4",
-    "Club 5",
-    "Club 6",
-    "Club 7",
-    "Club 8",
-    "Club 9",
-    "Club 10"
-  ];
+  List<dynamic> clubList = [];
   List<dynamic> selectedClubList = [];
 
-  List<dynamic> vacationList = [
-    "Ballermann",
-    "Goldstrand",
-    "Zrce Beach",
-    "Lloret",
-    "Ibiza",
-    "Springbreak Cancun"
-  ];
+  List<dynamic> vacationList = [];
 
   List<dynamic> selectedVacationList = [];
 
-  List<String> interestList = [
-    "White Wine",
-    "Hard Seltzer",
-    "Whiskey",
-    "Club 1",
-    "Club 2",
-    "Goldstrand",
-  ];
+  List<String> interestList = [];
 
   CameraPosition kGooglePlex = CameraPosition(
     target: LatLng(24.8169, 67.1118),
@@ -846,6 +885,15 @@ class MainViewModel extends BaseViewModel {
     //notifyListeners();
   }
 
+  void UpdateaddRemoveDrink(int index) {
+    updatedrinkIndex = index + 1;
+    //drinkIndexList.length = index + 1;
+    notifyListeners();
+
+    //drinkIndex = index + 1;
+    //notifyListeners();
+  }
+
   deleteAccount() async {
     NewBarModel? user = await locator<PrefrencesViewModel>().getBarUser();
     var response = await dio.delete(
@@ -864,8 +912,7 @@ class MainViewModel extends BaseViewModel {
     print(response.data);
   }
 
-  // List<FollowersList> follower = [];
-
+  List<FollowersList> follower = [];
   followers() async {
     NewBarModel? user = await locator<PrefrencesViewModel>().getBarUser();
     var response = await dio.get(Constants.BaseUrlPro + Constants.followersList,
@@ -878,14 +925,13 @@ class MainViewModel extends BaseViewModel {
     //     headers: {'authorization': 'Token ${user!.token!}'});
     print(response.data);
     // var jsonData = jsonDecode(response.data);
-    // follower =
-    //     (response.data as List).map((e) => FollowersList.fromJson(e)).toList();
+    follower =
+        (response.data as List).map((e) => FollowersList.fromJson(e)).toList();
     notifyListeners();
   }
 
-  // Ratings? ratingKaData;
-  // RatingData? forTime;
-
+  Ratings? ratingKaData;
+  RatingData? forTime;
   rating() async {
     NewBarModel? user = await locator<PrefrencesViewModel>().getBarUser();
 
@@ -896,25 +942,44 @@ class MainViewModel extends BaseViewModel {
         // Options(headers: {'Authorization': 'Token ${user!.token!}'})
         );
     print(response);
-    // ratingKaData = Ratings.fromJson(response.data);
+    ratingKaData = Ratings.fromJson(response.data);
     getTime();
   }
 
+  var currentPosition;
+  double longitude = 0.0;
+  double latitude = 0.0;
+  // var currentPosition;
+  Future updateCurrentLocation() async {
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+        .then((Position position) async {
+      // currentPosition = position;
+      notifyListeners();
+      // currentPosition;
+      longitude = position.longitude;
+      latitude = position.latitude;
+      notifyListeners();
+      var updatelocationResponse = await updateLocation.UpdateLocation(
+          latitude.toString(), longitude.toString(), userModel!.id.toString());
+      print(updatelocationResponse);
+    }).catchError((e) {
+      print(e);
+    });
+  }
   // var channel = "getting_started";
 
   List chats = [];
   var message = '';
 
   String? timeZone;
-
   getTime() {
-    // var checking = ratingKaData!.data![0].created_at.toString();
-    // var dateTime =
-    //     DateFormat("yyyy-MM-dd").parse(checking.replaceAll('T', ' '), true);
-    // var dateLocal = dateTime.toLocal();
-    // timeZone = dateLocal.toString();
-    // print(dateLocal);
-    // return dateLocal;
+    var checking = ratingKaData!.data![0].created_at.toString();
+    var dateTime =
+        DateFormat("yyyy-MM-dd").parse(checking.replaceAll('T', ' '), true);
+    var dateLocal = dateTime.toLocal();
+    timeZone = dateLocal.toString();
+    print(dateLocal);
+    return dateLocal;
   }
 
   DeactivateAccount() async {
@@ -938,12 +1003,11 @@ class MainViewModel extends BaseViewModel {
     // errorFlashMessage(jsonData['detail'], context);
   }
 
-  // List<UserForChat> userForChats = [];
+  List<UserForChat> userForChats = [];
   bool userComing = false;
-
   getAllUserForChat() async {
     userComing = true;
-    notifyListeners();
+    // notifyListeners();
     NewBarModel? user = await locator<PrefrencesViewModel>().getBarUser();
     var response = await dio.get(
         Constants.BaseUrlPro + Constants.allUserForChat,
@@ -951,14 +1015,150 @@ class MainViewModel extends BaseViewModel {
             contentType: Headers.formUrlEncodedContentType,
             headers: {'Authorization': 'Token ${user!.token!}'}));
     print(response.data);
-    // userForChats =
-    //     (response.data as List).map((e) => UserForChat.fromJson(e)).toList();
+    userForChats =
+        (response.data as List).map((e) => UserForChat.fromJson(e)).toList();
     userComing = false;
     notifyListeners();
   }
 
+  List<PubnubChannel>? pnChannel = [];
+  getGroupChannelFromPubnub() async {
+    UserModel? user = await locator<PrefrencesViewModel>().getUser();
+    var response = await dio.get('https://ps.pndsn.com/' +
+        'v2/presence/sub-key/sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4/uuid/${user!.id}');
+    print(response.data);
+    var encodedData = jsonEncode(response.data);
+    print(encodedData);
+    var jsonData = jsonDecode(encodedData);
+    print(jsonData);
+    pnChannel = (jsonData['channels'] as List)
+        .map((e) => PubnubChannel.fromJson(e))
+        .toList();
+  }
+
+  List<Discover> discoverPeople = [];
+  DiscoverPeople() async {
+    UserModel? user = await locator<PrefrencesViewModel>().getUser();
+    var response = await dio.get(Constants.BaseUrlPro + Constants.discover,
+        options: Options(
+            contentType: Headers.formUrlEncodedContentType,
+            headers: {'Authorization': 'Token ${user!.token!}'}));
+    print(response.data);
+    discoverPeople =
+        (response.data as List).map((e) => Discover.fromJson(e)).toList();
+  }
+
+  double? rate;
+  var barId = "";
+
+  giveRatingToBar() async {
+    UserModel? user = await locator<PrefrencesViewModel>().getUser();
+    var data = {'rate': rate, 'comments': barGiveRating.text, 'bar': 78};
+    var encodedData = jsonEncode(data);
+    var response = await http.post(
+        Uri.http(Constants.BaseUrlPro, '/api/rating/add/'),
+        body: encodedData,
+        headers: {
+          'content-type': 'application/json',
+          'accept': 'application/json',
+          'Authorization': 'Token ${user!.token!}'
+        });
+
+    var jsonData = jsonDecode(response.body);
+    print(jsonData);
+
+    // dio.post(Constants.BaseUrlPro + Constants.giveRating,
+    //     data: FormData.fromMap(
+    //         {'rate': rate, 'comments': barGiveRating.text, 'bar': 78}),
+    //     options: Options(
+    //         contentType: Headers.formUrlEncodedContentType,
+    //         headers: {'Authentication': 'Token ${user!.token!}'}));
+    // print(response.data);
+  }
+
+  String? drinkingFrom;
+  String? drinkingTo;
+  bool updateStatus = false;
+  drinkStatus() async {
+    UserModel? user = await locator<PrefrencesViewModel>().getUser();
+
+    var data = {
+      'quantity': drinkIndex,
+      'start_time': drinkingFrom,
+      'end_time': drinkingTo,
+    };
+    var response = await dio.post(Constants.BaseUrlPro + Constants.drinkStatus,
+        data: data,
+        options: Options(
+            contentType: Headers.formUrlEncodedContentType,
+            headers: {'Authorization': 'Token ${user!.token!}'}));
+    print(response.data);
+    getStatus = DrinkStatus.fromJson(response.data);
+    getStatus!.start_time = TimeOfDay(
+            hour: int.parse(getStatus!.start_time!.split(":")[0]),
+            minute: int.parse(getStatus!.start_time!.split(":")[1]))
+        .format(navigationService.navigationKey.currentContext!);
+    getStatus!.end_time = TimeOfDay(
+            hour: int.parse(getStatus!.end_time!.split(":")[0]),
+            minute: int.parse(getStatus!.end_time!.split(":")[1]))
+        .format(navigationService.navigationKey.currentContext!);
+    updatedrinkIndex = getStatus!.quantity!;
+    notifyListeners();
+  }
+
+  updateDrinkStatus() async {
+    UserModel? user = await locator<PrefrencesViewModel>().getUser();
+
+    var data = {
+      'quantity': updatedrinkIndex,
+      'start_time': drinkingFrom,
+      'end_time': drinkingTo,
+    };
+    var response = await dio.post(Constants.BaseUrlPro + Constants.drinkStatus,
+        data: data,
+        options: Options(
+            contentType: Headers.formUrlEncodedContentType,
+            headers: {'Authorization': 'Token ${user!.token!}'}));
+    print(response.data);
+    getStatus = DrinkStatus.fromJson(response.data);
+    getStatus!.start_time = TimeOfDay(
+            hour: int.parse(getStatus!.start_time!.split(":")[0]),
+            minute: int.parse(getStatus!.start_time!.split(":")[1]))
+        .format(navigationService.navigationKey.currentContext!);
+    getStatus!.end_time = TimeOfDay(
+            hour: int.parse(getStatus!.end_time!.split(":")[0]),
+            minute: int.parse(getStatus!.end_time!.split(":")[1]))
+        .format(navigationService.navigationKey.currentContext!);
+    updatedrinkIndex = getStatus!.quantity!;
+    notifyListeners();
+  }
+
+  DrinkStatus? getStatus;
+  getDrinkStatus() async {
+    UserModel? user = await locator<PrefrencesViewModel>().getUser();
+    var response = await dio.get(
+        Constants.BaseUrlPro + "api/user/drinkStatus/${user!.id!}/",
+        // queryParameters: {'user_id': user!.id!},
+        options: Options(
+            // contentType: Headers.formUrlEncodedContentType,
+            headers: {'Authorization': 'Token ${user.token!}'}));
+    print(response.data);
+    getStatus = DrinkStatus.fromJson(response.data);
+    getStatus!.start_time = TimeOfDay(
+            hour: int.parse(getStatus!.start_time!.split(":")[0]),
+            minute: int.parse(getStatus!.start_time!.split(":")[1]))
+        .format(navigationService.navigationKey.currentContext!);
+    getStatus!.end_time = TimeOfDay(
+            hour: int.parse(getStatus!.end_time!.split(":")[0]),
+            minute: int.parse(getStatus!.end_time!.split(":")[1]))
+        .format(navigationService.navigationKey.currentContext!);
+    updatedrinkIndex = getStatus!.quantity!;
+    notifyListeners();
+    // print(getStatus);
+  }
+
   void scrollDown() {
-    // chatScroll.jumpTo(chatScroll.position.maxScrollExtent);
+    chatScroll.jumpTo(chatScroll.position.maxScrollExtent);
   }
 
   void navigateToProfileScreen(List<String> images, String? name,
@@ -1055,6 +1255,10 @@ class MainViewModel extends BaseViewModel {
     navigationService.navigateToBarTimingTypeScreen();
   }
 
+  void navigateToOrderDetailsScreen() {
+    navigationService.navigateToOrderDetailsScreen();
+  }
+
   // void navigateToEventDetailsScreen( dynamic image,
   //       dynamic eventName,
   //       dynamic eventDate,
@@ -1100,6 +1304,10 @@ class MainViewModel extends BaseViewModel {
 
   void navigateToAllEventListScreen() {
     navigationService.navigateToAllEventListScreen();
+  }
+
+  void navigateToDataProtectionScreen() {
+    navigationService.navigateToDataProtectionScreen();
   }
 
   ///------User Drawer -----/////
@@ -1170,6 +1378,30 @@ class MainViewModel extends BaseViewModel {
     navigationService.navigateToBarProfile2();
   }
 
+  void navigateToPrivacyAndPolicyScreen() {
+    navigationService.navigateToPrivacyAndPolicyScreen();
+  }
+
+  void navigateToTermsAndConditionScreen() {
+    navigationService.navigateToTermsAndConditionScreen();
+  }
+
+  void navigateToFaqScreen() {
+    navigationService.navigateToFaqScreen();
+  }
+
+  void navigateToFaqAnsScreen() {
+    navigationService.navigateToFaqAnsScreen();
+  }
+
+  void navigateToAddressBookScreen() {
+    navigationService.navigateToAddressBookScreen();
+  }
+
+  void navigateToChooseDrinkScreen() {
+    navigationService.navigateToChooseDrinkScreen();
+  }
+
   Future saveUserDetails() async {
     List tempList = [];
     // for (int i = 0;i<imageFiles.length;i++){
@@ -1189,14 +1421,45 @@ class MainViewModel extends BaseViewModel {
     if (userUpdateResponse is UserModel) {
       UserModel user = userUpdateResponse;
       user.token = userModel!.token!;
-      user.favorite_alcohol_drinks =
-          CommonFunctions.SubtractFromList(user.favorite_alcohol_drinks!);
-      user.favorite_night_club =
-          CommonFunctions.SubtractFromList(user.favorite_night_club!);
-      user.favorite_party_vacation =
-          CommonFunctions.SubtractFromList(user.favorite_party_vacation!);
+      user.favorite_alcohol_drinks = user.favorite_alcohol_drinks!;
+      user.favorite_night_club = user.favorite_night_club!;
+      user.favorite_party_vacation = user.favorite_party_vacation!;
       await prefrencesViewModel.saveUser(user);
       notifyListeners();
+    }
+    editProfile = false;
+    notifyListeners();
+  }
+
+  Future saveBarDetails() async {
+    List tempList = [];
+    // for (int i = 0;i<imageFiles.length;i++){
+    //   if (imageFiles[i] is File && (imageFiles[i] as File).path.isNotEmpty){
+    //     String image = "data:${lookupMimeType(imageFiles[0].path)};base64," +
+    //         base64Encode(imageFiles[0].readAsBytesSync());
+    //     tempList.add(image);
+    //   }
+    //   else {
+    //     tempList.add(imageFiles[i]);
+    //   }
+    // }
+    editProfile = true;
+    notifyListeners();
+    var barUpdateResponse = await updateBar.UpdateBarProfile(
+      barNameController.text,
+      imageFiles,
+    );
+
+    if (barUpdateResponse is NewBarModel) {
+      NewBarModel barUser = barUpdateResponse;
+      barUser.token = barModel!.token!;
+      // user.favorite_alcohol_drinks = user.favorite_alcohol_drinks!;
+      // user.favorite_night_club = user.favorite_night_club!;
+      // user.favorite_party_vacation =user.favorite_party_vacation!;
+      await prefrencesViewModel.saveBarUser(barUser);
+      barModel = barUser;
+      print(barModel);
+      //notifyListeners();
     }
     editProfile = false;
     notifyListeners();
@@ -1205,22 +1468,152 @@ class MainViewModel extends BaseViewModel {
   logOutUser() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.clear();
+    getStatus = null;
     navigateAndRemoveSignInScreen();
   }
 
   // List<NewsfeedPostId> posts = [];
 
   void getUserData() async {
-    userModel = await prefrencesViewModel.getUser();
+    userModel = (await prefrencesViewModel.getUser())!;
+    barModel = (await prefrencesViewModel.getBarUser())!;
+    notifyListeners();
+  }
+
+  addBarImages() {
+    for (int i = 0; i < imageFiles.length; i++) {
+      if (i == 0) {
+        if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
+            imageFiles[i].path.isEmpty) {
+          DialogUtils().showDialog(MyErrorWidget(
+            error: "Select Bar Logo",
+          ));
+          return;
+        }
+      }
+      bool hasImages = false;
+      if (i > 0) {
+        if (!hasImages) {
+          if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
+              imageFiles[i].path.isEmpty) {
+            DialogUtils().showDialog(MyErrorWidget(
+              error: "Select at least one Bar Image",
+            ));
+            return;
+          } else {
+            hasImages = true;
+            break;
+          }
+        }
+      }
+    }
+    navigateToBarTimingTypeScreen();
+    //navigateToMediaScreen();
+    //navigateToHomeScreen(2);
+  }
+
+  void getBarData() async {
+    barModel = await prefrencesViewModel.getBarUser();
     notifyListeners();
   }
 
   getBarPost() async {
+    isPost = true;
     var getNewsfeed = await createBarPost.GetPost();
     if (getNewsfeed is List<NewsfeedPostId>) {
       posts = getNewsfeed;
     }
+    isPost = false;
     print(getNewsfeed);
+    notifyListeners();
+  }
+
+  getPrivacyPolicy() async {
+    isPrivacyPolicy = true;
+
+    var getPrivacyPolicy = await privacyPolicy.GetPrivacyPolicy();
+    if (getPrivacyPolicy is String) {
+      privacy = getPrivacyPolicy;
+      //isPrivacyPolicy = false;
+
+    } else {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Some thing went wrong",
+      ));
+      //isPrivacyPolicy = false;
+
+      return;
+    }
+    isPrivacyPolicy = false;
+    notifyListeners();
+    print(getPrivacyPolicy);
+  }
+
+  getTermsCondition() async {
+    isTermsCondition = true;
+
+    var getTerms = await termCondition.GetTermsCondition();
+    if (getTerms is String) {
+      termsAndCondition = getTerms;
+      //isPrivacyPolicy = false;
+
+    } else {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Some thing went wrong",
+      ));
+      //isPrivacyPolicy = false;
+
+      return;
+    }
+    isTermsCondition = false;
+    notifyListeners();
+    print(getPrivacyPolicy);
+  }
+
+  getDataProtection() async {
+    isDataProtection = true;
+
+    var getDaraProtection = await dataProtection.GetDataProtection();
+    if (getDaraProtection is String) {
+      protection = getDaraProtection;
+      //isPrivacyPolicy = false;
+
+    } else {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Some thing went wrong",
+      ));
+      //isPrivacyPolicy = false;
+
+      return;
+    }
+    isDataProtection = false;
+    notifyListeners();
+    print(getPrivacyPolicy);
+  }
+
+  getFaqsList() async {
+    isFaqs = true;
+
+    var getFaqList = await faqList.GetFaqs();
+    print(getFaqList);
+    // if (getFaqList is String){
+    //   faqs = getFaqList;
+    //   //isPrivacyPolicy = false;
+    //
+    // }
+    if (getFaqList is List<FaqsModel>) {
+      faqs = getFaqList;
+    } else {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Some thing went wrong",
+      ));
+      //isPrivacyPolicy = false;
+
+      return;
+    }
+    isFaqs = false;
+    notifyListeners();
+    print(getFaqsList);
   }
 
   bool eventLoader = false;
@@ -1268,12 +1661,51 @@ class MainViewModel extends BaseViewModel {
     }
   }
 
+  void getContacts() async {
+    bool permissionGranted = false;
+
+    var status = await Permission.contacts.status;
+    if (status.isDenied) {
+      await Permission.contacts.request();
+    }
+    //await Permission.storage.request();
+
+    if (await Permission.contacts.isRestricted ||
+        await Permission.contacts.isDenied) {
+      permissionGranted = false;
+      //await Permission.contacts.request();
+    } else {
+      permissionGranted = true;
+    }
+    if (permissionGranted) {
+      List<Contact> contacts = await ContactsService.getContacts();
+      List<dynamic> contactsToSend = [];
+      for (Contact contact in contacts) {
+        if (contact.displayName != null && contact.phones != null) {
+          if (contact.phones!.isNotEmpty) {
+            var data = {
+              "username": contact.displayName,
+              "phone_no": contact.phones!.first.value!,
+            };
+            contactsToSend.add(data);
+          }
+        }
+      }
+      var getContactList = await contactList.AddressBookList(contactsToSend);
+      if (getContactList is List<AddressBook>) {
+        contactBook = getContactList;
+      }
+      print(getContactList);
+    }
+  }
+
   List<UserModel>? discoverModel = [];
   List catalogImages = [];
   bool discoverLoader = false;
 
   void getDiscover(BuildContext context) async {
-    UserModel? user = UserModel();
+    UserModel? user = await locator<PrefrencesViewModel>().getUser();
+
     catalogImages = [];
     try {
       discoverLoader = true;
@@ -1282,7 +1714,7 @@ class MainViewModel extends BaseViewModel {
       var response = await dio.get("${Constants.GetDiscover}",
           options: Options(
               contentType: Headers.formUrlEncodedContentType,
-              headers: {"Authorization": "Token ${user!.token}"}));
+              headers: {"Authorization": "Token ${user!.token!}"}));
       print(response);
 
       if (response.statusCode == 200) {

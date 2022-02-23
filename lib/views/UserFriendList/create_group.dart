@@ -42,10 +42,11 @@ class _CreateGroupState extends State<CreateGroup> {
       }
       return ColorUtils.text_red;
     }
+
     return ViewModelBuilder<MainViewModel>.reactive(
-      onModelReady: (model){
+      onModelReady: (model) {
         model.groupList.clear();
-        model.selected = List<bool>.filled(model.contactChecked.length, false);
+        model.selected = List<bool>.filled(model.userForChats.length, false);
       },
       builder: (context, model, child) {
         return GestureDetector(
@@ -56,30 +57,29 @@ class _CreateGroupState extends State<CreateGroup> {
             top: false,
             bottom: false,
             child: Scaffold(
-              floatingActionButton: GestureDetector(
-                onTap: (){
-                  //model.groupList.add(value);
-                  //model.navigationService.navigateTo(to: ServiceCategory());
-                  model.navigateToGroupDetails();
-                },
-                child: Container(
-                  margin: EdgeInsets.only(bottom: 3.h,right: 2.w),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: ColorUtils.text_red,
-                  ),
+                floatingActionButton: GestureDetector(
+                  onTap: () {
+                    //model.groupList.add(value);
+                    //model.navigationService.navigateTo(to: ServiceCategory());
+                    model.navigateToGroupDetails();
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(bottom: 3.h, right: 2.w),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: ColorUtils.text_red,
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: SvgPicture.asset(ImageUtils.floatingForwardIcon),
                     ),
+                  ),
                 ),
-              ),
-
                 backgroundColor: ColorUtils.white,
                 body: Container(
                   padding: EdgeInsets.symmetric(
-                      horizontal: Dimensions.horizontalPadding,
-                      ),
+                    horizontal: Dimensions.horizontalPadding,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -160,8 +160,7 @@ class _CreateGroupState extends State<CreateGroup> {
                                       isDense: true,
                                       contentPadding: EdgeInsets.symmetric(
                                           vertical:
-                                              SizeConfig.heightMultiplier *
-                                                  2),
+                                              SizeConfig.heightMultiplier * 2),
                                     ),
                                   ),
                                 ),
@@ -170,43 +169,49 @@ class _CreateGroupState extends State<CreateGroup> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 3.h,),
-
+                      SizedBox(
+                        height: 3.h,
+                      ),
                       Expanded(
                         child: ListView.separated(
-                          padding: EdgeInsets.zero,
+                            padding: EdgeInsets.zero,
                             physics: BouncingScrollPhysics(),
-                          shrinkWrap: true,
+                            shrinkWrap: true,
                             itemBuilder: (context, index) {
                               return Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
                                       CircleAvatar(
                                         radius: 26.5,
-                                        backgroundImage: AssetImage(
-                                            model.contactChecked[index]["image"]),
+                                        backgroundImage: NetworkImage(model
+                                            .userForChats[index].profile_picture
+                                            .toString()),
                                         backgroundColor: Colors.transparent,
                                       ),
-                                      SizedBox(width: 3.w,),
-                                      Text(
-                                        model.contactChecked[index]["name"],
-                                      style: TextStyle(
-                                        fontFamily: FontUtils.modernistBold,
-                                        fontSize: 1.8.t,
-                                        color: ColorUtils.text_dark
+                                      SizedBox(
+                                        width: 3.w,
                                       ),
+                                      Text(
+                                        model.userForChats[index].username
+                                            .toString(),
+                                        style: TextStyle(
+                                            fontFamily: FontUtils.modernistBold,
+                                            fontSize: 1.8.t,
+                                            color: ColorUtils.text_dark),
                                       ),
                                     ],
                                   ),
+
                                   Checkbox(
                                     checkColor: Colors.white,
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(4)
-                                    ),
-
-                                    fillColor: MaterialStateProperty.resolveWith(getColor),
+                                        borderRadius: BorderRadius.circular(4)),
+                                    fillColor:
+                                        MaterialStateProperty.resolveWith(
+                                            getColor),
                                     value: model.selected![index],
                                     onChanged: (val) {
                                       setState(() {
@@ -214,14 +219,20 @@ class _CreateGroupState extends State<CreateGroup> {
                                         model.selectedValue = val;
                                         //model.groupMap["image"] =
                                         print(model.selectedValue);
-                                        if(model.selectedValue == true){
+                                        if (model.selectedValue == true) {
                                           model.currentIndex = index;
-                                          model.groupMap["image"] = model.contactChecked[index]["image"];
-                                          model.groupMap["name"] = model.contactChecked[index]["name"];
+                                          model.groupMap["image"] = model
+                                              .userForChats[index]
+                                              .profile_picture;
+                                          model.groupMap["name"] = model
+                                              .userForChats[index].username;
                                           //print(groupMap);
                                           model.groupList.add({
-                                            "image": model.groupMap["image"],
-                                            "name" : model.groupMap["name"]
+                                            'id': model.userForChats[index].id,
+                                            "image": model.userForChats[index]
+                                                .profile_picture,
+                                            "name": model
+                                                .userForChats[index].username
                                           });
                                           print(model.groupList);
                                           //containerBorder = ColorUtils.greenColor;
@@ -229,6 +240,39 @@ class _CreateGroupState extends State<CreateGroup> {
                                       });
                                     },
                                   ),
+
+                                  // Checkbox(
+                                  //   checkColor: Colors.white,
+                                  //   shape: RoundedRectangleBorder(
+                                  //       borderRadius: BorderRadius.circular(4)),
+                                  //   fillColor:
+                                  //       MaterialStateProperty.resolveWith(
+                                  //           getColor),
+                                  //   value: model.selected![index],
+                                  //   onChanged: (val) {
+                                  //     setState(() {
+                                  //       model.selected![index] = val!;
+                                  //       model.selectedValue = val;
+                                  //       //model.groupMap["image"] =
+                                  //       print(model.selectedValue);
+                                  //       if (model.selectedValue == true) {
+                                  //         model.currentIndex = index;
+                                  //         model.groupMap["image"] = model
+                                  //             .userForChats[index]
+                                  //             .profile_picture;
+                                  //         model.groupMap["name"] = model
+                                  //             .userForChats[index].username;
+                                  //         //print(groupMap);
+                                  //         model.groupList.add({
+                                  //           "image": model.groupMap["image"],
+                                  //           "name": model.groupMap["name"]
+                                  //         });
+                                  //         print(model.groupList);
+                                  //         //containerBorder = ColorUtils.greenColor;
+                                  //       }
+                                  //     });
+                                  //   },
+                                  // ),
                                 ],
                               );
                             },
@@ -237,12 +281,12 @@ class _CreateGroupState extends State<CreateGroup> {
                                 height: 3.h,
                               );
                             },
-                            itemCount: model.contactChecked.length),
+                            itemCount: model.userForChats.length),
                       ),
                     ],
                   ),
                 )),
-          ),
+          ),  
         );
       },
       viewModelBuilder: () => locator<MainViewModel>(),

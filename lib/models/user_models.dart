@@ -16,6 +16,8 @@ class UserModel {
   String? address;
   String? dob;
   dynamic relation_ship;
+  String? latitude;
+  String? longitude;
   dynamic role;
   List?  favorite_alcohol_drinks;
   List? favorite_night_club;

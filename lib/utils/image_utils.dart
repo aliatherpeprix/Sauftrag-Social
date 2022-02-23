@@ -125,8 +125,8 @@ class ImageUtils {
   static String targetIcon = "assets/target_icon.svg";
 
   //Girls Images
-  static String girl1 = "assets/girls/girl_1.png";
-  static String girl2 = "assets/girls/girl_2.png";
+  static String girl1 = "assets/girls/girl_1.jpeg";
+  static String girl2 = "assets/girls/girl_2.jpeg";
   static String girl3 = "assets/girls/girl_3.jpeg";
   static String girl4 = "assets/girls/girl_4.jpeg";
   static String girl5 = "assets/girls/girl_5.jpeg";
@@ -136,10 +136,14 @@ class ImageUtils {
   static String girl9 = "assets/girls/girl_9.jpeg";
   static String girl10 = "assets/girls/girl_10.jpeg";
   static String girl11 = "assets/girls/girl_11.jpeg";
-  static String girl12 = "assets/girls/girl_12.jpeg";
-  static String girl13 = "assets/girls/girl_13.jpeg";
-  static String girl14 = "assets/girls/girl_14.jpeg";
-  static String girl15 = "assets/girls/girl_15.jpeg";
+  static String girl12 = "assets/girls/girl_12.png";
+  static String girl13 = "assets/girls/girl_13.png";
+  static String boy_1 = "assets/girls/boy_1.jpeg";
+  static String boy_2 = "assets/girls/boy_2.jpeg";
+  static String boy_3 = "assets/girls/boy_3.jpeg";
+  static String boy_4 = "assets/girls/boy_4.png";
+  static String boy_5 = "assets/girls/boy_5.png";
+  static String boy_6 = "assets/girls/boy_6.png";
   static String mainfile = "assets/girls/girl_15.jpeg";
   static String image = "assets/girls/file.jpeg";
   static String boy1 = "assets/girls/file.jpeg";
