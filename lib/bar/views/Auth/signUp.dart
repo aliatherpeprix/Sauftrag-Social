@@ -207,33 +207,38 @@ class _SignUpBarState extends State<SignUpBar> {
                                     borderRadius: BorderRadius.all(Radius.circular(Dimensions.roundCorner)),
                                     border: Border.all(color: ColorUtils.divider)
                                 ),
-                                child: Row(
-                                  children: [
+                                child: GestureDetector(
+                                  onTap: (){
+                                    model.navigateToAddAddressBarScreen();
+                                  },
+                                  child: Row(
+                                    children: [
 
-                                    SvgPicture.asset(ImageUtils.locationIcon),
+                                      SvgPicture.asset(ImageUtils.locationIcon),
 
-                                    SizedBox(width: 4.w),
+                                      SizedBox(width: 4.w),
 
-                                    Expanded(
-                                      child: TextField(
-                                        focusNode: model.signUpBarAddressFocus,
-                                        controller: model.signUpBarAddressController,
-                                        keyboardType: TextInputType.text,
-                                        textInputAction: TextInputAction.next,
-                                        style: TextStyle(
-                                          color: ColorUtils.red_color,
-                                          fontFamily: FontUtils.modernistRegular,
-                                          fontSize: 1.9.t,
-                                        ),
-                                        decoration: const InputDecoration(
-                                          border: InputBorder.none,
-                                          isDense:true,
-                                          contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                                      Expanded(
+                                        child: TextField(
+                                          focusNode: model.signUpBarAddressFocus,
+                                          controller: model.signUpBarAddressController,
+                                          keyboardType: TextInputType.text,
+                                          textInputAction: TextInputAction.next,
+                                          style: TextStyle(
+                                            color: ColorUtils.red_color,
+                                            fontFamily: FontUtils.modernistRegular,
+                                            fontSize: 1.9.t,
+                                          ),
+                                          decoration: const InputDecoration(
+                                            border: InputBorder.none,
+                                            isDense:true,
+                                            contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                                          ),
                                         ),
                                       ),
-                                    ),
 
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
 

@@ -638,35 +638,36 @@ class _SignUpState extends State<SignUp> {
                                         Radius.circular(Dimensions.roundCorner)),
                                     border:
                                     Border.all(color: ColorUtils.divider)),
-                                child: Row(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: (){
-                                        model.navigateToAddAddressScreen();
-                                      },
-                                        child: Container(child: SvgPicture.asset(ImageUtils.locationIcon)
-                                        )),
-                                    SizedBox(width: 4.w),
-                                    Expanded(
-                                      child: TextField(
-                                        focusNode: model.signUpAddressFocus,
-                                        controller: model.signUpAddressController,
-                                        keyboardType: TextInputType.text,
-                                        textInputAction: TextInputAction.next,
-                                        style: TextStyle(
-                                          color: ColorUtils.red_color,
-                                          fontFamily: FontUtils.modernistRegular,
-                                          fontSize: 1.9.t,
-                                        ),
-                                        decoration: const InputDecoration(
-                                          border: InputBorder.none,
-                                          isDense: true,
-                                          contentPadding: EdgeInsets.symmetric(
-                                              horizontal: 0, vertical: 0),
+                                child: GestureDetector(
+                                  onTap: (){
+                                    model.navigateToAddAddressScreen();
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Container(child: SvgPicture.asset(ImageUtils.locationIcon)
+                                      ),
+                                      SizedBox(width: 4.w),
+                                      Expanded(
+                                        child: TextField(
+                                          focusNode: model.signUpAddressFocus,
+                                          controller: model.signUpAddressController,
+                                          keyboardType: TextInputType.text,
+                                          textInputAction: TextInputAction.next,
+                                          style: TextStyle(
+                                            color: ColorUtils.red_color,
+                                            fontFamily: FontUtils.modernistRegular,
+                                            fontSize: 1.9.t,
+                                          ),
+                                          decoration: const InputDecoration(
+                                            border: InputBorder.none,
+                                            isDense: true,
+                                            contentPadding: EdgeInsets.symmetric(
+                                                horizontal: 0, vertical: 0),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                               Container(

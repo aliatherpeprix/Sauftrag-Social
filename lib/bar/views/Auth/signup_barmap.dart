@@ -13,15 +13,15 @@ import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:stacked/stacked.dart';
 
-class SignupMap extends StatefulWidget {
+class SignupBarMap extends StatefulWidget {
 
-  const SignupMap({Key? key}) : super(key: key);
+  const SignupBarMap({Key? key}) : super(key: key);
 
   @override
-  _SignupMapState createState() => _SignupMapState();
+  _SignupBarMapState createState() => _SignupBarMapState();
 }
 
-class _SignupMapState extends State<SignupMap> {
+class _SignupBarMapState extends State<SignupBarMap> {
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class _SignupMapState extends State<SignupMap> {
             bottom: false,
             child: WillPopScope(
               onWillPop: ()async{
-                model.signUpAddressController.clear();
+                model.signUpBarAddressController.clear();
                 model.markers.clear();
                 model.address = "";
                 return true;
@@ -56,7 +56,7 @@ class _SignupMapState extends State<SignupMap> {
                               margin: EdgeInsets.symmetric(horizontal: 4.w),
                               child: ElevatedButton(
                                 onPressed: () {
-                                  model.signUpAddressController.text = model.address;
+                                  model.signUpBarAddressController.text = model.address;
                                   model.navigateBack();
                                 },
                                 child: Text('Use this Location'),

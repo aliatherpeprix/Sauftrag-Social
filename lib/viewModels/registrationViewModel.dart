@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get_utils/src/extensions/string_extensions.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -51,6 +52,9 @@ import 'package:stacked/stacked.dart';
 import '../main.dart';
 import 'main_view_model.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
+import "package:google_maps_webservice/geocoding.dart";
+import "package:google_maps_webservice/places.dart";
+import 'package:google_api_headers/google_api_headers.dart';
 
 
 class RegistrationViewModel extends BaseViewModel {
@@ -115,6 +119,7 @@ class RegistrationViewModel extends BaseViewModel {
   GoogleMapController? mapController;
   double? lat;
   double? lng;
+
   Position? currentPosition;
 
 
@@ -464,10 +469,10 @@ class RegistrationViewModel extends BaseViewModel {
     }*/
   }
 
-  addMarkers() {
+  addMarkers(LatLng latlng) {
     markers.add(Marker(
         markerId: MarkerId('SomeId'),
-        position: LatLng(24.8169, 67.1118),
+        position: LatLng(latlng.latitude, latlng.longitude),
         infoWindow: InfoWindow(title: 'The title of the marker')));
   }
 
@@ -534,8 +539,8 @@ class RegistrationViewModel extends BaseViewModel {
     lat = latLng.latitude;
     lng = latLng.longitude;
 
-    marker.clear();
-    marker.add(
+    markers.clear();
+    markers.add(
         Marker(
             markerId: MarkerId(placemarks[0].name!),
             position: LatLng(latLng.latitude, latLng.longitude),
@@ -550,7 +555,7 @@ class RegistrationViewModel extends BaseViewModel {
 
   Future<void> searchAddress(BuildContext context) async {
 
-    Prediction? p = await PlacesAutocomplete.show(
+    var p = await PlacesAutocomplete.show(
         offset: 0,
         radius: 1000,
         types: [],
@@ -560,7 +565,6 @@ class RegistrationViewModel extends BaseViewModel {
         mode: Mode.overlay, // Mode.fullscreen
         language: "en",
         components: [new Component(Component.country, "pk")]);
-
     GoogleMapsPlaces _places = GoogleMapsPlaces(
       apiKey: Constants.kGoogleApiKey,
       apiHeaders: await GoogleApiHeaders().getHeaders(),
@@ -576,8 +580,8 @@ class RegistrationViewModel extends BaseViewModel {
     this.lat = lat;
     this.lng = lng;
 
-    marker.clear();
-    marker.add(
+    markers.clear();
+    markers.add(
         Marker(
             markerId: MarkerId(p.placeId.toString()),
             position: LatLng(lat, lng),
@@ -700,6 +704,37 @@ class RegistrationViewModel extends BaseViewModel {
     }).catchError((e) {
       print(e);
     });
+  }
+
+  Future determinePosition1() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return Future.error('Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    currentPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+
+    mapController = await controller.future;
+
+    navigateToPosition(LatLng(currentPosition!.latitude, currentPosition!.longitude));
+
   }
 
   Future<Position> determinePosition() async {
@@ -957,7 +992,8 @@ class RegistrationViewModel extends BaseViewModel {
           Future.delayed(Duration(seconds: 2)).then((data) {
             createNewPasswordBool = false;
             notifyListeners();
-            navigateToLoginScreen();
+            navigateAndRemoveSignInScreen();
+            //navigateToLoginScreen();
             forgetPasswordController.clear();
             resetNewPasswordController.clear();
             confirmNewPasswordController.clear();
@@ -2109,5 +2145,9 @@ class RegistrationViewModel extends BaseViewModel {
 
   void navigateToAddAddressScreen() {
     navigationService.navigateToAddAddressScreen();
+  }
+
+  void navigateToAddAddressBarScreen() {
+    navigationService.navigateToAddAddressBarScreen();
   }
 }

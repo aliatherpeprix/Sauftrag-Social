@@ -46,7 +46,6 @@ dependencies:
   shrink_sidemenu: ^2.0.0+1-null-safety
   page_view_indicators: ^2.0.0
   smooth_page_indicator: ^1.0.0+2
-  google_maps_flutter: ^2.1.1
   bubble: ^1.2.1
   emoji_picker_flutter: ^1.0.8
   expand_tap_area: ^1.1.0
@@ -64,6 +63,7 @@ dependencies:
   pubnub: ^4.1.0
   location:
   geolocator: ^8.0.1
+  google_maps_flutter: ^2.1.1
   qr_flutter: ^4.0.0
   flutter_google_places: ^0.3.0
   geocoding: ^2.0.1

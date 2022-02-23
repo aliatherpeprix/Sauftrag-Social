@@ -4,6 +4,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:sauftrag/bar/views/Auth/barTimingType.dart';
 import 'package:sauftrag/bar/views/Auth/media.dart';
 import 'package:sauftrag/bar/views/Auth/signUp.dart';
+import 'package:sauftrag/bar/views/Auth/signup_barmap.dart';
 import 'package:sauftrag/bar/views/Drawer/barEvent.dart';
 import 'package:sauftrag/bar/views/Drawer/barProfile.dart';
 import 'package:sauftrag/bar/views/Drawer/bar_Rating.dart';
@@ -76,6 +77,10 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateToLoginScreen(){
     navigationKey.currentState!.pushReplacement(PageTransition(child: Login(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateAndRemoveSignInScreen(){
+    navigationKey.currentState!.pushAndRemoveUntil(PageTransition(child: Login(), type: PageTransitionType.rightToLeftWithFade), (route) => false);
   }
 
   void navigateToSignUpScreen(){
@@ -226,10 +231,6 @@ class NavigationViewModel extends BaseViewModel{
     navigationKey.currentState!.push(PageTransition(child: GPS(), type: PageTransitionType.rightToLeftWithFade));
   }
 
-
-  void navigateAndRemoveSignInScreen(){
-    navigationKey.currentState!.pushAndRemoveUntil(PageTransition(child: Login(), type: PageTransitionType.rightToLeftWithFade), (route) => false);
-  }
 
   void navigateToEventDetailScreen(
       dynamic image,
@@ -383,6 +384,10 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateToAddAddressScreen(){
     navigationKey.currentState!.push(PageTransition(child: SignupMap(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToAddAddressBarScreen(){
+    navigationKey.currentState!.push(PageTransition(child: SignupBarMap(), type: PageTransitionType.rightToLeftWithFade));
   }
 
 
