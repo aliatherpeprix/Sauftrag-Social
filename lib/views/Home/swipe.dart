@@ -343,7 +343,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                             : Stack(
                                 alignment: AlignmentDirectional.center,
                                 children: model.catalogImages.map((item) {
-                                  return SwipeCard(
+                                  return  SwipeCard(
                                     name: model
                                         .discoverModel![
                                             model.catalogImages.indexOf(item)]
