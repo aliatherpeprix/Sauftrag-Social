@@ -83,7 +83,12 @@ class _RequestedPeopleState extends State<RequestedPeople> {
                                               width: 3.w,
                                             ),
                                             GestureDetector(
-                                              onTap: () {
+                                              onTap: () async{
+                                              await  model.deleteRequest(
+                                                    context,
+                                                    model.requestModel[index]
+                                                        .id);
+
                                                 model.requestModel
                                                     .removeAt(index);
                                                 model.notifyListeners();
@@ -97,11 +102,14 @@ class _RequestedPeopleState extends State<RequestedPeople> {
                                               width: 8.w,
                                             ),
                                             GestureDetector(
-                                              onTap: () {
-                                                model.acceptRequest(
+                                              onTap: () async{
+                                             await   model.acceptRequest(
                                                     context,
                                                     model.requestModel[index]
                                                         .id);
+                                                model.requestModel
+                                                    .removeAt(index);
+                                                model.notifyListeners();
                                                 print(model
                                                     .requestModel[index].id);
                                               },

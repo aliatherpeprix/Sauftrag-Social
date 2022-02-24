@@ -224,6 +224,8 @@ class ImageUtils {
   static String bottleRank = "assets/bottleRank.png";
   static String coinImg = "assets/coinImg.png";
   static String sendIcon1 = "assets/sndIcon.svg";
+  static String UserNotFound = "assets/gifs/UserNF.gif";
+
 
 
   static String saufTragLogoGif = "assets/gifs/logo.gif";

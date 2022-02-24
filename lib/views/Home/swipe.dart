@@ -235,172 +235,190 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
             menu: MySideMenu(),
             child: Scaffold(
               backgroundColor: ColorUtils.white,
-              body: Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: 0, vertical: Dimensions.verticalPadding),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: Dimensions.homeTopMargin),
+              body: InkWell(
+                onTap: (){
+                  final _state = model.sideMenuKey.currentState;
+                  if (_state!.isOpened)
+                    _state.closeSideMenu();
+                  model.notifyListeners();
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 0, vertical: Dimensions.verticalPadding),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: Dimensions.homeTopMargin),
 
-                    //Top bar
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: Dimensions.horizontalPadding),
-                      //margin: EdgeInsets.only(bottom: 1.h),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          ElevatedButton(
-                            onPressed: () {
-                              final _state = model.sideMenuKey.currentState;
-                              if (_state!.isOpened)
-                                _state.closeSideMenu(); // close side menu
-                              else
-                                _state.openSideMenu();
-                            },
-                            child: SvgPicture.asset(ImageUtils.menuIcon),
-                            style: ElevatedButton.styleFrom(
-                              primary: ColorUtils.white,
-                              onPrimary: ColorUtils.white,
-                              padding: EdgeInsets.symmetric(
-                                  vertical:
-                                      Dimensions.containerVerticalPadding),
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      Dimensions.roundCorner),
-                                  side: BorderSide(
-                                      color: ColorUtils.divider, width: 1)),
-                              textStyle: TextStyle(
-                                color: ColorUtils.white,
-                                fontFamily: FontUtils.modernistBold,
-                                fontSize: 1.8.t,
-                                //height: 0
-                              ),
-                            ),
-                          ),
-                          Column(
-                            children: [
-                              Text(
-                                "Discover",
-                                style: TextStyle(
-                                  color: ColorUtils.black,
+                      //Top bar
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: Dimensions.horizontalPadding),
+                        //margin: EdgeInsets.only(bottom: 1.h),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                final _state = model.sideMenuKey.currentState;
+                                if (_state!.isOpened)
+                                  _state.closeSideMenu(); // close side menu
+                                else
+                                  _state.openSideMenu();
+                                model.notifyListeners();
+                              },
+                              child: SvgPicture.asset(ImageUtils.menuIcon),
+                              style: ElevatedButton.styleFrom(
+                                primary: ColorUtils.white,
+                                onPrimary: ColorUtils.white,
+                                padding: EdgeInsets.symmetric(
+                                    vertical:
+                                        Dimensions.containerVerticalPadding),
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        Dimensions.roundCorner),
+                                    side: BorderSide(
+                                        color: ColorUtils.divider, width: 1)),
+                                textStyle: TextStyle(
+                                  color: ColorUtils.white,
                                   fontFamily: FontUtils.modernistBold,
-                                  fontSize: 3.t,
+                                  fontSize: 1.8.t,
+                                  //height: 0
                                 ),
-                              ),
-                              Text(
-                                "Chicago",
-                                style: TextStyle(
-                                  color: ColorUtils.black,
-                                  fontFamily: FontUtils.modernistRegular,
-                                  fontSize: 1.7.t,
-                                ),
-                              ),
-                            ],
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return DrinkStatusDialogBox(
-                                        title: "Add New Location",
-                                        btnTxt: "Add Location",
-                                        icon: ImageUtils.addLocationIcon);
-                                  });
-                            },
-                            child: SvgPicture.asset(ImageUtils.setStatusIcon),
-                            style: ElevatedButton.styleFrom(
-                              primary: ColorUtils.white,
-                              //onPrimary: ColorUtils.white,
-                              padding: EdgeInsets.symmetric(
-                                  vertical:
-                                      Dimensions.containerVerticalPadding),
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      Dimensions.roundCorner),
-                                  side: BorderSide(
-                                      color: ColorUtils.divider, width: 1)),
-                              textStyle: TextStyle(
-                                color: ColorUtils.white,
-                                fontFamily: FontUtils.modernistBold,
-                                fontSize: 1.8.t,
-                                //height: 0
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        //margin: EdgeInsets.symmetric(vertical: 2.h),
-                        child: model.discoverLoader
-                            ? AllPageLoader()
-                            : Stack(
-                                alignment: AlignmentDirectional.center,
-                                children: model.catalogImages.map((item) {
-                                  return  SwipeCard(
-                                    name: model
-                                        .discoverModel![
-                                            model.catalogImages.indexOf(item)]
-                                        .username,
-                                    img: item,
-                                    cardWidth: backCardWidth + 0,
-                                    rotation: rotate.value,
-                                    skew: rotate.value < -10 ? 0.1 : 0.0,
-                                    address: model
-                                        .discoverModel![
-                                            model.catalogImages.indexOf(item)]
-                                        .address,
-                                    details: () {
-                                      model.navigateToProfileScreen(
-                                          item,
-                                          model.matchName[model.catalogImages
-                                              .indexOf(item)],
-                                          model
-                                              .discoverModel![model
-                                                  .catalogImages
-                                                  .indexOf(item)]
-                                              .address!,
-                                          model
-                                              .discoverModel![model
-                                                  .catalogImages
-                                                  .indexOf(item)]
-                                              .favorite_alcohol_drinks!,
-                                          model
-                                              .discoverModel![model
-                                                  .catalogImages
-                                                  .indexOf(item)]
-                                              .favorite_night_club!,
-                                          model
-                                              .discoverModel![model
-                                                  .catalogImages
-                                                  .indexOf(item)]
-                                              .favorite_party_vacation!);
-                                    },
-                                    right: right.value,
-                                    left: 0.0,
-                                    addImg: addImg,
-                                    bottom: bottom.value,
-                                    flag: flag,
-                                    dismissImg: dismissImg,
-                                    swipeRight: swipeRight,
-                                    swipeLeft: swipeLeft,
-                                    id: model
-                                        .discoverModel![
-                                            model.catalogImages.indexOf(item)]
-                                        .id,
-                                  );
-                                }).toList(),
+                            Column(
+                              children: [
+                                Text(
+                                  "Discover",
+                                  style: TextStyle(
+                                    color: ColorUtils.black,
+                                    fontFamily: FontUtils.modernistBold,
+                                    fontSize: 3.t,
+                                  ),
+                                ),
+                                Text(
+                                  "Chicago",
+                                  style: TextStyle(
+                                    color: ColorUtils.black,
+                                    fontFamily: FontUtils.modernistRegular,
+                                    fontSize: 1.7.t,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return DrinkStatusDialogBox(
+                                          title: "Add New Location",
+                                          btnTxt: "Add Location",
+                                          icon: ImageUtils.addLocationIcon);
+                                    });
+                              },
+                              child: SvgPicture.asset(ImageUtils.setStatusIcon),
+                              style: ElevatedButton.styleFrom(
+                                primary: ColorUtils.white,
+                                //onPrimary: ColorUtils.white,
+                                padding: EdgeInsets.symmetric(
+                                    vertical:
+                                        Dimensions.containerVerticalPadding),
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        Dimensions.roundCorner),
+                                    side: BorderSide(
+                                        color: ColorUtils.divider, width: 1)),
+                                textStyle: TextStyle(
+                                  color: ColorUtils.white,
+                                  fontFamily: FontUtils.modernistBold,
+                                  fontSize: 1.8.t,
+                                  //height: 0
+                                ),
                               ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 2.h),
-                  ],
+                      Expanded(
+                        child: Container(
+                          //margin: EdgeInsets.symmetric(vertical: 2.h),
+                          child: model.discoverLoader
+                              ? AllPageLoader()
+                              : model.catalogImages.isEmpty?Image.asset(ImageUtils.UserNotFound):AbsorbPointer(
+                            absorbing: model.sideMenuKey.currentState != null && model.sideMenuKey.currentState!.isOpened,
+                                child: Stack(
+                                    alignment: AlignmentDirectional.center,
+                                    children: model.catalogImages.map((item) {
+                                      return  SwipeCard(
+                                        name: model
+                                            .discoverModel![
+                                                model.catalogImages.indexOf(item)]
+                                            .username,
+                                        img: item,
+                                        cardWidth: backCardWidth + 0,
+                                        rotation: rotate.value,
+                                        skew: rotate.value < -10 ? 0.1 : 0.0,
+                                        address: model
+                                            .discoverModel![
+                                                model.catalogImages.indexOf(item)]
+                                            .address,
+                                        details: () {
+                                          model.navigateToProfileScreen(
+                                              item,
+                                              model.matchName[model.catalogImages
+                                                  .indexOf(item)],
+                                              model
+                                                  .discoverModel![model
+                                                      .catalogImages
+                                                      .indexOf(item)]
+                                                  .address!,
+                                              model
+                                                  .discoverModel![model
+                                                      .catalogImages
+                                                      .indexOf(item)]
+                                                  .favorite_alcohol_drinks!,
+                                              model
+                                                  .discoverModel![model
+                                                      .catalogImages
+                                                      .indexOf(item)]
+                                                  .favorite_night_club!,
+                                              model
+                                                  .discoverModel![model
+                                                      .catalogImages
+                                                      .indexOf(item)]
+                                                  .favorite_party_vacation!,
+                                            model
+                                                .discoverModel![
+                                            model.catalogImages.indexOf(item)]
+                                                .id,
+
+                                          );
+                                        },
+                                        right: right.value,
+                                        left: 0.0,
+                                        addImg: addImg,
+                                        bottom: bottom.value,
+                                        flag: flag,
+                                        dismissImg: dismissImg,
+                                        swipeRight: swipeRight,
+                                        swipeLeft: swipeLeft,
+                                        id: model
+                                            .discoverModel![
+                                                model.catalogImages.indexOf(item)]
+                                            .id,
+                                      );
+                                    }).toList(),
+                                  ),
+                              ),
+                        ),
+                      ),
+                      SizedBox(height: 2.h),
+                    ],
+                  ),
                 ),
               ),
             ),

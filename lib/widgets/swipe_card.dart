@@ -56,6 +56,10 @@ class _SwipeCardState extends State<SwipeCard> {
 
   bool isLike = false;
 
+  List images = [
+    ImageUtils.UserNotFound,
+  ];
+
   @override
   void initState() {
     // TODO: implement initState
@@ -97,7 +101,6 @@ class _SwipeCardState extends State<SwipeCard> {
               if (direction == DismissDirection.endToStart) {
                 widget.dismissImg(widget.img,model);
               } else {
-
                 widget.addImg(widget.img,model);
               }
             },
@@ -127,10 +130,17 @@ class _SwipeCardState extends State<SwipeCard> {
                               },
                               child: PageView.builder(
                                 itemBuilder: (context, position) {
-                                  return Container(
+                                  return widget.img.isNotEmpty? Container(
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.all(Radius.circular(20)),
-                                      image: DecorationImage(image: NetworkImage(widget.img[position]), fit: BoxFit.cover),
+                                      color: Colors.white,
+                                      image: DecorationImage(image:  NetworkImage(widget.img[position]), fit: BoxFit.cover),
+                                    ),
+                                    alignment: Alignment.center,
+                                  ):Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                                      image: DecorationImage(image:  AssetImage(ImageUtils.UserNotFound), fit: BoxFit.cover),
                                     ),
                                     alignment: Alignment.center,
                                   );
@@ -224,7 +234,7 @@ class _SwipeCardState extends State<SwipeCard> {
                                         onPressed: () {
                                           // widget.swipeRight(0);
                                           model.UserMatches(context,widget.id!);
-                                          model.notifyListeners();
+                                          //model.notifyListeners();
                                         },
                                         child:SvgPicture.asset(ImageUtils.likeIcon),
                                         style: ElevatedButton.styleFrom(
@@ -280,12 +290,14 @@ class _SwipeCardState extends State<SwipeCard> {
 
                                               Icon(Icons.location_pin, color: ColorUtils.white, size: 5.i,),
 
-                                              Text(
-                                               widget.address!,
-                                                style: TextStyle(
-                                                  color: ColorUtils.white,
-                                                  fontFamily: FontUtils.modernistRegular,
-                                                  fontSize: 1.5.t,
+                                              Expanded(
+                                                child: Text(
+                                                 widget.address!,
+                                                  style: TextStyle(
+                                                    color: ColorUtils.white,
+                                                    fontFamily: FontUtils.modernistRegular,
+                                                    fontSize: 1.5.t,
+                                                  ),
                                                 ),
                                               ),
                                             ],

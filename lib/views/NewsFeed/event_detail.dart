@@ -20,6 +20,8 @@ class EventDetails extends StatefulWidget {
   dynamic eventEndTime;
   dynamic location;
   dynamic about;
+  dynamic barName;
+  dynamic barImage;
 
   EventDetails(
       {required this.image,
@@ -28,7 +30,10 @@ class EventDetails extends StatefulWidget {
         required this.eventStartTime,
         required this.eventEndTime,
         required this.location,
-        required this.about});
+        required this.about,
+        required this.barName,
+        required this.barImage
+      });
 
   @override
   _EventDetailsState createState() => _EventDetailsState();
@@ -44,6 +49,9 @@ class _EventDetailsState extends State<EventDetails> {
     return ViewModelBuilder<MainViewModel>.reactive(
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
+      onModelReady: (model){
+
+      },
       builder: (context, model, child) {
         return SafeArea(
           top: false,
@@ -395,8 +403,8 @@ class _EventDetailsState extends State<EventDetails> {
                                             Radius.circular(12))),
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(12.0),
-                                      child: Image.asset(
-                                        ImageUtils.eventOrganizer,
+                                      child: Image.network(
+                                       widget.barImage,
                                         width: 12.i,
                                         height: 12.i,
                                       ),
@@ -410,7 +418,8 @@ class _EventDetailsState extends State<EventDetails> {
                                     CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "Barry Allen",
+                                        widget.barName,
+                                        // widget.barName,
                                         style: TextStyle(
                                             fontFamily: FontUtils.modernistBold,
                                             fontSize: 2.t,
