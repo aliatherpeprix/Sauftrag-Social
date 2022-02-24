@@ -70,6 +70,7 @@ class _MatchedPeopleState extends State<MatchedPeople> {
                                               .profilePicture,
                                           height: 20.h,
                                           width: 34.w,
+                                          fit: BoxFit.cover,
                                         ),
                                       ),
                                       PositionedDirectional(

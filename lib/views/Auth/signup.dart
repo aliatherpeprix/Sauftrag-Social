@@ -639,17 +639,16 @@ class _SignUpState extends State<SignUp> {
                                     border:
                                     Border.all(color: ColorUtils.divider)),
                                 child: GestureDetector(
-                                  onTap: (){
+                                  onTap: () async {
+                                    var position = await model.determinePosition();
+                                    model.latitude = position.latitude;
+                                    model.latitude = position.longitude;
                                     model.navigateToAddAddressScreen();
                                   },
                                   child: Row(
                                     children: [
-                                      GestureDetector(
-                                        onTap: (){
-
-                                        },
-                                          child: Container(child: SvgPicture.asset(ImageUtils.locationIcon)
-                                          )),
+                                      Container(child: SvgPicture.asset(ImageUtils.locationIcon)
+                                      ),
                                       SizedBox(width: 4.w),
                                       Expanded(
                                         child: TextField(

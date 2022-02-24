@@ -18,6 +18,7 @@ import 'package:stacked/stacked.dart';
 
 class Swipe extends StatefulWidget {
   const Swipe({Key? key}) : super(key: key);
+
   @override
   _SwipeState createState() => _SwipeState();
 }
@@ -112,6 +113,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
 
   late PageController pageController;
   final currentPageNotifier = ValueNotifier<int>(0);
+
   void initState() {
     super.initState();
     MainViewModel model = locator<MainViewModel>();
@@ -237,10 +239,9 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
             child: Scaffold(
               backgroundColor: ColorUtils.white,
               body: InkWell(
-                onTap: (){
+                onTap: () {
                   final _state = model.sideMenuKey.currentState;
-                  if (_state!.isOpened)
-                    _state.closeSideMenu();
+                  if (_state!.isOpened) _state.closeSideMenu();
                   model.notifyListeners();
                 },
                 child: Container(
@@ -332,37 +333,37 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                 }
                               },
                               child: model.getStatus == null
-                            ? SvgPicture.asset(ImageUtils.setStatusIcon)
-                      : Row(
-                children: [
-                SvgPicture.asset(
-                ImageUtils.bottleSelected,
-                  height: 3.5.h,
-                ),
-                Text(
-                  "x${model.getStatus!.quantity}",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 1.2.t,
-                      height: 0.5.h),
-                  textAlign: TextAlign.end,
-                ),
-                Container(
-                  width: 15.w,
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Motor anwärmen",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: ColorUtils.text_red,
-                      fontFamily:
-                      FontUtils.modernistBold,
-                      fontSize: 1.2.t,
-                    ),
-                  ),
-                ),
-                ],
-              ),
+                                  ? SvgPicture.asset(ImageUtils.setStatusIcon)
+                                  : Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          ImageUtils.bottleSelected,
+                                          height: 3.5.h,
+                                        ),
+                                        Text(
+                                          "x${model.getStatus!.quantity}",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 1.2.t,
+                                              height: 0.5.h),
+                                          textAlign: TextAlign.end,
+                                        ),
+                                        Container(
+                                          width: 15.w,
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            "Motor anwärmen",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: ColorUtils.text_red,
+                                              fontFamily:
+                                                  FontUtils.modernistBold,
+                                              fontSize: 1.2.t,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                               style: ElevatedButton.styleFrom(
                                 primary: ColorUtils.white,
                                 //onPrimary: ColorUtils.white,
@@ -390,71 +391,84 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                           //margin: EdgeInsets.symmetric(vertical: 2.h),
                           child: model.discoverLoader
                               ? AllPageLoader()
-                              : model.catalogImages.isEmpty?Image.asset(ImageUtils.UserNotFound):AbsorbPointer(
-                            absorbing: model.sideMenuKey.currentState != null && model.sideMenuKey.currentState!.isOpened,
-                                child: Stack(
-                                    alignment: AlignmentDirectional.center,
-                                    children: model.catalogImages.map((item) {
-                                      return  SwipeCard(
-                                        name: model
-                                            .discoverModel![
-                                                model.catalogImages.indexOf(item)]
-                                            .username,
-                                        img: item,
-                                        cardWidth: backCardWidth + 0,
-                                        rotation: rotate.value,
-                                        skew: rotate.value < -10 ? 0.1 : 0.0,
-                                        address: model
-                                            .discoverModel![
-                                                model.catalogImages.indexOf(item)]
-                                            .address,
-                                        details: () {
-                                          model.navigateToProfileScreen(
-                                              item,
-                                              model.matchName[model.catalogImages
-                                                  .indexOf(item)],
-                                              model
-                                                  .discoverModel![model
-                                                      .catalogImages
-                                                      .indexOf(item)]
-                                                  .address!,
-                                              model
-                                                  .discoverModel![model
-                                                      .catalogImages
-                                                      .indexOf(item)]
-                                                  .favorite_alcohol_drinks!,
-                                              model
-                                                  .discoverModel![model
-                                                      .catalogImages
-                                                      .indexOf(item)]
-                                                  .favorite_night_club!,
-                                              model
-                                                  .discoverModel![model
-                                                      .catalogImages
-                                                      .indexOf(item)]
-                                                  .favorite_party_vacation!,
-                                            model
-                                                .discoverModel![
-                                            model.catalogImages.indexOf(item)]
+                              : model.catalogImages.isEmpty
+                                  ? Image.asset(ImageUtils.UserNotFound)
+                                  : AbsorbPointer(
+                                      absorbing:
+                                          model.sideMenuKey.currentState !=
+                                                  null &&
+                                              model.sideMenuKey.currentState!
+                                                  .isOpened,
+                                      child: Stack(
+                                        alignment: AlignmentDirectional.center,
+                                        children:
+                                            model.catalogImages.map((item) {
+                                          return SwipeCard(
+                                            name: model
+                                                .discoverModel![model
+                                                    .catalogImages
+                                                    .indexOf(item)]
+                                                .username,
+                                            img: item,
+                                            cardWidth: backCardWidth + 0,
+                                            rotation: rotate.value,
+                                            skew:
+                                                rotate.value < -10 ? 0.1 : 0.0,
+                                            address: model
+                                                .discoverModel![model
+                                                    .catalogImages
+                                                    .indexOf(item)]
+                                                .address,
+                                            details: () {
+                                              model.navigateToProfileScreen(
+                                                item,
+                                                model.matchName[model
+                                                    .catalogImages
+                                                    .indexOf(item)],
+                                                model
+                                                    .discoverModel![model
+                                                        .catalogImages
+                                                        .indexOf(item)]
+                                                    .address!,
+                                                model
+                                                    .discoverModel![model
+                                                        .catalogImages
+                                                        .indexOf(item)]
+                                                    .favorite_alcohol_drinks!,
+                                                model
+                                                    .discoverModel![model
+                                                        .catalogImages
+                                                        .indexOf(item)]
+                                                    .favorite_night_club!,
+                                                model
+                                                    .discoverModel![model
+                                                        .catalogImages
+                                                        .indexOf(item)]
+                                                    .favorite_party_vacation!,
+                                                model
+                                                    .discoverModel![model
+                                                        .catalogImages
+                                                        .indexOf(item)]
+                                                    .id,
+                                              );
+                                            },
+                                            right: right.value,
+                                            left: 0.0,
+                                            addImg: addImg,
+                                            bottom: bottom.value,
+                                            flag: flag,
+                                            dismissImg: dismissImg,
+                                            swipeRight: swipeRight,
+                                            swipeLeft: swipeLeft,
+                                            id: model
+                                                .discoverModel![model
+                                                    .catalogImages
+                                                    .indexOf(item)]
                                                 .id,
                                           );
-                                        },
-                                        right: right.value,
-                                        left: 0.0,
-                                        addImg: addImg,
-                                        bottom: bottom.value,
-                                        flag: flag,
-                                        dismissImg: dismissImg,
-                                        swipeRight: swipeRight,
-                                        swipeLeft: swipeLeft,
-                                        id: model
-                                            .discoverModel![
-                                                model.catalogImages.indexOf(item)]
-                                            .id,
-                                      );
-                                    }).toList(),
-                                  ),
-                              ),
+                                        }).toList(),
+                                      ),
+                                    ),
                         ),
                       ),
                       SizedBox(height: 2.h),
@@ -475,5 +489,6 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
 class Content {
   final String text;
   final Color color;
+
   Content({required this.text, required this.color});
 }
