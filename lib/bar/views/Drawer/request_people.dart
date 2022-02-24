@@ -84,10 +84,14 @@ class _RequestedPeopleState extends State<RequestedPeople> {
                                             ),
                                             GestureDetector(
                                               onTap: () async{
-                                              await  model.deleteRequest(
-                                                    context,
-                                                    model.requestModel[index]
-                                                        .id);
+                                                if(model.matchesLoader){
+                                                }else{
+                                                  await  model.deleteRequest(
+                                                      context,
+                                                      model.requestModel[index]
+                                                          .id);
+                                                }
+
                                                 //
                                                 // model.requestModel
                                                 //     .removeAt(index);
@@ -103,10 +107,15 @@ class _RequestedPeopleState extends State<RequestedPeople> {
                                             ),
                                             GestureDetector(
                                               onTap: () async{
-                                             await   model.acceptRequest(
-                                                    context,
-                                                    model.requestModel[index]
-                                                        .id);
+                                                if(model.matchesLoader){
+
+                                                }else{
+                                                  await   model.acceptRequest(
+                                                      context,
+                                                      model.requestModel[index]
+                                                          .id);
+                                                }
+
                                                 // model.requestModel
                                                 //     .removeAt(index);
                                                 model.notifyListeners();

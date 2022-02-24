@@ -10,6 +10,7 @@ import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/widgets/all_page_loader.dart';
 import 'package:sauftrag/widgets/drink_status_dialog_box.dart';
+import 'package:sauftrag/widgets/drink_update_status_dialog_box.dart';
 import 'package:sauftrag/widgets/my_side_menu.dart';
 import 'package:sauftrag/widgets/swipe_card.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
@@ -310,22 +311,63 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                             ),
                             ElevatedButton(
                               onPressed: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return DrinkStatusDialogBox(
-                                          title: "Add New Location",
-                                          btnTxt: "Add Location",
-                                          icon: ImageUtils.addLocationIcon);
-                                    });
+                                if (model.getStatus != null) {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return DrinkUpdateStatusDialogBox(
+                                            title: "Add New Location",
+                                            btnTxt: "Add Location",
+                                            icon: ImageUtils.addLocationIcon);
+                                      });
+                                } else {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return DrinkStatusDialogBox(
+                                            title: "Add New Location",
+                                            btnTxt: "Add Location",
+                                            icon: ImageUtils.addLocationIcon);
+                                      });
+                                }
                               },
-                              child: SvgPicture.asset(ImageUtils.setStatusIcon),
+                              child: model.getStatus == null
+                            ? SvgPicture.asset(ImageUtils.setStatusIcon)
+                      : Row(
+                children: [
+                SvgPicture.asset(
+                ImageUtils.bottleSelected,
+                  height: 3.5.h,
+                ),
+                Text(
+                  "x${model.getStatus!.quantity}",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 1.2.t,
+                      height: 0.5.h),
+                  textAlign: TextAlign.end,
+                ),
+                Container(
+                  width: 15.w,
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Motor anwärmen",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: ColorUtils.text_red,
+                      fontFamily:
+                      FontUtils.modernistBold,
+                      fontSize: 1.2.t,
+                    ),
+                  ),
+                ),
+                ],
+              ),
                               style: ElevatedButton.styleFrom(
                                 primary: ColorUtils.white,
                                 //onPrimary: ColorUtils.white,
                                 padding: EdgeInsets.symmetric(
-                                    vertical:
-                                        Dimensions.containerVerticalPadding),
+                                    vertical: 0.5.h, horizontal: 3.3.w),
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(
