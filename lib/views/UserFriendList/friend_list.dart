@@ -356,13 +356,13 @@ class _FriendListState extends State<FriendList> {
                                                           .fade,
                                                       child: MessageScreen(
                                                         id: model
-                                                            .userForChats[index]
+                                                            .barsList[index]
                                                             .id,
                                                         username: model
-                                                            .userForChats[index]
+                                                            .barsList[index]
                                                             .username,
                                                         profilePic: model
-                                                            .userForChats[index]
+                                                            .barsList[index]
                                                             .profile_picture,
                                                       )));
                                             },
@@ -385,7 +385,7 @@ class _FriendListState extends State<FriendList> {
                                                           radius: 30.0,
                                                           backgroundImage:
                                                               NetworkImage(model
-                                                                      .userForChats[
+                                                                      .barsList[
                                                                           index]
                                                                       .profile_picture ??
                                                                   "https://tse2.mm.bing.net/th?id=OIP.4gcGG1F0z6LjVlJjYWGGcgHaHa&pid=Api&P=0&w=164&h=164"),
@@ -423,7 +423,7 @@ class _FriendListState extends State<FriendList> {
                                                           children: [
                                                             Text(
                                                               model
-                                                                  .userForChats[
+                                                                  .barsList[
                                                                       index]
                                                                   .username
                                                                   .toString(),
@@ -515,7 +515,7 @@ class _FriendListState extends State<FriendList> {
                                             height: 2.h,
                                           );
                                         },
-                                        itemCount: model.userForChats.length),
+                                        itemCount: model.barsList.length),
 
                                     // second tab bar viiew widget
 

@@ -163,6 +163,7 @@ class MainViewModel extends BaseViewModel {
   PrefrencesViewModel prefrencesViewModel = locator<PrefrencesViewModel>();
   double lowerValue = 50;
   double upperValue = 180;
+  PubNub? pubnub;
 
   List<FaqsModel> faqs = [];
   List<NewsfeedPostId> posts = [];
@@ -177,42 +178,8 @@ class MainViewModel extends BaseViewModel {
   List contactChecked = [];
   bool isSwitched = false;
 
-  // Future<Position> determinePosition() async {
-  //   bool serviceEnabled;
-  //   LocationPermission permission;
-  //
-  //   // Test if location services are enabled.
-  //   serviceEnabled = await Geolocator.isLocationServiceEnabled();
-  //   if (!serviceEnabled) {
-  //     // Location services are not enabled don't continue
-  //     // accessing the position and request users of the
-  //     // App to enable the location services.
-  //     return Future.error('Location services are disabled.');
-  //   }
-  //
-  //   permission = await Geolocator.checkPermission();
-  //   if (permission == LocationPermission.denied) {
-  //     permission = await Geolocator.requestPermission();
-  //     if (permission == LocationPermission.denied) {
-  //       // Permissions are denied, next time you could try
-  //       // requesting permissions again (this is also where
-  //       // Android's shouldShowRequestPermissionRationale
-  //       // returned true. According to Android guidelines
-  //       // your App should show an explanatory UI now.
-  //       return Future.error('Location permissions are denied');
-  //     }
-  //   }
-  //
-  //   if (permission == LocationPermission.deniedForever) {
-  //     // Permissions are denied forever, handle appropriately.
-  //     return Future.error(
-  //         'Location permissions are permanently denied, we cannot request permissions.');
-  //   }
-  //
-  //   // When we reach here, permissions are granted and we can
-  //   // continue accessing the position of the device.
-  //   return await Geolocator.getCurrentPosition();
-  // }
+  Subscription? subscription;
+
   Future<Position> determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -1039,6 +1006,12 @@ class MainViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  String getConversationID(String userID, String peerID) {
+  return userID.hashCode <= peerID.hashCode
+      ? userID + '_' + peerID
+      : peerID + '_' + userID;
+  }
+
   List<PubnubChannel>? pnChannel = [];
   getGroupChannelFromPubnub() async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
@@ -1100,15 +1073,17 @@ class MainViewModel extends BaseViewModel {
   drinkStatus() async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
 
-    var data = {
+    var data = FormData.fromMap({
       'quantity': drinkIndex,
       'start_time': drinkingFrom,
       'end_time': drinkingTo,
-    };
+    });
+    // var encodedData = jsonEncode(data);
+
     var response = await dio.post(Constants.BaseUrlPro + Constants.drinkStatus,
         data: data,
         options: Options(
-            contentType: Headers.formUrlEncodedContentType,
+            // contentType: Headers.formUrlEncodedContentType,
             headers: {'Authorization': 'Token ${user!.token!}'}));
     print(response.data);
     getStatus = DrinkStatus.fromJson(response.data);
@@ -1162,6 +1137,7 @@ class MainViewModel extends BaseViewModel {
             headers: {'Authorization': 'Token ${user.token!}'}));
     print(response.data);
     getStatus = DrinkStatus.fromJson(response.data);
+    DateFormat("hh:mm a").format(DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day,));
     getStatus!.start_time = TimeOfDay(
             hour: int.parse(getStatus!.start_time!.split(":")[0]),
             minute: int.parse(getStatus!.start_time!.split(":")[1]))
@@ -1171,8 +1147,24 @@ class MainViewModel extends BaseViewModel {
             minute: int.parse(getStatus!.end_time!.split(":")[1]))
         .format(navigationService.navigationKey.currentContext!);
     updatedrinkIndex = getStatus!.quantity!;
+
     notifyListeners();
     // print(getStatus);
+  }
+
+
+  barList()async{
+    UserModel? user = await locator<PrefrencesViewModel>().getUser();
+    var response = await dio.get(
+        Constants.BaseUrlPro + Constants.allUserForChat,
+        options: Options(
+            contentType: Headers.formUrlEncodedContentType,
+            headers: {'Authorization': 'Token ${user!.token!}'}));
+    print(response.data);
+    userForChats =
+        (response.data as List).map((e) => UserForChat.fromJson(e)).toList();
+    userComing = false;
+    notifyListeners();
   }
 
   void scrollDown() {
@@ -2008,4 +2000,24 @@ class MainViewModel extends BaseViewModel {
 // version: QrVersions.auto,
 // size: 200.0,
 // ),
+  void initBarPubNub() async{
+    NewBarModel barUser =
+            (await locator<PrefrencesViewModel>().getBarUser())!;
+    //UserModel user = (await locator<PrefrencesViewModel>().getUser())!;
+    pubnub = PubNub(
+        defaultKeyset: Keyset(
+            subscribeKey: 'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
+            publishKey: 'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
+            uuid: UUID("${barUser.id.toString()}")));
+
+  }
+
+  void initUserPubNub() async{
+    UserModel user = (await locator<PrefrencesViewModel>().getUser())!;
+        pubnub = PubNub(
+            defaultKeyset: Keyset(
+                subscribeKey: 'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
+                publishKey: 'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
+                uuid: UUID("${user.id.toString()}")));
+  }
 }

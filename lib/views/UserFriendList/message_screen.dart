@@ -38,39 +38,46 @@ class MessageScreen extends StatefulWidget {
 class _MessageScreenState extends State<MessageScreen> {
   final scrollController = ScrollController();
 
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    MainViewModel model = locator<MainViewModel>();
+    model.subscription!.pause();
+    }
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<MainViewModel>.reactive(
       viewModelBuilder: () => locator<MainViewModel>(),
       onModelReady: (model) async {
         // model.chat();
+        model.initUserPubNub();
         model.getAllUserForChat();
         model.chats.clear();
         NewBarModel barUser =
             (await locator<PrefrencesViewModel>().getBarUser())!;
-        UserModel user = (await locator<PrefrencesViewModel>().getUser())!;
-        var pubnub = PubNub(
-            defaultKeyset: Keyset(
-                subscribeKey: 'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
-                publishKey: 'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
-                uuid: UUID("${widget.id.toString() + user.id.toString()}")));
+        
         // Subscribe to a channel
-        var subscription = pubnub.subscribe(
-            channels: {"${widget.id.toString() + user.id.toString()}"});
+        UserModel user = (await locator<PrefrencesViewModel>().getUser())!;
+        model.subscription = model.pubnub!.subscribe(
+            channels: {"${model.getConversationID(widget.id.toString(),user.id.toString())}"});
         var channel =
-            pubnub.channel("${widget.id.toString() + user.id.toString()}");
+            model.pubnub!.channel("${model.getConversationID(widget.id.toString(),user.id.toString())}");
         // pubnub.channelGroups.addChannels(group, channels)
         var chat = await channel.messages();
         var data = await chat.count();
         await chat.fetch().whenComplete(() {
           print(chat.messages.length);
+          
           for (var data in chat.messages) {
             model.chats.add(data.content);
           }
           model.notifyListeners();
         });
 
-        subscription.messages.listen((message) async {
+        model.subscription!.messages.listen((message) async {
           model.chats.add(message.content);
           model.notifyListeners();
         });
@@ -572,7 +579,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                               child: Padding(
                                                 padding: EdgeInsets.all(8.0),
                                                 child: Text(
-                                                  "02:45 pm",
+                                                  model.chats[index]["time"].toString().substring(11,16),
                                                   style: TextStyle(
                                                       //fontFamily: FontUtils.avertaDemoRegular,
                                                       fontSize: 1.5.t,
@@ -670,6 +677,9 @@ class _MessageScreenState extends State<MessageScreen> {
                                                                       100),
                                                           child: TextField(
                                                             onTap: () {},
+                                                            onChanged: (value){
+                                                              model.notifyListeners();
+                                                            },
                                                             // enabled: true,
                                                             //readOnly: true,
                                                             //focusNode: model.searchFocus,
@@ -820,6 +830,21 @@ class _MessageScreenState extends State<MessageScreen> {
                                       ),
                                     ),
                                   ),
+        model.groupScreenChatController.text.length <=0?
+Container(
+                                      //margin: EdgeInsets.only(bottom: 2.2.h),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: ColorUtils.text_grey,
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(15.0),
+                                        child: SvgPicture.asset(
+                                          ImageUtils.sendIcon1,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ):
                                   InkWell(
                                     onTap: () async {
                                       NewBarModel barUser =
@@ -829,21 +854,21 @@ class _MessageScreenState extends State<MessageScreen> {
                                           (await locator<PrefrencesViewModel>()
                                               .getUser())!;
                                       // model.chat();
-                                      var pubnub = PubNub(
-                                          defaultKeyset: Keyset(
-                                              subscribeKey:
-                                                  'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
-                                              publishKey:
-                                                  'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
-                                              uuid: UUID(widget.id.toString() +
-                                                  user.id.toString())));
-                                      pubnub.publish(
-                                          widget.id.toString() +
-                                              user.id.toString(),
+                                      // var pubnub = PubNub(
+                                      //     defaultKeyset: Keyset(
+                                      //         subscribeKey:
+                                      //             'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
+                                      //         publishKey:
+                                      //             'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
+                                      //         uuid: UUID(widget.id.toString() +
+                                      //             user.id.toString())));
+                                      model.pubnub!.publish(
+                                         model.getConversationID(widget.id.toString(),user.id.toString()),
                                           {
                                             "content": model
                                                 .groupScreenChatController.text,
-                                            "userID": user.id!.toString()
+                                            "userID": user.id!.toString(),
+                                            "time":DateTime.now().toString()
                                           });
                                       model.groupScreenChatController.clear();
                                       Future.delayed(Duration(seconds: 2), () {
