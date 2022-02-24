@@ -232,8 +232,13 @@ class _SwipeCardState extends State<SwipeCard> {
 
                                       ElevatedButton(
                                         onPressed: () {
+                                          if(model.userMatchLoader){
+
+                                          }else{
+                                            model.UserMatches(context,widget.id!);
+
+                                          }
                                           // widget.swipeRight(0);
-                                          model.UserMatches(context,widget.id!);
                                           //model.notifyListeners();
                                         },
                                         child:SvgPicture.asset(ImageUtils.likeIcon),
