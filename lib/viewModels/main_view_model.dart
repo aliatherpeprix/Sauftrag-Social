@@ -1180,9 +1180,9 @@ class MainViewModel extends BaseViewModel {
   }
 
   void navigateToProfileScreen(List<String> images, String? name,
-      String address, List alcoholDrink, List nightClub, List partyVacation) {
+      String address, List alcoholDrink, List nightClub, List partyVacation,dynamic id) {
     navigationService.navigateToProfileScreen(
-        images, name, address, alcoholDrink, nightClub, partyVacation);
+        images, name, address, alcoholDrink, nightClub, partyVacation,id);
   }
 
   void navigateToMatchScreen() {
@@ -1294,7 +1294,10 @@ class MainViewModel extends BaseViewModel {
       dynamic eventStartTime,
       dynamic eventEndTime,
       dynamic location,
-      dynamic about) {
+      dynamic about,
+      dynamic barName,
+      dynamic barImage
+      ) {
     navigationKey.currentState!.push(PageTransition(
         child: EventDetails(
           image: image,
@@ -1304,6 +1307,8 @@ class MainViewModel extends BaseViewModel {
           eventEndTime: eventEndTime,
           location: location,
           about: about,
+          barName: barName,
+          barImage: barImage,
         ),
         type: PageTransitionType.rightToLeftWithFade));
   }
@@ -1723,11 +1728,10 @@ class MainViewModel extends BaseViewModel {
 
   void getDiscover(BuildContext context) async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
-
-    catalogImages = [];
     try {
       discoverLoader = true;
       notifyListeners();
+      catalogImages = [];
       // user!.token!
       var response = await dio.get("${Constants.GetDiscover}",
           options: Options(
@@ -1750,7 +1754,9 @@ class MainViewModel extends BaseViewModel {
               images.add(user.toJson()["catalogue_image${i}"]);
             }
           }
-          catalogImages.add(images);
+          if(images.isNotEmpty){
+            catalogImages.add(images);
+          }
           print(images);
         }
 
@@ -1783,13 +1789,13 @@ class MainViewModel extends BaseViewModel {
 
   bool userMatchLoader = false;
 
-  void UserMatches(BuildContext context, dynamic id) async {
+  Future UserMatches(BuildContext context, dynamic id) async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
-    catalogImages = [];
 
     try {
       userMatchLoader = true;
       notifyListeners();
+      //catalogImages = [];
 
       var matchParams = FormData.fromMap({'customer2': id});
       print(matchParams);
@@ -1802,9 +1808,9 @@ class MainViewModel extends BaseViewModel {
       print(response);
 
       if (response.statusCode == 201) {
-        DialogUtils().showDialog(MyErrorWidget(
-          error: "Request Send Successfully",
-        ));
+        // DialogUtils().showDialog(MyErrorWidget(
+        //   error: "Request Send Successfully",
+        // ));
         getDiscover(context);
         userMatchLoader = false;
         notifyListeners();
@@ -1898,7 +1904,7 @@ class MainViewModel extends BaseViewModel {
 
   bool acceptRequestLoader = false;
 
-  void acceptRequest(BuildContext context, dynamic id) async {
+  Future acceptRequest(BuildContext context, dynamic id) async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
     catalogImages = [];
     try {
@@ -1917,9 +1923,9 @@ class MainViewModel extends BaseViewModel {
       print(response);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        DialogUtils().showDialog(MyErrorWidget(
-          error: "Request Send Successfully",
-        ));
+        // DialogUtils().showDialog(MyErrorWidget(
+        //   error: "Request Accept Successfully",
+        // ));
         matchesLoader = false;
         notifyListeners();
       } else {
@@ -1942,6 +1948,51 @@ class MainViewModel extends BaseViewModel {
       notifyListeners();
     }
   }
+
+  Future deleteRequest(BuildContext context, dynamic id) async {
+    UserModel? user = await locator<PrefrencesViewModel>().getUser();
+    try {
+      matchesLoader = true;
+      notifyListeners();
+
+      var requestDelete = FormData.fromMap({'id': id});
+
+      print(requestDelete);
+
+      var response = await dio.delete("${Constants.requestDelete}",
+          data: requestDelete,
+          options: Options(
+              contentType: Headers.formUrlEncodedContentType,
+              headers: {"Authorization": "Token ${user!.token}"}));
+      print(response);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // DialogUtils().showDialog(MyErrorWidget(
+        //   error: "Delete Successfully",
+        // ));
+        matchesLoader = false;
+        notifyListeners();
+      } else {
+        DialogUtils().showDialog(MyErrorWidget(
+          error: "Something went wrong",
+        ));
+        print(response.statusCode);
+
+        matchesLoader = false;
+        notifyListeners();
+        matchesLoader = false;
+        notifyListeners();
+      }
+    } on DioError catch (e) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Something went wrong",
+      ));
+      print(e);
+      matchesLoader = false;
+      notifyListeners();
+    }
+  }
+
 
   bool matched = false;
 

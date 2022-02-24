@@ -21,6 +21,7 @@ class Profile extends StatefulWidget {
   List alcoholDrink;
   List nightClub;
   List partyVacation;
+  dynamic id;
 
   Profile({
     Key? key,
@@ -30,6 +31,7 @@ class Profile extends StatefulWidget {
     required this.alcoholDrink,
     required this.nightClub,
     required this.partyVacation,
+    required this.id,
   }) : super(key: key);
 
   @override
@@ -250,12 +252,14 @@ class _ProfileState extends State<Profile> {
                             children: [
                               Icon(Icons.location_pin,
                                   color: ColorUtils.text_dark),
-                              Text(
-                                widget.address!,
-                                style: TextStyle(
-                                  color: ColorUtils.text_dark,
-                                  fontFamily: FontUtils.modernistRegular,
-                                  fontSize: 1.8.t,
+                              Expanded(
+                                child: Text(
+                                  widget.address!,
+                                  style: TextStyle(
+                                    color: ColorUtils.text_dark,
+                                    fontFamily: FontUtils.modernistRegular,
+                                    fontSize: 1.8.t,
+                                  ),
                                 ),
                               ),
                             ],
@@ -431,6 +435,9 @@ class _ProfileState extends State<Profile> {
                             ElevatedButton(
                               onPressed: () {
                                 model.navigateBack();
+                                model.catalogImages!.remove(widget.images);
+
+                                model.notifyListeners();
                               },
                               child: SvgPicture.asset(ImageUtils.dislikeIcon),
                               style: ElevatedButton.styleFrom(
@@ -453,12 +460,15 @@ class _ProfileState extends State<Profile> {
                               ),
                             ),
                             FloatingActionButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                controller.animateToPage(0, duration: Duration(milliseconds: 200), curve: Curves.easeIn);
+                              },
                               child: SvgPicture.asset(ImageUtils.repeatIcon),
                               backgroundColor: ColorUtils.white,
                             ),
                             ElevatedButton(
-                              onPressed: () {
+                              onPressed: ()async {
+                              await  model.UserMatches(context,widget.id!);
                                 model.navigateToMatchScreen();
                               },
                               child: SvgPicture.asset(ImageUtils.likeIcon),
