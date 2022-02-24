@@ -41,6 +41,7 @@ class Constants {
   static const String discover = 'api/user/discover/';
   static const String giveRating = 'api/rating/add/';
   static const String drinkStatus = 'api/user/drinkStatus/';
+  static const String drinkStatuscheck = '/api/user/drinkStatus/';
   static const String GETdrinkStatus = 'api/user/drinkStatus/';
   static const String GetEvents = BaseUrlPro + 'api/event/add/';
 

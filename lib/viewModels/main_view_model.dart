@@ -151,6 +151,7 @@ class MainViewModel extends BaseViewModel {
   PrefrencesViewModel prefrencesViewModel = locator<PrefrencesViewModel>();
   double lowerValue = 50;
   double upperValue = 180;
+  PubNub? pubnub;
 
   List<FaqsModel> faqs = [];
   List<NewsfeedPostId> posts = [];
@@ -162,6 +163,8 @@ class MainViewModel extends BaseViewModel {
   List contactChecked = [];
 
   bool isSwitched = false;
+
+  Subscription? subscription;
 
   Future<Position> determinePosition() async {
     bool serviceEnabled;
@@ -980,6 +983,12 @@ class MainViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  String getConversationID(String userID, String peerID) {
+  return userID.hashCode <= peerID.hashCode
+      ? userID + '_' + peerID
+      : peerID + '_' + userID;
+  }
+
   List<PubnubChannel>? pnChannel = [];
   getGroupChannelFromPubnub() async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
@@ -1041,15 +1050,17 @@ class MainViewModel extends BaseViewModel {
   drinkStatus() async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
 
-    var data = {
+    var data = FormData.fromMap({
       'quantity': drinkIndex,
       'start_time': drinkingFrom,
       'end_time': drinkingTo,
-    };
+    });
+    // var encodedData = jsonEncode(data);
+
     var response = await dio.post(Constants.BaseUrlPro + Constants.drinkStatus,
         data: data,
         options: Options(
-            contentType: Headers.formUrlEncodedContentType,
+            // contentType: Headers.formUrlEncodedContentType,
             headers: {'Authorization': 'Token ${user!.token!}'}));
     print(response.data);
     getStatus = DrinkStatus.fromJson(response.data);
@@ -1064,6 +1075,25 @@ class MainViewModel extends BaseViewModel {
     updatedrinkIndex = getStatus!.quantity!;
     notifyListeners();
   }
+// drinkStatusCheck()async{
+//   UserModel? user = await locator<PrefrencesViewModel>().getUser();
+//   var data = {
+//     'quantity': drinkIndex,
+//       'start_time': drinkingFrom,
+//       'end_time': drinkingTo,
+//   };
+//   var encodedData = jsonEncode(data);
+//   var response =await http.post(Uri.http(Constants.BaseUrl, Constants.drinkStatuscheck),
+//   body: encodedData,
+//   headers: {
+//     'content-type': 'application/json',
+//           'accept': 'application/json',
+//           'Authorization': 'Token ${user!.token!}'
+//   }
+//   );
+//   print(response.body);
+// }
+
   updateDrinkStatus() async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
 
@@ -1102,6 +1132,7 @@ class MainViewModel extends BaseViewModel {
             headers: {'Authorization': 'Token ${user.token!}'}));
     print(response.data);
     getStatus = DrinkStatus.fromJson(response.data);
+    DateFormat("hh:mm a").format(DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day,));
     getStatus!.start_time = TimeOfDay(
             hour: int.parse(getStatus!.start_time!.split(":")[0]),
             minute: int.parse(getStatus!.start_time!.split(":")[1]))
@@ -1111,8 +1142,24 @@ class MainViewModel extends BaseViewModel {
             minute: int.parse(getStatus!.end_time!.split(":")[1]))
         .format(navigationService.navigationKey.currentContext!);
     updatedrinkIndex = getStatus!.quantity!;
+
     notifyListeners();
     // print(getStatus);
+  }
+
+
+  barList()async{
+    UserModel? user = await locator<PrefrencesViewModel>().getUser();
+    var response = await dio.get(
+        Constants.BaseUrlPro + Constants.allUserForChat,
+        options: Options(
+            contentType: Headers.formUrlEncodedContentType,
+            headers: {'Authorization': 'Token ${user!.token!}'}));
+    print(response.data);
+    userForChats =
+        (response.data as List).map((e) => UserForChat.fromJson(e)).toList();
+    userComing = false;
+    notifyListeners();
   }
 
   void scrollDown() {
@@ -1616,5 +1663,26 @@ class MainViewModel extends BaseViewModel {
       }
       print(getContactList);
     }
+  }
+
+  void initBarPubNub() async{
+    NewBarModel barUser =
+            (await locator<PrefrencesViewModel>().getBarUser())!;
+    //UserModel user = (await locator<PrefrencesViewModel>().getUser())!;
+    pubnub = PubNub(
+        defaultKeyset: Keyset(
+            subscribeKey: 'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
+            publishKey: 'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
+            uuid: UUID("${barUser.id.toString()}")));
+
+  }
+
+  void initUserPubNub() async{
+    UserModel user = (await locator<PrefrencesViewModel>().getUser())!;
+        pubnub = PubNub(
+            defaultKeyset: Keyset(
+                subscribeKey: 'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
+                publishKey: 'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
+                uuid: UUID("${user.id.toString()}")));
   }
 }
