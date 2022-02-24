@@ -50,7 +50,7 @@ class _EventDetailsState extends State<EventDetails> {
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
       onModelReady: (model){
-
+        print('barName:${widget.barName}');
       },
       builder: (context, model, child) {
         return SafeArea(
@@ -418,7 +418,7 @@ class _EventDetailsState extends State<EventDetails> {
                                     CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        widget.barName,
+                                        '${widget.barName}',
                                         // widget.barName,
                                         style: TextStyle(
                                             fontFamily: FontUtils.modernistBold,

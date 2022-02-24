@@ -84,8 +84,7 @@ class _BarEventState extends State<BarEvent> {
                       print(time);
                       return GestureDetector(
                         onTap: (){
-                          model.navigationService.navigateToEventDetailScreen(model.barEventModel?[index].media?[0].media ??'',model.barEventModel![index].name,model.barEventModel![index].eventDate,model.barEventModel![index].startTime,model.barEventModel![index].endTime,model.barEventModel![index].location,model.barEventModel![index].about,model.barEventModel![index]..userId!.username,model.barEventModel![index].userId!.profilePicture);
-
+                          model.navigationService.navigateToEventDetailScreen(model.barEventModel?[index].media?[0].media ??'',model.barEventModel![index].name,model.barEventModel![index].eventDate,model.barEventModel![index].startTime,model.barEventModel![index].endTime,model.barEventModel![index].location,model.barEventModel![index].about,model.barEventModel![index].userId!.username,model.barEventModel![index].userId!.profilePicture);
                         },
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal:SizeConfig.widthMultiplier * 4,),

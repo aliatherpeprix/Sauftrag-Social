@@ -88,9 +88,9 @@ class _RequestedPeopleState extends State<RequestedPeople> {
                                                     context,
                                                     model.requestModel[index]
                                                         .id);
-
-                                                model.requestModel
-                                                    .removeAt(index);
+                                                //
+                                                // model.requestModel
+                                                //     .removeAt(index);
                                                 model.notifyListeners();
                                               },
                                               child: SvgPicture.asset(
@@ -107,11 +107,11 @@ class _RequestedPeopleState extends State<RequestedPeople> {
                                                     context,
                                                     model.requestModel[index]
                                                         .id);
-                                                model.requestModel
-                                                    .removeAt(index);
+                                                // model.requestModel
+                                                //     .removeAt(index);
                                                 model.notifyListeners();
-                                                print(model
-                                                    .requestModel[index].id);
+                                                // print(model
+                                                //     .requestModel[index].id);
                                               },
                                               child: SvgPicture.asset(
                                                 ImageUtils.likeIcon,

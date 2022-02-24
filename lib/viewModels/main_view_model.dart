@@ -1834,7 +1834,7 @@ class MainViewModel extends BaseViewModel {
   void requestMatches(BuildContext context) async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
 
-    catalogImages = [];
+    // catalogImages = [];
     try {
       matchesLoader = true;
       notifyListeners();
@@ -1850,19 +1850,19 @@ class MainViewModel extends BaseViewModel {
             .map((e) => RequestMatchModel.fromJson(e))
             .toList();
 
-        for (UserModel userName in discoverModel!) {
-          matchName.add(userName.toJson()['username']);
-        }
-        for (UserModel user in discoverModel!) {
-          List<String> images = [];
-          for (int i = 1; i < 6; i++) {
-            if (user.toJson()["catalogue_image${i}"] != null) {
-              images.add(user.toJson()["catalogue_image${i}"]);
-            }
-          }
-          catalogImages.add(images);
-          print(images);
-        }
+        // for (UserModel userName in discoverModel!) {
+        //   matchName.add(userName.toJson()['username']);
+        // }
+        // for (UserModel user in discoverModel!) {
+        //   List<String> images = [];
+        //   for (int i = 1; i < 6; i++) {
+        //     if (user.toJson()["catalogue_image${i}"] != null) {
+        //       images.add(user.toJson()["catalogue_image${i}"]);
+        //     }
+        //   }
+        //   catalogImages.add(images);
+        //   print(images);
+        // }
 
         print(discoverModel!.length);
 
@@ -1918,6 +1918,8 @@ class MainViewModel extends BaseViewModel {
         // DialogUtils().showDialog(MyErrorWidget(
         //   error: "Request Accept Successfully",
         // ));
+        requestMatches(context);
+        getDiscover(context);
         matchesLoader = false;
         notifyListeners();
       } else {
@@ -1942,7 +1944,9 @@ class MainViewModel extends BaseViewModel {
   }
 
   Future deleteRequest(BuildContext context, dynamic id) async {
+
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
+    catalogImages = [];
     try {
       matchesLoader = true;
       notifyListeners();
@@ -1962,6 +1966,8 @@ class MainViewModel extends BaseViewModel {
         // DialogUtils().showDialog(MyErrorWidget(
         //   error: "Delete Successfully",
         // ));
+        requestMatches(context);
+        getDiscover(context);
         matchesLoader = false;
         notifyListeners();
       } else {

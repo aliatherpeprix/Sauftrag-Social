@@ -395,7 +395,6 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                                 .discoverModel![
                                             model.catalogImages.indexOf(item)]
                                                 .id,
-
                                           );
                                         },
                                         right: right.value,
