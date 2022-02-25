@@ -23,7 +23,7 @@ class BarProfile extends StatefulWidget {
 class _BarProfileState extends State<BarProfile> {
   @override
   Widget build(BuildContext context) {
-    return  ViewModelBuilder<MainViewModel>.reactive(
+    return ViewModelBuilder<MainViewModel>.reactive(
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
       onModelReady: (model) {
@@ -70,7 +70,7 @@ class _BarProfileState extends State<BarProfile> {
                           model.notifyListeners();
                           model.navigateToBarDetails();
                           PrefrencesViewModel prefs =
-                          locator<PrefrencesViewModel>();
+                              locator<PrefrencesViewModel>();
                           model.barModel = await prefs.getBarUser();
                           if (model.barModel!.profile_picture != null &&
                               model.barModel!.profile_picture!.isNotEmpty) {
@@ -113,9 +113,7 @@ class _BarProfileState extends State<BarProfile> {
                         },
                         child: Container(
                           // padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                          decoration: BoxDecoration(
-
-                              color: Colors.white),
+                          decoration: BoxDecoration(color: Colors.white),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -131,23 +129,39 @@ class _BarProfileState extends State<BarProfile> {
                                     //       }
                                     //   );*/
                                     // },
-                                    child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(50),
-                                        child: Image(
-                                          image: NetworkImage(model
-                                              .barModel!.profile_picture!),
-                                          fit: BoxFit.cover,
-                                          height: 15.i,
-                                          width: 15.i,
-                                        )),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        //color: ColorUtils.red_color,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: ColorUtils.black
+                                                .withOpacity(0.12),
+                                            spreadRadius: 1,
+                                            blurRadius: 10,
+                                            offset: Offset(0, 5),
+                                          ),
+                                        ],
+                                      ),
+                                      child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                          child: Image(
+                                            image: NetworkImage(model
+                                                .barModel!.profile_picture!),
+                                            fit: BoxFit.cover,
+                                            height: 15.i,
+                                            width: 15.i,
+                                          )),
+                                    ),
                                   ),
                                   SizedBox(
-                                    width: 2.w,
+                                    width: 3.w,
                                   ),
                                   Column(
                                     mainAxisSize: MainAxisSize.min,
                                     mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         model.barModel!.bar_name!,
@@ -190,7 +204,7 @@ class _BarProfileState extends State<BarProfile> {
 
                       ///--------------Settings Options--------------------///
                       GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           model.navigateToBarAccounts();
                         },
                         child: Row(
@@ -199,7 +213,9 @@ class _BarProfileState extends State<BarProfile> {
                             Row(
                               children: [
                                 SvgPicture.asset(ImageUtils.profile),
-                                SizedBox(width: 1.5.h,),
+                                SizedBox(
+                                  width: 1.5.h,
+                                ),
                                 Text(
                                   "Accounts",
                                   style: TextStyle(
@@ -221,7 +237,6 @@ class _BarProfileState extends State<BarProfile> {
                                 // ),
                               ],
                             ),
-
                             Icon(
                               Icons.keyboard_arrow_right_rounded,
                               size: 30,
@@ -233,8 +248,9 @@ class _BarProfileState extends State<BarProfile> {
                       SizedBox(height: 3.h),
 
                       GestureDetector(
-                        onTap: (){
-                          model.navigateToUserProfileAccountNotificationScreen();
+                        onTap: () {
+                          model
+                              .navigateToUserProfileAccountNotificationScreen();
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -242,7 +258,9 @@ class _BarProfileState extends State<BarProfile> {
                             Row(
                               children: [
                                 SvgPicture.asset(ImageUtils.notification),
-                                SizedBox(width: 1.5.h,),
+                                SizedBox(
+                                  width: 1.5.h,
+                                ),
                                 Text(
                                   "Notification",
                                   style: TextStyle(
@@ -264,7 +282,6 @@ class _BarProfileState extends State<BarProfile> {
                                 // ),
                               ],
                             ),
-
                             Icon(
                               Icons.keyboard_arrow_right_rounded,
                               size: 30,
@@ -275,7 +292,7 @@ class _BarProfileState extends State<BarProfile> {
                       ),
                       SizedBox(height: 3.h),
                       GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           model.navigateToUserProfileAccountLegalTermScreen();
                         },
                         child: Row(
@@ -284,7 +301,9 @@ class _BarProfileState extends State<BarProfile> {
                             Row(
                               children: [
                                 SvgPicture.asset(ImageUtils.terms),
-                                SizedBox(width: 1.5.h,),
+                                SizedBox(
+                                  width: 1.5.h,
+                                ),
                                 Text(
                                   "Others",
                                   style: TextStyle(
@@ -306,7 +325,6 @@ class _BarProfileState extends State<BarProfile> {
                                 // ),
                               ],
                             ),
-
                             Icon(
                               Icons.keyboard_arrow_right_rounded,
                               size: 30,
@@ -322,7 +340,9 @@ class _BarProfileState extends State<BarProfile> {
                           Row(
                             children: [
                               SvgPicture.asset(ImageUtils.packages),
-                              SizedBox(width: 1.5.h,),
+                              SizedBox(
+                                width: 1.5.h,
+                              ),
                               Text(
                                 "Packages",
                                 style: TextStyle(
@@ -344,7 +364,6 @@ class _BarProfileState extends State<BarProfile> {
                               // ),
                             ],
                           ),
-
                           Icon(
                             Icons.keyboard_arrow_right_rounded,
                             size: 30,
@@ -356,7 +375,7 @@ class _BarProfileState extends State<BarProfile> {
                       //GPS
                       SizedBox(height: 3.h),
                       GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           model.navigateToUserProfileAccountGpsScreen();
                         },
                         child: Row(
@@ -365,7 +384,9 @@ class _BarProfileState extends State<BarProfile> {
                             Row(
                               children: [
                                 SvgPicture.asset(ImageUtils.gps),
-                                SizedBox(width: 1.5.h,),
+                                SizedBox(
+                                  width: 1.5.h,
+                                ),
                                 Text(
                                   "GPS",
                                   style: TextStyle(
@@ -387,7 +408,6 @@ class _BarProfileState extends State<BarProfile> {
                                 // ),
                               ],
                             ),
-
                             Icon(
                               Icons.keyboard_arrow_right_rounded,
                               size: 30,
@@ -400,7 +420,7 @@ class _BarProfileState extends State<BarProfile> {
                       //Faqs
                       SizedBox(height: 3.h),
                       GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           model.navigateToFaqScreen();
                         },
                         child: Row(
@@ -409,7 +429,9 @@ class _BarProfileState extends State<BarProfile> {
                             Row(
                               children: [
                                 SvgPicture.asset(ImageUtils.gps),
-                                SizedBox(width: 1.5.h,),
+                                SizedBox(
+                                  width: 1.5.h,
+                                ),
                                 Text(
                                   "FAQ",
                                   style: TextStyle(
@@ -431,7 +453,6 @@ class _BarProfileState extends State<BarProfile> {
                                 // ),
                               ],
                             ),
-
                             Icon(
                               Icons.keyboard_arrow_right_rounded,
                               size: 30,

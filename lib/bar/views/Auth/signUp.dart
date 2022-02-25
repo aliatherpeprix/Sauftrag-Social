@@ -209,10 +209,10 @@ class _SignUpBarState extends State<SignUpBar> {
                                 ),
                                 child: GestureDetector(
                                   onTap: () async {
+                                    model.navigateToAddAddressBarScreen();
                                     var position = await model.determinePosition();
                                     model.latitude = position.latitude;
                                     model.latitude = position.longitude;
-                                    model.navigateToAddAddressBarScreen();
                                   },
                                   child: Row(
                                     children: [

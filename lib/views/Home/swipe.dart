@@ -288,7 +288,9 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                   fontSize: 1.8.t,
                                   //height: 0
                                 ),
+
                               ),
+
                             ),
                             Column(
                               children: [
@@ -366,6 +368,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                       ],
                                     ),
 
+
                               //   children: [
                               //     SvgPicture.asset(
                               //       ImageUtils.bottleSelected,
@@ -396,6 +399,37 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                               //   ],
                               // ),
 
+                                // children: [
+                                //   SvgPicture.asset(
+                                //     ImageUtils.bottleSelected,
+                                //     height: 3.5.h,
+                                //   ),
+                                //   Text(
+                                //     "x${model.getStatus!.quantity}",
+                                //     style: TextStyle(
+                                //         color: Colors.black,
+                                //         fontSize: 1.2.t,
+                                //         height: 0.5.h),
+                                //     textAlign: TextAlign.end,
+                                //   ),
+                                //   Container(
+                                //     width: 15.w,
+                                //     alignment: Alignment.center,
+                                //     child: Text(
+                                //       "Motor anwärmen",
+                                //       textAlign: TextAlign.center,
+                                //       style: TextStyle(
+                                //         color: ColorUtils.text_red,
+                                //         fontFamily:
+                                //         FontUtils.modernistBold,
+                                //         fontSize: 1.2.t,
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ],
+                             // ),
+
+
                               style: ElevatedButton.styleFrom(
                                 primary: ColorUtils.white,
                                 //onPrimary: ColorUtils.white,
@@ -412,6 +446,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                   fontFamily: FontUtils.modernistBold,
                                   fontSize: 1.8.t,
                                   //height: 0
+
                                 ),
                               ),
                             ),

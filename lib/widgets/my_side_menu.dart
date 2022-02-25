@@ -14,7 +14,6 @@ import 'package:sauftrag/widgets/round_image.dart';
 import 'package:stacked/stacked.dart';
 
 class MySideMenu extends StatefulWidget {
-
   const MySideMenu({Key? key}) : super(key: key);
 
   @override
@@ -22,10 +21,8 @@ class MySideMenu extends StatefulWidget {
 }
 
 class _MySideMenuState extends State<MySideMenu> {
-
   @override
   Widget build(BuildContext context) {
-
     return ViewModelBuilder<MainViewModel>.reactive(
       //onModelReady: (data) => data.initializeLoginModel(),
       builder: (context, model, child) {
@@ -33,7 +30,6 @@ class _MySideMenuState extends State<MySideMenu> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               //User
               GestureDetector(
                 onTap: () async {
@@ -45,12 +41,12 @@ class _MySideMenuState extends State<MySideMenu> {
                   model.isUserProfile = true;
                   model.notifyListeners();
                   model.navigateToUserDetailSettings();
-                  PrefrencesViewModel prefs =
-                  locator<PrefrencesViewModel>();
+                  PrefrencesViewModel prefs = locator<PrefrencesViewModel>();
 
-                  model.drinkList = await  Addfavorites().GetFavoritesDrink();
-                  model.clubList = await  Addfavorites().GetFavoritesClub();
-                  model.vacationList = await  Addfavorites().GetFavoritesPartyVacation();
+                  model.drinkList = await Addfavorites().GetFavoritesDrink();
+                  model.clubList = await Addfavorites().GetFavoritesClub();
+                  model.vacationList =
+                      await Addfavorites().GetFavoritesPartyVacation();
 
                   model.userModel = (await prefs.getUser())!;
                   if (model.userModel!.profile_picture != null &&
@@ -93,20 +89,36 @@ class _MySideMenuState extends State<MySideMenu> {
                   model.notifyListeners();
                 },
                 child: Container(
-                  padding: EdgeInsets.symmetric( vertical: Dimensions.containerVerticalPadding, horizontal: Dimensions.containerHorizontalPadding),
+                  padding: EdgeInsets.symmetric(
+                      vertical: Dimensions.containerVerticalPadding,
+                      horizontal: Dimensions.containerHorizontalPadding),
                   child: Row(
                     children: [
-
-                      ClipRRect(
-                          borderRadius: BorderRadius.circular(50),
-                          child: Image(
-                            image: NetworkImage(model
-                                .userModel!.profile_picture!),
-                            fit: BoxFit.cover,
-                            height: 15.i,
-                            width: 15.i,
-                          )),
-                      SizedBox(width: 2.5.w,),
+                      Container(
+                        decoration: BoxDecoration(
+                          //color: ColorUtils.red_color,
+                          boxShadow: [
+                            BoxShadow(
+                              color: ColorUtils.white.withOpacity(0.4),
+                              spreadRadius: 1,
+                              blurRadius: 10,
+                              offset: Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.circular(50),
+                            child: Image(
+                              image: NetworkImage(
+                                  model.userModel!.profile_picture!),
+                              fit: BoxFit.cover,
+                              height: 15.i,
+                              width: 15.i,
+                            )),
+                      ),
+                      SizedBox(
+                        width: 2.5.w,
+                      ),
                       Flexible(
                         child: Text(
                           model.userModel!.username!,
@@ -124,21 +136,19 @@ class _MySideMenuState extends State<MySideMenu> {
                 ),
               ),
 
-
               //Ranking List
               InkWell(
-                onTap: (){
+                onTap: () {
                   model.navigateToRatingList();
                 },
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: Dimensions.containerHorizontalPadding, vertical: Dimensions.containerVerticalPadding),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: Dimensions.containerHorizontalPadding,
+                      vertical: Dimensions.containerVerticalPadding),
                   child: Row(
                     children: [
-
                       SvgPicture.asset(ImageUtils.rankingListIcon),
-
                       SizedBox(width: 2.w),
-
                       Text(
                         "Ranking List",
                         style: TextStyle(
@@ -154,18 +164,17 @@ class _MySideMenuState extends State<MySideMenu> {
 
               //Notification
               InkWell(
-                onTap: (){
+                onTap: () {
                   model.navigateToNotificationScreen();
                 },
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: Dimensions.containerHorizontalPadding, vertical: Dimensions.containerVerticalPadding),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: Dimensions.containerHorizontalPadding,
+                      vertical: Dimensions.containerVerticalPadding),
                   child: Row(
                     children: [
-
                       SvgPicture.asset(ImageUtils.notificationIcon),
-
                       SizedBox(width: 2.w),
-
                       Text(
                         "Notification",
                         style: TextStyle(
@@ -181,18 +190,17 @@ class _MySideMenuState extends State<MySideMenu> {
 
               //Matched
               InkWell(
-                onTap: (){
+                onTap: () {
                   model.navigateToMatchedList();
                 },
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: Dimensions.containerHorizontalPadding, vertical: Dimensions.containerVerticalPadding),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: Dimensions.containerHorizontalPadding,
+                      vertical: Dimensions.containerVerticalPadding),
                   child: Row(
                     children: [
-
                       SvgPicture.asset(ImageUtils.matchedIcon),
-
                       SizedBox(width: 2.w),
-
                       Text(
                         "Matched",
                         style: TextStyle(
@@ -208,18 +216,17 @@ class _MySideMenuState extends State<MySideMenu> {
 
               //Followers
               InkWell(
-                onTap: (){
+                onTap: () {
                   model.navigateToFollowersListScreen();
                 },
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: Dimensions.containerHorizontalPadding, vertical: Dimensions.containerVerticalPadding),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: Dimensions.containerHorizontalPadding,
+                      vertical: Dimensions.containerVerticalPadding),
                   child: Row(
                     children: [
-
                       SvgPicture.asset(ImageUtils.followersIcon),
-
                       SizedBox(width: 2.w),
-
                       Text(
                         "Followers",
                         style: TextStyle(
@@ -235,18 +242,17 @@ class _MySideMenuState extends State<MySideMenu> {
 
               //Bars
               InkWell(
-                onTap: (){
+                onTap: () {
                   model.navigateToListOfBar();
                 },
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: Dimensions.containerHorizontalPadding, vertical: Dimensions.containerVerticalPadding),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: Dimensions.containerHorizontalPadding,
+                      vertical: Dimensions.containerVerticalPadding),
                   child: Row(
                     children: [
-
                       SvgPicture.asset(ImageUtils.barsIcon),
-
                       SizedBox(width: 2.w),
-
                       Text(
                         "Bars",
                         style: TextStyle(
@@ -262,18 +268,17 @@ class _MySideMenuState extends State<MySideMenu> {
 
               //QR Code
               InkWell(
-                onTap: (){
+                onTap: () {
                   model.navigateToUserBarCodeScanner();
                 },
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: Dimensions.containerHorizontalPadding, vertical: Dimensions.containerVerticalPadding),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: Dimensions.containerHorizontalPadding,
+                      vertical: Dimensions.containerVerticalPadding),
                   child: Row(
                     children: [
-
                       SvgPicture.asset(ImageUtils.qrCodeIcon),
-
                       SizedBox(width: 2.w),
-
                       Text(
                         "QR Code",
                         style: TextStyle(
@@ -289,18 +294,17 @@ class _MySideMenuState extends State<MySideMenu> {
 
               //Events
               InkWell(
-                onTap: (){
+                onTap: () {
                   model.navigateToUpcomingEvent();
                 },
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: Dimensions.containerHorizontalPadding, vertical: Dimensions.containerVerticalPadding),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: Dimensions.containerHorizontalPadding,
+                      vertical: Dimensions.containerVerticalPadding),
                   child: Row(
                     children: [
-
                       SvgPicture.asset(ImageUtils.eventsIcon),
-
                       SizedBox(width: 2.w),
-
                       Text(
                         "Events",
                         style: TextStyle(
@@ -316,19 +320,17 @@ class _MySideMenuState extends State<MySideMenu> {
 
               //Logout
               InkWell(
-                onTap: (){
+                onTap: () {
                   model.logOutUser();
-
                 },
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: Dimensions.containerHorizontalPadding, vertical: Dimensions.containerVerticalPadding),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: Dimensions.containerHorizontalPadding,
+                      vertical: Dimensions.containerVerticalPadding),
                   child: Row(
                     children: [
-
                       SvgPicture.asset(ImageUtils.logoutIcon),
-
                       SizedBox(width: 2.w),
-
                       Text(
                         "Logout",
                         style: TextStyle(
@@ -341,8 +343,6 @@ class _MySideMenuState extends State<MySideMenu> {
                   ),
                 ),
               ),
-
-
             ],
           ),
         );

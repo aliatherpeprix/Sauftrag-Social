@@ -102,9 +102,10 @@ class _NewsFeedState extends State<NewsFeed> {
                   child: Scaffold(
                     backgroundColor: Colors.white,
                     body: Container(
-                      padding: EdgeInsets.symmetric(
+                      padding: EdgeInsets.only(
                         //horizontal: Dimensions.horizontalPadding,
-                          vertical: Dimensions.verticalPadding),
+                          top: Dimensions.verticalPadding
+                      ),
                       child: Column(
                         children: [
                           SizedBox(height: Dimensions.homeTopMargin),

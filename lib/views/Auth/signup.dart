@@ -640,10 +640,10 @@ class _SignUpState extends State<SignUp> {
                                     Border.all(color: ColorUtils.divider)),
                                 child: GestureDetector(
                                   onTap: () async {
+                                    model.navigateToAddAddressScreen();
                                     var position = await model.determinePosition();
                                     model.latitude = position.latitude;
                                     model.latitude = position.longitude;
-                                    model.navigateToAddAddressScreen();
                                   },
                                   child: Row(
                                     children: [
