@@ -289,6 +289,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                   fontFamily: FontUtils.modernistBold,
                                   fontSize: 3.t,
                                 ),
+<<<<<<< Updated upstream
                               ),
                               Text(
                                 "Chicago",
@@ -296,6 +297,111 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                   color: ColorUtils.black,
                                   fontFamily: FontUtils.modernistRegular,
                                   fontSize: 1.7.t,
+=======
+                              ],
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                if (model.getStatus != null) {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return DrinkUpdateStatusDialogBox(
+                                            title: "Add New Location",
+                                            btnTxt: "Add Location",
+                                            icon: ImageUtils.addLocationIcon);
+                                      });
+                                } else {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return DrinkStatusDialogBox(
+                                            title: "Add New Location",
+                                            btnTxt: "Add Location",
+                                            icon: ImageUtils.addLocationIcon);
+                                      });
+                                }
+                              },
+                              child: model.getStatus == null
+                                  ? SvgPicture.asset(ImageUtils.setStatusIcon)
+                                  : Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          ImageUtils.bottleSelected,
+                                          height: 3.5.h,
+                                        ),
+                                        Text(
+                                          "x${model.getStatus!.quantity}",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 1.2.t,
+                                              height: 0.5.h),
+                                          textAlign: TextAlign.end,
+                                        ),
+                                        Container(
+                                          width: 15.w,
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            "Motor anwärmen",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: ColorUtils.text_red,
+                                              fontFamily:
+                                                  FontUtils.modernistBold,
+                                              fontSize: 1.2.t,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+
+                                // children: [
+                                //   SvgPicture.asset(
+                                //     ImageUtils.bottleSelected,
+                                //     height: 3.5.h,
+                                //   ),
+                                //   Text(
+                                //     "x${model.getStatus!.quantity}",
+                                //     style: TextStyle(
+                                //         color: Colors.black,
+                                //         fontSize: 1.2.t,
+                                //         height: 0.5.h),
+                                //     textAlign: TextAlign.end,
+                                //   ),
+                                //   Container(
+                                //     width: 15.w,
+                                //     alignment: Alignment.center,
+                                //     child: Text(
+                                //       "Motor anwärmen",
+                                //       textAlign: TextAlign.center,
+                                //       style: TextStyle(
+                                //         color: ColorUtils.text_red,
+                                //         fontFamily:
+                                //         FontUtils.modernistBold,
+                                //         fontSize: 1.2.t,
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ],
+                             // ),
+
+                              style: ElevatedButton.styleFrom(
+                                primary: ColorUtils.white,
+                                //onPrimary: ColorUtils.white,
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 0.5.h, horizontal: 3.3.w),
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        Dimensions.roundCorner),
+                                    side: BorderSide(
+                                        color: ColorUtils.divider, width: 1)),
+                                textStyle: TextStyle(
+                                  color: ColorUtils.white,
+                                  fontFamily: FontUtils.modernistBold,
+                                  fontSize: 1.8.t,
+                                  //height: 0
+>>>>>>> Stashed changes
                                 ),
                               ),
                             ],
