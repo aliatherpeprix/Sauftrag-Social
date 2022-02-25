@@ -124,6 +124,18 @@ class _UserProfileState extends State<UserProfile> {
                               Row(
                                 children: [
                                   Container(
+                                    decoration: BoxDecoration(
+                                      //color: ColorUtils.red_color,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: ColorUtils.black
+                                              .withOpacity(0.12),
+                                          spreadRadius: 1,
+                                          blurRadius: 10,
+                                          offset: Offset(0, 5),
+                                        ),
+                                      ],
+                                    ),
                                     // onPressed: () {
                                     //  /* showDialog(
                                     //       context: context,
@@ -143,7 +155,7 @@ class _UserProfileState extends State<UserProfile> {
                                         )),
                                   ),
                                   SizedBox(
-                                    width: 2.w,
+                                    width: 3.w,
                                   ),
                                   // Container(
                                   //   margin: EdgeInsets.only(right: 20),

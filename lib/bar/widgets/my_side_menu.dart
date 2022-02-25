@@ -36,8 +36,7 @@ class _MySideMenuState extends State<MySideMenu> {
                 onTap: () async {
                   //model.navigateToBarDetails();
                   model.navigateToBarDetails();
-                  PrefrencesViewModel prefs =
-                  locator<PrefrencesViewModel>();
+                  PrefrencesViewModel prefs = locator<PrefrencesViewModel>();
                   model.barModel = await prefs.getBarUser();
                   if (model.barModel!.profile_picture != null &&
                       model.barModel!.profile_picture!.isNotEmpty) {
@@ -80,19 +79,35 @@ class _MySideMenuState extends State<MySideMenu> {
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(
-                      vertical: Dimensions.containerVerticalPadding, horizontal: Dimensions.containerHorizontalPadding),
+                      vertical: Dimensions.containerVerticalPadding,
+                      horizontal: Dimensions.containerHorizontalPadding),
                   child: Row(
                     children: [
-                      ClipRRect(
-                          borderRadius: BorderRadius.circular(50),
-                          child: Image(
-                            image: NetworkImage(model
-                                .barModel!.profile_picture!),
-                            fit: BoxFit.cover,
-                            height: 15.i,
-                            width: 15.i,
-                          )),
-                      SizedBox(width: 2.5.w,),
+                      Container(
+                        decoration: BoxDecoration(
+                          //color: ColorUtils.red_color,
+                          boxShadow: [
+                            BoxShadow(
+                              color: ColorUtils.white.withOpacity(0.4),
+                              spreadRadius: 1,
+                              blurRadius: 10,
+                              offset: Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.circular(50),
+                            child: Image(
+                              image: NetworkImage(
+                                  model.barModel!.profile_picture!),
+                              fit: BoxFit.fill,
+                              height: 15.i,
+                              width: 15.i,
+                            )),
+                      ),
+                      SizedBox(
+                        width: 2.5.w,
+                      ),
                       Container(
                         width: 30.w,
                         child: Text(

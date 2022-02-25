@@ -133,6 +133,8 @@ class _EventsState extends State<Events> {
                   // ),
                   Expanded(
                     child: SingleChildScrollView(
+                      physics: BouncingScrollPhysics()
+                      ,
                       child: Column(
                         children: [
                           //SizedBox(height: 4.h,),

@@ -160,8 +160,8 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
                                             Radius.circular(25)),
                                         //border: Border.all(color: ColorUtils.red_color),
                                       ),
-                                      height: 5.4.h,
-                                      width: 11.5.w,
+                                      height: 5.5.h,
+                                      width: 12.w,
                                       child: Padding(
                                         padding: const EdgeInsets.all(11.0),
                                         child: SvgPicture.asset(
@@ -190,8 +190,8 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
                                             Radius.circular(25)),
                                         //border: Border.all(color: ColorUtils.red_color),
                                       ),
-                                      height: 5.4.h,
-                                      width: 11.5.w,
+                                      height: 5.5.h,
+                                      width: 12.w,
                                       child: Padding(
                                         padding: const EdgeInsets.all(11.0),
                                         child: SvgPicture.asset(
@@ -270,10 +270,28 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
                                           model.navigateToBarProfile2();
                                         },
                                         child: Container(
-                                          child: Image.asset(
-                                            ImageUtils.profileImg,
-                                            height: 17.i,
+                                          decoration: BoxDecoration(
+                                            //color: ColorUtils.red_color,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: ColorUtils.black
+                                                    .withOpacity(0.12),
+                                                spreadRadius: 1,
+                                                blurRadius: 10,
+                                                offset: Offset(0,
+                                                    5),
+                                              ),
+                                            ],
                                           ),
+                                          child: ClipRRect(
+                                              borderRadius: BorderRadius.circular(50),
+                                              child: Image(
+                                                image: NetworkImage(model
+                                                    .barModel!.profile_picture!),
+                                                fit: BoxFit.fill,
+                                                height: 15.i,
+                                                width: 15.i,
+                                              )),
                                         ),
                                       ),
                                     ],
@@ -985,7 +1003,7 @@ class _ExpandableFabState extends State<ExpandableFab>
   Widget _buildTapToCloseFab() {
     return SizedBox(
       width: 55.0,
-      height: 124.0,
+      height: 116.0,
       child: Center(
         child: Material(
           color: ColorUtils.text_red,
@@ -996,11 +1014,17 @@ class _ExpandableFabState extends State<ExpandableFab>
             onTap: _toggle,
             child: Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: SvgPicture.asset(
-                  ImageUtils.pen,
-                  height: 3.h,
-                  width: 2.w,
-                )),
+                child:  Icon(
+              Icons.clear,
+              color: Colors.white,
+              size: 7.i,
+            )
+                // SvgPicture.asset(
+                //   ImageUtils.pen,
+                //   height: 3.h,
+                //   width: 2.w,
+                // )
+            ),
           ),
         ),
       ),
@@ -1039,18 +1063,18 @@ class _ExpandableFabState extends State<ExpandableFab>
         duration: const Duration(milliseconds: 250),
         curve: const Interval(0.0, 0.5, curve: Curves.easeOut),
         child: AnimatedOpacity(
-            opacity: _open ? 0.0 : 1.0,
+            opacity: _open ? 0.0 : 0.9,
             curve: const Interval(0.25, 1.0, curve: Curves.easeInOut),
             duration: const Duration(milliseconds: 250),
             child: Container(
-              margin: EdgeInsets.symmetric(vertical: 4.h),
+              margin: EdgeInsets.symmetric(vertical: 3.9.h),
               child: FloatingActionButton(
                   backgroundColor: ColorUtils.text_red,
                   onPressed: _toggle,
                   child: SvgPicture.asset(
                     ImageUtils.pen,
-                    height: 3.h,
-                    width: 2.w,
+                    height: 2.8.h,
+                    width: 0.w,
                   )),
             )),
       ),
@@ -1083,8 +1107,8 @@ class _ExpandingActionButton extends StatelessWidget {
           progress.value * maxDistance,
         );
         return Positioned(
-          right: -115.0 + offset.dx,
-          bottom: 110.0 + offset.dy,
+          right: -112.0 + offset.dx,
+          bottom: 105.0 + offset.dy,
           child: Transform.rotate(
             angle: (1.0 - progress.value) * math.pi / 2,
             child: child!,
