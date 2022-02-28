@@ -29,7 +29,7 @@ class _BarDetailState extends State<BarDetail> {
     return ViewModelBuilder<MainViewModel>.reactive(
       onModelReady: (model){
         model.barNameController.text = model.barModel!.bar_name!;
-        model.notifyListeners();
+        // model.notifyListeners();
       },
       builder: (context, model, child) {
         return GestureDetector(
@@ -90,6 +90,7 @@ class _BarDetailState extends State<BarDetail> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
 
+                              //Image 1
                               model.imageFiles[0] is File
                                   ?
                               Container(
@@ -142,7 +143,7 @@ class _BarDetailState extends State<BarDetail> {
                                         child: IconButton(
                                           onPressed: () {
                                             model.imageFiles.removeAt(0);
-                                            model.imageFiles.insert(0,File(""));
+                                            model.imageFiles.insert(0, File(""));
                                             model.notifyListeners();
                                           },
                                           icon: SvgPicture.asset(
@@ -192,7 +193,7 @@ class _BarDetailState extends State<BarDetail> {
                                     ],
                                   )),
 
-                              //Image 1
+                              //Image 2
                               model.imageFiles[1] is File
                                   ?
                               Container(
@@ -245,7 +246,7 @@ class _BarDetailState extends State<BarDetail> {
                                         child: IconButton(
                                           onPressed: () {
                                             model.imageFiles.removeAt(1);
-                                            model.imageFiles.insert(1,File(""));
+                                            model.imageFiles.insert(1, File(""));
                                             model.notifyListeners();
                                           },
                                           icon: SvgPicture.asset(
@@ -269,7 +270,7 @@ class _BarDetailState extends State<BarDetail> {
                                     BorderRadius.all(Radius.circular(20)),
                                     image: DecorationImage(
                                         image:
-                                        NetworkImage(model.barModel!.profile_picture!),
+                                        NetworkImage(model.imageFiles[1]),
                                         fit: BoxFit.cover),
                                   ),
                                   child: Stack(
@@ -295,8 +296,7 @@ class _BarDetailState extends State<BarDetail> {
                                     ],
                                   )),
 
-
-                              //Image 2
+                              //Image 3
                               model.imageFiles[2] is File
                                   ?
                               Container(
@@ -349,7 +349,7 @@ class _BarDetailState extends State<BarDetail> {
                                         child: IconButton(
                                           onPressed: () {
                                             model.imageFiles.removeAt(2);
-                                            model.imageFiles.insert(2,File(""));
+                                            model.imageFiles.insert(2, File(""));
                                             model.notifyListeners();
                                           },
                                           icon: SvgPicture.asset(
@@ -373,7 +373,7 @@ class _BarDetailState extends State<BarDetail> {
                                     BorderRadius.all(Radius.circular(20)),
                                     image: DecorationImage(
                                         image:
-                                        NetworkImage(model.barModel!.profile_picture!),
+                                        NetworkImage(model.imageFiles[2]),
                                         fit: BoxFit.cover),
                                   ),
                                   child: Stack(
@@ -465,7 +465,7 @@ class _BarDetailState extends State<BarDetail> {
                                         child: IconButton(
                                           onPressed: () {
                                             model.imageFiles.removeAt(3);
-                                            model.imageFiles.insert(3,File(""));
+                                            model.imageFiles.insert(3, File(""));
                                             model.notifyListeners();
                                           },
                                           icon: SvgPicture.asset(
@@ -489,7 +489,7 @@ class _BarDetailState extends State<BarDetail> {
                                     BorderRadius.all(Radius.circular(20)),
                                     image: DecorationImage(
                                         image:
-                                        NetworkImage(model.barModel!.profile_picture!),
+                                        NetworkImage(model.imageFiles[3]),
                                         fit: BoxFit.cover),
                                   ),
                                   child: Stack(
@@ -515,6 +515,7 @@ class _BarDetailState extends State<BarDetail> {
                                     ],
                                   )),
 
+                              SizedBox(width: 2.w,),
                               //Image 4
                               model.imageFiles[4] is File
                                   ?
@@ -568,7 +569,7 @@ class _BarDetailState extends State<BarDetail> {
                                         child: IconButton(
                                           onPressed: () {
                                             model.imageFiles.removeAt(4);
-                                            model.imageFiles.insert(4,File(""));
+                                            model.imageFiles.insert(4, File(""));
                                             model.notifyListeners();
                                           },
                                           icon: SvgPicture.asset(
@@ -592,7 +593,7 @@ class _BarDetailState extends State<BarDetail> {
                                     BorderRadius.all(Radius.circular(20)),
                                     image: DecorationImage(
                                         image:
-                                        NetworkImage(model.barModel!.profile_picture!),
+                                        NetworkImage(model.imageFiles[4]),
                                         fit: BoxFit.cover),
                                   ),
                                   child: Stack(
@@ -617,7 +618,6 @@ class _BarDetailState extends State<BarDetail> {
                                       ),
                                     ],
                                   )),
-                              SizedBox(width: 2.5.w),
 
 
                             ],
@@ -694,7 +694,7 @@ class _BarDetailState extends State<BarDetail> {
                                         child: IconButton(
                                           onPressed: () {
                                             model.imageFiles.removeAt(5);
-                                            model.imageFiles.insert(5,File(""));
+                                            model.imageFiles.insert(5, File(""));
                                             model.notifyListeners();
                                           },
                                           icon: SvgPicture.asset(
@@ -718,7 +718,7 @@ class _BarDetailState extends State<BarDetail> {
                                     BorderRadius.all(Radius.circular(20)),
                                     image: DecorationImage(
                                         image:
-                                        NetworkImage(model.barModel!.profile_picture!),
+                                        NetworkImage(model.imageFiles[5]),
                                         fit: BoxFit.cover),
                                   ),
                                   child: Stack(
@@ -790,8 +790,8 @@ class _BarDetailState extends State<BarDetail> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 4.h),
-                        SizedBox(height: 2.h),
+                        SizedBox(height: 6.h),
+
                         SizedBox(
                           width: double.infinity,
                           //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),

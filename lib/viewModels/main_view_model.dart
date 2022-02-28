@@ -1432,7 +1432,10 @@ class MainViewModel extends BaseViewModel {
     editProfile = true;
     notifyListeners();
     var userUpdateResponse = await updateUser.UpdateUserProfile(
-        (genderList.indexOf(genderValueStr) + 1).toString(), imageFiles);
+        (
+            genderList.indexOf(genderValueStr) + 1).toString(),
+            imageFiles
+    );
     if (userUpdateResponse is UserModel) {
       UserModel user = userUpdateResponse;
       user.token = userModel!.token!;
@@ -1447,6 +1450,7 @@ class MainViewModel extends BaseViewModel {
   }
 
   Future saveBarDetails() async {
+
     List tempList = [];
     // for (int i = 0;i<imageFiles.length;i++){
     //   if (imageFiles[i] is File && (imageFiles[i] as File).path.isNotEmpty){
@@ -1460,6 +1464,29 @@ class MainViewModel extends BaseViewModel {
     // }
     editProfile = true;
     notifyListeners();
+    for (int i = 0; i < imageFiles.length; i++) {
+      if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
+          imageFiles[i].path.isEmpty) {
+        DialogUtils().showDialog(MyErrorWidget(
+          error: "Select All Images"/*+i.toString()*/,
+        ));
+        return;
+      }
+
+      // bool hasImages = false;
+      // if (!hasImages) {
+      //   if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
+      //       imageFiles[i].path.isEmpty) {
+      //     DialogUtils().showDialog(MyErrorWidget(
+      //       error: "Select at least one Image",
+      //     ));
+      //     return;
+      //   } else {
+      //     hasImages = true;
+      //     break;
+      //   }
+      // }
+    }
     var barUpdateResponse = await updateBar.UpdateBarProfile(
       barNameController.text,
       imageFiles,
@@ -1476,6 +1503,7 @@ class MainViewModel extends BaseViewModel {
       print(barModel);
       //notifyListeners();
     }
+
     editProfile = false;
     notifyListeners();
   }
