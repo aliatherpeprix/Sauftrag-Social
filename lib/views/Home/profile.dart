@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:page_view_indicators/page_view_indicators.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/models/favorites_model.dart';
+import 'package:sauftrag/services/addFavorites.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/extensions.dart';
@@ -57,6 +59,15 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return ViewModelBuilder<MainViewModel>.reactive(
       //onModelReady: (data) => data.initializeLoginModel(),
+      onModelReady: (model) async {
+        model.drinkList =
+            await Addfavorites().GetFavoritesDrink();
+        model.clubList =
+            await Addfavorites().GetFavoritesClub();
+        model.vacationList =
+            await Addfavorites().GetFavoritesPartyVacation();
+
+      },
       builder: (context, model, child) {
         return GestureDetector(
           onTap: () {
@@ -287,6 +298,52 @@ class _ProfileState extends State<Profile> {
                           ),
                         ),
                         SizedBox(height: 3.h),
+                        // Wrap(
+                        //   spacing: 2.5.w,
+                        //   runSpacing: 1.5.h,
+                        //   direction: Axis.horizontal,
+                        //   children: model.userModel!.favorite_alcohol_drinks!
+                        //       .map((element) => ElevatedButton(
+                        //     onPressed: () {
+                        //       // if(model.selectedDrinkList.contains(element.id)){
+                        //       //   model.selectedDrinkList.remove(element.id);
+                        //       // }
+                        //       // else{
+                        //       //   // if(element == "Radler"){
+                        //       //   //   showDialog(
+                        //       //   //       context: context,
+                        //       //   //       builder: (BuildContext context){
+                        //       //   //         return RadlerDialogBox(title: "Add New Location", btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+                        //       //   //       }
+                        //       //   //   );
+                        //       //   // }
+                        //       //   model.selectedDrinkList.add(element.id);
+                        //       // }
+                        //       // model.notifyListeners();
+                        //     },
+                        //     child: Text((model.drinkList.where((drink)
+                        //     => drink.id==element).first as FavoritesModel).name ?? ""),
+                        //     style: ElevatedButton.styleFrom(
+                        //       primary:   ColorUtils.red_color,
+                        //       onPrimary:  ColorUtils.white,
+                        //       padding: EdgeInsets.symmetric(vertical: 1.8.h, horizontal: 9.w),
+                        //       elevation:  5 ,
+                        //       shape: RoundedRectangleBorder(
+                        //           borderRadius: BorderRadius.circular(Dimensions.roundCorner),
+                        //           side: BorderSide(
+                        //               color:  ColorUtils.text_red,
+                        //               width: 1
+                        //           )
+                        //       ),
+                        //       textStyle: TextStyle(
+                        //         //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
+                        //         fontFamily:FontUtils.modernistBold ,
+                        //         fontSize: 1.8.t,
+                        //         //height: 0
+                        //       ),
+                        //     ),
+                        //   )).toList(),
+                        // ),
                         Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal: Dimensions.horizontalPadding),
@@ -298,7 +355,8 @@ class _ProfileState extends State<Profile> {
                                 .map((element) => ElevatedButton(
                                       onPressed: () {},
                                       child: Text(
-                                          "${widget.alcoholDrink[widget.alcoholDrink.indexOf(element)]}"),
+                                          "${(model.drinkList.where((drink)
+                                          => element==drink.id).first as FavoritesModel).name}"),
                                       style: ElevatedButton.styleFrom(
                                         primary: ColorUtils.white,
                                         onPrimary: ColorUtils.text_red,
@@ -350,7 +408,8 @@ class _ProfileState extends State<Profile> {
                                 .map((element) => ElevatedButton(
                                       onPressed: () {},
                                       child: Text(
-                                          "${widget.nightClub[widget.nightClub.indexOf(element)]}"),
+                                          "${(model.clubList.where((drink)
+                                          => element==drink.id).first as FavoritesModel).name}"),
                                       style: ElevatedButton.styleFrom(
                                         primary: ColorUtils.white,
                                         onPrimary: ColorUtils.text_red,
@@ -402,7 +461,8 @@ class _ProfileState extends State<Profile> {
                                 .map((element) => ElevatedButton(
                                       onPressed: () {},
                                       child: Text(
-                                          "${widget.partyVacation[widget.partyVacation.indexOf(element)]}"),
+                                          "${(model.vacationList.where((drink)
+                                          => element==drink.id).first as FavoritesModel).name}"),
                                       style: ElevatedButton.styleFrom(
                                         primary: ColorUtils.white,
                                         onPrimary: ColorUtils.text_red,

@@ -799,7 +799,7 @@ class _BarDetailState extends State<BarDetail> {
 
                             onPressed: ()async{
                               await model.saveBarDetails();
-                              model.navigateBack();
+                              //model.navigateBack();
                             },
                             child:  model.editProfile == false ? Text("Save") : Loader(),
                             style: ElevatedButton.styleFrom(

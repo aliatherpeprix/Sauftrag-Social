@@ -302,14 +302,14 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                     fontSize: 3.t,
                                   ),
                                 ),
-                                Text(
-                                  "Chicago",
-                                  style: TextStyle(
-                                    color: ColorUtils.black,
-                                    fontFamily: FontUtils.modernistRegular,
-                                    fontSize: 1.7.t,
-                                  ),
-                                ),
+                                // Text(
+                                //   "Chicago",
+                                //   style: TextStyle(
+                                //     color: ColorUtils.black,
+                                //     fontFamily: FontUtils.modernistRegular,
+                                //     fontSize: 1.7.t,
+                                //   ),
+                                // ),
                               ],
                             ),
                             ElevatedButton(

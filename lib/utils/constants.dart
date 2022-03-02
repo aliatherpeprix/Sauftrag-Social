@@ -3,10 +3,9 @@ class Constants {
   static const int user = 1;
   static const int bar = 2;
   //Pro Env
-  static const String BaseUrlPro =
-      'http://sauftragpro-environment.eba-4pafy8hm.ap-southeast-1.elasticbeanstalk.com/';
+  static const String BaseUrlPro = 'http://sauftragpro-environment.eba-4pafy8hm.ap-southeast-1.elasticbeanstalk.com/';
   //Dev Env
-  // static const String BaseUrlPro ='http://sauftragdev-environment.eba-yb3ya83i.ap-southeast-1.elasticbeanstalk.com/';
+  //static const String BaseUrlPro ='http://sauftragdev-environment.eba-yb3ya83i.ap-southeast-1.elasticbeanstalk.com/';
   static const String BaseUrl = 'sauftragdev-environment.eba-yb3ya83i.ap-southeast-1.elasticbeanstalk.com';
   static const String SignUp = 'api/user/register/';
   static const String kGoogleApiKey = "AIzaSyDOmwYa7kxedwhjxFlxMHGyeJKdGS4qQ1U";
@@ -20,8 +19,7 @@ class Constants {
   static const String UpdateBarProfile = 'api/user/register/';
   static const String AddFavoriteDrink = 'api/favorites/alcoholic_drink/';
   static const String AddFavoriteClub = 'api/favorites/night_club/';
-  static const String AddFavoritePartyVacation =
-      'api/favorites/party_vaccation/';
+  static const String AddFavoritePartyVacation = 'api/favorites/party_vaccation/';
   static const String AddressBook = 'api/invite/by-contact/';
   static const String QRCode = 'api/order/scan_qrcode/';
   static const String drinkStatus = 'api/user/drinkStatus/';

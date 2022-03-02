@@ -72,8 +72,7 @@ class _UserProfileState extends State<UserProfile> {
                               await Addfavorites().GetFavoritesClub();
                           model.vacationList =
                               await Addfavorites().GetFavoritesPartyVacation();
-                          model.userModel = (await prefs.
-                          getUser())!;
+                          model.userModel = (await prefs.getUser())!;
                           if (model.userModel!.profile_picture != null &&
                               model.userModel!.profile_picture!.isNotEmpty) {
                             model.imageFiles.removeAt(0);

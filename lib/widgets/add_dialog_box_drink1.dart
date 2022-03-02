@@ -1,38 +1,34 @@
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sauftrag/app/locator.dart';
-import 'package:sauftrag/services/addFavorites.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
-import 'package:sauftrag/utils/image_utils.dart';
-import 'package:sauftrag/viewModels/authentication_view_model.dart';
-import 'package:sauftrag/viewModels/registrationViewModel.dart';
+import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:stacked/stacked.dart';
 
 import 'loader.dart';
 
-class AddDialogBox extends StatefulWidget {
+class AddDialogBoxDrink1 extends StatefulWidget {
 
   String title;
   String btnTxt;
   String icon;
 
-  AddDialogBox({Key? key, required this.title, required this.btnTxt, required this.icon}) : super(key: key);
+  AddDialogBoxDrink1({Key? key, required this.title, required this.btnTxt, required this.icon}) : super(key: key);
+
 
   @override
-  _AddDialogBoxState createState() => _AddDialogBoxState();
+  _AddDialogBoxDrink1State createState() => _AddDialogBoxDrink1State();
 }
 
-class _AddDialogBoxState extends State<AddDialogBox> {
-
+class _AddDialogBoxDrink1State extends State<AddDialogBoxDrink1> {
   @override
   Widget build(BuildContext context) {
-
-    return ViewModelBuilder<RegistrationViewModel>.reactive(
+    return ViewModelBuilder<MainViewModel>.reactive(
       //onModelReady: (data) => data.initializeShareDialog(),
       builder: (context, model, child){
         return Dialog(
@@ -119,7 +115,7 @@ class _AddDialogBoxState extends State<AddDialogBox> {
                   child: ElevatedButton(
                     onPressed: () async {
 
-                      model.addFavoritedrink();
+                      model.addFavoritedrink1();
 
                       //model.navigateToTermsScreen();
                     },
@@ -146,7 +142,7 @@ class _AddDialogBoxState extends State<AddDialogBox> {
           ),
         );
       },
-      viewModelBuilder: () => locator<RegistrationViewModel>(),
+      viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
     );
   }

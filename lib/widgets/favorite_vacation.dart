@@ -14,6 +14,8 @@ import 'package:sauftrag/widgets/loader.dart';
 import 'package:sauftrag/widgets/radler_dialog_box.dart';
 import 'package:stacked/stacked.dart';
 
+import 'add_dialog_box_partyLocation1.dart';
+
 class FavoriteVacation extends StatefulWidget {
 
   String title;
@@ -131,54 +133,96 @@ class _FavoriteVacationState extends State<FavoriteVacation> {
                             ),
 
                             SizedBox(height: 5.h,),
-                            Stack(
-                              children: [
-                                Container(
-                                  height: 7.h,
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: Dimensions.containerVerticalPadding,
-                                      horizontal:
-                                      Dimensions.containerHorizontalPadding),
-                                  decoration: BoxDecoration(
-                                      color: ColorUtils.white,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(Dimensions.roundCorner)),
-                                      border:
-                                      Border.all(color: ColorUtils.divider)),
-                                  child: TextField(
-                                    focusNode: model.addVacationFocus,
-                                    controller: model.addVacationController,
-                                    keyboardType: TextInputType.text,
-                                    textInputAction: TextInputAction.next,
-                                    style: TextStyle(
-                                      color: ColorUtils.red_color,
-                                      fontFamily: FontUtils.modernistRegular,
-                                      fontSize: 1.9.t,
-                                    ),
-                                    decoration: const InputDecoration(
-                                      border: InputBorder.none,
-                                      isDense: true,
-                                      contentPadding: EdgeInsets.symmetric(
-                                          horizontal: 0, vertical: 0),
-                                    ),
-                                  ),
+
+                            ElevatedButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context){
+                                      return AddDialogBoxPartyLocation1(title: "Add New Location", btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+                                    }
+                                );
+                              },
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+
+                                  SvgPicture.asset(ImageUtils.addLocationIcon),
+
+                                  SizedBox(width: 10),
+
+                                  Text("Add Party Vacation")
+                                ],
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                primary: ColorUtils.white,
+                                onPrimary: ColorUtils.text_red,
+                                padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 8.w),
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(Dimensions.roundCorner),
+                                    side: BorderSide(
+                                        color: ColorUtils.text_red,
+                                        width: 1
+                                    )
                                 ),
-                                Container(
-                                  margin: EdgeInsets.only(left: 5.w),
-                                  padding: EdgeInsets.symmetric(horizontal: 1.w),
-                                  color: ColorUtils.white,
-                                  child: Text(
-                                    "Add Party Vacation",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: ColorUtils.text_grey,
-                                        fontFamily: FontUtils.modernistRegular,
-                                        fontSize: 1.5.t,
-                                        height: .4),
-                                  ),
+                                textStyle: TextStyle(
+                                  fontFamily: FontUtils.modernistRegular,
+                                  fontSize: 1.8.t,
+                                  //height: 0
                                 ),
-                              ],
+                              ),
                             ),
+                            // Stack(
+                            //   children: [
+                            //     Container(
+                            //       height: 7.h,
+                            //       padding: EdgeInsets.symmetric(
+                            //           vertical: Dimensions.containerVerticalPadding,
+                            //           horizontal:
+                            //           Dimensions.containerHorizontalPadding),
+                            //       decoration: BoxDecoration(
+                            //           color: ColorUtils.white,
+                            //           borderRadius: BorderRadius.all(
+                            //               Radius.circular(Dimensions.roundCorner)),
+                            //           border:
+                            //           Border.all(color: ColorUtils.divider)),
+                            //       child: TextField(
+                            //         focusNode: model.addVacationFocus,
+                            //         controller: model.addVacationController,
+                            //         keyboardType: TextInputType.text,
+                            //         textInputAction: TextInputAction.next,
+                            //         style: TextStyle(
+                            //           color: ColorUtils.red_color,
+                            //           fontFamily: FontUtils.modernistRegular,
+                            //           fontSize: 1.9.t,
+                            //         ),
+                            //         decoration: const InputDecoration(
+                            //           border: InputBorder.none,
+                            //           isDense: true,
+                            //           contentPadding: EdgeInsets.symmetric(
+                            //               horizontal: 0, vertical: 0),
+                            //         ),
+                            //       ),
+                            //     ),
+                            //     Container(
+                            //       margin: EdgeInsets.only(left: 5.w),
+                            //       padding: EdgeInsets.symmetric(horizontal: 1.w),
+                            //       color: ColorUtils.white,
+                            //       child: Text(
+                            //         "Add Party Vacation",
+                            //         textAlign: TextAlign.center,
+                            //         style: TextStyle(
+                            //             color: ColorUtils.text_grey,
+                            //             fontFamily: FontUtils.modernistRegular,
+                            //             fontSize: 1.5.t,
+                            //             height: .4),
+                            //       ),
+                            //     ),
+                            //   ],
+                            // ),
 
                             SizedBox(height: 5.h,),
                             //Submit

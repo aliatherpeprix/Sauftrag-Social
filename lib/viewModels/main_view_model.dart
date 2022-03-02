@@ -38,6 +38,7 @@ import 'package:sauftrag/models/pubnub_channel.dart';
 import 'package:sauftrag/models/rating_data.dart';
 import 'package:sauftrag/models/ratings.dart';
 import 'package:sauftrag/models/user_models.dart';
+import 'package:sauftrag/services/addFavorites.dart';
 import 'package:sauftrag/services/addressBook.dart';
 import 'package:sauftrag/services/barQRcode.dart';
 import 'package:sauftrag/services/bar_order.dart';
@@ -143,7 +144,9 @@ class MainViewModel extends BaseViewModel {
   bool isFaqs = false;
   bool isPost = false;
   bool isUserProfile = false;
+  bool addDrink = false;
   var dio = Dio();
+  var addFavorite = Addfavorites();
 
   final aboutMeController = TextEditingController();
   final barNameController = TextEditingController();
@@ -160,6 +163,24 @@ class MainViewModel extends BaseViewModel {
   bool isddVacationInFocus = false;
   FocusNode addVacationFocus = new FocusNode();
 
+  //Update New drinks
+  final updateNewDrinkController = TextEditingController();
+  bool isUpdateNewDrinkInFocus = false;
+  FocusNode updateNewDrinkFocus = new FocusNode();
+
+  final addNewDrinkController = TextEditingController();
+  bool isAddNewDrinkInFocus = false;
+  FocusNode addNewDrinkFocus = new FocusNode();
+
+  final addNewClubController = TextEditingController();
+  bool isAddNewClubInFocus = false;
+  FocusNode addNewClubFocus = new FocusNode();
+
+  final addNewPartyLocationController = TextEditingController();
+  bool isAddNewPartyLocationInFocus = false;
+  FocusNode addNewPartyLocationFocus = new FocusNode();
+
+
   PrefrencesViewModel prefrencesViewModel = locator<PrefrencesViewModel>();
   double lowerValue = 50;
   double upperValue = 180;
@@ -173,6 +194,7 @@ class MainViewModel extends BaseViewModel {
   List<FavoritesModel> barQRcode = [];
   List drinksSelected = [];
   List<AddressBook> contactBook = [];
+
   //String? faqs;
 
   List contactChecked = [];
@@ -881,6 +903,7 @@ class MainViewModel extends BaseViewModel {
   }
 
   List<FollowersList> follower = [];
+
   followers() async {
     NewBarModel? user = await locator<PrefrencesViewModel>().getBarUser();
     var response = await dio.get(Constants.BaseUrlPro + Constants.followersList,
@@ -900,6 +923,7 @@ class MainViewModel extends BaseViewModel {
 
   Ratings? ratingKaData;
   RatingData? forTime;
+
   rating() async {
     NewBarModel? user = await locator<PrefrencesViewModel>().getBarUser();
 
@@ -917,6 +941,7 @@ class MainViewModel extends BaseViewModel {
   var currentPosition;
   double longitude = 0.0;
   double latitude = 0.0;
+
   // var currentPosition;
   Future updateCurrentLocation() async {
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
@@ -934,12 +959,14 @@ class MainViewModel extends BaseViewModel {
       print(e);
     });
   }
+
   // var channel = "getting_started";
 
   List chats = [];
   var message = '';
 
   String? timeZone;
+
   getTime() {
     var checking = ratingKaData!.data![0].created_at.toString();
     var dateTime =
@@ -979,13 +1006,14 @@ class MainViewModel extends BaseViewModel {
   var matchUser = MatchUsers();
   List<UserModel> matchedUsers = [];
 
-  matchingUsers() async{
-   var response =  await matchUser.GetMatchedUsers();
-   matchedUsers = response;
-   notifyListeners();
+  matchingUsers() async {
+    var response = await matchUser.GetMatchedUsers();
+    matchedUsers = response;
+    notifyListeners();
   }
 
   bool userComing = false;
+
   getAllUserForChat() async {
     userComing = true;
     // notifyListeners();
@@ -1007,12 +1035,13 @@ class MainViewModel extends BaseViewModel {
   }
 
   String getConversationID(String userID, String peerID) {
-  return userID.hashCode <= peerID.hashCode
-      ? userID + '_' + peerID
-      : peerID + '_' + userID;
+    return userID.hashCode <= peerID.hashCode
+        ? userID + '_' + peerID
+        : peerID + '_' + userID;
   }
 
   List<PubnubChannel>? pnChannel = [];
+
   getGroupChannelFromPubnub() async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
     var response = await dio.get('https://ps.pndsn.com/' +
@@ -1028,6 +1057,7 @@ class MainViewModel extends BaseViewModel {
   }
 
   List<Discover> discoverPeople = [];
+
   DiscoverPeople() async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
     var response = await dio.get(Constants.BaseUrlPro + Constants.discover,
@@ -1070,6 +1100,7 @@ class MainViewModel extends BaseViewModel {
   String? drinkingFrom;
   String? drinkingTo;
   bool updateStatus = false;
+
   drinkStatus() async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
 
@@ -1081,8 +1112,7 @@ class MainViewModel extends BaseViewModel {
     // var encodedData = jsonEncode(data);
 
     var response = await dio.post(Constants.BaseUrlPro + Constants.drinkStatus,
-        data: data,
-        options: Options(
+        data: data, options: Options(
             // contentType: Headers.formUrlEncodedContentType,
             headers: {'Authorization': 'Token ${user!.token!}'}));
     print(response.data);
@@ -1127,6 +1157,7 @@ class MainViewModel extends BaseViewModel {
   }
 
   DrinkStatus? getStatus;
+
   getDrinkStatus() async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
     var response = await dio.get(
@@ -1137,7 +1168,11 @@ class MainViewModel extends BaseViewModel {
             headers: {'Authorization': 'Token ${user.token!}'}));
     print(response.data);
     getStatus = DrinkStatus.fromJson(response.data);
-    DateFormat("hh:mm a").format(DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day,));
+    DateFormat("hh:mm a").format(DateTime(
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day,
+    ));
     getStatus!.start_time = TimeOfDay(
             hour: int.parse(getStatus!.start_time!.split(":")[0]),
             minute: int.parse(getStatus!.start_time!.split(":")[1]))
@@ -1152,8 +1187,7 @@ class MainViewModel extends BaseViewModel {
     // print(getStatus);
   }
 
-
-  barList()async{
+  barList() async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
     var response = await dio.get(
         Constants.BaseUrlPro + Constants.allUserForChat,
@@ -1171,10 +1205,16 @@ class MainViewModel extends BaseViewModel {
     chatScroll.jumpTo(chatScroll.position.maxScrollExtent);
   }
 
-  void navigateToProfileScreen(List<String> images, String? name,
-      String address, List alcoholDrink, List nightClub, List partyVacation,dynamic id) {
+  void navigateToProfileScreen(
+      List<String> images,
+      String? name,
+      String address,
+      List alcoholDrink,
+      List nightClub,
+      List partyVacation,
+      dynamic id) {
     navigationService.navigateToProfileScreen(
-        images, name, address, alcoholDrink, nightClub, partyVacation,id);
+        images, name, address, alcoholDrink, nightClub, partyVacation, id);
   }
 
   void navigateToMatchScreen() {
@@ -1288,8 +1328,7 @@ class MainViewModel extends BaseViewModel {
       dynamic location,
       dynamic about,
       dynamic barName,
-      dynamic barImage
-      ) {
+      dynamic barImage) {
     navigationKey.currentState!.push(PageTransition(
         child: EventDetails(
           image: image,
@@ -1419,6 +1458,7 @@ class MainViewModel extends BaseViewModel {
 
   Future saveUserDetails() async {
     List tempList = [];
+
     // for (int i = 0;i<imageFiles.length;i++){
     //   if (imageFiles[i] is File && (imageFiles[i] as File).path.isNotEmpty){
     //     String image = "data:${lookupMimeType(imageFiles[0].path)};base64," +
@@ -1429,48 +1469,15 @@ class MainViewModel extends BaseViewModel {
     //     tempList.add(imageFiles[i]);
     //   }
     // }
-    editProfile = true;
-    notifyListeners();
-    var userUpdateResponse = await updateUser.UpdateUserProfile(
-        (
-            genderList.indexOf(genderValueStr) + 1).toString(),
-            imageFiles
-    );
-    if (userUpdateResponse is UserModel) {
-      UserModel user = userUpdateResponse;
-      user.token = userModel!.token!;
-      user.favorite_alcohol_drinks = user.favorite_alcohol_drinks!;
-      user.favorite_night_club = user.favorite_night_club!;
-      user.favorite_party_vacation = user.favorite_party_vacation!;
-      await prefrencesViewModel.saveUser(user);
-      notifyListeners();
-    }
-    editProfile = false;
-    notifyListeners();
-  }
 
-  Future saveBarDetails() async {
-
-    List tempList = [];
-    // for (int i = 0;i<imageFiles.length;i++){
-    //   if (imageFiles[i] is File && (imageFiles[i] as File).path.isNotEmpty){
-    //     String image = "data:${lookupMimeType(imageFiles[0].path)};base64," +
-    //         base64Encode(imageFiles[0].readAsBytesSync());
-    //     tempList.add(image);
-    //   }
-    //   else {
-    //     tempList.add(imageFiles[i]);
-    //   }
-    // }
-    editProfile = true;
-    notifyListeners();
     for (int i = 0; i < imageFiles.length; i++) {
-      if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
-          imageFiles[i].path.isEmpty) {
-        DialogUtils().showDialog(MyErrorWidget(
-          error: "Select All Images"/*+i.toString()*/,
-        ));
-        return;
+      if ((imageFiles[i] is File)) {
+        if (imageFiles[i].path.isEmpty) {
+          DialogUtils().showDialog(MyErrorWidget(
+            error: "Select All Images" /*+i.toString()*/,
+          ),isDismissable: true);
+          return;
+        }
       }
 
       // bool hasImages = false;
@@ -1487,6 +1494,62 @@ class MainViewModel extends BaseViewModel {
       //   }
       // }
     }
+    editProfile = true;
+    notifyListeners();
+    var userUpdateResponse = await updateUser.UpdateUserProfile(
+        (genderList.indexOf(genderValueStr) + 1).toString(), imageFiles);
+    if (userUpdateResponse is UserModel) {
+      UserModel user = userUpdateResponse;
+      user.token = userModel!.token!;
+      user.favorite_alcohol_drinks = user.favorite_alcohol_drinks!;
+      user.favorite_night_club = user.favorite_night_club!;
+      user.favorite_party_vacation = user.favorite_party_vacation!;
+      await prefrencesViewModel.saveUser(user);
+      notifyListeners();
+    }
+    editProfile = false;
+    notifyListeners();
+  }
+
+  Future saveBarDetails() async {
+    List tempList = [];
+    // for (int i = 0;i<imageFiles.length;i++){
+    //   if (imageFiles[i] is File && (imageFiles[i] as File).path.isNotEmpty){
+    //     String image = "data:${lookupMimeType(imageFiles[0].path)};base64," +
+    //         base64Encode(imageFiles[0].readAsBytesSync());
+    //     tempList.add(image);
+    //   }
+    //   else {
+    //     tempList.add(imageFiles[i]);
+    //   }
+    // }
+
+    for (int i = 0; i < imageFiles.length; i++) {
+      if ((imageFiles[i] is File)) {
+        if (imageFiles[i].path.isEmpty) {
+          DialogUtils().showDialog(MyErrorWidget(
+            error: "Select All Images" /*+i.toString()*/,
+          ),isDismissable: true);
+          return;
+        }
+      }
+
+      // bool hasImages = false;
+      // if (!hasImages) {
+      //   if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
+      //       imageFiles[i].path.isEmpty) {
+      //     DialogUtils().showDialog(MyErrorWidget(
+      //       error: "Select at least one Image",
+      //     ));
+      //     return;
+      //   } else {
+      //     hasImages = true;
+      //     break;
+      //   }
+      // }
+    }
+    editProfile = true;
+    notifyListeners();
     var barUpdateResponse = await updateBar.UpdateBarProfile(
       barNameController.text,
       imageFiles,
@@ -1774,7 +1837,7 @@ class MainViewModel extends BaseViewModel {
               images.add(user.toJson()["catalogue_image${i}"]);
             }
           }
-          if(images.isNotEmpty){
+          if (images.isNotEmpty) {
             catalogImages.add(images);
           }
           print(images);
@@ -1972,7 +2035,6 @@ class MainViewModel extends BaseViewModel {
   }
 
   Future deleteRequest(BuildContext context, dynamic id) async {
-
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
     catalogImages = [];
     try {
@@ -2018,7 +2080,6 @@ class MainViewModel extends BaseViewModel {
       notifyListeners();
     }
   }
-
 
   bool matched = false;
 
@@ -2085,24 +2146,107 @@ class MainViewModel extends BaseViewModel {
 // version: QrVersions.auto,
 // size: 200.0,
 // ),
-  void initBarPubNub() async{
-    NewBarModel barUser =
-            (await locator<PrefrencesViewModel>().getBarUser())!;
+  void initBarPubNub() async {
+    NewBarModel barUser = (await locator<PrefrencesViewModel>().getBarUser())!;
     //UserModel user = (await locator<PrefrencesViewModel>().getUser())!;
     pubnub = PubNub(
         defaultKeyset: Keyset(
             subscribeKey: 'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
             publishKey: 'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
             uuid: UUID("${barUser.id.toString()}")));
-
   }
 
-  void initUserPubNub() async{
+  void initUserPubNub() async {
     UserModel user = (await locator<PrefrencesViewModel>().getUser())!;
-        pubnub = PubNub(
-            defaultKeyset: Keyset(
-                subscribeKey: 'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
-                publishKey: 'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
-                uuid: UUID("${user.id.toString()}")));
+    pubnub = PubNub(
+        defaultKeyset: Keyset(
+            subscribeKey: 'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
+            publishKey: 'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
+            uuid: UUID("${user.id.toString()}")));
+  }
+
+  addFavoritedrink1() async {
+    if (addNewDrinkController.text.isEmpty) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Please add new drink",
+      ));
+      notifyListeners();
+      return;
+    } else {
+      addDrink = true;
+      notifyListeners();
+      //drinkList = await Addfavorites().GetFavoritesDrink();
+      var addFavoriteResponce = await addFavorite.AddFavoritesDrink(
+        addNewDrinkController.text,
+      );
+      if (addFavoriteResponce is FavoritesModel) {
+        var name = addFavoriteResponce.name;
+        // drinks = addFavoriteResponce;
+        drinkList.add(addFavoriteResponce);
+        notifyListeners();
+      }
+      print(drinkList);
+      navigateBack();
+      addDrink = false;
+      drinkList = await Addfavorites().GetFavoritesDrink();
+      addNewDrinkController.clear();
+      notifyListeners();
+
+    }
+  }
+
+  addFavoriteclub1() async {
+    if (addNewClubController.text.isEmpty) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Please add new club",
+      ));
+      notifyListeners();
+      return;
+    } else {
+      addDrink = true;
+      notifyListeners();
+      var addFavoriteResponce = await addFavorite.AddFavoritesClub(
+        addNewClubController.text,
+      );
+      if (addFavoriteResponce is FavoritesModel) {
+        var name = addFavoriteResponce.name;
+        // drinks = addFavoriteResponce;
+        clubList.add(addFavoriteResponce);
+        notifyListeners();
+      }
+      print(clubList);
+      navigateBack();
+      addDrink = false;
+      //clubList = await Addfavorites().GetFavoritesDrink();
+      addNewClubController.clear();
+      notifyListeners();
+    }
+  }
+
+  addFavoritePartyVacation1() async {
+    if (addNewPartyLocationController.text.isEmpty) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Please add new location",
+      ));
+      notifyListeners();
+      return;
+    } else {
+      addDrink = true;
+      notifyListeners();
+      var addFavoriteResponce = await addFavorite.AddFavoritesPartyVacation(
+        addNewPartyLocationController.text,
+      );
+      if (addFavoriteResponce is FavoritesModel) {
+        var name = addFavoriteResponce.name;
+        // drinks = addFavoriteResponce;
+        vacationList.add(addFavoriteResponce);
+        notifyListeners();
+      }
+      print(vacationList);
+      navigateBack();
+      addDrink = false;
+      addNewPartyLocationController.clear();
+      notifyListeners();
+    }
   }
 }

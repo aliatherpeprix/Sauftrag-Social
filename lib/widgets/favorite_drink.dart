@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/favorites_model.dart';
+import 'package:sauftrag/services/addFavorites.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/common_functions.dart';
 import 'package:sauftrag/utils/dimensions.dart';
@@ -13,6 +15,8 @@ import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/viewModels/registrationViewModel.dart';
+import 'package:sauftrag/widgets/add_dialog_box_drink1.dart';
+import 'package:sauftrag/widgets/add_dialog_box_drinks.dart';
 import 'package:sauftrag/widgets/radler_dialog_box.dart';
 import 'package:stacked/stacked.dart';
 
@@ -34,8 +38,11 @@ class _FavoriteDrinkListState extends State<FavoriteDrinkList> {
   @override
   Widget build(BuildContext context) {
 
-    return ViewModelBuilder<RegistrationViewModel>.reactive(
+    return ViewModelBuilder<MainViewModel>.reactive(
       //onModelReady: (data) => data.initializeShareDialog(),
+      onModelReady: (model) async {
+        model.drinkList = await Addfavorites().GetFavoritesDrink();
+      },
       builder: (context, model, child){
         // model.favDrink = false;
         return Dialog(
@@ -136,55 +143,121 @@ class _FavoriteDrinkListState extends State<FavoriteDrinkList> {
 
                             SizedBox(height: 5.h,),
 
+                            ElevatedButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context){
+                                      return AddDialogBoxDrink1(title: "Add New Drink", btnTxt: "Add Drink", icon: ImageUtils.addDrinkIcon);
+                                    }
+                                );
+                              },
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
 
-                            Stack(
-                              children: [
-                                Container(
-                                  height: 7.h,
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: Dimensions.containerVerticalPadding,
-                                      horizontal:
-                                      Dimensions.containerHorizontalPadding),
-                                  decoration: BoxDecoration(
-                                      color: ColorUtils.white,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(Dimensions.roundCorner)),
-                                      border:
-                                      Border.all(color: ColorUtils.divider)),
-                                  child: TextField(
-                                    focusNode: model.addDrinkFocus,
-                                    controller: model.addDrinkController,
-                                    keyboardType: TextInputType.text,
-                                    textInputAction: TextInputAction.next,
-                                    style: TextStyle(
-                                      color: ColorUtils.red_color,
-                                      fontFamily: FontUtils.modernistRegular,
-                                      fontSize: 1.9.t,
-                                    ),
-                                    decoration: const InputDecoration(
-                                      border: InputBorder.none,
-                                      isDense: true,
-                                      contentPadding: EdgeInsets.symmetric(
-                                          horizontal: 0, vertical: 0),
-                                    ),
-                                  ),
+                                  SvgPicture.asset(ImageUtils.addDrinkIcon),
+
+                                  SizedBox(width: 10),
+
+                                  Text("Add Drink")
+                                ],
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                primary: ColorUtils.white,
+                                onPrimary: ColorUtils.text_red,
+                                padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 8.w),
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(Dimensions.roundCorner),
+                                    side: BorderSide(
+                                        color: ColorUtils.text_red,
+                                        width: 1
+                                    )
                                 ),
-                                Container(
-                                  margin: EdgeInsets.only(left: 5.w),
-                                  padding: EdgeInsets.symmetric(horizontal: 1.w),
-                                  color: ColorUtils.white,
-                                  child: Text(
-                                    "Add Drink",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: ColorUtils.text_grey,
-                                        fontFamily: FontUtils.modernistRegular,
-                                        fontSize: 1.5.t,
-                                        height: .4),
-                                  ),
+                                textStyle: TextStyle(
+                                  fontFamily: FontUtils.modernistRegular,
+                                  fontSize: 1.8.t,
+                                  //height: 0
                                 ),
-                              ],
+                              ),
                             ),
+
+                            // Stack(
+                            //   children: [
+                            //     Container(
+                            //       height: 7.h,
+                            //       padding: EdgeInsets.symmetric(
+                            //           vertical: Dimensions.containerVerticalPadding,
+                            //           horizontal:
+                            //           Dimensions.containerHorizontalPadding),
+                            //       decoration: BoxDecoration(
+                            //           color: ColorUtils.white,
+                            //           borderRadius: BorderRadius.all(
+                            //               Radius.circular(Dimensions.roundCorner)),
+                            //           border:
+                            //           Border.all(color: ColorUtils.divider)),
+                            //       child: TextField(
+                            //         inputFormatters: <TextInputFormatter>[
+                            //           LengthLimitingTextInputFormatter(18),
+                            //         ],
+                            //         focusNode: model.updateNewDrinkFocus,
+                            //         controller: model.updateNewDrinkController,
+                            //         keyboardType: TextInputType.text,
+                            //         textInputAction: TextInputAction.next,
+                            //         style: TextStyle(
+                            //           color: ColorUtils.black,
+                            //           fontFamily: FontUtils.modernistRegular,
+                            //           fontSize: 1.8.t,
+                            //         ),
+                            //         decoration: InputDecoration(
+                            //           hintText: "Anything you like",
+                            //           hintStyle: TextStyle(
+                            //               fontFamily: FontUtils.modernistRegular,
+                            //               color: ColorUtils.text_grey,
+                            //               fontSize: 1.8.t
+                            //           ),
+                            //           border: InputBorder.none,
+                            //           isDense:true,
+                            //           contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                            //         ),
+                            //       ),
+                            //       // TextField(
+                            //       //   focusNode: model.addDrinkFocus,
+                            //       //   controller: model.addDrinkController,
+                            //       //   keyboardType: TextInputType.text,
+                            //       //   textInputAction: TextInputAction.next,
+                            //       //   style: TextStyle(
+                            //       //     color: ColorUtils.red_color,
+                            //       //     fontFamily: FontUtils.modernistRegular,
+                            //       //     fontSize: 1.9.t,
+                            //       //   ),
+                            //       //   decoration: const InputDecoration(
+                            //       //     border: InputBorder.none,
+                            //       //     isDense: true,
+                            //       //     contentPadding: EdgeInsets.symmetric(
+                            //       //         horizontal: 0, vertical: 0),
+                            //       //   ),
+                            //       // ),
+                            //     ),
+                            //     Container(
+                            //       margin: EdgeInsets.only(left: 5.w),
+                            //       padding: EdgeInsets.symmetric(horizontal: 1.w),
+                            //       color: ColorUtils.white,
+                            //       child: Text(
+                            //         "Add Drink",
+                            //         textAlign: TextAlign.center,
+                            //         style: TextStyle(
+                            //             color: ColorUtils.text_grey,
+                            //             fontFamily: FontUtils.modernistRegular,
+                            //             fontSize: 1.5.t,
+                            //             height: .4),
+                            //       ),
+                            //     ),
+                            //   ],
+                            // ),
 
                             SizedBox(height: 5.h,),
                             //Submit
@@ -230,7 +303,7 @@ class _FavoriteDrinkListState extends State<FavoriteDrinkList> {
             )
         );
       },
-      viewModelBuilder: () => locator<RegistrationViewModel>(),
+      viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
     );
   }

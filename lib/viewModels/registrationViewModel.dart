@@ -183,6 +183,10 @@ class RegistrationViewModel extends BaseViewModel {
   bool isAddNewPartyLocationInFocus = false;
   FocusNode addNewPartyLocationFocus = new FocusNode();
 
+
+  final updateNewDrinkController = TextEditingController();
+  bool isUpdateNewDrinkInFocus = false;
+  FocusNode updateNewDrinkFocus = new FocusNode();
   ///----------------------Forget Password Controller ----------------///
 
   final forgetPasswordController = TextEditingController();
@@ -483,31 +487,54 @@ class RegistrationViewModel extends BaseViewModel {
 
   addBarImages() {
     for (int i = 0; i < imageFiles.length; i++) {
-      if (i == 0) {
-        if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
-            imageFiles[i].path.isEmpty) {
-          DialogUtils().showDialog(MyErrorWidget(
-            error: "Select Bar Logo",
-          ));
-          return;
-        }
+      if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
+          imageFiles[i].path.isEmpty) {
+        DialogUtils().showDialog(MyErrorWidget(
+          error: "Select All Images"/*+i.toString()*/,
+        ));
+        return;
       }
-      bool hasImages = false;
-      if (i > 0) {
-        if (!hasImages) {
-          if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
-              imageFiles[i].path.isEmpty) {
-            DialogUtils().showDialog(MyErrorWidget(
-              error: "Select at least one Bar Image",
-            ));
-            return;
-          } else {
-            hasImages = true;
-            break;
-          }
-        }
-      }
+
+      // bool hasImages = false;
+      // if (!hasImages) {
+      //   if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
+      //       imageFiles[i].path.isEmpty) {
+      //     DialogUtils().showDialog(MyErrorWidget(
+      //       error: "Select at least one Image",
+      //     ));
+      //     return;
+      //   } else {
+      //     hasImages = true;
+      //     break;
+      //   }
+      // }
     }
+    // for (int i = 0; i < imageFiles.length; i++) {
+    //   if (i == 0) {
+    //     if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
+    //         imageFiles[i].path.isEmpty) {
+    //       DialogUtils().showDialog(MyErrorWidget(
+    //         error: "Select Bar Logo",
+    //       ));
+    //       return;
+    //     }
+    //   }
+    //   bool hasImages = false;
+    //   if (i > 0) {
+    //     if (!hasImages) {
+    //       if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
+    //           imageFiles[i].path.isEmpty) {
+    //         DialogUtils().showDialog(MyErrorWidget(
+    //           error: "Select at least one Bar Image",
+    //         ));
+    //         return;
+    //       } else {
+    //         hasImages = true;
+    //         break;
+    //       }
+    //     }
+    //   }
+    // }
     navigateToBarTimingTypeScreen();
     //navigateToMediaScreen();
     //navigateToHomeScreen(2);
@@ -1226,7 +1253,7 @@ class RegistrationViewModel extends BaseViewModel {
     //navigateToHomeScreen(2);
   }
 
-  addFavoritedrink() async {
+    addFavoritedrink() async {
     if (addNewDrinkController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Please add new drink",
@@ -1236,6 +1263,7 @@ class RegistrationViewModel extends BaseViewModel {
     } else {
       addDrink = true;
       notifyListeners();
+      //drinkList = await Addfavorites().GetFavoritesDrink();
       var addFavoriteResponce = await addFavorite.AddFavoritesDrink(
         addNewDrinkController.text,
       );
@@ -1248,8 +1276,10 @@ class RegistrationViewModel extends BaseViewModel {
       print(drinkList);
       navigateBack();
       addDrink = false;
+      drinkList = await Addfavorites().GetFavoritesDrink();
       addNewDrinkController.clear();
       notifyListeners();
+
     }
   }
 

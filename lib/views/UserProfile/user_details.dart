@@ -910,7 +910,8 @@ class _UserDetailsState extends State<UserDetails> {
                                   // }
                                   // model.notifyListeners();
                                 },
-                                child: Text((model.drinkList.where((drink) => drink.id==element).first as FavoritesModel).name ?? ""),
+                                child: Text((model.drinkList.where((drink)
+                                => drink.id==element).first as FavoritesModel).name ?? ""),
                                 style: ElevatedButton.styleFrom(
                                   primary:   ColorUtils.red_color,
                                   onPrimary:  ColorUtils.white,
@@ -1091,7 +1092,8 @@ class _UserDetailsState extends State<UserDetails> {
                                   // }
                                   // model.notifyListeners();
                                 },
-                                child:  Text((model.vacationList.where((drink) => drink.id==element).first as FavoritesModel).name ?? ""),
+                                child:  Text((model.vacationList.where((drink)
+                                => drink.id==element).first as FavoritesModel).name ?? ""),
                                 style: ElevatedButton.styleFrom(
                                   primary:   ColorUtils.red_color,
                                   onPrimary:  ColorUtils.white,
@@ -1123,7 +1125,7 @@ class _UserDetailsState extends State<UserDetails> {
 
                                 onPressed: ()async{
                                   await model.saveUserDetails();
-                                  model.navigateBack();
+                                  //model.navigateBack();
                                 },
                                 child:  model.editProfile == false ? Text("Save") : Loader(),
                                 style: ElevatedButton.styleFrom(
