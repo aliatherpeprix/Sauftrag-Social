@@ -47,6 +47,7 @@ import 'package:sauftrag/services/dataProtection.dart';
 import 'package:sauftrag/services/drinksOrder.dart';
 import 'package:sauftrag/services/faqs.dart';
 import 'package:sauftrag/services/get_match_users.dart';
+import 'package:sauftrag/services/listOfBars.dart';
 
 import 'package:sauftrag/services/privacyPolicy.dart';
 import 'package:sauftrag/services/termsAndCondition.dart';
@@ -81,6 +82,7 @@ class MainViewModel extends BaseViewModel {
   var contactList = Addressbook();
   var barQRCode = BarQrcode();
   var updateLocation = Updatelocation();
+  var listOfBars = Listofbars();
 
   Barcode? result;
 
@@ -145,11 +147,15 @@ class MainViewModel extends BaseViewModel {
   bool isPost = false;
   bool isUserProfile = false;
   bool addDrink = false;
+
+  bool editBool = false;
   var dio = Dio();
   var addFavorite = Addfavorites();
 
   final aboutMeController = TextEditingController();
   final barNameController = TextEditingController();
+  final updateSignUpPhoneController = TextEditingController();
+  final updateLocations = TextEditingController();
   ScrollController chatScroll = ScrollController();
   final addDrinkController = TextEditingController();
   bool isAddDrinkInFocus = false;
@@ -1405,6 +1411,11 @@ class MainViewModel extends BaseViewModel {
     navigationService.navigateToSelectIndividualChatScreen();
   }
 
+  void navigateToChangePassword() {
+    navigationService.navigateToChangePassword();
+  }
+
+
   ///-----------Bar Profile ---------------///
 
   void navigateToAllBarRating() {
@@ -1456,6 +1467,10 @@ class MainViewModel extends BaseViewModel {
     navigationService.navigateToChooseDrinkScreen();
   }
 
+  void navigateToAddAddressScreen() {
+    navigationService.navigateToAddAddressScreen();
+  }
+
   Future saveUserDetails() async {
     List tempList = [];
 
@@ -1504,6 +1519,29 @@ class MainViewModel extends BaseViewModel {
       user.favorite_alcohol_drinks = user.favorite_alcohol_drinks!;
       user.favorite_night_club = user.favorite_night_club!;
       user.favorite_party_vacation = user.favorite_party_vacation!;
+      await prefrencesViewModel.saveUser(user);
+      notifyListeners();
+    }
+    editProfile = false;
+    notifyListeners();
+  }
+
+  Future updateAccountDetials() async {
+
+
+    editProfile = true;
+    notifyListeners();
+    var updateAccountDetailResponse = await updateUser.UpdateAccountDetails(
+
+
+        updateSignUpPhoneController.text,
+            updateLocations.text
+
+    );
+    if (updateAccountDetailResponse is UserModel) {
+      UserModel user = updateAccountDetailResponse;
+      user.token = userModel!.token!;
+
       await prefrencesViewModel.saveUser(user);
       notifyListeners();
     }
@@ -1709,6 +1747,31 @@ class MainViewModel extends BaseViewModel {
     // }
     if (getFaqList is List<FaqsModel>) {
       faqs = getFaqList;
+    } else {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Some thing went wrong",
+      ));
+      //isPrivacyPolicy = false;
+
+      return;
+    }
+    isFaqs = false;
+    notifyListeners();
+    print(getFaqsList);
+  }
+
+  getListOfbars() async {
+    isFaqs = true;
+
+    var getListofbar = await listOfBars.ListOfBars();
+    print(getListofbar);
+    // if (getFaqList is String){
+    //   faqs = getFaqList;
+    //   //isPrivacyPolicy = false;
+    //
+    // }
+    if (getListofbar is List<FaqsModel>) {
+      faqs = getListofbar;
     } else {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Some thing went wrong",

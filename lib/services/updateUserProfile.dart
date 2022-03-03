@@ -202,4 +202,49 @@ class Updateuser {
       return  (e as DioError).response!.data["message"].toString();
     }
   }
+
+
+  Future UpdateAccountDetails(
+      String phone_no,
+      String address,
+
+      ) async {
+    try {
+      /// just login user through phoneNumber and password
+
+      var param = FormData.fromMap({
+
+        'phone_no' : phone_no,
+        'address' : address,
+
+      });
+      UserModel? user = await locator<PrefrencesViewModel>().getUser();
+      var response = await dio.patch(Constants.BaseUrlPro+Constants.
+      UpdateUserProfile+ user!.id.toString()+"/", data: param,options: Options(
+          contentType: Headers.formUrlEncodedContentType,
+          headers: {
+            "Authorization": "Token ${user.token!}"
+          }
+      ));
+      print(response);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // user found
+        /* if (response.data["status"] == 200) {
+          var userData = UserModel.fromJson(response.data['data']);
+          return userData;
+        }*/
+        var userData = UserModel.fromJson(response.data);
+        return userData;
+      }
+      //user not found
+      else {
+        return response.data['message'];
+      }
+
+    } catch (e) {
+      print(e);
+      //dynamic exception = e;
+      return  (e as DioError).response!.data["message"].toString();
+    }
+  }
 }

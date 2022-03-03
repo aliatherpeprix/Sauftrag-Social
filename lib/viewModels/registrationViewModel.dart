@@ -70,6 +70,7 @@ class RegistrationViewModel extends BaseViewModel {
   var createBarPost = Createpost();
   var checkBar = Checkbar();
 
+
   final GlobalKey<SideMenuState> sideMenuKey = GlobalKey<SideMenuState>();
 
   var navigationService = navigationViewModel;
@@ -1387,20 +1388,21 @@ class RegistrationViewModel extends BaseViewModel {
       notifyListeners();
       return;
     }
-    if (signUpPhoneController.text.length < 11) {
-      isSigningUp = false;
-      DialogUtils().showDialog(
-          MyErrorWidget(error: "Mobile number should contain 11 digits"));
-      notifyListeners();
-      return;
-    }
-    if (!signUpPhoneController.text.toString().startsWith("0")) {
-      isSigningUp = false;
-      DialogUtils().showDialog(
-          MyErrorWidget(error: "Mobile number should start with zero"));
-      notifyListeners();
-      return;
-    } else if (signUpPasswordController.text.isEmpty) {
+    // if (signUpPhoneController.text.length < 7) {
+    //   isSigningUp = false;
+    //   DialogUtils().showDialog(
+    //       MyErrorWidget(error: "Mobile number should contain 11 digits"));
+    //   notifyListeners();
+    //   return;
+    // }
+    // if (!signUpPhoneController.text.toString().startsWith("0")) {
+    //   isSigningUp = false;
+    //   DialogUtils().showDialog(
+    //       MyErrorWidget(error: "Mobile number should start with zero"));
+    //   notifyListeners();
+    //   return;
+    // }
+    else if (signUpPasswordController.text.isEmpty) {
       isSigningUp = false;
       DialogUtils().showDialog(MyErrorWidget(
         error: "Password is required",
@@ -1537,6 +1539,7 @@ class RegistrationViewModel extends BaseViewModel {
       user.gender = (genderList.indexOf(genderValueStr) + 1).toString();
       user.dob = DateFormat("yyyy-MM-dd").format(selectedDOB);
       await prefrencesViewModel.saveUser(user);
+
       //print(signupResponce);
 
       //var responce = await Addfavorites().GetFavoritesDrink();

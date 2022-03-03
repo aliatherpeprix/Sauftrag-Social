@@ -6,6 +6,7 @@ import 'package:sauftrag/bar/views/Home/bar_news_feed.dart';
 import 'package:sauftrag/utils/screen_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/navigation_view_model.dart';
+import 'package:sauftrag/views/Auth/signup.dart';
 import 'package:sauftrag/views/Auth/splash.dart';
 import 'package:sauftrag/views/UserProfile/gps.dart';
 import 'app/locator.dart';

@@ -496,7 +496,7 @@ class _ProfileState extends State<Profile> {
                             ElevatedButton(
                               onPressed: () {
                                 model.navigateBack();
-                                model.catalogImages!.remove(widget.images);
+                                model.catalogImages.remove(widget.images);
 
                                 model.notifyListeners();
                               },

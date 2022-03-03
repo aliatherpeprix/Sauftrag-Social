@@ -24,7 +24,6 @@ class ColorUtils{
   static Color messageChat = Color (0xFFFFEEF0);
   static Color goingColor = Color (0xFF3F38DD);
   static Color settingsProgress = Color (0xFFF8DA53);
-
   static Color startGradient = Color(0xFF00DCDC);
   static Color endGradient = Color(0xFF00ADEE);
   static Color searchFieldColor = Color(0xFFF7F7FC);

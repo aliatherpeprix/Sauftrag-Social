@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/services/listOfBars.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/extensions.dart';
@@ -22,6 +23,9 @@ class _ListOfBarState extends State<ListOfBar> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<MainViewModel>.reactive(
+      onModelReady: (model) {
+        model.getListOfbars();
+      },
 
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,

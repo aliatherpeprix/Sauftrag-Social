@@ -193,7 +193,7 @@ class _SwipeCardState extends State<SwipeCard> {
                                         onPressed: () {
                                           // widget.swipeLeft(0);
                                           // print(model.catalogImages[]);
-                                          model.catalogImages!.remove(widget.img);
+                                          model.catalogImages.remove(widget.img);
                                           if (model.catalogImages.isEmpty) {
                                             model.getDiscover(context);
                                           }

@@ -1,6 +1,9 @@
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/constants.dart';
@@ -272,7 +275,7 @@ class _SignUpState extends State<SignUp> {
                                 decoration: BoxDecoration(
                                     color: ColorUtils.white,
                                     borderRadius: BorderRadius.all(
-                                        Radius.circular(Dimensions.roundCorner)),
+                                        Radius.circular(Dimensions.roundCorner),),
                                     border:
                                     Border.all(color: ColorUtils.divider)),
                                 child: Row(
@@ -322,44 +325,107 @@ class _SignUpState extends State<SignUp> {
                           //Phone No.
                           Stack(
                             children: [
+                              // Container(
+                              //   height: 7.h,
+                              //   padding: EdgeInsets.symmetric(
+                              //       vertical: Dimensions.containerVerticalPadding,
+                              //       horizontal:
+                              //       Dimensions.containerHorizontalPadding),
+                              //   decoration: BoxDecoration(
+                              //       color: ColorUtils.white,
+                              //       borderRadius: BorderRadius.all(
+                              //           Radius.circular(Dimensions.roundCorner)),
+                              //       border:
+                              //       Border.all(color: ColorUtils.divider)),
+                              //   child: Row(
+                              //     children: [
+                              //       SvgPicture.asset(ImageUtils.phoneIcon),
+                              //       SizedBox(width: 4.w),
+                              //       Expanded(
+                              //         child: TextField(
+                              //           focusNode: model.signUpPhoneFocus,
+                              //           controller: model.signUpPhoneController,
+                              //           keyboardType: TextInputType.phone,maxLength: 11,
+                              //           obscureText: false,
+                              //           textInputAction: TextInputAction.next,
+                              //           style: TextStyle(
+                              //             color: ColorUtils.red_color,
+                              //             fontFamily: FontUtils.modernistRegular,
+                              //             fontSize: 1.9.t,
+                              //           ),
+                              //           decoration: const InputDecoration(
+                              //             border: InputBorder.none,
+                              //             isDense: true,
+                              //             counterText: "",
+                              //             contentPadding: EdgeInsets.symmetric(
+                              //                 horizontal: 0, vertical: 0),
+                              //           ),
+                              //         ),
+                              //       ),
+                              //     ],
+                              //   ),
+                              // ),
                               Container(
                                 height: 7.h,
                                 padding: EdgeInsets.symmetric(
-                                    vertical: Dimensions.containerVerticalPadding,
-                                    horizontal:
-                                    Dimensions.containerHorizontalPadding),
-                                decoration: BoxDecoration(
-                                    color: ColorUtils.white,
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(Dimensions.roundCorner)),
-                                    border:
-                                    Border.all(color: ColorUtils.divider)),
-                                child: Row(
-                                  children: [
-                                    SvgPicture.asset(ImageUtils.phoneIcon),
-                                    SizedBox(width: 4.w),
-                                    Expanded(
-                                      child: TextField(
-                                        focusNode: model.signUpPhoneFocus,
-                                        controller: model.signUpPhoneController,
-                                        keyboardType: TextInputType.phone,maxLength: 11,
-                                        obscureText: false,
-                                        textInputAction: TextInputAction.next,
-                                        style: TextStyle(
-                                          color: ColorUtils.red_color,
-                                          fontFamily: FontUtils.modernistRegular,
-                                          fontSize: 1.9.t,
-                                        ),
-                                        decoration: const InputDecoration(
-                                          border: InputBorder.none,
-                                          isDense: true,
-                                          counterText: "",
-                                          contentPadding: EdgeInsets.symmetric(
-                                              horizontal: 0, vertical: 0),
-                                        ),
-                                      ),
+                                        vertical: Dimensions.containerVerticalPadding,
+                                        horizontal:
+                                        Dimensions.containerHorizontalPadding),
+                                    decoration: BoxDecoration(
+                                        color: ColorUtils.white,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(Dimensions.roundCorner)),
+                                        border:
+                                        Border.all(color: ColorUtils.divider)),
+                                child: IntlPhoneField(
+                                  textAlignVertical: TextAlignVertical.center,
+                                  // countryCodeTextColor: ColorUtils.red_color,
+                                  // focusNode: model.signUpPhoneFocus,
+                                  // controller: model.signUpPhoneController,
+                                  autovalidateMode: AutovalidateMode.disabled,
+                                   dropdownIconPosition: IconPosition.trailing,
+                                  //dropDownIcon: Icon(Icons.),
+                                  //showDropdownIcon: false,
+                                  style: TextStyle(
+                                      fontFamily: FontUtils.modernistRegular,
+                                      fontSize: 1.9.t,
+                                      color: ColorUtils.red_color
+                                  ),
+                                  // autoValidate: false,
+                                  autofocus: false,
+                                  decoration: InputDecoration(
+                                    hintText: 'Enter Your Phone number',
+                                    hintStyle:
+                                    TextStyle(
+                                        color: ColorUtils.text_grey,
+                                        fontSize: 1.9.t,
+                                        fontFamily: FontUtils.modernistRegular
                                     ),
-                                  ],
+                                    suffixText: "",
+                                    isDense: true,
+                                    alignLabelWithHint: true,
+                                    counterText: "",
+                                    contentPadding: EdgeInsets.only(top: 0.h,left: 0.w,right: 0.w,bottom: 0.2.h),
+                                    focusedBorder: InputBorder.none,
+                                    labelStyle: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 0.0.t,
+                                    ),
+                                    //alignLabelWithHint: true,
+                                    //contentPadding: EdgeInsets.zero,
+                                    //labelText: 'Phone Number',
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide.none,
+                                    ),
+                                  ),
+                                  onTap: (){},
+                                  initialCountryCode: 'DE',
+                                  onChanged: (phone) {
+                                    //model.loginCountryCode = phone.countryCode ;
+                                    // model.loginPhoneController.text = phone.number!;
+                                     model.signUpPhoneController.text = phone.completeNumber;
+                                    model.notifyListeners();
+                                  },
                                 ),
                               ),
                               Container(
