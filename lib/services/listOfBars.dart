@@ -36,8 +36,8 @@ class Listofbars {
 
         // var faqs = (response.data);
         //List<FaqsModel> Faq = faqs[1]['question'];
-        List<BarModel> ListBars = (response.data as List).map((e) =>
-            BarModel.fromJson(e)).toList();
+        List<NewBarModel> ListBars = (response.data as List).map((e) =>
+            NewBarModel.fromJson(e)).toList();
         return ListBars;
       }
 

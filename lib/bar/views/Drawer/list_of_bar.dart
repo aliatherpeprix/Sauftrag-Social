@@ -103,7 +103,7 @@ class _ListOfBarState extends State<ListOfBar> {
                               children: [
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
-                                  child: Image.asset(model.ListOfBar[index]["image"],
+                                  child: Image.network(model.listOfBar[index].profile_picture!,
                                     width: 15.i,
                                     height: 15.i,
                                     fit: BoxFit.cover,
@@ -118,7 +118,7 @@ class _ListOfBarState extends State<ListOfBar> {
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
-                                        Text(model.ListOfBar[index]["title"],
+                                        Text(model.listOfBar[index].bar_name!,
                                           style: TextStyle(
                                               fontFamily: FontUtils.modernistBold,
                                               fontSize: 1.9.t,
@@ -126,7 +126,7 @@ class _ListOfBarState extends State<ListOfBar> {
                                           ),
                                         ),
                                         SizedBox(width: 1.w,),
-                                        Text(model.ListOfBar[index]["type"],
+                                        Text(model.ListOfBar[index]['type']!,
                                           style: TextStyle(
                                               fontFamily: FontUtils.modernistRegular,
                                               fontSize: 1.6.t,
@@ -140,7 +140,7 @@ class _ListOfBarState extends State<ListOfBar> {
                                         children: [
                                           SvgPicture.asset(model.ListOfBar[index]["locationIcon"],),
                                           SizedBox(width: 1.5.w,),
-                                          Text(model.ListOfBar[index]["address"],
+                                          Text(model.listOfBar[index].address!,
                                             style: TextStyle(
                                                 fontFamily: FontUtils.modernistRegular,
                                                 fontSize: 1.6.t,
@@ -151,8 +151,8 @@ class _ListOfBarState extends State<ListOfBar> {
                                       ),
                                       SizedBox(height: 0.8.h,),
                                       RatingBar.builder(
-                                        initialRating: 3,
-                                        minRating: 1,
+                                        // initialRating: 3,
+                                        // minRating: 1,
                                         direction: Axis.horizontal,
                                         allowHalfRating: true,
                                         itemCount: 5,
@@ -179,7 +179,7 @@ class _ListOfBarState extends State<ListOfBar> {
                     separatorBuilder: (context, index) {
                       return SizedBox(height:  SizeConfig.heightMultiplier * 2.5,);
                     },
-                    itemCount: model.ListOfBar.length,
+                    itemCount: model.listOfBar.length,
                   ),
                 ),
 

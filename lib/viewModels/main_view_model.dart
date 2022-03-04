@@ -200,6 +200,7 @@ class MainViewModel extends BaseViewModel {
   List<FavoritesModel> barQRcode = [];
   List drinksSelected = [];
   List<AddressBook> contactBook = [];
+  List<NewBarModel> listOfBar = [];
 
   //String? faqs;
 
@@ -1770,9 +1771,10 @@ class MainViewModel extends BaseViewModel {
     //   //isPrivacyPolicy = false;
     //
     // }
-    if (getListofbar is List<FaqsModel>) {
-      faqs = getListofbar;
-    } else {
+    if (getListofbar is List<NewBarModel>) {
+      listOfBar = getListofbar;
+      print(listOfBar);
+    }   else {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Some thing went wrong",
       ));

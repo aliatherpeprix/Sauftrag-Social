@@ -69,6 +69,7 @@ dependencies:
   geocoding: ^2.0.1
   tutorial_coach_mark: ^1.2.1
   intl_phone_field:
+  phone_number:
 
 
 dev_dependencies:

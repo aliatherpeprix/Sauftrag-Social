@@ -23,7 +23,7 @@ class _SplashState extends State<Splash> {
           top: false,
           bottom: false,
           child: Scaffold(
-            backgroundColor: ColorUtils.white,
+            backgroundColor: ColorUtils.black,
             body: Container(
               height: double.infinity,
               width: double.infinity,
@@ -35,7 +35,7 @@ class _SplashState extends State<Splash> {
                   Text(
                     "Sauftrag",
                     style: TextStyle(
-                      color: ColorUtils.black,
+                      color: ColorUtils.white,
                       fontFamily: FontUtils.modernistBold,
                       fontSize: 5.t,
                     ),
@@ -43,7 +43,7 @@ class _SplashState extends State<Splash> {
                   Text(
                     "Social",
                     style: TextStyle(
-                      color: ColorUtils.black,
+                      color: ColorUtils.white,
                       fontFamily: FontUtils.modernistMono,
                       fontSize: 3.t,
                     ),
