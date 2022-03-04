@@ -80,7 +80,9 @@ class _ListOfBarState extends State<ListOfBar> {
                         padding: EdgeInsets.symmetric(horizontal:SizeConfig.widthMultiplier * 4,),
                         child: GestureDetector(
                           onTap: (){
+                            model.selectedBar = model.listOfBar[index];
                             model.navigateToBarProfile();
+
                           },
                           child: Container(
                             padding: EdgeInsets.symmetric( horizontal: 2.5.w, vertical: 1.5.h),
@@ -151,7 +153,8 @@ class _ListOfBarState extends State<ListOfBar> {
                                       ),
                                       SizedBox(height: 0.8.h,),
                                       RatingBar.builder(
-                                        // initialRating: 3,
+                                        tapOnlyMode: false,
+                                        initialRating: model.listOfBar[index].total_ratings!.toDouble(),
                                         // minRating: 1,
                                         direction: Axis.horizontal,
                                         allowHalfRating: true,

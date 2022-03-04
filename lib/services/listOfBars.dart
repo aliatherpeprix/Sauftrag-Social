@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/bar_model.dart';
 import 'package:sauftrag/models/faqs_questions.dart';
+import 'package:sauftrag/models/listOfFollowing_Bars.dart';
 import 'package:sauftrag/models/new_bar_model.dart';
 import 'package:sauftrag/models/newsfeed_post_id.dart';
 import 'package:sauftrag/models/user_models.dart';
@@ -36,8 +37,8 @@ class Listofbars {
 
         // var faqs = (response.data);
         //List<FaqsModel> Faq = faqs[1]['question'];
-        List<NewBarModel> ListBars = (response.data as List).map((e) =>
-            NewBarModel.fromJson(e)).toList();
+        List<ListOfBarsModel> ListBars = (response.data as List).map((e) =>
+            ListOfBarsModel.fromJson(e)).toList();
         return ListBars;
       }
 

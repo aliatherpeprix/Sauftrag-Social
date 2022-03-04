@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:date_picker_timeline/extra/dimen.dart';
 import 'package:expand_tap_area/expand_tap_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/models/listOfFollowing_Bars.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/extensions.dart';
@@ -126,15 +128,14 @@ class _BarprofileState extends State<Barprofile> {
               backgroundColor: Colors.white,
               body: Column(children: [
                 Container(
-                  height: 45.h,
+                  height: 43.h,
                   child: SafeArea(
                     child: Stack(
                       children: [
                         Container(
                             width: 370.w,
                             height: 35.h,
-                            child: Image.asset(
-                              ImageUtils.BarProfileImage,
+                            child: Image.network(model.selectedBar!.catalogue_image1!,
                               fit: BoxFit.fill,
                             )),
                         Positioned(
@@ -149,20 +150,21 @@ class _BarprofileState extends State<Barprofile> {
                                         BorderRadius.all(Radius.circular(10))),
                                 child: BackArrowContainer())),
                         Positioned(
-                            top: 30.6.h,
+                            top: 30.h,
+                            left: 3.w,
                             child: Container(
                               width: 16.w,
                               height: 10.h,
-                              decoration: BoxDecoration(shape: BoxShape.circle),
-                              child: Image.asset(ImageUtils.barCircle),
-                            ))
+                              decoration: BoxDecoration(shape: BoxShape.circle, color: ColorUtils.white),
+                              child: Image.network(model.selectedBar!.profile_picture!,
+                            )))
                       ],
                     ),
                   ),
                 ),
                 Expanded(
                   child: SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
+                    //physics: BouncingScrollPhysics(),
                     child: Container(
                       padding: EdgeInsets.symmetric(
                           horizontal: Dimensions.horizontalPadding),
@@ -173,7 +175,7 @@ class _BarprofileState extends State<Barprofile> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                "John Milton's Bar",
+                                model.selectedBar!.bar_name!,
                                 style: TextStyle(
                                     fontFamily: FontUtils.modernistBold,
                                     fontSize: 2.5.t),
@@ -210,7 +212,7 @@ class _BarprofileState extends State<Barprofile> {
                               Column(
                                 children: [
                                   Text(
-                                    "198",
+                                    model.selectedBar!.total_followers!.toString(),
                                     style: TextStyle(
                                         fontSize: 2.5.t,
                                         color: ColorUtils.red_color,
@@ -231,34 +233,34 @@ class _BarprofileState extends State<Barprofile> {
                                   color: Colors.grey[400],
                                 ),
                               ),
+                              // Column(
+                              //   children: [
+                              //     Text(
+                              //       "50",
+                              //       style: TextStyle(
+                              //           fontSize: 2.5.t,
+                              //           color: ColorUtils.red_color,
+                              //           fontFamily: FontUtils.modernistBold),
+                              //     ),
+                              //     SizedBox(
+                              //       height: 1.5.h,
+                              //     ),
+                              //     Text(
+                              //       "Following",
+                              //       style: TextStyle(fontSize: 1.7.t),
+                              //     )
+                              //   ],
+                              // ),
+                              // SizedBox(
+                              //   height: 6.h,
+                              //   child: VerticalDivider(
+                              //     color: Colors.grey[300],
+                              //   ),
+                              // ),
                               Column(
                                 children: [
                                   Text(
-                                    "50",
-                                    style: TextStyle(
-                                        fontSize: 2.5.t,
-                                        color: ColorUtils.red_color,
-                                        fontFamily: FontUtils.modernistBold),
-                                  ),
-                                  SizedBox(
-                                    height: 1.5.h,
-                                  ),
-                                  Text(
-                                    "Following",
-                                    style: TextStyle(fontSize: 1.7.t),
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 6.h,
-                                child: VerticalDivider(
-                                  color: Colors.grey[300],
-                                ),
-                              ),
-                              Column(
-                                children: [
-                                  Text(
-                                    "291",
+                                    model.selectedBar!.total_posts!.toString(),
                                     style: TextStyle(
                                         fontSize: 2.5.t,
                                         color: ColorUtils.red_color,
@@ -313,126 +315,169 @@ class _BarprofileState extends State<Barprofile> {
                           ),
                           Container(
                             height: 32.h,
-                            padding: EdgeInsets.only(bottom: 5.h),
+                            //padding: EdgeInsets.only(bottom: 5.h),
                             child: TabBarView(children: [
                               ///----New Feed Tab----///
-                              Container(
-                                margin: EdgeInsets.only(top: 1.h),
-                                child: ListView.separated(
-                                  padding: EdgeInsets.zero,
-                                  // physics: NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: 4,
-                                  itemBuilder: (context, index) {
-                                    return Container(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 1.5.h, horizontal: 2.w),
-                                      //width: 6.h,
-                                      //height: 30.h,
-                                      decoration: BoxDecoration(
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: ColorUtils.black
-                                                .withOpacity(0.1),
-                                            spreadRadius: 0,
-                                            blurRadius: 10,
-                                            offset: Offset(0,
-                                                5), // changes position of shadow
-                                          ),
-                                        ],
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(18)),
-                                        //border: Border.all(color: ColorUtils.red_color),
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  Image.asset(
-                                                    people[index]['image'],
-                                                    height: 10.i,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 4.w,
-                                                  ),
-                                                  Text(
-                                                    people[index]["name"],
-                                                    style: TextStyle(
-                                                        fontFamily: FontUtils
-                                                            .modernistBold),
-                                                  ),
-                                                ],
-                                              ),
-                                              IconButton(
-                                                  onPressed: () {},
-                                                  icon: Icon(
-                                                    Icons.more_vert_rounded,
-                                                    color: Colors.grey[500],
+                              Expanded(
+                                child: Container(
+                                  margin: EdgeInsets.only(top: 1.h),
+                                  child: ListView.separated(
+                                    padding: EdgeInsets.zero,
+                                    // physics: NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: model.selectedBar!.posts!.length,
+                                    itemBuilder: (context, index) {
+                                      return Container(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 1.5.h,
+                                            horizontal: 2.w),
+                                        //width: 6.h,
+                                        //height: 30.h,
+                                        decoration: BoxDecoration(
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: ColorUtils.black
+                                                  .withOpacity(0.1),
+                                              spreadRadius: 0,
+                                              blurRadius: 10,
+                                              offset: Offset(0,
+                                                  5), // changes position of shadow
+                                            ),
+                                          ],
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(18)),
+                                          //border: Border.all(color: ColorUtils.red_color),
+                                        ),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Image.network(
+                                                      model.selectedBar!.posts![index].user_id!.profile_picture!,
+                                                      height: 10.i,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 4.w,
+                                                    ),
+                                                    Column(
+                                                      mainAxisAlignment: MainAxisAlignment.start,
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Text(
+                                                          model.selectedBar!.posts![index].user_id!.bar_name!,
+                                                          style: TextStyle(
+                                                              fontFamily: FontUtils
+                                                                  .modernistBold),
+                                                        ),
+                                                        SizedBox(height: 0.5.h,),
+                                                        Container(
+                                                          width: 50.w,
+                                                          child: Text(
+                                                            model.selectedBar!.posts![index].user_id!.address!,
+                                                            style: TextStyle(
+                                                                fontSize: 1.5.t,
+                                                                fontFamily: FontUtils
+                                                                    .modernistRegular),
+                                                            maxLines: 1,
+                                                            overflow: TextOverflow.ellipsis ,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
+                                                IconButton(
+                                                    onPressed: () {},
+                                                    icon: Icon(
+                                                      Icons.more_vert_rounded,
+                                                      color: Colors.grey[500],
+                                                    )),
+                                              ],
+                                            ),
+                                            SizedBox(height: 1.h),
+                                            Text(
+                                              model.selectedBar!.posts![index].post_content!,
+                                              style: TextStyle(
+                                                  fontFamily:
+                                                      FontUtils.modernistRegular,
+                                                  fontSize: 1.7.t),
+                                            ),
+                                            SizedBox(
+                                              height: 1.h,
+                                            ),
+                                            if (model.selectedBar!.posts![index]
+                                                .media !=
+                                                null &&
+                                                model.selectedBar!.posts![index].media!
+                                                    .length >
+                                                    0)
+                                              Container(
+                                                  child:
+                                                  CachedNetworkImage(
+                                                    imageUrl: model.selectedBar!
+                                                        .posts![index]
+                                                        .media![0]
+                                                        .media!,
+                                                    //width: 100.i,
+                                                    height: 40.i,
+                                                    fit: BoxFit.cover,
                                                   )),
-                                            ],
-                                          ),
-                                          SizedBox(height: 1.h),
-                                          Text(
-                                            people[index]['detail'],
-                                            style: TextStyle(
-                                                fontFamily:
-                                                    FontUtils.modernistRegular,
-                                                fontSize: 1.7.t),
-                                          ),
-                                          Divider(
-                                            height: 2.5.h,
-                                          ),
-                                          Row(
-                                            children: [
-                                              Image.asset(
-                                                ImageUtils.comment,
-                                                scale: 5,
-                                              ),
-                                              SizedBox(
-                                                width: 2.w,
-                                              ),
-                                              Text(
-                                                "68",
-                                                style: TextStyle(
-                                                    color: Colors.grey[400],
-                                                    fontFamily: FontUtils
-                                                        .modernistRegular),
-                                              ),
-                                              SizedBox(
-                                                width: 8.w,
-                                              ),
-                                              Image.asset(
-                                                ImageUtils.like,
-                                                scale: 5,
-                                              ),
-                                              SizedBox(
-                                                width: 2.w,
-                                              ),
-                                              Text(
-                                                "53.5 k",
-                                                style: TextStyle(
-                                                    color: Colors.grey[400],
-                                                    fontFamily: FontUtils
-                                                        .modernistRegular),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                  separatorBuilder: (context, index) {
-                                    return SizedBox(
-                                      height: SizeConfig.heightMultiplier * 1.5,
-                                    );
-                                  },
+                                            Divider(
+                                              height: 2.5.h,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Image.asset(
+                                                  ImageUtils.comment,
+                                                  scale: 5,
+                                                ),
+                                                SizedBox(
+                                                  width: 2.w,
+                                                ),
+                                                Text(
+                                                  "68",
+                                                  style: TextStyle(
+                                                      color: Colors.grey[400],
+                                                      fontFamily: FontUtils
+                                                          .modernistRegular),
+                                                ),
+                                                SizedBox(
+                                                  width: 8.w,
+                                                ),
+                                                Image.asset(
+                                                  ImageUtils.like,
+                                                  scale: 5,
+                                                ),
+                                                SizedBox(
+                                                  width: 2.w,
+                                                ),
+                                                Text(
+                                                  "53.5 k",
+                                                  style: TextStyle(
+                                                      color: Colors.grey[400],
+                                                      fontFamily: FontUtils
+                                                          .modernistRegular),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                    separatorBuilder: (context, index) {
+                                      return SizedBox(
+                                        height: SizeConfig.heightMultiplier * 1.5,
+                                      );
+                                    },
+                                  ),
                                 ),
                               ),
 
@@ -797,6 +842,8 @@ class _BarprofileState extends State<Barprofile> {
                                   physics: BouncingScrollPhysics(),
                                   shrinkWrap: true,
                                   itemBuilder: (context, index) {
+                                    dynamic time = model.selectedBar!.events![index].startTime;
+                                    time = time.toString().split(':00');
                                     return Container(
                                       decoration: BoxDecoration(
                                         boxShadow: [
@@ -828,8 +875,8 @@ class _BarprofileState extends State<Barprofile> {
                                                 ClipRRect(
                                                   borderRadius:
                                                       BorderRadius.circular(10),
-                                                  child: Image.asset(
-                                                    places[index]["image"],
+                                                  child: Image.network(
+                                                    model.selectedBar!.events![index].media?[0].media,
                                                     width: 20.i,
                                                     height: 20.i,
                                                     fit: BoxFit.cover,
@@ -843,7 +890,7 @@ class _BarprofileState extends State<Barprofile> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      places[index]["date"],
+                                                      model.selectedBar!.events![index].eventDate +' , '+time[0],
                                                       style: TextStyle(
                                                           fontFamily: FontUtils
                                                               .modernistRegular,
@@ -855,8 +902,7 @@ class _BarprofileState extends State<Barprofile> {
                                                       height: 1.h,
                                                     ),
                                                     Text(
-                                                      places[index]
-                                                          ["eventName"],
+                                                      model.selectedBar!.events![index].name,
                                                       style: TextStyle(
                                                           fontFamily: FontUtils
                                                               .modernistBold,
@@ -876,8 +922,7 @@ class _BarprofileState extends State<Barprofile> {
                                                           width: 2.w,
                                                         ),
                                                         Text(
-                                                          places[index]
-                                                              ["location"],
+                                                          model.selectedBar!.events![index].location,
                                                           style: TextStyle(
                                                               fontFamily: FontUtils
                                                                   .modernistRegular,
@@ -901,7 +946,7 @@ class _BarprofileState extends State<Barprofile> {
                                       height: SizeConfig.heightMultiplier * 2,
                                     );
                                   },
-                                  itemCount: places.length,
+                                  itemCount: model.selectedBar!.events!.length,
                                 ),
                               ),
                             ]),

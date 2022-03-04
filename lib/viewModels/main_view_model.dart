@@ -12,6 +12,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:sauftrag/models/listOfFollowing_Bars.dart';
 import 'package:sauftrag/models/request_match_model.dart';
 import 'package:sauftrag/models/user_matched.dart';
 import 'package:sauftrag/models/user_models.dart' as userModel;
@@ -200,7 +201,9 @@ class MainViewModel extends BaseViewModel {
   List<FavoritesModel> barQRcode = [];
   List drinksSelected = [];
   List<AddressBook> contactBook = [];
-  List<NewBarModel> listOfBar = [];
+  List<ListOfBarsModel> listOfBar = [];
+
+  ListOfBarsModel? selectedBar;
 
   //String? faqs;
 
@@ -1771,7 +1774,7 @@ class MainViewModel extends BaseViewModel {
     //   //isPrivacyPolicy = false;
     //
     // }
-    if (getListofbar is List<NewBarModel>) {
+    if (getListofbar is List<ListOfBarsModel>) {
       listOfBar = getListofbar;
       print(listOfBar);
     }   else {

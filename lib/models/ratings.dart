@@ -4,6 +4,7 @@ import 'package:sauftrag/models/rating_data.dart';
 part 'ratings.g.dart';
 
 @JsonSerializable()
+
 class Ratings {
   Ratings();
   double? total_rating;
