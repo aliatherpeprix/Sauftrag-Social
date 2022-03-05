@@ -228,7 +228,7 @@ class _MySideMenuState extends State<MySideMenu> {
                       SvgPicture.asset(ImageUtils.followersIcon),
                       SizedBox(width: 2.w),
                       Text(
-                        "Followers",
+                        "All Bars",
                         style: TextStyle(
                           color: ColorUtils.white,
                           fontFamily: FontUtils.modernistBold,
@@ -254,7 +254,7 @@ class _MySideMenuState extends State<MySideMenu> {
                       SvgPicture.asset(ImageUtils.barsIcon),
                       SizedBox(width: 2.w),
                       Text(
-                        "Bars",
+                        "Followed Bars",
                         style: TextStyle(
                           color: ColorUtils.white,
                           fontFamily: FontUtils.modernistBold,

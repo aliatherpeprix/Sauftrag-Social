@@ -64,9 +64,7 @@ class SignupBar {
         'weekend_closing_time': weekendClosingTime,
         'weekend_break_opening_time': weekendBreakOpeningTime,
         'weekend_break_closing_time': weekendBreakClosingTime,
-        if (barLogo.path.isNotEmpty)
-          'profile_picture': await MultipartFile.fromFile
-            (barLogo.path, filename: path.basename(barLogo.path)),
+        if (barLogo.path.isNotEmpty)'profile_picture': await MultipartFile.fromFile(barLogo.path, filename: path.basename(barLogo.path)),
         if (catalogueImage1.path.isNotEmpty)'catalogue_image1': await MultipartFile.fromFile(catalogueImage1.path, filename: path.basename(catalogueImage1.path)),
         if (catalogueImage2.path.isNotEmpty)'catalogue_image2': await MultipartFile.fromFile(catalogueImage2.path, filename: path.basename(catalogueImage2.path)),
         if (catalogueImage3.path.isNotEmpty)'catalogue_image3': await MultipartFile.fromFile(catalogueImage3.path, filename: path.basename(catalogueImage3.path)),

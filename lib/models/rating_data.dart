@@ -5,7 +5,9 @@ part 'rating_data.g.dart';
 
 @JsonSerializable()
 class RatingData {
+
   RatingData();
+
   int? id;
   RatingDataUser? user;
   double? rate;

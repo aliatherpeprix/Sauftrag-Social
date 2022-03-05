@@ -1,25 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/models/listOfFollowing_Bars.dart';
 import 'package:sauftrag/services/listOfBars.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
+import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:stacked/stacked.dart';
 
-class ListOfBar extends StatefulWidget {
-  const ListOfBar({Key? key}) : super(key: key);
+class ListOfAllBars extends StatefulWidget {
+  const ListOfAllBars({Key? key}) : super(key: key);
 
   @override
-  _ListOfBarState createState() => _ListOfBarState();
+  _ListOfAllBarsState createState() => _ListOfAllBarsState();
 }
 
-class _ListOfBarState extends State<ListOfBar> {
+class _ListOfAllBarsState extends State<ListOfAllBars> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<MainViewModel>.reactive(
@@ -80,7 +83,8 @@ class _ListOfBarState extends State<ListOfBar> {
                         padding: EdgeInsets.symmetric(horizontal:SizeConfig.widthMultiplier * 4,),
                         child: GestureDetector(
                           onTap: (){
-                            model.selectedBar = model.listOfBar[index];
+                            model.barId = model.listOfBar[index].id;
+                            model.selectedBar = (model.listOfBar[index]);
                             model.navigateToBarProfile();
 
                           },
@@ -116,37 +120,45 @@ class _ListOfBarState extends State<ListOfBar> {
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Text(model.listOfBar[index].bar_name!,
-                                          style: TextStyle(
-                                              fontFamily: FontUtils.modernistBold,
-                                              fontSize: 1.9.t,
-                                              color: ColorUtils.black
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          Text(model.listOfBar[index].bar_name!,
+                                            style: TextStyle(
+                                                fontFamily: FontUtils.modernistBold,
+                                                fontSize: 1.9.t,
+                                                color: ColorUtils.black
+                                            ),
                                           ),
-                                        ),
-                                        SizedBox(width: 1.w,),
-                                        Text(model.ListOfBar[index]['type']!,
-                                          style: TextStyle(
-                                              fontFamily: FontUtils.modernistRegular,
-                                              fontSize: 1.6.t,
-                                              color: ColorUtils.red_color
-                                          ),
-                                        )
-                                      ],
-                                    ),
+                                          SizedBox(width: 1.w,),
+                                          // Text(model.ListOfBar[index]['type']!,
+                                          //   style: TextStyle(
+                                          //       fontFamily: FontUtils.modernistRegular,
+                                          //       fontSize: 1.6.t,
+                                          //       color: ColorUtils.red_color
+                                          //   ),
+                                          // )
+                                        ],
+                                      ),
                                       SizedBox(height: 0.8.h,),
                                       Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          SvgPicture.asset(model.ListOfBar[index]["locationIcon"],),
+                                          SvgPicture.asset(ImageUtils.locationPin),
                                           SizedBox(width: 1.5.w,),
-                                          Text(model.listOfBar[index].address!,
-                                            style: TextStyle(
+                                          Container(
+                                            width: 50.w,
+                                            child: Text(model.listOfBar[index].address!,
+                                              style: TextStyle(
                                                 fontFamily: FontUtils.modernistRegular,
                                                 fontSize: 1.6.t,
-                                                color: ColorUtils.text_grey
+                                                color: ColorUtils.text_grey,
+                                              ),
+
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
                                             ),
                                           ),
                                         ],
@@ -154,7 +166,7 @@ class _ListOfBarState extends State<ListOfBar> {
                                       SizedBox(height: 0.8.h,),
                                       RatingBar.builder(
                                         tapOnlyMode: false,
-                                        initialRating: model.listOfBar[index].total_ratings!.toDouble(),
+                                        initialRating: model.listOfBar[index].total_ratings ?? 0.0,
                                         // minRating: 1,
                                         direction: Axis.horizontal,
                                         allowHalfRating: true,

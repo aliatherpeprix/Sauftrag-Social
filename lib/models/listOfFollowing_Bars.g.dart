@@ -34,11 +34,13 @@ ListOfBarsModel _$ListOfBarsModelFromJson(Map<String, dynamic> json) =>
       ..data_protection = json['data_protection'] as bool?
       ..password = json['password'] as String?
       ..password2 = json['password2'] as String?
-      ..total_ratings = json['total_ratings'] as int?
+      ..total_ratings = (json['total_ratings'] as num?)?.toDouble()
       ..total_followers = json['total_followers'] as int?
       ..total_posts = json['total_posts'] as int?
       ..total_events = json['total_events'] as int?
-      ..ratings = json['ratings'] as List<dynamic>?
+      ..ratings = (json['ratings'] as List<dynamic>?)
+          ?.map((e) => RatingData.fromJson(e as Map<String, dynamic>))
+          .toList()
       ..posts = (json['posts'] as List<dynamic>?)
           ?.map((e) => NewsfeedPostId.fromJson(e as Map<String, dynamic>))
           .toList()

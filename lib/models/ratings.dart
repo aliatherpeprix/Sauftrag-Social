@@ -6,6 +6,7 @@ part 'ratings.g.dart';
 @JsonSerializable()
 
 class Ratings {
+
   Ratings();
   double? total_rating;
   List<RatingData>? data;

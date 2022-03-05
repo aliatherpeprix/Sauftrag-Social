@@ -41,12 +41,14 @@ import 'package:sauftrag/models/ratings.dart';
 import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/services/addFavorites.dart';
 import 'package:sauftrag/services/addressBook.dart';
+import 'package:sauftrag/services/allBars.dart';
 import 'package:sauftrag/services/barQRcode.dart';
 import 'package:sauftrag/services/bar_order.dart';
 import 'package:sauftrag/services/createPost.dart';
 import 'package:sauftrag/services/dataProtection.dart';
 import 'package:sauftrag/services/drinksOrder.dart';
 import 'package:sauftrag/services/faqs.dart';
+import 'package:sauftrag/services/followBar.dart';
 import 'package:sauftrag/services/get_match_users.dart';
 import 'package:sauftrag/services/listOfBars.dart';
 
@@ -84,6 +86,8 @@ class MainViewModel extends BaseViewModel {
   var barQRCode = BarQrcode();
   var updateLocation = Updatelocation();
   var listOfBars = Listofbars();
+  var followbar = Followbar();
+  var getAllBar = AllBarUsers();
 
   Barcode? result;
 
@@ -115,6 +119,7 @@ class MainViewModel extends BaseViewModel {
   File? profileFileImage;
   bool emojiShowing = false;
   bool emojiSelected = false;
+  bool signInBar = false;
   final chatController = TextEditingController();
   bool groupScreenEmojiShowing = false;
   bool groupScreenEmojiSelected = false;
@@ -205,6 +210,8 @@ class MainViewModel extends BaseViewModel {
 
   ListOfBarsModel? selectedBar;
 
+
+  List<ListOfBarsModel> listOfAllBars = [];
   //String? faqs;
 
   List contactChecked = [];
@@ -914,28 +921,28 @@ class MainViewModel extends BaseViewModel {
 
   List<FollowersList> follower = [];
 
-  followers() async {
-    NewBarModel? user = await locator<PrefrencesViewModel>().getBarUser();
-    var response = await dio.get(Constants.BaseUrlPro + Constants.followersList,
-        options:
-            Options(contentType: Headers.formUrlEncodedContentType, headers: {
-          'Authorization': 'Token ${user!.token!}',
-        }));
-    // http.get(
-    //     Uri.http(Constants.BaseUrlPro, Constants.followersList),
-    //     headers: {'authorization': 'Token ${user!.token!}'});
-    print(response.data);
-    // var jsonData = jsonDecode(response.data);
-    follower =
-        (response.data as List).map((e) => FollowersList.fromJson(e)).toList();
-    notifyListeners();
-  }
+  // followers() async {
+  //   NewBarModel? user = await locator<PrefrencesViewModel>().getBarUser();
+  //   var response = await dio.get(Constants.BaseUrlPro + Constants.followersList,
+  //       options:
+  //           Options(contentType: Headers.formUrlEncodedContentType, headers: {
+  //         'Authorization': 'Token ${user!.token!}',
+  //       }));
+  //   // http.get(
+  //   //     Uri.http(Constants.BaseUrlPro, Constants.followersList),
+  //   //     headers: {'authorization': 'Token ${user!.token!}'});
+  //   print(response.data);
+  //   // var jsonData = jsonDecode(response.data);
+  //   follower =
+  //       (response.data as List).map((e) => FollowersList.fromJson(e)).toList();
+  //   notifyListeners();
+  // }
 
   Ratings? ratingKaData;
   RatingData? forTime;
 
   rating() async {
-    NewBarModel? user = await locator<PrefrencesViewModel>().getBarUser();
+    UserModel? user = await locator<PrefrencesViewModel>().getUser();
 
     var response = await dio.get(Constants.BaseUrlPro + Constants.rating,
         options: Options(
@@ -944,7 +951,7 @@ class MainViewModel extends BaseViewModel {
         // Options(headers: {'Authorization': 'Token ${user!.token!}'})
         );
     print(response);
-    ratingKaData = Ratings.fromJson(response.data);
+    forTime = RatingData.fromJson(response.data);
     getTime();
   }
 
@@ -978,7 +985,7 @@ class MainViewModel extends BaseViewModel {
   String? timeZone;
 
   getTime() {
-    var checking = ratingKaData!.data![0].created_at.toString();
+    var checking = ratingKaData!.data![0].toString();
     var dateTime =
         DateFormat("yyyy-MM-dd").parse(checking.replaceAll('T', ' '), true);
     var dateLocal = dateTime.toLocal();
@@ -1080,14 +1087,14 @@ class MainViewModel extends BaseViewModel {
   }
 
   double? rate;
-  var barId = "";
+  var barId;
 
   giveRatingToBar() async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
-    var data = {'rate': rate, 'comments': barGiveRating.text, 'bar': 78};
+    var data = {'rate': rate, 'comments': barGiveRating.text, 'bar': barId};
     var encodedData = jsonEncode(data);
     var response = await http.post(
-        Uri.http(Constants.BaseUrlPro, '/api/rating/add/'),
+        Uri.http(Constants.BaseUrl, '/api/rating/add/'),
         body: encodedData,
         headers: {
           'content-type': 'application/json',
@@ -1539,7 +1546,7 @@ class MainViewModel extends BaseViewModel {
 
 
         updateSignUpPhoneController.text,
-            updateLocations.text
+        updateLocations.text
 
     );
     if (updateAccountDetailResponse is UserModel) {
@@ -1550,6 +1557,7 @@ class MainViewModel extends BaseViewModel {
       notifyListeners();
     }
     editProfile = false;
+    navigateBack();
     notifyListeners();
   }
 
@@ -1789,6 +1797,60 @@ class MainViewModel extends BaseViewModel {
     notifyListeners();
     print(getFaqsList);
   }
+
+  getListOfAllBars() async {
+    isFaqs = true;
+
+    var getListofAllBar = await getAllBar.GetAllBarUsers();
+    print(getListofAllBar);
+    // if (getFaqList is String){
+    //   faqs = getFaqList;
+    //   //isPrivacyPolicy = false;
+    //
+    // }ListOfBarsModel
+    if (getListofAllBar is List<ListOfBarsModel>) {
+      listOfAllBars = getListofAllBar;
+      print(listOfAllBars);
+    }   else {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Some thing went wrong",
+      ));
+      //isPrivacyPolicy = false;
+
+      return;
+    }
+    isFaqs = false;
+    notifyListeners();
+    print(getFaqsList);
+  }
+
+  // postBarFollow() async {
+  //   isFaqs = true;
+  //
+  //   var getListofbar = await followbar.FollowBar(
+  //
+  //   );
+  //   print(getListofbar);
+  //   // if (getFaqList is String){
+  //   //   faqs = getFaqList;
+  //   //   //isPrivacyPolicy = false;
+  //   //
+  //   // }
+  //   if (getListofbar is List<ListOfBarsModel>) {
+  //     listOfBar = getListofbar;
+  //     print(listOfBar);
+  //   }   else {
+  //     DialogUtils().showDialog(MyErrorWidget(
+  //       error: "Some thing went wrong",
+  //     ));
+  //     //isPrivacyPolicy = false;
+  //
+  //     return;
+  //   }
+  //   isFaqs = false;
+  //   notifyListeners();
+  //   print(getFaqsList);
+  // }
 
   bool eventLoader = false;
 

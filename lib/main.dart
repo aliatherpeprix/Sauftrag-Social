@@ -16,7 +16,7 @@ import 'bar/views/Drawer/bar_Rating.dart';
 import 'bar/views/Drawer/bar_all_rating.dart';
 import 'bar/views/Drawer/follower_profile.dart';
 import 'bar/views/Drawer/followers.dart';
-import 'bar/views/Drawer/list_of_bar.dart';
+import 'bar/views/Drawer/list_of_followBar.dart';
 import 'bar/views/Drawer/matched_screen.dart';
 import 'bar/views/Drawer/notifications.dart';
 import 'bar/views/Drawer/qr_code_scanner.dart';

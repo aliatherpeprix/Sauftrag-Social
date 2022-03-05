@@ -11,7 +11,7 @@ import 'package:sauftrag/bar/views/Drawer/bar_Rating.dart';
 import 'package:sauftrag/bar/views/Drawer/bar_all_rating.dart';
 import 'package:sauftrag/bar/views/Drawer/follower_profile.dart';
 import 'package:sauftrag/bar/views/Drawer/followers.dart';
-import 'package:sauftrag/bar/views/Drawer/list_of_bar.dart';
+import 'package:sauftrag/bar/views/Drawer/list_of_followBar.dart';
 import 'package:sauftrag/bar/views/Drawer/matched_screen.dart';
 import 'package:sauftrag/bar/views/Drawer/notifications.dart';
 import 'package:sauftrag/bar/views/Drawer/qr_code_scanner.dart';

@@ -4,6 +4,7 @@ part 'rating_data_user.g.dart';
 
 @JsonSerializable()
 class RatingDataUser {
+
   RatingDataUser();
   int? id;
   String? username;

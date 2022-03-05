@@ -17,6 +17,7 @@ import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:sauftrag/views/Home/main_view.dart';
+import 'package:sauftrag/widgets/loader.dart';
 import 'package:stacked/stacked.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
@@ -101,92 +102,89 @@ class _AccountState extends State<Account> {
                                   fontSize: 2.t,
                                   fontFamily: FontUtils.modernistBold),
                             ),
-                            GestureDetector(
-                              onTap: (){
-                                model.editBool = false;
-                                model.updateSignUpPhoneController.clear();
-                                model.notifyListeners();
-                              },
-                              child: Text(
-                                "Edit",
-                                style: TextStyle(
-                                    color: ColorUtils.red_color,
-                                    fontFamily: FontUtils.modernistRegular,
-                                    fontSize: 1.8.t,
-                                    decoration: TextDecoration.underline
-                                ),
-                              ),
-                            ),
+                            // GestureDetector(
+                            //   onTap: (){
+                            //     model.editBool = false;
+                            //     model.updateSignUpPhoneController.clear();
+                            //     model.notifyListeners();
+                            //   },
+                            //   child: Text(
+                            //     "Edit",
+                            //     style: TextStyle(
+                            //         color: ColorUtils.red_color,
+                            //         fontFamily: FontUtils.modernistRegular,
+                            //         fontSize: 1.8.t,
+                            //         decoration: TextDecoration.underline
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         ),
                         SizedBox(
                           height: 2.h,
                         ),
 
-                        IgnorePointer(
-                          ignoring: model.editBool == true ? true : false,
-                          child: Container(
-                            height: 7.h,
-                            padding: EdgeInsets.symmetric(
-                                vertical: Dimensions.containerVerticalPadding,
-                                horizontal:
-                                Dimensions.containerHorizontalPadding),
-                            decoration: BoxDecoration(
-                                color: ColorUtils.white,
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(Dimensions.roundCorner)),
-                                border:
-                                Border.all(color: ColorUtils.divider)),
-                            child: IntlPhoneField(
-                              textAlignVertical: TextAlignVertical.center,
-                              // countryCodeTextColor: ColorUtils.red_color,
-                              // focusNode: model.signUpPhoneFocus,
-                              controller: model.updateSignUpPhoneController,
-                              autovalidateMode: AutovalidateMode.disabled,
-                              dropdownIconPosition: IconPosition.trailing,
-                              //dropDownIcon: Icon(Icons.),
-                              //showDropdownIcon: false,
-                              style: TextStyle(
-                                  fontFamily: FontUtils.modernistRegular,
-                                  fontSize: 1.9.t,
-                                  color: ColorUtils.red_color
-                              ),
-                              // autoValidate: false,
-                              autofocus: false,
-                              decoration: InputDecoration(
-                                hintText: 'Enter Your Phone number',
-                                hintStyle:
-                                TextStyle(
-                                    color: ColorUtils.text_grey,
-                                    fontSize: 1.9.t,
-                                    fontFamily: FontUtils.modernistRegular
-                                ),
-                                suffixText: "",
-                                isDense: true,
-                                alignLabelWithHint: true,
-                                counterText: "",
-                                contentPadding: EdgeInsets.only(top: 0.h,left: 0.w,right: 0.w,bottom: 0.2.h),
-                                focusedBorder: InputBorder.none,
-                                labelStyle: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 0.0.t,
-                                ),
-                                //alignLabelWithHint: true,
-                                //contentPadding: EdgeInsets.zero,
-                                //labelText: 'Phone Number',
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                ),
-                              ),
-                              onTap: (){},
-                              initialCountryCode: 'DE',
-                              onChanged: (phone) {
-                                //model.loginCountryCode = phone.countryCode ;
-                                // model.loginPhoneController.text = phone.number!;
-                                //model.updateSignUpPhoneController.text = phone.completeNumber;
-                                model.notifyListeners();
-                              },
+                        Container(
+                          height: 7.h,
+                          padding: EdgeInsets.symmetric(
+                              vertical: Dimensions.containerVerticalPadding,
+                              horizontal:
+                              Dimensions.containerHorizontalPadding),
+                          decoration: BoxDecoration(
+                              color: ColorUtils.white,
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(Dimensions.roundCorner)),
+                              border:
+                              Border.all(color: ColorUtils.divider)),
+                          child: IntlPhoneField(
+                            textAlignVertical: TextAlignVertical.center,
+                            // countryCodeTextColor: ColorUtils.red_color,
+                            // focusNode: model.signUpPhoneFocus,
+                            controller: model.updateSignUpPhoneController,
+                            autovalidateMode: AutovalidateMode.disabled,
+                            dropdownIconPosition: IconPosition.trailing,
+                            //dropDownIcon: Icon(Icons.),
+                            //showDropdownIcon: false,
+                            style: TextStyle(
+                                fontFamily: FontUtils.modernistRegular,
+                                fontSize: 1.9.t,
+                                color: ColorUtils.red_color
                             ),
+                            // autoValidate: false,
+                            autofocus: false,
+                            decoration: InputDecoration(
+                              hintText: 'Enter Your Phone number',
+                              hintStyle:
+                              TextStyle(
+                                  color: ColorUtils.text_grey,
+                                  fontSize: 1.9.t,
+                                  fontFamily: FontUtils.modernistRegular
+                              ),
+                              suffixText: "",
+                              isDense: true,
+                              alignLabelWithHint: true,
+                              counterText: "",
+                              contentPadding: EdgeInsets.only(top: 0.h,left: 0.w,right: 0.w,bottom: 0.2.h),
+                              focusedBorder: InputBorder.none,
+                              labelStyle: TextStyle(
+                                color: Colors.white,
+                                fontSize: 0.0.t,
+                              ),
+                              //alignLabelWithHint: true,
+                              //contentPadding: EdgeInsets.zero,
+                              //labelText: 'Phone Number',
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                            onTap: (){},
+                            initialCountryCode: 'DE',
+                            onChanged: (phone) {
+                              //model.loginCountryCode = phone.countryCode ;
+                              // model.loginPhoneController.text = phone.number!;
+                              //model.updateSignUpPhoneController.text = phone.completeNumber;
+                              model.notifyListeners();
+                            },
                           ),
                         ),
                         SizedBox(
@@ -393,9 +391,9 @@ class _AccountState extends State<Account> {
                           child: ElevatedButton(
                             onPressed: () {
                               model.updateAccountDetials();
-                              model.navigateBack();
+                              //model.navigateBack();
                             },
-                            child: const Text("Save"),
+                            child:  model.editProfile == false ? Text("Save") :  Loader(),
                             style: ElevatedButton.styleFrom(
                               primary: ColorUtils.text_red,
                               onPrimary: ColorUtils.white,

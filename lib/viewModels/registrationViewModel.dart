@@ -367,11 +367,12 @@ class RegistrationViewModel extends BaseViewModel {
   List<int> selectedBarKind = [];
 
   List<String> barKindList = [
-    "Disco",
-    "Cocktail",
-    "Pub",
+    "Beer Hall",
     "Hotel Bar",
-    "Beer Hall"
+    "Pub",
+    "Cocktail",
+    "Disco",
+
   ];
 
   List<dynamic> clubList = [];
@@ -1717,6 +1718,7 @@ class RegistrationViewModel extends BaseViewModel {
       signInBar = true;
       notifyListeners();
       var barKindList = CommonFunctions.AddFromList(selectedBarKind);
+      //var barKindList = CommonFunctions();
       var workingDaysList = selectedWeekDays;
       var weekendDaysList = selectedWeekendDays;
       var response = await signupBar.SignUpBar(

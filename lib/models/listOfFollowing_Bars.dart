@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:sauftrag/models/rating_data.dart';
 import 'package:sauftrag/models/week_days.dart';
 import 'package:sauftrag/models/weekend_days.dart';
 
@@ -44,11 +45,11 @@ class ListOfBarsModel {
   bool? data_protection;
   String? password;
   String? password2;
-  int? total_ratings;
+  double? total_ratings;
   int? total_followers;
   int? total_posts;
   int? total_events;
-  List? ratings;
+  List<RatingData>? ratings;
   List<NewsfeedPostId>? posts;
   List<BarEventModel>? events;
 

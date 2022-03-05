@@ -1,37 +1,35 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sauftrag/app/locator.dart';
-import 'package:sauftrag/bar/views/Drawer/follower_profile.dart';
-import 'package:sauftrag/models/bar_model.dart';
+import 'package:sauftrag/models/listOfFollowing_Bars.dart';
+import 'package:sauftrag/services/listOfBars.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
-import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:stacked/stacked.dart';
 
-class Followers extends StatefulWidget {
-  const Followers({Key? key}) : super(key: key);
+class ListOfBar extends StatefulWidget {
+  const ListOfBar({Key? key}) : super(key: key);
 
   @override
-  _FollowersState createState() => _FollowersState();
+  _ListOfBarState createState() => _ListOfBarState();
 }
 
-class _FollowersState extends State<Followers> {
+class _ListOfBarState extends State<ListOfBar> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<MainViewModel>.reactive(
-      viewModelBuilder: () => locator<MainViewModel>(),
       onModelReady: (model) {
-        //model.followers();
-        model.barModel;
-        model.getListOfAllBars();
+        model.getListOfbars();
       },
+
+      viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
       builder: (context, model, child) {
         return SafeArea(
@@ -62,7 +60,7 @@ class _FollowersState extends State<Followers> {
                           )),
                       SizedBox(width: 2.w),
                       Text(
-                        "All Bars",
+                        "Bars",
                         style: TextStyle(
                           color: ColorUtils.black,
                           fontFamily: FontUtils.modernistBold,
@@ -84,9 +82,9 @@ class _FollowersState extends State<Followers> {
                         padding: EdgeInsets.symmetric(horizontal:SizeConfig.widthMultiplier * 4,),
                         child: GestureDetector(
                           onTap: (){
-                            // model.barId = model.listOfBar[index].id;
-                            // model.selectedBar = (model.listOfBar[index]);
-                            // model.navigateToBarProfile();
+                            model.barId = model.listOfBar[index].id;
+                            model.selectedBar = (model.listOfBar[index]);
+                            model.navigateToBarProfile();
 
                           },
                           child: Container(
@@ -110,7 +108,7 @@ class _FollowersState extends State<Followers> {
                               children: [
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
-                                  child: Image.network(model.listOfAllBars[index].profile_picture!,
+                                  child: Image.network(model.listOfBar[index].profile_picture!,
                                     width: 15.i,
                                     height: 15.i,
                                     fit: BoxFit.cover,
@@ -121,41 +119,41 @@ class _FollowersState extends State<Followers> {
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          Text(model.listOfAllBars[index].bar_name!,
-                                            style: TextStyle(
-                                                fontFamily: FontUtils.modernistBold,
-                                                fontSize: 1.9.t,
-                                                color: ColorUtils.black
-                                            ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Text(model.listOfBar[index].bar_name!,
+                                          style: TextStyle(
+                                              fontFamily: FontUtils.modernistBold,
+                                              fontSize: 1.9.t,
+                                              color: ColorUtils.black
                                           ),
-                                          SizedBox(width: 1.w,),
-                                          // Text(model.listOfBar[index].bar_kind!.toString(),
-                                          //   style: TextStyle(
-                                          //       fontFamily: FontUtils.modernistRegular,
-                                          //       fontSize: 1.6.t,
-                                          //       color: ColorUtils.red_color
-                                          //   ),
-                                          // )
-                                        ],
-                                      ),
+                                        ),
+                                        SizedBox(width: 1.w,),
+                                        Text(model.ListOfBar[index]['type']!,
+                                          style: TextStyle(
+                                              fontFamily: FontUtils.modernistRegular,
+                                              fontSize: 1.6.t,
+                                              color: ColorUtils.red_color
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                       SizedBox(height: 0.8.h,),
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          SvgPicture.asset(ImageUtils.locationPin,),
+                                          SvgPicture.asset(model.ListOfBar[index]["locationIcon"],),
                                           SizedBox(width: 1.5.w,),
                                           Container(
                                             width: 50.w,
-                                            child: Text(model.listOfAllBars[index].address!,
+                                            child: Text(model.listOfBar[index].address!,
                                               style: TextStyle(
-                                                fontFamily: FontUtils.modernistRegular,
-                                                fontSize: 1.6.t,
-                                                color: ColorUtils.text_grey,
+                                                  fontFamily: FontUtils.modernistRegular,
+                                                  fontSize: 1.6.t,
+                                                  color: ColorUtils.text_grey,
                                               ),
 
                                               maxLines: 1,
@@ -167,7 +165,7 @@ class _FollowersState extends State<Followers> {
                                       SizedBox(height: 0.8.h,),
                                       RatingBar.builder(
                                         tapOnlyMode: false,
-                                        initialRating: model.listOfAllBars[index].total_ratings ?? 0.0,
+                                        initialRating: model.listOfBar[index].total_ratings ?? 0.0,
                                         // minRating: 1,
                                         direction: Axis.horizontal,
                                         allowHalfRating: true,
@@ -195,7 +193,7 @@ class _FollowersState extends State<Followers> {
                     separatorBuilder: (context, index) {
                       return SizedBox(height:  SizeConfig.heightMultiplier * 2.5,);
                     },
-                    itemCount: model.listOfAllBars.length,
+                    itemCount: model.listOfBar.length,
                   ),
                 ),
 
