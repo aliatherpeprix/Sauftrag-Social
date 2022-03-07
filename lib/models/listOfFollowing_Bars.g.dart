@@ -46,7 +46,9 @@ ListOfBarsModel _$ListOfBarsModelFromJson(Map<String, dynamic> json) =>
           .toList()
       ..events = (json['events'] as List<dynamic>?)
           ?.map((e) => BarEventModel.fromJson(e as Map<String, dynamic>))
-          .toList();
+          .toList()
+      ..is_follow = json['is_follow'] as bool?
+      ..is_rate = json['is_rate'] as bool?;
 
 Map<String, dynamic> _$ListOfBarsModelToJson(ListOfBarsModel instance) =>
     <String, dynamic>{
@@ -77,4 +79,6 @@ Map<String, dynamic> _$ListOfBarsModelToJson(ListOfBarsModel instance) =>
       'ratings': instance.ratings,
       'posts': instance.posts,
       'events': instance.events,
+      'is_follow': instance.is_follow,
+      'is_rate': instance.is_rate,
     };

@@ -15,6 +15,7 @@ import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/viewModels/prefrences_view_model.dart';
 import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:sauftrag/views/Home/main_view.dart';
 import 'package:sauftrag/widgets/loader.dart';
@@ -33,11 +34,13 @@ class _AccountState extends State<Account> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<MainViewModel>.reactive(
-      onModelReady: (model) {
+      onModelReady: (model) async {
+        PrefrencesViewModel prefs =
+        locator<PrefrencesViewModel>();
         //UserModel? userModel;
         model.updateSignUpPhoneController.text = model.userModel!.phone_no!;
         model.updateLocations.text = model.userModel!.address!;
-
+        model.userModel = (await prefs.getUser())!;
       },
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
@@ -136,56 +139,73 @@ class _AccountState extends State<Account> {
                                   Radius.circular(Dimensions.roundCorner)),
                               border:
                               Border.all(color: ColorUtils.divider)),
-                          child: IntlPhoneField(
-                            textAlignVertical: TextAlignVertical.center,
-                            // countryCodeTextColor: ColorUtils.red_color,
-                            // focusNode: model.signUpPhoneFocus,
+                          child: TextField(
+                            //focusNode: model.signUpAddressFocus,
                             controller: model.updateSignUpPhoneController,
-                            autovalidateMode: AutovalidateMode.disabled,
-                            dropdownIconPosition: IconPosition.trailing,
-                            //dropDownIcon: Icon(Icons.),
-                            //showDropdownIcon: false,
+                            keyboardType: TextInputType.text,
+                            textInputAction: TextInputAction.next,
                             style: TextStyle(
-                                fontFamily: FontUtils.modernistRegular,
-                                fontSize: 1.9.t,
-                                color: ColorUtils.red_color
+                              color: ColorUtils.red_color,
+                              fontFamily: FontUtils.modernistRegular,
+                              fontSize: 1.9.t,
                             ),
-                            // autoValidate: false,
-                            autofocus: false,
-                            decoration: InputDecoration(
-                              hintText: 'Enter Your Phone number',
-                              hintStyle:
-                              TextStyle(
-                                  color: ColorUtils.text_grey,
-                                  fontSize: 1.9.t,
-                                  fontFamily: FontUtils.modernistRegular
-                              ),
-                              suffixText: "",
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
                               isDense: true,
-                              alignLabelWithHint: true,
-                              counterText: "",
-                              contentPadding: EdgeInsets.only(top: 0.h,left: 0.w,right: 0.w,bottom: 0.2.h),
-                              focusedBorder: InputBorder.none,
-                              labelStyle: TextStyle(
-                                color: Colors.white,
-                                fontSize: 0.0.t,
-                              ),
-                              //alignLabelWithHint: true,
-                              //contentPadding: EdgeInsets.zero,
-                              //labelText: 'Phone Number',
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 0, vertical: 0),
                             ),
-                            onTap: (){},
-                            initialCountryCode: 'DE',
-                            onChanged: (phone) {
-                              //model.loginCountryCode = phone.countryCode ;
-                              // model.loginPhoneController.text = phone.number!;
-                              //model.updateSignUpPhoneController.text = phone.completeNumber;
-                              model.notifyListeners();
-                            },
                           ),
+                          // child: IntlPhoneField(
+                          //   textAlignVertical: TextAlignVertical.center,
+                          //   // countryCodeTextColor: ColorUtils.red_color,
+                          //   // focusNode: model.signUpPhoneFocus,
+                          //   controller: model.updateSignUpPhoneController,
+                          //   autovalidateMode: AutovalidateMode.disabled,
+                          //   dropdownIconPosition: IconPosition.trailing,
+                          //   //dropDownIcon: Icon(Icons.),
+                          //   //showDropdownIcon: false,
+                          //   style: TextStyle(
+                          //       fontFamily: FontUtils.modernistRegular,
+                          //       fontSize: 1.9.t,
+                          //       color: ColorUtils.red_color
+                          //   ),
+                          //   // autoValidate: false,
+                          //   autofocus: false,
+                          //   decoration: InputDecoration(
+                          //     hintText: 'Enter Your Phone number',
+                          //     hintStyle:
+                          //     TextStyle(
+                          //         color: ColorUtils.text_grey,
+                          //         fontSize: 1.9.t,
+                          //         fontFamily: FontUtils.modernistRegular
+                          //     ),
+                          //     suffixText: "",
+                          //     isDense: true,
+                          //     alignLabelWithHint: true,
+                          //     counterText: "",
+                          //     contentPadding: EdgeInsets.only(top: 0.h,left: 0.w,right: 0.w,bottom: 0.2.h),
+                          //     focusedBorder: InputBorder.none,
+                          //     labelStyle: TextStyle(
+                          //       color: Colors.white,
+                          //       fontSize: 0.0.t,
+                          //     ),
+                          //     //alignLabelWithHint: true,
+                          //     //contentPadding: EdgeInsets.zero,
+                          //     //labelText: 'Phone Number',
+                          //     border: OutlineInputBorder(
+                          //       borderSide: BorderSide.none,
+                          //     ),
+                          //   ),
+                          //   onTap: (){},
+                          //   initialCountryCode: 'DE',
+                          //   onChanged: (phone) {
+                          //     //model.loginCountryCode = phone.countryCode ;
+                          //     // model.loginPhoneController.text = phone.number!;
+                          //     //model.updateSignUpPhoneController.text = phone.completeNumber;
+                          //     model.notifyListeners();
+                          //   },
+                          // ),
                         ),
                         SizedBox(
                           height: 3.h,

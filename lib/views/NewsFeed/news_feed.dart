@@ -419,16 +419,18 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                                       ),
                                       Row(
                                         children: [
-                                          Text(
-                                            model.posts[index]
-                                                .post_content!,
-                                            //newsEvents[index]["para"],
-                                            style: TextStyle(
-                                                fontFamily: FontUtils
-                                                    .modernistRegular,
-                                                fontSize: 1.8.t,
-                                                color: ColorUtils
-                                                    .black),
+                                          Flexible(
+                                            child: Text(
+                                              model.posts[index]
+                                                  .post_content!,
+                                              //newsEvents[index]["para"],
+                                              style: TextStyle(
+                                                  fontFamily: FontUtils
+                                                      .modernistRegular,
+                                                  fontSize: 1.8.t,
+                                                  color: ColorUtils
+                                                      .black),
+                                            ),
                                           ),
                                         ],
                                       ),

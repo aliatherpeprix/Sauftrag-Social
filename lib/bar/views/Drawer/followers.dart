@@ -84,10 +84,9 @@ class _FollowersState extends State<Followers> {
                         padding: EdgeInsets.symmetric(horizontal:SizeConfig.widthMultiplier * 4,),
                         child: GestureDetector(
                           onTap: (){
-                            // model.barId = model.listOfBar[index].id;
-                            // model.selectedBar = (model.listOfBar[index]);
-                            // model.navigateToBarProfile();
-
+                           // model.barId = model.listOfBar[index].id;
+                            model.selectedBar = (model.listOfAllBars[index]);
+                            model.navigateToBarProfile();
                           },
                           child: Container(
                             padding: EdgeInsets.symmetric( horizontal: 2.5.w, vertical: 1.5.h),

@@ -99,8 +99,10 @@ class _SwipeCardState extends State<SwipeCard> {
             onDismissed: (DismissDirection direction) {
               //_swipeAnimation();
               if (direction == DismissDirection.endToStart) {
+               // model.UserMatches(context,widget.id!);
                 widget.dismissImg(widget.img,model);
               } else {
+                model.UserMatches(context,widget.id!);
                 widget.addImg(widget.img,model);
               }
             },
@@ -238,8 +240,8 @@ class _SwipeCardState extends State<SwipeCard> {
                                             model.UserMatches(context,widget.id!);
 
                                           }
-                                          // widget.swipeRight(0);
-                                          //model.notifyListeners();
+
+                                            model.notifyListeners();
                                         },
                                         child:SvgPicture.asset(ImageUtils.likeIcon),
                                         style: ElevatedButton.styleFrom(

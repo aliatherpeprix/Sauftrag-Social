@@ -52,6 +52,9 @@ class ListOfBarsModel {
   List<RatingData>? ratings;
   List<NewsfeedPostId>? posts;
   List<BarEventModel>? events;
+  bool? is_follow;
+  bool? is_rate;
+
 
 
   factory ListOfBarsModel.fromJson(Map<String, dynamic> json) => _$ListOfBarsModelFromJson(json);

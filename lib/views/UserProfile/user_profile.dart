@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/services/addFavorites.dart';
+import 'package:sauftrag/services/updateUserProfile.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/common_functions.dart';
 import 'package:sauftrag/utils/dimensions.dart';
@@ -291,8 +292,16 @@ class _UserProfileState extends State<UserProfile> {
 
                       ///--------------Settings Options--------------------///
                       GestureDetector(
-                        onTap: () {
+                        onTap: () async {
+                          model.isUserProfile = true;
+                          model.notifyListeners();
+                          PrefrencesViewModel prefs =
+                          locator<PrefrencesViewModel>();
+                           await Updateuser().UpdateAccountDetails(model.updateSignUpPhoneController.text, model.updateLocations.text);
+                          model.userModel = (await prefs.getUser())!;
                           model.navigateToUserProfileAccountScreen();
+                          model.isUserProfile = false;
+                          model.notifyListeners();
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

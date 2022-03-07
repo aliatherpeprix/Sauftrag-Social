@@ -353,7 +353,7 @@ class AuthenticationViewModel extends BaseViewModel {
   void initializeSplash() async {
     prefs = await SharedPreferences.getInstance();
 
-    Timer(Duration(seconds: 7), () async {
+    Timer(Duration(seconds: 6), () async {
       if ((await prefss.getUser()) != null) {
         UserModel? user = await prefss.getUser();
         NewBarModel? barUser = await prefss.getBarUser();

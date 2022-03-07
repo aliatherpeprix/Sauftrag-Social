@@ -100,6 +100,7 @@ class MainViewModel extends BaseViewModel {
 
   UserModel? userModel;
   NewBarModel? barModel;
+  ListOfBarsModel? barFollow;
 
   bool logInUserSelected = true;
   bool logInBarSelected = false;
@@ -153,6 +154,7 @@ class MainViewModel extends BaseViewModel {
   bool isPost = false;
   bool isUserProfile = false;
   bool addDrink = false;
+  bool isFollow = false;
 
   bool editBool = false;
   var dio = Dio();
@@ -1824,33 +1826,39 @@ class MainViewModel extends BaseViewModel {
     print(getFaqsList);
   }
 
-  // postBarFollow() async {
-  //   isFaqs = true;
-  //
-  //   var getListofbar = await followbar.FollowBar(
-  //
-  //   );
-  //   print(getListofbar);
-  //   // if (getFaqList is String){
-  //   //   faqs = getFaqList;
-  //   //   //isPrivacyPolicy = false;
-  //   //
-  //   // }
-  //   if (getListofbar is List<ListOfBarsModel>) {
-  //     listOfBar = getListofbar;
-  //     print(listOfBar);
-  //   }   else {
-  //     DialogUtils().showDialog(MyErrorWidget(
-  //       error: "Some thing went wrong",
-  //     ));
-  //     //isPrivacyPolicy = false;
-  //
-  //     return;
-  //   }
-  //   isFaqs = false;
-  //   notifyListeners();
-  //   print(getFaqsList);
-  // }
+  postBarFollow() async {
+    isFaqs = true;
+    bool follow =! selectedBar!.is_follow!;
+
+
+    var getListofbar = await followbar.FollowBar(
+        selectedBar!.id!,
+        follow
+    );
+    print(getListofbar);
+
+    // if (getFaqList is String){
+    //   faqs = getFaqList;
+    //   //isPrivacyPolicy = false;
+    //
+    // }
+    if (getListofbar is Followbar) {
+      var index = listOfAllBars.indexOf(selectedBar!);
+      listOfAllBars[index].is_follow = follow;
+      //listOfBar = getListofbar;
+      print(listOfBar);
+    }   else {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Some thing went wrong",
+      ));
+      //isPrivacyPolicy = false;
+
+      return;
+    }
+    isFaqs = false;
+    notifyListeners();
+    print(getFaqsList);
+  }
 
   bool eventLoader = false;
 

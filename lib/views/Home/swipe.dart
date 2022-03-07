@@ -201,6 +201,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
   }
 
   swipeRight() {
+    //model.
     if (flag == 0)
       setState(() {
         flag = 1;
@@ -288,9 +289,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                   fontSize: 1.8.t,
                                   //height: 0
                                 ),
-
                               ),
-
                             ),
                             Column(
                               children: [
@@ -337,7 +336,6 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                               child: model.getStatus == null
                                   ? SvgPicture.asset(ImageUtils.setStatusIcon)
                                   : Row(
-
                                       children: [
                                         SvgPicture.asset(
                                           ImageUtils.bottleSelected,
@@ -367,7 +365,6 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                         ),
                                       ],
                                     ),
-
 
                               //   children: [
                               //     SvgPicture.asset(
@@ -399,36 +396,35 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                               //   ],
                               // ),
 
-                                // children: [
-                                //   SvgPicture.asset(
-                                //     ImageUtils.bottleSelected,
-                                //     height: 3.5.h,
-                                //   ),
-                                //   Text(
-                                //     "x${model.getStatus!.quantity}",
-                                //     style: TextStyle(
-                                //         color: Colors.black,
-                                //         fontSize: 1.2.t,
-                                //         height: 0.5.h),
-                                //     textAlign: TextAlign.end,
-                                //   ),
-                                //   Container(
-                                //     width: 15.w,
-                                //     alignment: Alignment.center,
-                                //     child: Text(
-                                //       "Motor anwärmen",
-                                //       textAlign: TextAlign.center,
-                                //       style: TextStyle(
-                                //         color: ColorUtils.text_red,
-                                //         fontFamily:
-                                //         FontUtils.modernistBold,
-                                //         fontSize: 1.2.t,
-                                //       ),
-                                //     ),
-                                //   ),
-                                // ],
-                             // ),
-
+                              // children: [
+                              //   SvgPicture.asset(
+                              //     ImageUtils.bottleSelected,
+                              //     height: 3.5.h,
+                              //   ),
+                              //   Text(
+                              //     "x${model.getStatus!.quantity}",
+                              //     style: TextStyle(
+                              //         color: Colors.black,
+                              //         fontSize: 1.2.t,
+                              //         height: 0.5.h),
+                              //     textAlign: TextAlign.end,
+                              //   ),
+                              //   Container(
+                              //     width: 15.w,
+                              //     alignment: Alignment.center,
+                              //     child: Text(
+                              //       "Motor anwärmen",
+                              //       textAlign: TextAlign.center,
+                              //       style: TextStyle(
+                              //         color: ColorUtils.text_red,
+                              //         fontFamily:
+                              //         FontUtils.modernistBold,
+                              //         fontSize: 1.2.t,
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ],
+                              // ),
 
                               style: ElevatedButton.styleFrom(
                                 primary: ColorUtils.white,
@@ -446,7 +442,6 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                   fontFamily: FontUtils.modernistBold,
                                   fontSize: 1.8.t,
                                   //height: 0
-
                                 ),
                               ),
                             ),
@@ -459,7 +454,10 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                           child: model.discoverLoader
                               ? AllPageLoader()
                               : model.catalogImages.isEmpty
-                                  ? Image.asset(ImageUtils.UserNotFound)
+                                  ? Container(
+                            margin: EdgeInsets.symmetric(horizontal: 15.w),
+                            child: Image.asset(ImageUtils.UserNotFound),
+                          )
                                   : AbsorbPointer(
                                       absorbing:
                                           model.sideMenuKey.currentState !=
@@ -470,21 +468,16 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                         alignment: AlignmentDirectional.center,
                                         children:
                                             model.catalogImages.map((item) {
-                                          return SwipeCard(
+                                          return SwipeCard
+                                            (
                                             name: model
-                                                .discoverModel![model
-                                                    .catalogImages
-                                                    .indexOf(item)]
+                                                .discoverModel![model.catalogImages.indexOf(item)]
                                                 .username,
                                             img: item,
                                             cardWidth: backCardWidth + 0,
                                             rotation: rotate.value,
-                                            skew:
-                                                rotate.value < -10 ? 0.1 : 0.0,
-                                            address: model
-                                                .discoverModel![model
-                                                    .catalogImages
-                                                    .indexOf(item)]
+                                            skew: rotate.value < -10 ? 0.1 : 0.0,
+                                            address: model.discoverModel![model.catalogImages.indexOf(item)]
                                                 .address,
                                             details: () {
                                               model.navigateToProfileScreen(

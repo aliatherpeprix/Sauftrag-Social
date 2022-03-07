@@ -165,7 +165,8 @@ class _ListOfAllBarsState extends State<ListOfAllBars> {
                                       ),
                                       SizedBox(height: 0.8.h,),
                                       RatingBar.builder(
-                                        tapOnlyMode: false,
+                                        ignoreGestures: true,
+                                        //tapOnlyMode: true,
                                         initialRating: model.listOfBar[index].total_ratings ?? 0.0,
                                         // minRating: 1,
                                         direction: Axis.horizontal,
@@ -178,7 +179,7 @@ class _ListOfAllBarsState extends State<ListOfAllBars> {
                                           color: ColorUtils.red_color,
                                         ),
                                         onRatingUpdate: (rating) {
-                                          print(rating);
+                                         // print(rating);
                                         },
                                       ),
                                     ],

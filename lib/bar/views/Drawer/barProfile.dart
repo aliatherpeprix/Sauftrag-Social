@@ -185,7 +185,9 @@ class _BarprofileState extends State<Barprofile> {
                                     fontSize: 2.5.t),
                               ),
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  model.postBarFollow();
+                                },
                                 child: Container(
                                   height: 4.5.h,
                                   decoration: BoxDecoration(
@@ -195,13 +197,20 @@ class _BarprofileState extends State<Barprofile> {
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 30),
                                     child: Center(
-                                        child: Text(
-                                      "Follow",
-                                      style: TextStyle(
-                                          color: ColorUtils.white,
-                                          fontSize: 2.t,
-                                          fontFamily: FontUtils.modernistBold),
-                                    )),
+                                        child: model.selectedBar!.is_follow!? Text(
+                                          "UnFollow",
+                                          style: TextStyle(
+                                              color: ColorUtils.white,
+                                              fontSize: 2.t,
+                                              fontFamily: FontUtils.modernistBold),
+                                        ) : Text(
+                                          "Follow",
+                                          style: TextStyle(
+                                              color: ColorUtils.white,
+                                              fontSize: 2.t,
+                                              fontFamily: FontUtils.modernistBold),
+                                        )
+                                    ),
                                   ),
                                 ),
                               )
@@ -518,7 +527,9 @@ class _BarprofileState extends State<Barprofile> {
                                                             .addLocationIcon);
                                                   });
                                             },
-                                            child: Text(
+                                            child:
+                                            model.selectedBar!.is_rate == true ?
+                                            Text("") : Text(
                                               "Give Rating",
                                               style: TextStyle(
                                                 color: ColorUtils.red_color,
@@ -528,7 +539,7 @@ class _BarprofileState extends State<Barprofile> {
                                                 decoration:
                                                 TextDecoration.underline,
                                               ),
-                                            ),
+                                            )
                                           ),
                                         ],
                                       ),
@@ -568,7 +579,7 @@ class _BarprofileState extends State<Barprofile> {
                                                 //         .ratingKaData!
                                                 //         .total_rating ??
                                                 //     0,
-                                                minRating: 1,
+                                                minRating: 0,
                                                 direction: Axis.horizontal,
                                                 allowHalfRating: true,
                                                 itemCount: 5,
@@ -586,7 +597,7 @@ class _BarprofileState extends State<Barprofile> {
                                                 },
                                               ),
                                               Text(
-                                                "${model.selectedBar!.total_ratings/*.toString().substring(0,4) ?? 0.0*/} out of 5",
+                                                "${model.selectedBar!.total_ratings/*.toString().substring(0,5)*/ } out of 5",
                                                 style: TextStyle(
                                                   color: ColorUtils.red_color,
                                                   fontFamily: FontUtils
