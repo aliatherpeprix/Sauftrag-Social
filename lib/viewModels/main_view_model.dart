@@ -12,6 +12,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:sauftrag/bar/views/Drawer/bar_followers.dart';
+import 'package:sauftrag/models/get_bar_followers.dart';
 import 'package:sauftrag/models/listOfFollowing_Bars.dart';
 import 'package:sauftrag/models/request_match_model.dart';
 import 'package:sauftrag/models/user_matched.dart';
@@ -49,6 +51,7 @@ import 'package:sauftrag/services/dataProtection.dart';
 import 'package:sauftrag/services/drinksOrder.dart';
 import 'package:sauftrag/services/faqs.dart';
 import 'package:sauftrag/services/followBar.dart';
+import 'package:sauftrag/services/get_barFollowers.dart';
 import 'package:sauftrag/services/get_match_users.dart';
 import 'package:sauftrag/services/listOfBars.dart';
 
@@ -88,6 +91,7 @@ class MainViewModel extends BaseViewModel {
   var listOfBars = Listofbars();
   var followbar = Followbar();
   var getAllBar = AllBarUsers();
+  var getbarFollowers = BARFollowers();
 
   Barcode? result;
 
@@ -210,7 +214,11 @@ class MainViewModel extends BaseViewModel {
   List<AddressBook> contactBook = [];
   List<ListOfBarsModel> listOfBar = [];
 
+  List<GetBarFollower> getbarfollowers = [];
+
   ListOfBarsModel? selectedBar;
+
+  ListOfBarsModel? barFollowers;
 
 
   List<ListOfBarsModel> listOfAllBars = [];
@@ -1484,6 +1492,10 @@ class MainViewModel extends BaseViewModel {
     navigationService.navigateToAddAddressScreen();
   }
 
+  void navigateToBarFollowersListScreen() {
+    navigationService.navigateToBarFollowersListScreen();
+  }
+
   Future saveUserDetails() async {
     List tempList = [];
 
@@ -1813,6 +1825,32 @@ class MainViewModel extends BaseViewModel {
     if (getListofAllBar is List<ListOfBarsModel>) {
       listOfAllBars = getListofAllBar;
       print(listOfAllBars);
+    }   else {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Some thing went wrong",
+      ));
+      //isPrivacyPolicy = false;
+
+      return;
+    }
+    isFaqs = false;
+    notifyListeners();
+    print(getFaqsList);
+  }
+
+  getBarsFollowers() async {
+    isFaqs = true;
+
+    var getListofBarFollowers = await getbarFollowers.GetBarFollowers();
+    print(getListofBarFollowers);
+    // if (getFaqList is String){
+    //   faqs = getFaqList;
+    //   //isPrivacyPolicy = false;
+    //
+    // }ListOfBarsModel
+    if (getListofBarFollowers is List<GetBarFollower>) {
+      getbarfollowers = getListofBarFollowers;
+      print(getbarfollowers);
     }   else {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Some thing went wrong",

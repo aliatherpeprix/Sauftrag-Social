@@ -9,6 +9,7 @@ import 'package:sauftrag/bar/views/Drawer/barEvent.dart';
 import 'package:sauftrag/bar/views/Drawer/barProfile.dart';
 import 'package:sauftrag/bar/views/Drawer/bar_Rating.dart';
 import 'package:sauftrag/bar/views/Drawer/bar_all_rating.dart';
+import 'package:sauftrag/bar/views/Drawer/bar_followers.dart';
 import 'package:sauftrag/bar/views/Drawer/follower_profile.dart';
 import 'package:sauftrag/bar/views/Drawer/followers.dart';
 import 'package:sauftrag/bar/views/Drawer/list_of_followBar.dart';
@@ -125,6 +126,10 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateToFollowersListScreen(){
     navigationKey.currentState!.push(PageTransition(child: Followers(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToBarFollowersListScreen(){
+    navigationKey.currentState!.push(PageTransition(child: BarFollowers(), type: PageTransitionType.rightToLeftWithFade));
   }
 
   void navigateToForgetPasswordScreen(){
