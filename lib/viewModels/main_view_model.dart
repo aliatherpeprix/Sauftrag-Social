@@ -214,6 +214,8 @@ class MainViewModel extends BaseViewModel {
   List<AddressBook> contactBook = [];
   List<ListOfBarsModel> listOfBar = [];
 
+  GetBarFollower? getbarFollowersDet;
+
   List<GetBarFollower> getbarfollowers = [];
 
   ListOfBarsModel? selectedBar;
@@ -1402,6 +1404,10 @@ class MainViewModel extends BaseViewModel {
 
   void navigateToFollowerList() {
     navigationService.navigateToFollowerList();
+  }
+
+  void navigateToBarFollowerDet() {
+    navigationService.navigateToBarFollowerDet();
   }
 
   void navigateToListOfBar() {

@@ -5,16 +5,15 @@ import 'package:sauftrag/models/user_models.dart';
 part 'get_bar_followers.g.dart';
 
 @JsonSerializable()
-class GetBarFollower {
+class   GetBarFollower {
 
   GetBarFollower();
 
   int? id;
-  List<NewBarModel>? follow_to;
-  List<UserModel>? follow_by;
+  NewBarModel? follow_to;
+  UserModel? follow_by;
 
 
-  factory GetBarFollower.fromJson(Map<String, dynamic> json) =>
-      _$GetBarFollowerFromJson(json);
+  factory GetBarFollower.fromJson(Map<String, dynamic> json) => _$GetBarFollowerFromJson(json);
   Map<String, dynamic> toJson() => _$GetBarFollowerToJson(this);
 }

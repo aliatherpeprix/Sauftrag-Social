@@ -303,6 +303,11 @@ class NavigationViewModel extends BaseViewModel{
 
   }
 
+    void navigateToBarFollowerDet(){
+    navigationKey.currentState!.push(PageTransition(child: FollowerProfile(), type: PageTransitionType.rightToLeftWithFade));
+
+  }
+
   void navigateToListOfBar(){
     navigationKey.currentState!.push(PageTransition(child: ListOfBar(), type: PageTransitionType.rightToLeftWithFade));
 

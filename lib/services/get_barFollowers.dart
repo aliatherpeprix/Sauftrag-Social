@@ -32,6 +32,7 @@ class   BARFollowers {
 
         // var faqs = (response.data);
         //List<FaqsModel> Faq = faqs[1]['question'];
+        print("jhjg");
         List<GetBarFollower> getbarfollowers = (response.data as List).map((e) =>
             GetBarFollower.fromJson(e)).toList();
        // getbarfollowers.removeWhere((element) => element.role==2);

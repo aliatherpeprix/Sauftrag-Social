@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/models/favorites_model.dart';
+import 'package:sauftrag/services/addFavorites.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/extensions.dart';
@@ -15,10 +17,8 @@ import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:stacked/stacked.dart';
 
 class FollowerProfile extends StatefulWidget {
-  String? username;
-  String? address;
-  String? profilePicture;
-  FollowerProfile({Key? key, this.username, this.address, this.profilePicture})
+
+  FollowerProfile({Key? key, })
       : super(key: key);
 
   @override
@@ -52,12 +52,16 @@ class _FollowerProfileState extends State<FollowerProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<AuthenticationViewModel>.reactive(
-      viewModelBuilder: () => locator<AuthenticationViewModel>(),
-      // onModelReady: (model) {
-      //   model.addMarkers();
-      //
-      // },
+    return ViewModelBuilder<MainViewModel>.reactive(
+      viewModelBuilder: () => locator<MainViewModel>(),
+      onModelReady: (model) async {
+        model.drinkList =
+            await Addfavorites().GetFavoritesDrink();
+        model.clubList =
+            await Addfavorites().GetFavoritesClub();
+        model.vacationList =
+            await Addfavorites().GetFavoritesPartyVacation();
+      },
       disposeViewModel: false,
       builder: (context, model, child) {
         return SafeArea(
@@ -109,7 +113,7 @@ class _FollowerProfileState extends State<FollowerProfile> {
                 //   ),
                 // ),
                 // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-                backgroundColor: Colors.white,
+                // /backgroundColor: Colors.transparent,
                 key: _scaffoldKey,
                 body: Container(
                   padding: EdgeInsets.only(top: Dimensions.homeTopMargin),
@@ -145,12 +149,12 @@ class _FollowerProfileState extends State<FollowerProfile> {
                         ],
                         floating: true,
                         pinned: false,
-                        backgroundColor: Colors.white.withOpacity(0.1),
-                        shadowColor: Colors.white.withOpacity(0.9),
+                        backgroundColor: Colors.transparent,
+                        shadowColor: Colors.transparent,
                         expandedHeight: 280,
                         flexibleSpace: FlexibleSpaceBar(
                           background: Image.network(
-                            widget.profilePicture.toString(),
+                            model.getbarFollowersDet!.follow_by!.profile_picture!,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -183,33 +187,37 @@ class _FollowerProfileState extends State<FollowerProfile> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                widget.username.toString(),
+                                model.getbarFollowersDet!.follow_by!.username!,
                                 style: TextStyle(
                                   fontFamily: FontUtils.modernistBold,
                                   fontSize: 2.5.t,
                                   color: ColorUtils.black,
                                 ),
                               ),
-                              SizedBox(height: 1.h),
-                              Text(
-                                "Professional Dancer",
-                                style: TextStyle(
-                                  fontFamily: FontUtils.modernistRegular,
-                                  fontSize: 1.8.t,
-                                  color: ColorUtils.black,
-                                ),
-                              ),
+                              // SizedBox(height: 1.h),
+                              // Text(
+                              //   "Professional Dancer",
+                              //   style: TextStyle(
+                              //     fontFamily: FontUtils.modernistRegular,
+                              //     fontSize: 1.8.t,
+                              //     color: ColorUtils.black,
+                              //   ),
+                              // ),
                               SizedBox(height: 1.h),
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SvgPicture.asset(ImageUtils.location_icon),
                                   SizedBox(width: 2.w),
-                                  Text(
-                                    widget.address.toString(),
-                                    style: TextStyle(
-                                      fontFamily: FontUtils.modernistRegular,
-                                      fontSize: 2.t,
-                                      color: ColorUtils.black,
+                                  Flexible(
+                                    child: Text(
+                                      model.getbarFollowersDet!.follow_by!.address!,
+                                      style: TextStyle(
+                                        fontFamily: FontUtils.modernistRegular,
+                                        fontSize: 1.8.t,
+                                        color: ColorUtils.black,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -233,6 +241,8 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                 ),
                               ),
                               SizedBox(height: 3.h),
+
+                              //Interest
                               Text(
                                 "Interest",
                                 style: TextStyle(
@@ -242,48 +252,44 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                 ),
                               ),
                               SizedBox(height: 2.h),
+
+                              //Favorite Drink
+                              Text(
+                                "Favorite Alcoholic Drink",
+                                style: TextStyle(
+                                  fontFamily: FontUtils.modernistBold,
+                                  fontSize: 2.t,
+                                  color: ColorUtils.black,
+                                ),
+                              ),
+                              SizedBox(height: 2.h),
                               Wrap(
                                 spacing: 2.5.w,
                                 runSpacing: 1.5.h,
                                 direction: Axis.horizontal,
-                                children: model.interestList
+                                children: model.getbarFollowersDet!.follow_by!.favorite_alcohol_drinks!
                                     .map((element) => ElevatedButton(
                                           onPressed: () {
-                                            if (model.selectedInterestList
-                                                .contains(model.interestList
-                                                    .indexOf(element))) {
-                                              model.selectedInterestList.remove(
-                                                  model.interestList
-                                                      .indexOf(element));
-                                            } else {
-                                              //model.selectedInterestList.add(model.interestList.indexOf(element));
-                                            }
-                                            model.notifyListeners();
+                                            // if (model.selectedInterestList
+                                            //     .contains(model.interestList
+                                            //         .indexOf(element))) {
+                                            //   model.selectedInterestList.remove(
+                                            //       model.interestList
+                                            //           .indexOf(element));
+                                            // } else {
+                                            //   //model.selectedInterestList.add(model.interestList.indexOf(element));
+                                            // }
+                                            // model.notifyListeners();
                                           },
-                                          child: Text(model.interestList[model
-                                              .interestList
-                                              .indexOf(element)]),
+                                          child: Text( "${(model.drinkList.where((drink)
+                                          => element==drink.id).first as FavoritesModel).name}"),
                                           style: ElevatedButton.styleFrom(
-                                            primary: model.selectedInterestList
-                                                    .contains(model.interestList
-                                                        .indexOf(element))
-                                                ? ColorUtils.white
-                                                : ColorUtils.white,
-                                            onPrimary: model
-                                                    .selectedInterestList
-                                                    .contains(model.interestList
-                                                        .indexOf(element))
-                                                ? ColorUtils.red_color
-                                                : ColorUtils.red_color,
+                                            primary:  ColorUtils.white,
+                                            onPrimary: ColorUtils.red_color,
                                             padding: EdgeInsets.symmetric(
                                                 vertical: 1.8.h,
                                                 horizontal: 9.w),
-                                            elevation: model
-                                                    .selectedInterestList
-                                                    .contains(model.interestList
-                                                        .indexOf(element))
-                                                ? 5
-                                                : 0,
+                                            elevation: 0,
                                             shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(
@@ -304,6 +310,124 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                     .toList(),
                               ),
                               SizedBox(height: 3.h),
+
+                              //Favorite Night Club
+                              Text(
+                                "Favorite Night Club",
+                                style: TextStyle(
+                                  fontFamily: FontUtils.modernistBold,
+                                  fontSize: 2.t,
+                                  color: ColorUtils.black,
+                                ),
+                              ),
+                              SizedBox(height: 2.h),
+                              Wrap(
+                                spacing: 2.5.w,
+                                runSpacing: 1.5.h,
+                                direction: Axis.horizontal,
+                                children: model.getbarFollowersDet!.follow_by!.favorite_night_club!
+                                    .map((element) => ElevatedButton(
+                                  onPressed: () {
+                                    // if (model.selectedInterestList
+                                    //     .contains(model.interestList
+                                    //         .indexOf(element))) {
+                                    //   model.selectedInterestList.remove(
+                                    //       model.interestList
+                                    //           .indexOf(element));
+                                    // } else {
+                                    //   //model.selectedInterestList.add(model.interestList.indexOf(element));
+                                    // }
+                                    // model.notifyListeners();
+                                  },
+                                  child: Text( "${(model.clubList.where((drink)
+                                  => element==drink.id).first as FavoritesModel).name}"),
+                                  style: ElevatedButton.styleFrom(
+                                    primary:  ColorUtils.white,
+                                    onPrimary: ColorUtils.red_color,
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 1.8.h,
+                                        horizontal: 9.w),
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(
+                                            Dimensions.roundCorner),
+                                        side: BorderSide(
+                                            color: ColorUtils.text_red,
+                                            width: 1)),
+                                    textStyle: TextStyle(
+                                      //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
+                                      fontFamily:
+                                      FontUtils.modernistBold,
+
+                                      fontSize: 1.5.t,
+                                      //height: 0
+                                    ),
+                                  ),
+                                ))
+                                    .toList(),
+                              ),
+                              SizedBox(height: 3.h),
+
+                              //Favorite Party Vacation
+                              Text(
+                                "Favorite Party Vacation",
+                                style: TextStyle(
+                                  fontFamily: FontUtils.modernistBold,
+                                  fontSize: 2.t,
+                                  color: ColorUtils.black,
+                                ),
+                              ),
+                              SizedBox(height: 2.h),
+                              Wrap(
+                                spacing: 2.5.w,
+                                runSpacing: 1.5.h,
+                                direction: Axis.horizontal,
+                                children: model.getbarFollowersDet!.follow_by!.favorite_party_vacation!
+                                    .map((element) => ElevatedButton(
+                                  onPressed: () {
+                                    // if (model.selectedInterestList
+                                    //     .contains(model.interestList
+                                    //         .indexOf(element))) {
+                                    //   model.selectedInterestList.remove(
+                                    //       model.interestList
+                                    //           .indexOf(element));
+                                    // } else {
+                                    //   //model.selectedInterestList.add(model.interestList.indexOf(element));
+                                    // }
+                                    // model.notifyListeners();
+                                  },
+                                  child: Text( "${(model.vacationList.where((drink)
+                                  => element==drink.id).first as FavoritesModel).name}"),
+                                  style: ElevatedButton.styleFrom(
+                                    primary:  ColorUtils.white,
+                                    onPrimary: ColorUtils.red_color,
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 1.8.h,
+                                        horizontal: 9.w),
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(
+                                            Dimensions.roundCorner),
+                                        side: BorderSide(
+                                            color: ColorUtils.text_red,
+                                            width: 1)),
+                                    textStyle: TextStyle(
+                                      //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
+                                      fontFamily:
+                                      FontUtils.modernistBold,
+
+                                      fontSize: 1.5.t,
+                                      //height: 0
+                                    ),
+                                  ),
+                                ))
+                                    .toList(),
+                              ),
+                              SizedBox(height: 3.h),
+
+
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -318,189 +442,381 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                     ),
                                   ),
                                   SizedBox(width: 2.w),
-                                  Text(
-                                    "See all",
-                                    style: TextStyle(
-                                        fontFamily: FontUtils.modernistRegular,
-                                        fontSize: 1.8.t,
-                                        color: ColorUtils.red_color,
-                                        decoration: TextDecoration.underline),
-                                  ),
+                                  // Text(
+                                  //   "See all",
+                                  //   style: TextStyle(
+                                  //       fontFamily: FontUtils.modernistRegular,
+                                  //       fontSize: 1.8.t,
+                                  //       color: ColorUtils.red_color,
+                                  //       decoration: TextDecoration.underline),
+                                  // ),
                                 ],
                               ),
                               SizedBox(height: 2.h),
-                              Container(
-                                child: GridView.builder(
-                                  padding: EdgeInsets.zero,
-                                  shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemCount: followerImg.length,
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 5,
 
-                                    //mainAxisSpacing: 18,
-                                  ),
-                                  itemBuilder: (context, index) {
-                                    return Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      //mainAxisAlignment: MainAxisAlignment.center,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Container(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 1.5.w),
-                                          child: Image.asset(
-                                            followerImg[index]['image'],
-                                            height: 16.i,
-                                          ),
-                                          // CircleAvatar(
-                                          //   radius: 30.0,
-                                          //   backgroundImage: AssetImage(
-                                          //       followerImg[index]["image"]
+                              //Images
+                              Row(
+                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                               crossAxisAlignment: CrossAxisAlignment.center,
+                               children: [
+                                 //Image_1 Profile Picture
+                                 Container(
+                                     height: MediaQuery.of(context).size.width / 3.4,
+                                     width:
+                                     MediaQuery.of(context).size.width / 3.4,
+                                     decoration: BoxDecoration(
+                                       borderRadius:
+                                       BorderRadius.all(Radius.circular(20)),
+                                       image: DecorationImage(
+                                           image:
+                                           NetworkImage(model.getbarFollowersDet!.follow_by!.profile_picture!),
+                                           fit: BoxFit.cover),
+                                     ),
+                                     child: Stack(
+                                       children: [
+                                         // Align(
+                                         //   alignment: Alignment.bottomRight,
+                                         //   child: IconButton(
+                                         //     onPressed: () {
+                                         //       // model.imageFiles.removeAt(0);
+                                         //       // model.imageFiles.insert(0, File(""));
+                                         //       // model.notifyListeners();
+                                         //     },
+                                         //     icon: SvgPicture.asset(
+                                         //         ImageUtils.cancelIcon),
+                                         //     //icon: Icon(Icons.cancel_outlined, color: ColorUtils.text_red,),
+                                         //     padding: EdgeInsets.zero,
+                                         //     constraints: BoxConstraints(),
+                                         //     color: ColorUtils.white,
+                                         //     highlightColor:
+                                         //     ColorUtils.white,
+                                         //   ),
+                                         // ),
+                                       ],
+                                     )),
+
+                                 //Image_1 Catagory Image_1
+                                 Container(
+                                     height: MediaQuery.of(context).size.width / 3.4,
+                                     width:
+                                     MediaQuery.of(context).size.width / 3.4,
+                                     decoration: BoxDecoration(
+                                       borderRadius:
+                                       BorderRadius.all(Radius.circular(20)),
+                                       image: DecorationImage(
+                                           image:
+                                           NetworkImage(model.getbarFollowersDet!.follow_by!.catalogue_image1!),
+                                           fit: BoxFit.cover),
+                                     ),
+                                     child: Stack(
+                                       children: [
+                                         // Align(
+                                         //   alignment: Alignment.bottomRight,
+                                         //   child: IconButton(
+                                         //     onPressed: () {
+                                         //       // model.imageFiles.removeAt(0);
+                                         //       // model.imageFiles.insert(0, File(""));
+                                         //       // model.notifyListeners();
+                                         //     },
+                                         //     icon: SvgPicture.asset(
+                                         //         ImageUtils.cancelIcon),
+                                         //     //icon: Icon(Icons.cancel_outlined, color: ColorUtils.text_red,),
+                                         //     padding: EdgeInsets.zero,
+                                         //     constraints: BoxConstraints(),
+                                         //     color: ColorUtils.white,
+                                         //     highlightColor:
+                                         //     ColorUtils.white,
+                                         //   ),
+                                         // ),
+                                       ],
+                                     )),
+
+                                 //Image_1 Catagory Image_2
+                                 Container(
+                                     height: MediaQuery.of(context).size.width / 3.4,
+                                     width:
+                                     MediaQuery.of(context).size.width / 3.4,
+                                     decoration: BoxDecoration(
+                                       borderRadius:
+                                       BorderRadius.all(Radius.circular(20)),
+                                       image: DecorationImage(
+                                           image:
+                                           NetworkImage(model.getbarFollowersDet!.follow_by!.catalogue_image2!),
+                                           fit: BoxFit.cover),
+                                     ),
+                                     child: Stack(
+                                       children: [
+                                         // Align(
+                                         //   alignment: Alignment.bottomRight,
+                                         //   child: IconButton(
+                                         //     onPressed: () {
+                                         //       // model.imageFiles.removeAt(0);
+                                         //       // model.imageFiles.insert(0, File(""));
+                                         //       // model.notifyListeners();
+                                         //     },
+                                         //     icon: SvgPicture.asset(
+                                         //         ImageUtils.cancelIcon),
+                                         //     //icon: Icon(Icons.cancel_outlined, color: ColorUtils.text_red,),
+                                         //     padding: EdgeInsets.zero,
+                                         //     constraints: BoxConstraints(),
+                                         //     color: ColorUtils.white,
+                                         //     highlightColor:
+                                         //     ColorUtils.white,
+                                         //   ),
+                                         // ),
+                                       ],
+                                     )),
+                               ],
+                             ),
+                              SizedBox(height: 2.h),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  //Image_1 Catagory Image_3
+                                  Container(
+                                      height: MediaQuery.of(context).size.width / 3.4,
+                                      width:
+                                      MediaQuery.of(context).size.width / 3.4,
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(20)),
+                                        image: DecorationImage(
+                                            image:
+                                            NetworkImage(model.getbarFollowersDet!.follow_by!.catalogue_image3!),
+                                            fit: BoxFit.cover),
+                                      ),
+                                      child: Stack(
+                                        children: [
+                                          // Align(
+                                          //   alignment: Alignment.bottomRight,
+                                          //   child: IconButton(
+                                          //     onPressed: () {
+                                          //       // model.imageFiles.removeAt(0);
+                                          //       // model.imageFiles.insert(0, File(""));
+                                          //       // model.notifyListeners();
+                                          //     },
+                                          //     icon: SvgPicture.asset(
+                                          //         ImageUtils.cancelIcon),
+                                          //     //icon: Icon(Icons.cancel_outlined, color: ColorUtils.text_red,),
+                                          //     padding: EdgeInsets.zero,
+                                          //     constraints: BoxConstraints(),
+                                          //     color: ColorUtils.white,
+                                          //     highlightColor:
+                                          //     ColorUtils.white,
                                           //   ),
-                                          //   backgroundColor: Colors.transparent,
                                           // ),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                ),
-                              ),
-                              SizedBox(height: 3.h),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Friends",
-                                    style: TextStyle(
-                                      fontFamily: FontUtils.modernistBold,
-                                      fontSize: 2.3.t,
-                                      color: ColorUtils.black,
-                                    ),
-                                  ),
-                                  SizedBox(width: 2.w),
-                                  Text(
-                                    "See all",
-                                    style: TextStyle(
-                                        fontFamily: FontUtils.modernistRegular,
-                                        fontSize: 1.8.t,
-                                        color: ColorUtils.red_color,
-                                        decoration: TextDecoration.underline),
-                                  ),
+                                        ],
+                                      )),
+
+                                  //Image_1 Catagory Image_4
+                                  Container(
+                                      height: MediaQuery.of(context).size.width / 3.4,
+                                      width:
+                                      MediaQuery.of(context).size.width / 3.4,
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(20)),
+                                        image: DecorationImage(
+                                            image:
+                                            NetworkImage(model.getbarFollowersDet!.follow_by!.catalogue_image4!),
+                                            fit: BoxFit.cover),
+                                      ),
+                                      child: Stack(
+                                        children: [
+                                          // Align(
+                                          //   alignment: Alignment.bottomRight,
+                                          //   child: IconButton(
+                                          //     onPressed: () {
+                                          //       // model.imageFiles.removeAt(0);
+                                          //       // model.imageFiles.insert(0, File(""));
+                                          //       // model.notifyListeners();
+                                          //     },
+                                          //     icon: SvgPicture.asset(
+                                          //         ImageUtils.cancelIcon),
+                                          //     //icon: Icon(Icons.cancel_outlined, color: ColorUtils.text_red,),
+                                          //     padding: EdgeInsets.zero,
+                                          //     constraints: BoxConstraints(),
+                                          //     color: ColorUtils.white,
+                                          //     highlightColor:
+                                          //     ColorUtils.white,
+                                          //   ),
+                                          // ),
+                                        ],
+                                      )),
+
+                                  //Image_1 Catagory Image_5
+                                  Container(
+                                      height: MediaQuery.of(context).size.width / 3.4,
+                                      width:
+                                      MediaQuery.of(context).size.width / 3.4,
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(20)),
+                                        image: DecorationImage(
+                                            image:
+                                            NetworkImage(model.getbarFollowersDet!.follow_by!.catalogue_image5!),
+                                            fit: BoxFit.cover),
+                                      ),
+                                      child: Stack(
+                                        children: [
+                                          // Align(
+                                          //   alignment: Alignment.bottomRight,
+                                          //   child: IconButton(
+                                          //     onPressed: () {
+                                          //       // model.imageFiles.removeAt(0);
+                                          //       // model.imageFiles.insert(0, File(""));
+                                          //       // model.notifyListeners();
+                                          //     },
+                                          //     icon: SvgPicture.asset(
+                                          //         ImageUtils.cancelIcon),
+                                          //     //icon: Icon(Icons.cancel_outlined, color: ColorUtils.text_red,),
+                                          //     padding: EdgeInsets.zero,
+                                          //     constraints: BoxConstraints(),
+                                          //     color: ColorUtils.white,
+                                          //     highlightColor:
+                                          //     ColorUtils.white,
+                                          //   ),
+                                          // ),
+                                        ],
+                                      )),
                                 ],
                               ),
-                              SizedBox(height: 2.h),
-                              Container(
-                                child: GridView.builder(
-                                  padding: EdgeInsets.zero,
-                                  shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemCount: friendsList.length,
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 4,
-                                          mainAxisSpacing: 25,
-                                          crossAxisSpacing: 15),
-                                  itemBuilder: (context, index) {
-                                    return Center(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Image.asset(
-                                            friendsList[index]['image'],
-                                            height: 15.i,
-                                          ),
-                                          Expanded(
-                                              child: Text(
-                                            (friendsList[index]['title']),
-                                            maxLines: 2,
-                                            style: TextStyle(
-                                                fontFamily:
-                                                    FontUtils.modernistBold,
-                                                fontSize: 1.7.t),
-                                            textAlign: TextAlign.center,
-                                          ))
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
                               SizedBox(height: 3.h),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Mutual Friends",
-                                    style: TextStyle(
-                                      fontFamily: FontUtils.modernistBold,
-                                      fontSize: 2.3.t,
-                                      color: ColorUtils.black,
-                                    ),
-                                  ),
-                                  SizedBox(width: 2.w),
-                                  Text(
-                                    "See all",
-                                    style: TextStyle(
-                                        fontFamily: FontUtils.modernistRegular,
-                                        fontSize: 1.8.t,
-                                        color: ColorUtils.red_color,
-                                        decoration: TextDecoration.underline),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 2.h),
-                              Container(
-                                child: GridView.builder(
-                                  padding: EdgeInsets.zero,
-                                  shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemCount: friendsList.length,
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 4,
-                                          mainAxisSpacing: 25,
-                                          crossAxisSpacing: 15),
-                                  itemBuilder: (context, index) {
-                                    return Center(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Image.asset(
-                                            mutualFriendList[index]['image'],
-                                            height: 15.i,
-                                          ),
-                                          Expanded(
-                                              child: Text(
-                                            (mutualFriendList[index]['title']),
-                                            maxLines: 2,
-                                            style: TextStyle(
-                                                fontFamily:
-                                                    FontUtils.modernistBold,
-                                                fontSize: 1.7.t),
-                                            textAlign: TextAlign.center,
-                                          ))
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                              SizedBox(height: 0.h),
+
+                              //SizedBox(height: 3.h),
+                              // Row(
+                              //   mainAxisAlignment:
+                              //       MainAxisAlignment.spaceBetween,
+                              //   crossAxisAlignment: CrossAxisAlignment.center,
+                              //   children: [
+                              //     Text(
+                              //       "Friends",
+                              //       style: TextStyle(
+                              //         fontFamily: FontUtils.modernistBold,
+                              //         fontSize: 2.3.t,
+                              //         color: ColorUtils.black,
+                              //       ),
+                              //     ),
+                              //     SizedBox(width: 2.w),
+                              //     Text(
+                              //       "See all",
+                              //       style: TextStyle(
+                              //           fontFamily: FontUtils.modernistRegular,
+                              //           fontSize: 1.8.t,
+                              //           color: ColorUtils.red_color,
+                              //           decoration: TextDecoration.underline),
+                              //     ),
+                              //   ],
+                              // ),
+                              // SizedBox(height: 2.h),
+                              // Container(
+                              //   child: GridView.builder(
+                              //     padding: EdgeInsets.zero,
+                              //     shrinkWrap: true,
+                              //     physics: NeverScrollableScrollPhysics(),
+                              //     itemCount: friendsList.length,
+                              //     gridDelegate:
+                              //         SliverGridDelegateWithFixedCrossAxisCount(
+                              //             crossAxisCount: 4,
+                              //             mainAxisSpacing: 25,
+                              //             crossAxisSpacing: 15),
+                              //     itemBuilder: (context, index) {
+                              //       return Center(
+                              //         child: Column(
+                              //           crossAxisAlignment:
+                              //               CrossAxisAlignment.center,
+                              //           mainAxisAlignment:
+                              //               MainAxisAlignment.center,
+                              //           mainAxisSize: MainAxisSize.min,
+                              //           children: [
+                              //             Image.asset(
+                              //               friendsList[index]['image'],
+                              //               height: 15.i,
+                              //             ),
+                              //             Expanded(
+                              //                 child: Text(
+                              //               (friendsList[index]['title']),
+                              //               maxLines: 2,
+                              //               style: TextStyle(
+                              //                   fontFamily:
+                              //                       FontUtils.modernistBold,
+                              //                   fontSize: 1.7.t),
+                              //               textAlign: TextAlign.center,
+                              //             ))
+                              //           ],
+                              //         ),
+                              //       );
+                              //     },
+                              //   ),
+                              // ),
+                              // SizedBox(height: 3.h),
+                              // Row(
+                              //   mainAxisAlignment:
+                              //       MainAxisAlignment.spaceBetween,
+                              //   crossAxisAlignment: CrossAxisAlignment.center,
+                              //   children: [
+                              //     Text(
+                              //       "Mutual Friends",
+                              //       style: TextStyle(
+                              //         fontFamily: FontUtils.modernistBold,
+                              //         fontSize: 2.3.t,
+                              //         color: ColorUtils.black,
+                              //       ),
+                              //     ),
+                              //     SizedBox(width: 2.w),
+                              //     Text(
+                              //       "See all",
+                              //       style: TextStyle(
+                              //           fontFamily: FontUtils.modernistRegular,
+                              //           fontSize: 1.8.t,
+                              //           color: ColorUtils.red_color,
+                              //           decoration: TextDecoration.underline),
+                              //     ),
+                              //   ],
+                              // ),
+                              // SizedBox(height: 2.h),
+                              // Container(
+                              //   child: GridView.builder(
+                              //     padding: EdgeInsets.zero,
+                              //     shrinkWrap: true,
+                              //     physics: NeverScrollableScrollPhysics(),
+                              //     itemCount: friendsList.length,
+                              //     gridDelegate:
+                              //         SliverGridDelegateWithFixedCrossAxisCount(
+                              //             crossAxisCount: 4,
+                              //             mainAxisSpacing: 25,
+                              //             crossAxisSpacing: 15),
+                              //     itemBuilder: (context, index) {
+                              //       return Center(
+                              //         child: Column(
+                              //           crossAxisAlignment:
+                              //               CrossAxisAlignment.center,
+                              //           mainAxisAlignment:
+                              //               MainAxisAlignment.center,
+                              //           mainAxisSize: MainAxisSize.min,
+                              //           children: [
+                              //             Image.asset(
+                              //               mutualFriendList[index]['image'],
+                              //               height: 15.i,
+                              //             ),
+                              //             Expanded(
+                              //                 child: Text(
+                              //               (mutualFriendList[index]['title']),
+                              //               maxLines: 2,
+                              //               style: TextStyle(
+                              //                   fontFamily:
+                              //                       FontUtils.modernistBold,
+                              //                   fontSize: 1.7.t),
+                              //               textAlign: TextAlign.center,
+                              //             ))
+                              //           ],
+                              //         ),
+                              //       );
+                              //     },
+                              //   ),
+                              // ),
+                              // SizedBox(height: 0.h),
                             ],
                           ),
                         ),

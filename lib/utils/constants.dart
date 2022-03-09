@@ -27,6 +27,7 @@ class Constants {
   static const String drinkStatus = 'api/user/drinkStatus/';
   static const String discover = 'api/user/discover/';
   static const String FollowBar = 'api/user/follow/';
+  static const String CreateGrouppChat = 'api/group/create/';
 
   static const String GetFavoriteDrink = 'api/favorites/alcoholic_drink/';
   static const String GetFavoriteClub = 'api/favorites/night_club/';

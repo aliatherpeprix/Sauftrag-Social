@@ -70,6 +70,7 @@ dependencies:
   tutorial_coach_mark: ^1.2.1
   intl_phone_field:
   phone_number:
+  photo_view: ^0.13.0
 
 
 dev_dependencies:

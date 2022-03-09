@@ -59,7 +59,7 @@ class _BarFollowersState extends State<BarFollowers> {
                           )),
                       SizedBox(width: 2.w),
                       Text(
-                        "All Bars",
+                        "Bar Follower",
                         style: TextStyle(
                           color: ColorUtils.black,
                           fontFamily: FontUtils.modernistBold,
@@ -84,6 +84,8 @@ class _BarFollowersState extends State<BarFollowers> {
                             // model.barId = model.listOfBar[index].id;
                             // model.selectedBar = (model.listOfAllBars[index]);
                             // model.navigateToBarProfile();
+                            model.getbarFollowersDet = (model.getbarfollowers[index]);
+                            model.navigateToBarFollowerDet();
                           },
                           child:
                           // model.listOfAllBars[index].is_follow == true ?
@@ -108,7 +110,7 @@ class _BarFollowersState extends State<BarFollowers> {
                               children: [
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
-                                  child: Image.network(model.listOfAllBars[index].profile_picture!,
+                                  child: Image.network(model.getbarfollowers[index].follow_by!.profile_picture!,
                                     width: 15.i,
                                     height: 15.i,
                                     fit: BoxFit.cover,
@@ -123,7 +125,7 @@ class _BarFollowersState extends State<BarFollowers> {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         children: [
-                                          Text(model.listOfAllBars[index].username!,
+                                          Text(model.getbarfollowers[index].follow_by!.username!,
                                             style: TextStyle(
                                                 fontFamily: FontUtils.modernistBold,
                                                 fontSize: 1.9.t,
@@ -131,55 +133,33 @@ class _BarFollowersState extends State<BarFollowers> {
                                             ),
                                           ),
                                           SizedBox(width: 1.w,),
-                                          // Text(model.listOfBar[index].bar_kind!.toString(),
-                                          //   style: TextStyle(
-                                          //       fontFamily: FontUtils.modernistRegular,
-                                          //       fontSize: 1.6.t,
-                                          //       color: ColorUtils.red_color
-                                          //   ),
-                                          // )
+
                                         ],
                                       ),
-                                      // SizedBox(height: 0.8.h,),
-                                      // Row(
-                                      //   mainAxisAlignment: MainAxisAlignment.start,
-                                      //   crossAxisAlignment: CrossAxisAlignment.start,
-                                      //   children: [
-                                      //     SvgPicture.asset(ImageUtils.locationPin,),
-                                      //     SizedBox(width: 1.5.w,),
-                                      //     Container(
-                                      //       width: 50.w,
-                                      //       child: Text(model.listOfAllBars[index].address!,
-                                      //         style: TextStyle(
-                                      //           fontFamily: FontUtils.modernistRegular,
-                                      //           fontSize: 1.6.t,
-                                      //           color: ColorUtils.text_grey,
-                                      //         ),
-                                      //
-                                      //         maxLines: 1,
-                                      //         overflow: TextOverflow.ellipsis,
-                                      //       ),
-                                      //     ),
-                                      //   ],
-                                      // ),
-                                      // SizedBox(height: 0.8.h,),
-                                      // RatingBar.builder(
-                                      //   tapOnlyMode: false,
-                                      //   initialRating: model.listOfAllBars[index].total_ratings ?? 0.0,
-                                      //   // minRating: 1,
-                                      //   direction: Axis.horizontal,
-                                      //   allowHalfRating: true,
-                                      //   itemCount: 5,
-                                      //   itemSize: 4.5.i,
-                                      //   itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
-                                      //   itemBuilder: (context, _) => Icon(
-                                      //     Icons.star_rounded,
-                                      //     color: ColorUtils.red_color,
-                                      //   ),
-                                      //   onRatingUpdate: (rating) {
-                                      //     print(rating);
-                                      //   },
-                                      // ),
+                                      SizedBox(height: 1.h,),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          SvgPicture.asset(ImageUtils.locationPin,),
+                                          SizedBox(width: 1.5.w,),
+                                          Container(
+                                            width: 50.w,
+                                            child: Text(model.getbarfollowers[index].follow_by!.address!,
+                                              style: TextStyle(
+                                                fontFamily: FontUtils.modernistRegular,
+                                                fontSize: 1.6.t,
+                                                color: ColorUtils.text_grey,
+                                              ),
+
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 0.8.h,),
+
                                     ],
                                   ),
                                 ),
@@ -194,7 +174,7 @@ class _BarFollowersState extends State<BarFollowers> {
                     separatorBuilder: (context, index) {
                       return SizedBox(height:  SizeConfig.heightMultiplier * 2.5,);
                     },
-                    itemCount: model.listOfAllBars.length,
+                    itemCount: model.getbarfollowers.length,
                   ),
                 ),
 
