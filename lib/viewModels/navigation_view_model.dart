@@ -13,6 +13,7 @@ import 'package:sauftrag/bar/views/Drawer/bar_followers.dart';
 import 'package:sauftrag/bar/views/Drawer/follower_profile.dart';
 import 'package:sauftrag/bar/views/Drawer/followers.dart';
 import 'package:sauftrag/bar/views/Drawer/list_of_followBar.dart';
+import 'package:sauftrag/bar/views/Drawer/machedProfile_User.dart';
 import 'package:sauftrag/bar/views/Drawer/matched_screen.dart';
 import 'package:sauftrag/bar/views/Drawer/notifications.dart';
 import 'package:sauftrag/bar/views/Drawer/qr_code_scanner.dart';
@@ -300,6 +301,11 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateToFollowerList(){
     navigationKey.currentState!.push(PageTransition(child: FollowerProfile(), type: PageTransitionType.rightToLeftWithFade));
+
+  }
+
+  void navigateToMatchedProfileUser(){
+    navigationKey.currentState!.push(PageTransition(child: MatchedProfileUser(), type: PageTransitionType.rightToLeftWithFade));
 
   }
 

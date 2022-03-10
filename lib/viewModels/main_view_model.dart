@@ -159,6 +159,7 @@ class MainViewModel extends BaseViewModel {
   bool isUserProfile = false;
   bool addDrink = false;
   bool isFollow = false;
+  bool isLoading = false;
 
   bool editBool = false;
   var dio = Dio();
@@ -1406,6 +1407,10 @@ class MainViewModel extends BaseViewModel {
     navigationService.navigateToFollowerList();
   }
 
+  void navigateToMatchedProfileUser() {
+    navigationService.navigateToMatchedProfileUser();
+  }
+
   void navigateToBarFollowerDet() {
     navigationService.navigateToBarFollowerDet();
   }
@@ -2266,10 +2271,14 @@ class MainViewModel extends BaseViewModel {
   bool matched = false;
 
   List<UserMatchedModel> acceptMatchedtModel = [];
+  UserMatchedModel? getMatchedUserData;
+
   bool acceptMatchesLoader = false;
 
   List matcheImages = [];
   List matcheName = [];
+
+
 
   void acceptMatched(BuildContext context) async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();

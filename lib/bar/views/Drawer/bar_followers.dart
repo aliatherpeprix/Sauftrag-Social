@@ -59,7 +59,7 @@ class _BarFollowersState extends State<BarFollowers> {
                           )),
                       SizedBox(width: 2.w),
                       Text(
-                        "Bar Follower",
+                        "Bar Followers",
                         style: TextStyle(
                           color: ColorUtils.black,
                           fontFamily: FontUtils.modernistBold,

@@ -5,7 +5,7 @@ import 'package:sauftrag/models/user_models.dart';
 part 'get_bar_followers.g.dart';
 
 @JsonSerializable()
-class   GetBarFollower {
+class GetBarFollower {
 
   GetBarFollower();
 
