@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:sauftrag/bar/views/Auth/barTimingType.dart';
+import 'package:sauftrag/bar/views/Auth/getBarEventLocation.dart';
 import 'package:sauftrag/bar/views/Auth/media.dart';
 import 'package:sauftrag/bar/views/Auth/signUp.dart';
 import 'package:sauftrag/bar/views/Auth/signup_barmap.dart';
@@ -18,6 +19,7 @@ import 'package:sauftrag/bar/views/Drawer/matched_screen.dart';
 import 'package:sauftrag/bar/views/Drawer/notifications.dart';
 import 'package:sauftrag/bar/views/Drawer/qr_code_scanner.dart';
 import 'package:sauftrag/bar/views/Drawer/ranking_list.dart';
+import 'package:sauftrag/bar/views/Drawer/requestUserProfile.dart';
 import 'package:sauftrag/bar/views/Drawer/upcoming_event.dart';
 import 'package:sauftrag/bar/views/Home/bar_create_post.dart';
 import 'package:sauftrag/bar/views/Home/bar_drinks.dart';
@@ -171,6 +173,10 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateToMatchScreen(){
     navigationKey.currentState!.push(PageTransition(child: Match(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToMatchDetailScreen(dynamic images,String? name,String? address,List alcoholDrink,List nightClub, List partyVacation, dynamic id){
+    navigationKey.currentState!.push(PageTransition(child: RequestedProfile(images: images,name: name!,address: address,alcoholDrink: alcoholDrink,nightClub:nightClub,partyVacation: partyVacation,id: id,), type: PageTransitionType.rightToLeftWithFade));
   }
 
   // void navigateToFriendListScreen(){
@@ -409,6 +415,10 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateToAddAddressBarScreen(){
     navigationKey.currentState!.push(PageTransition(child: SignupBarMap(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToBarEventLocationBarScreen(){
+    navigationKey.currentState!.push(PageTransition(child: BarEventLocation(), type: PageTransitionType.rightToLeftWithFade));
   }
 
 

@@ -13,6 +13,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:sauftrag/bar/views/Drawer/bar_followers.dart';
+import 'package:sauftrag/models/follow_bar.dart';
 import 'package:sauftrag/models/get_bar_followers.dart';
 import 'package:sauftrag/models/listOfFollowing_Bars.dart';
 import 'package:sauftrag/models/request_match_model.dart';
@@ -53,6 +54,7 @@ import 'package:sauftrag/services/faqs.dart';
 import 'package:sauftrag/services/followBar.dart';
 import 'package:sauftrag/services/get_barFollowers.dart';
 import 'package:sauftrag/services/get_match_users.dart';
+import 'package:sauftrag/services/get_user_to_user.dart';
 import 'package:sauftrag/services/listOfBars.dart';
 
 import 'package:sauftrag/services/privacyPolicy.dart';
@@ -92,6 +94,7 @@ class MainViewModel extends BaseViewModel {
   var followbar = Followbar();
   var getAllBar = AllBarUsers();
   var getbarFollowers = BARFollowers();
+  var getUserInfo = UserGetAnotherUser();
 
   Barcode? result;
 
@@ -221,7 +224,11 @@ class MainViewModel extends BaseViewModel {
 
   ListOfBarsModel? selectedBar;
 
+  UserModel? matchedUser;
+
   ListOfBarsModel? barFollowers;
+
+  List<UserModel>? userDetails;
 
 
   List<ListOfBarsModel> listOfAllBars = [];
@@ -990,6 +997,23 @@ class MainViewModel extends BaseViewModel {
     });
   }
 
+  Future updateCurrentLocationBar() async {
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+        .then((Position position) async {
+      // currentPosition = position;
+      notifyListeners();
+      // currentPosition;
+      longitude = position.longitude;
+      latitude = position.latitude;
+      notifyListeners();
+      var updatelocationResponse = await updateLocation.UpdateLocationBar(
+          latitude.toString(), longitude.toString(), barModel!.id.toString());
+      print(updatelocationResponse);
+    }).catchError((e) {
+      print(e);
+    });
+  }
+
   // var channel = "getting_started";
 
   List chats = [];
@@ -1507,6 +1531,20 @@ class MainViewModel extends BaseViewModel {
     navigationService.navigateToBarFollowersListScreen();
   }
 
+  void navigateToMatchDetailScreen(
+      dynamic images,
+      String? name,
+      String address,
+      List alcoholDrink,
+      List nightClub,
+      List partyVacation,
+      dynamic id,
+      ) {
+    navigationService.navigateToMatchDetailScreen(
+        images, name, address, alcoholDrink, nightClub, partyVacation, id
+    );
+  }
+
   Future saveUserDetails() async {
     List tempList = [];
 
@@ -1876,7 +1914,8 @@ class MainViewModel extends BaseViewModel {
   }
 
   postBarFollow() async {
-    isFaqs = true;
+    isLoading = true;
+    notifyListeners();
     bool follow =! selectedBar!.is_follow!;
 
 
@@ -1891,12 +1930,14 @@ class MainViewModel extends BaseViewModel {
     //   //isPrivacyPolicy = false;
     //
     // }
-    if (getListofbar is Followbar) {
+    if (getListofbar is FollowBAR) {
       var index = listOfAllBars.indexOf(selectedBar!);
-      listOfAllBars[index].is_follow = follow;
+      listOfAllBars[index].is_follow = (getListofbar as FollowBAR).user!.is_follow!;
+      notifyListeners();
       //listOfBar = getListofbar;
-      print(listOfBar);
+      //print(listOfAllBars);
     }   else {
+      isLoading = false;
       DialogUtils().showDialog(MyErrorWidget(
         error: "Some thing went wrong",
       ));
@@ -1904,7 +1945,7 @@ class MainViewModel extends BaseViewModel {
 
       return;
     }
-    isFaqs = false;
+    isLoading = false;
     notifyListeners();
     print(getFaqsList);
   }
@@ -2105,6 +2146,8 @@ class MainViewModel extends BaseViewModel {
       notifyListeners();
     }
   }
+
+  RequestMatchModel? requestProfileDetails;
 
   List<RequestMatchModel> requestModel = [];
   bool matchesLoader = false;
@@ -2440,4 +2483,33 @@ class MainViewModel extends BaseViewModel {
       notifyListeners();
     }
   }
+
+  getAnitherUserInfo(String id) async {
+    isFaqs = true;
+
+    var getAnotherUserDetails = await getUserInfo.GetAnotherUserInfo(id);
+    print(getAnotherUserDetails);
+    // if (getFaqList is String){
+    //   faqs = getFaqList;
+    //   //isPrivacyPolicy = false;
+    //
+    // }ListOfBarsModel
+    if (getAnotherUserDetails is UserModel) {
+      matchedUser = getAnotherUserDetails;
+      print(matchedUser);
+    }   else {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Some thing went wrong",
+      ));
+      //isPrivacyPolicy = false;
+
+      return;
+    }
+    isFaqs = false;
+    notifyListeners();
+    print(getFaqsList);
+  }
+
+
+
 }

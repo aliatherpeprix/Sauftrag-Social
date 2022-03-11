@@ -42,6 +42,7 @@ class Constants {
   static const String order = 'api/order/create/';
   static const String GetMatches = 'api/user/match/';
   static const String GetListOfBar = 'api/user/getBarProfile/';
+  static const String GetUserToUserInfo = 'api/user/getAnotherUserProfile/';
 
   static const String accountDelete = 'api/account/delete/';
   static const String accountDeactivate = 'api/account/deactivate/';

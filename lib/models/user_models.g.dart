@@ -32,7 +32,10 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel()
   ..data_protection = json['data_protection'] as bool?
   ..password = json['password'] as String?
   ..password2 = json['password2'] as String?
-  ..token = json['token'] as String?;
+  ..token = json['token'] as String?
+  ..friends = (json['friends'] as List<dynamic>?)
+      ?.map((e) => UserMatchedModel.fromJson(e as Map<String, dynamic>))
+      .toList();
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'id': instance.id,
@@ -61,4 +64,5 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'password': instance.password,
       'password2': instance.password2,
       'token': instance.token,
+      'friends': instance.friends,
     };

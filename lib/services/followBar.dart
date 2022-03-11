@@ -28,7 +28,7 @@ class Followbar {
       var param = FormData.fromMap({
 
         'follow_id': follow_id,
-        'isFollow' : isFollow,
+        if (isFollow)'isFollow' : isFollow,
 
       });
 
@@ -44,7 +44,7 @@ class Followbar {
           var userData = UserModel.fromJson(response.data['data']);
           return userData;
         }*/
-        var userData = FollowBAR.fromJson(response.data["user"]);
+        var userData = FollowBAR.fromJson(response.data);
         return userData;}
       //user not found
       else {

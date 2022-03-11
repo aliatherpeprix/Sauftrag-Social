@@ -535,31 +535,39 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                   borderRadius: BorderRadius.all(Radius.circular(Dimensions.roundCorner)),
                                   border: Border.all(color: ColorUtils.divider)
                               ),
-                              child: Row(
-                                children: [
-                                  SvgPicture.asset(ImageUtils.locationIcon),
-                                  SizedBox(width: 4.w),
-                                  Expanded(
-                                    child: TextField(
-                                      //focusNode: model.logInEmailFocus,
-                                      controller: model.locationController,
-                                      keyboardType: TextInputType.text,
-                                      textInputAction: TextInputAction.next,
-                                      style: TextStyle(
-                                        color: ColorUtils.text_red,
-                                        fontFamily: FontUtils.modernistRegular,
-                                        fontSize: 1.8.t,
-                                      ),
-                                      decoration: const InputDecoration(
-                                        border: InputBorder.none,
-                                        isDense:true,
-                                        contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                                        // errorText: model.locationError
+                              child: GestureDetector(
+                                onTap: () async {
+                                  model.navigateToBarEventLocationBarScreen();
+                                  var position = await model.determinePosition();
+                                  model.latitude = position.latitude;
+                                  model.latitude = position.longitude;
+                                },
+                                child: Row(
+                                  children: [
+                                    SvgPicture.asset(ImageUtils.locationIcon),
+                                    SizedBox(width: 4.w),
+                                    Expanded(
+                                      child: TextField(
+                                        //focusNode: model.logInEmailFocus,
+                                        controller: model.locationController,
+                                        keyboardType: TextInputType.text,
+                                        textInputAction: TextInputAction.next,
+                                        style: TextStyle(
+                                          color: ColorUtils.text_red,
+                                          fontFamily: FontUtils.modernistRegular,
+                                          fontSize: 1.8.t,
+                                        ),
+                                        decoration: const InputDecoration(
+                                          border: InputBorder.none,
+                                          isDense:true,
+                                          contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                                          // errorText: model.locationError
+                                        ),
                                       ),
                                     ),
-                                  ),
 
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),

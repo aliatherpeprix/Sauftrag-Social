@@ -8,10 +8,10 @@ part of 'follow_bar.dart';
 
 FollowBAR _$FollowBARFromJson(Map<String, dynamic> json) => FollowBAR()
   ..details = json['details'] as String?
-  ..status = json['status'] as String?
-  ..user = (json['user'] as List<dynamic>?)
-      ?.map((e) => NewBarModel.fromJson(e as Map<String, dynamic>))
-      .toList();
+  ..status = json['status'] as int?
+  ..user = json['user'] == null
+      ? null
+      : NewBarModel.fromJson(json['user'] as Map<String, dynamic>);
 
 Map<String, dynamic> _$FollowBARToJson(FollowBAR instance) => <String, dynamic>{
       'details': instance.details,

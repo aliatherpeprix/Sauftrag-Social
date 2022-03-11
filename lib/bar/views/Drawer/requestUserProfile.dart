@@ -1,8 +1,6 @@
-import 'dart:ui';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:page_view_indicators/page_view_indicators.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/favorites_model.dart';
 import 'package:sauftrag/services/addFavorites.dart';
@@ -14,12 +12,12 @@ import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/widgets/all_page_loader.dart';
 import 'package:sauftrag/widgets/back_arrow_with_container.dart';
-import 'package:sauftrag/widgets/loader.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:stacked/stacked.dart';
 
-class Profile extends StatefulWidget {
-  List<String> images;
+class RequestedProfile extends StatefulWidget {
+
+  dynamic images;
   String? name;
   String? address;
   List alcoholDrink;
@@ -27,7 +25,8 @@ class Profile extends StatefulWidget {
   List partyVacation;
   dynamic id;
 
-  Profile({
+  RequestedProfile({
+
     Key? key,
     required this.images,
     required this.name,
@@ -36,15 +35,16 @@ class Profile extends StatefulWidget {
     required this.nightClub,
     required this.partyVacation,
     required this.id,
+
   }) : super(key: key);
 
   @override
-  _ProfileState createState() => _ProfileState();
+  _RequestedProfileState createState() => _RequestedProfileState();
 }
 
-class _ProfileState extends State<Profile> {
-  final currentPageNotifier = ValueNotifier<int>(0);
+class _RequestedProfileState extends State<RequestedProfile> {
 
+  final currentPageNotifier = ValueNotifier<int>(0);
   late PageController controller;
 
   @override
@@ -61,7 +61,12 @@ class _ProfileState extends State<Profile> {
     return ViewModelBuilder<MainViewModel>.reactive(
       //onModelReady: (data) => data.initializeLoginModel(),
       onModelReady: (model) async {
-
+        model.drinkList =
+        await Addfavorites().GetFavoritesDrink();
+        model.clubList =
+        await Addfavorites().GetFavoritesClub();
+        model.vacationList =
+        await Addfavorites().GetFavoritesPartyVacation();
 
       },
       builder: (context, model, child) {
@@ -69,8 +74,7 @@ class _ProfileState extends State<Profile> {
           onTap: () {
             FocusScope.of(context).unfocus();
           },
-          child: model.acceptMatchesLoader ? Center(child: AllPageLoader()) :
-          SafeArea(
+          child: SafeArea(
             top: false,
             bottom: false,
             child: Scaffold(
@@ -98,13 +102,13 @@ class _ProfileState extends State<Profile> {
                                               //borderRadius: BorderRadius.all(Radius.circular(20)),
                                               image: DecorationImage(
                                                   image: NetworkImage(
-                                                      widget.images[position]),
-                                                  fit: BoxFit.cover),
+                                                      widget.images),
+                                                  fit: BoxFit.fill),
                                             ),
                                             alignment: Alignment.center,
                                           );
                                         },
-                                        itemCount: widget.images.length,
+                                        itemCount: 1,
                                         controller: controller,
                                         onPageChanged: (int index) {
                                           currentPageNotifier.value = index;
@@ -125,7 +129,7 @@ class _ProfileState extends State<Profile> {
                                           child: SmoothPageIndicator(
                                               controller:
                                               controller, // PageController
-                                              count: widget.images.length,
+                                              count: 1,
                                               effect: WormEffect(
                                                   spacing: 10,
                                                   dotWidth: 5,
@@ -352,8 +356,7 @@ class _ProfileState extends State<Profile> {
                                 .map((element) => ElevatedButton(
                               onPressed: () {},
                               child: Text(
-                                  "${(model.drinkList.where((drink)
-                                  => element==drink.id).first as FavoritesModel).name}"),
+                              "${(model.drinkList.where((drink)=> element==drink.id).first as FavoritesModel).name}"),
                               style: ElevatedButton.styleFrom(
                                 primary: ColorUtils.white,
                                 onPrimary: ColorUtils.text_red,
@@ -405,8 +408,7 @@ class _ProfileState extends State<Profile> {
                                 .map((element) => ElevatedButton(
                               onPressed: () {},
                               child: Text(
-                                  "${(model.clubList.where((drink)
-                                  => element==drink.id).first as FavoritesModel).name}"),
+                                 "${(model.clubList.where((drink) => element==drink.id).first as FavoritesModel).name}"),
                               style: ElevatedButton.styleFrom(
                                 primary: ColorUtils.white,
                                 onPrimary: ColorUtils.text_red,
@@ -458,8 +460,8 @@ class _ProfileState extends State<Profile> {
                                 .map((element) => ElevatedButton(
                               onPressed: () {},
                               child: Text(
-                                  "${(model.vacationList.where((drink)
-                                  => element==drink.id).first as FavoritesModel).name}"),
+                                "${(model.vacationList.where((drink) => element==drink.id).first as FavoritesModel).name}"
+                              ),
                               style: ElevatedButton.styleFrom(
                                 primary: ColorUtils.white,
                                 onPrimary: ColorUtils.text_red,
@@ -490,69 +492,69 @@ class _ProfileState extends State<Profile> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                model.navigateBack();
-                                model.catalogImages.remove(widget.images);
-
-                                model.notifyListeners();
-                              },
-                              child: SvgPicture.asset(ImageUtils.dislikeIcon),
-                              style: ElevatedButton.styleFrom(
-                                shadowColor: ColorUtils.red_color,
-                                primary: ColorUtils.red_color.withOpacity(0.9),
-                                onPrimary: ColorUtils.white,
-                                //padding: EdgeInsets.symmetric(vertical: Dimensions.containerVerticalPadding),
-                                padding: EdgeInsets.symmetric(horizontal: 0),
-                                elevation: 3,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(35),
-                                  //side: BorderSide(color: ColorUtils.divider, width: 1)
-                                ),
-                                textStyle: TextStyle(
-                                  color: ColorUtils.white,
-                                  fontFamily: FontUtils.modernistBold,
-                                  fontSize: 1.8.t,
-                                  //height: 0
-                                ),
-                              ),
-                            ),
-                            FloatingActionButton(
-                              onPressed: () {
-                                controller.animateToPage(0, duration: Duration(milliseconds: 200), curve: Curves.easeIn);
-                              },
-                              child: SvgPicture.asset(ImageUtils.repeatIcon),
-                              backgroundColor: ColorUtils.white,
-                            ),
-                            ElevatedButton(
-                              onPressed: ()async {
-                                if(model.userMatchLoader){
-
-                                }else{
-                                  await  model.UserMatches(context,widget.id!);
-                                  model.navigateToMatchScreen();
-                                }
-                              },
-                              child: SvgPicture.asset(ImageUtils.likeIcon),
-                              style: ElevatedButton.styleFrom(
-                                shadowColor: Colors.green,
-                                primary: Colors.green.withOpacity(0.9),
-                                onPrimary: ColorUtils.white,
-                                //padding: EdgeInsets.symmetric(vertical: Dimensions.containerVerticalPadding),
-                                padding: EdgeInsets.symmetric(horizontal: 0),
-                                elevation: 3,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(35),
-                                  //side: BorderSide(color: ColorUtils.divider, width: 1)
-                                ),
-                                textStyle: TextStyle(
-                                  color: ColorUtils.white,
-                                  fontFamily: FontUtils.modernistBold,
-                                  fontSize: 1.8.t,
-                                  //height: 0
-                                ),
-                              ),
-                            ),
+                            // ElevatedButton(
+                            //   onPressed: () {
+                            //     model.navigateBack();
+                            //     model.catalogImages.remove(widget.images);
+                            //
+                            //     model.notifyListeners();
+                            //   },
+                            //   child: SvgPicture.asset(ImageUtils.dislikeIcon),
+                            //   style: ElevatedButton.styleFrom(
+                            //     shadowColor: ColorUtils.red_color,
+                            //     primary: ColorUtils.red_color.withOpacity(0.9),
+                            //     onPrimary: ColorUtils.white,
+                            //     //padding: EdgeInsets.symmetric(vertical: Dimensions.containerVerticalPadding),
+                            //     padding: EdgeInsets.symmetric(horizontal: 0),
+                            //     elevation: 3,
+                            //     shape: RoundedRectangleBorder(
+                            //       borderRadius: BorderRadius.circular(35),
+                            //       //side: BorderSide(color: ColorUtils.divider, width: 1)
+                            //     ),
+                            //     textStyle: TextStyle(
+                            //       color: ColorUtils.white,
+                            //       fontFamily: FontUtils.modernistBold,
+                            //       fontSize: 1.8.t,
+                            //       //height: 0
+                            //     ),
+                            //   ),
+                            // ),
+                            // FloatingActionButton(
+                            //   onPressed: () {
+                            //     controller.animateToPage(0, duration: Duration(milliseconds: 200), curve: Curves.easeIn);
+                            //   },
+                            //   child: SvgPicture.asset(ImageUtils.repeatIcon),
+                            //   backgroundColor: ColorUtils.white,
+                            // ),
+                            // ElevatedButton(
+                            //   onPressed: ()async {
+                            //     if(model.userMatchLoader){
+                            //
+                            //     }else{
+                            //       await  model.UserMatches(context,widget.id!);
+                            //       model.navigateToMatchScreen();
+                            //     }
+                            //   },
+                            //   child: SvgPicture.asset(ImageUtils.likeIcon),
+                            //   style: ElevatedButton.styleFrom(
+                            //     shadowColor: Colors.green,
+                            //     primary: Colors.green.withOpacity(0.9),
+                            //     onPrimary: ColorUtils.white,
+                            //     //padding: EdgeInsets.symmetric(vertical: Dimensions.containerVerticalPadding),
+                            //     padding: EdgeInsets.symmetric(horizontal: 0),
+                            //     elevation: 3,
+                            //     shape: RoundedRectangleBorder(
+                            //       borderRadius: BorderRadius.circular(35),
+                            //       //side: BorderSide(color: ColorUtils.divider, width: 1)
+                            //     ),
+                            //     textStyle: TextStyle(
+                            //       color: ColorUtils.white,
+                            //       fontFamily: FontUtils.modernistBold,
+                            //       fontSize: 1.8.t,
+                            //       //height: 0
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         ),
                         SizedBox(height: 2.h),
