@@ -15,6 +15,7 @@ import 'package:intl/intl.dart';
 import 'package:sauftrag/bar/views/Drawer/bar_followers.dart';
 import 'package:sauftrag/models/follow_bar.dart';
 import 'package:sauftrag/models/get_bar_followers.dart';
+import 'package:sauftrag/models/get_bar_upcoming_event.dart';
 import 'package:sauftrag/models/listOfFollowing_Bars.dart';
 import 'package:sauftrag/models/request_match_model.dart';
 import 'package:sauftrag/models/user_matched.dart';
@@ -54,6 +55,7 @@ import 'package:sauftrag/services/faqs.dart';
 import 'package:sauftrag/services/followBar.dart';
 import 'package:sauftrag/services/get_barFollowers.dart';
 import 'package:sauftrag/services/get_match_users.dart';
+import 'package:sauftrag/services/get_upcoming_events.dart';
 import 'package:sauftrag/services/get_user_to_user.dart';
 import 'package:sauftrag/services/listOfBars.dart';
 
@@ -95,6 +97,7 @@ class MainViewModel extends BaseViewModel {
   var getAllBar = AllBarUsers();
   var getbarFollowers = BARFollowers();
   var getUserInfo = UserGetAnotherUser();
+  var getBarUpcomingEvents = UpcomingEvents();
 
   Barcode? result;
 
@@ -230,8 +233,10 @@ class MainViewModel extends BaseViewModel {
 
   List<UserModel>? userDetails;
 
-
   List<ListOfBarsModel> listOfAllBars = [];
+
+  List<GetUpcomingEvent> listOfUpcomingEvents = [];
+  GetUpcomingEvent? selectedUpcomingEvents;
   //String? faqs;
 
   List contactChecked = [];
@@ -986,7 +991,7 @@ class MainViewModel extends BaseViewModel {
       // currentPosition = position;
       notifyListeners();
       // currentPosition;
-      longitude = position.longitude;
+      longitude = position. longitude;
       latitude = position.latitude;
       notifyListeners();
       var updatelocationResponse = await updateLocation.UpdateLocation(
@@ -1404,6 +1409,10 @@ class MainViewModel extends BaseViewModel {
 
   void navigateToUserDetailSettings() {
     navigationService.navigateToUserDetailSettings();
+  }
+
+  void navigateToUpcomingBarEventDetails() {
+    navigationService.navigateToUpcomingBarEventDetails();
   }
 
   void navigateToUpcomingBarEventScreen() {
@@ -1874,6 +1883,32 @@ class MainViewModel extends BaseViewModel {
     if (getListofAllBar is List<ListOfBarsModel>) {
       listOfAllBars = getListofAllBar;
       print(listOfAllBars);
+    }   else {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Some thing went wrong",
+      ));
+      //isPrivacyPolicy = false;
+
+      return;
+    }
+    isFaqs = false;
+    notifyListeners();
+    print(getFaqsList);
+  }
+
+  getListOfUpcomingEvents() async {
+    isFaqs = true;
+
+    var listOfUpcomingEvent = await getBarUpcomingEvents.GetUpcomingEvents();
+    print(listOfUpcomingEvent);
+    // if (getFaqList is String){
+    //   faqs = getFaqList;
+    //   //isPrivacyPolicy = false;
+    //
+    // }ListOfBarsModel
+    if (listOfUpcomingEvent is List<GetUpcomingEvent>) {
+      listOfUpcomingEvents = listOfUpcomingEvent;
+      print(listOfUpcomingEvents);
     }   else {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Some thing went wrong",

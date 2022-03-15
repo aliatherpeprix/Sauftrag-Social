@@ -6,6 +6,7 @@ import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
+import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:stacked/stacked.dart';
@@ -21,7 +22,9 @@ class _UpcomingBarEventState extends State<UpcomingBarEvent> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<MainViewModel>.reactive(
-
+      onModelReady: (model) {
+        model.getListOfUpcomingEvents();
+      },
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
       builder: (context, model, child) {
@@ -67,80 +70,97 @@ class _UpcomingBarEventState extends State<UpcomingBarEvent> {
                   child: ListView.separated(
                     padding: EdgeInsets.zero,
                     scrollDirection: Axis.vertical,
-                    physics: const AlwaysScrollableScrollPhysics(),
+                    physics: BouncingScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: EdgeInsets.symmetric(horizontal:SizeConfig.widthMultiplier * 4,),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: ColorUtils.black.withOpacity(0.1),
-                                spreadRadius: 0,
-                                blurRadius: 10,
-                                offset: Offset(0, 5), // changes position of shadow
-                              ),
-                            ],
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(18)),
-                            border: Border.all(color: ColorUtils.red_color),
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 2.w,vertical: 2.h),
-                                child: Row(
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: Image.asset(model.places[index]["image"],
-                                        width: 20.i,
-                                        height: 20.i,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    SizedBox(width: 3.w,),
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(model.places[index]["date"],
-                                          style: TextStyle(
-                                              fontFamily: FontUtils.modernistRegular,
-                                              fontSize: 1.7.t,
-                                              color: ColorUtils.text_red
-                                          ),
-                                        ),
-                                        SizedBox(height: 1.h,),
-                                        Text(model.places[index]["eventName"],
-                                          style: TextStyle(
-                                              fontFamily: FontUtils.modernistBold,
-                                              fontSize: 2.2.t,
-                                              color: ColorUtils.black
-                                          ),
-                                        ),
-                                        SizedBox(height: 1.h,),
-                                        Row(
-                                          children: [
-                                            SvgPicture.asset(model.places[index]["image1"]),
-                                            SizedBox(width: 2.w,),
-                                            Text(model.places[index]["location"],
-                                              style: TextStyle(
-                                                  fontFamily: FontUtils.modernistRegular,
-                                                  fontSize: 1.7.t,
-                                                  color: ColorUtils.text_dark
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ],
+                        child: GestureDetector(
+                          onTap: (){
+                            model.selectedUpcomingEvents = (model.listOfUpcomingEvents[index]);
+                            model.navigateToUpcomingBarEventDetails();
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: ColorUtils.black.withOpacity(0.1),
+                                  spreadRadius: 0,
+                                  blurRadius: 10,
+                                  offset: Offset(0, 5), // changes position of shadow
                                 ),
-                              ),
-                            ],
+                              ],
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all(Radius.circular(18)),
+                              border: Border.all(color: ColorUtils.red_color),
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 2.w,vertical: 2.h),
+                                  child: Row(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Image.network(model.listOfUpcomingEvents[index].media![0].media,
+                                          width: 20.i,
+                                          height: 20.i,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      SizedBox(width: 3.w,),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                         Row(
+                                           children: [
+                                             Text(model.listOfUpcomingEvents[index].event_date! + " , ",
+                                               style: TextStyle(
+                                                   fontFamily: FontUtils.modernistRegular,
+                                                   fontSize: 1.7.t,
+                                                   color: ColorUtils.text_red
+                                               ),
+                                             ),
+                                             Text(model.listOfUpcomingEvents[index].start_time!,
+                                               style: TextStyle(
+                                                   fontFamily: FontUtils.modernistRegular,
+                                                   fontSize: 1.7.t,
+                                                   color: ColorUtils.text_red
+                                               ),
+                                             ),
+                                           ],
+                                         ),
+                                          SizedBox(height: 1.h,),
+                                          Text(model.listOfUpcomingEvents[index].name!,
+                                            style: TextStyle(
+                                                fontFamily: FontUtils.modernistBold,
+                                                fontSize: 2.2.t,
+                                                color: ColorUtils.black
+                                            ),
+                                          ),
+                                          SizedBox(height: 1.h,),
+                                          Row(
+                                            children: [
+                                              SvgPicture.asset(ImageUtils.location_icon),
+                                              SizedBox(width: 2.w,),
+                                              Text(model.listOfUpcomingEvents[index].location!,
+                                                style: TextStyle(
+                                                    fontFamily: FontUtils.modernistRegular,
+                                                    fontSize: 1.7.t,
+                                                    color: ColorUtils.text_dark
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       );
@@ -148,9 +168,10 @@ class _UpcomingBarEventState extends State<UpcomingBarEvent> {
                     separatorBuilder: (context, index) {
                       return SizedBox(height:  SizeConfig.heightMultiplier * 2.5,);
                     },
-                    itemCount: model.places.length,
+                    itemCount: model.listOfUpcomingEvents.length,
                   ),
                 ),
+                SizedBox(height: SizeConfig.heightMultiplier * 2,),
 
               ],
             ),

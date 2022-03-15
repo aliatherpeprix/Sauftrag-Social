@@ -51,6 +51,7 @@ import 'package:sauftrag/views/Home/swipe.dart';
 import 'package:sauftrag/views/MapSearch/map_screen.dart';
 import 'package:sauftrag/views/MapSearch/search.dart';
 import 'package:sauftrag/views/NewsFeed/all_event_list.dart';
+import 'package:sauftrag/views/NewsFeed/upcoming_event_details.dart';
 import 'package:sauftrag/views/NewsFeed/upcoming_event_list.dart';
 import 'package:sauftrag/views/UserFriendList/contact_list.dart';
 import 'package:sauftrag/views/UserFriendList/create_group.dart';
@@ -272,6 +273,11 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateToMapSearchScreen(){
     navigationKey.currentState!.push(PageTransition(child: Search(), type: PageTransitionType.rightToLeftWithFade));
+
+  }
+
+  void navigateToUpcomingBarEventDetails(){
+    navigationKey.currentState!.push(PageTransition(child: UpcomingEventDetails(), type: PageTransitionType.rightToLeftWithFade));
 
   }
 

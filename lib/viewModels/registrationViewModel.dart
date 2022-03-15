@@ -1089,8 +1089,8 @@ class RegistrationViewModel extends BaseViewModel {
           usermodel.password2!,
           usermodel.phone_no!,
           usermodel.relation_ship.toString(),
-          latitude.toString(),
-          longitude.toString(),
+          latitude.toStringAsFixed(5),
+          longitude.toStringAsFixed(5),
           usermodel.address!,
           usermodel.gender!.toString(),
           usermodel.dob.toString(),
@@ -1392,13 +1392,13 @@ class RegistrationViewModel extends BaseViewModel {
       notifyListeners();
       return;
     }
-    // if (signUpPhoneController.text.length < 7) {
-    //   isSigningUp = false;
-    //   DialogUtils().showDialog(
-    //       MyErrorWidget(error: "Mobile number should contain 11 digits"));
-    //   notifyListeners();
-    //   return;
-    // }
+    if (signUpPhoneController.text.length < 14) {
+      isSigningUp = false;
+      DialogUtils().showDialog(
+          MyErrorWidget(error: "Mobile number should contain 11 digits"));
+      notifyListeners();
+      return;
+    }
     // if (!signUpPhoneController.text.toString().startsWith("0")) {
     //   isSigningUp = false;
     //   DialogUtils().showDialog(

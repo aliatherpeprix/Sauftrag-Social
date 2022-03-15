@@ -14,7 +14,6 @@ class GetNewsFeed {
 
   int? id;
   NewsfeedPostId?  post_id;
-
   String? created_at;
   String? updated_at;
 
