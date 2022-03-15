@@ -26,8 +26,10 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Privacy - Camera Usage Description</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>App requires location permission for map</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Need to use location for Bar</string>
+	<string>App requires location permission for map</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Privacy - Microphone Usage Description</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -36,10 +38,6 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>App requires location permission for map</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>App requires location permission for map</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -53,5 +51,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSBonjourServices</key>
+    	<array>
+    		<string>_dartobservatory._tcp.</string>
+    	</array>
 </dict>
 </plist>

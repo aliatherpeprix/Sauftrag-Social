@@ -151,7 +151,7 @@ class NavigationViewModel extends BaseViewModel{
     navigationKey.currentState!.pushAndRemoveUntil(PageTransition(child: MainView(index: 3), type: PageTransitionType.rightToLeftWithFade),(Route<dynamic> route) => false);
   }
 
-  void navigateToHomeBarScreen(){
+  void  navigateToHomeBarScreen(){
     navigationKey.currentState!.pushAndRemoveUntil(PageTransition(child: MainViewBar(index: 0), type: PageTransitionType.rightToLeftWithFade),(Route<dynamic> route) => false);
   }
 
