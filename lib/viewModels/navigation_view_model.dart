@@ -51,6 +51,7 @@ import 'package:sauftrag/views/Home/swipe.dart';
 import 'package:sauftrag/views/MapSearch/map_screen.dart';
 import 'package:sauftrag/views/MapSearch/search.dart';
 import 'package:sauftrag/views/NewsFeed/all_event_list.dart';
+import 'package:sauftrag/views/NewsFeed/ongoing_user_event.dart';
 import 'package:sauftrag/views/NewsFeed/upcoming_event_details.dart';
 import 'package:sauftrag/views/NewsFeed/upcoming_event_list.dart';
 import 'package:sauftrag/views/UserFriendList/contact_list.dart';
@@ -130,6 +131,10 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateToFollowersListScreen(){
     navigationKey.currentState!.push(PageTransition(child: Followers(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToOngoingUsersScreen(){
+    navigationKey.currentState!.push(PageTransition(child: OngoingEventUsers(), type: PageTransitionType.rightToLeftWithFade));
   }
 
   void navigateToBarFollowersListScreen(){

@@ -1392,13 +1392,13 @@ class RegistrationViewModel extends BaseViewModel {
       notifyListeners();
       return;
     }
-    if (signUpPhoneController.text.length < 14) {
-      isSigningUp = false;
-      DialogUtils().showDialog(
-          MyErrorWidget(error: "Mobile number should contain 11 digits"));
-      notifyListeners();
-      return;
-    }
+    // if (signUpPhoneController.text.length < 7) {
+    //   isSigningUp = false;
+    //   DialogUtils().showDialog(
+    //       MyErrorWidget(error: "Mobile number should contain 11 digits"));
+    //   notifyListeners();
+    //   return;
+    // }
     // if (!signUpPhoneController.text.toString().startsWith("0")) {
     //   isSigningUp = false;
     //   DialogUtils().showDialog(

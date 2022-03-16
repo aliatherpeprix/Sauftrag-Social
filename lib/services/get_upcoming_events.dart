@@ -31,7 +31,7 @@ class  UpcomingEvents {
           ));
       if (response.statusCode == 200 || response.statusCode == 201) {
 
-        // var faqs = (response.data);
+        var faqs = (response.data);
         //List<FaqsModel> Faq = faqs[1]['question'];
         print("jhjg");
         List<GetUpcomingEvent> getupcomingevents = (response.data as List).map((e) =>

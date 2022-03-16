@@ -22,6 +22,11 @@ GetUpcomingEvent _$GetUpcomingEventFromJson(Map<String, dynamic> json) =>
           : NewBarModel.fromJson(json['user_id'] as Map<String, dynamic>)
       ..media = (json['media'] as List<dynamic>?)
           ?.map((e) => Media.fromJson(e as Map<String, dynamic>))
+          .toList()
+      ..distance = (json['distance'] as num?)?.toDouble()
+      ..is_attend = json['is_attend'] as bool?
+      ..going_users = (json['going_users'] as List<dynamic>?)
+          ?.map((e) => EventAttendees.fromJson(e as Map<String, dynamic>))
           .toList();
 
 Map<String, dynamic> _$GetUpcomingEventToJson(GetUpcomingEvent instance) =>
@@ -37,4 +42,7 @@ Map<String, dynamic> _$GetUpcomingEventToJson(GetUpcomingEvent instance) =>
       'end_time': instance.end_time,
       'user_id': instance.user_id,
       'media': instance.media,
+      'distance': instance.distance,
+      'is_attend': instance.is_attend,
+      'going_users': instance.going_users,
     };

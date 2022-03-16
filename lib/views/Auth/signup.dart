@@ -378,6 +378,7 @@ class _SignUpState extends State<SignUp> {
                                         border:
                                         Border.all(color: ColorUtils.divider)),
                                 child: IntlPhoneField(
+                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly,LengthLimitingTextInputFormatter(12),],
                                   textAlignVertical: TextAlignVertical.center,
                                   // countryCodeTextColor: ColorUtils.red_color,
                                   // focusNode: model.signUpPhoneFocus,

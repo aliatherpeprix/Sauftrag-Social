@@ -123,9 +123,9 @@ class _UpcomingEventDetailsState extends State<UpcomingEventDetails> {
                       Container(
                         margin: EdgeInsets.only(bottom: 3.5.h),
                         decoration: BoxDecoration(
-                            color: ColorUtils.text_red,
-                            // image: DecorationImage(image: NetworkImage(widget.image),
-                            //     fit: BoxFit.cover)
+                            color: ColorUtils.white,
+                            image: DecorationImage(image: NetworkImage(model.selectedUpcomingEvents!.media![0].media),
+                                fit: BoxFit.cover)
                         ),
                         child: BackdropFilter(
                           filter: ImageFilter.blur(
@@ -192,6 +192,9 @@ class _UpcomingEventDetailsState extends State<UpcomingEventDetails> {
                               children: [
                                 GestureDetector(
                                   onTap: () {
+                                    // model.selectAttendeesInfo = model.listOfUpcomingEvents;
+                                    // model.selectUser = (model.);
+                                   // model.navigateToOngoingUsersScreen();
                                     //model.navigationService.navigateTo(to: AttendeesList());
                                   },
                                   child: Row(
@@ -294,7 +297,7 @@ class _UpcomingEventDetailsState extends State<UpcomingEventDetails> {
                                     CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "widget.eventDate",
+                                        model.selectedUpcomingEvents!.event_date!,
                                         style: TextStyle(
                                             fontFamily: FontUtils.modernistBold,
                                             fontSize: 2.t,
@@ -304,7 +307,7 @@ class _UpcomingEventDetailsState extends State<UpcomingEventDetails> {
                                         height: 1.h,
                                       ),
                                       Text(
-                                        "abc",
+                                        model.selectedUpcomingEvents!.start_time!,
                                         style: TextStyle(
                                             fontFamily:
                                             FontUtils.modernistRegular,
@@ -341,29 +344,15 @@ class _UpcomingEventDetailsState extends State<UpcomingEventDetails> {
                                   SizedBox(
                                     width: 4.w,
                                   ),
-                                  Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "widget.location",
-                                        style: TextStyle(
-                                            fontFamily: FontUtils.modernistBold,
-                                            fontSize: 2.t,
-                                            color: ColorUtils.text_dark),
-                                      ),
-                                      SizedBox(
-                                        height: 1.h,
-                                      ),
-                                      Text(
-                                        "Major Lazer, Showtek",
-                                        style: TextStyle(
-                                            fontFamily:
-                                            FontUtils.modernistRegular,
-                                            fontSize: 1.6.t,
-                                            color: ColorUtils.text_dark),
-                                      ),
-                                    ],
+                                  Container(
+                                    width: 65.w,
+                                    child: Text(
+                                      model.selectedUpcomingEvents!.location! ,
+                                      style: TextStyle(
+                                          fontFamily: FontUtils.modernistRegular,
+                                          fontSize: 2.t,
+                                          color: ColorUtils.text_dark),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -387,7 +376,7 @@ class _UpcomingEventDetailsState extends State<UpcomingEventDetails> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(12.0),
                                       child: Image.network(
-                                        "widget.barImage",
+                                        model.selectedUpcomingEvents!.user_id!.profile_picture!,
                                         width: 12.i,
                                         height: 12.i,
                                       ),
@@ -400,7 +389,8 @@ class _UpcomingEventDetailsState extends State<UpcomingEventDetails> {
                                     crossAxisAlignment:
                                     CrossAxisAlignment.start,
                                     children: [
-                                      Text("nskfn",
+                                      Text(
+                                        model.selectedUpcomingEvents!.user_id!.bar_name!,
                                         //'${widget.barName}',
                                         // widget.barName,
                                         style: TextStyle(
@@ -423,22 +413,37 @@ class _UpcomingEventDetailsState extends State<UpcomingEventDetails> {
                                   ),
                                 ],
                               ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: ColorUtils.messageChat,
-                                  shape: BoxShape.rectangle,
-                                  borderRadius:
-                                  BorderRadius.all(Radius.circular(6)),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 3.5.w, vertical: 1.h),
-                                  child: Text(
-                                    "Follow",
-                                    style: TextStyle(
-                                        fontFamily: FontUtils.modernistRegular,
-                                        fontSize: 1.6.t,
-                                        color: ColorUtils.text_red),
+                              GestureDetector(
+                                onTap: (){
+                                  if(!model.isLoading) {
+                                    model.postBarFollow();
+                                  }
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: ColorUtils.red_color,
+                                    shape: BoxShape.rectangle,
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(6)),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 3.5.w, vertical: 1.h),
+                                    child: Center(
+                                        child: model.selectedBar!.is_follow!? Text(
+                                          "UnFollow",
+                                          style: TextStyle(
+                                              color: ColorUtils.white,
+                                              fontSize: 2.t,
+                                              fontFamily: FontUtils.modernistBold),
+                                        ) : Text(
+                                          "Follow",
+                                          style: TextStyle(
+                                              color: ColorUtils.white,
+                                              fontSize: 2.t,
+                                              fontFamily: FontUtils.modernistBold),
+                                        )
+                                    ),
                                   ),
                                 ),
                               ),
@@ -461,7 +466,7 @@ class _UpcomingEventDetailsState extends State<UpcomingEventDetails> {
                                 height: 2.h,
                               ),
                               Text(
-                                "widget.about",
+                                model.selectedUpcomingEvents!.about!,
                                 style: TextStyle(
                                     fontFamily: FontUtils.modernistRegular,
                                     fontSize: 1.9.t,

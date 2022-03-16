@@ -13,6 +13,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:sauftrag/bar/views/Drawer/bar_followers.dart';
+import 'package:sauftrag/models/event_attendees.dart';
 import 'package:sauftrag/models/follow_bar.dart';
 import 'package:sauftrag/models/get_bar_followers.dart';
 import 'package:sauftrag/models/get_bar_upcoming_event.dart';
@@ -236,7 +237,12 @@ class MainViewModel extends BaseViewModel {
   List<ListOfBarsModel> listOfAllBars = [];
 
   List<GetUpcomingEvent> listOfUpcomingEvents = [];
+
   GetUpcomingEvent? selectedUpcomingEvents;
+
+//  List<GetUpcomingEvent>? eventOngoingUsers;
+
+  List<EventAttendees>? selectUser = [];
   //String? faqs;
 
   List contactChecked = [];
@@ -1336,6 +1342,10 @@ class MainViewModel extends BaseViewModel {
     navigationService.navigateToFriendListScreen();
   }
 
+  void navigateToOngoingUsersScreen() {
+    navigationService.navigateToOngoingUsersScreen();
+  }
+
   void navigateToMsgCreateGroupScreen() {
     navigationService.navigateToMsgCreateGroupScreen();
   }
@@ -1908,6 +1918,11 @@ class MainViewModel extends BaseViewModel {
     // }ListOfBarsModel
     if (listOfUpcomingEvent is List<GetUpcomingEvent>) {
       listOfUpcomingEvents = listOfUpcomingEvent;
+      // for(var v in listOfUpcomingEvent){
+      //   //v.going_users!;
+      //   selectUser!.add(v.going_users![0]);
+      //   print(selectUser);
+      // }
       print(listOfUpcomingEvents);
     }   else {
       DialogUtils().showDialog(MyErrorWidget(
