@@ -19,7 +19,7 @@ GetUpcomingEvent _$GetUpcomingEventFromJson(Map<String, dynamic> json) =>
       ..end_time = json['end_time'] as String?
       ..user_id = json['user_id'] == null
           ? null
-          : NewBarModel.fromJson(json['user_id'] as Map<String, dynamic>)
+          : ListOfBarsModel.fromJson(json['user_id'] as Map<String, dynamic>)
       ..media = (json['media'] as List<dynamic>?)
           ?.map((e) => Media.fromJson(e as Map<String, dynamic>))
           .toList()

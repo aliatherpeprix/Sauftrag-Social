@@ -13,6 +13,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:sauftrag/bar/views/Drawer/bar_followers.dart';
+import 'package:sauftrag/models/attend_event.dart';
 import 'package:sauftrag/models/event_attendees.dart';
 import 'package:sauftrag/models/follow_bar.dart';
 import 'package:sauftrag/models/get_bar_followers.dart';
@@ -47,6 +48,7 @@ import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/services/addFavorites.dart';
 import 'package:sauftrag/services/addressBook.dart';
 import 'package:sauftrag/services/allBars.dart';
+import 'package:sauftrag/services/attend_event.dart';
 import 'package:sauftrag/services/barQRcode.dart';
 import 'package:sauftrag/services/bar_order.dart';
 import 'package:sauftrag/services/createPost.dart';
@@ -99,6 +101,7 @@ class MainViewModel extends BaseViewModel {
   var getbarFollowers = BARFollowers();
   var getUserInfo = UserGetAnotherUser();
   var getBarUpcomingEvents = UpcomingEvents();
+  var attendEvent = Attendevent();
 
   Barcode? result;
 
@@ -112,6 +115,7 @@ class MainViewModel extends BaseViewModel {
   UserModel? userModel;
   NewBarModel? barModel;
   ListOfBarsModel? barFollow;
+  Media? barMedia;
 
   bool logInUserSelected = true;
   bool logInBarSelected = false;
@@ -1877,7 +1881,7 @@ class MainViewModel extends BaseViewModel {
     }
     isFaqs = false;
     notifyListeners();
-    print(getFaqsList);
+    //print(getFaqsList);
   }
 
   getListOfAllBars() async {
@@ -1903,7 +1907,7 @@ class MainViewModel extends BaseViewModel {
     }
     isFaqs = false;
     notifyListeners();
-    print(getFaqsList);
+    //print(getFaqsList);
   }
 
   getListOfUpcomingEvents() async {
@@ -1934,7 +1938,7 @@ class MainViewModel extends BaseViewModel {
     }
     isFaqs = false;
     notifyListeners();
-    print(getFaqsList);
+    //print(getFaqsList);
   }
 
   getBarsFollowers() async {
@@ -1960,32 +1964,22 @@ class MainViewModel extends BaseViewModel {
     }
     isFaqs = false;
     notifyListeners();
-    print(getFaqsList);
+    //print(getFaqsList);
   }
 
   postBarFollow() async {
     isLoading = true;
     notifyListeners();
     bool follow =! selectedBar!.is_follow!;
-
-
     var getListofbar = await followbar.FollowBar(
         selectedBar!.id!,
         follow
     );
     print(getListofbar);
-
-    // if (getFaqList is String){
-    //   faqs = getFaqList;
-    //   //isPrivacyPolicy = false;
-    //
-    // }
     if (getListofbar is FollowBAR) {
       var index = listOfAllBars.indexOf(selectedBar!);
       listOfAllBars[index].is_follow = (getListofbar as FollowBAR).user!.is_follow!;
       notifyListeners();
-      //listOfBar = getListofbar;
-      //print(listOfAllBars);
     }   else {
       isLoading = false;
       DialogUtils().showDialog(MyErrorWidget(
@@ -1993,6 +1987,70 @@ class MainViewModel extends BaseViewModel {
       ));
       //isPrivacyPolicy = false;
 
+      return;
+    }
+    isLoading = false;
+    notifyListeners();
+    //print(getFaqsList);
+  }
+
+  bool isAttend = false;
+  bool isAttendingEvent = false;
+  attendedEvent() async {
+    isLoading = true;
+    notifyListeners();
+    //bool follow =! selectedBar!.is_follow!;
+    var getAttendUser = await attendEvent.AttendEvent(
+        selectedUpcomingEvents!.id!
+    );
+    print(getAttendUser);
+
+    if (getAttendUser == true) {
+      var index = listOfUpcomingEvents.indexOf(selectedUpcomingEvents!);
+      selectedUpcomingEvents!.is_attend = true;
+      listOfUpcomingEvents[index].is_attend = true;
+      notifyListeners();
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "You'll attend this event!",
+      ));
+      notifyListeners();
+    }   else {
+      isLoading = false;
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Some thing went wrong",
+      ));
+      //isPrivacyPolicy = false;
+      return;
+    }
+    isLoading = false;
+    notifyListeners();
+    print(getFaqsList);
+  }
+
+  removeAttendedEvent() async {
+    isLoading = true;
+    notifyListeners();
+    //bool follow =! selectedBar!.is_follow!;
+    var getAttendUser = await attendEvent.RemoveAttendEvent(
+        selectedUpcomingEvents!.id!
+    );
+    print(getAttendUser);
+
+    if (getAttendUser == true) {
+      var index = listOfUpcomingEvents.indexOf(selectedUpcomingEvents!);
+      selectedUpcomingEvents!.is_attend = false;
+      listOfUpcomingEvents[index].is_attend = false;
+      notifyListeners();
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "You'll not attend this event!",
+      ));
+      notifyListeners();
+    }   else {
+      isLoading = false;
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Some thing went wrong",
+      ));
+      //isPrivacyPolicy = false;
       return;
     }
     isLoading = false;
@@ -2044,6 +2102,7 @@ class MainViewModel extends BaseViewModel {
       // }
     }
   }
+
 
   void getContacts() async {
     bool permissionGranted = false;
@@ -2557,7 +2616,7 @@ class MainViewModel extends BaseViewModel {
     }
     isFaqs = false;
     notifyListeners();
-    print(getFaqsList);
+    //print(getFaqsList);
   }
 
 

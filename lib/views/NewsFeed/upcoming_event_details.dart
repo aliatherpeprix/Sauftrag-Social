@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/utils/color_utils.dart';
+import 'package:sauftrag/utils/dialog_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/widgets/back_arrow_with_container.dart';
+import 'package:sauftrag/widgets/error_widget.dart';
 import 'package:stacked/stacked.dart';
 
 class UpcomingEventDetails extends StatefulWidget {
@@ -68,14 +70,46 @@ class _UpcomingEventDetailsState extends State<UpcomingEventDetails> {
                     padding: EdgeInsets.zero,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15)),
-                    onPressed: () {},
-                    child: Text(
-                      "Attend Event",
-                      style: TextStyle(
-                          fontFamily: FontUtils.modernistBold,
-                          fontSize: 1.8.t,
-                          color: Colors.white),
+                    onPressed: () {
+                     if(model.selectedUpcomingEvents!.is_attend!) {
+                       model.removeAttendedEvent();
+                       // DialogUtils().showDialog(MyErrorWidget(
+                       //   error: "Yoo.. Sabar Rakh Kam chal rha hay",
+                       // ));
+                     }
+                     else {
+                       model.attendedEvent();
+                     }
+                    },
+                    child:  Container(
+                      height: 4.5.h,
+                      decoration: BoxDecoration(
+                          color: ColorUtils.red_color,
+                          borderRadius: BorderRadius.circular(18)),
+                      child: Padding(
+                        padding:
+                        EdgeInsets.symmetric(horizontal: 30),
+                        child: Center(
+                            child: model.selectedUpcomingEvents!.is_attend!
+                                ? Text(
+                              "Attending Event",
+                              style: TextStyle(
+                                  color: ColorUtils.white,
+                                  fontSize: 2.t,
+                                  fontFamily: FontUtils.modernistBold),
+                            )
+
+                                : Text(
+                              "Attend Event",
+                              style: TextStyle(
+                                  color: ColorUtils.white,
+                                  fontSize: 2.t,
+                                  fontFamily: FontUtils.modernistBold),
+                            )
+                        ),
+                      ),
                     ),
+
                   ),
                 ),
 
@@ -379,6 +413,7 @@ class _UpcomingEventDetailsState extends State<UpcomingEventDetails> {
                                         model.selectedUpcomingEvents!.user_id!.profile_picture!,
                                         width: 12.i,
                                         height: 12.i,
+                                        fit: BoxFit.cover,
                                       ),
                                     ),
                                   ),
@@ -413,40 +448,40 @@ class _UpcomingEventDetailsState extends State<UpcomingEventDetails> {
                                   ),
                                 ],
                               ),
-                              GestureDetector(
-                                onTap: (){
-                                  if(!model.isLoading) {
-                                    model.postBarFollow();
-                                  }
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: ColorUtils.red_color,
-                                    shape: BoxShape.rectangle,
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(6)),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 3.5.w, vertical: 1.h),
-                                    child: Center(
-                                        child: model.selectedBar!.is_follow!? Text(
-                                          "UnFollow",
-                                          style: TextStyle(
-                                              color: ColorUtils.white,
-                                              fontSize: 2.t,
-                                              fontFamily: FontUtils.modernistBold),
-                                        ) : Text(
-                                          "Follow",
-                                          style: TextStyle(
-                                              color: ColorUtils.white,
-                                              fontSize: 2.t,
-                                              fontFamily: FontUtils.modernistBold),
-                                        )
-                                    ),
-                                  ),
-                                ),
-                              ),
+                              // GestureDetector(
+                              //   onTap: (){
+                              //     if(!model.isLoading) {
+                              //       model.postBarFollow();
+                              //     }
+                              //   },
+                              //   child: Container(
+                              //     decoration: BoxDecoration(
+                              //       color: ColorUtils.red_color,
+                              //       shape: BoxShape.rectangle,
+                              //       borderRadius:
+                              //       BorderRadius.all(Radius.circular(6)),
+                              //     ),
+                              //     child: Padding(
+                              //       padding: EdgeInsets.symmetric(
+                              //           horizontal: 3.5.w, vertical: 1.h),
+                              //       child: Center(
+                              //           child: model.selectedUpcomingEvents!.user_id!.is_follow!? Text(
+                              //             "UnFollow",
+                              //             style: TextStyle(
+                              //                 color: ColorUtils.white,
+                              //                 fontSize: 2.t,
+                              //                 fontFamily: FontUtils.modernistBold),
+                              //           ) : Text(
+                              //             "Follow",
+                              //             style: TextStyle(
+                              //                 color: ColorUtils.white,
+                              //                 fontSize: 2.t,
+                              //                 fontFamily: FontUtils.modernistBold),
+                              //           )
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
                             ],
                           ),
                           Column(

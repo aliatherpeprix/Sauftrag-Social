@@ -28,6 +28,8 @@ class Constants {
   static const String discover = 'api/user/discover/';
   static const String FollowBar = 'api/user/follow/';
   static const String CreateGrouppChat = 'api/group/create/';
+  static const String AttendEvent = 'api/event/attend/';
+  static const String RemoveAttendEvent = 'api/event/not_attend/';
 
   static const String GetFavoriteDrink = 'api/favorites/alcoholic_drink/';
   static const String GetFavoriteClub = 'api/favorites/night_club/';

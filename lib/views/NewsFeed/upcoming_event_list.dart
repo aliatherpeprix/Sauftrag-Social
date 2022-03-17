@@ -23,6 +23,7 @@ class _UpcomingBarEventState extends State<UpcomingBarEvent> {
   Widget build(BuildContext context) {
     return ViewModelBuilder<MainViewModel>.reactive(
       onModelReady: (model) {
+        model.getListOfbars();
         model.getListOfUpcomingEvents();
       },
       viewModelBuilder: () => locator<MainViewModel>(),
@@ -78,6 +79,7 @@ class _UpcomingBarEventState extends State<UpcomingBarEvent> {
                         child: GestureDetector(
                           onTap: (){
                             model.selectedUpcomingEvents = (model.listOfUpcomingEvents[index]);
+                           // model.selectedBar = (model.listOfBar[index]);
                             model.navigateToUpcomingBarEventDetails();
                           },
                           child: Container(
