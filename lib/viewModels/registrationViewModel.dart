@@ -229,6 +229,9 @@ class RegistrationViewModel extends BaseViewModel {
   bool isLocationInFocus = false;
   final LocationController = TextEditingController();
 
+
+  final locationController = TextEditingController();
+
   bool checkSignupUser = false;
   String? openingTimeFrom = "";
   String? openingTimeTo = "";

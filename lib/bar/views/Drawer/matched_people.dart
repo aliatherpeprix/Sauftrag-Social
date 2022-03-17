@@ -27,7 +27,11 @@ class _MatchedPeopleState extends State<MatchedPeople> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<MainViewModel>.reactive(
-      onModelReady: (data) => data.acceptMatched(context),
+
+      onModelReady: (model) {
+        model.acceptMatched(context);
+      },
+
       builder: (context, model, child) {
         return GestureDetector(
           onTap: () {
@@ -43,7 +47,8 @@ class _MatchedPeopleState extends State<MatchedPeople> {
                       body: SingleChildScrollView(
                           physics: const BouncingScrollPhysics(),
                           child: Container(
-                            margin: EdgeInsets.only(left: 5.w),
+                           // margin: EdgeInsets.only(left: 5.w),
+                            padding: EdgeInsets.symmetric(horizontal: 2.w),
                             child: GridView.builder(
                               itemCount: model.acceptMatchedtModel.length,
                               scrollDirection: Axis.vertical,
@@ -52,14 +57,16 @@ class _MatchedPeopleState extends State<MatchedPeople> {
                               primary: true,
                               gridDelegate:
                                   SliverGridDelegateWithFixedCrossAxisCount(
-                                      // childAspectRatio: 2.5,
+                                      childAspectRatio: 0.8,
                                       crossAxisCount: 2,
-                                      // crossAxisSpacing: 2,
-                                      mainAxisSpacing: 30),
+                                      crossAxisSpacing: 10,
+                                      mainAxisSpacing: 50),
                               itemBuilder: (BuildContext context, int index) {
                                 return GestureDetector(
                                   onTap: () {
-                                    // model.navigateToFollowerList();
+                                    model.getMatchedUserData = (model.acceptMatchedtModel[index]);
+                                    model.getAnitherUserInfo(model.acceptMatchedtModel[index].user!.id.toString());
+                                    model.navigateToMatchedProfileUser();
                                   },
                                   child: Stack(
                                     children: [
@@ -68,15 +75,15 @@ class _MatchedPeopleState extends State<MatchedPeople> {
                                         child: Image.network(
                                           model.acceptMatchedtModel[index].user!
                                               .profilePicture,
-                                          height: 20.h,
-                                          width: 34.w,
+                                          height: 25.h,
+                                          width: 40.w,
                                           fit: BoxFit.cover,
                                         ),
                                       ),
                                       PositionedDirectional(
                                           bottom: 0,
                                           child: Container(
-                                            width: 34.5.w,
+                                            //width: 34.5.w,
                                             decoration: BoxDecoration(
                                               color:
                                                   Colors.grey.withOpacity(0.7),
@@ -88,7 +95,7 @@ class _MatchedPeopleState extends State<MatchedPeople> {
                                             ),
                                             padding: EdgeInsets.symmetric(
                                                 vertical: 1.2.h,
-                                                horizontal: 2.w),
+                                                horizontal: 11.w),
                                             child: Text(
                                               model.acceptMatchedtModel[index]
                                                   .user!.username,

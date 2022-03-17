@@ -17,32 +17,32 @@ import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/widgets/all_page_loader.dart';
 import 'package:stacked/stacked.dart';
 
-class FollowerProfile extends StatefulWidget {
+class MatchedProfileUser extends StatefulWidget {
 
-  FollowerProfile({Key? key, })
+  MatchedProfileUser({Key? key,})
       : super(key: key);
 
   @override
-  _FollowerProfileState createState() => _FollowerProfileState();
+  _MatchedProfileUserState createState() => _MatchedProfileUserState();
 }
 
-class _FollowerProfileState extends State<FollowerProfile> {
+class _MatchedProfileUserState extends State<MatchedProfileUser> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  List followerImg = [
-    {'image': ImageUtils.followerImg1},
-    {'image': ImageUtils.followerImg2},
-    {'image': ImageUtils.followerImg3},
-    {'image': ImageUtils.followerImg4},
-    {'image': ImageUtils.followerImg5},
-  ];
-
-  List friendsList = [
-    {'image': ImageUtils.friends1, 'title': 'Dominic Gray'},
-    {'image': ImageUtils.friends2, 'title': 'Glen Romero'},
-    {'image': ImageUtils.friends3, 'title': 'Raul Pope'},
-    {'image': ImageUtils.friends4, 'title': 'Lance Hernandez'},
-  ];
+  // List followerImg = [
+  //   {'image': ImageUtils.followerImg1},
+  //   {'image': ImageUtils.followerImg2},
+  //   {'image': ImageUtils.followerImg3},
+  //   {'image': ImageUtils.followerImg4},
+  //   {'image': ImageUtils.followerImg5},
+  // ];
+  //
+  // List friendsList = [
+  //   {'image': ImageUtils.friends1, 'title': 'Dominic Gray'},
+  //   {'image': ImageUtils.friends2, 'title': 'Glen Romero'},
+  //   {'image': ImageUtils.friends3, 'title': 'Raul Pope'},
+  //   {'image': ImageUtils.friends4, 'title': 'Lance Hernandez'},
+  // ];
 
   List mutualFriendList = [
     {'image': ImageUtils.mutualfrnd1, 'title': 'Tony Walton'},
@@ -56,15 +56,20 @@ class _FollowerProfileState extends State<FollowerProfile> {
     return ViewModelBuilder<MainViewModel>.reactive(
       viewModelBuilder: () => locator<MainViewModel>(),
       onModelReady: (model) async {
+
+
+       model.acceptMatched(context);
+
         model.drinkList =
-            await Addfavorites().GetFavoritesDrink();
+        await Addfavorites().GetFavoritesDrink();
         model.clubList =
-            await Addfavorites().GetFavoritesClub();
+        await Addfavorites().GetFavoritesClub();
         model.vacationList =
-            await Addfavorites().GetFavoritesPartyVacation();
+        await Addfavorites().GetFavoritesPartyVacation();
       },
       disposeViewModel: false,
       builder: (context, model, child) {
+        var getMatchedUserData = model.acceptMatchedtModel;
         return model.isLoading == true ? AllPageLoader() :
         SafeArea(
           top: false,
@@ -74,48 +79,7 @@ class _FollowerProfileState extends State<FollowerProfile> {
               FocusScope.of(context).unfocus();
             },
             child: Scaffold(
-              // floatingActionButton: Container(
-              //   margin: EdgeInsets.symmetric(horizontal: 4.w),
-              //   decoration: BoxDecoration(
-              //     shape: BoxShape.rectangle,
-              //     borderRadius: BorderRadius.all(Radius.circular(16.0)),
-              //   ),
-              //   child: AnimatedContainer(
-              //     duration: Duration(milliseconds: 400),
-              //     width: MediaQuery.of(context).size.width / 1,
-              //     height: 7.h,
-              //     //margin: EdgeInsets.symmetric(horizontal: 5.w),
-              //     decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.circular(6),
-              //       color: ColorUtils.red_color,
-              //       boxShadow: [
-              //         BoxShadow(
-              //           color: ColorUtils.red_color.withOpacity(0.25),
-              //           spreadRadius: 0,
-              //           blurRadius: 10,
-              //           offset: Offset(0, 5), // changes position of shadow
-              //         ),
-              //       ],
-              //     ),
-              //     child: MaterialButton(
-              //       padding: EdgeInsets.zero,
-              //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-              //       onPressed: (){
-              //         //showLoginAlertDialog(context);
-              //         //model.checkSession(context);
-              //       },
-              //       child: Text(
-              //         "Request Service",
-              //         style: TextStyle(
-              //             fontFamily: FontUtils.modernistBold,
-              //             fontSize: 2.2.t,
-              //             color: Colors.white),
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-              // /backgroundColor: Colors.transparent,
+
                 key: _scaffoldKey,
                 body: Container(
                   padding: EdgeInsets.only(top: Dimensions.homeTopMargin),
@@ -130,7 +94,7 @@ class _FollowerProfileState extends State<FollowerProfile> {
                             margin: EdgeInsets.symmetric(
                                 horizontal: 1.7.w, vertical: 1.1.h),
                             padding: EdgeInsets.all(13),
-//height: 10.h,
+                            //height: 10.h,
                             decoration: BoxDecoration(
                               color: ColorUtils.white,
                               borderRadius: const BorderRadius.all(
@@ -156,7 +120,7 @@ class _FollowerProfileState extends State<FollowerProfile> {
                         expandedHeight: 280,
                         flexibleSpace: FlexibleSpaceBar(
                           background: Image.network(
-                            model.getbarFollowersDet!.follow_by!.profile_picture!,
+                            model.matchedUser!.profile_picture!,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -189,7 +153,7 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    model.getbarFollowersDet!.follow_by!.username!,
+                                    model.matchedUser!.username!,
                                     style: TextStyle(
                                       fontFamily: FontUtils.modernistBold,
                                       fontSize: 2.5.t,
@@ -214,7 +178,7 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                       SizedBox(width: 2.w),
                                       Flexible(
                                         child: Text(
-                                          model.getbarFollowersDet!.follow_by!.address!,
+                                          model.matchedUser!.address!,
                                           style: TextStyle(
                                             fontFamily: FontUtils.modernistRegular,
                                             fontSize: 1.8.t,
@@ -269,7 +233,7 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                     spacing: 2.5.w,
                                     runSpacing: 1.5.h,
                                     direction: Axis.horizontal,
-                                    children: model.getbarFollowersDet!.follow_by!.favorite_alcohol_drinks!
+                                    children: model.matchedUser!.favorite_alcohol_drinks!
                                         .map((element) => ElevatedButton(
                                       onPressed: () {
                                         // if (model.selectedInterestList
@@ -327,7 +291,7 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                     spacing: 2.5.w,
                                     runSpacing: 1.5.h,
                                     direction: Axis.horizontal,
-                                    children: model.getbarFollowersDet!.follow_by!.favorite_night_club!
+                                    children: model.matchedUser!.favorite_night_club!
                                         .map((element) => ElevatedButton(
                                       onPressed: () {
                                         // if (model.selectedInterestList
@@ -385,7 +349,7 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                     spacing: 2.5.w,
                                     runSpacing: 1.5.h,
                                     direction: Axis.horizontal,
-                                    children: model.getbarFollowersDet!.follow_by!.favorite_party_vacation!
+                                    children: model.matchedUser!.favorite_party_vacation!
                                         .map((element) => ElevatedButton(
                                       onPressed: () {
                                         // if (model.selectedInterestList
@@ -471,7 +435,7 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                             BorderRadius.all(Radius.circular(20)),
                                             image: DecorationImage(
                                                 image:
-                                                NetworkImage(model.getbarFollowersDet!.follow_by!.profile_picture!),
+                                                NetworkImage(model.matchedUser!.profile_picture!),
                                                 fit: BoxFit.cover),
                                           ),
                                           child: Stack(
@@ -507,7 +471,7 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                             BorderRadius.all(Radius.circular(20)),
                                             image: DecorationImage(
                                                 image:
-                                                NetworkImage(model.getbarFollowersDet!.follow_by!.catalogue_image1!),
+                                                NetworkImage(model.matchedUser!.catalogue_image1!),
                                                 fit: BoxFit.cover),
                                           ),
                                           child: Stack(
@@ -543,7 +507,7 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                             BorderRadius.all(Radius.circular(20)),
                                             image: DecorationImage(
                                                 image:
-                                                NetworkImage(model.getbarFollowersDet!.follow_by!.catalogue_image2!),
+                                                NetworkImage(model.matchedUser!.catalogue_image2!),
                                                 fit: BoxFit.cover),
                                           ),
                                           child: Stack(
@@ -585,7 +549,7 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                             BorderRadius.all(Radius.circular(20)),
                                             image: DecorationImage(
                                                 image:
-                                                NetworkImage(model.getbarFollowersDet!.follow_by!.catalogue_image3!),
+                                                NetworkImage(model.matchedUser!.catalogue_image3!),
                                                 fit: BoxFit.cover),
                                           ),
                                           child: Stack(
@@ -621,7 +585,7 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                             BorderRadius.all(Radius.circular(20)),
                                             image: DecorationImage(
                                                 image:
-                                                NetworkImage(model.getbarFollowersDet!.follow_by!.catalogue_image4!),
+                                                NetworkImage(model.matchedUser!.catalogue_image4!),
                                                 fit: BoxFit.cover),
                                           ),
                                           child: Stack(
@@ -647,7 +611,7 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                             ],
                                           )),
 
-                                      //Image_1 Catagory Image_5
+                                     // Image_1 Catagory Image_5
                                       Container(
                                           height: MediaQuery.of(context).size.width / 3.4,
                                           width:
@@ -657,7 +621,7 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                             BorderRadius.all(Radius.circular(20)),
                                             image: DecorationImage(
                                                 image:
-                                                NetworkImage(model.getbarFollowersDet!.follow_by!.catalogue_image5!),
+                                                NetworkImage(model.matchedUser!.catalogue_image5!),
                                                 fit: BoxFit.cover),
                                           ),
                                           child: Stack(
@@ -717,7 +681,7 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                       padding: EdgeInsets.zero,
                                       shrinkWrap: true,
                                       physics: NeverScrollableScrollPhysics(),
-                                      itemCount: friendsList.length,
+                                      itemCount: model.matchedUser!.friends!.length,
                                       gridDelegate:
                                       SliverGridDelegateWithFixedCrossAxisCount(
                                           crossAxisCount: 4,
@@ -732,13 +696,22 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                             MainAxisAlignment.center,
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
-                                              Image.asset(
-                                                friendsList[index]['image'],
-                                                height: 15.i,
+                                              ClipRRect(
+                                                borderRadius: BorderRadius.circular(50),
+                                                child: Image.network(model.matchedUser!.friends![index].user!.profilePicture!,
+                                                  width: 15.i,
+                                                  height: 15.i,
+                                                  fit: BoxFit.cover,
+
+                                                ),
                                               ),
+                                              // Image.network(
+                                              //   model.matchedUser!.friends![index].user!.profilePicture!,
+                                              //   height: 15.i,
+                                              // ),
                                               Expanded(
                                                   child: Text(
-                                                    (friendsList[index]['title']),
+                                                    (model.matchedUser!.friends![index].user!.username),
                                                     maxLines: 2,
                                                     style: TextStyle(
                                                         fontFamily:
@@ -783,7 +756,7 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                       padding: EdgeInsets.zero,
                                       shrinkWrap: true,
                                       physics: NeverScrollableScrollPhysics(),
-                                      itemCount: friendsList.length,
+                                      itemCount: model.matchedUser!.friends!.length,
                                       gridDelegate:
                                       SliverGridDelegateWithFixedCrossAxisCount(
                                           crossAxisCount: 4,
@@ -798,13 +771,18 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                             MainAxisAlignment.center,
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
-                                              Image.asset(
-                                                mutualFriendList[index]['image'],
-                                                height: 15.i,
+                                              ClipRRect(
+                                                borderRadius: BorderRadius.circular(50),
+                                                child: Image.network(model.matchedUser!.friends![index].user!.profilePicture!,
+                                                  width: 15.i,
+                                                  height: 15.i,
+                                                  fit: BoxFit.cover,
+
+                                                ),
                                               ),
                                               Expanded(
                                                   child: Text(
-                                                    (mutualFriendList[index]['title']),
+                                                    (model.matchedUser!.friends![index].user!.username),
                                                     maxLines: 2,
                                                     style: TextStyle(
                                                         fontFamily:

@@ -47,6 +47,7 @@ class _MainViewBarState extends State<MainViewBar> {
     return ViewModelBuilder<MainViewModel>.reactive(
       onModelReady: (model){
         model.getBarData();
+        model.updateCurrentLocationBar();
       },
       viewModelBuilder: ()=>locator<MainViewModel>(),
       disposeViewModel: false,

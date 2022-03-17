@@ -9,8 +9,8 @@ class FollowBAR {
   FollowBAR();
 
   String? details;
-  String? status;
-  List<NewBarModel>? user;
+  int? status;
+  NewBarModel? user;
 
   factory FollowBAR.fromJson(Map<String, dynamic> json) => _$FollowBARFromJson(json);
   Map<String, dynamic> toJson() => _$FollowBARToJson(this);

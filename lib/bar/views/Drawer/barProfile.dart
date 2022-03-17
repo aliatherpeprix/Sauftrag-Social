@@ -186,7 +186,9 @@ class _BarprofileState extends State<Barprofile> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  model.postBarFollow();
+                                  if(!model.isLoading) {
+                                    model.postBarFollow();
+                                  }
                                 },
                                 child: Container(
                                   height: 4.5.h,
@@ -704,7 +706,7 @@ class _BarprofileState extends State<Barprofile> {
                                                       ),
                                                       RatingBar.builder(
                                                         ignoreGestures: true,
-                                                        initialRating: model.selectedBar!.ratings![index].rate!,
+                                                        initialRating: model.selectedBar!.ratings![index].rate ?? 0.0,
                                                         minRating: 1,
                                                         direction:
                                                         Axis.horizontal,

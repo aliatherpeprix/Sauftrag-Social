@@ -17,13 +17,6 @@ ListOfBarsModel _$ListOfBarsModelFromJson(Map<String, dynamic> json) =>
       ..role = json['role']
       ..bar_kind =
           (json['bar_kind'] as List<dynamic>?)?.map((e) => e as int).toList()
-      ..week_days = json['week_days'] == null
-          ? null
-          : WeekDaysModel.fromJson(json['week_days'] as Map<String, dynamic>)
-      ..weekend_days = json['weekend_days'] == null
-          ? null
-          : WeekendDaysModel.fromJson(
-              json['weekend_days'] as Map<String, dynamic>)
       ..profile_picture = json['profile_picture'] as String?
       ..catalogue_image1 = json['catalogue_image1'] as String?
       ..catalogue_image2 = json['catalogue_image2'] as String?
@@ -60,8 +53,6 @@ Map<String, dynamic> _$ListOfBarsModelToJson(ListOfBarsModel instance) =>
       'address': instance.address,
       'role': instance.role,
       'bar_kind': instance.bar_kind,
-      'week_days': instance.week_days,
-      'weekend_days': instance.weekend_days,
       'profile_picture': instance.profile_picture,
       'catalogue_image1': instance.catalogue_image1,
       'catalogue_image2': instance.catalogue_image2,

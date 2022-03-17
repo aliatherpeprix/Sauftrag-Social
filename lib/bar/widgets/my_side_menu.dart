@@ -155,7 +155,7 @@ class _MySideMenuState extends State<MySideMenu> {
               //Followers
               InkWell(
                 onTap: () {
-                  model.navigateToFollowersListScreen();
+                  model.navigateToBarFollowersListScreen();
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(
@@ -166,7 +166,7 @@ class _MySideMenuState extends State<MySideMenu> {
                       SvgPicture.asset(ImageUtils.followersIcon),
                       SizedBox(width: 2.w),
                       Text(
-                        "Followers",
+                        "Bar Followers",
                         style: TextStyle(
                           color: ColorUtils.white,
                           fontFamily: FontUtils.modernistBold,

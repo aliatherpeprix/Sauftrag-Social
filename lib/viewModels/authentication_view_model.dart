@@ -1187,7 +1187,14 @@ class AuthenticationViewModel extends BaseViewModel {
     zoom: 14.4746,
   );
 
+  void navigateToAddAddressBarScreen() {
+    navigationService.navigateToAddAddressBarScreen();
+  }
 
+
+  void navigateToBarEventLocationBarScreen() {
+    navigationService.navigateToBarEventLocationBarScreen();
+  }
 
 }
 

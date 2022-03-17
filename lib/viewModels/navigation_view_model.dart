@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:sauftrag/bar/views/Auth/barTimingType.dart';
+import 'package:sauftrag/bar/views/Auth/getBarEventLocation.dart';
 import 'package:sauftrag/bar/views/Auth/media.dart';
 import 'package:sauftrag/bar/views/Auth/signUp.dart';
 import 'package:sauftrag/bar/views/Auth/signup_barmap.dart';
@@ -9,13 +10,16 @@ import 'package:sauftrag/bar/views/Drawer/barEvent.dart';
 import 'package:sauftrag/bar/views/Drawer/barProfile.dart';
 import 'package:sauftrag/bar/views/Drawer/bar_Rating.dart';
 import 'package:sauftrag/bar/views/Drawer/bar_all_rating.dart';
+import 'package:sauftrag/bar/views/Drawer/bar_followers.dart';
 import 'package:sauftrag/bar/views/Drawer/follower_profile.dart';
 import 'package:sauftrag/bar/views/Drawer/followers.dart';
 import 'package:sauftrag/bar/views/Drawer/list_of_followBar.dart';
+import 'package:sauftrag/bar/views/Drawer/machedProfile_User.dart';
 import 'package:sauftrag/bar/views/Drawer/matched_screen.dart';
 import 'package:sauftrag/bar/views/Drawer/notifications.dart';
 import 'package:sauftrag/bar/views/Drawer/qr_code_scanner.dart';
 import 'package:sauftrag/bar/views/Drawer/ranking_list.dart';
+import 'package:sauftrag/bar/views/Drawer/requestUserProfile.dart';
 import 'package:sauftrag/bar/views/Drawer/upcoming_event.dart';
 import 'package:sauftrag/bar/views/Home/bar_create_post.dart';
 import 'package:sauftrag/bar/views/Home/bar_drinks.dart';
@@ -47,6 +51,8 @@ import 'package:sauftrag/views/Home/swipe.dart';
 import 'package:sauftrag/views/MapSearch/map_screen.dart';
 import 'package:sauftrag/views/MapSearch/search.dart';
 import 'package:sauftrag/views/NewsFeed/all_event_list.dart';
+import 'package:sauftrag/views/NewsFeed/ongoing_user_event.dart';
+import 'package:sauftrag/views/NewsFeed/upcoming_event_details.dart';
 import 'package:sauftrag/views/NewsFeed/upcoming_event_list.dart';
 import 'package:sauftrag/views/UserFriendList/contact_list.dart';
 import 'package:sauftrag/views/UserFriendList/create_group.dart';
@@ -127,6 +133,14 @@ class NavigationViewModel extends BaseViewModel{
     navigationKey.currentState!.push(PageTransition(child: Followers(), type: PageTransitionType.rightToLeftWithFade));
   }
 
+  void navigateToOngoingUsersScreen(){
+    navigationKey.currentState!.push(PageTransition(child: OngoingEventUsers(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToBarFollowersListScreen(){
+    navigationKey.currentState!.push(PageTransition(child: BarFollowers(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
   void navigateToForgetPasswordScreen(){
     navigationKey.currentState!.push(PageTransition(child: ForgetPassword(), type: PageTransitionType.rightToLeftWithFade));
   }
@@ -165,6 +179,10 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateToMatchScreen(){
     navigationKey.currentState!.push(PageTransition(child: Match(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToMatchDetailScreen(dynamic images,String? name,String? address,List alcoholDrink,List nightClub, List partyVacation, dynamic id){
+    navigationKey.currentState!.push(PageTransition(child: RequestedProfile(images: images,name: name!,address: address,alcoholDrink: alcoholDrink,nightClub:nightClub,partyVacation: partyVacation,id: id,), type: PageTransitionType.rightToLeftWithFade));
   }
 
   // void navigateToFriendListScreen(){
@@ -263,6 +281,11 @@ class NavigationViewModel extends BaseViewModel{
 
   }
 
+  void navigateToUpcomingBarEventDetails(){
+    navigationKey.currentState!.push(PageTransition(child: UpcomingEventDetails(), type: PageTransitionType.rightToLeftWithFade));
+
+  }
+
   void navigateToUserDetailSettings(){
     navigationKey.currentState!.push(PageTransition(child: UserDetails(), type: PageTransitionType.rightToLeftWithFade));
 
@@ -294,6 +317,16 @@ class NavigationViewModel extends BaseViewModel{
   }
 
   void navigateToFollowerList(){
+    navigationKey.currentState!.push(PageTransition(child: FollowerProfile(), type: PageTransitionType.rightToLeftWithFade));
+
+  }
+
+  void navigateToMatchedProfileUser(){
+    navigationKey.currentState!.push(PageTransition(child: MatchedProfileUser(), type: PageTransitionType.rightToLeftWithFade));
+
+  }
+
+    void navigateToBarFollowerDet(){
     navigationKey.currentState!.push(PageTransition(child: FollowerProfile(), type: PageTransitionType.rightToLeftWithFade));
 
   }
@@ -393,6 +426,10 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateToAddAddressBarScreen(){
     navigationKey.currentState!.push(PageTransition(child: SignupBarMap(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToBarEventLocationBarScreen(){
+    navigationKey.currentState!.push(PageTransition(child: BarEventLocation(), type: PageTransitionType.rightToLeftWithFade));
   }
 
 

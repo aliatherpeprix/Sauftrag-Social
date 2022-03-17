@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/utils/color_utils.dart';
@@ -11,22 +12,23 @@ import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:stacked/stacked.dart';
 
-class UpcomingBarEvent extends StatefulWidget {
-  const UpcomingBarEvent({Key? key}) : super(key: key);
+class BarFollowers extends StatefulWidget {
+  const BarFollowers({Key? key}) : super(key: key);
 
   @override
-  _UpcomingBarEventState createState() => _UpcomingBarEventState();
+  _BarFollowersState createState() => _BarFollowersState();
 }
 
-class _UpcomingBarEventState extends State<UpcomingBarEvent> {
+class _BarFollowersState extends State<BarFollowers> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<MainViewModel>.reactive(
-      onModelReady: (model) {
-        model.getListOfbars();
-        model.getListOfUpcomingEvents();
-      },
       viewModelBuilder: () => locator<MainViewModel>(),
+      onModelReady: (model) {
+        //model.followers();
+        model.barModel;
+        model.getBarsFollowers();
+      },
       disposeViewModel: false,
       builder: (context, model, child) {
         return SafeArea(
@@ -39,7 +41,8 @@ class _UpcomingBarEventState extends State<UpcomingBarEvent> {
                 SizedBox(height: Dimensions.topMargin),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding),
-                  child:  Row(
+
+                  child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       IconButton(
@@ -56,7 +59,7 @@ class _UpcomingBarEventState extends State<UpcomingBarEvent> {
                           )),
                       SizedBox(width: 2.w),
                       Text(
-                        "Upcoming Events",
+                        "Bar Followers",
                         style: TextStyle(
                           color: ColorUtils.black,
                           fontFamily: FontUtils.modernistBold,
@@ -66,7 +69,7 @@ class _UpcomingBarEventState extends State<UpcomingBarEvent> {
                     ],
                   ),
                 ),
-                SizedBox(height: SizeConfig.heightMultiplier * 5,),
+                SizedBox(height: 5.h,),
                 Expanded(
                   child: ListView.separated(
                     padding: EdgeInsets.zero,
@@ -78,11 +81,16 @@ class _UpcomingBarEventState extends State<UpcomingBarEvent> {
                         padding: EdgeInsets.symmetric(horizontal:SizeConfig.widthMultiplier * 4,),
                         child: GestureDetector(
                           onTap: (){
-                            model.selectedUpcomingEvents = (model.listOfUpcomingEvents[index]);
-                           // model.selectedBar = (model.listOfBar[index]);
-                            model.navigateToUpcomingBarEventDetails();
+                            // model.barId = model.listOfBar[index].id;
+                            // model.selectedBar = (model.listOfAllBars[index]);
+                            // model.navigateToBarProfile();
+                            model.getbarFollowersDet = (model.getbarfollowers[index]);
+                            model.navigateToBarFollowerDet();
                           },
-                          child: Container(
+                          child:
+                          // model.listOfAllBars[index].is_follow == true ?
+                          Container(
+                            padding: EdgeInsets.symmetric( horizontal: 2.5.w, vertical: 1.5.h),
                             decoration: BoxDecoration(
                               boxShadow: [
                                 BoxShadow(
@@ -94,86 +102,81 @@ class _UpcomingBarEventState extends State<UpcomingBarEvent> {
                               ],
                               color: Colors.white,
                               borderRadius: BorderRadius.all(Radius.circular(18)),
-                              border: Border.all(color: ColorUtils.red_color),
+                              border: Border.all(color: ColorUtils.text_red),
                             ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 2.w,vertical: 2.h),
-                                  child: Row(
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.network(model.getbarfollowers[index].follow_by!.profile_picture!,
+                                    width: 15.i,
+                                    height: 15.i,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                SizedBox(width: 2.w,),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(10),
-                                        child: Image.network(model.listOfUpcomingEvents[index].media![0].media,
-                                          width: 20.i,
-                                          height: 20.i,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                      SizedBox(width: 3.w,),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
                                         children: [
-                                         Row(
-                                           children: [
-                                             Text(model.listOfUpcomingEvents[index].event_date! + " , ",
-                                               style: TextStyle(
-                                                   fontFamily: FontUtils.modernistRegular,
-                                                   fontSize: 1.7.t,
-                                                   color: ColorUtils.text_red
-                                               ),
-                                             ),
-                                             Text(model.listOfUpcomingEvents[index].start_time!,
-                                               style: TextStyle(
-                                                   fontFamily: FontUtils.modernistRegular,
-                                                   fontSize: 1.7.t,
-                                                   color: ColorUtils.text_red
-                                               ),
-                                             ),
-                                           ],
-                                         ),
-                                          SizedBox(height: 1.h,),
-                                          Text(model.listOfUpcomingEvents[index].name!,
+                                          Text(model.getbarfollowers[index].follow_by!.username!,
                                             style: TextStyle(
                                                 fontFamily: FontUtils.modernistBold,
-                                                fontSize: 2.2.t,
+                                                fontSize: 1.9.t,
                                                 color: ColorUtils.black
                                             ),
                                           ),
-                                          SizedBox(height: 1.h,),
-                                          Row(
-                                            children: [
-                                              SvgPicture.asset(ImageUtils.location_icon),
-                                              SizedBox(width: 2.w,),
-                                              Text(model.listOfUpcomingEvents[index].location!,
-                                                style: TextStyle(
-                                                    fontFamily: FontUtils.modernistRegular,
-                                                    fontSize: 1.7.t,
-                                                    color: ColorUtils.text_dark
-                                                ),
-                                              ),
-                                            ],
-                                          )
+                                          SizedBox(width: 1.w,),
+
                                         ],
                                       ),
+                                      SizedBox(height: 1.h,),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          SvgPicture.asset(ImageUtils.locationPin,),
+                                          SizedBox(width: 1.5.w,),
+                                          Container(
+                                            width: 50.w,
+                                            child: Text(model.getbarfollowers[index].follow_by!.address!,
+                                              style: TextStyle(
+                                                fontFamily: FontUtils.modernistRegular,
+                                                fontSize: 1.6.t,
+                                                color: ColorUtils.text_grey,
+                                              ),
+
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 0.8.h,),
+
                                     ],
                                   ),
                                 ),
+
                               ],
                             ),
-                          ),
+                          )
+                          // : Container()
                         ),
                       );
                     },
                     separatorBuilder: (context, index) {
                       return SizedBox(height:  SizeConfig.heightMultiplier * 2.5,);
                     },
-                    itemCount: model.listOfUpcomingEvents.length,
+                    itemCount: model.getbarfollowers.length,
                   ),
                 ),
-                SizedBox(height: SizeConfig.heightMultiplier * 2,),
 
               ],
             ),

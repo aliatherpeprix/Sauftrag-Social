@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/services/addFavorites.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/extensions.dart';
@@ -224,7 +225,13 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
     double backCardPosition = initialBottom + (dataLength - 1) * 10 + 10;
     double backCardWidth = 0.0;
     return ViewModelBuilder<MainViewModel>.reactive(
-      onModelReady: (data) {
+      onModelReady: (data) async{
+        data.drinkList =
+            await Addfavorites().GetFavoritesDrink();
+        data.clubList =
+            await Addfavorites().GetFavoritesClub();
+        data.vacationList =
+            await Addfavorites().GetFavoritesPartyVacation();
         data.getDiscover(context);
       },
       builder: (context, model, child) {
@@ -466,8 +473,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                                   .isOpened,
                                       child: Stack(
                                         alignment: AlignmentDirectional.center,
-                                        children:
-                                            model.catalogImages.map((item) {
+                                        children: model.catalogImages.map((item) {
                                           return SwipeCard
                                             (
                                             name: model
@@ -480,37 +486,39 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                             address: model.discoverModel![model.catalogImages.indexOf(item)]
                                                 .address,
                                             details: () {
-                                              model.navigateToProfileScreen(
-                                                item,
-                                                model.matchName[model
-                                                    .catalogImages
-                                                    .indexOf(item)],
-                                                model
-                                                    .discoverModel![model
-                                                        .catalogImages
-                                                        .indexOf(item)]
-                                                    .address!,
-                                                model
-                                                    .discoverModel![model
-                                                        .catalogImages
-                                                        .indexOf(item)]
-                                                    .favorite_alcohol_drinks!,
-                                                model
-                                                    .discoverModel![model
-                                                        .catalogImages
-                                                        .indexOf(item)]
-                                                    .favorite_night_club!,
-                                                model
-                                                    .discoverModel![model
-                                                        .catalogImages
-                                                        .indexOf(item)]
-                                                    .favorite_party_vacation!,
-                                                model
-                                                    .discoverModel![model
-                                                        .catalogImages
-                                                        .indexOf(item)]
-                                                    .id,
-                                              );
+                                              if(model.catalogImages.isNotEmpty){
+                                                model.navigateToProfileScreen(
+                                                  item,
+                                                  model.matchName[model
+                                                      .catalogImages
+                                                      .indexOf(item)],
+                                                  model
+                                                      .discoverModel![model
+                                                      .catalogImages
+                                                      .indexOf(item)]
+                                                      .address!,
+                                                  model
+                                                      .discoverModel![model
+                                                      .catalogImages
+                                                      .indexOf(item)]
+                                                      .favorite_alcohol_drinks!,
+                                                  model
+                                                      .discoverModel![model
+                                                      .catalogImages
+                                                      .indexOf(item)]
+                                                      .favorite_night_club!,
+                                                  model
+                                                      .discoverModel![model
+                                                      .catalogImages
+                                                      .indexOf(item)]
+                                                      .favorite_party_vacation!,
+                                                  model
+                                                      .discoverModel![model
+                                                      .catalogImages
+                                                      .indexOf(item)]
+                                                      .id,
+                                                );
+                                              }
                                             },
                                             right: right.value,
                                             left: 0.0,

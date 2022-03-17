@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:sauftrag/models/user_matched.dart';
 
 part 'user_models.g.dart';
 
@@ -33,6 +34,7 @@ class UserModel {
   String? password;
   String? password2;
   String? token;
+  List<UserMatchedModel>? friends;
 
 
   factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
