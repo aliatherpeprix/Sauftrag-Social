@@ -14,7 +14,7 @@ class BarModel {
   String? email;
   String? address;
   dynamic role;
-  List? bar_kind;
+  List<int>? bar_kind;
   List? week_days;
   String? opening_time;
   String? closing_time;

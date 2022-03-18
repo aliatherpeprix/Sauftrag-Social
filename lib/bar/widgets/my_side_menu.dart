@@ -24,6 +24,9 @@ class _MySideMenuState extends State<MySideMenu> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<MainViewModel>.reactive(
+      onModelReady: (model) {
+
+      },
       //onModelReady: (data) => data.initializeLoginModel(),
       builder: (context, model, child) {
         return Container(

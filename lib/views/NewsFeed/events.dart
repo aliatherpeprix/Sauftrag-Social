@@ -224,9 +224,10 @@ class _EventsState extends State<Events> {
                                                 children: [
                                                   ClipRRect(
                                                     borderRadius: BorderRadius.circular(10),
-                                                    child: Image.asset(upComingEvents[index]["image"],
-                                                      fit: BoxFit.fitHeight,
+                                                    child:  Image.network(model.listOfUpcomingEvents[index].media![0].media,
+                                                      fit: BoxFit.fill,
                                                       height: 17.h,
+                                                      width: 60.w,
                                                     ),
                                                   ),
                                                   Positioned(
@@ -241,14 +242,14 @@ class _EventsState extends State<Events> {
                                                         padding: EdgeInsets.symmetric(horizontal: 3.5.w, vertical: 1.25.h),
                                                         child: Column(
                                                           children: [
-                                                            Text(upComingEvents[index]["date"],
+                                                            Text(model.listOfUpcomingEvents[index].event_date!.substring(8, 10),
                                                               style: TextStyle(
                                                                   fontFamily: FontUtils.modernistBold,
                                                                   fontSize: 2.2.t,
                                                                   color: ColorUtils.text_red
                                                               ),
                                                             ),
-                                                            Text(upComingEvents[index]["month"],
+                                                            Text(model.listOfUpcomingEvents[index].event_date!.substring(0, 7),
                                                               style: TextStyle(
                                                                   fontFamily: FontUtils.modernistRegular,
                                                                   color: ColorUtils.text_red
@@ -268,7 +269,7 @@ class _EventsState extends State<Events> {
                                                   mainAxisSize: MainAxisSize.min,
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
-                                                    Text("Trivia Nights",
+                                                    Text(model.listOfUpcomingEvents[index].name!,
                                                       style: TextStyle(
                                                           fontFamily: FontUtils.modernistBold,
                                                           fontSize: 2.3.t,
@@ -281,14 +282,14 @@ class _EventsState extends State<Events> {
                                                       children: [
                                                         Container(
                                                           //color: Colors.red,
-                                                          child: Image.asset(upComingEvents[index]["goingGroup"],
+                                                          child: Image.asset(ImageUtils.groupGoing,
                                                             width: 16.i,
                                                             height: 7.i,
                                                             fit: BoxFit.cover,
                                                           ),
                                                         ),
                                                         SizedBox(width: 3.w,),
-                                                        Text(upComingEvents[index]["going"] + " Going",
+                                                        Text("+20 Going",
                                                           style: TextStyle(
                                                             fontFamily: FontUtils.modernistRegular,
                                                             fontSize: 1.6.t,
@@ -302,7 +303,7 @@ class _EventsState extends State<Events> {
                                                       children: [
                                                         SvgPicture.asset(ImageUtils.upcomingLocation),
                                                         SizedBox(width: 1.w,),
-                                                        Text(upComingEvents[index]["location"],
+                                                        Text(model.listOfUpcomingEvents[index].location!,
                                                           style: TextStyle(
                                                             fontFamily: FontUtils.modernistRegular,
                                                             fontSize: 1.6.t,
@@ -324,7 +325,7 @@ class _EventsState extends State<Events> {
                                 separatorBuilder: (context, index) {
                                   return SizedBox(width: 1.w,);
                                 },
-                                itemCount: upComingEvents.length
+                                itemCount: 4
                             ),
                           ),
                           SizedBox(height: 2.5.h,),
@@ -461,7 +462,7 @@ class _EventsState extends State<Events> {
                             separatorBuilder: (context, index) {
                               return SizedBox(height:  SizeConfig.heightMultiplier * 2.5,);
                             },
-                            itemCount: model.barEventModel!.length,
+                            itemCount: 4,
                           ),
 
                         ],

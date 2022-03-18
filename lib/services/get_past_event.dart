@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/faqs_questions.dart';
@@ -10,19 +9,19 @@ import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/utils/constants.dart';
 import 'package:sauftrag/viewModels/prefrences_view_model.dart';
 
-class  UpcomingEvents {
+class PastEvents {
   //var _dioService = DioService.getInstance();
 
   Dio dio = Dio();
 
-  Future GetUpcomingEvents(
+  Future GetPastEvents(
 
 
       ) async {
     try {
 
       UserModel? user = (await locator<PrefrencesViewModel>().getUser());
-      var response = await dio.get(Constants.BaseUrlPro+Constants.GetUpcomingEvents,
+      var response = await dio.get(Constants.BaseUrlPro+Constants.GetPastEvent,
           options: Options(
             // contentType: Headers.formUrlEncodedContentType,
               headers: {
@@ -33,7 +32,7 @@ class  UpcomingEvents {
 
         var faqs = (response.data);
         //List<FaqsModel> Faq = faqs[1]['question'];
-        print("jhjg");
+        //print("jhjg");
         List<GetEvent> getupcomingevents = (response.data as List).map((e) =>
             GetEvent.fromJson(e)).toList();
         // getbarfollowers.removeWhere((element) => element.role==2);

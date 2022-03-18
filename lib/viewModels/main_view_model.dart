@@ -58,6 +58,7 @@ import 'package:sauftrag/services/faqs.dart';
 import 'package:sauftrag/services/followBar.dart';
 import 'package:sauftrag/services/get_barFollowers.dart';
 import 'package:sauftrag/services/get_match_users.dart';
+import 'package:sauftrag/services/get_past_event.dart';
 import 'package:sauftrag/services/get_upcoming_events.dart';
 import 'package:sauftrag/services/get_user_to_user.dart';
 import 'package:sauftrag/services/listOfBars.dart';
@@ -102,6 +103,7 @@ class MainViewModel extends BaseViewModel {
   var getUserInfo = UserGetAnotherUser();
   var getBarUpcomingEvents = UpcomingEvents();
   var attendEvent = Attendevent();
+  var getPastEvents = PastEvents();
 
   Barcode? result;
 
@@ -240,9 +242,11 @@ class MainViewModel extends BaseViewModel {
 
   List<ListOfBarsModel> listOfAllBars = [];
 
-  List<GetUpcomingEvent> listOfUpcomingEvents = [];
+  List<GetEvent> listOfUpcomingEvents = [];
 
-  GetUpcomingEvent? selectedUpcomingEvents;
+  List<GetEvent> listOfPastEvents = [];
+
+  GetEvent? selectedUpcomingEvents;
 
 //  List<GetUpcomingEvent>? eventOngoingUsers;
 
@@ -1022,7 +1026,9 @@ class MainViewModel extends BaseViewModel {
       latitude = position.latitude;
       notifyListeners();
       var updatelocationResponse = await updateLocation.UpdateLocationBar(
-          latitude.toString(), longitude.toString(), barModel!.id.toString());
+          latitude.toString(),
+          longitude.toString(),
+          barModel!.id.toString());
       print(updatelocationResponse);
     }).catchError((e) {
       print(e);
@@ -1920,7 +1926,7 @@ class MainViewModel extends BaseViewModel {
     //   //isPrivacyPolicy = false;
     //
     // }ListOfBarsModel
-    if (listOfUpcomingEvent is List<GetUpcomingEvent>) {
+    if (listOfUpcomingEvent is List<GetEvent>) {
       listOfUpcomingEvents = listOfUpcomingEvent;
       // for(var v in listOfUpcomingEvent){
       //   //v.going_users!;
@@ -1928,6 +1934,37 @@ class MainViewModel extends BaseViewModel {
       //   print(selectUser);
       // }
       print(listOfUpcomingEvents);
+    }   else {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Some thing went wrong",
+      ));
+      //isPrivacyPolicy = false;
+
+      return;
+    }
+    isFaqs = false;
+    notifyListeners();
+    //print(getFaqsList);
+  }
+
+  getListOfPastEvents() async {
+    isFaqs = true;
+
+    var listOfPastEvent = await getPastEvents.GetPastEvents();
+    print(listOfPastEvent);
+    // if (getFaqList is String){
+    //   faqs = getFaqList;
+    //   //isPrivacyPolicy = false;
+    //
+    // }ListOfBarsModel
+    if (listOfPastEvent is List<GetEvent>) {
+      listOfPastEvents = listOfPastEvent;
+      // for(var v in listOfUpcomingEvent){
+      //   //v.going_users!;
+      //   selectUser!.add(v.going_users![0]);
+      //   print(selectUser);
+      // }
+      print(listOfPastEvents);
     }   else {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Some thing went wrong",

@@ -53,7 +53,7 @@ class SignupBar {
         'email': email,
         'address': address,
         'role': "2",
-        'bar_kind': barKind,
+        'bar_kind': [2],
         'working_days': workingDays,
         'opening_time': openingTime,
         'closing_time': closingTime,

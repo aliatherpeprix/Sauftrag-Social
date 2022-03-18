@@ -116,6 +116,7 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
         data.getBarPost();
         data.rating();
         data.getEvent(context);
+        data.updateCurrentLocationBar();
         // data.buttonController = AnimationController(duration: Duration(milliseconds: 1000), vsync: this);
         // data.initSwipe();
       },

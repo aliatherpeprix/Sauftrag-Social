@@ -15,8 +15,8 @@ part 'get_bar_upcoming_event.g.dart';
 
 @JsonSerializable()
 
-class GetUpcomingEvent {
-  GetUpcomingEvent();
+class GetEvent {
+  GetEvent();
 
   int? id;
   String? name;
@@ -34,7 +34,7 @@ class GetUpcomingEvent {
   List<EventAttendees>? going_users;
 
 
-  factory GetUpcomingEvent.fromJson(Map<String, dynamic> json) => _$GetUpcomingEventFromJson(json);
-  Map<String, dynamic> toJson() => _$GetUpcomingEventToJson(this);
+  factory GetEvent.fromJson(Map<String, dynamic> json) => _$GetEventFromJson(json);
+  Map<String, dynamic> toJson() => _$GetEventToJson(this);
 
 }
