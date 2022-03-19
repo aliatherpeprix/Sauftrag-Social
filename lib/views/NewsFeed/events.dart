@@ -72,6 +72,7 @@ class _EventsState extends State<Events> {
       disposeViewModel: false,
       onModelReady: (model){
         model.getEvent(context);
+        model.getListOfUpcomingEvents();
 
       },
       builder: (context, model, child) {
@@ -230,7 +231,7 @@ class _EventsState extends State<Events> {
                                                   children: [
                                                     ClipRRect(
                                                       borderRadius: BorderRadius.circular(10),
-                                                      child:  Image.network(model.listOfUpcomingEvents![index].media![0].media,
+                                                      child:  Image.network(model.listOfUpcomingEvents[index].media![0].media,
                                                         fit: BoxFit.fill,
                                                         height: 17.h,
                                                         width: 60.w,
@@ -248,14 +249,14 @@ class _EventsState extends State<Events> {
                                                           padding: EdgeInsets.symmetric(horizontal: 3.5.w, vertical: 1.25.h),
                                                           child: Column(
                                                             children: [
-                                                              Text(model.listOfUpcomingEvents![index].event_date!.substring(8, 10),
+                                                              Text(model.listOfUpcomingEvents[index].event_date!.substring(8, 10),
                                                                 style: TextStyle(
                                                                     fontFamily: FontUtils.modernistBold,
                                                                     fontSize: 2.2.t,
                                                                     color: ColorUtils.text_red
                                                                 ),
                                                               ),
-                                                              Text(model.listOfUpcomingEvents![index].event_date!.substring(0, 7),
+                                                              Text(model.listOfUpcomingEvents[index].event_date!.substring(0, 7),
                                                                 style: TextStyle(
                                                                     fontFamily: FontUtils.modernistRegular,
                                                                     color: ColorUtils.text_red
@@ -275,7 +276,7 @@ class _EventsState extends State<Events> {
                                                     mainAxisSize: MainAxisSize.min,
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
-                                                      Text(model.listOfUpcomingEvents![index].name!,
+                                                      Text(model.listOfUpcomingEvents[index].name!,
                                                         style: TextStyle(
                                                             fontFamily: FontUtils.modernistBold,
                                                             fontSize: 2.3.t,
@@ -309,7 +310,7 @@ class _EventsState extends State<Events> {
                                                         children: [
                                                           SvgPicture.asset(ImageUtils.upcomingLocation),
                                                           SizedBox(width: 1.w,),
-                                                          Text(model.listOfUpcomingEvents![index].location!,
+                                                          Text(model.listOfUpcomingEvents[index].location!,
                                                             style: TextStyle(
                                                               fontFamily: FontUtils.modernistRegular,
                                                               fontSize: 1.6.t,
