@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_google_places/flutter_google_places.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
@@ -50,6 +52,7 @@ import 'package:sauftrag/services/addressBook.dart';
 import 'package:sauftrag/services/allBars.dart';
 import 'package:sauftrag/services/attend_event.dart';
 import 'package:sauftrag/services/barQRcode.dart';
+import 'package:sauftrag/services/bar_filters.dart';
 import 'package:sauftrag/services/bar_order.dart';
 import 'package:sauftrag/services/createPost.dart';
 import 'package:sauftrag/services/dataProtection.dart';
@@ -104,6 +107,7 @@ class MainViewModel extends BaseViewModel {
   var getBarUpcomingEvents = UpcomingEvents();
   var attendEvent = Attendevent();
   var getPastEvents = PastEvents();
+  var addBarFilter = Barfilters();
 
   Barcode? result;
 
@@ -148,12 +152,12 @@ class MainViewModel extends BaseViewModel {
   bool myContactEmojiSelected = false;
   final myContactsChatController = TextEditingController();
   bool eventSelected = false;
-  int? currentEventSelected;
+  dynamic currentEventSelected;
   bool timeSelected = false;
-  int? timeValue;
+  dynamic timeValue;
   double sliderValue = 0.0;
-  String? lowValue = "50";
-  String? highValue = "180";
+  String? lowValue = "0";
+  String? highValue = "50";
   bool bottomSheetSelected = false;
   bool messageScreenEmojiShowing = false;
   bool messageScreenEmojiSelected = false;
@@ -173,6 +177,12 @@ class MainViewModel extends BaseViewModel {
   bool addDrink = false;
   bool isFollow = false;
   bool isLoading = false;
+
+  List<Marker> marker = <Marker>[];
+  String address = "";
+  GoogleMapController? mapController;
+  double? lat;
+  double? lng;
 
   bool editBool = false;
   var dio = Dio();
@@ -212,10 +222,14 @@ class MainViewModel extends BaseViewModel {
   bool isAddNewPartyLocationInFocus = false;
   FocusNode addNewPartyLocationFocus = new FocusNode();
 
+  final filtersMapController = TextEditingController();
+  bool isFiltersMapInFocus = false;
+  FocusNode filtersMapFocus = new FocusNode();
+
 
   PrefrencesViewModel prefrencesViewModel = locator<PrefrencesViewModel>();
-  double lowerValue = 50;
-  double upperValue = 180;
+  double lowerValue = 0;
+  double upperValue = 50;
   PubNub? pubnub;
 
   List<FaqsModel> faqs = [];
@@ -247,6 +261,8 @@ class MainViewModel extends BaseViewModel {
   List<GetEvent> listOfPastEvents = [];
 
   GetEvent? selectedUpcomingEvents;
+
+  List<GetEvent> addFilters = [];
 
 //  List<GetUpcomingEvent>? eventOngoingUsers;
 
@@ -472,6 +488,94 @@ class MainViewModel extends BaseViewModel {
     }
   }
 
+  Future<Position> determinePositionFilters() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled don't continue
+      // accessing the position and request users of the
+      // App to enable the location services.
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Please turn on your device location",
+      ));
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // Permissions are denied, next time you could try
+        // requesting permissions again (this is also where
+        // Android's shouldShowRequestPermissionRationale
+        // returned true. According to Android guidelines
+        // your App should show an explanatory UI now.
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    // When we reach here, permissions are granted and we can
+    // continue accessing the position of the device.
+    return await Geolocator.getCurrentPosition();
+  }
+
+  // Future<void> searchAddress(BuildContext context) async {
+  //
+  //   var p = await PlacesAutocomplete.show(
+  //       offset: 0,
+  //       radius: 1000,
+  //       types: [],
+  //       strictbounds: false,
+  //       context: context,
+  //       apiKey: Constants.kGoogleApiKey,
+  //       mode: Mode.overlay, // Mode.fullscreen
+  //       language: "en",
+  //       components: [new Component(Component.country, "pk")]);
+  //   GoogleMapsPlaces _places = GoogleMapsPlaces(
+  //     apiKey: Constants.kGoogleApiKey,
+  //     apiHeaders: await GoogleApiHeaders().getHeaders(),
+  //   );
+  //
+  //   PlacesDetailsResponse detail = await _places.getDetailsByPlaceId(p!.placeId!);
+  //   final lat = detail.result.geometry!.location.lat;
+  //   final lng = detail.result.geometry!.location.lng;
+  //
+  //   print(p.description);
+  //
+  //   address = p.description!;
+  //   this.lat = lat;
+  //   this.lng = lng;
+  //
+  //   markers.clear();
+  //   markers.add(
+  //       Marker(
+  //           markerId: MarkerId(p.placeId.toString()),
+  //           position: LatLng(lat, lng),
+  //           infoWindow: InfoWindow(
+  //               title: ""
+  //           )
+  //       )
+  //   );
+  //
+  //   kGooglePlex = CameraPosition(
+  //     target: LatLng(lat, lng),
+  //     zoom: 18,
+  //   );
+  //
+  //   mapController!.animateCamera(CameraUpdate.newCameraPosition(kGooglePlex));
+  //
+  //   notifyListeners();
+  // }
+
   Future<Null> cropImage(BuildContext context, String path) async {
     File? croppedFile = await ImageCropper.cropImage(
         sourcePath: path,
@@ -525,6 +629,35 @@ class MainViewModel extends BaseViewModel {
       notifyListeners();
       return true;
     }
+  }
+
+  Future navigateToPosition(LatLng latLng) async {
+
+    kGooglePlex = CameraPosition(
+      target: LatLng(latLng.latitude, latLng.longitude),
+      zoom: 18,
+    );
+
+    mapController!.animateCamera(CameraUpdate.newCameraPosition(kGooglePlex));
+
+    List<Placemark> placemarks = await placemarkFromCoordinates(latLng.latitude, latLng.longitude);
+
+    address = "${placemarks[0].name} ${placemarks[0].street} ${placemarks[0].subLocality} ${placemarks[0].locality} ${placemarks[0].country}";
+    lat = latLng.latitude;
+    lng = latLng.longitude;
+
+    markers.clear();
+    markers.add(
+        Marker(
+            markerId: MarkerId(placemarks[0].name!),
+            position: LatLng(latLng.latitude, latLng.longitude),
+            infoWindow: InfoWindow(
+                title: placemarks[0].name
+            )
+        )
+    );
+
+    notifyListeners();
   }
 
   Future<bool> getImage(int index) async {
@@ -706,10 +839,17 @@ class MainViewModel extends BaseViewModel {
           TextPosition(offset: chatController.text.length));
   }
 
-  addMarkers() {
+  // addMarkers() {
+  //   markers.add(Marker(
+  //       markerId: MarkerId('SomeId'),
+  //       position: LatLng(24.8169, 67.1118),
+  //       infoWindow: InfoWindow(title: 'The title of the marker')));
+  // }
+
+  addMarkers(LatLng latlng) {
     markers.add(Marker(
         markerId: MarkerId('SomeId'),
-        position: LatLng(24.8169, 67.1118),
+        position: LatLng(latlng.latitude, latlng.longitude),
         infoWindow: InfoWindow(title: 'The title of the marker')));
   }
 
@@ -1388,6 +1528,15 @@ class MainViewModel extends BaseViewModel {
     navigationService.navigateToOrderDetailsScreen();
   }
 
+
+  void navigateToMapSearchScreen() {
+    navigationService.navigateToMapSearchScreen();
+  }
+
+  void navigateToMapScreen() {
+    navigationService.navigateToMapScreen(3);
+  }
+
   // void navigateToEventDetailsScreen( dynamic image,
   //       dynamic eventName,
   //       dynamic eventDate,
@@ -1423,9 +1572,7 @@ class MainViewModel extends BaseViewModel {
         type: PageTransitionType.rightToLeftWithFade));
   }
 
-  void navigateToMapSearchScreen() {
-    navigationService.navigateToMapSearchScreen();
-  }
+
 
   void navigateToUserDetailSettings() {
     navigationService.navigateToUserDetailSettings();
@@ -1559,6 +1706,11 @@ class MainViewModel extends BaseViewModel {
   void navigateToBarFollowersListScreen() {
     navigationService.navigateToBarFollowersListScreen();
   }
+
+  void navigateToFilterEventScreen() {
+    navigationService.navigateToFilterEventScreen();
+  }
+
 
   void navigateToMatchDetailScreen(
       dynamic images,
@@ -1934,7 +2086,8 @@ class MainViewModel extends BaseViewModel {
       //   print(selectUser);
       // }
       print(listOfUpcomingEvents);
-    }   else {
+    }
+    else {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Some thing went wrong",
       ));
@@ -2033,6 +2186,7 @@ class MainViewModel extends BaseViewModel {
 
   bool isAttend = false;
   bool isAttendingEvent = false;
+
   attendedEvent() async {
     isLoading = true;
     notifyListeners();
@@ -2655,6 +2809,55 @@ class MainViewModel extends BaseViewModel {
     notifyListeners();
     //print(getFaqsList);
   }
+
+  addEventFilters() async {
+
+      addDrink = true;
+      notifyListeners();
+      //drinkList = await Addfavorites().GetFavoritesDrink();
+      var getFiltersEvent = await addBarFilter.BarFilters(
+
+          mapSearchController.text,
+          currentEventSelected != null ? currentEventSelected! + 1 : currentEventSelected,
+          timeValue,
+          lowerValue,
+          upperValue
+
+      );
+      if (getFiltersEvent is List<GetEvent>) {
+        addFilters = getFiltersEvent;
+        // for(var v in listOfUpcomingEvent){
+        //   //v.going_users!;
+        //   selectUser!.add(v.going_users![0]);
+        //   print(selectUser);
+        // }
+        print(addFilters);
+      }
+      else {
+        DialogUtils().showDialog(MyErrorWidget(
+          error: "Some thing went wrong",
+        ));
+        //isPrivacyPolicy = false;
+
+        return;
+      }
+      // if (addFavoriteResponce is FavoritesModel) {
+      //   var name = addFavoriteResponce.name;
+      //   // drinks = addFavoriteResponce;
+      //   drinkList.add(addFavoriteResponce);
+      //   notifyListeners();
+      // }
+      print(addFilters);
+      navigateToMapSearchScreen();
+
+      // navigateBack();
+      // addDrink = false;
+      // drinkList = await Addfavorites().GetFavoritesDrink();
+      // addNewDrinkController.clear();
+      notifyListeners();
+
+    }
+
 
 
 

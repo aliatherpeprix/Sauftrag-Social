@@ -51,23 +51,23 @@ class _SearchState extends State<Search> {
   List filterPlaces = [
     {
       'image': ImageUtils.discoBall,
-      'text': "Night Club",
+      'text': "Beer Hall",
     },
     {
       'image': ImageUtils.musicIcon,
-      'text': "Pub",
+      'text': "Hotel Bar",
     },
     {
       'image': ImageUtils.chaimpaineGlass,
-      'text': "Bar",
+      'text': "Pub",
     },
     {
       'image': ImageUtils.calenderFilter,
-      'text': "Events",
+      'text': "Cocktail",
     },
     {
       'image': ImageUtils.knife,
-      'text': "Food",
+      'text': "Disco",
     },
   ];
 
@@ -115,7 +115,8 @@ class _SearchState extends State<Search> {
                           padding: EdgeInsets.symmetric(horizontal: 5.w),
                             child: IconButton(
                                 onPressed: () {
-                                  model.navigateBack();
+                                  model.navigateToMapScreen();
+                                  //model.navigateBack();
                                 },
                                 iconSize: 18.0,
                                 padding: EdgeInsets.zero,
@@ -167,7 +168,7 @@ class _SearchState extends State<Search> {
                                   enabled: true,
                                   //readOnly: true,
                                   //focusNode: model.searchFocus,
-                                  controller: model.searchScreenController,
+                                  controller: model.mapSearchController,
                                   decoration: InputDecoration(
                                     hintText: "Where are you going to ?",
                                     hintStyle: TextStyle(
@@ -236,69 +237,76 @@ class _SearchState extends State<Search> {
                         itemBuilder: (context, index) {
                           return Padding(
                             padding: EdgeInsets.symmetric(horizontal:SizeConfig.widthMultiplier * 4,),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: ColorUtils.black.withOpacity(0.1),
-                                    spreadRadius: 0,
-                                    blurRadius: 10,
-                                    offset: Offset(0, 5), // changes position of shadow
-                                  ),
-                                ],
-                                color: Colors.white,
-                                borderRadius: BorderRadius.all(Radius.circular(18)),
-                                border: Border.all(color: ColorUtils.red_color),
-                              ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 2.w,vertical: 1.5.h),
-                                    child: Row(
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius: BorderRadius.circular(10),
-                                          child: Image.asset(places[index]["image"],
-                                            width: 20.i,
-                                            height: 20.i,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        SizedBox(width: 3.w,),
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(places[index]["date"],
-                                              style: TextStyle(
-                                                  fontFamily: FontUtils.modernistRegular,
-                                                  fontSize: 1.7.t,
-                                                  color: ColorUtils.text_red
-                                              ),
-                                            ),
-                                            SizedBox(height: 1.h,),
-                                            Text(places[index]["eventName"],
-                                              style: TextStyle(
-                                                  fontFamily: FontUtils.modernistBold,
-                                                  fontSize: 2.2.t,
-                                                  color: ColorUtils.blackText
-                                              ),
-                                            ),
-                                            SizedBox(height: 1.h,),
-                                            Text(places[index]["location"],
-                                              style: TextStyle(
-                                                  fontFamily: FontUtils.modernistRegular,
-                                                  fontSize: 1.7.t,
-                                                  color: ColorUtils.text_dark
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                            child: GestureDetector(
+                              onTap: (){
+                                model.selectedUpcomingEvents = (model.addFilters[index]);
+                                // model.selectedBar = (model.listOfBar[index]);
+                                model.navigateToUpcomingBarEventDetails();
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: ColorUtils.black.withOpacity(0.1),
+                                      spreadRadius: 0,
+                                      blurRadius: 10,
+                                      offset: Offset(0, 5), // changes position of shadow
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.all(Radius.circular(18)),
+                                  border: Border.all(color: ColorUtils.red_color),
+                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: 2.w,vertical: 1.5.h),
+                                      child: Row(
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.circular(10),
+                                            child: Image.network(model.addFilters[index].media![0].media,
+                                              width: 20.i,
+                                              height: 20.i,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                          SizedBox(width: 3.w,),
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(model.addFilters[index].event_date!,
+                                                style: TextStyle(
+                                                    fontFamily: FontUtils.modernistRegular,
+                                                    fontSize: 1.7.t,
+                                                    color: ColorUtils.text_red
+                                                ),
+                                              ),
+                                              SizedBox(height: 1.h,),
+                                              Text(model.addFilters[index].name!,
+                                                style: TextStyle(
+                                                    fontFamily: FontUtils.modernistBold,
+                                                    fontSize: 2.2.t,
+                                                    color: ColorUtils.blackText
+                                                ),
+                                              ),
+                                              SizedBox(height: 1.h,),
+                                              Text(model.addFilters[index].location!,
+                                                style: TextStyle(
+                                                    fontFamily: FontUtils.modernistRegular,
+                                                    fontSize: 1.7.t,
+                                                    color: ColorUtils.text_dark
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           );
@@ -306,7 +314,7 @@ class _SearchState extends State<Search> {
                         separatorBuilder: (context, index) {
                           return SizedBox(height:  SizeConfig.heightMultiplier * 2.5,);
                         },
-                        itemCount: places.length,
+                        itemCount: model.addFilters.length,
                       ),
                     ),
                     SizedBox(height: 6.h,)
@@ -539,97 +547,54 @@ class _SearchState extends State<Search> {
                     SizedBox(
                       height: 2.h,
                     ),
+
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 4.w),
-                      // width: double.infinity,
-                      // height: 6.5.h,
+                      height: 7.h,
+                      padding: EdgeInsets.symmetric(
+                          vertical: Dimensions.containerVerticalPadding,
+                          horizontal:
+                          Dimensions.containerHorizontalPadding),
                       decoration: BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                          border: Border.all(
-                            //width: 2.0,
-                            color: ColorUtils.borderColor,
-                          )),
-                      child: Container(
-                        margin: EdgeInsets.only(
-                          left: 2.2.w,
-                          right: 2.3.w,
-                        ),
+                          color: ColorUtils.white,
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(Dimensions.roundCorner)),
+                          border:
+                          Border.all(color: ColorUtils.divider)),
+                      child: GestureDetector(
+                        onTap: () async {
+                          mainModel.navigateToFilterEventScreen();
+                          var position = await mainModel.determinePositionFilters();
+                          mainModel.latitude = position.latitude;
+                          mainModel.latitude = position.longitude;
+                        },
                         child: Row(
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  Container(
-                                    width: 12.w,
-                                    height: 6.h,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.rectangle,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(11.89)),
-                                      color: ColorUtils.text_red,
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 8.w,
-                                    height: 4.h,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.rectangle,
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                      color: Colors.white,
-                                    ),
-                                    child: Center(
-                                      child: SvgPicture.asset(
-                                        ImageUtils.locationPin,
-                                        width: 4.i,
-                                        height: 4.i,
-                                        //fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                            Container(child: SvgPicture.asset(ImageUtils.locationIcon)
                             ),
+                            SizedBox(width: 4.w),
                             Expanded(
-                              child: DropdownButtonFormField<String>(
-                                //isExpanded: true,
-                                decoration: InputDecoration(
-                                    suffixIcon: Icon(
-                                      Icons.keyboard_arrow_down,
-                                      color: ColorUtils.text_red,
-                                      //size: 6.i,
-                                    ),
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide:
-                                      BorderSide(color: Colors.transparent),
-                                    )),
-                                icon: Icon(
-                                  Icons.keyboard_arrow_down,
-                                  color: Colors.black,
-                                  size: 0.0,
+                              child: TextField(
+                                focusNode: mainModel.filtersMapFocus,
+                                controller: mainModel.filtersMapController,
+                                keyboardType: TextInputType.text,
+                                textInputAction: TextInputAction.next,
+                                style: TextStyle(
+                                  color: ColorUtils.red_color,
+                                  fontFamily: FontUtils.modernistRegular,
+                                  fontSize: 1.9.t,
                                 ),
-                                onChanged: (newValue) {
-                                  selectedLocation = newValue;
-                                  setState(() {});
-                                },
-                                items: location.map((city) {
-                                  return DropdownMenuItem(
-                                    value: city,
-                                    child: new Text(
-                                      city,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: FontUtils.modernistRegular,
-                                        fontSize: 2.3.t,
-                                        color: ColorUtils.locationText,
-                                      ),
-                                    ),
-                                  );
-                                }).toList(),
-                                value: selectedLocation,
+                                decoration: InputDecoration(
+                                  hintText: "Enter location",
+                                  hintStyle: TextStyle(
+                                    fontFamily: FontUtils.modernistBold,
+                                    fontSize: 2.t,
+                                    color: ColorUtils.text_grey,
+                                  ),
+                                  border: InputBorder.none,
+                                  isDense: true,
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 0, vertical: 0),
+                                ),
                               ),
                             ),
                           ],
@@ -653,7 +618,7 @@ class _SearchState extends State<Search> {
                             ),
                           ),
                           Text(
-                            mainModel.lowValue! +"mi" + "-" + mainModel.highValue!+"mi",
+                            mainModel.lowValue! +"km" + "-" + mainModel.highValue!+"km",
                             style: TextStyle(
                                 fontFamily: FontUtils.modernistRegular,
                                 fontSize: 2.0.t,
@@ -717,7 +682,7 @@ class _SearchState extends State<Search> {
                       ),
                       values: [mainModel.lowerValue, mainModel.upperValue],
                       rangeSlider: true,
-                      max: 500,
+                      max: 50,
                       min: 0,
                       onDragging: (handlerIndex, lowerValue, upperValue) {
                         mainModel.lowerValue = lowerValue;
@@ -770,7 +735,8 @@ class _SearchState extends State<Search> {
                           Expanded(
                             child: ElevatedButton(
                               onPressed: () {
-                                mainModel.navigateToMapSearchScreen();
+                                mainModel.addEventFilters();
+                                //mainModel.navigateToMapSearchScreen();
                               },
                               child: Text("APPLY"),
                               style: ElevatedButton.styleFrom(

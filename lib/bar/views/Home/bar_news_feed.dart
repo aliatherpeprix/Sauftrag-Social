@@ -268,7 +268,7 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
                                       ),
                                       GestureDetector(
                                         onTap: () {
-                                          //model.navigateToBarProfile2();
+                                          model.navigateToBarProfile2();
                                         },
                                         child: Container(
                                           decoration: BoxDecoration(

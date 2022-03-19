@@ -94,8 +94,8 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<RegistrationViewModel>.reactive(
-      viewModelBuilder: () => locator<RegistrationViewModel>(),
+    return ViewModelBuilder<MainViewModel>.reactive(
+      viewModelBuilder: () => locator<MainViewModel>(),
       onModelReady: (model) {
       },
       disposeViewModel: false,
@@ -400,20 +400,20 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
-  void filter(context, RegistrationViewModel mainModel) {
+  void filter(context, MainViewModel mainModel) {
     showModalBottomSheet(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25.0),
-
+          borderRadius: BorderRadius.only(topRight: Radius.circular(25),topLeft:  Radius.circular(25) ),
         ),
         backgroundColor: Colors.white,
         context: context,
         builder: (BuildContext context) {
           return ViewModelBuilder.reactive(
             disposeViewModel: false,
-            viewModelBuilder: () => locator<RegistrationViewModel>(),
+            viewModelBuilder: () => locator<MainViewModel>(),
             builder: (context, model, child) {
               return Container(
+               // height: 200.h,
                 // decoration: BoxDecoration(
                 //     color: Colors.white,
                 //     borderRadius: BorderRadius.only(
@@ -421,6 +421,7 @@ class _MapScreenState extends State<MapScreen> {
                 //         topLeft: Radius.circular(50))
                 // ),
                 child: ListView(
+
                   // crossAxisAlignment: CrossAxisAlignment.start,
                   // mainAxisSize: MainAxisSize.min,
                   children: [
@@ -561,7 +562,7 @@ class _MapScreenState extends State<MapScreen> {
                               mainModel.timeValue = index;
                               mainModel.notifyListeners();
                               // mainModel.currentEventSelected = index;
-                              mainModel.notifyListeners();
+                            //  mainModel.notifyListeners();
                             },
                             child: Container(
                               margin: EdgeInsets.symmetric(horizontal: 3.w),
@@ -622,102 +623,156 @@ class _MapScreenState extends State<MapScreen> {
                       height: 2.h,
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 4.w),
-                      // width: double.infinity,
-                      // height: 6.5.h,
+                      height: 7.h,
+                      margin: EdgeInsets.symmetric(horizontal: 3.w ),
+                      padding: EdgeInsets.symmetric(
+                          vertical: Dimensions.containerVerticalPadding,
+                          horizontal:
+                          Dimensions.containerHorizontalPadding),
                       decoration: BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                          border: Border.all(
-                            //width: 2.0,
-                            color: ColorUtils.borderColor,
-                          )),
-                      child: Container(
-                        margin: EdgeInsets.only(
-                          left: 2.2.w,
-                          right: 2.3.w,
-                        ),
+                          color: ColorUtils.white,
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(Dimensions.roundCorner)),
+                          border:
+                          Border.all(color: ColorUtils.divider)),
+                      child: GestureDetector(
+                        onTap: () async {
+                          mainModel.navigateToFilterEventScreen();
+                          var position = await mainModel.determinePositionFilters();
+                          mainModel.latitude = position.latitude;
+                          mainModel.latitude = position.longitude;
+                        },
                         child: Row(
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  Container(
-                                    width: 12.w,
-                                    height: 6.h,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.rectangle,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(11.89)),
-                                      color: ColorUtils.text_red,
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 8.w,
-                                    height: 4.h,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.rectangle,
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(10)),
-                                      color: Colors.white,
-                                    ),
-                                    child: Center(
-                                      child: SvgPicture.asset(
-                                        ImageUtils.locationPin,
-                                        width: 4.i,
-                                        height: 4.i,
-                                        //fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                            Container(child: SvgPicture.asset(ImageUtils.locationIcon)
                             ),
+                            SizedBox(width: 4.w),
                             Expanded(
-                              child: DropdownButtonFormField<String>(
-                                //isExpanded: true,
-                                decoration: InputDecoration(
-                                    suffixIcon: Icon(
-                                      Icons.keyboard_arrow_down,
-                                      color: ColorUtils.text_red,
-                                      //size: 6.i,
-                                    ),
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.transparent),
-                                    )),
-                                icon: Icon(
-                                  Icons.keyboard_arrow_down,
-                                  color: Colors.black,
-                                  size: 0.0,
+                              child: TextField(
+                                focusNode: mainModel.filtersMapFocus,
+                                controller: mainModel.filtersMapController,
+                                keyboardType: TextInputType.text,
+                                textInputAction: TextInputAction.next,
+                                style: TextStyle(
+                                  color: ColorUtils.red_color,
+                                  fontFamily: FontUtils.modernistRegular,
+                                  fontSize: 1.9.t,
                                 ),
-                                onChanged: (newValue) {
-                                  selectedLocation = newValue;
-                                  setState(() {});
-                                },
-                                items: location.map((city) {
-                                  return DropdownMenuItem(
-                                    value: city,
-                                    child: new Text(
-                                      city,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: FontUtils.modernistRegular,
-                                        fontSize: 2.3.t,
-                                        color: ColorUtils.locationText,
-                                      ),
-                                    ),
-                                  );
-                                }).toList(),
-                                value: selectedLocation,
+                                decoration:  InputDecoration(
+                                  hintText: "Enter location",
+                                  hintStyle: TextStyle(
+                                    fontFamily: FontUtils.modernistBold,
+                                    fontSize: 2.t,
+                                    color: ColorUtils.text_grey,
+                                  ),
+                                  border: InputBorder.none,
+                                  isDense: true,
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 0, vertical: 0),
+                                ),
                               ),
                             ),
                           ],
                         ),
                       ),
                     ),
+                    // Container(
+                    //   margin: EdgeInsets.symmetric(horizontal: 4.w),
+                    //   // width: double.infinity,
+                    //   // height: 6.5.h,
+                    //   decoration: BoxDecoration(
+                    //       shape: BoxShape.rectangle,
+                    //       borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                    //       border: Border.all(
+                    //         //width: 2.0,
+                    //         color: ColorUtils.borderColor,
+                    //       )),
+                    //   child: Container(
+                    //     margin: EdgeInsets.only(
+                    //       left: 2.2.w,
+                    //       right: 2.3.w,
+                    //     ),
+                    //     child: Row(
+                    //       children: [
+                    //         Padding(
+                    //           padding: const EdgeInsets.all(8.0),
+                    //           child: Stack(
+                    //             alignment: Alignment.center,
+                    //             children: [
+                    //               Container(
+                    //                 width: 12.w,
+                    //                 height: 6.h,
+                    //                 decoration: BoxDecoration(
+                    //                   shape: BoxShape.rectangle,
+                    //                   borderRadius: BorderRadius.all(
+                    //                       Radius.circular(11.89)),
+                    //                   color: ColorUtils.text_red,
+                    //                 ),
+                    //               ),
+                    //               Container(
+                    //                 width: 8.w,
+                    //                 height: 4.h,
+                    //                 decoration: BoxDecoration(
+                    //                   shape: BoxShape.rectangle,
+                    //                   borderRadius:
+                    //                       BorderRadius.all(Radius.circular(10)),
+                    //                   color: Colors.white,
+                    //                 ),
+                    //                 child: Center(
+                    //                   child: SvgPicture.asset(
+                    //                     ImageUtils.locationPin,
+                    //                     width: 4.i,
+                    //                     height: 4.i,
+                    //                     //fit: BoxFit.cover,
+                    //                   ),
+                    //                 ),
+                    //               ),
+                    //             ],
+                    //           ),
+                    //         ),
+                    //         Expanded(
+                    //           child: DropdownButtonFormField<String>(
+                    //             //isExpanded: true,
+                    //             decoration: InputDecoration(
+                    //                 suffixIcon: Icon(
+                    //                   Icons.keyboard_arrow_down,
+                    //                   color: ColorUtils.text_red,
+                    //                   //size: 6.i,
+                    //                 ),
+                    //                 enabledBorder: UnderlineInputBorder(
+                    //                   borderSide:
+                    //                       BorderSide(color: Colors.transparent),
+                    //                 )),
+                    //             icon: Icon(
+                    //               Icons.keyboard_arrow_down,
+                    //               color: Colors.black,
+                    //               size: 0.0,
+                    //             ),
+                    //             onChanged: (newValue) {
+                    //               selectedLocation = newValue;
+                    //               setState(() {});
+                    //             },
+                    //             items: location.map((city) {
+                    //               return DropdownMenuItem(
+                    //                 value: city,
+                    //                 child: new Text(
+                    //                   city,
+                    //                   textAlign: TextAlign.center,
+                    //                   style: TextStyle(
+                    //                     fontFamily: FontUtils.modernistRegular,
+                    //                     fontSize: 2.3.t,
+                    //                     color: ColorUtils.locationText,
+                    //                   ),
+                    //                 ),
+                    //               );
+                    //             }).toList(),
+                    //             value: selectedLocation,
+                    //           ),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
                     SizedBox(
                       height: 3.h,
                     ),
@@ -735,7 +790,7 @@ class _MapScreenState extends State<MapScreen> {
                             ),
                           ),
                           Text(
-                              mainModel.lowValue! +"mi" + "-" + mainModel.highValue!+"mi",
+                              mainModel.lowValue! +"km" + "-" + mainModel.highValue!+"km",
                             style: TextStyle(
                               fontFamily: FontUtils.modernistRegular,
                               fontSize: 2.0.t,
@@ -799,7 +854,7 @@ class _MapScreenState extends State<MapScreen> {
                       ),
                       values: [mainModel.lowerValue, mainModel.upperValue],
                       rangeSlider: true,
-                      max: 500,
+                      max: 50,
                       min: 0,
                       onDragging: (handlerIndex, lowerValue, upperValue) {
                         mainModel.lowerValue = lowerValue;
@@ -822,8 +877,8 @@ class _MapScreenState extends State<MapScreen> {
                                 mainModel.currentEventSelected = null;
                                 mainModel.timeSelected = false;
                                 mainModel.timeValue = null;
-                                mainModel.lowerValue = 20;
-                                mainModel.upperValue = 100;
+                                mainModel.lowerValue = 5;
+                                mainModel.upperValue = 15;
                                 selectedLocation = 'Karachi, Pakistan';
                                 mainModel.notifyListeners();
                               },
@@ -855,7 +910,8 @@ class _MapScreenState extends State<MapScreen> {
                           Expanded(
                             child: ElevatedButton(
                               onPressed: () {
-                                mainModel.navigateToMapSearchScreen();
+                                mainModel.addEventFilters();
+                                //mainModel.navigateToMapSearchScreen();
                               },
                               child: Text("APPLY"),
                               style: ElevatedButton.styleFrom(

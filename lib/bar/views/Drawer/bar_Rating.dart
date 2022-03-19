@@ -529,10 +529,10 @@ class _BarRatingState extends State<BarRating> {
                                                 children: [
                                                   RatingBar.builder(
                                                     tapOnlyMode: false,
-                                                    initialRating: model
-                                                            .ratingKaData!
-                                                            .total_rating ??
-                                                        0,
+                                                    // initialRating: model
+                                                    //         .ratingKaData!
+                                                    //         .total_rating ??
+                                                    //     0.0,
                                                     minRating: 1,
                                                     ignoreGestures: true,
                                                     direction: Axis.horizontal,
@@ -553,7 +553,10 @@ class _BarRatingState extends State<BarRating> {
                                                     },
                                                   ),
                                                   Text(
-                                                    "${model.ratingKaData!.total_rating ?? 0} out of 5",
+                                                    // "${
+                                                    //     model.ratingKaData!.total_rating ?? 0.0
+                                                    // }
+                                                    "0 out of 5",
                                                     style: TextStyle(
                                                       color:
                                                           ColorUtils.red_color,
@@ -569,197 +572,197 @@ class _BarRatingState extends State<BarRating> {
                                       SizedBox(
                                         height: 2.5.h,
                                       ),
-                                      Container(
-                                        // height: 20.h,
-                                        child: ListView.separated(
-                                          padding: EdgeInsets.zero,
-                                          // physics:
-                                          //     NeverScrollableScrollPhysics(),
-                                          shrinkWrap: true,
-                                          itemCount:
-                                              model.ratingKaData!.data!.length,
-                                          itemBuilder: (context, index) {
-                                            return Container(
-                                              padding: EdgeInsets.symmetric(
-                                                  vertical: 2.5.h,
-                                                  horizontal: 2.w),
-                                              //width: 6.h,
-                                              //height: 30.h,
-                                              decoration: BoxDecoration(
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: ColorUtils.black
-                                                        .withOpacity(0.1),
-                                                    spreadRadius: 0,
-                                                    blurRadius: 10,
-                                                    offset: Offset(0,
-                                                        5), // changes position of shadow
-                                                  ),
-                                                ],
-                                                color: Colors.white,
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(18)),
-                                                //border: Border.all(color: ColorUtils.red_color),
-                                              ),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Row(
-                                                        children: [
-                                                          Image.network(
-                                                            model
-                                                                .ratingKaData!
-                                                                .data![index]
-                                                                .user!
-                                                                .profile_picture
-                                                                .toString(),
-                                                            height: 10.i,
-                                                          ),
-                                                          SizedBox(
-                                                            width: 4.w,
-                                                          ),
-                                                          Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              Text(
-                                                                model
-                                                                    .ratingKaData!
-                                                                    .data![
-                                                                        index]
-                                                                    .user!
-                                                                    .username
-                                                                    .toString(),
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize: 2.h,
-                                                                  fontFamily:
-                                                                      FontUtils
-                                                                          .modernistBold,
-                                                                ),
-                                                              ),
-                                                              SizedBox(
-                                                                height: 0.5.h,
-                                                              ),
-                                                              Text(
-                                                                model.timeZone!
-                                                                    .substring(
-                                                                        0, 10)
-                                                                    .toString(),
-                                                                style: TextStyle(
-                                                                    color: ColorUtils
-                                                                        .text_grey,
-                                                                    fontFamily:
-                                                                        FontUtils
-                                                                            .modernistRegular,
-                                                                    fontSize:
-                                                                        1.3.h),
-                                                              ),
-                                                            ],
-                                                          )
-                                                        ],
-                                                      ),
-                                                      RatingBar.builder(
-                                                        initialRating: model
-                                                            .ratingKaData!
-                                                            .data![index]
-                                                            .rate!,
-                                                        minRating: 1,
-                                                        ignoreGestures: true,
-                                                        direction:
-                                                            Axis.horizontal,
-                                                        allowHalfRating: true,
-                                                        itemCount: 5,
-                                                        itemSize: 4.5.i,
-                                                        itemPadding: EdgeInsets
-                                                            .symmetric(
-                                                                horizontal:
-                                                                    3.0),
-                                                        itemBuilder:
-                                                            (context, _) =>
-                                                                Icon(
-                                                          Icons.star_rounded,
-                                                          color: ColorUtils
-                                                              .red_color,
-                                                        ),
-                                                        onRatingUpdate:
-                                                            (rating) {
-                                                          print(rating);
-                                                        },
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  SizedBox(height: 2.h),
-                                                  Text(
-                                                    model.ratingKaData!
-                                                        .data![index].comments
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                        fontFamily: FontUtils
-                                                            .modernistRegular,
-                                                        fontSize: 1.7.t),
-                                                  ),
-                                                  // Divider(
-                                                  //   height: 2.5.h,
-                                                  // ),
-                                                  // Row(
-                                                  //   children: [
-                                                  //     Image.asset(
-                                                  //       ImageUtils.comment,
-                                                  //       scale: 5,
-                                                  //     ),
-                                                  //     SizedBox(
-                                                  //       width: 2.w,
-                                                  //     ),
-                                                  //     Text(
-                                                  //       "68",
-                                                  //       style: TextStyle(
-                                                  //           color: Colors.grey[400],
-                                                  //           fontFamily: FontUtils
-                                                  //               .modernistRegular),
-                                                  //     ),
-                                                  //     SizedBox(
-                                                  //       width: 8.w,
-                                                  //     ),
-                                                  //     Image.asset(
-                                                  //       ImageUtils.like,
-                                                  //       scale: 5,
-                                                  //     ),
-                                                  //     SizedBox(
-                                                  //       width: 2.w,
-                                                  //     ),
-                                                  //     Text(
-                                                  //       "53.5 k",
-                                                  //       style: TextStyle(
-                                                  //           color: Colors.grey[400],
-                                                  //           fontFamily: FontUtils
-                                                  //               .modernistRegular),
-                                                  //     ),
-                                                  //   ],
-                                                  // ),
-                                                ],
-                                              ),
-                                            );
-                                          },
-                                          separatorBuilder: (context, index) {
-                                            return SizedBox(
-                                              height:
-                                                  SizeConfig.heightMultiplier *
-                                                      1.5,
-                                            );
-                                          },
-                                        ),
-                                      ),
+                                      // Container(
+                                      //   // height: 20.h,
+                                      //   child: ListView.separated(
+                                      //     padding: EdgeInsets.zero,
+                                      //     // physics:
+                                      //     //     NeverScrollableScrollPhysics(),
+                                      //     shrinkWrap: true,
+                                      //     itemCount:
+                                      //         model.ratingKaData!.data!.length,
+                                      //     itemBuilder: (context, index) {
+                                      //       return Container(
+                                      //         padding: EdgeInsets.symmetric(
+                                      //             vertical: 2.5.h,
+                                      //             horizontal: 2.w),
+                                      //         //width: 6.h,
+                                      //         //height: 30.h,
+                                      //         decoration: BoxDecoration(
+                                      //           boxShadow: [
+                                      //             BoxShadow(
+                                      //               color: ColorUtils.black
+                                      //                   .withOpacity(0.1),
+                                      //               spreadRadius: 0,
+                                      //               blurRadius: 10,
+                                      //               offset: Offset(0,
+                                      //                   5), // changes position of shadow
+                                      //             ),
+                                      //           ],
+                                      //           color: Colors.white,
+                                      //           borderRadius: BorderRadius.all(
+                                      //               Radius.circular(18)),
+                                      //           //border: Border.all(color: ColorUtils.red_color),
+                                      //         ),
+                                      //         child: Column(
+                                      //           crossAxisAlignment:
+                                      //               CrossAxisAlignment.start,
+                                      //           children: [
+                                      //             Row(
+                                      //               mainAxisAlignment:
+                                      //                   MainAxisAlignment
+                                      //                       .spaceBetween,
+                                      //               crossAxisAlignment:
+                                      //                   CrossAxisAlignment
+                                      //                       .center,
+                                      //               children: [
+                                      //                 Row(
+                                      //                   children: [
+                                      //                     Image.network(
+                                      //                       model
+                                      //                           .ratingKaData!
+                                      //                           .data![index]
+                                      //                           .user!
+                                      //                           .profile_picture
+                                      //                           .toString(),
+                                      //                       height: 10.i,
+                                      //                     ),
+                                      //                     SizedBox(
+                                      //                       width: 4.w,
+                                      //                     ),
+                                      //                     Column(
+                                      //                       crossAxisAlignment:
+                                      //                           CrossAxisAlignment
+                                      //                               .start,
+                                      //                       children: [
+                                      //                         Text(
+                                      //                           model
+                                      //                               .ratingKaData!
+                                      //                               .data![
+                                      //                                   index]
+                                      //                               .user!
+                                      //                               .username
+                                      //                               .toString(),
+                                      //                           style:
+                                      //                               TextStyle(
+                                      //                             fontSize: 2.h,
+                                      //                             fontFamily:
+                                      //                                 FontUtils
+                                      //                                     .modernistBold,
+                                      //                           ),
+                                      //                         ),
+                                      //                         SizedBox(
+                                      //                           height: 0.5.h,
+                                      //                         ),
+                                      //                         Text(
+                                      //                           model.timeZone!
+                                      //                               .substring(
+                                      //                                   0, 10)
+                                      //                               .toString(),
+                                      //                           style: TextStyle(
+                                      //                               color: ColorUtils
+                                      //                                   .text_grey,
+                                      //                               fontFamily:
+                                      //                                   FontUtils
+                                      //                                       .modernistRegular,
+                                      //                               fontSize:
+                                      //                                   1.3.h),
+                                      //                         ),
+                                      //                       ],
+                                      //                     )
+                                      //                   ],
+                                      //                 ),
+                                      //                 RatingBar.builder(
+                                      //                   initialRating: model
+                                      //                       .ratingKaData!
+                                      //                       .data![index]
+                                      //                       .rate!,
+                                      //                   minRating: 1,
+                                      //                   ignoreGestures: true,
+                                      //                   direction:
+                                      //                       Axis.horizontal,
+                                      //                   allowHalfRating: true,
+                                      //                   itemCount: 5,
+                                      //                   itemSize: 4.5.i,
+                                      //                   itemPadding: EdgeInsets
+                                      //                       .symmetric(
+                                      //                           horizontal:
+                                      //                               3.0),
+                                      //                   itemBuilder:
+                                      //                       (context, _) =>
+                                      //                           Icon(
+                                      //                     Icons.star_rounded,
+                                      //                     color: ColorUtils
+                                      //                         .red_color,
+                                      //                   ),
+                                      //                   onRatingUpdate:
+                                      //                       (rating) {
+                                      //                     print(rating);
+                                      //                   },
+                                      //                 ),
+                                      //               ],
+                                      //             ),
+                                      //             SizedBox(height: 2.h),
+                                      //             Text(
+                                      //               model.ratingKaData!
+                                      //                   .data![index].comments
+                                      //                   .toString(),
+                                      //               style: TextStyle(
+                                      //                   fontFamily: FontUtils
+                                      //                       .modernistRegular,
+                                      //                   fontSize: 1.7.t),
+                                      //             ),
+                                      //             // Divider(
+                                      //             //   height: 2.5.h,
+                                      //             // ),
+                                      //             // Row(
+                                      //             //   children: [
+                                      //             //     Image.asset(
+                                      //             //       ImageUtils.comment,
+                                      //             //       scale: 5,
+                                      //             //     ),
+                                      //             //     SizedBox(
+                                      //             //       width: 2.w,
+                                      //             //     ),
+                                      //             //     Text(
+                                      //             //       "68",
+                                      //             //       style: TextStyle(
+                                      //             //           color: Colors.grey[400],
+                                      //             //           fontFamily: FontUtils
+                                      //             //               .modernistRegular),
+                                      //             //     ),
+                                      //             //     SizedBox(
+                                      //             //       width: 8.w,
+                                      //             //     ),
+                                      //             //     Image.asset(
+                                      //             //       ImageUtils.like,
+                                      //             //       scale: 5,
+                                      //             //     ),
+                                      //             //     SizedBox(
+                                      //             //       width: 2.w,
+                                      //             //     ),
+                                      //             //     Text(
+                                      //             //       "53.5 k",
+                                      //             //       style: TextStyle(
+                                      //             //           color: Colors.grey[400],
+                                      //             //           fontFamily: FontUtils
+                                      //             //               .modernistRegular),
+                                      //             //     ),
+                                      //             //   ],
+                                      //             // ),
+                                      //           ],
+                                      //         ),
+                                      //       );
+                                      //     },
+                                      //     separatorBuilder: (context, index) {
+                                      //       return SizedBox(
+                                      //         height:
+                                      //             SizeConfig.heightMultiplier *
+                                      //                 1.5,
+                                      //       );
+                                      //     },
+                                      //   ),
+                                      // ),
                                       SizedBox(height: 2.5.h),
                                       Container(
                                         //width: 200.0,
