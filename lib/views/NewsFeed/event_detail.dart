@@ -57,75 +57,75 @@ class _EventDetailsState extends State<EventDetails> {
           top: false,
           bottom: false,
           child: Scaffold(
-            floatingActionButton: Container(
-              margin: EdgeInsets.symmetric(horizontal: 4.w),
-              child: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.all(Radius.circular(16.0)),
-                ),
-                child: AnimatedContainer(
-                  duration: Duration(milliseconds: 400),
-                  width: MediaQuery.of(context).size.width / 1,
-                  height: 6.5.h,
-                  //margin: EdgeInsets.symmetric(horizontal: 5.w),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6),
-                    color: ColorUtils.text_red,
-                    boxShadow: [
-                      BoxShadow(
-                        color: ColorUtils.text_red.withOpacity(0.25),
-                        spreadRadius: 0,
-                        blurRadius: 10,
-                        offset: Offset(0, 5), // changes position of shadow
-                      ),
-                    ],
-                  ),
-                  child: MaterialButton(
-                    padding: EdgeInsets.zero,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    onPressed: () {},
-                    child: Text(
-                      "Attend Event",
-                      style: TextStyle(
-                          fontFamily: FontUtils.modernistBold,
-                          fontSize: 1.8.t,
-                          color: Colors.white),
-                    ),
-                  ),
-                ),
-
-                // MaterialButton(
-                //     onPressed: onButtonPressed,
-                //   color: ColorUtils.greenColor,
-                //   minWidth: MediaQuery.of(context).size.width /1,
-                //   height: 7.h,
-                //   textColor: Colors.white,
-                //   shape: RoundedRectangleBorder(
-                //       borderRadius: BorderRadius.circular(6.0),
-                //   ),
-                //   // style: ElevatedButton.styleFrom(
-                //   //     primary: ColorUtils.greenColor,
-                //   //     shadowColor: ColorUtils.greenColor.withOpacity(0.25),
-                //   //     shape: RoundedRectangleBorder(
-                //   //         borderRadius: BorderRadius.circular(10.0)),
-                //   //     minimumSize: Size(MediaQuery.of(context).size.width /1, 7.h),
-                //   //   ),
-                //     child: Text(
-                //       textValue!,
-                //       textAlign: TextAlign.center,
-                //       style: TextStyle(
-                //         fontFamily: FontUtils.avertaSemiBold,
-                //         fontSize: 2.2.t,
-                //         color: Colors.white,
-                //       ),
-                //     ),
-                // ),
-              ),
-            ),
-            floatingActionButtonLocation:
-            FloatingActionButtonLocation.centerFloat,
+            // floatingActionButton: Container(
+            //   margin: EdgeInsets.symmetric(horizontal: 4.w),
+            //   child: Container(
+            //     decoration: BoxDecoration(
+            //       shape: BoxShape.rectangle,
+            //       borderRadius: BorderRadius.all(Radius.circular(16.0)),
+            //     ),
+            //     child: AnimatedContainer(
+            //       duration: Duration(milliseconds: 400),
+            //       width: MediaQuery.of(context).size.width / 1,
+            //       height: 6.5.h,
+            //       //margin: EdgeInsets.symmetric(horizontal: 5.w),
+            //       decoration: BoxDecoration(
+            //         borderRadius: BorderRadius.circular(6),
+            //         color: ColorUtils.text_red,
+            //         boxShadow: [
+            //           BoxShadow(
+            //             color: ColorUtils.text_red.withOpacity(0.25),
+            //             spreadRadius: 0,
+            //             blurRadius: 10,
+            //             offset: Offset(0, 5), // changes position of shadow
+            //           ),
+            //         ],
+            //       ),
+            //       child: MaterialButton(
+            //         padding: EdgeInsets.zero,
+            //         shape: RoundedRectangleBorder(
+            //             borderRadius: BorderRadius.circular(15)),
+            //         onPressed: () {},
+            //         child: Text(
+            //           "Attend Event",
+            //           style: TextStyle(
+            //               fontFamily: FontUtils.modernistBold,
+            //               fontSize: 1.8.t,
+            //               color: Colors.white),
+            //         ),
+            //       ),
+            //     ),
+            //
+            //     // MaterialButton(
+            //     //     onPressed: onButtonPressed,
+            //     //   color: ColorUtils.greenColor,
+            //     //   minWidth: MediaQuery.of(context).size.width /1,
+            //     //   height: 7.h,
+            //     //   textColor: Colors.white,
+            //     //   shape: RoundedRectangleBorder(
+            //     //       borderRadius: BorderRadius.circular(6.0),
+            //     //   ),
+            //     //   // style: ElevatedButton.styleFrom(
+            //     //   //     primary: ColorUtils.greenColor,
+            //     //   //     shadowColor: ColorUtils.greenColor.withOpacity(0.25),
+            //     //   //     shape: RoundedRectangleBorder(
+            //     //   //         borderRadius: BorderRadius.circular(10.0)),
+            //     //   //     minimumSize: Size(MediaQuery.of(context).size.width /1, 7.h),
+            //     //   //   ),
+            //     //     child: Text(
+            //     //       textValue!,
+            //     //       textAlign: TextAlign.center,
+            //     //       style: TextStyle(
+            //     //         fontFamily: FontUtils.avertaSemiBold,
+            //     //         fontSize: 2.2.t,
+            //     //         color: Colors.white,
+            //     //       ),
+            //     //     ),
+            //     // ),
+            //   ),
+            // ),
+            // floatingActionButtonLocation:
+            // FloatingActionButtonLocation.centerFloat,
             backgroundColor: Colors.white,
             body: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

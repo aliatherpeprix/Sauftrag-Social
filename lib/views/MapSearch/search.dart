@@ -329,8 +329,7 @@ class _SearchState extends State<Search> {
   void filter(context, MainViewModel mainModel) {
     showModalBottomSheet(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25.0),
-
+          borderRadius: BorderRadius.only(topRight: Radius.circular(25),topLeft:  Radius.circular(25) ),
         ),
         backgroundColor: Colors.white,
         context: context,

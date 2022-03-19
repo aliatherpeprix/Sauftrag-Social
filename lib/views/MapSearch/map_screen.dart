@@ -51,23 +51,23 @@ class _MapScreenState extends State<MapScreen> {
   List filterPlaces = [
     {
       'image': ImageUtils.discoBall,
-      'text': "Night Club",
+      'text': "Beer Hall",
     },
     {
       'image': ImageUtils.musicIcon,
-      'text': "Pub",
+      'text': "Hotel Bar",
     },
     {
       'image': ImageUtils.chaimpaineGlass,
-      'text': "Bar",
+      'text': "Pub",
     },
     {
       'image': ImageUtils.calenderFilter,
-      'text': "Events",
+      'text': "Cocktail",
     },
     {
       'image': ImageUtils.knife,
-      'text': "Food",
+      'text': "Disco",
     },
   ];
 
