@@ -1151,7 +1151,11 @@ class MainViewModel extends BaseViewModel {
       latitude = position.latitude;
       notifyListeners();
       var updatelocationResponse = await updateLocation.UpdateLocation(
-          latitude.toString(), longitude.toString(), userModel!.id.toString());
+
+          latitude.toStringAsFixed(5),
+          longitude.toStringAsFixed(5),
+          userModel!.id.toString());
+
       print(updatelocationResponse);
     }).catchError((e) {
       print(e);
@@ -1168,9 +1172,12 @@ class MainViewModel extends BaseViewModel {
       latitude = position.latitude;
       notifyListeners();
       var updatelocationResponse = await updateLocation.UpdateLocationBar(
-          latitude.toString(),
-          longitude.toString(),
-          barModel!.id.toString());
+
+          latitude.toStringAsFixed(5),
+          longitude.toStringAsFixed(5),
+          barModel!.id.toString()
+      );
+
       print(updatelocationResponse);
     }).catchError((e) {
       print(e);
@@ -2098,7 +2105,7 @@ class MainViewModel extends BaseViewModel {
       return;
     }
     isFaqs = false;
-    notifyListeners();
+    //notifyListeners();
     //print(getFaqsList);
   }
 

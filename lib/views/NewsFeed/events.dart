@@ -134,12 +134,13 @@ class _EventsState extends State<Events> {
                   // ),
                   Expanded(
                     child: SingleChildScrollView(
-                      physics: BouncingScrollPhysics()
-                      ,
+                      physics: BouncingScrollPhysics(),
+                      padding: EdgeInsets.zero,
                       child: Column(
                         children: [
                           //SizedBox(height: 4.h,),
                           Container(
+                            height: 5.h,
                             margin: EdgeInsets.symmetric(horizontal: 4.w),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -160,7 +161,7 @@ class _EventsState extends State<Events> {
                                     "See all",
                                     style: TextStyle(
                                       fontFamily: FontUtils.modernistRegular,
-                                      fontSize: 1.7.t,
+                                      fontSize: 2.2.t,
                                       color: ColorUtils.text_red,
                                       decoration: TextDecoration.underline,
 
@@ -358,7 +359,7 @@ class _EventsState extends State<Events> {
                                     "See all",
                                     style: TextStyle(
                                       fontFamily: FontUtils.modernistRegular,
-                                      fontSize: 1.7.t,
+                                      fontSize: 2.2.t,
                                       color: ColorUtils.red_color,
                                       decoration:
                                       TextDecoration.underline,
