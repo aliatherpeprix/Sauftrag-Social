@@ -237,7 +237,7 @@ class _SwipeCardState extends State<SwipeCard> {
                                           if(model.userMatchLoader){
 
                                           }else{
-                                            model.UserMatches(context,widget.id!);
+                                            model.UserMatches(context,widget.id,img: widget.img);
 
                                           }
 
