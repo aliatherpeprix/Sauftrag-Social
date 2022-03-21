@@ -1751,8 +1751,8 @@ class RegistrationViewModel extends BaseViewModel {
         true,
         signUpBarPasswordController.text,
         signUpBarVerifyPasswordController.text,
-        latitude,
-        longitude,
+        double.parse(latitude.toStringAsFixed(5)),
+        double.parse(longitude.toStringAsFixed(5)),
       );
       signInBar = false;
       notifyListeners();

@@ -12,6 +12,8 @@ import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/prefrences_view_model.dart';
 import 'package:sauftrag/views/Auth/signup.dart';
 
+import '../models/bar_model.dart';
+
 class Updatelocation {
   //var _dioService = DioService.getInstance();
 

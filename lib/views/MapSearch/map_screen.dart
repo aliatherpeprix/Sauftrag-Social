@@ -97,6 +97,7 @@ class _MapScreenState extends State<MapScreen> {
     return ViewModelBuilder<MainViewModel>.reactive(
       viewModelBuilder: () => locator<MainViewModel>(),
       onModelReady: (model) {
+        model.updateCurrentLocation();
       },
       disposeViewModel: false,
       builder: (context, model, child) {

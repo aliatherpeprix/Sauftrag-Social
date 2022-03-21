@@ -15,8 +15,6 @@ class NewBarModel {
   String? bar_name;
   String? email;
   String? address;
-  String? latitude;
-  String? longitude;
   dynamic role;
   List<int>? bar_kind;
   WeekDaysModel? week_days;
@@ -44,8 +42,8 @@ class NewBarModel {
   String? password2;
   bool? is_follow;
   bool? is_rate;
-
-
+  double? latitude;
+  double? longitude;
 
   factory NewBarModel.fromJson(Map<String, dynamic> json) => _$NewBarModelFromJson(json);
   Map<String, dynamic> toJson() => _$NewBarModelToJson(this);

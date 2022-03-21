@@ -13,8 +13,6 @@ NewBarModel _$NewBarModelFromJson(Map<String, dynamic> json) => NewBarModel()
   ..bar_name = json['bar_name'] as String?
   ..email = json['email'] as String?
   ..address = json['address'] as String?
-  ..latitude = json['latitude'] as String?
-  ..longitude = json['longitude'] as String?
   ..role = json['role']
   ..bar_kind =
       (json['bar_kind'] as List<dynamic>?)?.map((e) => e as int).toList()
@@ -35,7 +33,9 @@ NewBarModel _$NewBarModelFromJson(Map<String, dynamic> json) => NewBarModel()
   ..password = json['password'] as String?
   ..password2 = json['password2'] as String?
   ..is_follow = json['is_follow'] as bool?
-  ..is_rate = json['is_rate'] as bool?;
+  ..is_rate = json['is_rate'] as bool?
+  ..latitude = (json['latitude'] as num?)?.toDouble()
+  ..longitude = (json['longitude'] as num?)?.toDouble();
 
 Map<String, dynamic> _$NewBarModelToJson(NewBarModel instance) =>
     <String, dynamic>{
@@ -45,8 +45,6 @@ Map<String, dynamic> _$NewBarModelToJson(NewBarModel instance) =>
       'bar_name': instance.bar_name,
       'email': instance.email,
       'address': instance.address,
-      'latitude': instance.latitude,
-      'longitude': instance.longitude,
       'role': instance.role,
       'bar_kind': instance.bar_kind,
       'week_days': instance.week_days,
@@ -63,4 +61,6 @@ Map<String, dynamic> _$NewBarModelToJson(NewBarModel instance) =>
       'password2': instance.password2,
       'is_follow': instance.is_follow,
       'is_rate': instance.is_rate,
+      'latitude': instance.latitude,
+      'longitude': instance.longitude,
     };

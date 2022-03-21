@@ -1175,7 +1175,8 @@ class MainViewModel extends BaseViewModel {
 
           latitude.toStringAsFixed(5),
           longitude.toStringAsFixed(5),
-          barModel!.id.toString());
+          barModel!.id.toString()
+      );
 
       print(updatelocationResponse);
     }).catchError((e) {
@@ -2104,7 +2105,7 @@ class MainViewModel extends BaseViewModel {
       return;
     }
     isFaqs = false;
-    notifyListeners();
+    //notifyListeners();
     //print(getFaqsList);
   }
 
