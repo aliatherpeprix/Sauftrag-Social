@@ -11,6 +11,7 @@ part 'newsfeed_post_id.g.dart';
 class NewsfeedPostId {
   NewsfeedPostId();
 
+  int? id;
   int? post_type;
   String? post_location;
   String? post_content;

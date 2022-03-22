@@ -42,8 +42,8 @@ class NewBarModel {
   String? password2;
   bool? is_follow;
   bool? is_rate;
-  double? latitude;
-  double? longitude;
+  dynamic latitude;
+  dynamic longitude;
 
   factory NewBarModel.fromJson(Map<String, dynamic> json) => _$NewBarModelFromJson(json);
   Map<String, dynamic> toJson() => _$NewBarModelToJson(this);

@@ -258,8 +258,6 @@ class MainViewModel extends BaseViewModel {
 
   List<GetEvent> listOfUpcomingEvents = [];
 
-
-
   List<GetEvent> listOfPastEvents = [];
 
   GetEvent? selectedUpcomingEvents;

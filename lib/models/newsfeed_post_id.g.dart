@@ -8,6 +8,7 @@ part of 'newsfeed_post_id.dart';
 
 NewsfeedPostId _$NewsfeedPostIdFromJson(Map<String, dynamic> json) =>
     NewsfeedPostId()
+      ..id = json['id'] as int?
       ..post_type = json['post_type'] as int?
       ..post_location = json['post_location'] as String?
       ..post_content = json['post_content'] as String?
@@ -20,6 +21,7 @@ NewsfeedPostId _$NewsfeedPostIdFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$NewsfeedPostIdToJson(NewsfeedPostId instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'post_type': instance.post_type,
       'post_location': instance.post_location,
       'post_content': instance.post_content,

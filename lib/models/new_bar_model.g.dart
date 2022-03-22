@@ -34,8 +34,8 @@ NewBarModel _$NewBarModelFromJson(Map<String, dynamic> json) => NewBarModel()
   ..password2 = json['password2'] as String?
   ..is_follow = json['is_follow'] as bool?
   ..is_rate = json['is_rate'] as bool?
-  ..latitude = (json['latitude'] as num?)?.toDouble()
-  ..longitude = (json['longitude'] as num?)?.toDouble();
+  ..latitude = json['latitude']
+  ..longitude = json['longitude'];
 
 Map<String, dynamic> _$NewBarModelToJson(NewBarModel instance) =>
     <String, dynamic>{
