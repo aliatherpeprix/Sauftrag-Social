@@ -121,6 +121,7 @@ class MainViewModel extends BaseViewModel {
   UserModel? userModel;
   NewBarModel? barModel;
   ListOfBarsModel? barFollow;
+  ListOfBarsModel? getUpcmoingUserDetails;
   Media? barMedia;
 
   bool logInUserSelected = true;
@@ -247,6 +248,7 @@ class MainViewModel extends BaseViewModel {
   List<GetBarFollower> getbarfollowers = [];
 
   ListOfBarsModel? selectedBar;
+ List<ListOfBarsModel?>? upcomingDetails;
 
   UserModel? matchedUser;
 

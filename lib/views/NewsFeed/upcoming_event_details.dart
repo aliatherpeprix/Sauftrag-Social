@@ -35,6 +35,8 @@ class _UpcomingEventDetailsState extends State<UpcomingEventDetails> {
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
       onModelReady: (model){
+        //model.getUpcmoingUserDetails;
+        model.getListOfUpcomingEvents();
         //print('barName:${widget.barName}');
       },
       builder: (context, model, child) {
@@ -226,10 +228,9 @@ class _UpcomingEventDetailsState extends State<UpcomingEventDetails> {
                               children: [
                                 GestureDetector(
                                   onTap: () {
-                                    // model.selectAttendeesInfo = model.listOfUpcomingEvents;
-                                    // model.selectUser = (model.);
-                                   // model.navigateToOngoingUsersScreen();
-                                    //model.navigationService.navigateTo(to: AttendeesList());
+                                    model.navigateToOngoingUsersScreen();
+                                    //model.selectedUpcomingEvents = (model.listOfUpcomingEvents[index]);
+                                    //model.getUpcmoingUserDetails = (model.listOfUpcomingEvents[index]);
                                   },
                                   child: Row(
                                     children: [
@@ -243,7 +244,7 @@ class _UpcomingEventDetailsState extends State<UpcomingEventDetails> {
                                         width: 3.w,
                                       ),
                                       Text(
-                                        "+ 20 Going",
+                                       model.selectedUpcomingEvents!.going_users!.length.toString(),
                                         style: TextStyle(
                                             fontFamily: FontUtils.modernistBold,
                                             fontSize: 1.8.t,

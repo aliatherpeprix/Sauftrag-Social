@@ -101,90 +101,90 @@ class _OngoingEventUsersState extends State<OngoingEventUsers> {
                               borderRadius: BorderRadius.all(Radius.circular(18)),
                               border: Border.all(color: ColorUtils.text_red),
                             ),
-                            // child: Row(
-                            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            //   crossAxisAlignment: CrossAxisAlignment.center,
-                            //   children: [
-                            //     ClipRRect(
-                            //       borderRadius: BorderRadius.circular(10),
-                            //       child: Image.network(model.listOfAllBars[index].profile_picture!,
-                            //         width: 15.i,
-                            //         height: 15.i,
-                            //         fit: BoxFit.cover,
-                            //       ),
-                            //     ),
-                            //     SizedBox(width: 2.w,),
-                            //     Expanded(
-                            //       child: Column(
-                            //         crossAxisAlignment: CrossAxisAlignment.start,
-                            //         children: [
-                            //           Row(
-                            //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            //             crossAxisAlignment: CrossAxisAlignment.center,
-                            //             children: [
-                            //               Text(model.listOfAllBars[index].bar_name!,
-                            //                 style: TextStyle(
-                            //                     fontFamily: FontUtils.modernistBold,
-                            //                     fontSize: 1.9.t,
-                            //                     color: ColorUtils.black
-                            //                 ),
-                            //               ),
-                            //               SizedBox(width: 1.w,),
-                            //               // Text(model.listOfBar[index].bar_kind!.toString(),
-                            //               //   style: TextStyle(
-                            //               //       fontFamily: FontUtils.modernistRegular,
-                            //               //       fontSize: 1.6.t,
-                            //               //       color: ColorUtils.red_color
-                            //               //   ),
-                            //               // )
-                            //             ],
-                            //           ),
-                            //           SizedBox(height: 0.8.h,),
-                            //           Row(
-                            //             mainAxisAlignment: MainAxisAlignment.start,
-                            //             crossAxisAlignment: CrossAxisAlignment.start,
-                            //             children: [
-                            //               SvgPicture.asset(ImageUtils.locationPin,),
-                            //               SizedBox(width: 1.5.w,),
-                            //               Container(
-                            //                 width: 50.w,
-                            //                 child: Text(model.listOfAllBars[index].address!,
-                            //                   style: TextStyle(
-                            //                     fontFamily: FontUtils.modernistRegular,
-                            //                     fontSize: 1.6.t,
-                            //                     color: ColorUtils.text_grey,
-                            //                   ),
-                            //
-                            //                   maxLines: 1,
-                            //                   overflow: TextOverflow.ellipsis,
-                            //                 ),
-                            //               ),
-                            //             ],
-                            //           ),
-                            //           SizedBox(height: 0.8.h,),
-                            //           RatingBar.builder(
-                            //             tapOnlyMode: false,
-                            //             initialRating: model.listOfAllBars[index].total_ratings ?? 0.0,
-                            //             // minRating: 1,
-                            //             direction: Axis.horizontal,
-                            //             allowHalfRating: true,
-                            //             itemCount: 5,
-                            //             itemSize: 4.5.i,
-                            //             itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
-                            //             itemBuilder: (context, _) => Icon(
-                            //               Icons.star_rounded,
-                            //               color: ColorUtils.red_color,
-                            //             ),
-                            //             onRatingUpdate: (rating) {
-                            //               print(rating);
-                            //             },
-                            //           ),
-                            //         ],
-                            //       ),
-                            //     ),
-                            //
-                            //   ],
-                            // ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.network(model.selectedUpcomingEvents!.going_users![index].user_id!.profile_picture!,
+                                    width: 15.i,
+                                    height: 15.i,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                SizedBox(width: 2.w,),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          Text(model.selectedUpcomingEvents!.going_users![index].user_id!.username!,
+                                            style: TextStyle(
+                                                fontFamily: FontUtils.modernistBold,
+                                                fontSize: 1.9.t,
+                                                color: ColorUtils.black
+                                            ),
+                                          ),
+                                          // SizedBox(width: 1.w,),
+                                          // Text(model.listOfBar[index].bar_kind!.toString(),
+                                          //   style: TextStyle(
+                                          //       fontFamily: FontUtils.modernistRegular,
+                                          //       fontSize: 1.6.t,
+                                          //       color: ColorUtils.red_color
+                                          //   ),
+                                          // )
+                                        ],
+                                      ),
+                                      SizedBox(height: 1.5.h,),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          SvgPicture.asset(ImageUtils.locationPin,),
+                                          SizedBox(width: 1.5.w,),
+                                          Container(
+                                            width: 50.w,
+                                            child: Text(model.selectedUpcomingEvents!.going_users![index].user_id!.address!,
+                                              style: TextStyle(
+                                                fontFamily: FontUtils.modernistRegular,
+                                                fontSize: 1.6.t,
+                                                color: ColorUtils.text_grey,
+                                              ),
+
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      // SizedBox(height: 0.8.h,),
+                                      // RatingBar.builder(
+                                      //   tapOnlyMode: false,
+                                      //   initialRating: model.listOfAllBars[index].total_ratings ?? 0.0,
+                                      //   // minRating: 1,
+                                      //   direction: Axis.horizontal,
+                                      //   allowHalfRating: true,
+                                      //   itemCount: 5,
+                                      //   itemSize: 4.5.i,
+                                      //   itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
+                                      //   itemBuilder: (context, _) => Icon(
+                                      //     Icons.star_rounded,
+                                      //     color: ColorUtils.red_color,
+                                      //   ),
+                                      //   onRatingUpdate: (rating) {
+                                      //     print(rating);
+                                      //   },
+                                      // ),
+                                    ],
+                                  ),
+                                ),
+
+                              ],
+                            ),
                           ),
                         ),
                       );
