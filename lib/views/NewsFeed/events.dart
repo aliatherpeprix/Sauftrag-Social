@@ -334,7 +334,7 @@ class _EventsState extends State<Events> {
                                 separatorBuilder: (context, index) {
                                   return SizedBox(width: 1.w,);
                                 },
-                                itemCount: 4
+                                itemCount: model.listOfUpcomingEvents.length
                             ),
                           ),
                           SizedBox(height: 2.5.h,),
@@ -471,7 +471,7 @@ class _EventsState extends State<Events> {
                             separatorBuilder: (context, index) {
                               return SizedBox(height:  SizeConfig.heightMultiplier * 2.5,);
                             },
-                            itemCount: 4,
+                            itemCount: model.barEventModel!.length,
                           ),
 
                         ],

@@ -56,7 +56,7 @@ class _FriendListState extends State<FriendList> {
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
       onModelReady: (model) {
-        model.getBarsFollowers();
+        model.getBarsFollowerList();
       },
       builder: (context, model, child) {
         return GestureDetector(
@@ -347,6 +347,10 @@ class _FriendListState extends State<FriendList> {
                                         physics: BouncingScrollPhysics(),
                                         shrinkWrap: true,
                                         itemBuilder: (context, index) {
+
+
+                                          dynamic image = model.getFollowerList[index].follow_by?[0].profile_picture??"";
+
                                           return GestureDetector(
                                             onTap: () {
                                               // Navigator.push(
@@ -384,7 +388,7 @@ class _FriendListState extends State<FriendList> {
                                                         CircleAvatar(
                                                           radius: 30.0,
                                                           backgroundImage:
-                                                              NetworkImage(model.getbarfollowers[index].follow_by!.profile_picture ?? "https://tse2.mm.bing.net/th?id=OIP.4gcGG1F0z6LjVlJjYWGGcgHaHa&pid=Api&P=0&w=164&h=164"),
+                                                              NetworkImage(image??"" /*?? "https://tse2.mm.bing.net/th?id=OIP.4gcGG1F0z6LjVlJjYWGGcgHaHa&pid=Api&P=0&w=164&h=164"*/),
                                                           backgroundColor:
                                                               Colors
                                                                   .transparent,
@@ -418,7 +422,7 @@ class _FriendListState extends State<FriendList> {
                                                                   .start,
                                                           children: [
                                                             Text(
-                                                              model.getbarfollowers[index].follow_by!.username!,
+                                                              model.getFollowerList[index].follow_by?[0].username??"",
                                                               style: TextStyle(
                                                                   fontFamily:
                                                                       FontUtils
@@ -507,7 +511,7 @@ class _FriendListState extends State<FriendList> {
                                             height: 2.h,
                                           );
                                         },
-                                        itemCount: model.getbarfollowers.length),
+                                        itemCount: model.getFollowerList.length),
 
                                     // second tab bar viiew widget
 

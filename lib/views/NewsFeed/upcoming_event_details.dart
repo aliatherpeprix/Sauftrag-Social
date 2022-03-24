@@ -228,7 +228,7 @@ class _UpcomingEventDetailsState extends State<UpcomingEventDetails> {
                               children: [
                                 GestureDetector(
                                   onTap: () {
-                                    model.navigateToOngoingUsersScreen();
+                                    //model.navigateToOngoingUsersScreen();
                                     //model.selectedUpcomingEvents = (model.listOfUpcomingEvents[index]);
                                     //model.getUpcmoingUserDetails = (model.listOfUpcomingEvents[index]);
                                   },

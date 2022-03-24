@@ -87,6 +87,7 @@ import 'package:shrink_sidemenu/shrink_sidemenu.dart';
 import 'package:stacked/stacked.dart';
 
 import '../main.dart';
+import '../models/get_bar_follower_list.dart';
 
 class MainViewModel extends BaseViewModel {
   var updateUser = Updateuser();
@@ -246,6 +247,8 @@ class MainViewModel extends BaseViewModel {
   GetBarFollower? getbarFollowersDet;
 
   List<GetBarFollower> getbarfollowers = [];
+
+  List<GetBarFollowersList> getFollowerList = [];
 
   ListOfBarsModel? selectedBar;
  List<ListOfBarsModel?>? upcomingDetails;
@@ -2166,6 +2169,32 @@ class MainViewModel extends BaseViewModel {
     //print(getFaqsList);
   }
 
+  getBarsFollowerList() async {
+    isFaqs = true;
+
+    var BarFollowersList = await getbarFollowers.GetBarFollowersLists();
+    print(BarFollowersList);
+    // if (getFaqList is String){
+    //   faqs = getFaqList;
+    //   //isPrivacyPolicy = false;
+    //
+    // }ListOfBarsModel
+    if (BarFollowersList is List<GetBarFollowersList>) {
+      getFollowerList = BarFollowersList;
+        print(getFollowerList);
+    }   else {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Some thing went wrong",
+      ));
+      //isPrivacyPolicy = false;
+
+      return;
+    }
+    isFaqs = false;
+    notifyListeners();
+    //print(getFaqsList);
+  }
+
   postBarFollow() async {
     isLoading = true;
     notifyListeners();
@@ -2208,7 +2237,9 @@ class MainViewModel extends BaseViewModel {
     if (getAttendUser == true) {
       var index = listOfUpcomingEvents.indexOf(selectedUpcomingEvents!);
       selectedUpcomingEvents!.is_attend = true;
-      listOfUpcomingEvents[index].is_attend = true;
+      if (index!= -1){
+        listOfUpcomingEvents[index].is_attend = true;
+      }
       notifyListeners();
       DialogUtils().showDialog(MyErrorWidget(
         error: "You'll attend this event!",
