@@ -1224,7 +1224,7 @@ class MainViewModel extends BaseViewModel {
 
   List<UserForChat> userForChats = [];
   List<UserForChat> usersList = [];
-  List<UserForChat> barsList = [];
+  List barsList = [];
 
   /// Get Match
   var matchUser = MatchUsers();

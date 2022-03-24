@@ -9,21 +9,20 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
-import 'package:sauftrag/views/UserFriendList/group_screen_user.dart';
-
-import 'package:sauftrag/views/UserFriendList/groupScreen.dart';
+import 'package:sauftrag/views/UserFriendList/create_group.dart';
 import 'package:sauftrag/views/UserFriendList/message_screen.dart';
+import 'package:sauftrag/views/UserFriendList/message_screen_for_user.dart';
 import 'package:sauftrag/widgets/all_page_loader.dart';
 import 'package:stacked/stacked.dart';
 
-class FriendList extends StatefulWidget {
-  const FriendList({Key? key}) : super(key: key);
+class FriendListForBar extends StatefulWidget {
+  const FriendListForBar({Key? key}) : super(key: key);
 
   @override
-  _FriendListState createState() => _FriendListState();
+  _FriendListForBarState createState() => _FriendListForBarState();
 }
 
-class _FriendListState extends State<FriendList> {
+class _FriendListForBarState extends State<FriendListForBar> {
   String dropdownValue = 'hi';
 
   List friendsList = [
@@ -56,7 +55,8 @@ class _FriendListState extends State<FriendList> {
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
       onModelReady: (model) {
-        model.getBarsFollowers();
+        //model.getAllUserForChat();
+        model.matchingUsers();
       },
       builder: (context, model, child) {
         return GestureDetector(
@@ -122,14 +122,6 @@ class _FriendListState extends State<FriendList> {
                           )),
                     Column(
                       children: [
-                        // SizedBox(
-                        //   height: 20.h,
-                        // ),
-                        // ElevatedButton(
-                        //     onPressed: () {
-                        //       model.getGroupChannelFromPubnub();
-                        //     },
-                        //     child: Text("click me")),
                         SizedBox(height: 6.h),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -165,8 +157,12 @@ class _FriendListState extends State<FriendList> {
                                 IconButton(
                                   padding: EdgeInsets.zero,
                                   onPressed: () {
-                                    model
-                                        .navigateToSelectIndividualChatScreen();
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CreateGroup()));
+                                    // .navigateToSelectIndividualChatScreen();Navigat
                                     // if(model.openGroupMenu == false){
                                     //   model.openGroupMenu = true;
                                     //   model.notifyListeners();
@@ -337,7 +333,8 @@ class _FriendListState extends State<FriendList> {
                                   ),
                                 ),
                               )
-                            : Expanded(
+                            :
+                        Expanded(
                                 child: TabBarView(
                                   children: [
                                     // first tab bar view widget
@@ -349,22 +346,44 @@ class _FriendListState extends State<FriendList> {
                                         itemBuilder: (context, index) {
                                           return GestureDetector(
                                             onTap: () {
-                                              // Navigator.push(
-                                              //     context,
-                                              //     PageTransition(
-                                              //         type: PageTransitionType
-                                              //             .fade,
-                                              //         child: MessageScreen(
-                                              //           id: model
-                                              //               .barsList[index]
-                                              //               .id,
-                                              //           username: model
-                                              //               .barsList[index]
-                                              //               .username,
-                                              //           profilePic: model
-                                              //               .barsList[index]
-                                              //               .profile_picture,
-                                              //         )));
+                                              if(model.userModel!.role == 1){
+                                                Navigator.push(
+                                                    context,
+                                                    PageTransition(
+                                                        type: PageTransitionType
+                                                            .fade,
+                                                        child:
+                                                        MessageScreenForUser(
+                                                          id: model
+                                                              .matchedUsers[index]
+                                                              .id,
+                                                          username: model
+                                                              .matchedUsers[index]
+                                                              .username,
+                                                          profilePic: model
+                                                              .matchedUsers[index]
+                                                              .profile_picture,
+                                                        )));
+                                              }
+                                              else{
+                                                Navigator.push(
+                                                    context,
+                                                    PageTransition(
+                                                        type: PageTransitionType
+                                                            .fade,
+                                                        child:
+                                                        MessageScreenForUser(
+                                                          id: model
+                                                              .barsList[index]
+                                                              .id,
+                                                          username: model
+                                                              .barsList[index]
+                                                              .username,
+                                                          profilePic: model
+                                                              .barsList[index]
+                                                              .profile_picture,
+                                                        )));
+                                              }
                                             },
                                             child: Column(
                                               children: [
@@ -384,7 +403,19 @@ class _FriendListState extends State<FriendList> {
                                                         CircleAvatar(
                                                           radius: 30.0,
                                                           backgroundImage:
-                                                              NetworkImage(model.getbarfollowers[index].follow_by!.profile_picture ?? "https://tse2.mm.bing.net/th?id=OIP.4gcGG1F0z6LjVlJjYWGGcgHaHa&pid=Api&P=0&w=164&h=164"),
+                                                              model.userModel!.role == 1 ?
+                                                              NetworkImage(
+                                                                  model
+                                                                      .matchedUsers[
+                                                                          index]
+                                                                      .profile_picture ??
+                                                                  "https://tse2.mm.bing.net/th?id=OIP.4gcGG1F0z6LjVlJjYWGGcgHaHa&pid=Api&P=0&w=164&h=164")
+                                                              :
+                                                              NetworkImage(model
+                                                                  .matchedUsers[
+                                                              index]
+                                                                  .profile_picture ??
+                                                                  "https://tse2.mm.bing.net/th?id=OIP.4gcGG1F0z6LjVlJjYWGGcgHaHa&pid=Api&P=0&w=164&h=164"),
                                                           backgroundColor:
                                                               Colors
                                                                   .transparent,
@@ -417,14 +448,34 @@ class _FriendListState extends State<FriendList> {
                                                               CrossAxisAlignment
                                                                   .start,
                                                           children: [
+                                                            model.userModel!.role == 1 ?
                                                             Text(
-                                                              model.getbarfollowers[index].follow_by!.username!,
+                                                              model
+                                                                  .matchedUsers[
+                                                                      index]
+                                                                  .username
+                                                                  .toString(),
                                                               style: TextStyle(
                                                                   fontFamily:
                                                                       FontUtils
                                                                           .modernistBold,
                                                                   fontSize:
                                                                       1.9.t,
+                                                                  color: ColorUtils
+                                                                      .text_dark),
+                                                            ):
+                                                            Text(
+                                                              model
+                                                                  .barsList[
+                                                              index]
+                                                                  .username
+                                                                  .toString(),
+                                                              style: TextStyle(
+                                                                  fontFamily:
+                                                                  FontUtils
+                                                                      .modernistBold,
+                                                                  fontSize:
+                                                                  1.9.t,
                                                                   color: ColorUtils
                                                                       .text_dark),
                                                             ),
@@ -507,13 +558,96 @@ class _FriendListState extends State<FriendList> {
                                             height: 2.h,
                                           );
                                         },
-                                        itemCount: model.getbarfollowers.length),
+                                        itemCount: model.userModel!.role == 1 ?
+                                        model.matchedUsers.length :
+                                        model.barsList.length
+                                    ),
 
                                     // second tab bar viiew widget
-
-                                    GroupScreenUser(),
-                                    //GroupScreenChat()
-
+                                    GestureDetector(
+                                      onTap: () {
+                                        model.navigateToGroupScreen();
+                                      },
+                                      child: Container(
+                                        padding:
+                                            EdgeInsets.symmetric(vertical: 4.h),
+                                        //margin: EdgeInsets.only(top: 3.h),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                CircleAvatar(
+                                                  radius: 30.0,
+                                                  backgroundImage: AssetImage(
+                                                      ImageUtils.cosmos),
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                ),
+                                                SizedBox(
+                                                  width: 3.w,
+                                                ),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      "Cosmos",
+                                                      style: TextStyle(
+                                                          fontFamily: FontUtils
+                                                              .modernistBold,
+                                                          fontSize: 1.9.t,
+                                                          color: ColorUtils
+                                                              .text_dark),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 1.h,
+                                                    ),
+                                                    Container(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width /
+                                                              2,
+                                                      child: Text(
+                                                        "Did you see the last episode of cosmos?",
+                                                        style: TextStyle(
+                                                            fontFamily: FontUtils
+                                                                .modernistRegular,
+                                                            fontSize: 1.8.t,
+                                                            color: ColorUtils
+                                                                .lightTextColor),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            Column(
+                                              children: [
+                                                Text(
+                                                  "Today",
+                                                  style: TextStyle(
+                                                    fontFamily: FontUtils
+                                                        .modernistRegular,
+                                                    fontSize: 1.6.t,
+                                                    color: ColorUtils.chatTime,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: 1.h,
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),

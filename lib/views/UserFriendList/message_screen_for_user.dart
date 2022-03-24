@@ -54,7 +54,7 @@ class _MessageScreenForUserState extends State<MessageScreenForUser> {
       onModelReady: (model) async {
         model.initBarPubNub();
         // model.chat();
-        model.getAllUserForChat();
+       // model.getAllUserForChat();
         model.chats.clear();
         
         // Subscribe to a channel

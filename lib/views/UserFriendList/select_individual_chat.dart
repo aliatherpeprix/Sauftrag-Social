@@ -298,7 +298,7 @@ class _CreateGroup1State extends State<CreateGroup1> {
     return ViewModelBuilder<MainViewModel>.reactive(
       onModelReady: (model) {
         model.groupList.clear();
-        model.getAllUserForChat();
+        //model.getAllUserForChat();
         model.selected = List<bool>.filled(model.userForChats.length, false);
       },
       builder: (context, model, child) {

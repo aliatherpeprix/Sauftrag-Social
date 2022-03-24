@@ -3,9 +3,9 @@ class Constants {
   static const int user = 1;
   static const int bar = 2;
   //Pro Env
-  static const String BaseUrlPro = 'http://sauftragpro-environment.eba-4pafy8hm.ap-southeast-1.elasticbeanstalk.com/';
+ // static const String BaseUrlPro = 'http://sauftragpro-environment.eba-4pafy8hm.ap-southeast-1.elasticbeanstalk.com/';
   //Dev Env
-  //static const String BaseUrlPro ='http://sauftragdev-environment.eba-yb3ya83i.ap-southeast-1.elasticbeanstalk.com/';
+  static const String BaseUrlPro ='http://sauftragdev-environment.eba-yb3ya83i.ap-southeast-1.elasticbeanstalk.com/';
   //static const String BaseUrl = 'sauftragdev-environment.eba-yb3ya83i.ap-southeast-1.elasticbeanstalk.com';
   static const String BaseUrl = 'sauftragpro-environment.eba-4pafy8hm.ap-southeast-1.elasticbeanstalk.com';
   static const String SignUp = 'api/user/register/';

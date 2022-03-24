@@ -10,7 +10,7 @@ class GetBarFollower {
   GetBarFollower();
 
   int? id;
-  NewBarModel? follow_to;
+  /*NewBarModel? follow_to;*/
   UserModel? follow_by;
 
 
