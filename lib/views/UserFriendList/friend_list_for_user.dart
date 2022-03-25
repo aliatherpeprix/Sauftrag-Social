@@ -63,6 +63,7 @@ class _FriendListForUserState extends State<FriendListForUser> {
           onTap: () {
             context.unFocus();
             model.openGroupMenu = false;
+            model.getListOfbars();
             model.notifyListeners();
           },
           child: DefaultTabController(

@@ -6,6 +6,8 @@ import 'package:sauftrag/bar/views/Auth/getBarEventLocation.dart';
 import 'package:sauftrag/bar/views/Auth/media.dart';
 import 'package:sauftrag/bar/views/Auth/signUp.dart';
 import 'package:sauftrag/bar/views/Auth/signup_barmap.dart';
+import 'package:sauftrag/bar/views/BarChat/bar_group_chat.dart';
+import 'package:sauftrag/bar/views/BarChat/bar_individual_chat.dart';
 import 'package:sauftrag/bar/views/Drawer/barEvent.dart';
 import 'package:sauftrag/bar/views/Drawer/barProfile.dart';
 import 'package:sauftrag/bar/views/Drawer/bar_Rating.dart';
@@ -57,7 +59,7 @@ import 'package:sauftrag/views/NewsFeed/upcoming_event_details.dart';
 import 'package:sauftrag/views/NewsFeed/upcoming_event_list.dart';
 import 'package:sauftrag/views/UserFriendList/contact_list.dart';
 import 'package:sauftrag/views/UserFriendList/create_group.dart';
-import 'package:sauftrag/views/UserFriendList/friend_list.dart';
+import 'package:sauftrag/bar/views/BarChat/friend_list.dart';
 import 'package:sauftrag/views/NewsFeed/event_detail.dart';
 import 'package:sauftrag/views/UserFriendList/group_details.dart';
 import 'package:sauftrag/views/UserFriendList/group_screen.dart';
@@ -204,6 +206,10 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateToInvitePeopleScreen(){
     navigationKey.currentState!.push(PageTransition(child: InvitePeople(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToBarGroupScreen(){
+    navigationKey.currentState!.push(PageTransition(child: BarGroupChat(), type: PageTransitionType.rightToLeftWithFade));
   }
 
   void navigateToBarTimingTypeScreen(){
@@ -358,6 +364,11 @@ class NavigationViewModel extends BaseViewModel{
   void navigateToSelectIndividualChatScreen(){
     navigationKey.currentState!.push(PageTransition(child: CreateGroup1(), type: PageTransitionType.rightToLeftWithFade));
   }
+
+  void navigateToBarIndividualChatScreen(){
+    navigationKey.currentState!.push(PageTransition(child: BarIndividualChat(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
 
 
 

@@ -16,6 +16,8 @@ import 'package:sauftrag/views/UserFriendList/message_screen.dart';
 import 'package:sauftrag/widgets/all_page_loader.dart';
 import 'package:stacked/stacked.dart';
 
+import 'message_screen_for_bar.dart';
+
 class FriendList extends StatefulWidget {
   const FriendList({Key? key}) : super(key: key);
 
@@ -81,7 +83,7 @@ class _FriendListState extends State<FriendList> {
                           top: 10.7.h,
                           child: GestureDetector(
                             onTap: () {
-                              model.navigateToMsgCreateGroupScreen();
+                              model.navigateToBarGroupScreen();
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -166,7 +168,7 @@ class _FriendListState extends State<FriendList> {
                                   padding: EdgeInsets.zero,
                                   onPressed: () {
                                     model
-                                        .navigateToSelectIndividualChatScreen();
+                                        .navigateToBarIndividualChatScreen();
                                     // if(model.openGroupMenu == false){
                                     //   model.openGroupMenu = true;
                                     //   model.notifyListeners();
@@ -353,22 +355,42 @@ class _FriendListState extends State<FriendList> {
 
                                           return GestureDetector(
                                             onTap: () {
-                                              // Navigator.push(
-                                              //     context,
-                                              //     PageTransition(
-                                              //         type: PageTransitionType
-                                              //             .fade,
-                                              //         child: MessageScreen(
-                                              //           id: model
-                                              //               .barsList[index]
-                                              //               .id,
-                                              //           username: model
-                                              //               .barsList[index]
-                                              //               .username,
-                                              //           profilePic: model
-                                              //               .barsList[index]
-                                              //               .profile_picture,
-                                              //         )));
+                                              if(model.barModel!.role == 2){
+                                                Navigator.push(
+                                                    context,
+
+                                                    PageTransition(
+                                                        type: PageTransitionType
+                                                            .fade,
+                                                        child:
+                                                        MessageScreenForBar(
+                                                          id: model.getFollowerList[index].follow_by?[0]
+                                                              .id,
+                                                          username: model.getFollowerList[index].follow_by?[0]
+                                                              .username,
+                                                          profilePic: model.getFollowerList[index].follow_by?[0]
+                                                              .profile_picture,
+                                                        )));
+                                              }
+                                              else{
+                                                Navigator.push(
+                                                    context,
+                                                    PageTransition(
+                                                        type: PageTransitionType
+                                                            .fade,
+                                                        child:
+                                                        MessageScreenForBar(
+                                                          id: model
+                                                              .barsList[index]
+                                                              .id,
+                                                          username: model
+                                                              .barsList[index]
+                                                              .username,
+                                                          profilePic: model
+                                                              .barsList[index]
+                                                              .profile_picture,
+                                                        )));
+                                              }
                                             },
                                             child: Column(
                                               children: [

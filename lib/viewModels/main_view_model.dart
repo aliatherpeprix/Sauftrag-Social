@@ -1228,6 +1228,7 @@ class MainViewModel extends BaseViewModel {
   List<UserForChat> userForChats = [];
   List<UserForChat> usersList = [];
   List barsList = [];
+  // List usersList = [];
 
   /// Get Match
   var matchUser = MatchUsers();
@@ -1242,6 +1243,26 @@ class MainViewModel extends BaseViewModel {
   bool userComing = false;
 
   getAllUserForChat() async {
+    userComing = true;
+    // notifyListeners();
+    NewBarModel? user = await locator<PrefrencesViewModel>().getBarUser();
+    var response = await dio.get(
+        Constants.BaseUrlPro + Constants.allUserForChat,
+        options: Options(
+            contentType: Headers.formUrlEncodedContentType,
+            headers: {'Authorization': 'Token ${user!.token!}'}));
+    print(response.data);
+    userForChats =
+        (response.data as List).map((e) => UserForChat.fromJson(e)).toList();
+    //usersList.add(userForChats.where((element) => element.id == 1).toList());
+    usersList = userForChats.where((element) => element.role == 1).toList();
+    barsList = userForChats.where((element) => element.role == 2).toList();
+    print(usersList);
+    userComing = false;
+    notifyListeners();
+  }
+
+  getAllBarForChat() async {
     userComing = true;
     // notifyListeners();
     NewBarModel? user = await locator<PrefrencesViewModel>().getBarUser();
@@ -1512,6 +1533,10 @@ class MainViewModel extends BaseViewModel {
     navigationService.navigateToMsgCreateGroupScreen();
   }
 
+  void navigateToBarGroupScreen() {
+    navigationService.navigateToBarGroupScreen();
+  }
+
   void navigateToInvitePeopleScreen() {
     navigationService.navigateToInvitePeopleScreen();
   }
@@ -1653,6 +1678,10 @@ class MainViewModel extends BaseViewModel {
 
   void navigateToSelectIndividualChatScreen() {
     navigationService.navigateToSelectIndividualChatScreen();
+  }
+
+  void navigateToBarIndividualChatScreen() {
+    navigationService.navigateToBarIndividualChatScreen();
   }
 
   void navigateToChangePassword() {

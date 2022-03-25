@@ -11,7 +11,7 @@ import 'package:sauftrag/views/Home/swipe.dart';
 import 'package:sauftrag/views/MapSearch/map_screen.dart';
 import 'package:sauftrag/views/MapSearch/search.dart';
 import 'package:sauftrag/views/NewsFeed/news_feed.dart';
-import 'package:sauftrag/views/UserFriendList/friend_list.dart';
+import 'package:sauftrag/bar/views/BarChat/friend_list.dart';
 import 'package:sauftrag/views/UserFriendList/friend_list_for_user.dart';
 import 'package:sauftrag/views/UserProfile/user_profile.dart';
 import 'package:sauftrag/widgets/my_curved_nav_bar.dart';
