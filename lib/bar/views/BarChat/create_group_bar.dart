@@ -13,19 +13,19 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/views/UserFriendList/message_screen_for_user.dart';
 import 'package:sauftrag/widgets/back_arrow_with_container.dart';
 import 'package:stacked/stacked.dart';
 
-import 'message_screen_for_user.dart';
 
-class CreateGroup extends StatefulWidget {
-  const CreateGroup({Key? key}) : super(key: key);
+class CreateGroupBar extends StatefulWidget {
+  const CreateGroupBar({Key? key}) : super(key: key);
 
   @override
-  _CreateGroupState createState() => _CreateGroupState();
+  _CreateGroupBarState createState() => _CreateGroupBarState();
 }
 
-class _CreateGroupState extends State<CreateGroup> {
+class _CreateGroupBarState extends State<CreateGroupBar> {
   @override
   // void initState() {
   //   super.initState();
@@ -181,10 +181,10 @@ class _CreateGroupState extends State<CreateGroup> {
                                                         .matchedUsers[index]
                                                         .id,
                                                     username: model
-                                                        .matchedUsers[index]
+                                                        .listOfBar[index]
                                                         .username,
                                                     profilePic: model
-                                                        .matchedUsers[index]
+                                                        .listOfBar[index]
                                                         .profile_picture,
                                                   )));
                                         }

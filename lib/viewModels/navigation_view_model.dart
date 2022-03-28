@@ -8,6 +8,7 @@ import 'package:sauftrag/bar/views/Auth/signUp.dart';
 import 'package:sauftrag/bar/views/Auth/signup_barmap.dart';
 import 'package:sauftrag/bar/views/BarChat/bar_group_chat.dart';
 import 'package:sauftrag/bar/views/BarChat/bar_individual_chat.dart';
+import 'package:sauftrag/bar/views/BarChat/create_group_bar.dart';
 import 'package:sauftrag/bar/views/Drawer/barEvent.dart';
 import 'package:sauftrag/bar/views/Drawer/barProfile.dart';
 import 'package:sauftrag/bar/views/Drawer/bar_Rating.dart';
@@ -66,6 +67,7 @@ import 'package:sauftrag/views/UserFriendList/group_screen.dart';
 import 'package:sauftrag/views/UserFriendList/invite_people.dart';
 import 'package:sauftrag/views/UserFriendList/message_screen.dart';
 import 'package:sauftrag/views/UserFriendList/select_individual_chat.dart';
+import 'package:sauftrag/views/UserFriendList/user_group_chat.dart';
 import 'package:sauftrag/views/UserProfile/account.dart';
 import 'package:sauftrag/views/UserProfile/accountOwnership.dart';
 import 'package:sauftrag/views/UserProfile/data_protection.dart';
@@ -202,6 +204,14 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateToMsgCreateGroupScreen(){
     navigationKey.currentState!.push(PageTransition(child: CreateGroup(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToUserGroupChatScreen(){
+    navigationKey.currentState!.push(PageTransition(child: UserGroupChat(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToMsgCreateGroupBarScreen(){
+    navigationKey.currentState!.push(PageTransition(child: CreateGroupBar(), type: PageTransitionType.rightToLeftWithFade));
   }
 
   void navigateToInvitePeopleScreen(){

@@ -57,6 +57,12 @@ class _GroupDetailsState extends State<GroupDetails> {
                 child: ElevatedButton(
 
                   onPressed: () async {
+                    model.getUserId = [];
+                    for (var data in model.groupList) {
+                      model.getUserId.add(data['id']);
+                    }
+
+                    model.createGroupChatUser();
                     NewBarModel barUser =
                         (await locator<PrefrencesViewModel>().getBarUser())!;
                     UserModel user =
@@ -89,6 +95,7 @@ class _GroupDetailsState extends State<GroupDetails> {
                     pubnub.objects.setChannelMembers(
                         model.chatController.text, setMetadata);
                     print(setMetadata);
+                    model.navigateToGroupScreen();
                     //model.navigateToFriendListScreen1();
 
                   },

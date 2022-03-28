@@ -16,6 +16,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:sauftrag/bar/views/Drawer/bar_followers.dart';
 import 'package:sauftrag/models/attend_event.dart';
+import 'package:sauftrag/models/create_group_chat.dart';
 import 'package:sauftrag/models/event_attendees.dart';
 import 'package:sauftrag/models/follow_bar.dart';
 import 'package:sauftrag/models/get_bar_followers.dart';
@@ -54,6 +55,7 @@ import 'package:sauftrag/services/attend_event.dart';
 import 'package:sauftrag/services/barQRcode.dart';
 import 'package:sauftrag/services/bar_filters.dart';
 import 'package:sauftrag/services/bar_order.dart';
+import 'package:sauftrag/services/createGroup.dart';
 import 'package:sauftrag/services/createPost.dart';
 import 'package:sauftrag/services/dataProtection.dart';
 import 'package:sauftrag/services/drinksOrder.dart';
@@ -109,6 +111,7 @@ class MainViewModel extends BaseViewModel {
   var attendEvent = Attendevent();
   var getPastEvents = PastEvents();
   var addBarFilter = Barfilters();
+  var createGroup = Creategroup();
 
   Barcode? result;
 
@@ -233,6 +236,8 @@ class MainViewModel extends BaseViewModel {
   double lowerValue = 0;
   double upperValue = 50;
   PubNub? pubnub;
+
+  List getUserId = [];
 
   List<FaqsModel> faqs = [];
   List<NewsfeedPostId> posts = [];
@@ -1531,6 +1536,14 @@ class MainViewModel extends BaseViewModel {
 
   void navigateToMsgCreateGroupScreen() {
     navigationService.navigateToMsgCreateGroupScreen();
+  }
+
+  void navigateToUserGroupChatScreen() {
+    navigationService.navigateToUserGroupChatScreen();
+  }
+
+  void navigateToMsgCreateGroupBarScreen() {
+    navigationService.navigateToMsgCreateGroupBarScreen();
   }
 
   void navigateToBarGroupScreen() {
@@ -2930,6 +2943,40 @@ class MainViewModel extends BaseViewModel {
       notifyListeners();
 
     }
+
+
+  createGroupChatUser() async {
+
+    addDrink = true;
+    notifyListeners();
+    //drinkList = await Addfavorites().GetFavoritesDrink();
+    var createGroupUser = await createGroup.CreateGroup(
+
+        chatController.text,
+        getUserId,
+        1
+
+    );
+    if (createGroupUser is CreateGroupChat) {
+     // addFilters = getFiltersEvent;
+     // print(addFilters);
+    }
+    else {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Some thing went wrong",
+      ));
+      //isPrivacyPolicy = false;
+
+      return;
+    }
+
+    print(addFilters);
+    //navigateToMapSearchScreen();
+    notifyListeners();
+
+  }
+
+
 
 
 

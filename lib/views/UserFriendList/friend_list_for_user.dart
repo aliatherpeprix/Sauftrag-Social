@@ -57,6 +57,7 @@ class _FriendListForUserState extends State<FriendListForUser> {
       onModelReady: (model) {
         //model.getAllUserForChat();
         model.matchingUsers();
+        model.getListOfbars();
       },
       builder: (context, model, child) {
         return GestureDetector(
@@ -82,7 +83,7 @@ class _FriendListForUserState extends State<FriendListForUser> {
                           top: 10.7.h,
                           child: GestureDetector(
                             onTap: () {
-                              model.navigateToMsgCreateGroupScreen();
+                              model.navigateToUserGroupChatScreen();
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -317,6 +318,8 @@ class _FriendListForUserState extends State<FriendListForUser> {
                             ],
                           ),
                         ),
+
+                        ///------- Direct Message -------///
                         model.userComing == true
                             ? Container(
                                 color: Colors.white,
@@ -339,239 +342,412 @@ class _FriendListForUserState extends State<FriendListForUser> {
                                 child: TabBarView(
                                   children: [
                                     // first tab bar view widget
-                                    ListView.separated(
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 4.h),
-                                        physics: BouncingScrollPhysics(),
-                                        shrinkWrap: true,
-                                        itemBuilder: (context, index) {
-                                          return GestureDetector(
-                                            onTap: () {
-                                              if(model.userModel!.role == 1){
-                                                Navigator.push(
-                                                    context,
-                                                    PageTransition(
-                                                        type: PageTransitionType
-                                                            .fade,
-                                                        child:
-                                                        MessageScreenForUser(
-                                                          id: model
-                                                              .matchedUsers[index]
-                                                              .id,
-                                                          username: model
-                                                              .matchedUsers[index]
-                                                              .username,
-                                                          profilePic: model
-                                                              .matchedUsers[index]
-                                                              .profile_picture,
-                                                        )));
-                                              }
-                                              else{
-                                                Navigator.push(
-                                                    context,
-                                                    PageTransition(
-                                                        type: PageTransitionType
-                                                            .fade,
-                                                        child:
-                                                        MessageScreenForUser(
-                                                          id: model
-                                                              .barsList[index]
-                                                              .id,
-                                                          username: model
-                                                              .barsList[index]
-                                                              .username,
-                                                          profilePic: model
-                                                              .barsList[index]
-                                                              .profile_picture,
-                                                        )));
-                                              }
-                                            },
-                                            child: Column(
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Row(
-                                                      children: [
-                                                        // Stack(
-                                                        //   alignment:
-                                                        //       Alignment.topCenter,
-                                                        //   children: [
-                                                        CircleAvatar(
-                                                          radius: 30.0,
-                                                          backgroundImage:
-                                                              model.userModel!.role == 1 ?
-                                                              NetworkImage(
-                                                                  model
-                                                                      .matchedUsers[
-                                                                          index]
-                                                                      .profile_picture ??
-                                                                  "https://tse2.mm.bing.net/th?id=OIP.4gcGG1F0z6LjVlJjYWGGcgHaHa&pid=Api&P=0&w=164&h=164")
-                                                              :
-                                                              NetworkImage(model
-                                                                  .matchedUsers[
-                                                              index]
-                                                                  .profile_picture ??
-                                                                  "https://tse2.mm.bing.net/th?id=OIP.4gcGG1F0z6LjVlJjYWGGcgHaHa&pid=Api&P=0&w=164&h=164"),
-                                                          backgroundColor:
-                                                              Colors
-                                                                  .transparent,
-                                                        ),
-                                                        // if (friendsList[index]
-                                                        //         ["online"] ==
-                                                        //     true)
-                                                        //   Positioned(
-                                                        //     top: 0.5.h,
-                                                        //     right: 0.w,
-                                                        //     child: Container(
-                                                        //       decoration:
-                                                        //           BoxDecoration(
-                                                        //         shape: BoxShape
-                                                        //             .circle,
-                                                        //         color: ColorUtils
-                                                        //             .onlineProfileColor,
-                                                        //       ),
-                                                        //       width: 2.5.i,
-                                                        //       height: 2.5.i,
-                                                        //     ),
-                                                        //   ),
-                                                        //   ],
-                                                        // ),
-                                                        SizedBox(
-                                                          width: 3.w,
-                                                        ),
-                                                        Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            model.userModel!.role == 1 ?
-                                                            Text(
-                                                              model
-                                                                  .matchedUsers[
-                                                                      index]
-                                                                  .username
-                                                                  .toString(),
-                                                              style: TextStyle(
-                                                                  fontFamily:
-                                                                      FontUtils
-                                                                          .modernistBold,
-                                                                  fontSize:
-                                                                      1.9.t,
-                                                                  color: ColorUtils
-                                                                      .text_dark),
-                                                            ):
-                                                            Text(
-                                                              model
-                                                                  .barsList[
-                                                              index]
-                                                                  .username
-                                                                  .toString(),
-                                                              style: TextStyle(
-                                                                  fontFamily:
-                                                                  FontUtils
-                                                                      .modernistBold,
-                                                                  fontSize:
-                                                                  1.9.t,
-                                                                  color: ColorUtils
-                                                                      .text_dark),
-                                                            ),
-                                                            SizedBox(
-                                                              height: 0.5.h,
-                                                            ),
-                                                            // Container(
-                                                            //   width: MediaQuery.of(
-                                                            //               context)
-                                                            //           .size
-                                                            //           .width /
-                                                            //       2,
-                                                            //   child: Text(
-                                                            //     friendsList[index]
-                                                            //         ["message"],
-                                                            //     style: TextStyle(
-                                                            //         fontFamily: FontUtils
-                                                            //             .modernistRegular,
-                                                            //         fontSize: 1.8.t,
-                                                            //         color: ColorUtils
-                                                            //             .lightTextColor),
-                                                            //   ),
-                                                            // ),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Column(
-                                                      children: [
-                                                        // Text(
-                                                        //   friendsList[index]["time"],
-                                                        //   style: TextStyle(
-                                                        //     fontFamily: FontUtils
-                                                        //         .modernistRegular,
-                                                        //     fontSize: 1.6.t,
-                                                        //     color:
-                                                        //         ColorUtils.chatTime,
-                                                        //   ),
-                                                        // ),
-                                                        SizedBox(
-                                                          height: 1.h,
-                                                        ),
-                                                        // if (friendsList[index]
-                                                        //         ["online"] ==
-                                                        //     true)
-                                                        //   Container(
-                                                        //     decoration: BoxDecoration(
-                                                        //       shape: BoxShape.circle,
-                                                        //       color:
-                                                        //           ColorUtils.text_red,
-                                                        //     ),
-                                                        //     child: Center(
-                                                        //       child: Padding(
-                                                        //         padding:
-                                                        //             const EdgeInsets
-                                                        //                 .all(8.0),
-                                                        //         child: Text(
-                                                        //           "1",
-                                                        //           style: TextStyle(
-                                                        //               fontFamily:
-                                                        //                   FontUtils
-                                                        //                       .modernistBold,
-                                                        //               fontSize: 1.5.t,
-                                                        //               color: Colors
-                                                        //                   .white),
-                                                        //         ),
-                                                        //       ),
-                                                        //     ),
-                                                        //   ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          );
-                                        },
-                                        separatorBuilder: (context, index) {
-                                          return SizedBox(
-                                            height: 2.h,
-                                          );
-                                        },
-                                        itemCount: model.userModel!.role == 1 ?
-                                        model.matchedUsers.length :
-                                        model.barsList.length
-                                    ),
+                                   Container(
+                                     child: Column(
+                                       children: [
+                                         ListView.separated(
+                                             padding:
+                                             EdgeInsets.only(top: 4.h),
+                                             physics: BouncingScrollPhysics(),
+                                             shrinkWrap: true,
+                                             itemBuilder: (context, index) {
+                                               return GestureDetector(
+                                                 onTap: () {
+                                                   if(model.userModel!.role == 1){
+                                                     Navigator.push(
+                                                         context,
+                                                         PageTransition(
+                                                             type: PageTransitionType
+                                                                 .fade,
+                                                             child:
+                                                             MessageScreenForUser(
+                                                               id: model
+                                                                   .matchedUsers[index]
+                                                                   .id,
+                                                               username: model
+                                                                   .matchedUsers[index]
+                                                                   .username,
+                                                               profilePic: model
+                                                                   .matchedUsers[index]
+                                                                   .profile_picture,
+                                                             )));
+                                                   }
+                                                   else{
+                                                     Navigator.push(
+                                                         context,
+                                                         PageTransition(
+                                                             type: PageTransitionType
+                                                                 .fade,
+                                                             child:
+                                                             MessageScreenForUser(
+                                                               id: model
+                                                                   .barsList[index]
+                                                                   .id,
+                                                               username: model
+                                                                   .barsList[index]
+                                                                   .username,
+                                                               profilePic: model
+                                                                   .barsList[index]
+                                                                   .profile_picture,
+                                                             )));
+                                                   }
+                                                 },
+                                                 child: Column(
+                                                   children: [
+                                                     Row(
+                                                       mainAxisAlignment:
+                                                       MainAxisAlignment
+                                                           .spaceBetween,
+                                                       crossAxisAlignment:
+                                                       CrossAxisAlignment.start,
+                                                       children: [
+                                                         Row(
+                                                           children: [
+                                                             // Stack(
+                                                             //   alignment:
+                                                             //       Alignment.topCenter,
+                                                             //   children: [
+                                                             CircleAvatar(
+                                                               radius: 30.0,
+                                                               backgroundImage:
+                                                               model.userModel!.role == 1 ?
+                                                               NetworkImage(
+                                                                   model
+                                                                       .matchedUsers[
+                                                                   index]
+                                                                       .profile_picture ??
+                                                                       "https://tse2.mm.bing.net/th?id=OIP.4gcGG1F0z6LjVlJjYWGGcgHaHa&pid=Api&P=0&w=164&h=164")
+                                                                   :
+                                                               NetworkImage(model
+                                                                   .matchedUsers[
+                                                               index]
+                                                                   .profile_picture ??
+                                                                   "https://tse2.mm.bing.net/th?id=OIP.4gcGG1F0z6LjVlJjYWGGcgHaHa&pid=Api&P=0&w=164&h=164"),
+                                                               backgroundColor:
+                                                               Colors
+                                                                   .transparent,
+                                                             ),
+                                                             // if (friendsList[index]
+                                                             //         ["online"] ==
+                                                             //     true)
+                                                             //   Positioned(
+                                                             //     top: 0.5.h,
+                                                             //     right: 0.w,
+                                                             //     child: Container(
+                                                             //       decoration:
+                                                             //           BoxDecoration(
+                                                             //         shape: BoxShape
+                                                             //             .circle,
+                                                             //         color: ColorUtils
+                                                             //             .onlineProfileColor,
+                                                             //       ),
+                                                             //       width: 2.5.i,
+                                                             //       height: 2.5.i,
+                                                             //     ),
+                                                             //   ),
+                                                             //   ],
+                                                             // ),
+                                                             SizedBox(
+                                                               width: 3.w,
+                                                             ),
+                                                             Column(
+                                                               crossAxisAlignment:
+                                                               CrossAxisAlignment
+                                                                   .start,
+                                                               children: [
+                                                                 model.userModel!.role == 1 ?
+                                                                 Text(
+                                                                   model
+                                                                       .matchedUsers[
+                                                                   index]
+                                                                       .username
+                                                                       .toString(),
+                                                                   style: TextStyle(
+                                                                       fontFamily:
+                                                                       FontUtils
+                                                                           .modernistBold,
+                                                                       fontSize:
+                                                                       1.9.t,
+                                                                       color: ColorUtils
+                                                                           .text_dark),
+                                                                 ):
+                                                                 Text(
+                                                                   model
+                                                                       .barsList[
+                                                                   index]
+                                                                       .username
+                                                                       .toString(),
+                                                                   style: TextStyle(
+                                                                       fontFamily:
+                                                                       FontUtils
+                                                                           .modernistBold,
+                                                                       fontSize:
+                                                                       1.9.t,
+                                                                       color: ColorUtils
+                                                                           .text_dark),
+                                                                 ),
 
-                                    // second tab bar viiew widget
+                                                               ],
+                                                             ),
+                                                           ],
+                                                         ),
+
+                                                       ],
+                                                     ),
+                                                   ],
+                                                 ),
+                                               );
+                                             },
+                                             separatorBuilder: (context, index) {
+                                               return SizedBox(
+                                                 height: 2.h,
+                                               );
+                                             },
+                                             itemCount: model.userModel!.role == 1 ?
+                                             model.matchedUsers.length :
+                                             model.barsList.length
+                                         ),
+                                         ListView.separated(
+                                             padding:
+                                             EdgeInsets.symmetric(vertical: 2.h),
+                                             physics: BouncingScrollPhysics(),
+                                             shrinkWrap: true,
+                                             itemBuilder: (context, index) {
+                                               return GestureDetector(
+                                                 onTap: () {
+                                                   if(model.userModel!.role == 1){
+                                                     Navigator.push(
+                                                         context,
+                                                         PageTransition(
+                                                             type: PageTransitionType
+                                                                 .fade,
+                                                             child:
+                                                             MessageScreenForUser(
+                                                               id: model
+                                                                   .listOfBar[index]
+                                                                   .id,
+                                                               username: model
+                                                                   .listOfBar[index]
+                                                                   .username,
+                                                               profilePic: model
+                                                                   .listOfBar[index]
+                                                                   .profile_picture,
+                                                             )));
+                                                   }
+                                                   else{
+                                                     Navigator.push(
+                                                         context,
+                                                         PageTransition(
+                                                             type: PageTransitionType
+                                                                 .fade,
+                                                             child:
+                                                             MessageScreenForUser(
+                                                               id: model
+                                                                   .barsList[index]
+                                                                   .id,
+                                                               username: model
+                                                                   .barsList[index]
+                                                                   .username,
+                                                               profilePic: model
+                                                                   .barsList[index]
+                                                                   .profile_picture,
+                                                             )));
+                                                   }
+                                                 },
+                                                 child: Column(
+                                                   children: [
+
+                                                     Row(
+                                                       mainAxisAlignment:
+                                                       MainAxisAlignment
+                                                           .spaceBetween,
+                                                       crossAxisAlignment:
+                                                       CrossAxisAlignment.start,
+                                                       children: [
+                                                         Row(
+                                                           children: [
+                                                             // Stack(
+                                                             //   alignment:
+                                                             //       Alignment.topCenter,
+                                                             //   children: [
+                                                             CircleAvatar(
+                                                               radius: 30.0,
+                                                               backgroundImage:
+                                                               model.userModel!.role == 1 ?
+                                                               NetworkImage(
+                                                                   model
+                                                                       .listOfBar[
+                                                                   index]
+                                                                       .profile_picture ??
+                                                                       "https://tse2.mm.bing.net/th?id=OIP.4gcGG1F0z6LjVlJjYWGGcgHaHa&pid=Api&P=0&w=164&h=164")
+                                                                   :
+                                                               NetworkImage(model
+                                                                   .listOfBar[
+                                                               index]
+                                                                   .profile_picture ??
+                                                                   "https://tse2.mm.bing.net/th?id=OIP.4gcGG1F0z6LjVlJjYWGGcgHaHa&pid=Api&P=0&w=164&h=164"),
+                                                               backgroundColor:
+                                                               Colors
+                                                                   .transparent,
+                                                             ),
+                                                             // if (friendsList[index]
+                                                             //         ["online"] ==
+                                                             //     true)
+                                                             //   Positioned(
+                                                             //     top: 0.5.h,
+                                                             //     right: 0.w,
+                                                             //     child: Container(
+                                                             //       decoration:
+                                                             //           BoxDecoration(
+                                                             //         shape: BoxShape
+                                                             //             .circle,
+                                                             //         color: ColorUtils
+                                                             //             .onlineProfileColor,
+                                                             //       ),
+                                                             //       width: 2.5.i,
+                                                             //       height: 2.5.i,
+                                                             //     ),
+                                                             //   ),
+                                                             //   ],
+                                                             // ),
+                                                             SizedBox(
+                                                               width: 3.w,
+                                                             ),
+                                                             Column(
+                                                               crossAxisAlignment:
+                                                               CrossAxisAlignment
+                                                                   .start,
+                                                               children: [
+                                                                 model.userModel!.role == 1 ?
+                                                                 Text(
+                                                                   model
+                                                                       .listOfBar[
+                                                                   index]
+                                                                       .username
+                                                                       .toString(),
+                                                                   style: TextStyle(
+                                                                       fontFamily:
+                                                                       FontUtils
+                                                                           .modernistBold,
+                                                                       fontSize:
+                                                                       1.9.t,
+                                                                       color: ColorUtils
+                                                                           .text_dark),
+                                                                 ):
+                                                                 Text(
+                                                                   model
+                                                                       .barsList[
+                                                                   index]
+                                                                       .username
+                                                                       .toString(),
+                                                                   style: TextStyle(
+                                                                       fontFamily:
+                                                                       FontUtils
+                                                                           .modernistBold,
+                                                                       fontSize:
+                                                                       1.9.t,
+                                                                       color: ColorUtils
+                                                                           .text_dark),
+                                                                 ),
+                                                                 SizedBox(
+                                                                   height: 0.5.h,
+                                                                 ),
+                                                                 // Container(
+                                                                 //   width: MediaQuery.of(
+                                                                 //               context)
+                                                                 //           .size
+                                                                 //           .width /
+                                                                 //       2,
+                                                                 //   child: Text(
+                                                                 //     friendsList[index]
+                                                                 //         ["message"],
+                                                                 //     style: TextStyle(
+                                                                 //         fontFamily: FontUtils
+                                                                 //             .modernistRegular,
+                                                                 //         fontSize: 1.8.t,
+                                                                 //         color: ColorUtils
+                                                                 //             .lightTextColor),
+                                                                 //   ),
+                                                                 // ),
+                                                               ],
+                                                             ),
+                                                           ],
+                                                         ),
+                                                         Column(
+                                                           children: [
+                                                             // Text(
+                                                             //   friendsList[index]["time"],
+                                                             //   style: TextStyle(
+                                                             //     fontFamily: FontUtils
+                                                             //         .modernistRegular,
+                                                             //     fontSize: 1.6.t,
+                                                             //     color:
+                                                             //         ColorUtils.chatTime,
+                                                             //   ),
+                                                             // ),
+                                                             SizedBox(
+                                                               height: 1.h,
+                                                             ),
+                                                             // if (friendsList[index]
+                                                             //         ["online"] ==
+                                                             //     true)
+                                                             //   Container(
+                                                             //     decoration: BoxDecoration(
+                                                             //       shape: BoxShape.circle,
+                                                             //       color:
+                                                             //           ColorUtils.text_red,
+                                                             //     ),
+                                                             //     child: Center(
+                                                             //       child: Padding(
+                                                             //         padding:
+                                                             //             const EdgeInsets
+                                                             //                 .all(8.0),
+                                                             //         child: Text(
+                                                             //           "1",
+                                                             //           style: TextStyle(
+                                                             //               fontFamily:
+                                                             //                   FontUtils
+                                                             //                       .modernistBold,
+                                                             //               fontSize: 1.5.t,
+                                                             //               color: Colors
+                                                             //                   .white),
+                                                             //         ),
+                                                             //       ),
+                                                             //     ),
+                                                             //   ),
+                                                           ],
+                                                         ),
+                                                       ],
+                                                     ),
+                                                     Row(
+                                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                       crossAxisAlignment: CrossAxisAlignment.center,
+                                                     )
+                                                   ],
+                                                 ),
+                                               );
+                                             },
+                                             separatorBuilder: (context, index) {
+                                               return SizedBox(
+                                                 height: 0.h,
+                                               );
+                                             },
+                                             itemCount: model.userModel!.role == 1 ?
+                                             model.listOfBar.length :
+                                             model.barsList.length
+                                         ),
+
+                                       ],
+                                     ),
+                                   ),
+                                    ///----- Group Message ------///
                                     GestureDetector(
                                       onTap: () {
                                         model.navigateToGroupScreen();
                                       },
                                       child: Container(
                                         padding:
-                                            EdgeInsets.symmetric(vertical: 4.h),
+                                            EdgeInsets.symmetric(vertical: 0.h),
                                         //margin: EdgeInsets.only(top: 3.h),
                                         child: Row(
                                           mainAxisAlignment:
