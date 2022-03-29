@@ -49,6 +49,7 @@ class Constants {
   static const String GetUserToUserInfo = 'api/user/getAnotherUserProfile/';
   static const String GetUpcomingEvents = 'api/event/upcoming/';
   static const String GetPastEvent = 'api/event/past/';
+  static const String GetGroup = 'api/group/create/';
 
   static const String accountDelete = 'api/account/delete/';
   static const String accountDeactivate = 'api/account/deactivate/';

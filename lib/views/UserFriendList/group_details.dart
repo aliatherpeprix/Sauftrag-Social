@@ -4,6 +4,7 @@ import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:expand_tap_area/expand_tap_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:pubnub/pubnub.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/new_bar_model.dart';
@@ -20,6 +21,8 @@ import 'package:sauftrag/viewModels/prefrences_view_model.dart';
 import 'package:sauftrag/widgets/back_arrow_with_container.dart';
 import 'package:sauftrag/widgets/image_edit_dialog.dart';
 import 'package:stacked/stacked.dart';
+
+import 'group_screen.dart';
 
 class GroupDetails extends StatefulWidget {
   int? id;
@@ -67,17 +70,16 @@ class _GroupDetailsState extends State<GroupDetails> {
                         (await locator<PrefrencesViewModel>().getBarUser())!;
                     UserModel user =
                         (await locator<PrefrencesViewModel>().getUser())!;
-                    var pubnub = PubNub(
-                        defaultKeyset: Keyset(
-                            subscribeKey:
-                                'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
-                            publishKey:
-                                'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
-                            uuid: UUID(user.id.toString())));
+                    // var pubnub = PubNub(
+                    //     defaultKeyset: Keyset(
+                    //         subscribeKey:
+                    //             'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
+                    //         publishKey:
+                    //             'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
+                    //         uuid: UUID(user.id.toString())));
                     // Subscribe to a channel
-                    var subscription =
-                        pubnub.subscribe(channels: {model.chatController.text});
-                    var channel = pubnub.channel(model.chatController.text);
+                     model.subscription = model.pubnub!.subscribe(channels: {model.chatController.text});
+                     model.channel = model.pubnub!.channel(model.chatController.text);
 
                     // if(model.logInUserSelected == true){
                     //   model.navigateToFriendListScreen();
@@ -92,12 +94,38 @@ class _GroupDetailsState extends State<GroupDetails> {
                           ChannelMemberMetadataInput(data['id'].toString());
                       setMetadata.add(user);
                     }
-                    pubnub.objects.setChannelMembers(
+                    model.pubnub!.objects.setChannelMembers(
                         model.chatController.text, setMetadata);
                     print(setMetadata);
-                    model.navigateToGroupScreen();
+                    if(model.userModel!.role == 1){
+                      Navigator.push(
+                          context,
+                          PageTransition(
+                              type: PageTransitionType
+                                  .fade,
+                              child:
+                              GroupScreen(
+                                id: model.groupChatUser!.id,
+                                username: model.groupChatUser!.name,
+                              )
+                          ));
+                    }
+                    else{
+                      Navigator.push(
+                          context,
+                          PageTransition(
+                              type: PageTransitionType
+                                  .fade,
+                              child:
+                              GroupScreen(
+                                  id: model.groupChatUser!.id,
+                                  username: model.groupChatUser!.name,
+                                  //userLength: model.getListGroup[index].users!.length
+                              )
+                          ));
+                    }
+                    //model.navigateToGroupScreen();
                     //model.navigateToFriendListScreen1();
-
                   },
                   child: const Text("Create Group"),
                   style: ElevatedButton.styleFrom(

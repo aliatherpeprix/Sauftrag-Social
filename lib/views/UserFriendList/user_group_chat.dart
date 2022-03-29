@@ -298,7 +298,8 @@ class _UserGroupChatState extends State<UserGroupChat> {
     return ViewModelBuilder<MainViewModel>.reactive(
       onModelReady: (model) {
         model.groupList.clear();
-        model.getBarsFollowerList();
+        //model.getBarsFollowerList();
+        //model.getBarsFollowerForChat();
         //model.getAllUserForChat();
         model.selected = List<bool>.filled(model.matchedUser.toString().length, false);
       },

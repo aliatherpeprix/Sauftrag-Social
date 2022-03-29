@@ -92,4 +92,41 @@ class   BARFollowers {
       return exception.message;
     }
   }
+
+  Future GetFollowersForGroupChat(
+
+
+      ) async {
+    try {
+
+      UserModel? user = (await locator<PrefrencesViewModel>().getUser());
+      var response = await dio.get(Constants.BaseUrlPro+Constants.followersList,
+          options: Options(
+            // contentType: Headers.formUrlEncodedContentType,
+              headers: {
+                "Authorization": "Token ${user!.token!}"
+              }
+          ));
+      if (response.statusCode == 200 || response.statusCode == 201) {
+
+        // var faqs = (response.data);
+        //List<FaqsModel> Faq = faqs[1]['question'];
+        print("jhjg");
+        List<GetBarFollowersList> getbarfolloweringForChat = (response.data as List).map((e) =>
+            GetBarFollowersList.fromJson(e)).toList();
+        // getbarfollowers.removeWhere((element) => element.role==2);
+        return getbarfolloweringForChat;
+      }
+
+      //user not found
+      else {
+        return response.data['message'];
+      }
+
+    }
+    catch (e) {
+      dynamic exception = e;
+      return exception.message;
+    }
+  }
 }

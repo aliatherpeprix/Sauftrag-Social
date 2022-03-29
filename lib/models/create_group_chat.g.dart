@@ -10,8 +10,8 @@ CreateGroupChat _$CreateGroupChatFromJson(Map<String, dynamic> json) =>
     CreateGroupChat()
       ..id = json['id'] as int?
       ..name = json['name'] as String?
-      ..privacy = json['privacy'] as int?
-      ..originator = json['originator'] as int?
+      ..privacy = json['privacy']
+      ..originator = json['originator']
       ..users = json['users'] as List<dynamic>?;
 
 Map<String, dynamic> _$CreateGroupChatToJson(CreateGroupChat instance) =>

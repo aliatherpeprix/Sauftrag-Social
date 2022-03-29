@@ -49,6 +49,7 @@ class _MainViewState extends State<MainView> {
         // var position = await model.determinePosition();
         // print(position);
         model.updateCurrentLocation();
+        model.initUserGrpPubNub();
       },
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,

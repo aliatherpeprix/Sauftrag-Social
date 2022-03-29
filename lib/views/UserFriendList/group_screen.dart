@@ -20,7 +20,12 @@ import 'package:sauftrag/widgets/back_arrow_with_container.dart';
 import 'package:stacked/stacked.dart';
 
 class GroupScreen extends StatefulWidget {
-  const GroupScreen({Key? key}) : super(key: key);
+
+  int? id;
+  String? username;
+  int? userLength;
+
+  GroupScreen({Key? key, this.id, this.username,  this.userLength}) : super(key: key);
 
   @override
   _GroupScreenState createState() => _GroupScreenState();
@@ -33,19 +38,11 @@ class _GroupScreenState extends State<GroupScreen> {
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
       onModelReady: (model) async {
-        NewBarModel barUser =
-            (await locator<PrefrencesViewModel>().getBarUser())!;
-        UserModel user = (await locator<PrefrencesViewModel>().getUser())!;
-        var pubnub = PubNub(
-            defaultKeyset: Keyset(
-                subscribeKey: 'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
-                publishKey: 'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
-                uuid: UUID(user.id.toString())));
         // Subscribe to a channel
-        var subscription = pubnub.subscribe(channels: {model.chatController.text});
+        model.subscription = model.pubnub!.subscribe(channels: {widget.username!});
 
-        var channel = pubnub.channel(model.chatController.text);
-        var chat = await channel.messages();
+        model.channel = model.pubnub!.channel(widget.username!);
+        var chat = await model.channel!.messages();
         var data = await chat.count();
         await chat.fetch().whenComplete(() {
           model.chats.clear();
@@ -58,7 +55,7 @@ class _GroupScreenState extends State<GroupScreen> {
 
         //print("Testing");
         // Print every message
-        subscription.messages.listen((message) async {
+        model.subscription!.messages.listen((message) async {
           //print(message.content);
           //model.message = message.content;
           model.chats.add(message.content);
@@ -88,7 +85,8 @@ class _GroupScreenState extends State<GroupScreen> {
             bottom: false,
             child: Scaffold(
               backgroundColor: Colors.white,
-              floatingActionButton: Container(
+              floatingActionButton:
+              Container(
                 color: Colors.white,
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -106,9 +104,7 @@ class _GroupScreenState extends State<GroupScreen> {
                               child: Container(
                                 //width: 200.0,
                                 margin: EdgeInsets.only(
-                                    //left: SizeConfig.widthMultiplier * 4.5,
-                                    //right: SizeConfig.widthMultiplier * 2,
-                                    //top: SizeConfig.heightMultiplier * 3,
+
                                     ),
                                 decoration: BoxDecoration(
                                     color: Colors.white,
@@ -153,6 +149,9 @@ class _GroupScreenState extends State<GroupScreen> {
                                                   maxHeight: 100),
                                               child: TextField(
                                                 onTap: () {},
+                                                onChanged: (value){
+                                                  model.notifyListeners();
+                                                },
                                                 // enabled: true,
                                                 //readOnly: true,
                                                 //focusNode: model.searchFocus,
@@ -290,16 +289,11 @@ class _GroupScreenState extends State<GroupScreen> {
                         UserModel user =
                             (await locator<PrefrencesViewModel>().getUser())!;
                         // model.chat();
-                        var pubnub = PubNub(
-                            defaultKeyset: Keyset(
-                                subscribeKey:
-                                    'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
-                                publishKey:
-                                    'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
-                                uuid: UUID("Cosmos")));
-                        pubnub.publish("Cosmos", {
+
+                        model.pubnub!.publish(widget.username!, {
                           "content": model.groupScreenChatController.text,
-                          "userID": barUser.id!.toString()
+                          "userID": user.id!.toString(),
+                          "time":DateTime.now().toString()
                         });
                         model.groupScreenChatController.clear();
                         Future.delayed(Duration(seconds: 2), () {
@@ -382,7 +376,7 @@ class _GroupScreenState extends State<GroupScreen> {
                                           Row(
                                             children: [
                                               Text(
-                                                "Cosmos",
+                                                widget.username!,
                                                 style: TextStyle(
                                                     fontFamily:
                                                         FontUtils.modernistBold,
@@ -401,7 +395,7 @@ class _GroupScreenState extends State<GroupScreen> {
                                             height: 0.8.h,
                                           ),
                                           Text(
-                                            "4 Members, 1 Online",
+                                            " Members" ,
                                             style: TextStyle(
                                                 fontFamily:
                                                     FontUtils.modernistBold,
@@ -432,7 +426,7 @@ class _GroupScreenState extends State<GroupScreen> {
                           itemBuilder: (context, index) {
                             return Align(
                               alignment: model.chats[index]["userID"] ==
-                                      model.barModel!.id!.toString()
+                                      model.userModel!.id!.toString()
                                   ? Alignment.centerRight
                                   : Alignment.centerLeft,
                               child: Container(
@@ -440,7 +434,7 @@ class _GroupScreenState extends State<GroupScreen> {
                                 decoration: BoxDecoration(
                                   color: ColorUtils.messageChat,
                                   borderRadius: model.chats[index]["userID"] ==
-                                          model.barModel!.id!.toString()
+                                          model.userModel!.id!.toString()
                                       ? BorderRadius.only(
                                           topLeft: Radius.circular(15),
                                           topRight: Radius.circular(15),
@@ -455,7 +449,7 @@ class _GroupScreenState extends State<GroupScreen> {
                                 child: Column(
                                   crossAxisAlignment: model.chats[index]
                                               ["userID"] ==
-                                          model.barModel!.id!.toString()
+                                          model.userModel!.id!.toString()
                                       ? CrossAxisAlignment.end
                                       : CrossAxisAlignment.start,
                                   children: [
@@ -482,7 +476,7 @@ class _GroupScreenState extends State<GroupScreen> {
                                     //SizedBox(height: 1.h,),
                                     Align(
                                       alignment: model.chats[index]["userID"] ==
-                                              model.barModel!.id!.toString()
+                                              model.userModel!.id!.toString()
                                           ? Alignment.centerLeft
                                           : Alignment.centerRight,
                                       child: Padding(

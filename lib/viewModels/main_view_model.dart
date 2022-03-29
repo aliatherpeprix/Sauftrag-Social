@@ -61,6 +61,7 @@ import 'package:sauftrag/services/dataProtection.dart';
 import 'package:sauftrag/services/drinksOrder.dart';
 import 'package:sauftrag/services/faqs.dart';
 import 'package:sauftrag/services/followBar.dart';
+import 'package:sauftrag/services/getGroup.dart';
 import 'package:sauftrag/services/get_barFollowers.dart';
 import 'package:sauftrag/services/get_match_users.dart';
 import 'package:sauftrag/services/get_past_event.dart';
@@ -112,6 +113,7 @@ class MainViewModel extends BaseViewModel {
   var getPastEvents = PastEvents();
   var addBarFilter = Barfilters();
   var createGroup = Creategroup();
+  var getGroup = GetGroup();
 
   Barcode? result;
 
@@ -127,6 +129,7 @@ class MainViewModel extends BaseViewModel {
   ListOfBarsModel? barFollow;
   ListOfBarsModel? getUpcmoingUserDetails;
   Media? barMedia;
+  CreateGroupChat? groupChatUser;
 
   bool logInUserSelected = true;
   bool logInBarSelected = false;
@@ -255,8 +258,11 @@ class MainViewModel extends BaseViewModel {
 
   List<GetBarFollowersList> getFollowerList = [];
 
+  List<CreateGroupChat> getListGroup = [];
+  CreateGroupChat? selectedGroup;
+
   ListOfBarsModel? selectedBar;
- List<ListOfBarsModel?>? upcomingDetails;
+  List<ListOfBarsModel?>? upcomingDetails;
 
   UserModel? matchedUser;
 
@@ -283,6 +289,7 @@ class MainViewModel extends BaseViewModel {
   bool isSwitched = false;
 
   Subscription? subscription;
+  Channel? channel;
 
   Future<Position> determinePosition() async {
     bool serviceEnabled;
@@ -2237,6 +2244,32 @@ class MainViewModel extends BaseViewModel {
     //print(getFaqsList);
   }
 
+  // getBarsFollowerForChat() async {
+  //   isFaqs = true;
+  //
+  //   var BarFollowersListForChat = await getbarFollowers.GetFollowersForGroupChat();
+  //   print(BarFollowersListForChat);
+  //   // if (getFaqList is String){
+  //   //   faqs = getFaqList;
+  //   //   //isPrivacyPolicy = false;
+  //   //
+  //   // }ListOfBarsModel
+  //   if (BarFollowersListForChat is List<GetBarFollowersList>) {
+  //     getFollowerList = BarFollowersListForChat;
+  //     print(getFollowerList);
+  //   }   else {
+  //     DialogUtils().showDialog(MyErrorWidget(
+  //       error: "Error",
+  //     ));
+  //     //isPrivacyPolicy = false;
+  //
+  //     return;
+  //   }
+  //   isFaqs = false;
+  //   notifyListeners();
+  //   //print(getFaqsList);
+  // }
+
   postBarFollow() async {
     isLoading = true;
     notifyListeners();
@@ -2776,6 +2809,16 @@ class MainViewModel extends BaseViewModel {
             uuid: UUID("${barUser.id.toString()}")));
   }
 
+  void initUserGrpPubNub() async {
+    //NewBarModel barUser = (await locator<PrefrencesViewModel>().getBarUser())!;
+    UserModel user = (await locator<PrefrencesViewModel>().getUser())!;
+    pubnub = PubNub(
+        defaultKeyset: Keyset(
+            subscribeKey: 'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
+            publishKey: 'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
+            uuid: UUID("${user.id.toString()}")));
+  }
+
   void initUserPubNub() async {
     UserModel user = (await locator<PrefrencesViewModel>().getUser())!;
     pubnub = PubNub(
@@ -2958,8 +3001,8 @@ class MainViewModel extends BaseViewModel {
 
     );
     if (createGroupUser is CreateGroupChat) {
-     // addFilters = getFiltersEvent;
-     // print(addFilters);
+        groupChatUser = createGroupUser;
+        print(groupChatUser);
     }
     else {
       DialogUtils().showDialog(MyErrorWidget(
@@ -2976,9 +3019,30 @@ class MainViewModel extends BaseViewModel {
 
   }
 
+  getGroupList() async {
+    isFaqs = true;
 
+    var getList = await getGroup.GetGroups();
+    print(getList);
+    // if (getFaqList is String){
+    //   faqs = getFaqList;
+    //   //isPrivacyPolicy = false;
+    //
+    // }ListOfBarsModel
+    if (getList is List<CreateGroupChat>) {
+      getListGroup = getList;
+      print(getListGroup);
+    }   else {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Some thing went wrong",
+      ));
+      //isPrivacyPolicy = false;
 
-
-
+      return;
+    }
+    isFaqs = false;
+    notifyListeners();
+    //print(getFaqsList);
+  }
 
 }

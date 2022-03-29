@@ -67,7 +67,7 @@ class _MessageScreenState extends State<MessageScreen> {
             model.pubnub!.channel("${model.getConversationID(widget.id.toString(),user.id.toString())}");
         // pubnub.channelGroups.addChannels(group, channels)
         var chat = await channel.messages();
-        var data = await chat.count();
+        var   data = await chat.count();
         await chat.fetch().whenComplete(() {
           print(chat.messages.length);
           
