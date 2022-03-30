@@ -359,7 +359,14 @@ class _SignUpBarState extends State<SignUpBar> {
                                           fontFamily: FontUtils.modernistRegular,
                                           fontSize: 1.9.t,
                                         ),
-                                        decoration: const InputDecoration(
+                                        decoration: InputDecoration(
+                                          hintText: "Hint: Abc!123",
+                                          hintStyle: TextStyle(
+                                            color: ColorUtils.text_grey,
+                                            fontFamily: FontUtils.modernistRegular,
+                                            fontSize: 1.9.t,
+                                            //height: .4
+                                          ),
                                           border: InputBorder.none,
                                           isDense:true,
                                           contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
@@ -439,7 +446,14 @@ class _SignUpBarState extends State<SignUpBar> {
                                           fontFamily: FontUtils.modernistRegular,
                                           fontSize: 1.9.t,
                                         ),
-                                        decoration: const InputDecoration(
+                                        decoration: InputDecoration(
+                                          hintText: "Hint: Abc!123",
+                                          hintStyle: TextStyle(
+                                            color: ColorUtils.text_grey,
+                                            fontFamily: FontUtils.modernistRegular,
+                                            fontSize: 1.9.t,
+                                            //height: .4
+                                          ),
                                           border: InputBorder.none,
                                           isDense:true,
                                           contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),

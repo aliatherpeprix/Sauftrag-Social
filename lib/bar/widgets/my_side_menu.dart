@@ -10,6 +10,7 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/viewModels/prefrences_view_model.dart';
+import 'package:sauftrag/widgets/logout_dialog.dart';
 import 'package:sauftrag/widgets/round_image.dart';
 import 'package:stacked/stacked.dart';
 
@@ -210,7 +211,14 @@ class _MySideMenuState extends State<MySideMenu> {
               //Logout
               InkWell(
                 onTap: () {
-                  model.logOutUser();
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context){
+                        return LogoutDialog(title: "Add New Location",
+                            btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+                      }
+                  );
+                  //model.logOutUser();
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(

@@ -1059,7 +1059,8 @@ class RegistrationViewModel extends BaseViewModel {
         error: "Please Accept Terms and Conditions",
       ));
       return;
-    } else if (dataCheck == false) {
+    }
+    else if (dataCheck == false) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Please Accept Data Protection",
       ));
@@ -1493,14 +1494,14 @@ class RegistrationViewModel extends BaseViewModel {
       ));
       notifyListeners();
       return;
-    } /*else if (isChecked == false) {
+    } else if (isChecked == false) {
       isSigningUp = false;
       DialogUtils().showDialog(MyErrorWidget(
         error: "Please Accept Terms and Conditions",
       ));
       notifyListeners();
       return;
-    }*/ else
+    } else
       signInUser = true;
     notifyListeners();
     //var user = userModel.UserModel();
@@ -1677,17 +1678,20 @@ class RegistrationViewModel extends BaseViewModel {
         error: "Select week days close time",
       ));
       return;
-    } else if (breakTimeFrom == "") {
-      DialogUtils().showDialog(MyErrorWidget(
-        error: "Select week days start break time",
-      ));
-      return;
-    } else if (breakTimeTo == "") {
-      DialogUtils().showDialog(MyErrorWidget(
-        error: "Select week days end break time",
-      ));
-      return;
-    } else if (selectedWeekendDays.length == 0) {
+    }
+    // else if (breakTimeFrom == "") {
+    //   DialogUtils().showDialog(MyErrorWidget(
+    //     error: "Select week days start break time",
+    //   ));
+    //   return;
+    // }
+    // else if (breakTimeTo == "") {
+    //   DialogUtils().showDialog(MyErrorWidget(
+    //     error: "Select week days end break time",
+    //   ));
+    //   return;
+    // }
+    else if (selectedWeekendDays.length == 0) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select a weekend day please",
       ));
@@ -1702,17 +1706,19 @@ class RegistrationViewModel extends BaseViewModel {
         error: "Select weekend days opening time",
       ));
       return;
-    } else if (weekEndBreakTimeFrom == "") {
-      DialogUtils().showDialog(MyErrorWidget(
-        error: "Select weekend days start break time",
-      ));
-      return;
-    } else if (weekEndBreakTimeTo == "") {
-      DialogUtils().showDialog(MyErrorWidget(
-        error: "Select weekend days end break time",
-      ));
-      return;
-    } else if (selectedBarKind.length == 0) {
+    }
+    // else if (weekEndBreakTimeFrom == "") {
+    //   DialogUtils().showDialog(MyErrorWidget(
+    //     error: "Select weekend days start break time",
+    //   ));
+    //   return;
+    // } else if (weekEndBreakTimeTo == "") {
+    //   DialogUtils().showDialog(MyErrorWidget(
+    //     error: "Select weekend days end break time",
+    //   ));
+    //   return;
+    // }
+    else if (selectedBarKind.length == 0) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select a bar kind",
       ));
@@ -2139,6 +2145,10 @@ class RegistrationViewModel extends BaseViewModel {
 
   void navigateToResentPasswordScreen() {
     navigationService.navigateToResentPasswordScreen();
+  }
+
+  void navigateToStaticTermsAndConditionScreen() {
+    navigationService.navigateToStaticTermsAndConditionScreen();
   }
 
   void navigateToChangePassword() {

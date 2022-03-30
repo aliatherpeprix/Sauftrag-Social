@@ -13,6 +13,8 @@ import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:sauftrag/widgets/round_image.dart';
 import 'package:stacked/stacked.dart';
 
+import 'logout_dialog.dart';
+
 class MySideMenu extends StatefulWidget {
   const MySideMenu({Key? key}) : super(key: key);
 
@@ -320,8 +322,16 @@ class _MySideMenuState extends State<MySideMenu> {
 
               //Logout
               InkWell(
+
                 onTap: () {
-                  model.logOutUser();
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context){
+                        return LogoutDialog(title: "Add New Location",
+                            btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+                      }
+                  );
+                  //model.logOutUser();
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(

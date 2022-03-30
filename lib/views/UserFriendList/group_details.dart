@@ -105,7 +105,7 @@ class _GroupDetailsState extends State<GroupDetails> {
                                   .fade,
                               child:
                               GroupScreen(
-                                id: model.groupChatUser!.id,
+                                id: model.groupChatUser!.id ?? 0,
                                 username: model.groupChatUser!.name,
                               )
                           ));
@@ -118,7 +118,7 @@ class _GroupDetailsState extends State<GroupDetails> {
                                   .fade,
                               child:
                               GroupScreen(
-                                  id: model.groupChatUser!.id,
+                                  id: model.groupChatUser!.id ?? 0,
                                   username: model.groupChatUser!.name,
                                   //userLength: model.getListGroup[index].users!.length
                               )

@@ -356,11 +356,12 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                               height: 0.5.h),
                                           textAlign: TextAlign.end,
                                         ),
+                                        if(model.updatedrinkIndex == 1)
                                         Container(
                                           width: 15.w,
                                           alignment: Alignment.center,
                                           child: Text(
-                                            "Motor anwärmen",
+                                            "Gemütlich einen trinken",
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                               color: ColorUtils.text_red,
@@ -370,6 +371,67 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                             ),
                                           ),
                                         ),
+                                        if(model.updatedrinkIndex == 2)
+                                          Container(
+                                            width: 15.w,
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              "Motor anwärmen",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: ColorUtils.text_red,
+                                                fontFamily:
+                                                FontUtils.modernistBold,
+                                                fontSize: 1.2.t,
+                                              ),
+                                            ),
+                                          ),
+                                        if(model.updatedrinkIndex == 3)
+                                          Container(
+                                            width: 15.w,
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              "Schön einen reinorgeln",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: ColorUtils.text_red,
+                                                fontFamily:
+                                                FontUtils.modernistBold,
+                                                fontSize: 1.2.t,
+                                              ),
+                                            ),
+                                          ),
+                                        if(model.updatedrinkIndex == 4)
+                                          Container(
+                                            width: 15.w,
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              "Die Rüstung demolieren",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: ColorUtils.text_red,
+                                                fontFamily:
+                                                FontUtils.modernistBold,
+                                                fontSize: 1.2.t,
+                                              ),
+                                            ),
+                                          ),
+                                        if(model.updatedrinkIndex == 5)
+                                          Container(
+                                            width: 15.w,
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              "Sauftrag komplett erfüllen",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: ColorUtils.text_red,
+                                                fontFamily:
+                                                FontUtils.modernistBold,
+                                                fontSize: 1.2.t,
+                                              ),
+                                            ),
+                                          ),
+
                                       ],
                                     ),
 

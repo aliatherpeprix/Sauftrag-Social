@@ -45,6 +45,7 @@ import 'package:sauftrag/views/Auth/media.dart';
 import 'package:sauftrag/views/Auth/resent_password.dart';
 import 'package:sauftrag/views/Auth/signup.dart';
 import 'package:sauftrag/views/Auth/signup_map.dart';
+import 'package:sauftrag/views/Auth/terms&condition.dart';
 import 'package:sauftrag/views/Auth/terms.dart';
 import 'package:sauftrag/views/Auth/verification_code.dart';
 import 'package:sauftrag/views/Home/main_view.dart';
@@ -248,6 +249,10 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateToUserProfileAccountScreen(){
     navigationKey.currentState!.push(PageTransition(child: Account(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToStaticTermsAndConditionScreen(){
+    navigationKey.currentState!.push(PageTransition(child: TermsAndConditions(), type: PageTransitionType.rightToLeftWithFade));
   }
 
   void navigateToUserProfileAccountOwnershipScreen(){

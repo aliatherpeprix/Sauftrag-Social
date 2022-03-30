@@ -537,7 +537,7 @@ class _SignUpState extends State<SignUp> {
                           Stack(
                             children: [
                               Container(
-                                height: 7.h,
+                                height: 8.h,
                                 padding: EdgeInsets.symmetric(
                                     vertical: Dimensions.containerVerticalPadding,
                                     horizontal:
@@ -565,13 +565,20 @@ class _SignUpState extends State<SignUp> {
                                           fontFamily: FontUtils.modernistRegular,
                                           fontSize: 1.9.t,
                                         ),
-                                        decoration: const InputDecoration(
+                                        decoration: InputDecoration(
+                                          hintText: "Hint: Abc!123",
+                                            hintStyle: TextStyle(
+                                              color: ColorUtils.text_grey,
+                                              fontFamily: FontUtils.modernistRegular,
+                                              fontSize: 1.9.t,
+                                              //height: .4
+                                            ),
                                           border: InputBorder.none,
                                           isDense: true,
                                           contentPadding: EdgeInsets.symmetric(
                                               horizontal: 0, vertical: 0),
                                         ),
-                                      ),
+                                      )
                                     ),
                                     SizedBox(width: 3.w),
                                     IconButton(
@@ -609,6 +616,7 @@ class _SignUpState extends State<SignUp> {
                               ),
                             ],
                           ),
+
                           SizedBox(height: 3.h),
 
                           //Verify Password
@@ -644,7 +652,14 @@ class _SignUpState extends State<SignUp> {
                                           fontFamily: FontUtils.modernistRegular,
                                           fontSize: 1.9.t,
                                         ),
-                                        decoration: const InputDecoration(
+                                        decoration: InputDecoration(
+                                          hintText: "Hint: Abc!123",
+                                          hintStyle: TextStyle(
+                                            color: ColorUtils.text_grey,
+                                            fontFamily: FontUtils.modernistRegular,
+                                            fontSize: 1.9.t,
+                                            //height: .4
+                                          ),
                                           border: InputBorder.none,
                                           isDense: true,
                                           contentPadding: EdgeInsets.symmetric(
@@ -996,41 +1011,51 @@ class _SignUpState extends State<SignUp> {
                             ],
                           ),
 
-                          // GestureDetector(
-                          //     onTap: () {
-                          //       model.signupCheck = true ;
-                          //       model.notifyListeners();
-                          //     },
-                          //     child: Row(
-                          //       children: <Widget>[
-                          //         Theme(
-                          //           data: Theme.of(context).copyWith(
-                          //             unselectedWidgetColor: ColorUtils.text_grey,
-                          //           ),
-                          //           child: Checkbox(
-                          //             checkColor: ColorUtils.white,
-                          //             activeColor: ColorUtils.text_red,
-                          //             value: model.isChecked,
-                          //             onChanged: (bool? value) {
-                          //               setState(() {
-                          //                 model.isChecked = value!;
-                          //               });
-                          //             },
-                          //           ),
-                          //         ),
-                          //         Flexible(
-                          //           child: Text(
-                          //             "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                          //             style: TextStyle(
-                          //               color: ColorUtils.text_grey,
-                          //               fontFamily: FontUtils.modernistRegular,
-                          //               fontSize: 1.5.t,
-                          //             ),
-                          //           ),
-                          //         ),
-                          //       ],
-                          //     )),
-                          SizedBox(height: 6.h),
+                          SizedBox(height: 1.5.h,),
+                          GestureDetector(
+                              onTap: () {
+                                model.signupCheck = true ;
+                                model.notifyListeners();
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Theme(
+                                    data: Theme.of(context).copyWith(
+                                      unselectedWidgetColor: ColorUtils.text_grey,
+                                    ),
+                                    child: Checkbox(
+                                      checkColor: ColorUtils.white,
+                                      activeColor: ColorUtils.text_red,
+                                      value: model.isChecked,
+                                      onChanged: (bool? value) {
+                                        setState(() {
+                                          model.isChecked = value!;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  Flexible(
+                                    child: GestureDetector(
+                                      onTap: (){
+                                        model.navigateToStaticTermsAndConditionScreen();
+                                      },
+                                      child: Text(
+                                        "Accept terms & condition, privacy policy, data protection.",
+                                        style: TextStyle(
+                                          color: ColorUtils.red_color,
+                                          fontFamily: FontUtils.modernistRegular,
+                                          fontSize: 1.5.t,
+                                          decoration: TextDecoration.underline,
+                                        ),
+
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )),
+                          SizedBox(height: 3.h),
 
                           //Sign up Button
                           SizedBox(
@@ -1038,6 +1063,7 @@ class _SignUpState extends State<SignUp> {
 
                             //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                             child:
+
                             ElevatedButton(
                               onPressed: () async {
                                 //model.navigateToFavoriteScreen();

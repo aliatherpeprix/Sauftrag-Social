@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:date_picker_timeline/extra/dimen.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
@@ -305,231 +304,234 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
                                 height: SizeConfig.heightMultiplier * 2,
                               ),
                               Expanded(
-                                child: ListView.separated(
-                                  padding: EdgeInsets.zero,
-                                  scrollDirection: Axis.vertical,
-                                  physics: const BouncingScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 3.5.w,
-                                      ),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: ColorUtils.black
-                                                  .withOpacity(0.1),
-                                              spreadRadius: 0,
-                                              blurRadius: 10,
-                                              offset: Offset(0,
-                                                  5), // changes position of shadow
-                                            ),
-                                          ],
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(18)),
-                                          border: Border.all(
-                                              color: ColorUtils.text_grey
-                                                  .withOpacity(0.1)),
+                                child: Container(
+                                  child: ListView.separated(
+                                    padding: EdgeInsets.zero,
+                                    scrollDirection: Axis.vertical,
+                                    physics: const BouncingScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 3.5.w,
                                         ),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 2.5.w,
-                                                  vertical: 1.h),
-                                              child: Column(
-                                                children: [
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                        child: Image.network(
-                                                          model
-                                                              .posts[index]
-                                                              .user_id!
-                                                              .profile_picture!,
-                                                          //newsEvents[index]["image"],
-                                                          width: 10.i,
-                                                          height: 10.i,
-                                                          fit: BoxFit.cover,
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        width: 3.w,
-                                                      ),
-                                                      Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Row(
-                                                            children: [
-                                                              Text(
-                                                                model
-                                                                    .posts[
-                                                                        index]
-                                                                    .user_id!
-                                                                    .bar_name!,
-                                                                //newsEvents[index]["barOwnerName"],
-                                                                style: TextStyle(
-                                                                    fontFamily:
-                                                                        FontUtils
-                                                                            .modernistBold,
-                                                                    fontSize:
-                                                                        2.2.t,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    color: ColorUtils
-                                                                        .black),
-                                                              ),
-                                                              // if (model.posts[index].post_type! == '1')
-                                                              //   {
-                                                              //     Text("Abc")
-                                                              //   }
-                                                            ],
-                                                          ),
-                                                          SizedBox(
-                                                            height: 0.5.h,
-                                                          ),
-                                                          Text(
-                                                            model.posts[index]
-                                                                .post_location!,
-                                                            //newsEvents[index]["barOwnerName"],
-                                                            style: TextStyle(
-                                                                fontFamily:
-                                                                    FontUtils
-                                                                        .modernistRegular,
-                                                                fontSize: 1.7.t,
-                                                                //fontWeight: FontWeight.bold,
-                                                                color:
-                                                                    ColorUtils
-                                                                        .black),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: 1.h,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      Flexible(
-                                                        child: Text(
-                                                          model.posts[index]
-                                                              .post_content!,
-                                                          //newsEvents[index]["para"],
-                                                          style: TextStyle(
-                                                              fontFamily: FontUtils
-                                                                  .modernistRegular,
-                                                              fontSize: 1.8.t,
-                                                              color: ColorUtils
-                                                                  .black),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: 1.h,
-                                                  ),
-                                                  if (model.posts[index]
-                                                              .media !=
-                                                          null &&
-                                                      model.posts[index].media!
-                                                              .length >
-                                                          0)
-                                                    Container(
-                                                        child:
-                                                            CachedNetworkImage(
-                                                      imageUrl: model
-                                                          .posts[index]
-                                                          .media![0]
-                                                          .media!,
-                                                      //width: 100.i,
-                                                      height: 40.i,
-                                                      fit: BoxFit.cover,
-                                                    )),
-                                                  Divider(),
-                                                  Row(
-                                                    children: [
-                                                      Row(
-                                                        children: [
-                                                          SvgPicture.asset(
-                                                            ImageUtils.msgIcon,
-                                                            color: ColorUtils
-                                                                .icon_color,
-                                                          ),
-                                                          SizedBox(
-                                                            width: 1.5.w,
-                                                          ),
-                                                          Text(
-                                                            "68",
-                                                            style: TextStyle(
-                                                                fontFamily:
-                                                                    FontUtils
-                                                                        .modernistRegular,
-                                                                fontSize: 1.5.t,
-                                                                color: ColorUtils
-                                                                    .icon_color),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      SizedBox(width: 7.w),
-                                                      Row(
-                                                        children: [
-                                                          SvgPicture.asset(
-                                                            ImageUtils
-                                                                .matchedIcon,
-                                                            color: ColorUtils
-                                                                .icon_color,
-                                                          ),
-                                                          SizedBox(
-                                                            width: 1.5.w,
-                                                          ),
-                                                          Text(
-                                                            "53.5 k",
-                                                            style: TextStyle(
-                                                                fontFamily:
-                                                                    FontUtils
-                                                                        .modernistRegular,
-                                                                fontSize: 1.5.t,
-                                                                color: ColorUtils
-                                                                    .icon_color),
-                                                          ),
-                                                        ],
-                                                      )
-                                                    ],
-                                                  )
-                                                ],
+                                        child: Container(
+                                          margin: EdgeInsets.only(bottom: 3.5.h),
+                                          decoration: BoxDecoration(
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: ColorUtils.black
+                                                    .withOpacity(0.1),
+                                                spreadRadius: 0,
+                                                blurRadius: 10,
+                                                offset: Offset(0,
+                                                    5), // changes position of shadow
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(18)),
+                                            border: Border.all(
+                                                color: ColorUtils.text_grey
+                                                    .withOpacity(0.1)),
+                                          ),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 2.5.w,
+                                                    vertical: 1.h),
+                                                child: Column(
+                                                  children: [
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.start,
+                                                      children: [
+                                                        ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                          child: Image.network(
+                                                            model
+                                                                .posts[index]
+                                                                .user_id!
+                                                                .profile_picture!,
+                                                            //newsEvents[index]["image"],
+                                                            width: 10.i,
+                                                            height: 10.i,
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          width: 3.w,
+                                                        ),
+                                                        Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Row(
+                                                              children: [
+                                                                Text(
+                                                                  model
+                                                                      .posts[
+                                                                          index]
+                                                                      .user_id!
+                                                                      .bar_name!,
+                                                                  //newsEvents[index]["barOwnerName"],
+                                                                  style: TextStyle(
+                                                                      fontFamily:
+                                                                          FontUtils
+                                                                              .modernistBold,
+                                                                      fontSize:
+                                                                          2.2.t,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      color: ColorUtils
+                                                                          .black),
+                                                                ),
+                                                                // if (model.posts[index].post_type! == '1')
+                                                                //   {
+                                                                //     Text("Abc")
+                                                                //   }
+                                                              ],
+                                                            ),
+                                                            SizedBox(
+                                                              height: 0.5.h,
+                                                            ),
+                                                            Text(
+                                                              model.posts[index]
+                                                                  .post_location!,
+                                                              //newsEvents[index]["barOwnerName"],
+                                                              style: TextStyle(
+                                                                  fontFamily:
+                                                                      FontUtils
+                                                                          .modernistRegular,
+                                                                  fontSize: 1.7.t,
+                                                                  //fontWeight: FontWeight.bold,
+                                                                  color:
+                                                                      ColorUtils
+                                                                          .black),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: 1.h,
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Flexible(
+                                                          child: Text(
+                                                            model.posts[index]
+                                                                .post_content!,
+                                                            //newsEvents[index]["para"],
+                                                            style: TextStyle(
+                                                                fontFamily: FontUtils
+                                                                    .modernistRegular,
+                                                                fontSize: 1.8.t,
+                                                                color: ColorUtils
+                                                                    .black),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: 1.h,
+                                                    ),
+                                                    if (model.posts[index]
+                                                                .media !=
+                                                            null &&
+                                                        model.posts[index].media!
+                                                                .length >
+                                                            0)
+                                                      Container(
+                                                          child:
+                                                              CachedNetworkImage(
+                                                        imageUrl: model
+                                                            .posts[index]
+                                                            .media![0]
+                                                            .media!,
+                                                        //width: 100.i,
+                                                        height: 40.i,
+                                                        fit: BoxFit.cover,
+                                                      )),
+                                                    Divider(),
+                                                    Row(
+                                                      children: [
+                                                        Row(
+                                                          children: [
+                                                            SvgPicture.asset(
+                                                              ImageUtils.msgIcon,
+                                                              color: ColorUtils
+                                                                  .icon_color,
+                                                            ),
+                                                            SizedBox(
+                                                              width: 1.5.w,
+                                                            ),
+                                                            Text(
+                                                              "68",
+                                                              style: TextStyle(
+                                                                  fontFamily:
+                                                                      FontUtils
+                                                                          .modernistRegular,
+                                                                  fontSize: 1.5.t,
+                                                                  color: ColorUtils
+                                                                      .icon_color),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        SizedBox(width: 7.w),
+                                                        Row(
+                                                          children: [
+                                                            SvgPicture.asset(
+                                                              ImageUtils
+                                                                  .matchedIcon,
+                                                              color: ColorUtils
+                                                                  .icon_color,
+                                                            ),
+                                                            SizedBox(
+                                                              width: 1.5.w,
+                                                            ),
+                                                            Text(
+                                                              "53.5 k",
+                                                              style: TextStyle(
+                                                                  fontFamily:
+                                                                      FontUtils
+                                                                          .modernistRegular,
+                                                                  fontSize: 1.5.t,
+                                                                  color: ColorUtils
+                                                                      .icon_color),
+                                                            ),
+                                                          ],
+                                                        )
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                  },
-                                  separatorBuilder: (context, index) {
-                                    return SizedBox(
-                                      height: SizeConfig.heightMultiplier * 2.5,
-                                    );
-                                  },
-                                  itemCount: model.posts.length,
+                                      );
+                                    },
+                                    separatorBuilder: (context, index) {
+                                      return SizedBox(
+                                        //height: SizeConfig.heightMultiplier * 2.5,
+                                      );
+                                    },
+                                    itemCount: model.posts.length,
+                                  ),
                                 ),
                               ),
                             ],

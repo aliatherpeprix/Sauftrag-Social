@@ -1497,6 +1497,10 @@ class MainViewModel extends BaseViewModel {
     navigationService.navigateToUserProfileAccountScreen();
   }
 
+  void navigateToStaticTermsAndConditionScreen() {
+    navigationService.navigateToStaticTermsAndConditionScreen();
+  }
+
   void navigateToUserProfileAccountOwnershipScreen() {
     navigationService.navigateToUserProfileAccountOwnershipScreen();
   }

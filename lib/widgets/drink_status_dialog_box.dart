@@ -110,10 +110,11 @@ class _DrinkStatusDialogBoxState extends State<DrinkStatusDialogBox> {
                       SizedBox(height: 3.h),
 
                       //Motor anwärmen
+                      if(model.drinkIndex == 1)
                       Container(
                         alignment: Alignment.center,
                         child: Text(
-                          "Motor anwärmen",
+                          "Gemütlich einen trinken",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: ColorUtils.text_red,
@@ -122,6 +123,58 @@ class _DrinkStatusDialogBoxState extends State<DrinkStatusDialogBox> {
                           ),
                         ),
                       ),
+                      if(model.drinkIndex == 2)
+                        Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Motor anwärmen",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: ColorUtils.text_red,
+                              fontFamily: FontUtils.modernistBold,
+                              fontSize: 2.5.t,
+                            ),
+                          ),
+                        ),
+                      if(model.drinkIndex == 3)
+                        Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Schön einen reinorgeln",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: ColorUtils.text_red,
+                              fontFamily: FontUtils.modernistBold,
+                              fontSize: 2.5.t,
+                            ),
+                          ),
+                        ),
+                      if(model.drinkIndex == 4)
+                        Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Die Rüstung demolieren ",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: ColorUtils.text_red,
+                              fontFamily: FontUtils.modernistBold,
+                              fontSize: 2.5.t,
+                            ),
+                          ),
+                        ),
+                      if(model.drinkIndex == 5)
+                        Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Sauftrag komplett erfüllen",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: ColorUtils.text_red,
+                              fontFamily: FontUtils.modernistBold,
+                              fontSize: 2.5.t,
+                            ),
+                          ),
+                        ),
                       SizedBox(height: 3.h),
 
                       //Drinks List

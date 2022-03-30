@@ -111,18 +111,71 @@ class _DrinkUpdateStatusDialogBoxState
                       SizedBox(height: 3.h),
 
                       //Motor anwärmen
-                      Container(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "Motor anwärmen",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: ColorUtils.text_red,
-                            fontFamily: FontUtils.modernistBold,
-                            fontSize: 2.5.t,
+                      if(model.updatedrinkIndex == 1)
+                        Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Gemütlich einen trinken",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: ColorUtils.text_red,
+                              fontFamily: FontUtils.modernistBold,
+                              fontSize: 2.5.t,
+                            ),
                           ),
                         ),
-                      ),
+                      if(model.updatedrinkIndex == 2)
+                        Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Motor anwärmen",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: ColorUtils.text_red,
+                              fontFamily: FontUtils.modernistBold,
+                              fontSize: 2.5.t,
+                            ),
+                          ),
+                        ),
+                      if(model.updatedrinkIndex == 3)
+                        Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Schön einen reinorgeln",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: ColorUtils.text_red,
+                              fontFamily: FontUtils.modernistBold,
+                              fontSize: 2.5.t,
+                            ),
+                          ),
+                        ),
+                      if(model.updatedrinkIndex == 4)
+                        Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Die Rüstung demolieren ",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: ColorUtils.text_red,
+                              fontFamily: FontUtils.modernistBold,
+                              fontSize: 2.5.t,
+                            ),
+                          ),
+                        ),
+                      if(model.updatedrinkIndex == 5)
+                        Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Sauftrag komplett erfüllen",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: ColorUtils.text_red,
+                              fontFamily: FontUtils.modernistBold,
+                              fontSize: 2.5.t,
+                            ),
+                          ),
+                        ),
                       SizedBox(height: 3.h),
 
                       //Drinks List

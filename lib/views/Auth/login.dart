@@ -242,7 +242,7 @@ class _LoginState extends State<Login> {
                                               horizontal: 1.w),
                                           color: ColorUtils.white,
                                           child: Text(
-                                            "Username",
+                                            "Email",
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                                 color: ColorUtils.text_grey,
