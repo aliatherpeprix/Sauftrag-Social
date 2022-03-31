@@ -150,7 +150,13 @@ class MainViewModel extends BaseViewModel {
   bool emojiShowing = false;
   bool emojiSelected = false;
   bool signInBar = false;
+
+  //-----Group Name User-----////
   final chatController = TextEditingController();
+
+  //-----Group Name Bar-----////
+  final barGroupNameController = TextEditingController();
+
   bool groupScreenEmojiShowing = false;
   bool groupScreenEmojiSelected = false;
   final groupScreenChatController = TextEditingController();
@@ -1495,6 +1501,10 @@ class MainViewModel extends BaseViewModel {
 
   void navigateToUserProfileAccountScreen() {
     navigationService.navigateToUserProfileAccountScreen();
+  }
+
+  void navigateToBarGroup() {
+    navigationService.navigateToBarGroup();
   }
 
   void navigateToStaticTermsAndConditionScreen() {
@@ -3007,6 +3017,37 @@ class MainViewModel extends BaseViewModel {
     if (createGroupUser is CreateGroupChat) {
         groupChatUser = createGroupUser;
         print(groupChatUser);
+    }
+    else {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Some thing went wrong",
+      ));
+      //isPrivacyPolicy = false;
+
+      return;
+    }
+
+    print(addFilters);
+    //navigateToMapSearchScreen();
+    notifyListeners();
+
+  }
+
+  createGroupChatBar() async {
+
+    addDrink = true;
+    notifyListeners();
+    //drinkList = await Addfavorites().GetFavoritesDrink();
+    var createGroupUser = await createGroup.CreateGroupBar(
+
+        barGroupNameController.text,
+        getUserId,
+        1
+
+    );
+    if (createGroupUser is CreateGroupChat) {
+      groupChatUser = createGroupUser;
+      print(groupChatUser);
     }
     else {
       DialogUtils().showDialog(MyErrorWidget(

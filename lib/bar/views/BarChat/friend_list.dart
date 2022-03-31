@@ -16,6 +16,7 @@ import 'package:sauftrag/views/UserFriendList/message_screen.dart';
 import 'package:sauftrag/widgets/all_page_loader.dart';
 import 'package:stacked/stacked.dart';
 
+import 'bar_group_screen.dart';
 import 'message_screen_for_bar.dart';
 
 class FriendList extends StatefulWidget {
@@ -58,6 +59,7 @@ class _FriendListState extends State<FriendList> {
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
       onModelReady: (model) {
+        model.getGroupList();
         model.getBarsFollowerList();
       },
       builder: (context, model, child) {
@@ -342,10 +344,11 @@ class _FriendListState extends State<FriendList> {
                             : Expanded(
                                 child: TabBarView(
                                   children: [
+                                    ///------- Direct Message -------///
                                     // first tab bar view widget
                                     ListView.separated(
                                         padding:
-                                            EdgeInsets.symmetric(vertical: 4.h),
+                                            EdgeInsets.symmetric(vertical: 3.h),
                                         physics: BouncingScrollPhysics(),
                                         shrinkWrap: true,
                                         itemBuilder: (context, index) {
@@ -478,50 +481,6 @@ class _FriendListState extends State<FriendList> {
                                                         ),
                                                       ],
                                                     ),
-                                                    Column(
-                                                      children: [
-                                                        // Text(
-                                                        //   friendsList[index]["time"],
-                                                        //   style: TextStyle(
-                                                        //     fontFamily: FontUtils
-                                                        //         .modernistRegular,
-                                                        //     fontSize: 1.6.t,
-                                                        //     color:
-                                                        //         ColorUtils.chatTime,
-                                                        //   ),
-                                                        // ),
-                                                        SizedBox(
-                                                          height: 1.h,
-                                                        ),
-                                                        // if (friendsList[index]
-                                                        //         ["online"] ==
-                                                        //     true)
-                                                        //   Container(
-                                                        //     decoration: BoxDecoration(
-                                                        //       shape: BoxShape.circle,
-                                                        //       color:
-                                                        //           ColorUtils.text_red,
-                                                        //     ),
-                                                        //     child: Center(
-                                                        //       child: Padding(
-                                                        //         padding:
-                                                        //             const EdgeInsets
-                                                        //                 .all(8.0),
-                                                        //         child: Text(
-                                                        //           "1",
-                                                        //           style: TextStyle(
-                                                        //               fontFamily:
-                                                        //                   FontUtils
-                                                        //                       .modernistBold,
-                                                        //               fontSize: 1.5.t,
-                                                        //               color: Colors
-                                                        //                   .white),
-                                                        //         ),
-                                                        //       ),
-                                                        //     ),
-                                                        //   ),
-                                                      ],
-                                                    ),
                                                   ],
                                                 ),
                                               ],
@@ -537,7 +496,144 @@ class _FriendListState extends State<FriendList> {
 
                                     // second tab bar viiew widget
 
-                                    GroupScreenUser(),
+                                    ///------- Group Message -------///
+                                    GestureDetector(
+                                      onTap: () {
+                                        //model.navigateToGroupScreen();
+                                      },
+                                      child: SingleChildScrollView(
+                                        physics: BouncingScrollPhysics(),
+                                        child: Column(
+                                          children: [
+                                            ListView.separated(
+                                                padding:
+                                                EdgeInsets.only(top: 3.h),
+                                                physics: BouncingScrollPhysics(),
+                                                shrinkWrap: true,
+                                                itemBuilder: (context, index) {
+                                                  return GestureDetector(
+                                                    onTap: () {
+                                                      if(model.barModel!.role == 2){
+                                                        Navigator.push(
+                                                            context,
+                                                            PageTransition(
+                                                                type: PageTransitionType
+                                                                    .fade,
+                                                                child:
+                                                                BarGroupScreen(
+                                                                    id: model.getListGroup[index].id,
+                                                                    username: model.getListGroup[index].name,
+                                                                    userLength: model.getListGroup[index].users!.length
+                                                                )
+                                                            ));
+                                                      }
+                                                      else{
+                                                        Navigator.push(
+                                                            context,
+                                                            PageTransition(
+                                                                type: PageTransitionType
+                                                                    .fade,
+                                                                child:
+                                                                BarGroupScreen(
+                                                                    id: model.getListGroup[index].id,
+                                                                    username: model.getListGroup[index].name,
+                                                                    userLength: model.getListGroup[index].users!.length
+                                                                )
+                                                            ));
+                                                      }
+                                                    },
+                                                    child: Column(
+                                                      children: [
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                          crossAxisAlignment:
+                                                          CrossAxisAlignment.start,
+                                                          children: [
+                                                            Row(
+                                                              children: [
+                                                                CircleAvatar(
+                                                                  radius: 28.0,
+                                                                  backgroundImage: AssetImage(
+                                                                      ImageUtils.cosmos),
+                                                                  backgroundColor:
+                                                                  Colors.transparent,
+                                                                ),
+                                                                SizedBox(
+                                                                  width: 3.w,
+                                                                ),
+                                                                Column(
+                                                                  crossAxisAlignment:
+                                                                  CrossAxisAlignment.start,
+                                                                  children: [
+                                                                    Text(
+                                                                      model.getListGroup[index].name!,
+                                                                      style: TextStyle(
+                                                                          fontFamily: FontUtils
+                                                                              .modernistBold,
+                                                                          fontSize: 1.9.t,
+                                                                          color: ColorUtils
+                                                                              .text_dark),
+                                                                    ),
+                                                                    // SizedBox(
+                                                                    //   height: 1.h,
+                                                                    // ),
+                                                                    // Container(
+                                                                    //   width:
+                                                                    //   MediaQuery.of(context)
+                                                                    //       .size
+                                                                    //       .width /
+                                                                    //       2,
+                                                                    //   child: Text(
+                                                                    //     "Did you see the last episode of cosmos?",
+                                                                    //     style: TextStyle(
+                                                                    //         fontFamily: FontUtils
+                                                                    //             .modernistRegular,
+                                                                    //         fontSize: 1.8.t,
+                                                                    //         color: ColorUtils
+                                                                    //             .lightTextColor),
+                                                                    //   ),
+                                                                    // ),
+                                                                  ],
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            Column(
+                                                              children: [
+                                                                Text(
+                                                                  "Today",
+                                                                  style: TextStyle(
+                                                                    fontFamily: FontUtils
+                                                                        .modernistRegular,
+                                                                    fontSize: 1.6.t,
+                                                                    color: ColorUtils.chatTime,
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                  height: 1.h,
+                                                                ),
+                                                              ],
+                                                            ),
+
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  );
+                                                },
+                                                separatorBuilder: (context, index) {
+                                                  return SizedBox(
+                                                    height: 2.h,
+                                                  );
+                                                },
+                                                itemCount: model.getListGroup.length
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    //GroupScreenUser(),
                                     //GroupScreenChat()
 
                                   ],

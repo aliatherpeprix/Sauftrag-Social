@@ -65,12 +65,12 @@ class _GroupDetailsState extends State<GroupDetails> {
                       model.getUserId.add(data['id']);
                     }
 
-                    model.createGroupChatUser();
+                    await model.createGroupChatUser();
                     NewBarModel barUser =
                         (await locator<PrefrencesViewModel>().getBarUser())!;
                     UserModel user =
                         (await locator<PrefrencesViewModel>().getUser())!;
-                    // var pubnub = PubNub(
+                    // model.pubnub = PubNub(
                     //     defaultKeyset: Keyset(
                     //         subscribeKey:
                     //             'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',

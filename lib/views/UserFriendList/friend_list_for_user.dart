@@ -323,7 +323,7 @@ class _FriendListForUserState extends State<FriendListForUser> {
                           ),
                         ),
 
-                        ///------- Direct Message -------///
+
                         model.userComing == true
                             ? Container(
                                 color: Colors.white,
@@ -345,6 +345,7 @@ class _FriendListForUserState extends State<FriendListForUser> {
                         Expanded(
                                 child: TabBarView(
                                   children: [
+                                    ///------- Direct Message -------///
                                     // first tab bar view widget
                                    Container(
                                      child: SingleChildScrollView(
