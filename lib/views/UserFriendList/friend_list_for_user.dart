@@ -353,7 +353,7 @@ class _FriendListForUserState extends State<FriendListForUser> {
                                          children: [
                                            ListView.separated(
                                                padding:
-                                               EdgeInsets.only(top: 4.h),
+                                               EdgeInsets.only(top: 1.5.h),
                                                physics: BouncingScrollPhysics(),
                                                shrinkWrap: true,
                                                itemBuilder: (context, index) {
@@ -675,7 +675,7 @@ class _FriendListForUserState extends State<FriendListForUser> {
                                           children: [
                                             ListView.separated(
                                                 padding:
-                                                EdgeInsets.only(top: 4.h),
+                                                EdgeInsets.only(top: 3.h),
                                                 physics: BouncingScrollPhysics(),
                                                 shrinkWrap: true,
                                                 itemBuilder: (context, index) {

@@ -387,7 +387,7 @@ class _CreateGroupState extends State<CreateGroup> {
                                                   //       Alignment.topCenter,
                                                   //   children: [
                                                   CircleAvatar(
-                                                    radius: 30.0,
+                                                    radius: 28.0,
                                                     backgroundImage:
                                                     model.userModel!.role == 1 ?
                                                     NetworkImage(
@@ -545,7 +545,7 @@ class _CreateGroupState extends State<CreateGroup> {
                                   },
                                   separatorBuilder: (context, index) {
                                     return SizedBox(
-                                      height: 0.h,
+                                      height: 2.h,
                                     );
                                   },
                                   itemCount: model.userModel!.role == 1 ?
