@@ -13,6 +13,7 @@ import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:stacked/stacked.dart';
+
 class OwnerShip extends StatefulWidget {
   const OwnerShip({Key? key}) : super(key: key);
 
@@ -28,8 +29,6 @@ class _OwnerShipState extends State<OwnerShip> {
   int selectedIndex = 0;
   bool radioSelected1 = false;
   bool radioUnselected1 = false;
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +48,8 @@ class _OwnerShipState extends State<OwnerShip> {
                   physics: BouncingScrollPhysics(),
                   child: Container(
                     padding: EdgeInsets.symmetric(
-                        horizontal: Dimensions.horizontalPadding,
-                        //vertical: Dimensions.verticalPadding
+                      horizontal: Dimensions.horizontalPadding,
+                      //vertical: Dimensions.verticalPadding
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,7 +95,6 @@ class _OwnerShipState extends State<OwnerShip> {
                         SizedBox(height: 3.h),
                         GestureDetector(
                           onTap: () {
-
                             // showDialog(
                             //     context: context,
                             //     builder: (BuildContext context){
@@ -105,15 +103,18 @@ class _OwnerShipState extends State<OwnerShip> {
                             //     }
                             // );
                             setState(() {
+                              radioSelected = selected;
+                              radioSelected1 = true;
+                              radioUnselected1 == false;
+                              checkSelected = 0;
                               // ignore: unnecessary_statements
                               //roomusers.length == 0;
-                              radioSelected = selected;
-                              radioSelected1 == true;
-                              radioUnselected1 == false;
                             });
                           },
                           child: Container(
-                            padding: EdgeInsets.symmetric(vertical: Dimensions.verticalPadding, horizontal: Dimensions.horizontalPadding),
+                            padding: EdgeInsets.symmetric(
+                                vertical: Dimensions.verticalPadding,
+                                horizontal: Dimensions.horizontalPadding),
                             decoration: BoxDecoration(
                               boxShadow: [
                                 BoxShadow(
@@ -126,51 +127,53 @@ class _OwnerShipState extends State<OwnerShip> {
                               ],
                               color: Colors.white,
                               borderRadius:
-                              BorderRadius.all(Radius.circular(18)),
+                                  BorderRadius.all(Radius.circular(18)),
                               border: Border.all(color: ColorUtils.red_color),
                             ),
                             child: Row(
-                              mainAxisAlignment:
-                              MainAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 SvgPicture.asset(radioSelected == selected
                                     ? ImageUtils.radioSelected
                                     : ImageUtils.radioUnselected),
-                                SizedBox(width: 3.w,),
+                                SizedBox(
+                                  width: 3.w,
+                                ),
                                 Expanded(
                                   child: Column(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.start,
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       children: [
                                         Text(
                                           "Deactivate Account",
                                           style: TextStyle(
                                               color: ColorUtils.red_color,
                                               fontSize: 2.2.t,
-                                              fontFamily: FontUtils
-                                                  .modernistBold),
+                                              fontFamily:
+                                                  FontUtils.modernistBold),
                                         ),
-                                        SizedBox(height: 2.w,),
+                                        SizedBox(
+                                          height: 2.w,
+                                        ),
                                         Text(
                                           "Deactivating your account is temporary. Your account will be disabled and your photos will be removed from most of the things.",
                                           style: TextStyle(
                                               color: ColorUtils.black,
                                               fontSize: 1.7.t,
-                                              fontFamily: FontUtils
-                                                  .modernistRegular),
+                                              fontFamily:
+                                                  FontUtils.modernistRegular),
                                         ),
-
                                       ]),
                                 ),
-
                               ],
                             ),
                           ),
                         ),
                         SizedBox(
-                          height:  2.5.h,
+                          height: 2.5.h,
                         ),
                         GestureDetector(
                             onTap: () {
@@ -186,12 +189,16 @@ class _OwnerShipState extends State<OwnerShip> {
                                 //roomusers.length == 1;
 
                                 radioSelected = unselected;
-                                radioSelected1 = true;
+                                radioSelected1 = false;
                                 radioUnselected1 == false;
+                                checkSelected = 1;
+                                print(checkSelected);
                               });
                             },
                             child: Container(
-                              padding: EdgeInsets.symmetric(vertical: Dimensions.verticalPadding, horizontal: Dimensions.horizontalPadding),
+                              padding: EdgeInsets.symmetric(
+                                  vertical: Dimensions.verticalPadding,
+                                  horizontal: Dimensions.horizontalPadding),
                               decoration: BoxDecoration(
                                 boxShadow: [
                                   BoxShadow(
@@ -204,46 +211,48 @@ class _OwnerShipState extends State<OwnerShip> {
                                 ],
                                 color: Colors.white,
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(18)),
+                                    BorderRadius.all(Radius.circular(18)),
                                 border: Border.all(color: ColorUtils.red_color),
                               ),
                               child: Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-
                                   SvgPicture.asset(radioSelected == unselected
                                       ? ImageUtils.radioSelected
                                       : ImageUtils.radioUnselected),
-                                  SizedBox(width: 3.w,),
+                                  SizedBox(
+                                    width: 3.w,
+                                  ),
                                   Expanded(
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           "Delete Account",
                                           style: TextStyle(
                                               color: ColorUtils.red_color,
                                               fontSize: 2.2.t,
-                                              fontFamily: FontUtils
-                                                  .modernistBold),
+                                              fontFamily:
+                                                  FontUtils.modernistBold),
                                         ),
-                                        SizedBox(height: 2.w,),
+                                        SizedBox(
+                                          height: 2.w,
+                                        ),
                                         Text(
                                           "Deleting your account is permament. When you delete your account, you won’t be able to retrieve the content or the information that you have shared.",
                                           style: TextStyle(
                                               color: ColorUtils.black,
                                               fontSize: 1.7.t,
-                                              fontFamily: FontUtils
-                                                  .modernistRegular),
+                                              fontFamily:
+                                                  FontUtils.modernistRegular),
                                         ),
-
                                       ],
                                     ),
                                   ),
-
                                 ],
                               ),
                             )),
@@ -254,32 +263,34 @@ class _OwnerShipState extends State<OwnerShip> {
                           child: ElevatedButton(
                             onPressed: () {
                               //model.navigateToHomeBarScreen();
-                              if(radioSelected1 == true )
-                              {
+                              if (checkSelected != 1) {
                                 showDialog(
                                     context: context,
-                                    builder: (BuildContext context){
-                                      return DeactivateAccountDialog(title: "Add New Location",
-                                          btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
-                                    }
-                                );
-                              }
-                              else
+                                    builder: (BuildContext context) {
+                                      return DeactivateAccountDialog(
+                                          title: "Add New Location",
+                                          btnTxt: "Add Location",
+                                          icon: ImageUtils.addLocationIcon);
+                                    });
+                              } else
                                 showDialog(
                                     context: context,
-                                    builder: (BuildContext context){
-                                      return DeleteAcountDialogbox(title: "Add New Location",
-                                          btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
-                                    }
-                                );
+                                    builder: (BuildContext context) {
+                                      return DeleteAcountDialogbox(
+                                          title: "Add New Location",
+                                          btnTxt: "Add Location",
+                                          icon: ImageUtils.addLocationIcon);
+                                    });
                             },
-                            child:  Text(radioSelected == unselected ? "Delete Account" : "Deactivate Account"),
+                            child: Text(radioSelected == unselected
+                                ? "Delete Account"
+                                : "Deactivate Account"),
                             style: ElevatedButton.styleFrom(
                               primary: ColorUtils.text_red,
                               onPrimary: ColorUtils.white,
                               padding: EdgeInsets.symmetric(
                                   vertical:
-                                  Dimensions.containerVerticalPadding),
+                                      Dimensions.containerVerticalPadding),
                               elevation: 1,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(
@@ -293,7 +304,6 @@ class _OwnerShipState extends State<OwnerShip> {
                             ),
                           ),
                         ),
-
                       ],
                     ),
                   ),
