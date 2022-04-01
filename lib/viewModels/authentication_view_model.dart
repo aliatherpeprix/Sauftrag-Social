@@ -944,11 +944,8 @@ class AuthenticationViewModel extends BaseViewModel {
       notifyListeners();
       return;
     } else {
-      openingTimeTo =
-          "${convertOpeningTimeTo!.hour.toString()}:${convertOpeningTimeTo!.minute.toString()}";
-      openingTimeFrom =
-          "${convertOpeningTimeFrom!.hour.toString()}:${convertOpeningTimeFrom!.minute.toString()}";
-
+      openingTimeTo = "${convertOpeningTimeTo!.hour.toString()}:${convertOpeningTimeTo!.minute.toString()}";
+      openingTimeFrom = "${convertOpeningTimeFrom!.hour.toString()}:${convertOpeningTimeFrom!.minute.toString()}";
       eventDate = selectedEventDate.toString().split(' ');
 
       print(titleController.text);
@@ -1039,6 +1036,7 @@ class AuthenticationViewModel extends BaseViewModel {
       notifyListeners();
     }
   }
+
   List<Marker> marker = <Marker>[];
   String address = "";
   GoogleMapController? mapController;
@@ -1191,11 +1189,13 @@ class AuthenticationViewModel extends BaseViewModel {
     navigationService.navigateToAddAddressBarScreen();
   }
 
-
   void navigateToBarEventLocationBarScreen() {
     navigationService.navigateToBarEventLocationBarScreen();
   }
 
+  void navigateToBarEventMapScreen() {
+    navigationService.navigateToBarEventMapScreen();
+  }
 }
 
 

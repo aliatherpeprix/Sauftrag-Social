@@ -61,6 +61,8 @@ class _FriendListState extends State<FriendList> {
       onModelReady: (model) {
         model.getGroupList();
         model.getBarsFollowerList();
+        model.initBarPubNub();
+        model.openGroupMenu = false;
       },
       builder: (context, model, child) {
         return GestureDetector(

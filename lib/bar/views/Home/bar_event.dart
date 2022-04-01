@@ -14,6 +14,7 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:sauftrag/widgets/loader.dart';
 import 'package:stacked/stacked.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -54,16 +55,16 @@ class _CreateBarEventState extends State<CreateBarEvent> {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<AuthenticationViewModel>.reactive(
+    return ViewModelBuilder<RegistrationViewModel>.reactive(
       onModelReady: (model){
        model.titleController.clear();
         model.descriptionController.clear();
-        model.locationController.clear();
+        model.maplocationController.clear();
         model.eventDate.clear();
         model.openingTimeTo = null;
         model.openingTimeFrom = null;
       },
-      viewModelBuilder: () => locator<AuthenticationViewModel>(),
+      viewModelBuilder: () => locator<RegistrationViewModel>(),
       disposeViewModel: false,
       builder: (context, model, child) {
         return GestureDetector(
@@ -100,7 +101,7 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                               )),
                           SizedBox(width: 2.w),
                           Text(
-                            "Create Event",
+                            "Crete Event",
                             style: TextStyle(
                               color: ColorUtils.black,
                               fontFamily: FontUtils.modernistBold,
@@ -542,31 +543,39 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                                   model.latitude = position.latitude;
                                   model.latitude = position.longitude;
                                 },
-                                child: Row(
-                                  children: [
-                                    SvgPicture.asset(ImageUtils.locationIcon),
-                                    SizedBox(width: 4.w),
-                                    Expanded(
-                                      child: TextField(
-                                        //focusNode: model.logInEmailFocus,
-                                        controller: model.locationController,
-                                        keyboardType: TextInputType.text,
-                                        textInputAction: TextInputAction.next,
-                                        style: TextStyle(
-                                          color: ColorUtils.text_red,
-                                          fontFamily: FontUtils.modernistRegular,
-                                          fontSize: 1.8.t,
-                                        ),
-                                        decoration: const InputDecoration(
-                                          border: InputBorder.none,
-                                          isDense:true,
-                                          contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                                          // errorText: model.locationError
+                                child: GestureDetector(
+                                  onTap : () async {
+                                    model.navigateToBarEventMapScreen();
+                                    var position = await model.determinePosition();
+                                    model.latitude = position.latitude;
+                                    model.latitude = position.longitude;
+                                  },
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset(ImageUtils.locationIcon),
+                                      SizedBox(width: 4.w),
+                                      Expanded(
+                                        child: TextField(
+                                          //focusNode: model.logInEmailFocus,
+                                          controller: model.maplocationController,
+                                          keyboardType: TextInputType.text,
+                                          textInputAction: TextInputAction.next,
+                                          style: TextStyle(
+                                            color: ColorUtils.text_red,
+                                            fontFamily: FontUtils.modernistRegular,
+                                            fontSize: 1.8.t,
+                                          ),
+                                          decoration: const InputDecoration(
+                                            border: InputBorder.none,
+                                            isDense:true,
+                                            contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                                            // errorText: model.locationError
+                                          ),
                                         ),
                                       ),
-                                    ),
 
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -902,7 +911,10 @@ class _CreateBarEventState extends State<CreateBarEvent> {
                         width: double.infinity,
                         //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                         child: ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
+                            var position = await model.determinePosition();
+                            model.latitude = position.latitude;
+                            model.longitude = position.longitude;
                             model.validateCreateEvent(context);
                           },
                           child: model.createEventLoader?Center(child: Loader()): Text("Create Event"),

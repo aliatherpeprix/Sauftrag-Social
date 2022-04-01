@@ -25,6 +25,7 @@ import 'package:sauftrag/bar/views/Drawer/qr_code_scanner.dart';
 import 'package:sauftrag/bar/views/Drawer/ranking_list.dart';
 import 'package:sauftrag/bar/views/Drawer/requestUserProfile.dart';
 import 'package:sauftrag/bar/views/Drawer/upcoming_event.dart';
+import 'package:sauftrag/bar/views/Home/barEvent_map.dart';
 import 'package:sauftrag/bar/views/Home/bar_create_post.dart';
 import 'package:sauftrag/bar/views/Home/bar_drinks.dart';
 import 'package:sauftrag/bar/views/Home/bar_news_feed.dart';
@@ -455,6 +456,11 @@ class NavigationViewModel extends BaseViewModel{
   void navigateToAddAddressScreen(){
     navigationKey.currentState!.push(PageTransition(child: SignupMap(), type: PageTransitionType.rightToLeftWithFade));
   }
+
+  void navigateToBarEventMapScreen(){
+    navigationKey.currentState!.push(PageTransition(child: BarEventMap(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
 
   void navigateToAddAddressBarScreen(){
     navigationKey.currentState!.push(PageTransition(child: SignupBarMap(), type: PageTransitionType.rightToLeftWithFade));

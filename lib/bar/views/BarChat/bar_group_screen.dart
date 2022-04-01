@@ -340,7 +340,7 @@ class _BarGroupScreenState extends State<BarGroupScreen> {
                                 children: [
                                   IconButton(
                                       onPressed: () {
-                                        model.navigateBack();
+                                        model.navigateToFriendListScreen1();
                                       },
                                       iconSize: 18.0,
                                       padding: EdgeInsets.zero,

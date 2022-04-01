@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 
@@ -12,6 +13,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:mime/mime.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/bar_model.dart';
 import 'package:sauftrag/models/create_bar_post.dart';
@@ -291,6 +293,214 @@ class RegistrationViewModel extends BaseViewModel {
   bool changeNewCurrentPasswordUserVisible = false;
 
   ///-------------------Create Bar Post ---------------------------------///
+  ///
+  ///
+  ///-------------------Create Event Open -------------------------------------///
+
+  bool createEventLoader = false;
+  final titleController = TextEditingController();
+  final descriptionController = TextEditingController();
+  final maplocationController = TextEditingController();
+  final eventDateController = TextEditingController();
+  final startTimeController = TextEditingController();
+  final endTimeController = TextEditingController();
+  List eventDate = [];
+  List<dynamic> eventFiles = [
+    File(""),
+    File(""),
+    File(""),
+    File(""),
+  ];
+  DateTime? selectedEventDate;
+  TimeOfDay? convertOpeningTimeFrom;
+  TimeOfDay? convertOpeningTimeTo;
+  var dio = Dio();
+  Future<bool> getEventImage(int index) async {
+    ImagePicker picker = ImagePicker();
+    //List<XFile>? images = await picker.pickMultiImage();
+    XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    //imageFile = File(image!.path);
+
+    if (image == null) {
+      return false;
+    } else {
+      eventFiles.removeAt(index);
+      eventFiles.insert(index, File(image.path));
+      print(eventFiles);
+
+
+      notifyListeners();
+      return true;
+    }
+
+    /*if (imageFile == null) {
+      return false;
+    }
+    else{
+      notifyListeners();
+      return true;
+    }*/
+  }
+  void openAndSelectEventDate(BuildContext context) async {
+    selectedEventDate = DateTime.now();
+    selectedEventDate =
+    await CommonFunctions.showEventDatePicker(context, selectedEventDate!);
+    notifyListeners();
+  }
+
+  void validateCreateEvent(BuildContext context) async {
+    if (titleController.text.isEmpty) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Title is required",
+      ));
+      notifyListeners();
+      return;
+    }
+    // imageFiles
+    else  if (descriptionController.text.isEmpty) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Description is required",
+      ));
+      notifyListeners();
+      return;
+    }
+    else  if (eventFiles[0].path.isEmpty) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Image is required",
+      ));
+      notifyListeners();
+      return;
+    }
+    else if (maplocationController.text.isEmpty) {
+
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Location is required",
+      ));
+      notifyListeners();
+      return;
+    }
+    else if (selectedEventDate ==null) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Event Date is required",
+      ));
+      notifyListeners();
+      return;
+    }
+    else if (openingTimeFrom ==null) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Start Time is required",
+      ));
+      notifyListeners();
+      return;
+    }
+    else if (openingTimeTo ==null) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "End Time is required",
+      ));
+      notifyListeners();
+      return;
+    } else {
+      openingTimeTo = "${convertOpeningTimeTo!.hour.toString()}:${convertOpeningTimeTo!.minute.toString()}";
+      openingTimeFrom = "${convertOpeningTimeFrom!.hour.toString()}:${convertOpeningTimeFrom!.minute.toString()}";
+      eventDate = selectedEventDate.toString().split(' ');
+
+      print(titleController.text);
+      print(descriptionController.text);
+      print(locationController.text);
+      print(eventDate);
+      print(openingTimeTo);
+
+      notifyListeners();
+
+      createEvent();
+    }
+  }
+
+  void createEvent() async {
+
+    NewBarModel? user = await locator<PrefrencesViewModel>().getBarUser();
+    List files = [];
+
+    try {
+      createEventLoader = true;
+      notifyListeners();
+
+      for (File data in eventFiles){
+        if (data.path.isNotEmpty){
+          String media = "data:${lookupMimeType(data.path)};base64," +
+              base64Encode(data.readAsBytesSync());
+          files.add(media);
+        }
+      }
+
+      var createEventParams = {
+
+        "name": titleController.text,
+        "about": descriptionController.text,
+        "lat": latitude.toStringAsFixed(5),
+        "long": longitude.toStringAsFixed(5),
+        "location": maplocationController.text,
+        "event_date": eventDate[0],
+        "start_time": openingTimeFrom,
+        "end_time": openingTimeTo,
+        "media":files
+      };
+
+      print(createEventParams);
+      var response = await dio.post(
+          Constants.GetEvents, data: createEventParams, options: Options(
+          headers: {
+            "Authorization": "Token ${user!.token!}"
+          }
+      ));
+      print("-------------response----------");
+
+      if (response.statusCode == 201) {
+        titleController.clear();
+        descriptionController.clear();
+        maplocationController.clear();
+        createEventLoader = false;
+        files.clear();
+        imageFiles.clear();
+        selectedEventDate = null;
+        openingTimeTo= null;
+        openingTimeFrom ==null;
+        eventFiles = [
+          File(""),
+          File(""),
+          File(""),
+          File(""),
+        ];
+        notifyListeners();
+        navigationService.navigateBack();
+      }
+      else {
+        print(response.statusCode);
+        createEventLoader = false;
+        notifyListeners();
+        // DialogUtils().showDialog(
+        //     MyErrorWidget(error: 'Something went wrong. Please try again'));
+        throw Exception('Failed to load');
+      }
+    }
+    catch (e) {
+      print(e);
+      DialogUtils().showDialog(MyErrorWidget(error: e.toString()));
+      createEventLoader = false;
+      notifyListeners();
+    }
+  }
+
+  void navigateToBarEventLocationBarScreen() {
+    navigationService.navigateToBarEventLocationBarScreen();
+  }
+
+  void navigateToBarEventMapScreen() {
+    navigationService.navigateToBarEventMapScreen();
+  }
+
+  ///-------------------Create Event Closed -------------------------------------///
+
 
   final barPostLocationController = TextEditingController();
   bool isBarPostLocationInFocus = false;

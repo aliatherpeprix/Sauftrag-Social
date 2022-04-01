@@ -422,7 +422,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                         children: [
                                           IconButton(
                                               onPressed: () {
-                                                model.navigateBack();
+                                                model.navigateToFriendListScreen();
                                               },
                                               iconSize: 18.0,
                                               padding: EdgeInsets.zero,

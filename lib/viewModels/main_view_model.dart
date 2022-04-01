@@ -1189,8 +1189,10 @@ class MainViewModel extends BaseViewModel {
       // currentPosition = position;
       notifyListeners();
       // currentPosition;
-      longitude = position.longitude;
+
       latitude = position.latitude;
+      longitude = position.longitude;
+
       notifyListeners();
       var updatelocationResponse = await updateLocation.UpdateLocationBar(
 
@@ -1776,6 +1778,10 @@ class MainViewModel extends BaseViewModel {
 
   void navigateToAddAddressScreen() {
     navigationService.navigateToAddAddressScreen();
+  }
+
+  void navigateToBarEventMapScreen() {
+    navigationService.navigateToBarEventMapScreen();
   }
 
   void navigateToBarFollowersListScreen() {
@@ -2383,7 +2389,7 @@ class MainViewModel extends BaseViewModel {
   List<BarEventModel>? barEventModel = [];
 
   void getEvent(BuildContext context) async {
-    UserModel? user = await locator<PrefrencesViewModel>().getUser();
+    NewBarModel? user = await locator<PrefrencesViewModel>().getBarUser();
 
     try {
       eventLoader = true;
@@ -3000,7 +3006,6 @@ class MainViewModel extends BaseViewModel {
       notifyListeners();
 
     }
-
 
   createGroupChatUser() async {
 
