@@ -2759,7 +2759,8 @@ class MainViewModel extends BaseViewModel {
   List matcheImages = [];
   List matcheName = [];
 
-  void acceptMatched(BuildContext context) async {
+   acceptMatched(BuildContext context) async {
+    isLoading = true;
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
 
     matcheImages = [];
@@ -2789,6 +2790,7 @@ class MainViewModel extends BaseViewModel {
               images.add(user.toJson()["catalogue_image${i}"]);
             }
           }
+          isLoading =false;
           matcheImages.add(images);
           print(images);
         }
@@ -2796,9 +2798,11 @@ class MainViewModel extends BaseViewModel {
         print(discoverModel!.length);
 
         acceptMatchesLoader = false;
+        isLoading =false;
         notifyListeners();
       } else {
         print(response.statusCode);
+        isLoading =false;
         acceptMatchesLoader = false;
         notifyListeners();
 
@@ -2929,8 +2933,8 @@ class MainViewModel extends BaseViewModel {
     }
   }
 
-  getAnitherUserInfo(String id) async {
-    isFaqs = true;
+ Future getAnitherUserInfo(String id) async {
+    isLoading = true;
 
     var getAnotherUserDetails = await getUserInfo.GetAnotherUserInfo(id);
     print(getAnotherUserDetails);
@@ -2950,7 +2954,7 @@ class MainViewModel extends BaseViewModel {
 
       return;
     }
-    isFaqs = false;
+    isLoading = false;
     notifyListeners();
     //print(getFaqsList);
   }

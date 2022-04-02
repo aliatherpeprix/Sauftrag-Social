@@ -49,6 +49,7 @@ class AuthenticationViewModel extends BaseViewModel {
   bool isChecked1 = false;
   bool termsCheck = false;
   bool dataCheck = false;
+  bool isLoading = false;
 
   bool otpLoading = false;
   TimeOfDay? startTime;

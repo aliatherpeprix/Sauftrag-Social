@@ -147,11 +147,16 @@ class _UpcomingBarEventState extends State<UpcomingBarEvent> {
                                             children: [
                                               SvgPicture.asset(ImageUtils.location_icon),
                                               SizedBox(width: 2.w,),
-                                              Text(model.listOfUpcomingEvents[index].location!,
-                                                style: TextStyle(
-                                                    fontFamily: FontUtils.modernistRegular,
-                                                    fontSize: 1.7.t,
-                                                    color: ColorUtils.text_dark
+                                              Container(
+                                                width: 52.w,
+                                                child: Text(model.listOfUpcomingEvents[index].location!,
+                                                  style: TextStyle(
+                                                      fontFamily: FontUtils.modernistRegular,
+                                                      fontSize: 1.7.t,
+                                                      color: ColorUtils.text_dark
+                                                  ),
+                                                  maxLines: 1,
+                                                  overflow: TextOverflow.ellipsis ,
                                                 ),
                                               ),
                                             ],

@@ -11,6 +11,7 @@ import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
 import 'package:sauftrag/widgets/FadedScaleAnimation.dart';
+import 'package:sauftrag/widgets/all_page_loader.dart';
 import 'package:stacked/stacked.dart';
 
 class MatchedScreen extends StatefulWidget {
@@ -52,7 +53,8 @@ class _MatchedScreenState extends State<MatchedScreen>
     return ViewModelBuilder<AuthenticationViewModel>.reactive(
       //onModelReady: (data) => data.initializeLoginModel(),
       builder: (context, model, child) {
-        return GestureDetector(
+        return model.isLoading ==true? AllPageLoader() :
+        GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();
           },
@@ -108,7 +110,7 @@ class _MatchedScreenState extends State<MatchedScreen>
                               decoration: BoxDecoration(
                                 color: ColorUtils.divider,
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(15)),
+                                BorderRadius.all(Radius.circular(15)),
                               ),
                               child: TabBar(
                                 onTap: (value) {
@@ -122,7 +124,7 @@ class _MatchedScreenState extends State<MatchedScreen>
                                   Container(
                                       padding: EdgeInsets.symmetric(
                                           vertical:
-                                              2 * SizeConfig.widthMultiplier),
+                                          2 * SizeConfig.widthMultiplier),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(15)),
@@ -133,7 +135,7 @@ class _MatchedScreenState extends State<MatchedScreen>
                                           BoxShadow(
                                             color: tabSlelected1 == 0
                                                 ? ColorUtils.shadowColor
-                                                    .withOpacity(0.15)
+                                                .withOpacity(0.15)
                                                 : ColorUtils.divider,
                                             spreadRadius: 3,
                                             blurRadius: 8,
@@ -144,9 +146,9 @@ class _MatchedScreenState extends State<MatchedScreen>
                                       ),
                                       child: Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                        MainAxisAlignment.center,
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                        CrossAxisAlignment.center,
                                         children: [
                                           Text(
                                             "All",
@@ -156,7 +158,7 @@ class _MatchedScreenState extends State<MatchedScreen>
                                                   ? Colors.blue
                                                   : ColorUtils.icon_color,
                                               fontFamily:
-                                                  FontUtils.modernistBold,
+                                              FontUtils.modernistBold,
                                               fontWeight: tabSlelected1 == 0
                                                   ? FontWeight.bold
                                                   : FontWeight.w500,
@@ -165,12 +167,12 @@ class _MatchedScreenState extends State<MatchedScreen>
                                         ],
                                       )),
                                   Container(
-                                      // margin: EdgeInsets.only(
-                                      //   //top: 3 * SizeConfig.heightMultiplier,
-                                      //     right: 3 * SizeConfig.widthMultiplier),
+                                    // margin: EdgeInsets.only(
+                                    //   //top: 3 * SizeConfig.heightMultiplier,
+                                    //     right: 3 * SizeConfig.widthMultiplier),
                                       padding: EdgeInsets.symmetric(
                                           vertical:
-                                              2 * SizeConfig.widthMultiplier),
+                                          2 * SizeConfig.widthMultiplier),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(18)),
@@ -178,7 +180,7 @@ class _MatchedScreenState extends State<MatchedScreen>
                                           BoxShadow(
                                             color: tabSlelected1 == 1
                                                 ? ColorUtils.shadowColor
-                                                    .withOpacity(0.15)
+                                                .withOpacity(0.15)
                                                 : ColorUtils.divider,
                                             spreadRadius: 3,
                                             blurRadius: 8,
@@ -197,9 +199,9 @@ class _MatchedScreenState extends State<MatchedScreen>
                                       ),
                                       child: Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                        MainAxisAlignment.center,
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                        CrossAxisAlignment.center,
                                         children: [
                                           Text(
                                             "REQUESTS",
@@ -212,7 +214,7 @@ class _MatchedScreenState extends State<MatchedScreen>
                                                     ? FontWeight.bold
                                                     : FontWeight.w500,
                                                 fontFamily:
-                                                    FontUtils.modernistBold),
+                                                FontUtils.modernistBold),
                                           )
                                         ],
                                       )),

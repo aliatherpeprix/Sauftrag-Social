@@ -62,8 +62,9 @@ class _MatchedPeopleState extends State<MatchedPeople> {
                                       crossAxisSpacing: 10,
                                       mainAxisSpacing: 50),
                               itemBuilder: (BuildContext context, int index) {
-                                return GestureDetector(
-                                  onTap: () {
+                                return /*model.isLoading == true ? AllPageLoader() :*/
+                                GestureDetector(
+                                  onTap:  () {
                                     model.getMatchedUserData = (model.acceptMatchedtModel[index]);
                                     model.getAnitherUserInfo(model.acceptMatchedtModel[index].user!.id.toString());
                                     model.navigateToMatchedProfileUser();
@@ -86,12 +87,12 @@ class _MatchedPeopleState extends State<MatchedPeople> {
                                             //width: 34.5.w,
                                             decoration: BoxDecoration(
                                               color:
-                                                  Colors.grey.withOpacity(0.7),
+                                              Colors.grey.withOpacity(0.7),
                                               borderRadius: BorderRadius.only(
                                                   bottomRight:
-                                                      Radius.circular(10),
+                                                  Radius.circular(10),
                                                   bottomLeft:
-                                                      Radius.circular(10)),
+                                                  Radius.circular(10)),
                                             ),
                                             padding: EdgeInsets.symmetric(
                                                 vertical: 1.2.h,

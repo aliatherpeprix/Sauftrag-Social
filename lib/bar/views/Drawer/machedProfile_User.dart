@@ -57,9 +57,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
       viewModelBuilder: () => locator<MainViewModel>(),
       onModelReady: (model) async {
 
-
-       model.acceptMatched(context);
-
+        model.acceptMatched(context);
         model.drinkList =
         await Addfavorites().GetFavoritesDrink();
         model.clubList =
@@ -70,8 +68,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
       disposeViewModel: false,
       builder: (context, model, child) {
         var getMatchedUserData = model.acceptMatchedtModel;
-        return model.isLoading == true ? AllPageLoader() :
-        SafeArea(
+        return SafeArea(
           top: false,
           bottom: false,
           child: GestureDetector(
@@ -79,7 +76,6 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
               FocusScope.of(context).unfocus();
             },
             child: Scaffold(
-
                 key: _scaffoldKey,
                 body: Container(
                   padding: EdgeInsets.only(top: Dimensions.homeTopMargin),
@@ -611,7 +607,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                             ],
                                           )),
 
-                                     // Image_1 Catagory Image_5
+                                      // Image_1 Catagory Image_5
                                       Container(
                                           height: MediaQuery.of(context).size.width / 3.4,
                                           width:
@@ -806,6 +802,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                 )),
           ),
         );
+
       },
     );
   }

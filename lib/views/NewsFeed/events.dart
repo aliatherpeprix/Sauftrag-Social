@@ -311,16 +311,21 @@ class _EventsState extends State<Events> {
                                                         children: [
                                                           SvgPicture.asset(ImageUtils.upcomingLocation),
                                                           SizedBox(width: 1.w,),
-                                                          Text(model.listOfUpcomingEvents[index].location!,
-                                                            style: TextStyle(
-                                                              fontFamily: FontUtils.modernistRegular,
-                                                              fontSize: 1.6.t,
-                                                              color: ColorUtils.text_dark,
+                                                          Container(
+                                                            width: 48.w,
+                                                            child: Text(model.listOfUpcomingEvents[index].location!,
+                                                              style: TextStyle(
+                                                                fontFamily: FontUtils.modernistRegular,
+                                                                fontSize: 1.6.t,
+                                                                color: ColorUtils.text_dark,
+                                                              ),
+                                                              maxLines: 1,
+                                                              overflow: TextOverflow.ellipsis ,
                                                             ),
                                                           ),
                                                         ],
                                                       ),
-                                                    ],
+                                                   ],
                                                   ),
                                                 ),
                                               ],
