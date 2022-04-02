@@ -22,6 +22,8 @@ import 'package:sauftrag/widgets/loader.dart';
 import 'package:stacked/stacked.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
+import '../../bar/views/Profile/bar_account_ownership.dart';
+
 class Account extends StatefulWidget {
   const Account({Key? key}) : super(key: key);
 
@@ -35,8 +37,7 @@ class _AccountState extends State<Account> {
   Widget build(BuildContext context) {
     return ViewModelBuilder<MainViewModel>.reactive(
       onModelReady: (model) async {
-        PrefrencesViewModel prefs =
-        locator<PrefrencesViewModel>();
+        PrefrencesViewModel prefs = locator<PrefrencesViewModel>();
         //UserModel? userModel;
         model.updateSignUpPhoneController.text = model.userModel!.phone_no!;
         model.updateLocations.text = model.userModel!.address!;
@@ -132,13 +133,12 @@ class _AccountState extends State<Account> {
                           padding: EdgeInsets.symmetric(
                               vertical: Dimensions.containerVerticalPadding,
                               horizontal:
-                              Dimensions.containerHorizontalPadding),
+                                  Dimensions.containerHorizontalPadding),
                           decoration: BoxDecoration(
                               color: ColorUtils.white,
                               borderRadius: BorderRadius.all(
                                   Radius.circular(Dimensions.roundCorner)),
-                              border:
-                              Border.all(color: ColorUtils.divider)),
+                              border: Border.all(color: ColorUtils.divider)),
                           child: TextField(
                             //focusNode: model.signUpAddressFocus,
                             controller: model.updateSignUpPhoneController,
@@ -228,13 +228,12 @@ class _AccountState extends State<Account> {
                           padding: EdgeInsets.symmetric(
                               vertical: Dimensions.containerVerticalPadding,
                               horizontal:
-                              Dimensions.containerHorizontalPadding),
+                                  Dimensions.containerHorizontalPadding),
                           decoration: BoxDecoration(
                               color: ColorUtils.white,
                               borderRadius: BorderRadius.all(
                                   Radius.circular(Dimensions.roundCorner)),
-                              border:
-                              Border.all(color: ColorUtils.divider)),
+                              border: Border.all(color: ColorUtils.divider)),
                           child: GestureDetector(
                             onTap: () async {
                               model.navigateToAddAddressScreen();
@@ -244,8 +243,9 @@ class _AccountState extends State<Account> {
                             },
                             child: Row(
                               children: [
-                                Container(child: SvgPicture.asset(ImageUtils.locationIcon)
-                                ),
+                                Container(
+                                    child: SvgPicture.asset(
+                                        ImageUtils.locationIcon)),
                                 //SizedBox(width: 4.w),
                                 Expanded(
                                   child: TextField(
@@ -375,7 +375,9 @@ class _AccountState extends State<Account> {
 
                         InkWell(
                           onTap: () {
+                            radioSelected = 1;
                             model.navigateToUserProfileAccountOwnershipScreen();
+                            model.notifyListeners();
                           },
                           child: Container(
                             height: 7.h,
@@ -413,7 +415,9 @@ class _AccountState extends State<Account> {
                               model.updateAccountDetials();
                               //model.navigateBack();
                             },
-                            child:  model.editProfile == false ? Text("Save") :  Loader(),
+                            child: model.editProfile == false
+                                ? Text("Save")
+                                : Loader(),
                             style: ElevatedButton.styleFrom(
                               primary: ColorUtils.text_red,
                               onPrimary: ColorUtils.white,

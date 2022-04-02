@@ -240,7 +240,6 @@ class MainViewModel extends BaseViewModel {
   bool isFiltersMapInFocus = false;
   FocusNode filtersMapFocus = new FocusNode();
 
-
   PrefrencesViewModel prefrencesViewModel = locator<PrefrencesViewModel>();
   double lowerValue = 0;
   double upperValue = 50;
@@ -655,7 +654,6 @@ class MainViewModel extends BaseViewModel {
   }
 
   Future navigateToPosition(LatLng latLng) async {
-
     kGooglePlex = CameraPosition(
       target: LatLng(latLng.latitude, latLng.longitude),
       zoom: 18,
@@ -663,22 +661,19 @@ class MainViewModel extends BaseViewModel {
 
     mapController!.animateCamera(CameraUpdate.newCameraPosition(kGooglePlex));
 
-    List<Placemark> placemarks = await placemarkFromCoordinates(latLng.latitude, latLng.longitude);
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(latLng.latitude, latLng.longitude);
 
-    address = "${placemarks[0].name} ${placemarks[0].street} ${placemarks[0].subLocality} ${placemarks[0].locality} ${placemarks[0].country}";
+    address =
+        "${placemarks[0].name} ${placemarks[0].street} ${placemarks[0].subLocality} ${placemarks[0].locality} ${placemarks[0].country}";
     lat = latLng.latitude;
     lng = latLng.longitude;
 
     markers.clear();
-    markers.add(
-        Marker(
-            markerId: MarkerId(placemarks[0].name!),
-            position: LatLng(latLng.latitude, latLng.longitude),
-            infoWindow: InfoWindow(
-                title: placemarks[0].name
-            )
-        )
-    );
+    markers.add(Marker(
+        markerId: MarkerId(placemarks[0].name!),
+        position: LatLng(latLng.latitude, latLng.longitude),
+        infoWindow: InfoWindow(title: placemarks[0].name)));
 
     notifyListeners();
   }
@@ -1168,11 +1163,10 @@ class MainViewModel extends BaseViewModel {
       // currentPosition = position;
       notifyListeners();
       // currentPosition;
-      longitude = position. longitude;
+      longitude = position.longitude;
       latitude = position.latitude;
       notifyListeners();
       var updatelocationResponse = await updateLocation.UpdateLocation(
-
           latitude.toStringAsFixed(5),
           longitude.toStringAsFixed(5),
           userModel!.id.toString());
@@ -1195,11 +1189,9 @@ class MainViewModel extends BaseViewModel {
 
       notifyListeners();
       var updatelocationResponse = await updateLocation.UpdateLocationBar(
-
           latitude.toStringAsFixed(5),
           longitude.toStringAsFixed(5),
-          barModel!.id.toString()
-      );
+          barModel!.id.toString());
 
       print(updatelocationResponse);
     }).catchError((e) {
@@ -1371,11 +1363,22 @@ class MainViewModel extends BaseViewModel {
 
   drinkStatus() async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
-
+    var startTimeofDrinking = DateFormat('jm')
+        .parse(drinkingFrom!)
+        .toString()
+        .split(' ')[1]
+        .substring(0, 5);
+    var endTimeOfDrinking = DateFormat('jm')
+        .parse(drinkingTo!)
+        .toString()
+        .split(' ')[1]
+        .substring(0, 5);
+    print(startTimeofDrinking);
+    print(endTimeOfDrinking);
     var data = FormData.fromMap({
       'quantity': drinkIndex,
-      'start_time': drinkingFrom,
-      'end_time': drinkingTo,
+      'start_time': startTimeofDrinking,
+      'end_time': endTimeOfDrinking,
     });
     // var encodedData = jsonEncode(data);
 
@@ -1399,11 +1402,22 @@ class MainViewModel extends BaseViewModel {
 
   updateDrinkStatus() async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
-
+    var startTimeofDrinking = DateFormat('jm')
+        .parse(drinkingFrom!)
+        .toString()
+        .split(' ')[1]
+        .substring(0, 5);
+    var endTimeOfDrinking = DateFormat('jm')
+        .parse(drinkingTo!)
+        .toString()
+        .split(' ')[1]
+        .substring(0, 5);
+    print(startTimeofDrinking);
+    print(endTimeOfDrinking);
     var data = {
       'quantity': updatedrinkIndex,
-      'start_time': drinkingFrom,
-      'end_time': drinkingTo,
+      'start_time': startTimeofDrinking,
+      'end_time': endTimeOfDrinking,
     };
     var response = await dio.post(Constants.BaseUrlPro + Constants.drinkStatus,
         data: data,
@@ -1601,7 +1615,6 @@ class MainViewModel extends BaseViewModel {
     navigationService.navigateToOrderDetailsScreen();
   }
 
-
   void navigateToMapSearchScreen() {
     navigationService.navigateToMapSearchScreen();
   }
@@ -1644,8 +1657,6 @@ class MainViewModel extends BaseViewModel {
         ),
         type: PageTransitionType.rightToLeftWithFade));
   }
-
-
 
   void navigateToUserDetailSettings() {
     navigationService.navigateToUserDetailSettings();
@@ -1724,7 +1735,6 @@ class MainViewModel extends BaseViewModel {
     navigationService.navigateToChangePassword();
   }
 
-
   ///-----------Bar Profile ---------------///
 
   void navigateToAllBarRating() {
@@ -1792,19 +1802,17 @@ class MainViewModel extends BaseViewModel {
     navigationService.navigateToFilterEventScreen();
   }
 
-
   void navigateToMatchDetailScreen(
-      dynamic images,
-      String? name,
-      String address,
-      List alcoholDrink,
-      List nightClub,
-      List partyVacation,
-      dynamic id,
-      ) {
+    dynamic images,
+    String? name,
+    String address,
+    List alcoholDrink,
+    List nightClub,
+    List partyVacation,
+    dynamic id,
+  ) {
     navigationService.navigateToMatchDetailScreen(
-        images, name, address, alcoholDrink, nightClub, partyVacation, id
-    );
+        images, name, address, alcoholDrink, nightClub, partyVacation, id);
   }
 
   Future saveUserDetails() async {
@@ -1824,9 +1832,11 @@ class MainViewModel extends BaseViewModel {
     for (int i = 0; i < imageFiles.length; i++) {
       if ((imageFiles[i] is File)) {
         if (imageFiles[i].path.isEmpty) {
-          DialogUtils().showDialog(MyErrorWidget(
-            error: "Select All Images" /*+i.toString()*/,
-          ),isDismissable: true);
+          DialogUtils().showDialog(
+              MyErrorWidget(
+                error: "Select All Images" /*+i.toString()*/,
+              ),
+              isDismissable: true);
           return;
         }
       }
@@ -1863,17 +1873,10 @@ class MainViewModel extends BaseViewModel {
   }
 
   Future updateAccountDetials() async {
-
-
     editProfile = true;
     notifyListeners();
     var updateAccountDetailResponse = await updateUser.UpdateAccountDetails(
-
-
-        updateSignUpPhoneController.text,
-        updateLocations.text
-
-    );
+        updateSignUpPhoneController.text, updateLocations.text);
     if (updateAccountDetailResponse is UserModel) {
       UserModel user = updateAccountDetailResponse;
       user.token = userModel!.token!;
@@ -1902,9 +1905,11 @@ class MainViewModel extends BaseViewModel {
     for (int i = 0; i < imageFiles.length; i++) {
       if ((imageFiles[i] is File)) {
         if (imageFiles[i].path.isEmpty) {
-          DialogUtils().showDialog(MyErrorWidget(
-            error: "Select All Images" /*+i.toString()*/,
-          ),isDismissable: true);
+          DialogUtils().showDialog(
+              MyErrorWidget(
+                error: "Select All Images" /*+i.toString()*/,
+              ),
+              isDismissable: true);
           return;
         }
       }
@@ -2110,7 +2115,7 @@ class MainViewModel extends BaseViewModel {
     if (getListofbar is List<ListOfBarsModel>) {
       listOfBar = getListofbar;
       print(listOfBar);
-    }   else {
+    } else {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Some thing went wrong",
       ));
@@ -2136,7 +2141,7 @@ class MainViewModel extends BaseViewModel {
     if (getListofAllBar is List<ListOfBarsModel>) {
       listOfAllBars = getListofAllBar;
       print(listOfAllBars);
-    }   else {
+    } else {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Some thing went wrong",
       ));
@@ -2167,8 +2172,7 @@ class MainViewModel extends BaseViewModel {
       //   print(selectUser);
       // }
       print(listOfUpcomingEvents);
-    }
-    else {
+    } else {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Some thing went wrong",
       ));
@@ -2199,7 +2203,7 @@ class MainViewModel extends BaseViewModel {
       //   print(selectUser);
       // }
       print(listOfPastEvents);
-    }   else {
+    } else {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Some thing went wrong",
       ));
@@ -2225,7 +2229,7 @@ class MainViewModel extends BaseViewModel {
     if (getListofBarFollowers is List<GetBarFollower>) {
       getbarfollowers = getListofBarFollowers;
       print(getbarfollowers);
-    }   else {
+    } else {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Some thing went wrong",
       ));
@@ -2250,8 +2254,8 @@ class MainViewModel extends BaseViewModel {
     // }ListOfBarsModel
     if (BarFollowersList is List<GetBarFollowersList>) {
       getFollowerList = BarFollowersList;
-        print(getFollowerList);
-    }   else {
+      print(getFollowerList);
+    } else {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Some thing went wrong",
       ));
@@ -2293,17 +2297,15 @@ class MainViewModel extends BaseViewModel {
   postBarFollow() async {
     isLoading = true;
     notifyListeners();
-    bool follow =! selectedBar!.is_follow!;
-    var getListofbar = await followbar.FollowBar(
-        selectedBar!.id!,
-        follow
-    );
+    bool follow = !selectedBar!.is_follow!;
+    var getListofbar = await followbar.FollowBar(selectedBar!.id!, follow);
     print(getListofbar);
     if (getListofbar is FollowBAR) {
       var index = listOfAllBars.indexOf(selectedBar!);
-      listOfAllBars[index].is_follow = (getListofbar as FollowBAR).user!.is_follow!;
+      listOfAllBars[index].is_follow =
+          (getListofbar as FollowBAR).user!.is_follow!;
       notifyListeners();
-    }   else {
+    } else {
       isLoading = false;
       DialogUtils().showDialog(MyErrorWidget(
         error: "Some thing went wrong",
@@ -2324,15 +2326,14 @@ class MainViewModel extends BaseViewModel {
     isLoading = true;
     notifyListeners();
     //bool follow =! selectedBar!.is_follow!;
-    var getAttendUser = await attendEvent.AttendEvent(
-        selectedUpcomingEvents!.id!
-    );
+    var getAttendUser =
+        await attendEvent.AttendEvent(selectedUpcomingEvents!.id!);
     print(getAttendUser);
 
     if (getAttendUser == true) {
       var index = listOfUpcomingEvents.indexOf(selectedUpcomingEvents!);
       selectedUpcomingEvents!.is_attend = true;
-      if (index!= -1){
+      if (index != -1) {
         listOfUpcomingEvents[index].is_attend = true;
       }
       notifyListeners();
@@ -2340,7 +2341,7 @@ class MainViewModel extends BaseViewModel {
         error: "You'll attend this event!",
       ));
       notifyListeners();
-    }   else {
+    } else {
       isLoading = false;
       DialogUtils().showDialog(MyErrorWidget(
         error: "Some thing went wrong",
@@ -2357,9 +2358,8 @@ class MainViewModel extends BaseViewModel {
     isLoading = true;
     notifyListeners();
     //bool follow =! selectedBar!.is_follow!;
-    var getAttendUser = await attendEvent.RemoveAttendEvent(
-        selectedUpcomingEvents!.id!
-    );
+    var getAttendUser =
+        await attendEvent.RemoveAttendEvent(selectedUpcomingEvents!.id!);
     print(getAttendUser);
 
     if (getAttendUser == true) {
@@ -2371,7 +2371,7 @@ class MainViewModel extends BaseViewModel {
         error: "You'll not attend this event!",
       ));
       notifyListeners();
-    }   else {
+    } else {
       isLoading = false;
       DialogUtils().showDialog(MyErrorWidget(
         error: "Some thing went wrong",
@@ -2428,7 +2428,6 @@ class MainViewModel extends BaseViewModel {
       // }
     }
   }
-
 
   void getContacts() async {
     bool permissionGranted = false;
@@ -2760,8 +2759,6 @@ class MainViewModel extends BaseViewModel {
   List matcheImages = [];
   List matcheName = [];
 
-
-
   void acceptMatched(BuildContext context) async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
 
@@ -2874,7 +2871,6 @@ class MainViewModel extends BaseViewModel {
       drinkList = await Addfavorites().GetFavoritesDrink();
       addNewDrinkController.clear();
       notifyListeners();
-
     }
   }
 
@@ -2946,7 +2942,7 @@ class MainViewModel extends BaseViewModel {
     if (getAnotherUserDetails is UserModel) {
       matchedUser = getAnotherUserDetails;
       print(matchedUser);
-    }   else {
+    } else {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Some thing went wrong",
       ));
@@ -2960,70 +2956,59 @@ class MainViewModel extends BaseViewModel {
   }
 
   addEventFilters() async {
-
-      addDrink = true;
-      notifyListeners();
-      //drinkList = await Addfavorites().GetFavoritesDrink();
-      var getFiltersEvent = await addBarFilter.BarFilters(
-
-          mapSearchController.text,
-          currentEventSelected != null ? currentEventSelected! + 1 : currentEventSelected,
-          timeValue,
-          lowerValue,
-          upperValue
-
-      );
-      if (getFiltersEvent is List<GetEvent>) {
-        addFilters = getFiltersEvent;
-        // for(var v in listOfUpcomingEvent){
-        //   //v.going_users!;
-        //   selectUser!.add(v.going_users![0]);
-        //   print(selectUser);
-        // }
-        print(addFilters);
-      }
-      else {
-        DialogUtils().showDialog(MyErrorWidget(
-          error: "Some thing went wrong",
-        ));
-        //isPrivacyPolicy = false;
-
-        return;
-      }
-      // if (addFavoriteResponce is FavoritesModel) {
-      //   var name = addFavoriteResponce.name;
-      //   // drinks = addFavoriteResponce;
-      //   drinkList.add(addFavoriteResponce);
-      //   notifyListeners();
-      // }
-      print(addFilters);
-      navigateToMapSearchScreen();
-
-      // navigateBack();
-      // addDrink = false;
-      // drinkList = await Addfavorites().GetFavoritesDrink();
-      // addNewDrinkController.clear();
-      notifyListeners();
-
-    }
-
-  createGroupChatUser() async {
-
     addDrink = true;
     notifyListeners();
     //drinkList = await Addfavorites().GetFavoritesDrink();
-    var createGroupUser = await createGroup.CreateGroup(
+    var getFiltersEvent = await addBarFilter.BarFilters(
+        mapSearchController.text,
+        currentEventSelected != null
+            ? currentEventSelected! + 1
+            : currentEventSelected,
+        timeValue,
+        lowerValue,
+        upperValue);
+    if (getFiltersEvent is List<GetEvent>) {
+      addFilters = getFiltersEvent;
+      // for(var v in listOfUpcomingEvent){
+      //   //v.going_users!;
+      //   selectUser!.add(v.going_users![0]);
+      //   print(selectUser);
+      // }
+      print(addFilters);
+    } else {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Some thing went wrong",
+      ));
+      //isPrivacyPolicy = false;
 
-        chatController.text,
-        getUserId,
-        1
-
-    );
-    if (createGroupUser is CreateGroupChat) {
-        groupChatUser = createGroupUser;
-        print(groupChatUser);
+      return;
     }
-    else {
+    // if (addFavoriteResponce is FavoritesModel) {
+    //   var name = addFavoriteResponce.name;
+    //   // drinks = addFavoriteResponce;
+    //   drinkList.add(addFavoriteResponce);
+    //   notifyListeners();
+    // }
+    print(addFilters);
+    navigateToMapSearchScreen();
+
+    // navigateBack();
+    // addDrink = false;
+    // drinkList = await Addfavorites().GetFavoritesDrink();
+    // addNewDrinkController.clear();
+    notifyListeners();
+  }
+
+  createGroupChatUser() async {
+    addDrink = true;
+    notifyListeners();
+    //drinkList = await Addfavorites().GetFavoritesDrink();
+    var createGroupUser =
+        await createGroup.CreateGroup(chatController.text, getUserId, 1);
+    if (createGroupUser is CreateGroupChat) {
+      groupChatUser = createGroupUser;
+      print(groupChatUser);
+    } else {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Some thing went wrong",
       ));
@@ -3035,7 +3020,6 @@ class MainViewModel extends BaseViewModel {
     print(addFilters);
     //navigateToMapSearchScreen();
     notifyListeners();
-
   }
 
   createGroupChatBar() async {
@@ -3082,7 +3066,7 @@ class MainViewModel extends BaseViewModel {
     if (getList is List<CreateGroupChat>) {
       getListGroup = getList;
       print(getListGroup);
-    }   else {
+    } else {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Some thing went wrong",
       ));
@@ -3094,5 +3078,4 @@ class MainViewModel extends BaseViewModel {
     notifyListeners();
     //print(getFaqsList);
   }
-
 }
