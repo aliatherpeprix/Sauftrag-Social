@@ -362,12 +362,17 @@ class _EventDetailsState extends State<EventDetails> {
                                     crossAxisAlignment:
                                     CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        widget.location,
-                                        style: TextStyle(
-                                            fontFamily: FontUtils.modernistBold,
-                                            fontSize: 2.t,
-                                            color: ColorUtils.text_dark),
+                                      Container(
+                                        width: 70.w,
+                                        child: Text(
+                                          widget.location,
+                                          style: TextStyle(
+                                              fontFamily: FontUtils.modernistBold,
+                                              fontSize: 2.t,
+                                              color: ColorUtils.text_dark),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis
+                                        ),
                                       ),
                                       SizedBox(
                                         height: 1.h,

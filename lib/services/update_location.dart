@@ -83,12 +83,12 @@ class Updatelocation {
         'role' : 2,
 
       });
-      NewBarModel? user = await locator<PrefrencesViewModel>().getBarUser();
+      NewBarModel? bar = await locator<PrefrencesViewModel>().getBarUser();
       var response = await dio.patch(Constants.BaseUrlPro+Constants.
-      UpdateUserProfile+ id+"/", data: param,options: Options(
+      UpdateBarProfile+ id+"/", data: param,options: Options(
           contentType: Headers.formUrlEncodedContentType,
           headers: {
-            "Authorization": "Token ${user!.token!}"
+            "Authorization": "Token ${bar!.token!}"
           }
       ));
       if (response.statusCode == 200 || response.statusCode == 201) {

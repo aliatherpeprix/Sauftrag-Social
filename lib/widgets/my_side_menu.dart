@@ -204,7 +204,7 @@ class _MySideMenuState extends State<MySideMenu> {
                       SvgPicture.asset(ImageUtils.matchedIcon),
                       SizedBox(width: 2.w),
                       Text(
-                        "Matched",
+                        "Drinks Buddies",
                         style: TextStyle(
                           color: ColorUtils.white,
                           fontFamily: FontUtils.modernistBold,
@@ -230,7 +230,7 @@ class _MySideMenuState extends State<MySideMenu> {
                       SvgPicture.asset(ImageUtils.followersIcon),
                       SizedBox(width: 2.w),
                       Text(
-                        "All Bars",
+                        "Bars & Clubs",
                         style: TextStyle(
                           color: ColorUtils.white,
                           fontFamily: FontUtils.modernistBold,
@@ -256,7 +256,7 @@ class _MySideMenuState extends State<MySideMenu> {
                       SvgPicture.asset(ImageUtils.barsIcon),
                       SizedBox(width: 2.w),
                       Text(
-                        "Followed Bars",
+                        "Followed Bars & Clubs",
                         style: TextStyle(
                           color: ColorUtils.white,
                           fontFamily: FontUtils.modernistBold,

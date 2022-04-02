@@ -509,7 +509,7 @@ class _SignUpBarState extends State<SignUpBar> {
                               onPressed: () async {
                                 var position = await model.determinePosition();
                                 model.latitude = position.latitude;
-                                model.latitude = position.longitude;
+                                model.longitude = position.longitude;
                                 model.signupBarScreen();
                               },
                               child: model.checkSignupUser == false ? Text("Next") : Loader(),

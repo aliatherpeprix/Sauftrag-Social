@@ -357,6 +357,7 @@ class RegistrationViewModel extends BaseViewModel {
       return;
     }
     // imageFiles
+    // imageFiles
     else  if (descriptionController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Description is required",

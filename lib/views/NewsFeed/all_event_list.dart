@@ -159,15 +159,20 @@ class _AllEventListState extends State<AllEventList> {
                                               SizedBox(
                                                 width: 2.w,
                                               ),
-                                              Text(
-                                                model.barEventModel![index]
-                                                    .location,
-                                                style: TextStyle(
-                                                    fontFamily: FontUtils
-                                                        .modernistRegular,
-                                                    fontSize: 1.7.t,
-                                                    color:
-                                                        ColorUtils.text_dark),
+                                              Container(
+                                                width: 50.w,
+                                                child: Text(
+                                                  model.barEventModel![index]
+                                                      .location,
+                                                  style: TextStyle(
+                                                      fontFamily: FontUtils
+                                                          .modernistRegular,
+                                                      fontSize: 1.7.t,
+                                                      color:
+                                                          ColorUtils.text_dark),
+                                                  maxLines: 1,
+                                                  overflow: TextOverflow.ellipsis ,
+                                                ),
                                               ),
                                             ],
                                           )

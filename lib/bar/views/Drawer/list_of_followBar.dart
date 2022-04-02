@@ -60,7 +60,7 @@ class _ListOfBarState extends State<ListOfBar> {
                           )),
                       SizedBox(width: 2.w),
                       Text(
-                        "Bars",
+                        "Followed Bars & Clubs",
                         style: TextStyle(
                           color: ColorUtils.black,
                           fontFamily: FontUtils.modernistBold,

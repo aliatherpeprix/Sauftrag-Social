@@ -431,33 +431,35 @@ class _EventsState extends State<Events> {
                                                 ),
                                               ),
                                               SizedBox(width: 3.w,),
-                                              Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(model.barEventModel![index].eventDate +' -'+time[0],
-                                                    style: TextStyle(
-                                                        fontFamily: FontUtils.modernistRegular,
-                                                        fontSize: 1.7.t,
-                                                        color: ColorUtils.text_red
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(model.barEventModel![index].eventDate +' -'+time[0],
+                                                      style: TextStyle(
+                                                          fontFamily: FontUtils.modernistRegular,
+                                                          fontSize: 1.7.t,
+                                                          color: ColorUtils.text_red
+                                                      ),
                                                     ),
-                                                  ),
-                                                  SizedBox(height: 1.h,),
-                                                  Text(model.barEventModel![index].name,
-                                                    style: TextStyle(
-                                                        fontFamily: FontUtils.modernistBold,
-                                                        fontSize: 2.2.t,
-                                                        color: ColorUtils.blackText
+                                                    SizedBox(height: 1.h,),
+                                                    Text(model.barEventModel![index].name,
+                                                      style: TextStyle(
+                                                          fontFamily: FontUtils.modernistBold,
+                                                          fontSize: 2.2.t,
+                                                          color: ColorUtils.blackText
+                                                      ),
                                                     ),
-                                                  ),
-                                                  SizedBox(height: 1.h,),
-                                                  Text(model.barEventModel![index].location,
-                                                    style: TextStyle(
-                                                        fontFamily: FontUtils.modernistRegular,
-                                                        fontSize: 1.7.t,
-                                                        color: ColorUtils.text_dark
+                                                    SizedBox(height: 1.h,),
+                                                    Text(model.barEventModel![index].location,
+                                                      style: TextStyle(
+                                                          fontFamily: FontUtils.modernistRegular,
+                                                          fontSize: 1.7.t,
+                                                          color: ColorUtils.text_dark
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
                                             ],
                                           ),

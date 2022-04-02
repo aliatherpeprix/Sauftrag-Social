@@ -89,7 +89,7 @@ class _MatchedScreenState extends State<MatchedScreen>
                                 )),
                             SizedBox(width: 2.w),
                             Text(
-                              "Matched",
+                              "Drink Buddies",
                               style: TextStyle(
                                 color: ColorUtils.black,
                                 fontFamily: FontUtils.modernistBold,
@@ -120,9 +120,6 @@ class _MatchedScreenState extends State<MatchedScreen>
                                 indicatorColor: Colors.transparent,
                                 tabs: [
                                   Container(
-                                      // margin: EdgeInsets.only(
-                                      //   // top: 3 * SizeConfig.heightMultiplier,
-                                      //     left: 3 * SizeConfig.widthMultiplier),
                                       padding: EdgeInsets.symmetric(
                                           vertical:
                                               2 * SizeConfig.widthMultiplier),
@@ -144,11 +141,6 @@ class _MatchedScreenState extends State<MatchedScreen>
                                                 3), // changes position of shadow
                                           ),
                                         ],
-                                        // border: Border.all(
-                                        //   color: tabSlelected == 0
-                                        //       ? Colors.blue
-                                        //       : Colors.grey,
-                                        // )
                                       ),
                                       child: Row(
                                         mainAxisAlignment:
@@ -157,7 +149,7 @@ class _MatchedScreenState extends State<MatchedScreen>
                                             CrossAxisAlignment.center,
                                         children: [
                                           Text(
-                                            "MATCHED",
+                                            "All",
                                             style: TextStyle(
                                               fontSize: 1.8.t,
                                               color: tabSlelected1 == 0
