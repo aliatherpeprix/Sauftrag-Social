@@ -21,8 +21,8 @@ class GetEvent {
   int? id;
   String? name;
   String? about;
-  String? lat;
-  String? long;
+  dynamic lat;
+  dynamic long;
   String? location;
   String? event_date;
   String? start_time;
