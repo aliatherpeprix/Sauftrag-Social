@@ -4,6 +4,7 @@ import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:expand_tap_area/expand_tap_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:pubnub/pubnub.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/new_bar_model.dart';
@@ -19,13 +20,16 @@ import 'package:sauftrag/viewModels/prefrences_view_model.dart';
 import 'package:sauftrag/widgets/back_arrow_with_container.dart';
 import 'package:stacked/stacked.dart';
 
+import 'group_detail_screen.dart';
+
 class GroupScreen extends StatefulWidget {
 
   int? id;
   String? username;
   int? userLength;
+  List<UserModel>? groupUser;
 
-  GroupScreen({Key? key, this.id, this.username,  this.userLength}) : super(key: key);
+  GroupScreen({Key? key, this.id, this.username,  this.userLength, this.groupUser}) : super(key: key);
 
   @override
   _GroupScreenState createState() => _GroupScreenState();
@@ -56,20 +60,8 @@ class _GroupScreenState extends State<GroupScreen> {
         //print("Testing");
         // Print every message
         model.subscription!.messages.listen((message) async {
-          //print(message.content);
-          //model.message = message.content;
           model.chats.add(message.content);
-          // message.uuid;
-          // print(message.flags);
           model.notifyListeners();
-          // model.chats = (message.content['content'] as List)
-          //     .map((e) => Envelope.fromJson(e))
-          //     .toList();
-          // model.pubnub
-          //     .publish(model.channel, model.groupScreenChatController.text);
-          //   for (var i in model.chats) {
-          //     await model.pubnub.publish(model.channel, i[Envelope]);
-          //   }
         });
       },
       builder: (context, model, child) {
@@ -353,58 +345,76 @@ class _GroupScreenState extends State<GroupScreen> {
                                   SizedBox(
                                     width: 2.5.w,
                                   ),
-                                  Row(
-                                    children: [
-                                      Stack(
-                                        alignment: Alignment.topCenter,
-                                        children: [
-                                          CircleAvatar(
-                                            radius: 26.0,
-                                            backgroundImage:
-                                                AssetImage(ImageUtils.cosmos),
-                                            backgroundColor: Colors.transparent,
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        width: 3.w,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Text(
-                                                widget.username!,
-                                                style: TextStyle(
-                                                    fontFamily:
-                                                        FontUtils.modernistBold,
-                                                    fontSize: 1.9.t,
-                                                    color:
-                                                        ColorUtils.text_dark),
-                                              ),
-                                              SizedBox(
-                                                width: 2.w,
-                                              ),
-                                              SvgPicture.asset(
-                                                  ImageUtils.groupLock),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 0.8.h,
-                                          ),
-                                          Text(
-                                            " Members" ,
-                                            style: TextStyle(
-                                                fontFamily:
-                                                    FontUtils.modernistBold,
-                                                fontSize: 1.5.t,
-                                                color: ColorUtils.activeColor),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                  GestureDetector(
+                                    onTap: (){
+                                      Navigator.push(
+                                          context ,
+                                          PageTransition(
+                                              type: PageTransitionType
+                                                  .fade,
+                                              child:
+                                              Group_Details(
+                                                  id: widget.id,
+                                                  username: widget.username,
+                                                  userLength: widget.userLength,
+                                                  groupUser: widget.groupUser
+                                              )
+                                          )
+                                      );
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Stack(
+                                          alignment: Alignment.topCenter,
+                                          children: [
+                                            CircleAvatar(
+                                              radius: 26.0,
+                                              backgroundImage:
+                                                  AssetImage(ImageUtils.cosmos),
+                                              backgroundColor: Colors.transparent,
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          width: 3.w,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  widget.username!,
+                                                  style: TextStyle(
+                                                      fontFamily:
+                                                          FontUtils.modernistBold,
+                                                      fontSize: 1.9.t,
+                                                      color:
+                                                          ColorUtils.text_dark),
+                                                ),
+                                                  SizedBox(
+                                                    width: 2.w,
+                                                  ),
+                                                SvgPicture.asset(
+                                                    ImageUtils.groupLock),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 0.8.h,
+                                            ),
+                                            Text(
+                                              " Members" ,
+                                              style: TextStyle(
+                                                  fontFamily:
+                                                      FontUtils.modernistBold,
+                                                  fontSize: 1.5.t,
+                                                  color: ColorUtils.activeColor),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),

@@ -12,7 +12,7 @@ class CreateGroupChat {
   String? name;
   dynamic privacy;
   dynamic originator;
-  List<dynamic>? users;
+  List<UserModel>? users;
 
   factory CreateGroupChat.fromJson(Map<String, dynamic> json) => _$CreateGroupChatFromJson(json);
   Map<String, dynamic> toJson() => _$CreateGroupChatToJson(this);

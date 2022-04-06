@@ -123,6 +123,8 @@ class ImageUtils {
   static String barIcon = "assets/bar_icon.svg";
   static String sendIcon = "assets/send_icon.svg";
   static String targetIcon = "assets/target_icon.svg";
+  static String addImages = "assets/add.svg";
+  static String exitGroup = "assets/exit_group.svg";
 
   //Girls Images
   static String girl1 = "assets/girls/girl_1.jpeg";

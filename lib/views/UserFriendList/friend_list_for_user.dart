@@ -82,52 +82,8 @@ class _FriendListForUserState extends State<FriendListForUser> {
                   horizontal: Dimensions.horizontalPadding,
                 ),
                 child: Stack(
+                  clipBehavior: Clip.none,
                   children: [
-                    if (model.openGroupMenu == true)
-                      Positioned(
-                          right: 0.w,
-                          top: 10.7.h,
-                          child: GestureDetector(
-                            onTap: () {
-                              model.navigateToUserGroupChatScreen();
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
-                                    spreadRadius: 0,
-                                    blurRadius: 10,
-                                    offset: Offset(
-                                        0, 5), // changes position of shadow
-                                  ),
-                                ],
-                                color: Colors.white,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(6)),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    SvgPicture.asset(ImageUtils.multipleUsers),
-                                    SizedBox(
-                                      width: 2.w,
-                                    ),
-                                    Text(
-                                      "New Group",
-                                      style: TextStyle(
-                                          fontFamily:
-                                              FontUtils.modernistRegular,
-                                          fontSize: 1.7.t,
-                                          color: ColorUtils.text_dark),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          )),
                     Column(
                       children: [
                         SizedBox(height: 6.h),
@@ -195,56 +151,96 @@ class _FriendListForUserState extends State<FriendListForUser> {
                                   },
                                   icon: SvgPicture.asset(
                                       ImageUtils.menuCheckIcon),
-                                )
+                                ),
                               ],
                             ),
                           ],
                         ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            if (model.openGroupMenu == true)
+                              Positioned(
+                                // left: 15.w,
+                                // top: 0.7.h,
+                                  child: GestureDetector(
+                                    onTap: () {
+
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.symmetric(vertical: 1.3.h, horizontal: 3.w),
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black.withOpacity(0.1),
+                                            spreadRadius: 0,
+                                            blurRadius: 10,
+                                            offset: Offset(
+                                                0, 5), // changes position of shadow
+                                          ),
+                                        ],
+                                        color: Colors.white,
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(6)),
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          GestureDetector(
+                                            onTap: (){
+                                              model.navigateToUserGroupChatScreen();
+                                            },
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                SvgPicture.asset(ImageUtils.multipleUsers),
+                                                SizedBox(
+                                                  width: 2.w,
+                                                ),
+                                                Text(
+                                                  "New Group",
+                                                  style: TextStyle(
+                                                      fontFamily:
+                                                      FontUtils.modernistRegular,
+                                                      fontSize: 1.7.t,
+                                                      color: ColorUtils.text_dark),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(height: 1.h,),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              SvgPicture.asset(ImageUtils.multipleUsers),
+                                              SizedBox(
+                                                width: 2.w,
+                                              ),
+                                              Text(
+                                                "Blocked Contacts",
+                                                style: TextStyle(
+                                                    fontFamily:
+                                                    FontUtils.modernistRegular,
+                                                    fontSize: 1.7.t,
+                                                    color: ColorUtils.text_dark),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )),
+                          ],
+                        ),
                         //if(model.openMenu == false)
                         SizedBox(
-                          height: 3.7.h,
+                          height: 2.h,
                         ),
-                        // if(model.openMenu == true)
-                        //   Align(
-                        //     alignment: Alignment.centerRight,
-                        //     child: Container(
-                        //       decoration: BoxDecoration(
-                        //         boxShadow: [
-                        //           BoxShadow(
-                        //             color: Colors.black.withOpacity(0.1),
-                        //             spreadRadius: 0,
-                        //             blurRadius: 10,
-                        //             offset: Offset(0, 5), // changes position of shadow
-                        //           ),
-                        //         ],
-                        //         color: Colors.white,
-                        //         borderRadius: BorderRadius.all(Radius.circular(6)),
-                        //       ),
-                        //       child: Padding(
-                        //         padding: const EdgeInsets.all(8.0),
-                        //         child: Row(
-                        //           mainAxisSize: MainAxisSize.min,
-                        //           children: [
-                        //             SvgPicture.asset(ImageUtils.multipleUsers),
-                        //             SizedBox(width: 2.w,),
-                        //             Text("New Group",
-                        //               style: TextStyle(
-                        //                   fontFamily: FontUtils.modernistRegular,
-                        //                   fontSize: 1.7.t,
-                        //                   color: ColorUtils.text_dark
-                        //               ),
-                        //             ),
-                        //           ],
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ),
                         Container(
-                          //width: 200.0,
-                          // margin: EdgeInsets.only(
-                          //     left: SizeConfig.widthMultiplier * 4.5,
-                          //     right: SizeConfig.widthMultiplier * 5,
-                          //     top: SizeConfig.heightMultiplier * 3),
                           decoration: BoxDecoration(
                             color: ColorUtils.textFieldBg,
                             borderRadius: BorderRadius.all(
@@ -296,6 +292,7 @@ class _FriendListForUserState extends State<FriendListForUser> {
                             ),
                           ),
                         ),
+
                         SizedBox(
                           height: 2.h,
                         ),
@@ -692,8 +689,10 @@ class _FriendListForUserState extends State<FriendListForUser> {
                                                                     .fade,
                                                                 child:
                                                                 GroupScreen(
-                                                                  id: model.getListGroup[index].id,
-                                                                  username: model.getListGroup[index].name,
+                                                                    id: model.getListGroup[index].id,
+                                                                    username: model.getListGroup[index].name,
+                                                                    groupUser : model.getListGroup[index].users,
+                                                                    userLength: model.getListGroup[index].users!.length
                                                                 )
                                                             ));
                                                       }

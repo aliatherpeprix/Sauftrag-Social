@@ -119,7 +119,6 @@ class _UserNotificationsState extends State<UserNotifications> {
                   SizedBox(height: 2.h,),
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding),
-
                     height: 15.h,
                     decoration: BoxDecoration(
                         border: Border.all(color: ColorUtils.red_color),
