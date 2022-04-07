@@ -211,12 +211,12 @@ class _FriendListForUserState extends State<FriendListForUser> {
                                               ],
                                             ),
                                           ),
-                                          SizedBox(height: 1.h,),
+                                          SizedBox(height: 1.8.h,),
                                           Row(
                                             mainAxisAlignment: MainAxisAlignment.start,
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
-                                              SvgPicture.asset(ImageUtils.multipleUsers),
+                                              SvgPicture.asset(ImageUtils.blockIcon),
                                               SizedBox(
                                                 width: 2.w,
                                               ),

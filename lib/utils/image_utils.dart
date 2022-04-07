@@ -125,6 +125,11 @@ class ImageUtils {
   static String targetIcon = "assets/target_icon.svg";
   static String addImages = "assets/add.svg";
   static String exitGroup = "assets/exit_group.svg";
+  static String mess1 = "assets/mess_1.png";
+  static String mess2 = "assets/mess_2.png";
+  static String mess3 = "assets/mess_3.png";
+  static String mess4 = "assets/mess_4.png";
+  static String blockIcon = "assets/blockIcon.svg";
 
   //Girls Images
   static String girl1 = "assets/girls/girl_1.jpeg";

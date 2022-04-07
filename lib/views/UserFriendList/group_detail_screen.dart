@@ -1,3 +1,4 @@
+import 'package:date_picker_timeline/extra/dimen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -13,6 +14,7 @@ import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/views/UserFriendList/create_group.dart';
+import 'package:sauftrag/widgets/exit_group_dialog.dart';
 import 'package:stacked/stacked.dart';
 
 import 'group_screen.dart';
@@ -34,6 +36,21 @@ class Group_Details extends StatefulWidget {
 class _Group_DetailsState extends State<Group_Details> {
 
   bool _isSwitch =false;
+
+  List images = [
+    {
+      'image': ImageUtils.mess1,
+    },
+    {
+      'image': ImageUtils.mess2,
+    },
+    {
+      'image': ImageUtils.mess3,
+    },
+    {
+      'image': ImageUtils.mess4,
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -62,297 +79,336 @@ class _Group_DetailsState extends State<Group_Details> {
             backgroundColor: Colors.white,
             body: Container(
               padding: EdgeInsets.symmetric(
-                horizontal: Dimensions.horizontalPadding,
+                horizontal: Dimensions.horizontalPadding,vertical: Dimensions.verticalPadding
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 6.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      IconButton(
-                          onPressed: () {
-                            model.navigateBack();
-                          },
-                          iconSize: 18.0,
-                          padding: EdgeInsets.zero,
-                          constraints: BoxConstraints(),
-                          icon: Icon(
-                            Icons.arrow_back_ios,
-                            color: ColorUtils.black,
-                            size: 4.5.i,
-                          )),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+              child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 6.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        IconButton(
+                            onPressed: () {
+                              model.navigateBack();
+                            },
+                            iconSize: 18.0,
+                            padding: EdgeInsets.zero,
+                            constraints: BoxConstraints(),
+                            icon: Icon(
+                              Icons.arrow_back_ios,
+                              color: ColorUtils.black,
+                              size: 4.5.i,
+                            )),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            CircleAvatar(
+                              radius: 35.0,
+                              backgroundImage:
+                              AssetImage(ImageUtils.cosmos),
+                              backgroundColor: Colors.transparent,
+                            ),
+                            SizedBox(height: 1.5.h,),
+                            Row(
+                              children: [
+                                Text(
+                                  widget.username!,
+                                  style: TextStyle(
+                                    fontFamily: FontUtils.modernistBold,
+                                    color: Colors.black,
+                                    fontSize: 2.5.t,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 2.w,
+                                ),
+                                SvgPicture.asset(
+                                    ImageUtils.groupLock , height: 5.i,),
+                              ],
+                            ),
+                            SizedBox(height: 0.5.h,),
+                            Row(
+                              children: [
+                                Text(
+                                  widget.userLength.toString() + " Members,",
+                                  style: TextStyle(
+                                    fontFamily: FontUtils.modernistBold,
+                                    color: Colors.green,
+                                    fontSize: 1.9.t,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 1.w,
+                                ),
+                                Text(
+                                  "1 Online",
+                                  style: TextStyle(
+                                    fontFamily: FontUtils.modernistBold,
+                                    color: Colors.green,
+                                    fontSize: 1.9.t,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 3.5.h,),
+                            GestureDetector(
+                              onTap: (){
+                                model.navigateToAddParticipantsScreen();
+                              },
+                              child: Container(
+                                child: Column(
+                                  children: [
+                                    SvgPicture.asset(ImageUtils.addImages),
+                                    Text("Add", style: TextStyle(
+                                      fontFamily: FontUtils.modernistBold,
+                                      color: ColorUtils.red_color,
+                                      fontSize: 1.9.t,
+                                    ),)
+
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        Container()
+                      ],
+                    ),
+
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    Text(
+                      "Notifications",
+                      style:
+                      TextStyle(fontSize: 2.t, fontFamily: FontUtils.modernistBold),
+                    ),
+                    SizedBox(height: 2.h,),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding),
+                      width: 350.w,
+                      height: 6.h,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: ColorUtils.red_color),
+                          borderRadius: BorderRadius.circular(15)
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          CircleAvatar(
-                            radius: 35.0,
-                            backgroundImage:
-                            AssetImage(ImageUtils.cosmos),
-                            backgroundColor: Colors.transparent,
+                          Text("Mute Notifications",style: TextStyle(color: ColorUtils.red_color,fontFamily: FontUtils.modernistBold),),
+                          Switch(
+                            value: _isSwitch,
+                            onChanged: (value) {
+                              setState(() {
+                                _isSwitch = value;
+                                print(_isSwitch);
+                              });
+                            },
+                            activeTrackColor:ColorUtils.red_color,
+                            activeColor: ColorUtils.red_color,
                           ),
-                          SizedBox(height: 1.5.h,),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    Text(
+                      "Media, Links and Docs",
+                      style:
+                      TextStyle(fontSize: 2.t, fontFamily: FontUtils.modernistBold),
+                    ),
+                    SizedBox(height: 2.h,),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding, vertical: 1.3.h),
+
+                      decoration: BoxDecoration(
+                          border: Border.all(color: ColorUtils.red_color),
+                          borderRadius: BorderRadius.circular(15)
+                      ),
+                      child: Row(
+                        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: GridView.builder(
+                              padding: EdgeInsets.zero,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: images.length,
+                              gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 4,
+                                  mainAxisSpacing: 5,
+                                  crossAxisSpacing: 10),
+                              itemBuilder: (context, index) {
+                                return ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: Image.asset(images[index]['image'],
+                                    width: 15.i,
+                                    height: 15.i,
+                                    fit: BoxFit.cover,
+
+                                  ),
+                                );
+                              },
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    Text(
+                      "Group Participants",
+                      style:
+                      TextStyle(fontSize: 2.t, fontFamily: FontUtils.modernistBold),
+                    ),
+                    SizedBox(height: 2.h,),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding, vertical: Dimensions.verticalPadding),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: ColorUtils.red_color),
+                          borderRadius: BorderRadius.circular(15)
+                      ),
+                      child: Column(
+                        children: [
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                widget.username!,
+                              Text(widget.userLength.toString() + " Participants",
                                 style: TextStyle(
-                                  fontFamily: FontUtils.modernistBold,
-                                  color: Colors.black,
-                                  fontSize: 2.5.t,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 2.w,
-                              ),
-                              SvgPicture.asset(
-                                  ImageUtils.groupLock , height: 5.i,),
+                                    color: ColorUtils.text_grey,
+                                    fontFamily: FontUtils.modernistBold
+                                ),),
+                              SvgPicture.asset(ImageUtils.searchIcon)
+
                             ],
                           ),
-                          SizedBox(height: 0.5.h,),
-                          Row(
-                            children: [
-                              Text(
-                                widget.userLength.toString() + " Members,",
-                                style: TextStyle(
-                                  fontFamily: FontUtils.modernistBold,
-                                  color: Colors.green,
-                                  fontSize: 1.9.t,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 1.w,
-                              ),
-                              Text(
-                                "1 Online",
-                                style: TextStyle(
-                                  fontFamily: FontUtils.modernistBold,
-                                  color: Colors.green,
-                                  fontSize: 1.9.t,
-                                ),
-                              ),
-                            ],
+                          SizedBox(height: 2.h,),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //   children: [
+                          //     CircleAvatar(
+                          //       radius: 25.0,
+                          //       backgroundImage:
+                          //       AssetImage(ImageUtils.cosmos),
+                          //       backgroundColor: Colors.transparent,
+                          //     ),
+                          //     Container(
+                          //       padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 0.3.h),
+                          //       decoration: BoxDecoration(
+                          //           border: Border.all(color: ColorUtils.red_color),
+                          //           borderRadius: BorderRadius.circular(5)
+                          //       ),
+                          //       child: Text("Group Admin",
+                          //         style: TextStyle(
+                          //             fontSize: 1.8.t,
+                          //             fontFamily: FontUtils.modernistRegular,
+                          //             color: ColorUtils.red_color
+                          //         ),),
+                          //     )
+                          //
+                          //   ],
+                          // ),
+                          ListView.separated(
+                              padding:
+                              EdgeInsets.only(top: 0.h),
+                              physics: BouncingScrollPhysics(),
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                return Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment
+                                          .spaceBetween,
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            // Stack(
+                                            //   alignment:
+                                            //       Alignment.topCenter,
+                                            //   children: [
+                                            CircleAvatar(
+                                              radius: 28.0,
+                                              backgroundImage:
+                                              NetworkImage(
+                                                  widget.groupUser![index].profile_picture??
+                                                      "https://tse2.mm.bing.net/th?id=OIP.4gcGG1F0z6LjVlJjYWGGcgHaHa&pid=Api&P=0&w=164&h=164"),
+                                            backgroundColor:
+                                              Colors
+                                                  .transparent,
+                                            ),
+                                            SizedBox(width: 5.w,),
+                                            Text(widget.groupUser![index].username!,
+                                              style: TextStyle(
+                                                          fontSize: 1.8.t,
+                                                          fontFamily: FontUtils.modernistBold,
+                                                          color: ColorUtils.black
+                                                      ))
+                                          ],
+                                        ),
+
+                                      ],
+                                    ),
+                                  ],
+                                );
+                              },
+                              separatorBuilder: (context, index) {
+                                return SizedBox(
+                                  height: 2.h,
+                                );
+                              },
+                              itemCount: widget.groupUser!.length
                           ),
-                          SizedBox(height: 3.5.h,),
-                          SvgPicture.asset(ImageUtils.addImages),
-                          Text("Add", style: TextStyle(
-                            fontFamily: FontUtils.modernistBold,
-                            color: ColorUtils.red_color,
-                            fontSize: 1.9.t,
-                          ),)
+                        ],
+                      )
+                    ),
+                    SizedBox(height: 2.h,),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding),
+                      width: 350.w,
+                      height: 6.h,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: ColorUtils.red_color),
+                          borderRadius: BorderRadius.circular(15)
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(ImageUtils.exitGroup),
+                          SizedBox(width: 3.w,),
+                          GestureDetector(
+                            onTap: (){
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context){
+                                    return ExitGroup(title: "Add New Location",
+                                        btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+                                  }
+                              );
+                            },
+                              child:
+                              Text("Exit Group",
+                                style: TextStyle(
+                                    color: ColorUtils.red_color,
+                                    fontFamily: FontUtils.modernistBold),)),
 
                         ],
                       ),
-                      Container()
-                    ],
-                  ),
+                    ),
 
-                  SizedBox(
-                    height: 2.h,
-                  ),
-                  Text(
-                    "Notifications",
-                    style:
-                    TextStyle(fontSize: 2.t, fontFamily: FontUtils.modernistBold),
-                  ),
-                  SizedBox(height: 2.h,),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding),
-                    width: 350.w,
-                    height: 6.h,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: ColorUtils.red_color),
-                        borderRadius: BorderRadius.circular(15)
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Mute Notifications",style: TextStyle(color: ColorUtils.red_color,fontFamily: FontUtils.modernistBold),),
-                        Switch(
-                          value: _isSwitch,
-                          onChanged: (value) {
-                            setState(() {
-                              _isSwitch = value;
-                              print(_isSwitch);
-                            });
-                          },
-                          activeTrackColor:ColorUtils.red_color,
-                          activeColor: ColorUtils.red_color,
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 2.h,
-                  ),
-                  Text(
-                    "Media, Links and Docs",
-                    style:
-                    TextStyle(fontSize: 2.t, fontFamily: FontUtils.modernistBold),
-                  ),
-                  SizedBox(height: 2.h,),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding),
-                    width: 350.w,
-                    height: 6.h,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: ColorUtils.red_color),
-                        borderRadius: BorderRadius.circular(15)
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Mute Notifications",style: TextStyle(color: ColorUtils.red_color,fontFamily: FontUtils.modernistBold),),
-                        Switch(
-                          value: _isSwitch,
-                          onChanged: (value) {
-                            setState(() {
-                              _isSwitch = value;
-                              print(_isSwitch);
-                            });
-                          },
-                          activeTrackColor:ColorUtils.red_color,
-                          activeColor: ColorUtils.red_color,
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 2.h,
-                  ),
-                  Text(
-                    "Group Participants",
-                    style:
-                    TextStyle(fontSize: 2.t, fontFamily: FontUtils.modernistBold),
-                  ),
-                  SizedBox(height: 2.h,),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding, vertical: Dimensions.verticalPadding),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: ColorUtils.red_color),
-                        borderRadius: BorderRadius.circular(15)
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(widget.userLength.toString() + " Participants",
-                              style: TextStyle(
-                                  color: ColorUtils.text_grey,
-                                  fontFamily: FontUtils.modernistBold
-                              ),),
-                            SvgPicture.asset(ImageUtils.searchIcon)
-
-                          ],
-                        ),
-                        SizedBox(height: 2.h,),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //   children: [
-                        //     CircleAvatar(
-                        //       radius: 25.0,
-                        //       backgroundImage:
-                        //       AssetImage(ImageUtils.cosmos),
-                        //       backgroundColor: Colors.transparent,
-                        //     ),
-                        //     Container(
-                        //       padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 0.3.h),
-                        //       decoration: BoxDecoration(
-                        //           border: Border.all(color: ColorUtils.red_color),
-                        //           borderRadius: BorderRadius.circular(5)
-                        //       ),
-                        //       child: Text("Group Admin",
-                        //         style: TextStyle(
-                        //             fontSize: 1.8.t,
-                        //             fontFamily: FontUtils.modernistRegular,
-                        //             color: ColorUtils.red_color
-                        //         ),),
-                        //     )
-                        //
-                        //   ],
-                        // ),
-                        ListView.separated(
-                            padding:
-                            EdgeInsets.only(top: 0.h),
-                            physics: BouncingScrollPhysics(),
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              return Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment
-                                        .spaceBetween,
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          // Stack(
-                                          //   alignment:
-                                          //       Alignment.topCenter,
-                                          //   children: [
-                                          CircleAvatar(
-                                            radius: 28.0,
-                                            backgroundImage:
-                                            NetworkImage(
-                                                widget.groupUser![index].profile_picture??
-                                                    "https://tse2.mm.bing.net/th?id=OIP.4gcGG1F0z6LjVlJjYWGGcgHaHa&pid=Api&P=0&w=164&h=164"),
-                                          backgroundColor:
-                                            Colors
-                                                .transparent,
-                                          ),
-                                          SizedBox(width: 5.w,),
-                                          Text(widget.groupUser![index].username!,
-                                            style: TextStyle(
-                                                        fontSize: 1.8.t,
-                                                        fontFamily: FontUtils.modernistBold,
-                                                        color: ColorUtils.black
-                                                    ))
-                                        ],
-                                      ),
-
-                                    ],
-                                  ),
-                                ],
-                              );
-                            },
-                            separatorBuilder: (context, index) {
-                              return SizedBox(
-                                height: 2.h,
-                              );
-                            },
-                            itemCount: widget.groupUser!.length
-                        ),
-                      ],
-                    )
-                  ),
-                  SizedBox(height: 2.h,),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding),
-                    width: 350.w,
-                    height: 6.h,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: ColorUtils.red_color),
-                        borderRadius: BorderRadius.circular(15)
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(ImageUtils.exitGroup),
-                        SizedBox(width: 3.w,),
-                        Text("Exit Group",style: TextStyle(color: ColorUtils.red_color,fontFamily: FontUtils.modernistBold),),
-
-                      ],
-                    ),
-                  ),
-
-                ],
+                  ],
+                ),
               ),
             ),
           ),

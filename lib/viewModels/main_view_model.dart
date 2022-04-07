@@ -1583,6 +1583,10 @@ class MainViewModel extends BaseViewModel {
     navigationService.navigateToMsgCreateGroupBarScreen();
   }
 
+  void navigateToAddParticipantsScreen() {
+    navigationService.navigateToAddParticipantsScreen();
+  }
+
   void navigateToBarGroupScreen() {
     navigationService.navigateToBarGroupScreen();
   }
@@ -3011,6 +3015,34 @@ class MainViewModel extends BaseViewModel {
         await createGroup.CreateGroup(chatController.text, getUserId, 1);
     if (createGroupUser is CreateGroupChat) {
       groupChatUser = createGroupUser;
+      print(groupChatUser);
+    } else {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Some thing went wrong",
+      ));
+      //isPrivacyPolicy = false;
+
+      return;
+    }
+
+    print(addFilters);
+    //navigateToMapSearchScreen();
+    notifyListeners();
+  }
+
+  updateUsers() async {
+    addDrink = true;
+    notifyListeners();
+    //drinkList = await Addfavorites().GetFavoritesDrink();
+    var updateUsers =
+    await createGroup.UpdateGroupUsers(
+        chatController.text,
+        getUserId,
+        userModel!.id.toString(),
+
+    );
+    if (updateUsers is CreateGroupChat) {
+      groupChatUser = updateUsers;
       print(groupChatUser);
     } else {
       DialogUtils().showDialog(MyErrorWidget(

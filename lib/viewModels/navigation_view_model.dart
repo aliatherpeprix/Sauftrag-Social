@@ -61,6 +61,7 @@ import 'package:sauftrag/views/NewsFeed/all_event_list.dart';
 import 'package:sauftrag/views/NewsFeed/ongoing_user_event.dart';
 import 'package:sauftrag/views/NewsFeed/upcoming_event_details.dart';
 import 'package:sauftrag/views/NewsFeed/upcoming_event_list.dart';
+import 'package:sauftrag/views/UserFriendList/add_participants.dart';
 import 'package:sauftrag/views/UserFriendList/contact_list.dart';
 import 'package:sauftrag/views/UserFriendList/create_group.dart';
 import 'package:sauftrag/bar/views/BarChat/friend_list.dart';
@@ -215,6 +216,10 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateToMsgCreateGroupBarScreen(){
     navigationKey.currentState!.push(PageTransition(child: CreateGroupBar(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToAddParticipantsScreen(){
+    navigationKey.currentState!.push(PageTransition(child: AddParticipants(), type: PageTransitionType.rightToLeftWithFade));
   }
 
   void navigateToInvitePeopleScreen(){
