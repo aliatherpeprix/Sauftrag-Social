@@ -77,6 +77,7 @@ class CommonFunctions{
               child: Center(
                 child: CupertinoTheme(
                   child: CupertinoDatePicker(
+                    dateOrder: DatePickerDateOrder.ymd,
                     mode: CupertinoDatePickerMode.date,
                     maximumDate:  maxDateTime,
                     minimumDate: DateTime.now().subtract(Duration(days: 365*100)),

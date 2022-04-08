@@ -163,8 +163,14 @@ class _NewsFeedState extends State<NewsFeed> {
                               Tab(
                                 text: "NewsFeed",
                               ),
-                              Tab(
-                                text: "Events",
+                              Tab(child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(ImageUtils.greyLock),
+                                  SizedBox(width: 1.5.w,),
+                                  Text("Events", style: TextStyle(color: ColorUtils.text_grey),),
+                                ],
+                              ),
                               ),
                             ],
                             onTap: (value) {
@@ -182,7 +188,8 @@ class _NewsFeedState extends State<NewsFeed> {
                                 NewsFeedScreen(),
 
                                 // second tab bar viiew widget
-                                Events(),
+                                // Events(),
+                                Container()
                               ],
                             ),
                           ),

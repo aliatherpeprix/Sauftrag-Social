@@ -71,7 +71,7 @@ class _AccountState extends State<Account> {
                           children: [
                             IconButton(
                                 onPressed: () {
-                                  model.navigateBack();
+                                  model.navigateToUserProfileScreen();
                                 },
                                 iconSize: 18.0,
                                 padding: EdgeInsets.zero,

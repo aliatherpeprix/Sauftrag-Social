@@ -204,7 +204,7 @@ class _MySideMenuState extends State<MySideMenu> {
                       SvgPicture.asset(ImageUtils.matchedIcon),
                       SizedBox(width: 2.w),
                       Text(
-                        "Drinks Buddies",
+                        "Drink Buddies",
                         style: TextStyle(
                           color: ColorUtils.white,
                           fontFamily: FontUtils.modernistBold,
@@ -216,10 +216,10 @@ class _MySideMenuState extends State<MySideMenu> {
                 ),
               ),
 
-              //Followers
+              //Bars & Clubs
               InkWell(
                 onTap: () {
-                  model.navigateToFollowersListScreen();
+                  model.navigateToBarAndClubsScreen();
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(
@@ -227,7 +227,7 @@ class _MySideMenuState extends State<MySideMenu> {
                       vertical: Dimensions.containerVerticalPadding),
                   child: Row(
                     children: [
-                      SvgPicture.asset(ImageUtils.followersIcon),
+                      SvgPicture.asset(ImageUtils.barsIcon),
                       SizedBox(width: 2.w),
                       Text(
                         "Bars & Clubs",
@@ -242,31 +242,57 @@ class _MySideMenuState extends State<MySideMenu> {
                 ),
               ),
 
+              //Followers
+              // InkWell(
+              //   onTap: () {
+              //     model.navigateToFollowersListScreen();
+              //   },
+              //   child: Container(
+              //     padding: EdgeInsets.symmetric(
+              //         horizontal: Dimensions.containerHorizontalPadding,
+              //         vertical: Dimensions.containerVerticalPadding),
+              //     child: Row(
+              //       children: [
+              //         SvgPicture.asset(ImageUtils.followersIcon),
+              //         SizedBox(width: 2.w),
+              //         Text(
+              //           "Bars & Clubs",
+              //           style: TextStyle(
+              //             color: ColorUtils.white,
+              //             fontFamily: FontUtils.modernistBold,
+              //             fontSize: 1.8.t,
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
+
               //Bars
-              InkWell(
-                onTap: () {
-                  model.navigateToListOfBar();
-                },
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: Dimensions.containerHorizontalPadding,
-                      vertical: Dimensions.containerVerticalPadding),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(ImageUtils.barsIcon),
-                      SizedBox(width: 2.w),
-                      Text(
-                        "Followed Bars & Clubs",
-                        style: TextStyle(
-                          color: ColorUtils.white,
-                          fontFamily: FontUtils.modernistBold,
-                          fontSize: 1.8.t,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              // InkWell(
+              //   onTap: () {
+              //     model.navigateToListOfBar();
+              //   },
+              //   child: Container(
+              //     padding: EdgeInsets.symmetric(
+              //         horizontal: Dimensions.containerHorizontalPadding,
+              //         vertical: Dimensions.containerVerticalPadding),
+              //     child: Row(
+              //       children: [
+              //         SvgPicture.asset(ImageUtils.barsIcon),
+              //         SizedBox(width: 2.w),
+              //         Text(
+              //           "Followed Bars & Clubs",
+              //           style: TextStyle(
+              //             color: ColorUtils.white,
+              //             fontFamily: FontUtils.modernistBold,
+              //             fontSize: 1.8.t,
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
 
               //QR Code
               InkWell(

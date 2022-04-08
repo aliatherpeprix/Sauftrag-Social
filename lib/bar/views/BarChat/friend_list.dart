@@ -81,51 +81,51 @@ class _FriendListState extends State<FriendList> {
                 ),
                 child: Stack(
                   children: [
-                    if (model.openGroupMenu == true)
-                      Positioned(
-                          right: 0.w,
-                          top: 10.7.h,
-                          child: GestureDetector(
-                            onTap: () {
-                              model.navigateToBarGroupScreen();
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
-                                    spreadRadius: 0,
-                                    blurRadius: 10,
-                                    offset: Offset(
-                                        0, 5), // changes position of shadow
-                                  ),
-                                ],
-                                color: Colors.white,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(6)),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    SvgPicture.asset(ImageUtils.multipleUsers),
-                                    SizedBox(
-                                      width: 2.w,
-                                    ),
-                                    Text(
-                                      "New Group",
-                                      style: TextStyle(
-                                          fontFamily:
-                                              FontUtils.modernistRegular,
-                                          fontSize: 1.7.t,
-                                          color: ColorUtils.text_dark),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          )),
+                    // if (model.openGroupMenu == true)
+                    //   Positioned(
+                    //       right: 0.w,
+                    //       top: 10.7.h,
+                    //       child: GestureDetector(
+                    //         onTap: () {
+                    //           model.navigateToBarGroupScreen();
+                    //         },
+                    //         child: Container(
+                    //           decoration: BoxDecoration(
+                    //             boxShadow: [
+                    //               BoxShadow(
+                    //                 color: Colors.black.withOpacity(0.1),
+                    //                 spreadRadius: 0,
+                    //                 blurRadius: 10,
+                    //                 offset: Offset(
+                    //                     0, 5), // changes position of shadow
+                    //               ),
+                    //             ],
+                    //             color: Colors.white,
+                    //             borderRadius:
+                    //                 BorderRadius.all(Radius.circular(6)),
+                    //           ),
+                    //           child: Padding(
+                    //             padding: const EdgeInsets.all(8.0),
+                    //             child: Row(
+                    //               mainAxisSize: MainAxisSize.min,
+                    //               children: [
+                    //                 SvgPicture.asset(ImageUtils.multipleUsers),
+                    //                 SizedBox(
+                    //                   width: 2.w,
+                    //                 ),
+                    //                 Text(
+                    //                   "New Group",
+                    //                   style: TextStyle(
+                    //                       fontFamily:
+                    //                           FontUtils.modernistRegular,
+                    //                       fontSize: 1.7.t,
+                    //                       color: ColorUtils.text_dark),
+                    //                 ),
+                    //               ],
+                    //             ),
+                    //           ),
+                    //         ),
+                    //       )),
                     Column(
                       children: [
                         // SizedBox(
@@ -187,16 +187,16 @@ class _FriendListState extends State<FriendList> {
                                 ),
                                 IconButton(
                                   onPressed: () {
-                                    if (model.openGroupMenu == false) {
-                                      model.openGroupMenu = true;
-                                      model.notifyListeners();
-                                    } else if (model.openGroupMenu == true) {
-                                      model.openGroupMenu = false;
-                                      model.notifyListeners();
-                                    }
+                                    model.navigateToBarGroupScreen();
+                                    // if (model.openGroupMenu == false) {
+                                    //   model.openGroupMenu = true;
+                                    //   model.notifyListeners();
+                                    // } else if (model.openGroupMenu == true) {
+                                    //   model.openGroupMenu = false;
+                                    //   model.notifyListeners();
+                                    // }
                                   },
-                                  icon: SvgPicture.asset(
-                                      ImageUtils.menuCheckIcon),
+                                  icon: SvgPicture.asset(ImageUtils.multipleUsers),
                                 )
                               ],
                             ),

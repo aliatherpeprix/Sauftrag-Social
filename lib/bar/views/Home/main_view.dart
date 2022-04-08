@@ -86,7 +86,7 @@ class _MainViewBarState extends State<MainViewBar> {
                   items: <String>[
                     ImageUtils.homeIcon,
                     ImageUtils.chatIcon,
-                    ImageUtils.scanner,
+                    ImageUtils.qrLock,
                     ImageUtils.profileIcon
                   ],
                   onTap: (index) {
@@ -130,7 +130,7 @@ class _MainViewBarState extends State<MainViewBar> {
           body = FriendList();
           break;
         case 2:
-          body = QRViewExample();
+          // body = QRViewExample();
           break;
         case 3:
           body = BarProfile();

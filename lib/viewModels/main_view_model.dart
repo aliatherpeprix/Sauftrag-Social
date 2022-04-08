@@ -1519,6 +1519,10 @@ class MainViewModel extends BaseViewModel {
     navigationService.navigateToUserProfileAccountScreen();
   }
 
+  void navigateToUserProfileScreen() {
+    navigationService.navigateToUserProfileScreen(4);
+  }
+
   void navigateToBarGroup() {
     navigationService.navigateToBarGroup();
   }
@@ -1561,6 +1565,10 @@ class MainViewModel extends BaseViewModel {
 
   void navigateToFollowersListScreen() {
     navigationService.navigateToFollowersListScreen();
+  }
+
+  void navigateToBarAndClubsScreen() {
+    navigationService.navigateToBarAndClubsScreen();
   }
 
   void navigateToFriendListScreen() {
@@ -1889,7 +1897,7 @@ class MainViewModel extends BaseViewModel {
       notifyListeners();
     }
     editProfile = false;
-    navigateBack();
+    navigateToUserProfileScreen();
     notifyListeners();
   }
 
@@ -3034,8 +3042,7 @@ class MainViewModel extends BaseViewModel {
     addDrink = true;
     notifyListeners();
     //drinkList = await Addfavorites().GetFavoritesDrink();
-    var updateUsers =
-    await createGroup.UpdateGroupUsers(
+    var updateUsers = await createGroup.UpdateGroupUsers(
         chatController.text,
         getUserId,
         userModel!.id.toString(),

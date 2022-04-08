@@ -15,6 +15,7 @@ import 'package:sauftrag/bar/views/Drawer/barProfile.dart';
 import 'package:sauftrag/bar/views/Drawer/bar_Rating.dart';
 import 'package:sauftrag/bar/views/Drawer/bar_all_rating.dart';
 import 'package:sauftrag/bar/views/Drawer/bar_followers.dart';
+import 'package:sauftrag/bar/views/Drawer/barsAndclubs.dart';
 import 'package:sauftrag/bar/views/Drawer/follower_profile.dart';
 import 'package:sauftrag/bar/views/Drawer/followers.dart';
 import 'package:sauftrag/bar/views/Drawer/list_of_followBar.dart';
@@ -77,6 +78,7 @@ import 'package:sauftrag/views/UserProfile/accountOwnership.dart';
 import 'package:sauftrag/views/UserProfile/data_protection.dart';
 import 'package:sauftrag/views/UserProfile/privacy_policy.dart';
 import 'package:sauftrag/views/UserProfile/terms_condition.dart';
+import 'package:sauftrag/views/UserProfile/user_profile.dart';
 import 'package:sauftrag/widgets/change_password.dart';
 import 'package:sauftrag/views/UserProfile/gps.dart';
 import 'package:sauftrag/views/UserProfile/legalTerm.dart';
@@ -142,6 +144,10 @@ class NavigationViewModel extends BaseViewModel{
     navigationKey.currentState!.push(PageTransition(child: Followers(), type: PageTransitionType.rightToLeftWithFade));
   }
 
+  void navigateToBarAndClubsScreen(){
+    navigationKey.currentState!.push(PageTransition(child: BarAndClubs(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
   void navigateToOngoingUsersScreen(){
     navigationKey.currentState!.push(PageTransition(child: OngoingEventUsers(), type: PageTransitionType.rightToLeftWithFade));
   }
@@ -168,6 +174,10 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateToBarHomeScreen(){
     navigationKey.currentState!.push(PageTransition(child: ZoomDrawerHome(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToUserProfileScreen(int index){
+    navigationKey.currentState!.pushAndRemoveUntil(PageTransition(child: MainView(index: 4), type: PageTransitionType.rightToLeftWithFade),(Route<dynamic> route) => false);
   }
 
   void navigateToHomeScreen(int index){
@@ -261,6 +271,10 @@ class NavigationViewModel extends BaseViewModel{
   void navigateToUserProfileAccountScreen(){
     navigationKey.currentState!.push(PageTransition(child: Account(), type: PageTransitionType.rightToLeftWithFade));
   }
+
+  // void navigateToUserProfileScreen(){
+  //   navigationKey.currentState!.push(PageTransition(child: UserProfile(), type: PageTransitionType.rightToLeftWithFade));
+  // }
 
   void navigateToStaticTermsAndConditionScreen(){
     navigationKey.currentState!.push(PageTransition(child: TermsAndConditions(), type: PageTransitionType.rightToLeftWithFade));

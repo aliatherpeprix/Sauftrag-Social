@@ -141,101 +141,102 @@ class _FriendListForUserState extends State<FriendListForUser> {
                                 ),
                                 IconButton(
                                   onPressed: () {
-                                    if (model.openGroupMenu == false) {
-                                      model.openGroupMenu = true;
-                                      model.notifyListeners();
-                                    } else if (model.openGroupMenu == true) {
-                                      model.openGroupMenu = false;
-                                      model.notifyListeners();
-                                    }
+                                    model.navigateToUserGroupChatScreen();
+                                    // if (model.openGroupMenu == false) {
+                                    //   model.openGroupMenu = true;
+                                    //   model.notifyListeners();
+                                    // } else if (model.openGroupMenu == true) {
+                                    //   model.openGroupMenu = false;
+                                    //   model.notifyListeners();
+                                    // }
                                   },
                                   icon: SvgPicture.asset(
-                                      ImageUtils.menuCheckIcon),
+                                      ImageUtils.multipleUsers),
                                 ),
                               ],
                             ),
                           ],
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            if (model.openGroupMenu == true)
-                              Positioned(
-                                // left: 15.w,
-                                // top: 0.7.h,
-                                  child: GestureDetector(
-                                    onTap: () {
-
-                                    },
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(vertical: 1.3.h, horizontal: 3.w),
-                                      decoration: BoxDecoration(
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.black.withOpacity(0.1),
-                                            spreadRadius: 0,
-                                            blurRadius: 10,
-                                            offset: Offset(
-                                                0, 5), // changes position of shadow
-                                          ),
-                                        ],
-                                        color: Colors.white,
-                                        borderRadius:
-                                        BorderRadius.all(Radius.circular(6)),
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          GestureDetector(
-                                            onTap: (){
-                                              model.navigateToUserGroupChatScreen();
-                                            },
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                SvgPicture.asset(ImageUtils.multipleUsers),
-                                                SizedBox(
-                                                  width: 2.w,
-                                                ),
-                                                Text(
-                                                  "New Group",
-                                                  style: TextStyle(
-                                                      fontFamily:
-                                                      FontUtils.modernistRegular,
-                                                      fontSize: 1.7.t,
-                                                      color: ColorUtils.text_dark),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          SizedBox(height: 1.8.h,),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              SvgPicture.asset(ImageUtils.blockIcon),
-                                              SizedBox(
-                                                width: 2.w,
-                                              ),
-                                              Text(
-                                                "Blocked Contacts",
-                                                style: TextStyle(
-                                                    fontFamily:
-                                                    FontUtils.modernistRegular,
-                                                    fontSize: 1.7.t,
-                                                    color: ColorUtils.text_dark),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  )),
-                          ],
-                        ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.end,
+                        //   crossAxisAlignment: CrossAxisAlignment.end,
+                        //   children: [
+                        //     if (model.openGroupMenu == true)
+                        //       Positioned(
+                        //         // left: 15.w,
+                        //         // top: 0.7.h,
+                        //           child: GestureDetector(
+                        //             onTap: () {
+                        //
+                        //             },
+                        //             child: Container(
+                        //               padding: EdgeInsets.symmetric(vertical: 1.3.h, horizontal: 3.w),
+                        //               decoration: BoxDecoration(
+                        //                 boxShadow: [
+                        //                   BoxShadow(
+                        //                     color: Colors.black.withOpacity(0.1),
+                        //                     spreadRadius: 0,
+                        //                     blurRadius: 10,
+                        //                     offset: Offset(
+                        //                         0, 5), // changes position of shadow
+                        //                   ),
+                        //                 ],
+                        //                 color: Colors.white,
+                        //                 borderRadius:
+                        //                 BorderRadius.all(Radius.circular(6)),
+                        //               ),
+                        //               child: Column(
+                        //                 crossAxisAlignment: CrossAxisAlignment.start,
+                        //                 children: [
+                        //                   GestureDetector(
+                        //                     onTap: (){
+                        //                       model.navigateToUserGroupChatScreen();
+                        //                     },
+                        //                     child: Row(
+                        //                       mainAxisAlignment: MainAxisAlignment.start,
+                        //                       crossAxisAlignment: CrossAxisAlignment.start,
+                        //                       mainAxisSize: MainAxisSize.min,
+                        //                       children: [
+                        //                         SvgPicture.asset(ImageUtils.multipleUsers),
+                        //                         SizedBox(
+                        //                           width: 2.w,
+                        //                         ),
+                        //                         Text(
+                        //                           "New Group",
+                        //                           style: TextStyle(
+                        //                               fontFamily:
+                        //                               FontUtils.modernistRegular,
+                        //                               fontSize: 1.7.t,
+                        //                               color: ColorUtils.text_dark),
+                        //                         ),
+                        //                       ],
+                        //                     ),
+                        //                   ),
+                        //                   SizedBox(height: 1.8.h,),
+                        //                   Row(
+                        //                     mainAxisAlignment: MainAxisAlignment.start,
+                        //                     mainAxisSize: MainAxisSize.min,
+                        //                     children: [
+                        //                       SvgPicture.asset(ImageUtils.blockIcon),
+                        //                       SizedBox(
+                        //                         width: 2.w,
+                        //                       ),
+                        //                       Text(
+                        //                         "Blocked Contacts",
+                        //                         style: TextStyle(
+                        //                             fontFamily:
+                        //                             FontUtils.modernistRegular,
+                        //                             fontSize: 1.7.t,
+                        //                             color: ColorUtils.text_dark),
+                        //                       ),
+                        //                     ],
+                        //                   ),
+                        //                 ],
+                        //               ),
+                        //             ),
+                        //           )),
+                        //   ],
+                        // ),
                         //if(model.openMenu == false)
                         SizedBox(
                           height: 2.h,

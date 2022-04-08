@@ -55,6 +55,7 @@ class _AddParticipantsState extends State<AddParticipants> {
                     //model.groupList.add(value);
                     //model.navigationService.navigateTo(to: ServiceCategory());
                     //model.navigateToGroupDetails();
+                    model.updateUsers();
                   },
                   child: Container(
                     margin: EdgeInsets.only(bottom: 3.h, right: 2.w),

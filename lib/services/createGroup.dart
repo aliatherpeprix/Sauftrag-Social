@@ -132,7 +132,7 @@ class Creategroup {
       });
 
       UserModel? userModel = (await locator<PrefrencesViewModel>().getUser());
-      var response = await dio.post(Constants.BaseUrlPro+Constants.createGroup + id +"/",
+      var response = await dio.patch(Constants.BaseUrlPro+Constants.createGroup + id +"/",
           data: param,
           options: Options(
             // contentType: Headers.formUrlEncodedContentType,

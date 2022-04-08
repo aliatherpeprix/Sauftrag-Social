@@ -295,8 +295,7 @@ class _UserProfileState extends State<UserProfile> {
                         onTap: () async {
                           model.isUserProfile = true;
                           model.notifyListeners();
-                          PrefrencesViewModel prefs =
-                          locator<PrefrencesViewModel>();
+                          PrefrencesViewModel prefs = await locator<PrefrencesViewModel>();
                            await Updateuser().UpdateAccountDetails(model.updateSignUpPhoneController.text, model.updateLocations.text);
                           model.userModel = (await prefs.getUser())!;
                           model.navigateToUserProfileAccountScreen();
