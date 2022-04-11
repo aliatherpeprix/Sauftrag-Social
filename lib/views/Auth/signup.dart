@@ -263,64 +263,64 @@ class _SignUpState extends State<SignUp> {
                           ),
                           SizedBox(height: 3.h),
 
-                          //Confirm Email
-                          Stack(
-                            children: [
-                              Container(
-                                height: 7.h,
-                                padding: EdgeInsets.symmetric(
-                                    vertical: Dimensions.containerVerticalPadding,
-                                    horizontal:
-                                    Dimensions.containerHorizontalPadding),
-                                decoration: BoxDecoration(
-                                    color: ColorUtils.white,
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(Dimensions.roundCorner),),
-                                    border:
-                                    Border.all(color: ColorUtils.divider)),
-                                child: Row(
-                                  children: [
-                                    SvgPicture.asset(ImageUtils.emailIcon),
-                                    SizedBox(width: 4.w),
-                                    Expanded(
-                                      child: TextField(
-                                        focusNode: model.signUpConfirmEmailFocus,
-                                        controller: model.signUpConfirmEmailController,
-                                        keyboardType: TextInputType.emailAddress,
-                                        textInputAction: TextInputAction.next,
-                                        style: TextStyle(
-                                          color: ColorUtils.red_color,
-                                          fontFamily: FontUtils.modernistRegular,
-                                          fontSize: 1.9.t,
-                                        ),
-                                        decoration: const InputDecoration(
-                                          border: InputBorder.none,
-                                          isDense: true,
-                                          contentPadding: EdgeInsets.symmetric(
-                                              horizontal: 0, vertical: 0),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(left: 5.w),
-                                padding: EdgeInsets.symmetric(horizontal: 1.w),
-                                color: ColorUtils.white,
-                                child: Text(
-                                  "Confirm Email",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: ColorUtils.text_grey,
-                                      fontFamily: FontUtils.modernistRegular,
-                                      fontSize: 1.5.t,
-                                      height: .4),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 3.h),
+                          // //Confirm Email
+                          // Stack(
+                          //   children: [
+                          //     Container(
+                          //       height: 7.h,
+                          //       padding: EdgeInsets.symmetric(
+                          //           vertical: Dimensions.containerVerticalPadding,
+                          //           horizontal:
+                          //           Dimensions.containerHorizontalPadding),
+                          //       decoration: BoxDecoration(
+                          //           color: ColorUtils.white,
+                          //           borderRadius: BorderRadius.all(
+                          //               Radius.circular(Dimensions.roundCorner),),
+                          //           border:
+                          //           Border.all(color: ColorUtils.divider)),
+                          //       child: Row(
+                          //         children: [
+                          //           SvgPicture.asset(ImageUtils.emailIcon),
+                          //           SizedBox(width: 4.w),
+                          //           Expanded(
+                          //             child: TextField(
+                          //               focusNode: model.signUpConfirmEmailFocus,
+                          //               controller: model.signUpConfirmEmailController,
+                          //               keyboardType: TextInputType.emailAddress,
+                          //               textInputAction: TextInputAction.next,
+                          //               style: TextStyle(
+                          //                 color: ColorUtils.red_color,
+                          //                 fontFamily: FontUtils.modernistRegular,
+                          //                 fontSize: 1.9.t,
+                          //               ),
+                          //               decoration: const InputDecoration(
+                          //                 border: InputBorder.none,
+                          //                 isDense: true,
+                          //                 contentPadding: EdgeInsets.symmetric(
+                          //                     horizontal: 0, vertical: 0),
+                          //               ),
+                          //             ),
+                          //           ),
+                          //         ],
+                          //       ),
+                          //     ),
+                          //     Container(
+                          //       margin: EdgeInsets.only(left: 5.w),
+                          //       padding: EdgeInsets.symmetric(horizontal: 1.w),
+                          //       color: ColorUtils.white,
+                          //       child: Text(
+                          //         "Confirm Email",
+                          //         textAlign: TextAlign.center,
+                          //         style: TextStyle(
+                          //             color: ColorUtils.text_grey,
+                          //             fontFamily: FontUtils.modernistRegular,
+                          //             fontSize: 1.5.t,
+                          //             height: .4),
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
+                          // SizedBox(height: 3.h),
 
                           //Phone No.
                           Stack(
@@ -619,91 +619,91 @@ class _SignUpState extends State<SignUp> {
 
                           SizedBox(height: 3.h),
 
-                          //Verify Password
-                          Stack(
-                            children: [
-                              Container(
-                                height: 7.h,
-                                padding: EdgeInsets.symmetric(
-                                    vertical: Dimensions.containerVerticalPadding,
-                                    horizontal:
-                                    Dimensions.containerHorizontalPadding),
-                                decoration: BoxDecoration(
-                                    color: ColorUtils.white,
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(Dimensions.roundCorner)),
-                                    border:
-                                    Border.all(color: ColorUtils.divider)),
-                                child: Row(
-                                  children: [
-                                    SvgPicture.asset(ImageUtils.passwordIcon),
-                                    SizedBox(width: 4.w),
-                                    Expanded(
-                                      child: TextField(
-                                        focusNode:
-                                        model.signUpVerifyPasswordFocus,
-                                        controller:
-                                        model.signUpVerifyPasswordController,
-                                        obscureText: !model.signupVerifyPasswordVisible,
-                                        keyboardType: TextInputType.text,
-                                        textInputAction: TextInputAction.next,
-                                        style: TextStyle(
-                                          color: ColorUtils.red_color,
-                                          fontFamily: FontUtils.modernistRegular,
-                                          fontSize: 1.9.t,
-                                        ),
-                                        decoration: InputDecoration(
-                                          hintText: "Hint: Abc!123",
-                                          hintStyle: TextStyle(
-                                            color: ColorUtils.text_grey,
-                                            fontFamily: FontUtils.modernistRegular,
-                                            fontSize: 1.9.t,
-                                            //height: .4
-                                          ),
-                                          border: InputBorder.none,
-                                          isDense: true,
-                                          contentPadding: EdgeInsets.symmetric(
-                                              horizontal: 0, vertical: 0),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(width: 3.w),
-                                    IconButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          model.signupVerifyPasswordVisible = !model.signupVerifyPasswordVisible;
-                                        });
-                                      },
-                                      icon: Icon(model.signupVerifyPasswordVisible
-                                          ? Icons.visibility
-                                          : Icons.visibility_off,
-                                        color: ColorUtils.red_color,
-                                        //size: 6 * SizeConfig.imageSizeMultiplier,
-                                        //color: ColorUtils.textFormColor,),
-                                      ),
-                                      padding: EdgeInsets.zero,
-                                      constraints: BoxConstraints(),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(left: 5.w),
-                                padding: EdgeInsets.symmetric(horizontal: 1.w),
-                                color: ColorUtils.white,
-                                child: Text(
-                                  "Verify Password",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: ColorUtils.text_grey,
-                                      fontFamily: FontUtils.modernistRegular,
-                                      fontSize: 1.5.t,
-                                      height: .4),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 3.h),
+                          // //Verify Password
+                          // Stack(
+                          //   children: [
+                          //     Container(
+                          //       height: 7.h,
+                          //       padding: EdgeInsets.symmetric(
+                          //           vertical: Dimensions.containerVerticalPadding,
+                          //           horizontal:
+                          //           Dimensions.containerHorizontalPadding),
+                          //       decoration: BoxDecoration(
+                          //           color: ColorUtils.white,
+                          //           borderRadius: BorderRadius.all(
+                          //               Radius.circular(Dimensions.roundCorner)),
+                          //           border:
+                          //           Border.all(color: ColorUtils.divider)),
+                          //       child: Row(
+                          //         children: [
+                          //           SvgPicture.asset(ImageUtils.passwordIcon),
+                          //           SizedBox(width: 4.w),
+                          //           Expanded(
+                          //             child: TextField(
+                          //               focusNode:
+                          //               model.signUpVerifyPasswordFocus,
+                          //               controller:
+                          //               model.signUpVerifyPasswordController,
+                          //               obscureText: !model.signupVerifyPasswordVisible,
+                          //               keyboardType: TextInputType.text,
+                          //               textInputAction: TextInputAction.next,
+                          //               style: TextStyle(
+                          //                 color: ColorUtils.red_color,
+                          //                 fontFamily: FontUtils.modernistRegular,
+                          //                 fontSize: 1.9.t,
+                          //               ),
+                          //               decoration: InputDecoration(
+                          //                 hintText: "Hint: Abc!123",
+                          //                 hintStyle: TextStyle(
+                          //                   color: ColorUtils.text_grey,
+                          //                   fontFamily: FontUtils.modernistRegular,
+                          //                   fontSize: 1.9.t,
+                          //                   //height: .4
+                          //                 ),
+                          //                 border: InputBorder.none,
+                          //                 isDense: true,
+                          //                 contentPadding: EdgeInsets.symmetric(
+                          //                     horizontal: 0, vertical: 0),
+                          //               ),
+                          //             ),
+                          //           ),
+                          //           SizedBox(width: 3.w),
+                          //           IconButton(
+                          //             onPressed: () {
+                          //               setState(() {
+                          //                 model.signupVerifyPasswordVisible = !model.signupVerifyPasswordVisible;
+                          //               });
+                          //             },
+                          //             icon: Icon(model.signupVerifyPasswordVisible
+                          //                 ? Icons.visibility
+                          //                 : Icons.visibility_off,
+                          //               color: ColorUtils.red_color,
+                          //               //size: 6 * SizeConfig.imageSizeMultiplier,
+                          //               //color: ColorUtils.textFormColor,),
+                          //             ),
+                          //             padding: EdgeInsets.zero,
+                          //             constraints: BoxConstraints(),
+                          //           ),
+                          //         ],
+                          //       ),
+                          //     ),
+                          //     Container(
+                          //       margin: EdgeInsets.only(left: 5.w),
+                          //       padding: EdgeInsets.symmetric(horizontal: 1.w),
+                          //       color: ColorUtils.white,
+                          //       child: Text(
+                          //         "Verify Password",
+                          //         textAlign: TextAlign.center,
+                          //         style: TextStyle(
+                          //             color: ColorUtils.text_grey,
+                          //             fontFamily: FontUtils.modernistRegular,
+                          //             fontSize: 1.5.t,
+                          //             height: .4),
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
+                          // SizedBox(height: 3.h),
 
                           //Enter your address
                           Stack(

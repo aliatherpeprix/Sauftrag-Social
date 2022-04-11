@@ -1304,8 +1304,7 @@ class MainViewModel extends BaseViewModel {
 
   getGroupChannelFromPubnub() async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
-    var response = await dio.get('https://ps.pndsn.com/' +
-        'v2/presence/sub-key/sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4/uuid/${user!.id}');
+    var response = await dio.get('https://ps.pndsn.com/' + 'v2/presence/sub-key/sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4/uuid/${user!.id}');
     print(response.data);
     var encodedData = jsonEncode(response.data);
     print(encodedData);

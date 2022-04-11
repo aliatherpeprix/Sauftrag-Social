@@ -46,7 +46,7 @@ class SignupUser {
         'email': email,
         'username': username,
         'password': password,
-        'password2': password2,
+        'password2': password,
         'phone_no': phone_no,
         'relation_ship': relationship,
         'latitude' : latitude,

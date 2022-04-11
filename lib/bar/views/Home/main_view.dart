@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/bar/views/Profile/bar_profile.dart';
+import 'package:sauftrag/bar/widgets/dialog_qrcode.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
@@ -14,6 +15,7 @@ import 'package:sauftrag/widgets/my_curved_nav_bar.dart';
 import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/widgets/my_side_menu.dart';
+import 'package:sauftrag/widgets/radler_dialog_box.dart';
 import 'package:sauftrag/widgets/zoom_drawer.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
 import 'package:stacked/stacked.dart';
@@ -130,6 +132,12 @@ class _MainViewBarState extends State<MainViewBar> {
           body = FriendList();
           break;
         case 2:
+          body = showDialog(
+              context: context,
+              builder: (BuildContext context){
+                return DialogQrCode(title: "Add New Location", btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+              }
+          ) as Widget;
           // body = QRViewExample();
           break;
         case 3:

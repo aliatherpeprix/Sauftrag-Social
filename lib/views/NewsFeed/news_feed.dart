@@ -11,6 +11,7 @@ import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/views/NewsFeed/events.dart';
 import 'package:sauftrag/widgets/all_page_loader.dart';
+import 'package:sauftrag/widgets/dialog_event.dart';
 import 'package:sauftrag/widgets/my_side_menu.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
 import 'package:stacked/stacked.dart';
@@ -163,14 +164,25 @@ class _NewsFeedState extends State<NewsFeed> {
                               Tab(
                                 text: "NewsFeed",
                               ),
-                              Tab(child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset(ImageUtils.greyLock),
-                                  SizedBox(width: 1.5.w,),
-                                  Text("Events", style: TextStyle(color: ColorUtils.text_grey),),
-                                ],
-                              ),
+                              GestureDetector(
+                                onTap: (){
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context){
+                                        return DialogEvent(title: "Add New Location", btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+                                      }
+                                  ) ;
+                                },
+                                child: Tab(
+                                  child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(ImageUtils.greyLock),
+                                    SizedBox(width: 1.5.w,),
+                                    Text("Events", style: TextStyle(color: ColorUtils.text_grey),),
+                                  ],
+                                ),
+                                ),
                               ),
                             ],
                             onTap: (value) {
@@ -186,10 +198,18 @@ class _NewsFeedState extends State<NewsFeed> {
                               children: [
                                 // first tab bar view widget
                                 NewsFeedScreen(),
+                                Container()
 
                                 // second tab bar viiew widget
                                 // Events(),
-                                Container()
+                                // Container(
+                                //   child:   showDialog(
+                                //       context: context,
+                                //       builder: (BuildContext context){
+                                //         return DialogEvent(title: "Add New Location", btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+                                //       }
+                                //   )
+                                // )
                               ],
                             ),
                           ),

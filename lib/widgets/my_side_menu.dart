@@ -13,6 +13,7 @@ import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:sauftrag/widgets/round_image.dart';
 import 'package:stacked/stacked.dart';
 
+import 'dialog_event.dart';
 import 'logout_dialog.dart';
 
 class MySideMenu extends StatefulWidget {
@@ -323,7 +324,14 @@ class _MySideMenuState extends State<MySideMenu> {
               //Events
               InkWell(
                 onTap: () {
-                  model.navigateToUpcomingEvent();
+
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context){
+                        return DialogEvent(title: "Add New Location", btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+                      }
+                  ) ;
+                  //model.navigateToUpcomingEvent();
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(

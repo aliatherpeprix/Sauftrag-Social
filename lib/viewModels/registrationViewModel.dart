@@ -1298,7 +1298,7 @@ class RegistrationViewModel extends BaseViewModel {
           usermodel!.email!,
           usermodel.username!,
           usermodel.password!,
-          usermodel.password2!,
+          usermodel.password!,
           usermodel.phone_no!,
           usermodel.relation_ship.toString(),
           latitude.toStringAsFixed(5),
@@ -1577,26 +1577,29 @@ class RegistrationViewModel extends BaseViewModel {
       DialogUtils().showDialog(MyErrorWidget(error: "Email is invalid"));
       notifyListeners();
       return;
-    } else if (signUpConfirmEmailController.text.isEmpty) {
-      isSigningUp = false;
-      DialogUtils().showDialog(MyErrorWidget(
-        error: "Confirm Email is required",
-      ));
-      notifyListeners();
-      return;
-    } else if (!signUpConfirmEmailController.text.isEmail) {
-      isSigningUp = false;
-      DialogUtils().showDialog(MyErrorWidget(error: "Email is invalid"));
-      notifyListeners();
-      return;
-    } else if (signUpConfirmEmailController.text !=
-        signUpEmailController.text) {
-      isSigningUp = false;
-      DialogUtils()
-          .showDialog(MyErrorWidget(error: "Email & Confirm don't match"));
-      notifyListeners();
-      return;
-    } else if (signUpPhoneController.text.isEmpty) {
+    }
+    // else if (signUpConfirmEmailController.text.isEmpty) {
+    //   isSigningUp = false;
+    //   DialogUtils().showDialog(MyErrorWidget(
+    //     error: "Confirm Email is required",
+    //   ));
+    //   notifyListeners();
+    //   return;
+    // }
+    // else if (!signUpConfirmEmailController.text.isEmail) {
+    //   isSigningUp = false;
+    //   DialogUtils().showDialog(MyErrorWidget(error: "Email is invalid"));
+    //   notifyListeners();
+    //   return;
+    // } else if (signUpConfirmEmailController.text !=
+    //     signUpEmailController.text) {
+    //   isSigningUp = false;
+    //   DialogUtils()
+    //       .showDialog(MyErrorWidget(error: "Email & Confirm don't match"));
+    //   notifyListeners();
+    //   return;
+    // }
+    else if (signUpPhoneController.text.isEmpty) {
       isSigningUp = false;
       DialogUtils().showDialog(MyErrorWidget(
         error: "Phone Number is required",
@@ -1663,22 +1666,24 @@ class RegistrationViewModel extends BaseViewModel {
           error: "Password should contain at least one special character"));
       notifyListeners();
       return;
-    } else if (signUpVerifyPasswordController.text.isEmpty) {
-      isSigningUp = false;
-      DialogUtils().showDialog(MyErrorWidget(
-        error: "Verify Password is required",
-      ));
-      notifyListeners();
-      return;
-    } else if (signUpVerifyPasswordController.text !=
-        signUpPasswordController.text) {
-      isSigningUp = false;
-      DialogUtils().showDialog(MyErrorWidget(
-        error: "Password & Verify Password don't match",
-      ));
-      notifyListeners();
-      return;
-    } else if (signUpAddressController.text.isEmpty) {
+    }
+    // else if (signUpVerifyPasswordController.text.isEmpty) {
+    //   isSigningUp = false;
+    //   DialogUtils().showDialog(MyErrorWidget(
+    //     error: "Verify Password is required",
+    //   ));
+    //   notifyListeners();
+    //   return;
+    // }
+    // else if (signUpVerifyPasswordController.text != signUpPasswordController.text) {
+    //   isSigningUp = false;
+    //   DialogUtils().showDialog(MyErrorWidget(
+    //     error: "Password & Verify Password don't match",
+    //   ));
+    //   notifyListeners();
+    //   return;
+    // }
+    else if (signUpAddressController.text.isEmpty) {
       isSigningUp = false;
       DialogUtils().showDialog(MyErrorWidget(
         error: "Address is required",
@@ -1747,10 +1752,9 @@ class RegistrationViewModel extends BaseViewModel {
       user.email = signUpEmailController.text;
       user.username = signUpUserController.text;
       user.password = signUpPasswordController.text;
-      user.password2 = signUpVerifyPasswordController.text;
+      //user.password2 = signUpVerifyPasswordController.text;
       user.phone_no = signUpPhoneController.text;
-      user.relation_ship =
-          (relationStatusList.indexOf(relationStatusValueStr) + 1).toString();
+      user.relation_ship = (relationStatusList.indexOf(relationStatusValueStr) + 1).toString();
       user.address = signUpAddressController.text;
       user.gender = (genderList.indexOf(genderValueStr) + 1).toString();
       user.dob = DateFormat("yyyy-MM-dd").format(selectedDOB);
@@ -1821,18 +1825,20 @@ class RegistrationViewModel extends BaseViewModel {
       DialogUtils().showDialog(MyErrorWidget(
           error: "Password should contain at least one special character"));
       return;
-    } else if (signUpBarVerifyPasswordController.text.isEmpty) {
-      DialogUtils().showDialog(MyErrorWidget(
-        error: "Verify Password is required",
-      ));
-      return;
-    } else if (signUpBarVerifyPasswordController.text !=
-        signUpBarPasswordController.text) {
-      DialogUtils().showDialog(MyErrorWidget(
-        error: "Password & Verify Password don't match",
-      ));
-      return;
-    } else {
+    }
+    // else if (signUpBarVerifyPasswordController.text.isEmpty) {
+    //   DialogUtils().showDialog(MyErrorWidget(
+    //     error: "Verify Password is required",
+    //   ));
+    //   return;
+    // } else if (signUpBarVerifyPasswordController.text !=
+    //     signUpBarPasswordController.text) {
+    //   DialogUtils().showDialog(MyErrorWidget(
+    //     error: "Password & Verify Password don't match",
+    //   ));
+    //   return;
+    // }
+    else {
       checkSignupUser = true;
       notifyListeners();
 
@@ -1967,7 +1973,7 @@ class RegistrationViewModel extends BaseViewModel {
         true,
         true,
         signUpBarPasswordController.text,
-        signUpBarVerifyPasswordController.text,
+        signUpBarPasswordController.text,
         double.parse(latitude.toStringAsFixed(5)),
         double.parse(longitude.toStringAsFixed(5)),
       );

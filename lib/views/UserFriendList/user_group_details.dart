@@ -66,10 +66,8 @@ class _GroupDetailsState extends State<GroupDetails> {
                     }
 
                     await model.createGroupChatUser();
-                    NewBarModel barUser =
-                        (await locator<PrefrencesViewModel>().getBarUser())!;
-                    UserModel user =
-                        (await locator<PrefrencesViewModel>().getUser())!;
+                    NewBarModel barUser = (await locator<PrefrencesViewModel>().getBarUser())!;
+                    UserModel user = (await locator<PrefrencesViewModel>().getUser())!;
                     // model.pubnub = PubNub(
                     //     defaultKeyset: Keyset(
                     //         subscribeKey:
