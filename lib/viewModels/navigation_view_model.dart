@@ -197,8 +197,20 @@ class NavigationViewModel extends BaseViewModel{
     navigationKey.currentState!.pushAndRemoveUntil(PageTransition(child: MainView(index: index), type: PageTransitionType.rightToLeftWithFade),(Route<dynamic> route) => false);
   }
 
-  void navigateToProfileScreen(List<String> images,String? name,String? address,List alcoholDrink,List nightClub, List partyVacation, dynamic id){
-    navigationKey.currentState!.push(PageTransition(child: Profile(images: images,name: name!,address: address,alcoholDrink: alcoholDrink,nightClub:nightClub,partyVacation: partyVacation,id: id,), type: PageTransitionType.rightToLeftWithFade));
+  void navigateToProfileScreen(List<String> images,String? name,String? address,List alcoholDrink,List nightClub, List partyVacation,
+      dynamic id, String latitude, String longitude){
+    navigationKey.currentState!.push(PageTransition(child:
+    Profile(
+      images: images,
+      name: name!,
+      address: address,
+      alcoholDrink: alcoholDrink,
+      nightClub:nightClub,
+      partyVacation: partyVacation,
+      id: id,
+      latitude: latitude,
+      longitude: longitude,
+    ), type: PageTransitionType.rightToLeftWithFade));
   }
 
   void navigateToMatchScreen(){

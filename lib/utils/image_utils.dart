@@ -134,6 +134,8 @@ class ImageUtils {
   static String greyLock = "assets/greylock.svg";
   static String barLock = "assets/barLock.svg";
   static String eventLock = "assets/eventLock.svg";
+  static String beerMug = "assets/beermug.svg";
+  static String infoIcon = "assets/info.svg";
 
   //Girls Images
   static String girl1 = "assets/girls/girl_1.jpeg";

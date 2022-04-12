@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:page_view_indicators/page_view_indicators.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/favorites_model.dart';
@@ -26,6 +27,8 @@ class Profile extends StatefulWidget {
   List nightClub;
   List partyVacation;
   dynamic id;
+  String latitude;
+  String? longitude;
 
   Profile({
     Key? key,
@@ -36,6 +39,8 @@ class Profile extends StatefulWidget {
     required this.nightClub,
     required this.partyVacation,
     required this.id,
+    required this.latitude,
+    required this.longitude
   }) : super(key: key);
 
   @override
@@ -44,6 +49,8 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   final currentPageNotifier = ValueNotifier<int>(0);
+
+  double? distanceInMeters;
 
   late PageController controller;
 
@@ -61,7 +68,12 @@ class _ProfileState extends State<Profile> {
     return ViewModelBuilder<MainViewModel>.reactive(
       //onModelReady: (data) => data.initializeLoginModel(),
       onModelReady: (model) async {
-
+        distanceInMeters = Geolocator.distanceBetween(
+            double.parse(widget.latitude),
+            double.parse(widget.longitude!),
+            double.parse(model.userModel!.latitude!),
+            double.parse(model.userModel!.longitude!)
+        );
 
       },
       builder: (context, model, child) {
@@ -262,13 +274,17 @@ class _ProfileState extends State<Profile> {
                               Icon(Icons.location_pin,
                                   color: ColorUtils.text_dark),
                               Expanded(
-                                child: Text(
-                                  widget.address!,
-                                  style: TextStyle(
-                                    color: ColorUtils.text_dark,
-                                    fontFamily: FontUtils.modernistRegular,
-                                    fontSize: 1.8.t,
-                                  ),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      widget.address!,
+                                      style: TextStyle(
+                                        color: ColorUtils.text_dark,
+                                        fontFamily: FontUtils.modernistRegular,
+                                        fontSize: 1.8.t,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],

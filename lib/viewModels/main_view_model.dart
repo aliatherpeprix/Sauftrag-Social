@@ -1494,9 +1494,11 @@ class MainViewModel extends BaseViewModel {
       List alcoholDrink,
       List nightClub,
       List partyVacation,
+      String latitude,
+      String longitude,
       dynamic id) {
     navigationService.navigateToProfileScreen(
-        images, name, address, alcoholDrink, nightClub, partyVacation, id);
+        images, name, address, alcoholDrink, nightClub, partyVacation, id, latitude, longitude);
   }
 
   void navigateToMatchScreen() {
@@ -3125,4 +3127,8 @@ class MainViewModel extends BaseViewModel {
     notifyListeners();
     //print(getFaqsList);
   }
+
+
+
+
 }

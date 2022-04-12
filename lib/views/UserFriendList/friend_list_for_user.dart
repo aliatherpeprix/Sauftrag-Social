@@ -692,7 +692,7 @@ class _FriendListForUserState extends State<FriendListForUser> {
                                                                 GroupScreen(
                                                                     id: model.getListGroup[index].id,
                                                                     username: model.getListGroup[index].name,
-                                                                    groupUser : model.getListGroup[index].users,
+                                                                    //groupUser : model.getListGroup[index].users,
                                                                     userLength: model.getListGroup[index].users!.length
                                                                 )
                                                             ));

@@ -92,8 +92,11 @@ class _GroupDetailsState extends State<GroupDetails> {
                           ChannelMemberMetadataInput(data['id'].toString());
                       setMetadata.add(user);
                     }
-                    model.pubnub!.objects.setChannelMembers(
-                        model.chatController.text, setMetadata);
+                    model.pubnub!.objects.setChannelMetadata(model.chatController.text,
+                        ChannelMetadataInput(name: model.chatController.text,description: "Group", custom: {
+                      "admin" : model.userModel!.id
+                    }));
+                    model.pubnub!.objects.setChannelMembers(model.chatController.text, setMetadata);
                     print(setMetadata);
                     if(model.userModel!.role == 1){
                       Navigator.push(
@@ -103,8 +106,9 @@ class _GroupDetailsState extends State<GroupDetails> {
                                   .fade,
                               child:
                               GroupScreen(
-                                id: model.groupChatUser!.id ?? 0,
-                                username: model.groupChatUser!.name,
+                                  id: model.groupChatUser!.id ?? 0,
+                                  username: model.groupChatUser!.name,
+                                  userLength: model.groupChatUser!.users!.length
                               )
                           ));
                     }
@@ -118,7 +122,7 @@ class _GroupDetailsState extends State<GroupDetails> {
                               GroupScreen(
                                   id: model.groupChatUser!.id ?? 0,
                                   username: model.groupChatUser!.name,
-                                  //userLength: model.getListGroup[index].users!.length
+                                  userLength: model.groupChatUser!.users!.length
                               )
                           ));
                     }

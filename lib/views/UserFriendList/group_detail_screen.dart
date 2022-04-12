@@ -317,59 +317,59 @@ class _Group_DetailsState extends State<Group_Details> {
                           //
                           //   ],
                           // ),
-                          ListView.separated(
-                              padding:
-                              EdgeInsets.only(top: 0.h),
-                              physics: BouncingScrollPhysics(),
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                return Column(
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment
-                                          .spaceBetween,
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            // Stack(
-                                            //   alignment:
-                                            //       Alignment.topCenter,
-                                            //   children: [
-                                            CircleAvatar(
-                                              radius: 28.0,
-                                              backgroundImage:
-                                              NetworkImage(
-                                                  widget.groupUser![index].profile_picture??
-                                                      "https://tse2.mm.bing.net/th?id=OIP.4gcGG1F0z6LjVlJjYWGGcgHaHa&pid=Api&P=0&w=164&h=164"),
-                                            backgroundColor:
-                                              Colors
-                                                  .transparent,
-                                            ),
-                                            SizedBox(width: 5.w,),
-                                            Text(widget.groupUser![index].username!,
-                                              style: TextStyle(
-                                                          fontSize: 1.8.t,
-                                                          fontFamily: FontUtils.modernistBold,
-                                                          color: ColorUtils.black
-                                                      ))
-                                          ],
-                                        ),
-
-                                      ],
-                                    ),
-                                  ],
-                                );
-                              },
-                              separatorBuilder: (context, index) {
-                                return SizedBox(
-                                  height: 2.h,
-                                );
-                              },
-                              itemCount: widget.groupUser!.length
-                          ),
+                          // ListView.separated(
+                          //     padding:
+                          //     EdgeInsets.only(top: 0.h),
+                          //     physics: BouncingScrollPhysics(),
+                          //     shrinkWrap: true,
+                          //     itemBuilder: (context, index) {
+                          //       return Column(
+                          //         children: [
+                          //           Row(
+                          //             mainAxisAlignment:
+                          //             MainAxisAlignment
+                          //                 .spaceBetween,
+                          //             crossAxisAlignment:
+                          //             CrossAxisAlignment.start,
+                          //             children: [
+                          //               Row(
+                          //                 children: [
+                          //                   // Stack(
+                          //                   //   alignment:
+                          //                   //       Alignment.topCenter,
+                          //                   //   children: [
+                          //                   CircleAvatar(
+                          //                     radius: 28.0,
+                          //                     backgroundImage:
+                          //                     NetworkImage(
+                          //                         widget.groupUser![index].profile_picture??
+                          //                             "https://tse2.mm.bing.net/th?id=OIP.4gcGG1F0z6LjVlJjYWGGcgHaHa&pid=Api&P=0&w=164&h=164"),
+                          //                   backgroundColor:
+                          //                     Colors
+                          //                         .transparent,
+                          //                   ),
+                          //                   SizedBox(width: 5.w,),
+                          //                   Text(widget.groupUser![index].username!,
+                          //                     style: TextStyle(
+                          //                                 fontSize: 1.8.t,
+                          //                                 fontFamily: FontUtils.modernistBold,
+                          //                                 color: ColorUtils.black
+                          //                             ))
+                          //                 ],
+                          //               ),
+                          //
+                          //             ],
+                          //           ),
+                          //         ],
+                          //       );
+                          //     },
+                          //     separatorBuilder: (context, index) {
+                          //       return SizedBox(
+                          //         height: 2.h,
+                          //       );
+                          //     },
+                          //     itemCount: widget.groupUser!.length
+                          // ),
                         ],
                       )
                     ),

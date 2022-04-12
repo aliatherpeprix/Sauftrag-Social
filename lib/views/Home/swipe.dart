@@ -341,7 +341,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                 }
                               },
                               child: model.getStatus == null
-                                  ? SvgPicture.asset(ImageUtils.setStatusIcon)
+                                  ? SvgPicture.asset(ImageUtils.beerMug)
                                   : Row(
                                       children: [
                                         SvgPicture.asset(
@@ -536,8 +536,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                       child: Stack(
                                         alignment: AlignmentDirectional.center,
                                         children: model.catalogImages.map((item) {
-                                          return SwipeCard
-                                            (
+                                          return SwipeCard(
                                             name: model
                                                 .discoverModel![model.catalogImages.indexOf(item)]
                                                 .username,
@@ -545,8 +544,9 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                             cardWidth: backCardWidth + 0,
                                             rotation: rotate.value,
                                             skew: rotate.value < -10 ? 0.1 : 0.0,
-                                            address: model.discoverModel![model.catalogImages.indexOf(item)]
-                                                .address,
+                                            address: model.discoverModel![model.catalogImages.indexOf(item)].address,
+                                            latitude: model.discoverModel![model.catalogImages.indexOf(item)].latitude,
+                                            longitude: model.discoverModel![model.catalogImages.indexOf(item)].longitude,
                                             details: () {
                                               if(model.catalogImages.isNotEmpty){
                                                 model.navigateToProfileScreen(
@@ -574,6 +574,16 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                                       .catalogImages
                                                       .indexOf(item)]
                                                       .favorite_party_vacation!,
+                                                  model
+                                                      .discoverModel![model
+                                                      .catalogImages
+                                                      .indexOf(item)]
+                                                      .latitude!,
+                                                  model
+                                                      .discoverModel![model
+                                                      .catalogImages
+                                                      .indexOf(item)]
+                                                      .longitude!,
                                                   model
                                                       .discoverModel![model
                                                       .catalogImages

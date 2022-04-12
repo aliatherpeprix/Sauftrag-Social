@@ -32,10 +32,15 @@ class SwipeCard extends StatefulWidget {
   Function swipeRight;
   String? name;
   String?address;
+  String? latitude;
+  String? longitude;
   dynamic id;
 
 
-  SwipeCard({Key? key, required this.img, required this.bottom, required this.right, required this.left, required this.cardWidth, required this.rotation, required this.skew, required this.flag, required this.dismissImg, required this.addImg, required this.details, required this.swipeLeft, required this.swipeRight,required this.name,required this.address,required this.id}) : super(key: key);
+  SwipeCard({Key? key, required this.img, required this.bottom, required this.right, required this.left, required this.cardWidth,
+    required this.rotation, required this.skew, required this.flag, required this.dismissImg, required this.addImg,
+    required this.details, required this.swipeLeft, required this.swipeRight,required this.name,required this.address,
+    required this.latitude, required this.longitude,  required this.id}) : super(key: key);
 
   @override
   _SwipeCardState createState() => _SwipeCardState();
