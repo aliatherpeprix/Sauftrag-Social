@@ -26,6 +26,7 @@ import 'package:sauftrag/bar/views/Drawer/qr_code_scanner.dart';
 import 'package:sauftrag/bar/views/Drawer/ranking_list.dart';
 import 'package:sauftrag/bar/views/Drawer/requestUserProfile.dart';
 import 'package:sauftrag/bar/views/Drawer/upcoming_event.dart';
+import 'package:sauftrag/bar/views/Drawer/user_feedback.dart';
 import 'package:sauftrag/bar/views/Home/barEvent_map.dart';
 import 'package:sauftrag/bar/views/Home/bar_create_post.dart';
 import 'package:sauftrag/bar/views/Home/bar_drinks.dart';
@@ -138,6 +139,10 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateToNotificationScreen(){
     navigationKey.currentState!.push(PageTransition(child: Notifications(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToUserFeedbackScreen(){
+    navigationKey.currentState!.push(PageTransition(child: UserFeedback(), type: PageTransitionType.rightToLeftWithFade));
   }
 
   void navigateToFollowersListScreen(){

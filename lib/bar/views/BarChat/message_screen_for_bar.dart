@@ -28,6 +28,7 @@ class MessageScreenForBar extends StatefulWidget {
   int? id;
   String? username;
   String? profilePic;
+
   MessageScreenForBar({Key? key, this.id, this.username, this.profilePic})
       : super(key: key);
 
@@ -44,7 +45,6 @@ class _MessageScreenForBarState extends State<MessageScreenForBar> {
     super.dispose();
     MainViewModel model = locator<MainViewModel>();
     model.subscription!.pause();
-
   }
 
   @override
@@ -54,16 +54,17 @@ class _MessageScreenForBarState extends State<MessageScreenForBar> {
       onModelReady: (model) async {
         model.initBarPubNub();
         // model.chat();
-       // model.getAllUserForChat();
+        // model.getAllUserForChat();
         model.chats.clear();
-        
+
         // Subscribe to a channel
         NewBarModel barUser =
             (await locator<PrefrencesViewModel>().getBarUser())!;
-        model.subscription = model.pubnub!.subscribe(
-            channels: {"${model.getConversationID(barUser.id.toString(), widget.id.toString())}"});
-        var channel =
-            model.pubnub!.channel("${model.getConversationID(barUser.id.toString(), widget.id.toString())}");
+        model.subscription = model.pubnub!.subscribe(channels: {
+          "${model.getConversationID(barUser.id.toString(), widget.id.toString())}"
+        });
+        var channel = model.pubnub!.channel(
+            "${model.getConversationID(barUser.id.toString(), widget.id.toString())}");
         var chat = await channel.messages();
         var data = await chat.count();
         await chat.fetch().whenComplete(() {
@@ -74,17 +75,19 @@ class _MessageScreenForBarState extends State<MessageScreenForBar> {
           model.notifyListeners();
         });
 
-        model.pubnub!.fetchMessageActions("${model.getConversationID(barUser.id.toString(), widget.id.toString())}",limit: 20).then((value){
+        model.pubnub!
+            .fetchMessageActions(
+                "${model.getConversationID(barUser.id.toString(), widget.id.toString())}",
+                limit: 20)
+            .then((value) {
           print(value);
         });
-
-    
 
         model.subscription!.messages.listen((message) async {
           model.chats.add(message.content);
           model.notifyListeners();
         });
-        
+
         // Send a message every second for 5 seconds
 
         // Unsubscribe and quit
@@ -105,7 +108,7 @@ class _MessageScreenForBarState extends State<MessageScreenForBar> {
             child: Scaffold(
               // resizeToAvoidBottomInset: false,
               backgroundColor: Colors.white,
-              
+
               body: SingleChildScrollView(
                 // physics: NeverScrollableScrollPhysics(),
                 child: Container(
@@ -344,7 +347,9 @@ class _MessageScreenForBarState extends State<MessageScreenForBar> {
                                               child: Padding(
                                                 padding: EdgeInsets.all(8.0),
                                                 child: Text(
-                                                  model.chats[index]["time"].toString().substring(11,16),
+                                                  model.chats[index]["time"]
+                                                      .toString()
+                                                      .substring(11, 16),
                                                   style: TextStyle(
                                                       //fontFamily: FontUtils.avertaDemoRegular,
                                                       fontSize: 1.5.t,
@@ -442,8 +447,9 @@ class _MessageScreenForBarState extends State<MessageScreenForBar> {
                                                                       100),
                                                           child: TextField(
                                                             onTap: () {},
-                                                            onChanged: (value){
-                                                              model.notifyListeners();
+                                                            onChanged: (value) {
+                                                              model
+                                                                  .notifyListeners();
                                                             },
                                                             // enabled: true,
                                                             //readOnly: true,
@@ -595,65 +601,72 @@ class _MessageScreenForBarState extends State<MessageScreenForBar> {
                                       ),
                                     ),
                                   ),
-                                  model.groupScreenChatController.text.length <=0 ?
-Container(
-                                      //margin: EdgeInsets.only(bottom: 2.2.h),
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: ColorUtils.text_grey,
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(15.0),
-                                        child: SvgPicture.asset(
-                                          ImageUtils.sendIcon1,
-                                          color: Colors.white,
+                                  model.groupScreenChatController.text.length <=
+                                          0
+                                      ? Container(
+                                          //margin: EdgeInsets.only(bottom: 2.2.h),
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: ColorUtils.text_grey,
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(15.0),
+                                            child: SvgPicture.asset(
+                                              ImageUtils.sendIcon1,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        )
+                                      : InkWell(
+                                          onTap: () async {
+                                            // NewBarModel barUser =
+                                            //     (await locator<PrefrencesViewModel>()
+                                            //         .getBarUser())!;
+                                            UserModel barUser = (await locator<
+                                                    PrefrencesViewModel>()
+                                                .getUser())!;
+                                            // model.chat();
+                                            model.pubnub!.publish(
+                                                model.getConversationID(
+                                                    barUser.id.toString(),
+                                                    widget.id.toString()),
+                                                {
+                                                  "content": model
+                                                      .groupScreenChatController
+                                                      .text,
+                                                  "userID":
+                                                      barUser.id!.toString(),
+                                                  "time":
+                                                      DateTime.now().toString()
+                                                });
+                                            // model.pubnub!.files.publishFileMessage(model.getConversationID(barUser.id.toString(), widget.id.toString()), FileMessage(file));
+                                            model.groupScreenChatController
+                                                .clear();
+                                            model.notifyListeners();
+                                            Future.delayed(Duration(seconds: 2),
+                                                () {
+                                              model.scrollDown();
+                                            });
+                                          },
+                                          child: Container(
+                                            //margin: EdgeInsets.only(bottom: 2.2.h),
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: ColorUtils.text_red,
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(15.0),
+                                              child: SvgPicture.asset(
+                                                ImageUtils.sendIcon1,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                    )
-
-                                 : InkWell(
-                                    onTap: () async {
-                                      // NewBarModel barUser =
-                                      //     (await locator<PrefrencesViewModel>()
-                                      //         .getBarUser())!;
-                                      UserModel barUser =
-                                          (await locator<PrefrencesViewModel>()
-                                              .getUser())!;
-                                      // model.chat();
-                                      model.pubnub!.publish(
-                                          model.getConversationID(barUser.id.toString(), widget.id.toString()),
-                                          {
-                                            "content": model
-                                                .groupScreenChatController.text,
-                                            "userID": barUser.id!.toString(),
-                                            "time": DateTime.now().toString()
-                                          });
-                                          // model.pubnub!.files.publishFileMessage(model.getConversationID(barUser.id.toString(), widget.id.toString()), FileMessage(file));
-                                      model.groupScreenChatController.clear();
-                                      model.notifyListeners();
-                                      Future.delayed(Duration(seconds: 2), () {
-                                      model.scrollDown();
-                                      });
-                                    },
-                                    child: Container(
-                                      //margin: EdgeInsets.only(bottom: 2.2.h),
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: ColorUtils.text_red,
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(15.0),
-                                        child: SvgPicture.asset(
-                                          ImageUtils.sendIcon1,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
-                           
                           ],
                         ),
                       ],

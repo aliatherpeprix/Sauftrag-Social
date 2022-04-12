@@ -139,6 +139,7 @@ class MainViewModel extends BaseViewModel {
   final mapSearchController = TextEditingController();
   final searchScreenController = TextEditingController();
   final friendListSearchController = TextEditingController();
+  final feedbackController = TextEditingController();
   bool openGroupMenu = false;
   bool openBurgerMenu = false;
   bool privateGroupSelected = false;
@@ -1560,6 +1561,10 @@ class MainViewModel extends BaseViewModel {
 
   void navigateToNotificationScreen() {
     navigationService.navigateToNotificationScreen();
+  }
+
+  void navigateToUserFeedbackScreen() {
+    navigationService.navigateToUserFeedbackScreen();
   }
 
   void navigateToFollowersListScreen() {

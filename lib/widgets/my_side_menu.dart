@@ -354,6 +354,39 @@ class _MySideMenuState extends State<MySideMenu> {
                 ),
               ),
 
+              //FeedBack
+              InkWell(
+                onTap: () {
+
+                  // showDialog(
+                  //     context: context,
+                  //     builder: (BuildContext context){
+                  //       return DialogEvent(title: "Add New Location", btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+                  //     }
+                  // ) ;
+                  model.navigateToUserFeedbackScreen();
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: Dimensions.containerHorizontalPadding,
+                      vertical: Dimensions.containerVerticalPadding),
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(ImageUtils.eventsIcon),
+                      SizedBox(width: 2.w),
+                      Text(
+                        "Feedback",
+                        style: TextStyle(
+                          color: ColorUtils.white,
+                          fontFamily: FontUtils.modernistBold,
+                          fontSize: 1.8.t,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
               //Logout
               InkWell(
 
