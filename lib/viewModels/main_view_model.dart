@@ -1494,11 +1494,10 @@ class MainViewModel extends BaseViewModel {
       List alcoholDrink,
       List nightClub,
       List partyVacation,
-      String latitude,
-      String longitude,
-      dynamic id) {
+      dynamic id,
+      int? distance) {
     navigationService.navigateToProfileScreen(
-        images, name, address, alcoholDrink, nightClub, partyVacation, id, latitude, longitude);
+        images, name, address, alcoholDrink, nightClub, partyVacation, id, distance!);
   }
 
   void navigateToMatchScreen() {

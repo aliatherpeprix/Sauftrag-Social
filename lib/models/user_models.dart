@@ -35,6 +35,7 @@ class UserModel {
   String? password2;
   String? token;
   List<UserMatchedModel>? friends;
+  double? distance;
 
 
   factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);

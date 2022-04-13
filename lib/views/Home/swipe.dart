@@ -252,6 +252,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                   if (_state!.isOpened) _state.closeSideMenu();
                   model.notifyListeners();
                 },
+
                 child: Container(
                   padding: EdgeInsets.symmetric(
                       horizontal: 0, vertical: Dimensions.verticalPadding),
@@ -537,16 +538,14 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                         alignment: AlignmentDirectional.center,
                                         children: model.catalogImages.map((item) {
                                           return SwipeCard(
-                                            name: model
-                                                .discoverModel![model.catalogImages.indexOf(item)]
+                                            name: model.discoverModel![model.catalogImages.indexOf(item)]
                                                 .username,
                                             img: item,
                                             cardWidth: backCardWidth + 0,
                                             rotation: rotate.value,
                                             skew: rotate.value < -10 ? 0.1 : 0.0,
                                             address: model.discoverModel![model.catalogImages.indexOf(item)].address,
-                                            latitude: model.discoverModel![model.catalogImages.indexOf(item)].latitude,
-                                            longitude: model.discoverModel![model.catalogImages.indexOf(item)].longitude,
+                                            distance : model.discoverModel![model.catalogImages.indexOf(item)].distance!,
                                             details: () {
                                               if(model.catalogImages.isNotEmpty){
                                                 model.navigateToProfileScreen(
@@ -578,17 +577,12 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                                       .discoverModel![model
                                                       .catalogImages
                                                       .indexOf(item)]
-                                                      .latitude!,
-                                                  model
-                                                      .discoverModel![model
-                                                      .catalogImages
-                                                      .indexOf(item)]
-                                                      .longitude!,
-                                                  model
-                                                      .discoverModel![model
-                                                      .catalogImages
-                                                      .indexOf(item)]
                                                       .id,
+                                                  model
+                                                      .discoverModel![model
+                                                      .catalogImages
+                                                      .indexOf(item)]
+                                                      .distance!.toInt(),
                                                 );
                                               }
                                             },

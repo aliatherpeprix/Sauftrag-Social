@@ -35,7 +35,8 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel()
   ..token = json['token'] as String?
   ..friends = (json['friends'] as List<dynamic>?)
       ?.map((e) => UserMatchedModel.fromJson(e as Map<String, dynamic>))
-      .toList();
+      .toList()
+  ..distance = (json['distance'] as num?)?.toDouble();
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'id': instance.id,
@@ -65,4 +66,5 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'password2': instance.password2,
       'token': instance.token,
       'friends': instance.friends,
+      'distance': instance.distance,
     };

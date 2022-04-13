@@ -27,8 +27,8 @@ class Profile extends StatefulWidget {
   List nightClub;
   List partyVacation;
   dynamic id;
-  String latitude;
-  String? longitude;
+  int distance;
+
 
   Profile({
     Key? key,
@@ -39,8 +39,8 @@ class Profile extends StatefulWidget {
     required this.nightClub,
     required this.partyVacation,
     required this.id,
-    required this.latitude,
-    required this.longitude
+    required this.distance
+
   }) : super(key: key);
 
   @override
@@ -50,7 +50,7 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   final currentPageNotifier = ValueNotifier<int>(0);
 
-  double? distanceInMeters;
+ // double? distanceInMeters;
 
   late PageController controller;
 
@@ -68,12 +68,7 @@ class _ProfileState extends State<Profile> {
     return ViewModelBuilder<MainViewModel>.reactive(
       //onModelReady: (data) => data.initializeLoginModel(),
       onModelReady: (model) async {
-        distanceInMeters = Geolocator.distanceBetween(
-            double.parse(widget.latitude),
-            double.parse(widget.longitude!),
-            double.parse(model.userModel!.latitude!),
-            double.parse(model.userModel!.longitude!)
-        );
+
 
       },
       builder: (context, model, child) {
@@ -275,9 +270,20 @@ class _ProfileState extends State<Profile> {
                                   color: ColorUtils.text_dark),
                               Expanded(
                                 child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
                                       widget.address!,
+                                      style: TextStyle(
+                                        color: ColorUtils.text_dark,
+                                        fontFamily: FontUtils.modernistRegular,
+                                        fontSize: 1.8.t,
+                                      ),
+                                    ),
+                                    SizedBox(height: 0.5.h),
+                                    Text(
+                                      widget.distance.toString() + " km",
                                       style: TextStyle(
                                         color: ColorUtils.text_dark,
                                         fontFamily: FontUtils.modernistRegular,

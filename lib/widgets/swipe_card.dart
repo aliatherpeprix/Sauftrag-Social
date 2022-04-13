@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:page_view_indicators/circle_page_indicator.dart';
 import 'package:sauftrag/app/locator.dart';
@@ -32,15 +33,15 @@ class SwipeCard extends StatefulWidget {
   Function swipeRight;
   String? name;
   String?address;
-  String? latitude;
-  String? longitude;
+  double distance;
+
   dynamic id;
 
 
   SwipeCard({Key? key, required this.img, required this.bottom, required this.right, required this.left, required this.cardWidth,
     required this.rotation, required this.skew, required this.flag, required this.dismissImg, required this.addImg,
     required this.details, required this.swipeLeft, required this.swipeRight,required this.name,required this.address,
-    required this.latitude, required this.longitude,  required this.id}) : super(key: key);
+    required this.distance, required this.id}) : super(key: key);
 
   @override
   _SwipeCardState createState() => _SwipeCardState();
@@ -287,29 +288,53 @@ class _SwipeCardState extends State<SwipeCard> {
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           SizedBox(height: 0.8.h),
-                                          Text(
-                                            widget.name!,
-                                            style: TextStyle(
-                                              color: ColorUtils.white,
-                                              fontFamily: FontUtils.modernistBold,
-                                              fontSize: 2.2.t,
-                                            ),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                widget.name!,
+                                                style: TextStyle(
+                                                  color: ColorUtils.white,
+                                                  fontFamily: FontUtils.modernistBold,
+                                                  fontSize: 2.2.t,
+                                                ),
+                                              ),
+                                              GestureDetector(
+                                                  onTap: (){
+                                                    widget.details();
+                                                  },
+                                                  child: SvgPicture.asset(ImageUtils.infoIcon,height: 3.h, ))
+                                            ],
                                           ),
                                           SizedBox(height: 1.h),
 
                                           Row(
                                             children: [
-
                                               Icon(Icons.location_pin, color: ColorUtils.white, size: 5.i,),
-
+                                              SizedBox(width: 3.w,),
                                               Expanded(
-                                                child: Text(
-                                                 widget.address!,
-                                                  style: TextStyle(
-                                                    color: ColorUtils.white,
-                                                    fontFamily: FontUtils.modernistRegular,
-                                                    fontSize: 1.5.t,
-                                                  ),
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                     widget.address!,
+                                                      style: TextStyle(
+                                                        color: ColorUtils.white,
+                                                        fontFamily: FontUtils.modernistRegular,
+                                                        fontSize: 1.5.t,
+                                                      ),
+                                                    ),
+                                                    SizedBox(height: 0.5.h),
+                                                    Text(widget.distance.toStringAsFixed(0) + " km",
+                                                      style: TextStyle(
+                                                        color: ColorUtils.white,
+                                                        fontFamily: FontUtils.modernistRegular,
+                                                        fontSize: 1.5.t,
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
                                             ],

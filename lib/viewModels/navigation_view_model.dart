@@ -197,8 +197,15 @@ class NavigationViewModel extends BaseViewModel{
     navigationKey.currentState!.pushAndRemoveUntil(PageTransition(child: MainView(index: index), type: PageTransitionType.rightToLeftWithFade),(Route<dynamic> route) => false);
   }
 
-  void navigateToProfileScreen(List<String> images,String? name,String? address,List alcoholDrink,List nightClub, List partyVacation,
-      dynamic id, String latitude, String longitude){
+  void navigateToProfileScreen(
+      List<String> images,
+      String? name,
+      String? address,
+      List alcoholDrink,
+      List nightClub,
+      List partyVacation,
+      dynamic id,
+      int distance,){
     navigationKey.currentState!.push(PageTransition(child:
     Profile(
       images: images,
@@ -208,8 +215,7 @@ class NavigationViewModel extends BaseViewModel{
       nightClub:nightClub,
       partyVacation: partyVacation,
       id: id,
-      latitude: latitude,
-      longitude: longitude,
+      distance: distance,
     ), type: PageTransitionType.rightToLeftWithFade));
   }
 
