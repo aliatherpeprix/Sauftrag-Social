@@ -98,7 +98,7 @@ class _MapScreenState extends State<MapScreen> {
       viewModelBuilder: () => locator<MainViewModel>(),
       onModelReady: (model) {
         model.updateCurrentLocation();
-        model.getListOfUpcomingEvents();
+        //model.getListOfUpcomingEvents();
       },
       disposeViewModel: false,
       builder: (context, model, child) {
@@ -270,153 +270,156 @@ class _MapScreenState extends State<MapScreen> {
                     ),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: SizeConfig.widthMultiplier * 4,
-                        ),
-                        child: Text("Near Events",
-                        style: TextStyle(
-                          fontFamily: FontUtils.modernistBold,
-                          fontSize: 2.t,
-                          color: Colors.black,
-                            shadows: [
-                              Shadow(
-                                  color: Colors.black.withOpacity(0.5),
-                                  offset: const Offset(5, 5),
-                                  blurRadius: 15),
-                            ]
-                        ),
-                        ),
-                      ),
 
-                      Container(
-                        margin: EdgeInsets.only(bottom: 5.h),
-                        height: 14.8.h,
-                        child: ListView.separated(
-                          padding: EdgeInsets.zero,
-                          scrollDirection: Axis.horizontal,
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: SizeConfig.widthMultiplier * 2,
-                                vertical: SizeConfig.widthMultiplier * 3
-                              ),
-                              child: GestureDetector(
-                                onTap: () {
-                                  model.selectedUpcomingEvents = (model.listOfUpcomingEvents[index]);
-                                  // model.selectedBar = (model.listOfBar[index]);
-                                  model.navigateToUpcomingBarEventDetails();
-                                },
-                                child: Container(
-                                  //height: 12.h,
-                                  width: MediaQuery.of(context).size.width / 1.2,
-                                  decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: ColorUtils.black
-                                            .withOpacity(0.2),
-                                        spreadRadius: 0,
-                                        blurRadius: 10,
-                                        offset: Offset(0,
-                                            5), // changes position of shadow
-                                      ),
-                                    ],
-                                    color: Colors.white.withOpacity(0.8),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(18)),
-                                    border: Border.all(color: ColorUtils.red_color),
-                                  ),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 2.w, vertical: 1.5.h),
-                                        child: Row(
-                                          children: [
-                                            ClipRRect(
-                                              borderRadius: BorderRadius.circular(10),
-                                              child: Image.network(
-                                                model.listOfUpcomingEvents[index].media![0].media,
-                                                width: 18.i,
-                                                height: 18.i,
-                                                fit: BoxFit.fill,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: 3.w,
-                                            ),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  model.listOfUpcomingEvents[index].event_date!,
-                                                  style: TextStyle(
-                                                      fontFamily:
-                                                          FontUtils.modernistRegular,
-                                                      fontSize: 1.7.t,
-                                                      color: ColorUtils.text_red),
-                                                ),
-                                                SizedBox(
-                                                  height: 1.h,
-                                                ),
-                                                Text(
-                                                  model.listOfUpcomingEvents[index].name!,
-                                                  style: TextStyle(
-                                                      fontFamily:
-                                                          FontUtils.modernistBold,
-                                                      fontSize: 2.2.t,
-                                                      color: ColorUtils.blackText),
-                                                ),
-                                                SizedBox(
-                                                  height: 1.h,
-                                                ),
-                                                Container(
-                                                  width: 55.w,
-                                                  child: Text(
-                                                    model.listOfUpcomingEvents[index].location!,
-                                                    style: TextStyle(
-                                                        fontFamily:
-                                                            FontUtils.modernistRegular,
-                                                        fontSize: 1.7.t,
-                                                        color: ColorUtils.text_dark),
-                                                      maxLines: 1,
-                                                      overflow: TextOverflow.ellipsis,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                          separatorBuilder: (context, index) {
-                            return SizedBox(
-                              width: SizeConfig.widthMultiplier * 0,
-                            );
-                          },
-                          itemCount: model.listOfUpcomingEvents.length,
-                        ),
-                      ),
+                ///----- NEAR EVENTS------////
 
-                    ],
-                  ),
-                ),
+                // Align(
+                //   alignment: Alignment.bottomCenter,
+                //   child: Column(
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     mainAxisSize: MainAxisSize.min,
+                //     children: [
+                //       Container(
+                //         padding: EdgeInsets.symmetric(
+                //           horizontal: SizeConfig.widthMultiplier * 4,
+                //         ),
+                //         child: Text("Near Events",
+                //         style: TextStyle(
+                //           fontFamily: FontUtils.modernistBold,
+                //           fontSize: 2.t,
+                //           color: Colors.black,
+                //             shadows: [
+                //               Shadow(
+                //                   color: Colors.black.withOpacity(0.5),
+                //                   offset: const Offset(5, 5),
+                //                   blurRadius: 15),
+                //             ]
+                //         ),
+                //         ),
+                //       ),
+                //
+                //       Container(
+                //         margin: EdgeInsets.only(bottom: 5.h),
+                //         height: 14.8.h,
+                //         child: ListView.separated(
+                //           padding: EdgeInsets.zero,
+                //           scrollDirection: Axis.horizontal,
+                //           physics: const AlwaysScrollableScrollPhysics(),
+                //           shrinkWrap: true,
+                //           itemBuilder: (context, index) {
+                //             return Padding(
+                //               padding: EdgeInsets.symmetric(
+                //                 horizontal: SizeConfig.widthMultiplier * 2,
+                //                 vertical: SizeConfig.widthMultiplier * 3
+                //               ),
+                //               child: GestureDetector(
+                //                 onTap: () {
+                //                   model.selectedUpcomingEvents = (model.listOfUpcomingEvents[index]);
+                //                   // model.selectedBar = (model.listOfBar[index]);
+                //                   model.navigateToUpcomingBarEventDetails();
+                //                 },
+                //                 child: Container(
+                //                   //height: 12.h,
+                //                   width: MediaQuery.of(context).size.width / 1.2,
+                //                   decoration: BoxDecoration(
+                //                     boxShadow: [
+                //                       BoxShadow(
+                //                         color: ColorUtils.black
+                //                             .withOpacity(0.2),
+                //                         spreadRadius: 0,
+                //                         blurRadius: 10,
+                //                         offset: Offset(0,
+                //                             5), // changes position of shadow
+                //                       ),
+                //                     ],
+                //                     color: Colors.white.withOpacity(0.8),
+                //                     borderRadius:
+                //                         BorderRadius.all(Radius.circular(18)),
+                //                     border: Border.all(color: ColorUtils.red_color),
+                //                   ),
+                //                   child: Column(
+                //                     mainAxisSize: MainAxisSize.min,
+                //                     crossAxisAlignment: CrossAxisAlignment.start,
+                //                     children: [
+                //                       Padding(
+                //                         padding: EdgeInsets.symmetric(
+                //                             horizontal: 2.w, vertical: 1.5.h),
+                //                         child: Row(
+                //                           children: [
+                //                             ClipRRect(
+                //                               borderRadius: BorderRadius.circular(10),
+                //                               child: Image.network(
+                //                                 model.listOfUpcomingEvents[index].media![0].media,
+                //                                 width: 18.i,
+                //                                 height: 18.i,
+                //                                 fit: BoxFit.fill,
+                //                               ),
+                //                             ),
+                //                             SizedBox(
+                //                               width: 3.w,
+                //                             ),
+                //                             Column(
+                //                               crossAxisAlignment:
+                //                                   CrossAxisAlignment.start,
+                //                               children: [
+                //                                 Text(
+                //                                   model.listOfUpcomingEvents[index].event_date!,
+                //                                   style: TextStyle(
+                //                                       fontFamily:
+                //                                           FontUtils.modernistRegular,
+                //                                       fontSize: 1.7.t,
+                //                                       color: ColorUtils.text_red),
+                //                                 ),
+                //                                 SizedBox(
+                //                                   height: 1.h,
+                //                                 ),
+                //                                 Text(
+                //                                   model.listOfUpcomingEvents[index].name!,
+                //                                   style: TextStyle(
+                //                                       fontFamily:
+                //                                           FontUtils.modernistBold,
+                //                                       fontSize: 2.2.t,
+                //                                       color: ColorUtils.blackText),
+                //                                 ),
+                //                                 SizedBox(
+                //                                   height: 1.h,
+                //                                 ),
+                //                                 Container(
+                //                                   width: 55.w,
+                //                                   child: Text(
+                //                                     model.listOfUpcomingEvents[index].location!,
+                //                                     style: TextStyle(
+                //                                         fontFamily:
+                //                                             FontUtils.modernistRegular,
+                //                                         fontSize: 1.7.t,
+                //                                         color: ColorUtils.text_dark),
+                //                                       maxLines: 1,
+                //                                       overflow: TextOverflow.ellipsis,
+                //                                   ),
+                //                                 ),
+                //                               ],
+                //                             ),
+                //                           ],
+                //                         ),
+                //                       ),
+                //                     ],
+                //                   ),
+                //                 ),
+                //               ),
+                //             );
+                //           },
+                //           separatorBuilder: (context, index) {
+                //             return SizedBox(
+                //               width: SizeConfig.widthMultiplier * 0,
+                //             );
+                //           },
+                //           itemCount: model.listOfUpcomingEvents.length,
+                //         ),
+                //       ),
+                //
+                //     ],
+                //   ),
+                // ),
               ],
             ),
           ),
