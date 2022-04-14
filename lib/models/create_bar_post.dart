@@ -7,6 +7,7 @@ part 'create_bar_post.g.dart';
 class CreateBarPost {
   CreateBarPost();
 
+  int? id;
   dynamic post_type;
   String? post_location;
   String? post_content;

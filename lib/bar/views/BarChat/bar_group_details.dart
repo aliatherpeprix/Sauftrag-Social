@@ -65,30 +65,13 @@ class _BarGroupDetailsState extends State<BarGroupDetails> {
                     for (var data in model.groupList) {
                       model.getUserId.add(data['id']);
                     }
-
                     await model.createGroupChatBar();
                     NewBarModel barUser =
                         (await locator<PrefrencesViewModel>().getBarUser())!;
                     UserModel user =
                         (await locator<PrefrencesViewModel>().getUser())!;
-                     // model.pubnub = PubNub(
-                     //    defaultKeyset: Keyset(
-                     //        subscribeKey:
-                     //            'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
-                     //        publishKey:
-                     //            'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
-                     //        uuid: UUID(user.id.toString())));
-                   // Subscribe to a channel
                      model.subscription = model.pubnub!.subscribe(channels: {model.barGroupNameController.text});
                      model.channel = model.pubnub!.channel(model.barGroupNameController.text);
-
-                    // if(model.logInUserSelected == true){
-                    //   model.navigateToFriendListScreen();
-                    // }
-                    // else if(model.logInBarSelected == true){
-                    //   model.navigateToFriendListScreen1();
-                    // }
-
                     List<ChannelMemberMetadataInput> setMetadata = [];
                     for (var data in model.groupList) {
                       var user =
@@ -125,8 +108,6 @@ class _BarGroupDetailsState extends State<BarGroupDetails> {
                               )
                           ));
                     }
-                    //model.navigateToGroupScreen();
-                    //model.navigateToFriendListScreen1();
                   },
                   child: const Text("Create Group"),
                   style: ElevatedButton.styleFrom(

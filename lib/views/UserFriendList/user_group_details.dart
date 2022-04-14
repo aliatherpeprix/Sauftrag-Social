@@ -129,7 +129,7 @@ class _GroupDetailsState extends State<GroupDetails> {
                     //model.navigateToGroupScreen();
                     //model.navigateToFriendListScreen1();
                   },
-                  child: const Text("Create Group"),
+                  child: const Text("imageFiles[5]oup"),
                   style: ElevatedButton.styleFrom(
                     primary: ColorUtils.text_red,
                     onPrimary: ColorUtils.white,

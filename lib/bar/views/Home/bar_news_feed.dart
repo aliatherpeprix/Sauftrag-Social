@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:date_picker_timeline/extra/dimen.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:expand_tap_area/expand_tap_area.dart';
+import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -18,6 +19,7 @@ import 'package:sauftrag/models/create_bar_post.dart';
 import 'package:sauftrag/models/create_bar_post.dart';
 import 'package:sauftrag/models/create_bar_post.dart';
 import 'package:sauftrag/models/create_bar_post.dart';
+import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/extensions.dart';
@@ -25,6 +27,7 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/viewModels/prefrences_view_model.dart';
 import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:sauftrag/widgets/all_page_loader.dart';
 import 'package:sauftrag/widgets/drink_status_dialog_box.dart';
@@ -46,6 +49,8 @@ class BarNewsFeed extends StatefulWidget {
 }
 
 class _BarNewsFeedState extends State<BarNewsFeed> {
+
+  final expandableController = ExpandableController();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   static const _actionTitles = ['Create Post', 'Upload Photo', 'Upload Video'];
   List newsEvents = [
@@ -467,53 +472,255 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
                                                         fit: BoxFit.cover,
                                                       )),
                                                     Divider(),
+                                                    ///LIKE AND COMMENT
                                                     Row(
+                                                      mainAxisAlignment: MainAxisAlignment.start,
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: [
-                                                        Row(
-                                                          children: [
-                                                            SvgPicture.asset(
-                                                              ImageUtils.msgIcon,
-                                                              color: ColorUtils
-                                                                  .icon_color,
+
+                                                        Expanded(
+                                                          child: ExpandableTheme(
+                                                            data: ExpandableThemeData(
+                                                              headerAlignment:
+                                                              ExpandablePanelHeaderAlignment.top,
+                                                              alignment:
+                                                              Alignment.centerLeft,
+                                                              iconPadding:
+                                                              EdgeInsets.zero,
+                                                              iconSize: 0,
                                                             ),
-                                                            SizedBox(
-                                                              width: 1.5.w,
+                                                            child: ExpandablePanel(
+                                                              controller: expandableController,
+                                                              header: Container(
+                                                                padding: EdgeInsets.only(top: 0.7.h),
+                                                                child: Row(
+                                                                  children: [
+                                                                    Row(
+                                                                      children: [
+                                                                        SvgPicture.asset(
+                                                                          ImageUtils.matchedIcon,
+                                                                          color:
+                                                                          ColorUtils.icon_color,
+                                                                        ),
+                                                                        SizedBox(
+                                                                          width: 1.5.w,
+                                                                        ),
+                                                                        Text(
+                                                                          "53.5 k",
+                                                                          style: TextStyle(
+                                                                              fontFamily: FontUtils
+                                                                                  .modernistRegular,
+                                                                              fontSize: 1.5.t,
+                                                                              color: ColorUtils
+                                                                                  .icon_color),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                    SizedBox(width: 7.w),
+                                                                    GestureDetector(
+                                                                      onTap: (){
+                                                                        expandableController == true;
+                                                                      },
+                                                                      child: Row(
+                                                                        children: [
+                                                                          SvgPicture.asset(
+                                                                            ImageUtils.msgIcon,
+                                                                            color: ColorUtils
+                                                                                .icon_color,
+                                                                          ),
+                                                                          SizedBox(
+                                                                            width: 1.5.w,
+                                                                          ),
+                                                                          Text(
+                                                                            "68",
+                                                                            style: TextStyle(
+                                                                                fontFamily:
+                                                                                FontUtils
+                                                                                    .modernistRegular,
+                                                                                fontSize: 1.5.t,
+                                                                                color: ColorUtils
+                                                                                    .icon_color),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              collapsed: Container(
+                                                                decoration: BoxDecoration(
+                                                                    shape: BoxShape
+                                                                        .rectangle,
+                                                                    borderRadius:
+                                                                    BorderRadius
+                                                                        .all(Radius
+                                                                        .circular(
+                                                                        10)),
+                                                                    color:
+                                                                    Colors.black),
+                                                                child: Container(),
+                                                              ),
+                                                              expanded:
+
+                                                              Column(
+                                                                children: [
+                                                                  Container(
+                                                                    margin: EdgeInsets.only(top: 1.5.h),
+                                                                    decoration:
+                                                                    BoxDecoration(
+                                                                        shape: BoxShape
+                                                                            .rectangle,
+                                                                        borderRadius:
+                                                                        BorderRadius
+                                                                            .all(Radius
+                                                                            .circular(
+                                                                            10)),
+                                                                        color:
+                                                                        ColorUtils.icon_color.withOpacity(0.2)),
+                                                                    padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 1.h),
+
+                                                                    width: double.maxFinite,
+                                                                    //height: 40.h,
+                                                                    child: Text(
+                                                                      "model.faqs[index]sdfgkjfsdhgkjdjkhdkjh",
+                                                                      style: TextStyle(
+                                                                        fontFamily: FontUtils
+                                                                            .modernistRegular,
+                                                                        fontSize: 1.8.t,
+                                                                        color:
+                                                                        Colors.black,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(height: 1.5.h,),
+                                                                  Row(
+                                                                    mainAxisSize: MainAxisSize.min,
+                                                                    children: [
+                                                                      ClipRRect
+                                                                        (
+                                                                        borderRadius: BorderRadius.circular(30),
+                                                                        child: Image.network(model.barModel!.profile_picture!,
+                                                                          width: 10.i,
+                                                                          height: 10.i,
+                                                                          fit: BoxFit.cover,
+                                                                        ),
+                                                                      ),
+                                                                      SizedBox(width: 2.w,),
+                                                                      Expanded(
+                                                                        child: Container(
+                                                                          padding: EdgeInsets.symmetric(horizontal: 3.w),
+                                                                          // margin: EdgeInsets.only(top: 1.5.h),
+                                                                          decoration:
+                                                                          BoxDecoration(
+                                                                              shape: BoxShape
+                                                                                  .rectangle,
+                                                                              borderRadius:
+                                                                              BorderRadius
+                                                                                  .all(Radius
+                                                                                  .circular(
+                                                                                  10)),
+                                                                              color:
+                                                                              ColorUtils.icon_color.withOpacity(0.2)),
+                                                                          // padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 1.h),
+
+                                                                          width: double.maxFinite,
+                                                                          //height: 40.h,
+                                                                          child: TextField(
+                                                                            onTap: () {},
+                                                                            onChanged: (value){
+                                                                              model.notifyListeners();
+                                                                            },
+                                                                            // enabled: true,
+                                                                            //readOnly: true,
+                                                                            //focusNode: model.searchFocus,
+                                                                            controller: model
+                                                                                .postCommentController,
+                                                                            decoration: InputDecoration(
+                                                                              counterText: '',
+                                                                              hintText:
+                                                                              "Type your message...",
+                                                                              hintStyle: TextStyle(
+                                                                                //fontFamily: FontUtils.proximaNovaRegular,
+                                                                                //color: ColorUtils.silverColor,
+                                                                                fontSize: SizeConfig
+                                                                                    .textMultiplier *
+                                                                                    1.8,
+                                                                              ),
+                                                                              border: InputBorder.none,
+                                                                              // isDense: true,
+                                                                              contentPadding:
+                                                                              EdgeInsets.symmetric(
+                                                                                  vertical: SizeConfig
+                                                                                      .heightMultiplier *
+                                                                                      2),
+                                                                            ),
+                                                                            keyboardType:
+                                                                            TextInputType.multiline,
+                                                                            maxLines: null,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      SizedBox(width: 2.w),
+                                                                      model.postCommentController.text.length <=0 ?
+                                                                      Container(
+                                                                        //margin: EdgeInsets.only(bottom: 2.2.h),
+                                                                        decoration: BoxDecoration(
+                                                                          shape: BoxShape.circle,
+                                                                          color: ColorUtils.text_grey,
+                                                                        ),
+                                                                        child: Padding(
+                                                                          padding: const EdgeInsets.all(15.0),
+                                                                          child: SvgPicture.asset(
+                                                                            ImageUtils.sendIcon1,
+                                                                            color: Colors.white,
+                                                                          ),
+                                                                        ),
+                                                                      ) : InkWell(
+                                                                        onTap: () async {
+                                                                          // NewBarModel barUser =
+                                                                          //     (await locator<PrefrencesViewModel>()
+                                                                          //         .getBarUser())!;
+                                                                          UserModel barUser =
+                                                                          (await locator<PrefrencesViewModel>().getUser())!;
+                                                                          // model.chat();
+                                                                          // model.pubnub!.publish(
+                                                                          //     model.getConversationID(barUser.id.toString(), widget.id.toString()),
+                                                                          //     {
+                                                                          //       "content": model
+                                                                          //           .groupScreenChatController.text,
+                                                                          //       "userID": barUser.id!.toString(),
+                                                                          //       "time": DateTime.now().toString()
+                                                                          //     });
+                                                                          //  model.pubnub!.files.publishFileMessage(model.getConversationID(barUser.id.toString(),
+                                                                          //      widget.id.toString()), FileMessage(file));
+                                                                          model.postCommentController.clear();
+                                                                          model.notifyListeners();
+                                                                          Future.delayed(Duration(seconds: 2), () {
+                                                                            model.scrollDown();
+                                                                          });
+                                                                        },
+                                                                        child: Container(
+                                                                          //margin: EdgeInsets.only(bottom: 2.2.h),
+                                                                          decoration: BoxDecoration(
+                                                                            shape: BoxShape.circle,
+                                                                            color: ColorUtils.text_red,
+                                                                          ),
+                                                                          child: Padding(
+                                                                            padding: const EdgeInsets.all(15.0),
+                                                                            child: SvgPicture.asset(
+                                                                              ImageUtils.sendIcon1,
+                                                                              color: Colors.white,
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ],
+                                                              ),
+
                                                             ),
-                                                            Text(
-                                                              "68",
-                                                              style: TextStyle(
-                                                                  fontFamily:
-                                                                      FontUtils
-                                                                          .modernistRegular,
-                                                                  fontSize: 1.5.t,
-                                                                  color: ColorUtils
-                                                                      .icon_color),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        SizedBox(width: 7.w),
-                                                        Row(
-                                                          children: [
-                                                            SvgPicture.asset(
-                                                              ImageUtils
-                                                                  .matchedIcon,
-                                                              color: ColorUtils
-                                                                  .icon_color,
-                                                            ),
-                                                            SizedBox(
-                                                              width: 1.5.w,
-                                                            ),
-                                                            Text(
-                                                              "53.5 k",
-                                                              style: TextStyle(
-                                                                  fontFamily:
-                                                                      FontUtils
-                                                                          .modernistRegular,
-                                                                  fontSize: 1.5.t,
-                                                                  color: ColorUtils
-                                                                      .icon_color),
-                                                            ),
-                                                          ],
+                                                          ),
                                                         )
                                                       ],
                                                     )

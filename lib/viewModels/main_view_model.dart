@@ -161,6 +161,7 @@ class MainViewModel extends BaseViewModel {
   bool groupScreenEmojiShowing = false;
   bool groupScreenEmojiSelected = false;
   final groupScreenChatController = TextEditingController();
+  final postCommentController = TextEditingController();
   final barGiveRating = TextEditingController();
   final myContactsSearchController = TextEditingController();
   bool myContactEmojiShowing = false;

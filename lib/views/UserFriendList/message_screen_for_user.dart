@@ -558,45 +558,20 @@ class _MessageScreenForUserState extends State<MessageScreenForUser> {
                                                           SizedBox(
                                                             width: 1.5.w,
                                                           ),
-                                                          // GestureDetector(
-                                                          //   onTap: (){
-                                                          //   },
-                                                          //   child: SvgPicture.asset(ImageUtils.photoCamera)
-                                                          // ),
                                                         ],
                                                       ),
                                                     )
-                                                    // Text(searchHere,
-                                                    //   style: TextStyle(
-                                                    //     fontFamily: FontUtils.gibsonRegular,
-                                                    //     fontWeight: FontWeight.w400,
-                                                    //     fontSize: SizeConfig.textMultiplier * 1.8,
-                                                    //     color: ColorUtils.searchFieldText,
-                                                    //   ),
-                                                    // ),
                                                   ],
                                                 ),
                                               ),
                                             ),
                                           ),
-                                          // Container(
-                                          //   decoration: BoxDecoration(
-                                          //     shape: BoxShape.circle,
-                                          //     color: ColorUtils.text_red,
-                                          //   ),
-                                          //   child: Padding(
-                                          //     padding: const EdgeInsets.all(15.0),
-                                          //     child: SvgPicture.asset(ImageUtils.voiceRecorder,
-                                          //       //color: ColorUtils.blueColor,
-                                          //     ),
-                                          //   ),
-                                          // ),
                                         ],
                                       ),
                                     ),
                                   ),
                                   model.groupScreenChatController.text.length <=0 ?
-Container(
+                                  Container(
                                       //margin: EdgeInsets.only(bottom: 2.2.h),
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,

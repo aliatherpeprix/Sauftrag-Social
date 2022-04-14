@@ -14,6 +14,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:mime/mime.dart';
+import 'package:pubnub/pubnub.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/bar_model.dart';
 import 'package:sauftrag/models/create_bar_post.dart';
@@ -113,6 +114,10 @@ class RegistrationViewModel extends BaseViewModel {
   bool createNewPasswordBool = false;
   bool addDrink = false;
   bool privacyPolicy = false;
+
+  Subscription? subscription;
+  Channel? channel;
+  PubNub? pubnub;
 
   bool otpLoading = false;
   TimeOfDay? startTime;
@@ -2005,6 +2010,7 @@ class RegistrationViewModel extends BaseViewModel {
       return;
     } else {
       var createPostResponce = await createBarPost.CreatePost(
+
         (msgTypeList.indexOf(msgTypeValueStr) + 1).toString(),
         barPostLocationController.text,
         barPostController.text,
@@ -2012,6 +2018,12 @@ class RegistrationViewModel extends BaseViewModel {
       );
       print(createPostResponce);
       navigateToHomeBarScreen();
+      if (createPostResponce is CreateBarPost) {
+        channel = pubnub!.channel(createPostResponce.id!.toString());
+        navigateToHomeBarScreen();
+      }
+      // subscription = pubnub!.subscribe(channels: {});
+      // channel = pubnub!.channel();
 
       // if(checkuserResponce is UserModel)
       // {

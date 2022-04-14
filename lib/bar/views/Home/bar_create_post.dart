@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/models/new_bar_model.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/extensions.dart';
@@ -14,6 +15,7 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
+import 'package:sauftrag/viewModels/prefrences_view_model.dart';
 import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -245,7 +247,7 @@ class _BarCreatePostState extends State<BarCreatePost> {
                                   controller: model.barPostController,
                                   decoration: InputDecoration(
                                     counterText: '',
-                                    hintText: "Type your message...",
+                                    hintText: "Type your comment...",
                                     hintStyle: TextStyle(
                                       //fontFamily: FontUtils.proximaNovaRegular,
 
@@ -364,8 +366,11 @@ class _BarCreatePostState extends State<BarCreatePost> {
                         width: double.infinity,
                         //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                         child: ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
+
                             model.createBarPostScreen();
+                            // NewBarModel barUser =
+                            // (await locator<PrefrencesViewModel>().getBarUser())!;
                             //navigateToMediaScreen();
                           },
                           child: const Text("Post"),

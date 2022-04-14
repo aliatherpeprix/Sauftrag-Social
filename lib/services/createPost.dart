@@ -24,10 +24,11 @@ class Createpost {
   Dio dio = Dio();
 
   Future CreatePost(
-    dynamic post_type,
-    String post_location,
-    String post_content,
-    List images,
+
+      dynamic post_type,
+      String post_location,
+      String post_content,
+      List images,
   ) async {
     try {
       /// just login user through phoneNumber and password
@@ -40,6 +41,7 @@ class Createpost {
         }
       }
       var param = {
+
         'post_type': post_type,
         'post_location': post_location,
         'post_content': post_content,
