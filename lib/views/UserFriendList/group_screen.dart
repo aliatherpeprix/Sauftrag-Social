@@ -486,7 +486,7 @@ class _GroupScreenState extends State<GroupScreen> {
                                     //SizedBox(height: 1.h,),
                                     Align(
                                       alignment: model.chats[index]["userID"] ==
-                                              model.userModel!.id!.toString()
+                                          model.userModel!.id!.toString()
                                           ? Alignment.centerLeft
                                           : Alignment.centerRight,
                                       child: Padding(
