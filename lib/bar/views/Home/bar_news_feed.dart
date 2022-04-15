@@ -996,7 +996,7 @@ class _BarNewsFeedItemState extends State<BarNewsFeedItem> {
         NewBarModel barUser =
         (await locator<PrefrencesViewModel>().getBarUser())!;
         var channel =
-        model.pubnub!.channel("${model.getConversationID(widget.id!.toString(),barUser.id.toString())}");
+        model.pubnub!.channel(model.posts[widget.index!].id.toString());
         var chat = await channel.messages();
         var   data = await chat.count();
       },
@@ -1167,13 +1167,14 @@ class _BarNewsFeedItemState extends State<BarNewsFeedItem> {
                             child: ExpandableTheme(
                               data: ExpandableThemeData(
 
-                                headerAlignment:
-                                ExpandablePanelHeaderAlignment.top,
-                                alignment:
-                                Alignment.centerLeft,
-                                iconPadding:
-                                EdgeInsets.zero,
-                                iconSize: 0,
+                                  headerAlignment:
+                                  ExpandablePanelHeaderAlignment.top,
+                                  alignment:
+                                  Alignment.centerLeft,
+                                  iconPadding:
+                                  EdgeInsets.zero,
+                                  iconSize: 0,
+                                  tapHeaderToExpand: false
                               ),
                               child: ExpandablePanel(
 
@@ -1206,20 +1207,25 @@ class _BarNewsFeedItemState extends State<BarNewsFeedItem> {
                                       SizedBox(width: 7.w),
                                       GestureDetector(
                                         onTap: () async {
-                                          NewBarModel barUser =
-                                          (await locator<PrefrencesViewModel>().getBarUser())!;
-                                          var channel =
-                                          model.pubnub!.channel("${model.getConversationID(widget.id.toString(),barUser.id.toString())}");
-                                          var chat = await channel.messages();
-                                          await chat.fetch().whenComplete(() {
-                                            print(chat.messages.length);
+                                          expandableController.toggle();
+                                          if(!expandableController.expanded){
+                                            if(comments.isEmpty)
+                                            {
+                                              NewBarModel barUser = (await locator<PrefrencesViewModel>().getBarUser())!;
+                                              var channel =
+                                              model.pubnub!.channel(model.posts[widget.index!].id.toString());
+                                              var commnt = await channel.messages();
+                                              await commnt.fetch().whenComplete(() {
+                                                print(commnt.messages.length);
 
-                                            for (var data in chat.messages) {
-                                              model.chats.add(data.content);
+                                                for (var data in commnt.messages) {
+                                                  comments.add(data.content);
+                                                }
+                                                model.notifyListeners();
+                                              });
                                             }
-                                            model.notifyListeners();
-                                          });
-                                          expandableController == true;
+                                            else {}
+                                          }
                                         },
                                         child: Row(
                                           children: [
@@ -1265,63 +1271,92 @@ class _BarNewsFeedItemState extends State<BarNewsFeedItem> {
                                 Column(
                                   children: [
                                     Container(
-                                      height: 10.h,
-                                      margin: EdgeInsets.only(top: 1.5.h),
+                                      //height: 10.h,
+                                     // margin: EdgeInsets.only(top: 1.5.h),
 
                                       width: double.maxFinite,
                                       //height: 40.h,
                                       child: ListView.separated(
+                                        //padding: EdgeInsets.zero,
                                         shrinkWrap: true,
                                           physics: NeverScrollableScrollPhysics(),
                                           controller: model.chatScroll,
                                           itemBuilder: (context, index) {
                                             return Align(
                                               alignment: Alignment.centerLeft,
-                                              child: Container(
-                                                width: MediaQuery.of(context).size.width / 1.7,
-                                                decoration: BoxDecoration(
-                                                    shape: BoxShape
-                                                        .rectangle,
-                                                    borderRadius:
-                                                    BorderRadius
-                                                        .all(Radius
-                                                        .circular(
-                                                        10)),
-                                                    color:
-                                                    ColorUtils.icon_color.withOpacity(0.2)),
-                                                padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 1.h),
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    // Padding(
-                                                    //   padding: EdgeInsets.symmetric(
-                                                    //       horizontal: 3.w,
-                                                    //       vertical: 1.5.h),
-                                                    //   child: Image.asset(
-                                                    //     ImageUtils.drinkImage,
-                                                    //   ),
-                                                    // ),
-                                                    Padding(
-                                                      padding: EdgeInsets.only(
-                                                          left: 3.w, right: 3.w, top: 1.5.h),
+                                              child: Row(
+                                                children: [
+                                                  ClipRRect
+                                                    (
+                                                    borderRadius: BorderRadius.circular(30),
+                                                    child: Image.network(model.barModel!.profile_picture!,
+                                                      width: 10.i,
+                                                      height: 10.i,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                  SizedBox(width: 3.w),
+                                                  Container(
+                                                    width: MediaQuery.of(context).size.width / 1.7,
+                                                    decoration: BoxDecoration(
+                                                        shape: BoxShape
+                                                            .rectangle,
+                                                        borderRadius:
+                                                        BorderRadius
+                                                            .all(Radius
+                                                            .circular(
+                                                            10)),
+                                                        color:
+                                                        ColorUtils.icon_color.withOpacity(0.2)),
+                                                    padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 1.h),
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        // Padding(
+                                                        //   padding: EdgeInsets.symmetric(
+                                                        //       horizontal: 3.w,
+                                                        //       vertical: 1.5.h),
+                                                        //   child: Image.asset(
+                                                        //     ImageUtils.drinkImage,
+                                                        //   ),
+                                                        // ),
+                                                        Padding(
+                                                          padding: EdgeInsets.only(
+                                                              left: 3.w, right: 3.w,),
+                                                          child: Text(
+                                                            comments[index]["content"]
+                                                                .toString(),
+                                                            style: TextStyle(
+                                                              //fontFamily: FontUtils.avertaDemoRegular,
+                                                                fontSize: 1.8.t,
+                                                                color: ColorUtils.text_dark),
+                                                          ),
+                                                        ),
+                                                        //SizedBox(height: 1.h,),
+
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Align(
+                                                    alignment:  Alignment.centerLeft,
+                                                    child: Padding(
+                                                      padding: EdgeInsets.only(top: 15.0, left: 1.w),
                                                       child: Text(
-                                                        comments[index]["content"]
-                                                            .toString(),
+                                                        comments[index]["time"].toString().substring(11,16),
                                                         style: TextStyle(
                                                           //fontFamily: FontUtils.avertaDemoRegular,
-                                                            fontSize: 1.8.t,
-                                                            color: ColorUtils.text_dark),
+                                                            fontSize: 1.5.t,
+                                                            color: ColorUtils
+                                                                .icon_color),
                                                       ),
                                                     ),
-                                                    //SizedBox(height: 1.h,),
-
-                                                  ],
-                                                ),
+                                                  ),
+                                                ],
                                               ),
                                             );
                                           },
                                           separatorBuilder: (context, index) => SizedBox(
-                                            height: 5.h,
+                                            height: 1.h,
                                           ),
                                           itemCount: comments.length),
                                     ),
@@ -1408,7 +1443,8 @@ class _BarNewsFeedItemState extends State<BarNewsFeedItem> {
                                               color: Colors.white,
                                             ),
                                           ),
-                                        ) : InkWell(
+                                        ) :
+                                        InkWell(
                                           onTap: () async {
                                             NewBarModel barUser =
                                             (await locator<PrefrencesViewModel>()

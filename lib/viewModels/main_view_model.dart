@@ -1725,6 +1725,10 @@ class MainViewModel extends BaseViewModel {
     navigationService.navigateToTermsScreen();
   }
 
+  void navigateToAlCommentsUserScreen() {
+    navigationService.navigateToAlCommentsUserScreen();
+  }
+
   void navigateToBarProfile() {
     navigationService.navigateToBarProfile();
   }

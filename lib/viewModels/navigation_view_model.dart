@@ -80,6 +80,7 @@ import 'package:sauftrag/views/UserProfile/data_protection.dart';
 import 'package:sauftrag/views/UserProfile/privacy_policy.dart';
 import 'package:sauftrag/views/UserProfile/terms_condition.dart';
 import 'package:sauftrag/views/UserProfile/user_profile.dart';
+import 'package:sauftrag/widgets/all_comments_users.dart';
 import 'package:sauftrag/widgets/change_password.dart';
 import 'package:sauftrag/views/UserProfile/gps.dart';
 import 'package:sauftrag/views/UserProfile/legalTerm.dart';
@@ -127,6 +128,10 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateToTermsScreen(){
     navigationKey.currentState!.push(PageTransition(child: TermsOfService(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToAlCommentsUserScreen(){
+    navigationKey.currentState!.push(PageTransition(child: AllCommentsUsers(), type: PageTransitionType.rightToLeftWithFade));
   }
 
   void navigateToCreateEventScreen(){
