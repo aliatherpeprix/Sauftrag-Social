@@ -91,6 +91,10 @@ import 'package:stacked/stacked.dart';
 
 import '../main.dart';
 import '../models/get_bar_follower_list.dart';
+import '../models/newfeed_like.dart';
+import '../models/user_feedback.dart';
+import '../services/feedback_user.dart';
+import '../services/like_newsfeed_user.dart';
 
 class MainViewModel extends BaseViewModel {
   var updateUser = Updateuser();
@@ -114,6 +118,8 @@ class MainViewModel extends BaseViewModel {
   var addBarFilter = Barfilters();
   var createGroup = Creategroup();
   var getGroup = GetGroup();
+  var feedbackUser = Userfeedback();
+  var userLike = Newfeedlike();
 
   Barcode? result;
 
@@ -130,6 +136,8 @@ class MainViewModel extends BaseViewModel {
   ListOfBarsModel? getUpcmoingUserDetails;
   Media? barMedia;
   CreateGroupChat? groupChatUser;
+  UserFeedBack? getMessage;
+  LikeNewsFeed? likes;
 
   bool logInUserSelected = true;
   bool logInBarSelected = false;
@@ -269,6 +277,9 @@ class MainViewModel extends BaseViewModel {
   CreateGroupChat? selectedGroup;
 
   ListOfBarsModel? selectedBar;
+
+  NewsfeedPostId? selectedPost;
+
   List<ListOfBarsModel?>? upcomingDetails;
 
   UserModel? matchedUser;
@@ -3133,6 +3144,72 @@ class MainViewModel extends BaseViewModel {
   }
 
 
+  feedBack() async {
+
+    addDrink = true;
+    notifyListeners();
+    //drinkList = await Addfavorites().GetFavoritesDrink();
+    var feedBack = await feedbackUser.UserFeedback(
+
+        feedbackController.text,
+
+    );
+    if (feedBack is UserFeedBack) {
+      getMessage = feedBack;
+      print(getMessage);
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Feedback has been send",
+      ));
+      addDrink = false;
+      feedbackController.clear();
+    }
+    else {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Some thing went wrong",
+      ));
+      //isPrivacyPolicy = false;
+      return;
+    }
+    print(addFilters);
+    //navigateToMapSearchScreen();
+    notifyListeners();
+
+  }
+
+  postLikeNewsFeed() async {
+    isLoading = true;
+    notifyListeners();
+    bool like = true;
+    var userlike = await userLike.NewfeedLike(selectedPost!.id!, like);
+    print(userlike);
+    if (userlike is LikeNewsFeed) {
+      likes = userlike;
+      print(likes);
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "You liked this news feed!",
+      ));
+      addDrink = false;
+      //feedbackController.clear();
+
+      // var index = listOfAllBars.indexOf();
+      // listOfAllBars[index].like =
+      // (getListofbar as LikeNewsFeed).user!.like!;
+      notifyListeners();
+    } else {
+      isLoading = true;
+      like = false;
+      var userlike = await userLike.NewfeedLike(selectedPost!.id!, like);
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "You disliked this new feed",
+      ));
+      //isPrivacyPolicy = false;
+
+      return;
+    }
+    isLoading = false;
+    notifyListeners();
+    //print(getFaqsList);
+  }
 
 
 }

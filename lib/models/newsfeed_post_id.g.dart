@@ -17,7 +17,8 @@ NewsfeedPostId _$NewsfeedPostIdFromJson(Map<String, dynamic> json) =>
           : NewBarModel.fromJson(json['user_id'] as Map<String, dynamic>)
       ..media = (json['media'] as List<dynamic>?)
           ?.map((e) => PostMedia.fromJson(e as Map<String, dynamic>))
-          .toList();
+          .toList()
+      ..likes = json['likes'] as int?;
 
 Map<String, dynamic> _$NewsfeedPostIdToJson(NewsfeedPostId instance) =>
     <String, dynamic>{
@@ -27,4 +28,5 @@ Map<String, dynamic> _$NewsfeedPostIdToJson(NewsfeedPostId instance) =>
       'post_content': instance.post_content,
       'user_id': instance.user_id,
       'media': instance.media,
+      'likes': instance.likes,
     };

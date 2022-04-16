@@ -17,6 +17,7 @@ class NewsfeedPostId {
   String? post_content;
   NewBarModel? user_id;
   List<PostMedia>? media;
+  int? likes;
 
   factory NewsfeedPostId.fromJson(Map<String, dynamic> json) => _$NewsfeedPostIdFromJson(json);
   Map<String, dynamic> toJson() => _$NewsfeedPostIdToJson(this);

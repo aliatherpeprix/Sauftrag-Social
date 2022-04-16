@@ -464,6 +464,8 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                                         children: [
                                           GestureDetector(
                                             onTap: (){
+                                              model.selectedPost = model.posts[widget.index!];
+                                              model.postLikeNewsFeed();
                                               //expandableController == false ;
                                             },
                                             child: Row(
@@ -523,7 +525,7 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                                                   width: 1.5.w,
                                                 ),
                                                 Text(
-                                                  "68",
+                                                  comments.length.toString(),
                                                   style: TextStyle(
                                                       fontFamily: FontUtils
                                                           .modernistRegular,
@@ -550,27 +552,27 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                                     Column(
                                       children: [
                                         Divider(),
-                                        GestureDetector(
-                                          onTap: (){
-                                            model.navigateToAlCommentsUserScreen();
-                                          },
-                                          child: Align(
-                                            alignment:  Alignment.topRight,
-                                            child: Padding(
-                                              padding: EdgeInsets.only(top: 0.0, left: 1.w),
-                                              child: Text("See All",
-                                                style: TextStyle(
-                                                  color: ColorUtils.red_color,
-                                                  fontFamily: FontUtils
-                                                      .modernistRegular,
-                                                  fontSize: 1.7.t,
-                                                  decoration: TextDecoration
-                                                      .underline,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
+                                        // GestureDetector(
+                                        //   onTap: (){
+                                        //     model.navigateToAlCommentsUserScreen();
+                                        //   },
+                                        //   child: Align(
+                                        //     alignment:  Alignment.topRight,
+                                        //     child: Padding(
+                                        //       padding: EdgeInsets.only(top: 0.0, left: 1.w),
+                                        //       child: Text("See All",
+                                        //         style: TextStyle(
+                                        //           color: ColorUtils.red_color,
+                                        //           fontFamily: FontUtils
+                                        //               .modernistRegular,
+                                        //           fontSize: 1.7.t,
+                                        //           decoration: TextDecoration
+                                        //               .underline,
+                                        //         ),
+                                        //       ),
+                                        //     ),
+                                        //   ),
+                                        // ),
                                         SizedBox(height: 1.5.h,),
                                         Container(
                                           //height: 10.h,
@@ -659,7 +661,9 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                                               separatorBuilder: (context, index) => SizedBox(
                                                 height: 1.h,
                                               ),
-                                              itemCount: comments.length>2?2:comments.length),
+                                              itemCount: comments.length
+                                              //comments.length>2?2:comments.length
+                                          ),
                                         ),
                                         SizedBox(
                                           height: 1.5.h,

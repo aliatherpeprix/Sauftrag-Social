@@ -56,8 +56,7 @@ class Createpost {
       //   //if (images[0] is File && (images[0] as File).path.isNotEmpty)"media": await MultipartFile.fromFile((images[0] as File).path,),
       // });
 
-      NewBarModel? barModel =
-          (await locator<PrefrencesViewModel>().getBarUser());
+      NewBarModel? barModel = (await locator<PrefrencesViewModel>().getBarUser());
       var response = await dio.post(
           Constants.BaseUrlPro + Constants.CreateNewFeed,
           data: param,

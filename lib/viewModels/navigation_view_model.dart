@@ -147,7 +147,7 @@ class NavigationViewModel extends BaseViewModel{
   }
 
   void navigateToUserFeedbackScreen(){
-    navigationKey.currentState!.push(PageTransition(child: UserFeedback(), type: PageTransitionType.rightToLeftWithFade));
+    navigationKey.currentState!.push(PageTransition(child: FeedbackUser(), type: PageTransitionType.rightToLeftWithFade));
   }
 
   void navigateToFollowersListScreen(){
