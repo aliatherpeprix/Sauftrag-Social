@@ -9,7 +9,7 @@ class UserFeedBack {
 
   UserFeedBack();
 
-  String? details;
+  String? detail;
 
   factory UserFeedBack.fromJson(Map<String, dynamic> json) => _$UserFeedBackFromJson(json);
   Map<String, dynamic> toJson() => _$UserFeedBackToJson(this);

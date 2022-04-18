@@ -11,6 +11,7 @@ import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/prefrences_view_model.dart';
 import 'package:sauftrag/views/Auth/signup.dart';
 
+import '../models/newfeed_like.dart';
 import '../models/user_feedback.dart';
 
 class Newfeedlike {
@@ -46,7 +47,7 @@ class Newfeedlike {
           var userData = UserModel.fromJson(response.data['data']);
           return userData;
         }*/
-        var userData = UserFeedBack.fromJson(response.data);
+        var userData = LikeNewsFeed.fromJson(response.data);
         return userData;}
       //user not found
       else {

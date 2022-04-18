@@ -1901,18 +1901,18 @@ class RegistrationViewModel extends BaseViewModel {
       ));
       return;
     }
-    // else if (breakTimeFrom == "") {
-    //   DialogUtils().showDialog(MyErrorWidget(
-    //     error: "Select week days start break time",
-    //   ));
-    //   return;
-    // }
-    // else if (breakTimeTo == "") {
-    //   DialogUtils().showDialog(MyErrorWidget(
-    //     error: "Select week days end break time",
-    //   ));
-    //   return;
-    // }
+    else if (breakTimeFrom == "") {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Select week days start break time",
+      ));
+      return;
+    }
+    else if (breakTimeTo == "") {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Select week days end break time",
+      ));
+      return;
+    }
     else if (selectedWeekendDays.length == 0) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select a weekend day please",
@@ -1929,17 +1929,17 @@ class RegistrationViewModel extends BaseViewModel {
       ));
       return;
     }
-    // else if (weekEndBreakTimeFrom == "") {
-    //   DialogUtils().showDialog(MyErrorWidget(
-    //     error: "Select weekend days start break time",
-    //   ));
-    //   return;
-    // } else if (weekEndBreakTimeTo == "") {
-    //   DialogUtils().showDialog(MyErrorWidget(
-    //     error: "Select weekend days end break time",
-    //   ));
-    //   return;
-    // }
+    else if (weekEndBreakTimeFrom == "") {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Select weekend days start break time",
+      ));
+      return;
+    } else if (weekEndBreakTimeTo == "") {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Select weekend days end break time",
+      ));
+      return;
+    }
     else if (selectedBarKind.length == 0) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select a bar kind",

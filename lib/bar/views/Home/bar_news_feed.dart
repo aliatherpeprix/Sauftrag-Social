@@ -987,6 +987,7 @@ class BarNewsFeedItem extends StatefulWidget {
 class _BarNewsFeedItemState extends State<BarNewsFeedItem> {
   final expandableController = ExpandableController();
   List comments = [];
+  int comments_count = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -996,9 +997,12 @@ class _BarNewsFeedItemState extends State<BarNewsFeedItem> {
         NewBarModel barUser =
         (await locator<PrefrencesViewModel>().getBarUser())!;
         var channel =
-        model.pubnub!.channel(model.posts[widget.index!].id.toString());
+          model.pubnub!.channel(model.posts[widget.index!].id.toString());
         var chat = await channel.messages();
-        var   data = await chat.count();
+        await chat.fetch();
+        comments_count = await chat.count();
+        model.notifyListeners();
+        //var   data = await chat.count();
       },
       builder: (context, model, child) {
         return Padding(
@@ -1183,32 +1187,38 @@ class _BarNewsFeedItemState extends State<BarNewsFeedItem> {
                                   padding: EdgeInsets.only(top: 0.7.h),
                                   child: Row(
                                     children: [
-                                      Row(
-                                        children: [
-                                          SvgPicture.asset(
-                                            ImageUtils.matchedIcon,
-                                            color:
-                                            ColorUtils.icon_color,
-                                          ),
-                                          SizedBox(
-                                            width: 1.5.w,
-                                          ),
-                                          Text(
-                                            "53.5 k",
-                                            style: TextStyle(
-                                                fontFamily: FontUtils
-                                                    .modernistRegular,
-                                                fontSize: 1.5.t,
-                                                color: ColorUtils
-                                                    .icon_color),
-                                          ),
-                                        ],
+                                      GestureDetector(
+                                        onTap: (){
+                                          model.selectedPost = model.posts[widget.index!];
+                                          model.postLikeNewsFeed(widget.index!);
+                                        },
+                                        child: Row(
+                                          children: [
+                                            SvgPicture.asset(
+                                              ImageUtils.matchedIcon,
+                                              color:
+                                              ColorUtils.icon_color,
+                                            ),
+                                            SizedBox(
+                                              width: 1.5.w,
+                                            ),
+                                            Text(
+                                              model.posts[widget.index!].likes.toString(),
+                                              style: TextStyle(
+                                                  fontFamily: FontUtils
+                                                      .modernistRegular,
+                                                  fontSize: 1.5.t,
+                                                  color: ColorUtils
+                                                      .icon_color),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                       SizedBox(width: 7.w),
                                       GestureDetector(
                                         onTap: () async {
                                           expandableController.toggle();
-                                          if(!expandableController.expanded){
+                                          if(expandableController.expanded){
                                             if(comments.isEmpty)
                                             {
                                               NewBarModel barUser = (await locator<PrefrencesViewModel>().getBarUser())!;
@@ -1220,6 +1230,7 @@ class _BarNewsFeedItemState extends State<BarNewsFeedItem> {
 
                                                 for (var data in commnt.messages) {
                                                   comments.add(data.content);
+                                                  comments = comments.reversed.toList();
                                                 }
                                                 model.notifyListeners();
                                               });
@@ -1238,7 +1249,7 @@ class _BarNewsFeedItemState extends State<BarNewsFeedItem> {
                                               width: 1.5.w,
                                             ),
                                             Text(
-                                              "68",
+                                              comments_count.toString(),
                                               style: TextStyle(
                                                   fontFamily:
                                                   FontUtils
@@ -1285,6 +1296,8 @@ class _BarNewsFeedItemState extends State<BarNewsFeedItem> {
                                             return Align(
                                               alignment: Alignment.centerLeft,
                                               child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
                                                   ClipRRect
                                                     (
@@ -1296,51 +1309,64 @@ class _BarNewsFeedItemState extends State<BarNewsFeedItem> {
                                                     ),
                                                   ),
                                                   SizedBox(width: 3.w),
-                                                  Container(
-                                                    width: MediaQuery.of(context).size.width / 1.7,
-                                                    decoration: BoxDecoration(
-                                                        shape: BoxShape
-                                                            .rectangle,
-                                                        borderRadius:
-                                                        BorderRadius
-                                                            .all(Radius
-                                                            .circular(
-                                                            10)),
-                                                        color:
-                                                        ColorUtils.icon_color.withOpacity(0.2)),
-                                                    padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 1.h),
-                                                    child: Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: [
-                                                        // Padding(
-                                                        //   padding: EdgeInsets.symmetric(
-                                                        //       horizontal: 3.w,
-                                                        //       vertical: 1.5.h),
-                                                        //   child: Image.asset(
-                                                        //     ImageUtils.drinkImage,
-                                                        //   ),
-                                                        // ),
-                                                        Padding(
-                                                          padding: EdgeInsets.only(
-                                                              left: 3.w, right: 3.w,),
-                                                          child: Text(
-                                                            comments[index]["content"]
-                                                                .toString(),
-                                                            style: TextStyle(
-                                                              //fontFamily: FontUtils.avertaDemoRegular,
-                                                                fontSize: 1.8.t,
-                                                                color: ColorUtils.text_dark),
-                                                          ),
-                                                        ),
-                                                        //SizedBox(height: 1.h,),
+                                                  Column(
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(model.barModel!.bar_name!,
+                                                        style: TextStyle(
+                                                            fontFamily: FontUtils.modernistBold,
+                                                            fontSize: 1.8.t,
+                                                            color: ColorUtils.text_dark) ,
+                                                      ),
+                                                      SizedBox(height: 1.h,),
+                                                      Container(
+                                                        width: MediaQuery.of(context).size.width / 1.7,
+                                                        decoration: BoxDecoration(
+                                                            shape: BoxShape
+                                                                .rectangle,
+                                                            borderRadius:
+                                                            BorderRadius
+                                                                .all(Radius
+                                                                .circular(
+                                                                10)),
+                                                            color:
+                                                            ColorUtils.icon_color.withOpacity(0.2)),
+                                                        padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 1.h),
+                                                        child: Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: [
+                                                            // Padding(
+                                                            //   padding: EdgeInsets.symmetric(
+                                                            //       horizontal: 3.w,
+                                                            //       vertical: 1.5.h),
+                                                            //   child: Image.asset(
+                                                            //     ImageUtils.drinkImage,
+                                                            //   ),
+                                                            // ),
+                                                            Padding(
+                                                              padding: EdgeInsets.only(
+                                                                  left: 3.w, right: 3.w,),
+                                                              child: Text(
+                                                                comments[index]["content"]
+                                                                    .toString(),
+                                                                style: TextStyle(
+                                                                  //fontFamily: FontUtils.avertaDemoRegular,
+                                                                    fontSize: 1.8.t,
+                                                                    color: ColorUtils.text_dark),
+                                                              ),
+                                                            ),
+                                                            //SizedBox(height: 1.h,),
 
-                                                      ],
-                                                    ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                   Align(
-                                                    alignment:  Alignment.centerLeft,
+                                                    //alignment:  Alignment.centerLeft,
                                                     child: Padding(
-                                                      padding: EdgeInsets.only(top: 15.0, left: 1.w),
+                                                      padding: EdgeInsets.only(top: 0.0, left: 0.w),
                                                       child: Text(
                                                         comments[index]["time"].toString().substring(11,16),
                                                         style: TextStyle(
@@ -1356,7 +1382,7 @@ class _BarNewsFeedItemState extends State<BarNewsFeedItem> {
                                             );
                                           },
                                           separatorBuilder: (context, index) => SizedBox(
-                                            height: 1.h,
+                                            height: 3.h,
                                           ),
                                           itemCount: comments.length),
                                     ),

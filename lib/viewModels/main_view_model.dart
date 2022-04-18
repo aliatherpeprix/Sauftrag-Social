@@ -3176,7 +3176,7 @@ class MainViewModel extends BaseViewModel {
 
   }
 
-  postLikeNewsFeed() async {
+  postLikeNewsFeed(int index) async {
     isLoading = true;
     notifyListeners();
     bool like = true;
@@ -3184,6 +3184,7 @@ class MainViewModel extends BaseViewModel {
     print(userlike);
     if (userlike is LikeNewsFeed) {
       likes = userlike;
+      posts[index].likes = posts[index].likes! + 1;
       print(likes);
       DialogUtils().showDialog(MyErrorWidget(
         error: "You liked this news feed!",
@@ -3198,10 +3199,12 @@ class MainViewModel extends BaseViewModel {
     } else {
       isLoading = true;
       like = false;
+      posts[index].likes = posts[index].likes!  - 1 ;
       var userlike = await userLike.NewfeedLike(selectedPost!.id!, like);
       DialogUtils().showDialog(MyErrorWidget(
         error: "You disliked this new feed",
       ));
+      notifyListeners();
       //isPrivacyPolicy = false;
 
       return;

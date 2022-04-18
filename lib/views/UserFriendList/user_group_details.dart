@@ -129,7 +129,7 @@ class _GroupDetailsState extends State<GroupDetails> {
                     //model.navigateToGroupScreen();
                     //model.navigateToFriendListScreen1();
                   },
-                  child: const Text("imageFiles[5]oup"),
+                  child: const Text("Create Group"),
                   style: ElevatedButton.styleFrom(
                     primary: ColorUtils.text_red,
                     onPrimary: ColorUtils.white,
@@ -335,135 +335,133 @@ class _GroupDetailsState extends State<GroupDetails> {
                                           buttonMode: ButtonMode.MATERIAL)),
                                 ),
                               ),
-                            SizedBox(
-                              height: 4.h,
-                            ),
-                            Center(
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      model.privateGroupSelected = true;
-                                      model.publicGroupSelected = false;
-                                      model.notifyListeners();
-                                    },
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Container(
-                                          width: 25.w,
-                                          height: 5.5.h,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.rectangle,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(15)),
-                                            border: Border.all(
-                                                color: ColorUtils.text_red),
-                                            color: model.privateGroupSelected ==
-                                                    true
-                                                ? ColorUtils.text_red
-                                                : Colors.white,
-                                          ),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              SvgPicture.asset(
-                                                ImageUtils.lockIcon,
-                                                color:
-                                                    model.privateGroupSelected ==
-                                                            true
-                                                        ? Colors.white
-                                                        : ColorUtils.text_red,
-                                              ),
-                                              SizedBox(
-                                                width: 2.w,
-                                              ),
-                                              Text(
-                                                "Private",
-                                                style: TextStyle(
-                                                  color:
-                                                      model.privateGroupSelected ==
-                                                              true
-                                                          ? Colors.white
-                                                          : ColorUtils.text_red,
-                                                  fontFamily: FontUtils
-                                                      .modernistRegular,
-                                                  fontSize: 1.8.t,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 4.w,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      model.publicGroupSelected = true;
-                                      model.privateGroupSelected = false;
-                                      model.notifyListeners();
-                                    },
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Container(
-                                          width: 25.w,
-                                          height: 5.5.h,
-                                          decoration: BoxDecoration(
-                                            color: model.publicGroupSelected ==
-                                                    true
-                                                ? ColorUtils.text_red
-                                                : Colors.white,
-                                            shape: BoxShape.rectangle,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(15)),
-                                            border: Border.all(
-                                                color: ColorUtils.text_red),
-                                          ),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              SvgPicture.asset(
-                                                ImageUtils.speaker,
-                                                color:
-                                                    model.publicGroupSelected ==
-                                                            true
-                                                        ? Colors.white
-                                                        : ColorUtils.text_red,
-                                              ),
-                                              SizedBox(
-                                                width: 2.w,
-                                              ),
-                                              Text(
-                                                "Public",
-                                                style: TextStyle(
-                                                  color:
-                                                      model.publicGroupSelected ==
-                                                              true
-                                                          ? Colors.white
-                                                          : ColorUtils.text_red,
-                                                  fontFamily: FontUtils
-                                                      .modernistRegular,
-                                                  fontSize: 1.8.t,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+
+                            // Center(
+                            //   child: Row(
+                            //     mainAxisSize: MainAxisSize.min,
+                            //     children: [
+                            //       GestureDetector(
+                            //         onTap: () {
+                            //           model.privateGroupSelected = true;
+                            //           model.publicGroupSelected = false;
+                            //           model.notifyListeners();
+                            //         },
+                            //         child: Row(
+                            //           mainAxisSize: MainAxisSize.min,
+                            //           children: [
+                            //             Container(
+                            //               width: 25.w,
+                            //               height: 5.5.h,
+                            //               decoration: BoxDecoration(
+                            //                 shape: BoxShape.rectangle,
+                            //                 borderRadius: BorderRadius.all(
+                            //                     Radius.circular(15)),
+                            //                 border: Border.all(
+                            //                     color: ColorUtils.text_red),
+                            //                 color: model.privateGroupSelected ==
+                            //                         true
+                            //                     ? ColorUtils.text_red
+                            //                     : Colors.white,
+                            //               ),
+                            //               child: Row(
+                            //                 mainAxisSize: MainAxisSize.min,
+                            //                 mainAxisAlignment:
+                            //                     MainAxisAlignment.center,
+                            //                 children: [
+                            //                   SvgPicture.asset(
+                            //                     ImageUtils.lockIcon,
+                            //                     color:
+                            //                         model.privateGroupSelected ==
+                            //                                 true
+                            //                             ? Colors.white
+                            //                             : ColorUtils.text_red,
+                            //                   ),
+                            //                   SizedBox(
+                            //                     width: 2.w,
+                            //                   ),
+                            //                   Text(
+                            //                     "Private",
+                            //                     style: TextStyle(
+                            //                       color:
+                            //                           model.privateGroupSelected ==
+                            //                                   true
+                            //                               ? Colors.white
+                            //                               : ColorUtils.text_red,
+                            //                       fontFamily: FontUtils
+                            //                           .modernistRegular,
+                            //                       fontSize: 1.8.t,
+                            //                     ),
+                            //                   ),
+                            //                 ],
+                            //               ),
+                            //             ),
+                            //           ],
+                            //         ),
+                            //       ),
+                            //       SizedBox(
+                            //         width: 4.w,
+                            //       ),
+                            //       GestureDetector(
+                            //         onTap: () {
+                            //           model.publicGroupSelected = true;
+                            //           model.privateGroupSelected = false;
+                            //           model.notifyListeners();
+                            //         },
+                            //         child: Row(
+                            //           mainAxisSize: MainAxisSize.min,
+                            //           children: [
+                            //             Container(
+                            //               width: 25.w,
+                            //               height: 5.5.h,
+                            //               decoration: BoxDecoration(
+                            //                 color: model.publicGroupSelected ==
+                            //                         true
+                            //                     ? ColorUtils.text_red
+                            //                     : Colors.white,
+                            //                 shape: BoxShape.rectangle,
+                            //                 borderRadius: BorderRadius.all(
+                            //                     Radius.circular(15)),
+                            //                 border: Border.all(
+                            //                     color: ColorUtils.text_red),
+                            //               ),
+                            //               child: Row(
+                            //                 mainAxisSize: MainAxisSize.min,
+                            //                 mainAxisAlignment:
+                            //                     MainAxisAlignment.center,
+                            //                 children: [
+                            //                   SvgPicture.asset(
+                            //                     ImageUtils.speaker,
+                            //                     color:
+                            //                         model.publicGroupSelected ==
+                            //                                 true
+                            //                             ? Colors.white
+                            //                             : ColorUtils.text_red,
+                            //                   ),
+                            //                   SizedBox(
+                            //                     width: 2.w,
+                            //                   ),
+                            //                   Text(
+                            //                     "Public",
+                            //                     style: TextStyle(
+                            //                       color:
+                            //                           model.publicGroupSelected ==
+                            //                                   true
+                            //                               ? Colors.white
+                            //                               : ColorUtils.text_red,
+                            //                       fontFamily: FontUtils
+                            //                           .modernistRegular,
+                            //                       fontSize: 1.8.t,
+                            //                     ),
+                            //                   ),
+                            //                 ],
+                            //               ),
+                            //             ),
+                            //           ],
+                            //         ),
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
                             SizedBox(
                               height: 2.5.h,
                             ),
