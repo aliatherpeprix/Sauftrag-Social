@@ -1269,19 +1269,20 @@ class RegistrationViewModel extends BaseViewModel {
     }
   }
 
-  termsAndCondition() async {
-    if (termsCheck == false) {
-      DialogUtils().showDialog(MyErrorWidget(
-        error: "Please Accept Terms and Conditions",
-      ));
-      return;
-    }
-    else if (dataCheck == false) {
-      DialogUtils().showDialog(MyErrorWidget(
-        error: "Please Accept Data Protection",
-      ));
-      return;
-    } else {
+  Future termsAndCondition() async {
+    // if (termsCheck == false) {
+    //   DialogUtils().showDialog(MyErrorWidget(
+    //     error: "Please Accept Terms and Conditions",
+    //   ));
+    //   return;
+    // }
+    // else if (dataCheck == false) {
+    //   DialogUtils().showDialog(MyErrorWidget(
+    //     error: "Please Accept Data Protection",
+    //   ));
+    //   return;
+    // }
+
       getStarted = true;
       notifyListeners();
       userModel.UserModel? usermodel = await prefrencesViewModel.getUser();
@@ -1348,7 +1349,7 @@ class RegistrationViewModel extends BaseViewModel {
       }
 
       //favorites();
-    }
+
     //signInUser = false;
     getStarted = false;
     notifyListeners();
@@ -1446,7 +1447,9 @@ class RegistrationViewModel extends BaseViewModel {
     //navigateToHomeScreen(2);
   }
 
-  addImageUser() {
+  Future addImageUser() async {
+    getStarted = true;
+    notifyListeners();
     for (int i = 0; i < imageFiles.length; i++) {
       if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
           imageFiles[i].path.isEmpty) {
@@ -1470,7 +1473,9 @@ class RegistrationViewModel extends BaseViewModel {
       //   }
       // }
     }
-    navigateToTermsScreen();
+    getStarted = false;
+    notifyListeners();
+    //navigateToTermsScreen();
     //navigateToMediaScreen();
     //navigateToHomeScreen(2);
   }

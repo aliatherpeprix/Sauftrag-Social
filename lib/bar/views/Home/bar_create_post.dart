@@ -79,98 +79,98 @@ class _BarCreatePostState extends State<BarCreatePost> {
                       SizedBox(height: 5.h),
 
                       ///--------------Event Name--------------------///
-                      Stack(
-                        children: [
+                      // Stack(
+                      //   children: [
+                      //
+                      //     Container(
+                      //       height: 7.h,
+                      //       padding: EdgeInsets.symmetric(vertical: Dimensions.containerVerticalPadding, horizontal: Dimensions.containerHorizontalPadding),
+                      //       decoration: BoxDecoration(
+                      //           color: ColorUtils.white,
+                      //           borderRadius: BorderRadius.all(Radius.circular(Dimensions.roundCorner)),
+                      //           border: Border.all(color: ColorUtils.text_red)
+                      //       ),
+                      //       child: Row(
+                      //         crossAxisAlignment: CrossAxisAlignment.center,
+                      //         mainAxisAlignment: MainAxisAlignment.start,
+                      //         children: [
+                      //           Expanded(
+                      //               child: DropdownButton<String>(
+                      //                 value: model.msgTypeValueStr,
+                      //                 items: model.msgTypeList
+                      //                     .asMap()
+                      //                     .values
+                      //                     .map((String value) {
+                      //                   return DropdownMenuItem<String>(
+                      //                     value: value,
+                      //                     child: Text(
+                      //                       value,
+                      //                       style: TextStyle(
+                      //                         fontSize: 1.8.t,
+                      //                         fontFamily: FontUtils
+                      //                             .modernistBold,
+                      //                         color: ColorUtils.red_color,
+                      //                         //height: 1.8
+                      //                       ),
+                      //                     ),
+                      //                   );
+                      //                 }).toList(),
+                      //                 onChanged: (data) {
+                      //                   setState(() {
+                      //                     model.msgTypeValueStr =
+                      //                     data as String;
+                      //                     model.msgTypeValue =
+                      //                     model.msgTypeMap[model
+                      //                         .msgTypeValueStr] as int;
+                      //                   });
+                      //                 },
+                      //                 hint: Text(
+                      //                   "Select an option",
+                      //                   style: TextStyle(
+                      //                     fontSize: 1.8.t,
+                      //                     fontFamily: FontUtils.modernistRegular,
+                      //                     color: ColorUtils.red_color,
+                      //                   ),
+                      //                 ),
+                      //                 isExpanded: true,
+                      //                 underline: Container(
+                      //                 ),
+                      //                 icon: Align(
+                      //                     alignment: Alignment.centerRight,
+                      //                     child: Icon(
+                      //                       Icons.keyboard_arrow_down_rounded,
+                      //                       color: ColorUtils.black,
+                      //                       size: 4.2.i,
+                      //                     )
+                      //                 ),
+                      //               )
+                      //           ),
+                      //         ],
+                      //       ),
+                      //     ),
+                      //
+                      //
+                      //
+                      //     Container(
+                      //       margin: EdgeInsets.only(left: 5.w),
+                      //       padding: EdgeInsets.symmetric(horizontal: 1.w),
+                      //       color: ColorUtils.white,
+                      //       child: Text(
+                      //         "Event Name",
+                      //         textAlign: TextAlign.center,
+                      //         style: TextStyle(
+                      //             color: ColorUtils.text_red,
+                      //             fontFamily: FontUtils.modernistRegular,
+                      //             fontSize: 1.5.t,
+                      //             height: .4
+                      //         ),
+                      //       ),
+                      //     ),
+                      //
+                      //   ],
+                      // ),
 
-                          Container(
-                            height: 7.h,
-                            padding: EdgeInsets.symmetric(vertical: Dimensions.containerVerticalPadding, horizontal: Dimensions.containerHorizontalPadding),
-                            decoration: BoxDecoration(
-                                color: ColorUtils.white,
-                                borderRadius: BorderRadius.all(Radius.circular(Dimensions.roundCorner)),
-                                border: Border.all(color: ColorUtils.text_red)
-                            ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                    child: DropdownButton<String>(
-                                      value: model.msgTypeValueStr,
-                                      items: model.msgTypeList
-                                          .asMap()
-                                          .values
-                                          .map((String value) {
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(
-                                            value,
-                                            style: TextStyle(
-                                              fontSize: 1.8.t,
-                                              fontFamily: FontUtils
-                                                  .modernistBold,
-                                              color: ColorUtils.red_color,
-                                              //height: 1.8
-                                            ),
-                                          ),
-                                        );
-                                      }).toList(),
-                                      onChanged: (data) {
-                                        setState(() {
-                                          model.msgTypeValueStr =
-                                          data as String;
-                                          model.msgTypeValue =
-                                          model.msgTypeMap[model
-                                              .msgTypeValueStr] as int;
-                                        });
-                                      },
-                                      hint: Text(
-                                        "Select an option",
-                                        style: TextStyle(
-                                          fontSize: 1.8.t,
-                                          fontFamily: FontUtils.modernistRegular,
-                                          color: ColorUtils.red_color,
-                                        ),
-                                      ),
-                                      isExpanded: true,
-                                      underline: Container(
-                                      ),
-                                      icon: Align(
-                                          alignment: Alignment.centerRight,
-                                          child: Icon(
-                                            Icons.keyboard_arrow_down_rounded,
-                                            color: ColorUtils.black,
-                                            size: 4.2.i,
-                                          )
-                                      ),
-                                    )
-                                ),
-                              ],
-                            ),
-                          ),
-
-
-
-                          Container(
-                            margin: EdgeInsets.only(left: 5.w),
-                            padding: EdgeInsets.symmetric(horizontal: 1.w),
-                            color: ColorUtils.white,
-                            child: Text(
-                              "Event Name",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: ColorUtils.text_red,
-                                  fontFamily: FontUtils.modernistRegular,
-                                  fontSize: 1.5.t,
-                                  height: .4
-                              ),
-                            ),
-                          ),
-
-                        ],
-                      ),
-
-                      SizedBox(height: 3.h),
+                     // SizedBox(height: 3.h),
 
                       ///------------------Event Location ------------------///
                       Stack(
@@ -184,22 +184,20 @@ class _BarCreatePostState extends State<BarCreatePost> {
                                 borderRadius: BorderRadius.all(Radius.circular(Dimensions.roundCorner)),
                                 border: Border.all(color: ColorUtils.divider)
                             ),
-                            child: Expanded(
-                              child: TextField(
-                                focusNode: model.barPostLocationFocus,
-                                controller: model.barPostLocationController,
-                                keyboardType: TextInputType.text,
-                                textInputAction: TextInputAction.next,
-                                style: TextStyle(
-                                  color: ColorUtils.text_red,
-                                  fontFamily: FontUtils.modernistRegular,
-                                  fontSize: 1.8.t,
-                                ),
-                                decoration: const InputDecoration(
-                                  border: InputBorder.none,
-                                  isDense:true,
-                                  contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                                ),
+                            child: TextField(
+                              focusNode: model.barPostLocationFocus,
+                              controller: model.barPostLocationController,
+                              keyboardType: TextInputType.text,
+                              textInputAction: TextInputAction.next,
+                              style: TextStyle(
+                                color: ColorUtils.text_red,
+                                fontFamily: FontUtils.modernistRegular,
+                                fontSize: 1.8.t,
+                              ),
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                isDense:true,
+                                contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                               ),
                             ),
                           ),

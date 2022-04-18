@@ -82,7 +82,7 @@ class _BarAndClubsState extends State<BarAndClubs>
                           )),
                       SizedBox(width: 2.w),
                       Text(
-                        "All Bars & Clubs",
+                        "Bars & Clubs",
                         style: TextStyle(
                           color: ColorUtils.black,
                           fontFamily: FontUtils.modernistBold,
@@ -149,7 +149,7 @@ class _BarAndClubsState extends State<BarAndClubs>
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "Bars & Clubs",
+                                    "All Bars & Clubs",
                                     style: TextStyle(
                                       fontSize: 1.8.t,
                                       color: tabSlelected == 0

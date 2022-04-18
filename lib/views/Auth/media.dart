@@ -14,6 +14,7 @@ import 'package:sauftrag/viewModels/authentication_view_model.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:sauftrag/widgets/back_arrow_with_container.dart';
+import 'package:sauftrag/widgets/loader.dart';
 import 'package:stacked/stacked.dart';
 
 class Media extends StatefulWidget {
@@ -731,11 +732,12 @@ class _MediaState extends State<Media> {
                           width: double.infinity,
                           //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                           child: ElevatedButton(
-                            onPressed: () {
-                              model.addImageUser();
+                            onPressed: () async {
+                              await model.addImageUser();
+                              await model.termsAndCondition();
                               //model.navigateToTermsScreen();
                             },
-                            child: const Text("Next"),
+                            child: model.getStarted == false ? Text("Let’s Get Started") : Loader(),
                             style: ElevatedButton.styleFrom(
                               primary: ColorUtils.text_red,
                               onPrimary: ColorUtils.white,

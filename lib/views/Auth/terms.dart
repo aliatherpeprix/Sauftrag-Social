@@ -258,7 +258,7 @@ class _TermsOfServiceState extends State<TermsOfService> {
                             //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                             child: ElevatedButton(
                               onPressed: () {
-                                model.termsAndCondition();
+                                //model.termsAndCondition();
 
                               },
                               child: model.getStarted == false ? Text("Let’s Get Started") : Loader(),
