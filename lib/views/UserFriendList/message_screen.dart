@@ -521,7 +521,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                             MediaQuery.of(context).size.width /
                                                 1.7,
                                         decoration: BoxDecoration(
-                                          color: ColorUtils.messageChat,
+                                          color: ColorUtils.red_color.withOpacity(0.9),
                                           borderRadius: model.chats[index]
                                                       ["userID"] ==
                                                   model.barModel!.id!.toString()

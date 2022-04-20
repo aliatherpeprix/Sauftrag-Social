@@ -143,47 +143,47 @@ class _FavoriteDrinkListState extends State<FavoriteDrinkList> {
 
                             SizedBox(height: 5.h,),
 
-                            ElevatedButton(
-                              onPressed: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context){
-                                      return AddDialogBoxDrink1(title: "Add New Drink", btnTxt: "Add Drink", icon: ImageUtils.addDrinkIcon);
-                                    }
-                                );
-                              },
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-
-                                  SvgPicture.asset(ImageUtils.addDrinkIcon),
-
-                                  SizedBox(width: 10),
-
-                                  Text("Add Drink")
-                                ],
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                primary: ColorUtils.white,
-                                onPrimary: ColorUtils.text_red,
-                                padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 8.w),
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(Dimensions.roundCorner),
-                                    side: BorderSide(
-                                        color: ColorUtils.text_red,
-                                        width: 1
-                                    )
-                                ),
-                                textStyle: TextStyle(
-                                  fontFamily: FontUtils.modernistRegular,
-                                  fontSize: 1.8.t,
-                                  //height: 0
-                                ),
-                              ),
-                            ),
+                            // ElevatedButton(
+                            //   onPressed: () {
+                            //     showDialog(
+                            //         context: context,
+                            //         builder: (BuildContext context){
+                            //           return AddDialogBoxDrink1(title: "Add New Drink", btnTxt: "Add Drink", icon: ImageUtils.addDrinkIcon);
+                            //         }
+                            //     );
+                            //   },
+                            //   child: Row(
+                            //     mainAxisSize: MainAxisSize.min,
+                            //     crossAxisAlignment: CrossAxisAlignment.center,
+                            //     mainAxisAlignment: MainAxisAlignment.center,
+                            //     children: [
+                            //
+                            //       SvgPicture.asset(ImageUtils.addDrinkIcon),
+                            //
+                            //       SizedBox(width: 10),
+                            //
+                            //       Text("Add Drink")
+                            //     ],
+                            //   ),
+                            //   style: ElevatedButton.styleFrom(
+                            //     primary: ColorUtils.white,
+                            //     onPrimary: ColorUtils.text_red,
+                            //     padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 8.w),
+                            //     elevation: 0,
+                            //     shape: RoundedRectangleBorder(
+                            //         borderRadius: BorderRadius.circular(Dimensions.roundCorner),
+                            //         side: BorderSide(
+                            //             color: ColorUtils.text_red,
+                            //             width: 1
+                            //         )
+                            //     ),
+                            //     textStyle: TextStyle(
+                            //       fontFamily: FontUtils.modernistRegular,
+                            //       fontSize: 1.8.t,
+                            //       //height: 0
+                            //     ),
+                            //   ),
+                            // ),
 
                             // Stack(
                             //   children: [

@@ -1228,7 +1228,7 @@ class MainViewModel extends BaseViewModel {
     print(dateLocal);
     return dateLocal;
   }
-
+  
   DeactivateAccount() async {
     NewBarModel? user = await locator<PrefrencesViewModel>().getBarUser();
     var response = await dio.post(

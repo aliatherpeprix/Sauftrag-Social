@@ -193,47 +193,47 @@ class _FavoriteState extends State<Favorite> {
                             //   )).toList(),
                             // ),
 
-                            ElevatedButton(
-                              onPressed: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context){
-                                      return AddDialogBox(title: "Add New Drink", btnTxt: "Add Drink", icon: ImageUtils.addDrinkIcon);
-                                    }
-                                );
-                              },
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-
-                                  SvgPicture.asset(ImageUtils.addDrinkIcon),
-
-                                  SizedBox(width: 10),
-
-                                  Text("Getränk hinzufügen")
-                                ],
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                primary: ColorUtils.white,
-                                onPrimary: ColorUtils.text_red,
-                                padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 8.w),
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(Dimensions.roundCorner),
-                                    side: BorderSide(
-                                        color: ColorUtils.text_red,
-                                        width: 1
-                                    )
-                                ),
-                                textStyle: TextStyle(
-                                  fontFamily: FontUtils.modernistRegular,
-                                  fontSize: 1.8.t,
-                                  //height: 0
-                                ),
-                              ),
-                            ),
+                            // ElevatedButton(
+                            //   onPressed: () {
+                            //     showDialog(
+                            //         context: context,
+                            //         builder: (BuildContext context){
+                            //           return AddDialogBox(title: "Add New Drink", btnTxt: "Add Drink", icon: ImageUtils.addDrinkIcon);
+                            //         }
+                            //     );
+                            //   },
+                            //   child: Row(
+                            //     mainAxisSize: MainAxisSize.min,
+                            //     crossAxisAlignment: CrossAxisAlignment.center,
+                            //     mainAxisAlignment: MainAxisAlignment.center,
+                            //     children: [
+                            //
+                            //       SvgPicture.asset(ImageUtils.addDrinkIcon),
+                            //
+                            //       SizedBox(width: 10),
+                            //
+                            //       Text("Getränk hinzufügen")
+                            //     ],
+                            //   ),
+                            //   style: ElevatedButton.styleFrom(
+                            //     primary: ColorUtils.white,
+                            //     onPrimary: ColorUtils.text_red,
+                            //     padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 8.w),
+                            //     elevation: 0,
+                            //     shape: RoundedRectangleBorder(
+                            //         borderRadius: BorderRadius.circular(Dimensions.roundCorner),
+                            //         side: BorderSide(
+                            //             color: ColorUtils.text_red,
+                            //             width: 1
+                            //         )
+                            //     ),
+                            //     textStyle: TextStyle(
+                            //       fontFamily: FontUtils.modernistRegular,
+                            //       fontSize: 1.8.t,
+                            //       //height: 0
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         ),
                         SizedBox(height: 4.h),
@@ -317,47 +317,47 @@ class _FavoriteState extends State<Favorite> {
                             ),
                             SizedBox(height: 2.h),
 
-                            ElevatedButton(
-                              onPressed: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context){
-                                      return AddDialogBoxClubs(title: "Add New Club", btnTxt: "Add Club", icon: ImageUtils.addClubIcon);
-                                    }
-                                );
-                              },
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-
-                                  SvgPicture.asset(ImageUtils.addClubIcon),
-
-                                  SizedBox(width: 10),
-
-                                  Text("Verein hinzufügen")
-                                ],
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                primary: ColorUtils.white,
-                                onPrimary: ColorUtils.text_red,
-                                padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 8.w),
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(Dimensions.roundCorner),
-                                    side: BorderSide(
-                                        color: ColorUtils.text_red,
-                                        width: 1
-                                    )
-                                ),
-                                textStyle: TextStyle(
-                                  fontFamily: FontUtils.modernistRegular,
-                                  fontSize: 1.8.t,
-                                  //height: 0
-                                ),
-                              ),
-                            ),
+                            // ElevatedButton(
+                            //   onPressed: () {
+                            //     showDialog(
+                            //         context: context,
+                            //         builder: (BuildContext context){
+                            //           return AddDialogBoxClubs(title: "Add New Club", btnTxt: "Add Club", icon: ImageUtils.addClubIcon);
+                            //         }
+                            //     );
+                            //   },
+                            //   child: Row(
+                            //     mainAxisSize: MainAxisSize.min,
+                            //     crossAxisAlignment: CrossAxisAlignment.center,
+                            //     mainAxisAlignment: MainAxisAlignment.center,
+                            //     children: [
+                            //
+                            //       SvgPicture.asset(ImageUtils.addClubIcon),
+                            //
+                            //       SizedBox(width: 10),
+                            //
+                            //       Text("Verein hinzufügen")
+                            //     ],
+                            //   ),
+                            //   style: ElevatedButton.styleFrom(
+                            //     primary: ColorUtils.white,
+                            //     onPrimary: ColorUtils.text_red,
+                            //     padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 8.w),
+                            //     elevation: 0,
+                            //     shape: RoundedRectangleBorder(
+                            //         borderRadius: BorderRadius.circular(Dimensions.roundCorner),
+                            //         side: BorderSide(
+                            //             color: ColorUtils.text_red,
+                            //             width: 1
+                            //         )
+                            //     ),
+                            //     textStyle: TextStyle(
+                            //       fontFamily: FontUtils.modernistRegular,
+                            //       fontSize: 1.8.t,
+                            //       //height: 0
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         ),
                         SizedBox(height: 4.h),
@@ -368,7 +368,7 @@ class _FavoriteState extends State<Favorite> {
                           children: [
 
                             Text(
-                              "Lieblings-Party-Urlaub",
+                              "Lieblingsmusik in der Bar",
                               style: TextStyle(
                                 color: ColorUtils.black,
                                 fontFamily: FontUtils.modernistBold,
@@ -427,47 +427,47 @@ class _FavoriteState extends State<Favorite> {
                             ),
                             SizedBox(height: 2.h),
 
-                            ElevatedButton(
-                              onPressed: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context){
-                                      return AddDialogBoxPartyLocation(title: "Add New Location", btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
-                                    }
-                                );
-                              },
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-
-                                  SvgPicture.asset(ImageUtils.addLocationIcon),
-
-                                  SizedBox(width: 10),
-
-                                  Text("Ort hinzufügen")
-                                ],
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                primary: ColorUtils.white,
-                                onPrimary: ColorUtils.text_red,
-                                padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 8.w),
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(Dimensions.roundCorner),
-                                    side: BorderSide(
-                                        color: ColorUtils.text_red,
-                                        width: 1
-                                    )
-                                ),
-                                textStyle: TextStyle(
-                                  fontFamily: FontUtils.modernistRegular,
-                                  fontSize: 1.8.t,
-                                  //height: 0
-                                ),
-                              ),
-                            ),
+                            // ElevatedButton(
+                            //   onPressed: () {
+                            //     showDialog(
+                            //         context: context,
+                            //         builder: (BuildContext context){
+                            //           return AddDialogBoxPartyLocation(title: "Add New Location", btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+                            //         }
+                            //     );
+                            //   },
+                            //   child: Row(
+                            //     mainAxisSize: MainAxisSize.min,
+                            //     crossAxisAlignment: CrossAxisAlignment.center,
+                            //     mainAxisAlignment: MainAxisAlignment.center,
+                            //     children: [
+                            //
+                            //       SvgPicture.asset(ImageUtils.addLocationIcon),
+                            //
+                            //       SizedBox(width: 10),
+                            //
+                            //       Text("Ort hinzufügen")
+                            //     ],
+                            //   ),
+                            //   style: ElevatedButton.styleFrom(
+                            //     primary: ColorUtils.white,
+                            //     onPrimary: ColorUtils.text_red,
+                            //     padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 8.w),
+                            //     elevation: 0,
+                            //     shape: RoundedRectangleBorder(
+                            //         borderRadius: BorderRadius.circular(Dimensions.roundCorner),
+                            //         side: BorderSide(
+                            //             color: ColorUtils.text_red,
+                            //             width: 1
+                            //         )
+                            //     ),
+                            //     textStyle: TextStyle(
+                            //       fontFamily: FontUtils.modernistRegular,
+                            //       fontSize: 1.8.t,
+                            //       //height: 0
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         ),
                         SizedBox(height: 5.h),

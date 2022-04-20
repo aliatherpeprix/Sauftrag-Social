@@ -277,16 +277,12 @@ class _MessageScreenForUserState extends State<MessageScreenForUser> {
                                   controller: model.chatScroll,
                                   itemBuilder: (context, index) {
                                     return Align(
-                                      alignment: model.chats[index]["userID"] ==
-                                              model.barModel!.id!.toString()
-                                          ? Alignment.centerRight
-                                          : Alignment.centerLeft,
                                       child: Container(
                                         width:
                                             MediaQuery.of(context).size.width /
                                                 1.7,
                                         decoration: BoxDecoration(
-                                          color: ColorUtils.messageChat,
+                                          color: ColorUtils.red_color.withOpacity(0.9),
                                           borderRadius: model.chats[index]
                                                       ["userID"] ==
                                                   model.barModel!.id!.toString()
@@ -330,7 +326,7 @@ class _MessageScreenForUserState extends State<MessageScreenForUser> {
                                                     //fontFamily: FontUtils.avertaDemoRegular,
                                                     fontSize: 1.8.t,
                                                     color:
-                                                        ColorUtils.text_dark),
+                                                        ColorUtils.white),
                                               ),
                                             ),
                                             //SizedBox(height: 1.h,),
@@ -356,6 +352,10 @@ class _MessageScreenForUserState extends State<MessageScreenForUser> {
                                           ],
                                         ),
                                       ),
+                                      alignment: model.chats[index]["userID"] ==
+                                          model.barModel!.id!.toString()
+                                          ? Alignment.centerRight
+                                          : Alignment.centerLeft,
                                     );
                                   },
                                   separatorBuilder: (context, index) =>

@@ -333,7 +333,7 @@ class _MessageScreenForBarState extends State<MessageScreenForBar> {
                                                     //fontFamily: FontUtils.avertaDemoRegular,
                                                     fontSize: 1.8.t,
                                                     color:
-                                                        ColorUtils.text_dark),
+                                                        ColorUtils.white),
                                               ),
                                             ),
                                             //SizedBox(height: 1.h,),

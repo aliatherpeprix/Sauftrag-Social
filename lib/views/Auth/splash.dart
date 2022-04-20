@@ -41,7 +41,7 @@ class _SplashState extends State<Splash> {
                     ),
                   ),
                   Text(
-                    "Social",
+                    "App",
                     style: TextStyle(
                       color: ColorUtils.white,
                       fontFamily: FontUtils.modernistMono,
