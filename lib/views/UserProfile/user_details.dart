@@ -941,7 +941,7 @@ class _UserDetailsState extends State<UserDetails> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  "Favorite Nightclub",
+                                  "Favorite Music",
                                   style: TextStyle(
                                     color: ColorUtils.black,
                                     fontFamily: FontUtils.modernistBold,

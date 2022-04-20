@@ -432,7 +432,7 @@ class _BarGroupScreenState extends State<BarGroupScreen> {
                               child: Container(
                                 width: MediaQuery.of(context).size.width / 1.7,
                                 decoration: BoxDecoration(
-                                  color: ColorUtils.messageChat,
+                                  color: ColorUtils.red_color.withOpacity(0.9),
                                   borderRadius: model.chats[index]["userID"] ==
                                       model.barModel!.id!.toString()
                                       ? BorderRadius.only(
@@ -470,7 +470,7 @@ class _BarGroupScreenState extends State<BarGroupScreen> {
                                         style: TextStyle(
                                           //fontFamily: FontUtils.avertaDemoRegular,
                                             fontSize: 1.8.t,
-                                            color: ColorUtils.text_dark),
+                                            color: ColorUtils.white),
                                       ),
                                     ),
                                     //SizedBox(height: 1.h,),

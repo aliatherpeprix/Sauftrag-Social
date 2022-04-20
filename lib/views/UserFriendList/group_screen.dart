@@ -442,7 +442,7 @@ class _GroupScreenState extends State<GroupScreen> {
                               child: Container(
                                 width: MediaQuery.of(context).size.width / 1.7,
                                 decoration: BoxDecoration(
-                                  color: ColorUtils.messageChat,
+                                  color: ColorUtils.red_color.withOpacity(0.9),
                                   borderRadius: model.chats[index]["userID"] ==
                                           model.userModel!.id!.toString()
                                       ? BorderRadius.only(
@@ -480,7 +480,7 @@ class _GroupScreenState extends State<GroupScreen> {
                                         style: TextStyle(
                                             //fontFamily: FontUtils.avertaDemoRegular,
                                             fontSize: 1.8.t,
-                                            color: ColorUtils.text_dark),
+                                            color: ColorUtils.white),
                                       ),
                                     ),
                                     //SizedBox(height: 1.h,),
