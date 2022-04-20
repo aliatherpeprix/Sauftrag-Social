@@ -64,27 +64,28 @@ class _FavoriteDrinkListState extends State<FavoriteDrinkList> {
                 absorbing: model.favDrink,
                 child: Stack(
                   children: [
-
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
 
-                        IconButton(
-                          onPressed: (){
-                            model.navigateBack();
-                          },
-                          iconSize: 15.0,
-                          //padding: EdgeInsets.all(20),
-                          //constraints: BoxConstraints(),
-                          icon: SvgPicture.asset(ImageUtils.cancelIcon),
+                        Container(
+                          child: IconButton(
+                            onPressed: (){
+                              model.navigateBack();
+                            },
+                            iconSize: 15.0,
+                            //padding: EdgeInsets.all(20),
+                            //constraints: BoxConstraints(),
+                            icon: SvgPicture.asset(ImageUtils.cancelIcon),
+                          ),
                         ),
 
                       ],
                     ),
-
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding, vertical: Dimensions.verticalPadding),
+                      margin: EdgeInsets.only(top: 5.h),
+                      padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding,),
                       child: SingleChildScrollView(
                         physics: BouncingScrollPhysics(),
                         child: Column(
@@ -290,8 +291,7 @@ class _FavoriteDrinkListState extends State<FavoriteDrinkList> {
                                 ),
                               ),
                             ),
-
-
+                            SizedBox(height: 2.h,),
 
                           ],
                         ),

@@ -458,6 +458,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                           )),
 
                                       //Image_1 Catagory Image_1
+                                      if(model.matchedUser!.catalogue_image1 != null)
                                       Container(
                                           height: MediaQuery.of(context).size.width / 3.4,
                                           width:
@@ -494,6 +495,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                           )),
 
                                       //Image_1 Catagory Image_2
+                                      if(model.matchedUser!.catalogue_image2 != null)
                                       Container(
                                           height: MediaQuery.of(context).size.width / 3.4,
                                           width:
@@ -536,6 +538,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       //Image_1 Catagory Image_3
+                                      if(model.matchedUser!.catalogue_image3 != null)
                                       Container(
                                           height: MediaQuery.of(context).size.width / 3.4,
                                           width:
@@ -572,6 +575,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                           )),
 
                                       //Image_1 Catagory Image_4
+                                      if(model.matchedUser!.catalogue_image4 != null)
                                       Container(
                                           height: MediaQuery.of(context).size.width / 3.4,
                                           width:
@@ -608,6 +612,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                           )),
 
                                       // Image_1 Catagory Image_5
+                                      if(model.matchedUser!.catalogue_image5 != null)
                                       Container(
                                           height: MediaQuery.of(context).size.width / 3.4,
                                           width:

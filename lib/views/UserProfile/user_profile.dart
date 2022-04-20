@@ -1,3 +1,4 @@
+import 'package:expand_tap_area/expand_tap_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
@@ -291,7 +292,7 @@ class _UserProfileState extends State<UserProfile> {
                       SizedBox(height: 4.h),
 
                       ///--------------Settings Options--------------------///
-                      GestureDetector(
+                      ExpandTapWidget(
                         onTap: () async {
                           model.isUserProfile = true;
                           model.notifyListeners();
@@ -302,6 +303,7 @@ class _UserProfileState extends State<UserProfile> {
                           model.isUserProfile = false;
                           model.notifyListeners();
                         },
+                        tapPadding: EdgeInsets.all(8),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -341,11 +343,12 @@ class _UserProfileState extends State<UserProfile> {
                         ),
                       ),
                       SizedBox(height: 3.h),
-                      GestureDetector(
+                      ExpandTapWidget(
                         onTap: () {
                           model
                               .navigateToUserProfileAccountNotificationScreen();
                         },
+                        tapPadding: EdgeInsets.all(8),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -386,10 +389,11 @@ class _UserProfileState extends State<UserProfile> {
                         ),
                       ),
                       SizedBox(height: 3.h),
-                      GestureDetector(
+                      ExpandTapWidget(
                         onTap: () {
                           model.navigateToUserProfileAccountLegalTermScreen();
                         },
+                        tapPadding: EdgeInsets.all(8),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -469,10 +473,11 @@ class _UserProfileState extends State<UserProfile> {
                         ],
                       ),
                       SizedBox(height: 3.h),
-                      GestureDetector(
+                      ExpandTapWidget(
                         onTap: () {
                           model.navigateToUserProfileAccountGpsScreen();
                         },
+                        tapPadding: EdgeInsets.all(8),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [

@@ -101,7 +101,11 @@ class _UserNotificationsState extends State<UserNotifications> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("On",style: TextStyle(color: ColorUtils.red_color,fontFamily: FontUtils.modernistBold),),
+                        Text( _isSwitch == false ?
+                          "Off" : "On",
+                          style: TextStyle(
+                              color: ColorUtils.red_color,fontFamily: FontUtils.modernistBold),
+                        ),
                         Switch(
                           value: _isSwitch,
                           onChanged: (value) {
