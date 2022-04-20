@@ -434,14 +434,23 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                           ),
                           if (model.posts[widget.index!].media != null &&
                               model.posts[widget.index!].media!.length > 0)
-                            Container(
-                                child: CachedNetworkImage(
-                              imageUrl:
-                                  model.posts[widget.index!].media![0].media!,
-                              //width: 100.i,
-                              height: 40.i,
-                              fit: BoxFit.cover,
-                            )),
+                            GestureDetector(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (_) {
+                                  return DetailScreen(
+                                    imageUrl: model.posts[widget.index!].media![0].media!,
+                                  );
+                                }));
+                              },
+                              child: Container(
+                                  child: CachedNetworkImage(
+                                imageUrl:
+                                    model.posts[widget.index!].media![0].media!,
+                                //width: 100.i,
+                                height: 40.i,
+                                fit: BoxFit.cover,
+                              )),
+                            ),
                           Divider(),
 
                           ///LIKE AND COMMENT
@@ -838,3 +847,39 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
         disposeViewModel: false,);
   }
 }
+
+class DetailScreen extends StatefulWidget {
+
+  String? imageUrl;
+
+  DetailScreen({this.imageUrl, Key? key}) : super(key: key);
+
+  @override
+  _DetailScreenState createState() => _DetailScreenState();
+}
+
+class _DetailScreenState extends State<DetailScreen> {
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: GestureDetector(
+        child: Hero(
+          tag: 'imageHero',
+          child: CachedNetworkImage(
+            imageUrl: widget.imageUrl!,
+            width: MediaQuery.of(context).size.width/1,
+            height: MediaQuery.of(context).size.height/1,
+              fit: BoxFit.fitWidth,
+            // placeholder: new CircularProgressIndicator(),
+            // errorWidget: new Icon(Icons.error),
+          ),
+        ),
+        onTap: () {
+          Navigator.pop(context);
+        },
+      ),
+    );
+  }
+}
+
