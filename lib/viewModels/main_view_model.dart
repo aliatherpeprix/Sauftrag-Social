@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:contacts_service/contacts_service.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:geocoding/geocoding.dart';
@@ -3212,6 +3213,34 @@ class MainViewModel extends BaseViewModel {
     isLoading = false;
     notifyListeners();
     //print(getFaqsList);
+  }
+
+  Future sendImageMessage(int id) async{
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.any,
+      allowMultiple: false,
+    );
+
+    if (result != null) {
+      File file = File(result.files.first.path!);
+
+      await pubnub!.files.sendFile(getConversationID(
+              barModel!.id.toString(),
+              id.toString()
+      ), result.files.first.name, file.readAsBytesSync().toList(),fileMessage: {
+        "userId" : barModel!.id,
+        "createdAt" : DateTime.now().toIso8601String()
+      }).then((value){
+        print(value);
+      })
+          .catchError((error){
+        print(error);
+      });
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Image has been uploaded!",
+      ));
+    }
+
   }
 
 

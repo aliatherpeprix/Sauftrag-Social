@@ -238,6 +238,7 @@ class ImageUtils {
   static String coinImg = "assets/coinImg.png";
   static String sendIcon1 = "assets/sndIcon.svg";
   static String UserNotFound = "assets/gifs/UserNF.gif";
+  static String document = "assets/google-docs.svg";
 
 
 

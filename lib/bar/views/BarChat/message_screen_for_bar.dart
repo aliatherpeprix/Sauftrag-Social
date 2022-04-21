@@ -12,6 +12,7 @@ import 'package:sauftrag/models/bar_model.dart';
 import 'package:sauftrag/models/new_bar_model.dart';
 import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/utils/color_utils.dart';
+import 'package:sauftrag/utils/constants.dart';
 import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
@@ -19,8 +20,10 @@ import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/viewModels/prefrences_view_model.dart';
+import 'package:sauftrag/views/Home/main_view.dart';
 import 'package:sauftrag/views/UserFriendList/chat_input.dart';
 import 'package:sauftrag/views/UserFriendList/chat_list_widget.dart';
+import 'package:sauftrag/widgets/add_dialog_box_plusAttachment.dart';
 import 'package:sauftrag/widgets/back_arrow_with_container.dart';
 import 'package:stacked/stacked.dart';
 
@@ -279,89 +282,7 @@ class _MessageScreenForBarState extends State<MessageScreenForBar> {
                                   physics: BouncingScrollPhysics(),
                                   controller: model.chatScroll,
                                   itemBuilder: (context, index) {
-                                    return Align(
-                                      alignment: model.chats[index]["userID"] ==
-                                              model.barModel!.id!.toString()
-                                          ? Alignment.centerRight
-                                          : Alignment.centerLeft,
-                                      child: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                1.7,
-                                        decoration: BoxDecoration(
-                                          color: ColorUtils.messageChat,
-                                          borderRadius: model.chats[index]
-                                                      ["userID"] ==
-                                                  model.barModel!.id!.toString()
-                                              ? BorderRadius.only(
-                                                  topLeft: Radius.circular(15),
-                                                  topRight: Radius.circular(15),
-                                                  bottomLeft:
-                                                      Radius.circular(15),
-                                                )
-                                              : BorderRadius.only(
-                                                  topLeft: Radius.circular(15),
-                                                  topRight: Radius.circular(15),
-                                                  bottomRight:
-                                                      Radius.circular(15),
-                                                ),
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment: model.chats[index]
-                                                      ["userID"] ==
-                                                  model.barModel!.id!.toString()
-                                              ? CrossAxisAlignment.end
-                                              : CrossAxisAlignment.start,
-                                          children: [
-                                            // Padding(
-                                            //   padding: EdgeInsets.symmetric(
-                                            //       horizontal: 3.w,
-                                            //       vertical: 1.5.h),
-                                            //   child: Image.asset(
-                                            //     ImageUtils.drinkImage,
-                                            //   ),
-                                            // ),
-                                            Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 3.w,
-                                                  right: 3.w,
-                                                  top: 1.5.h),
-                                              child: Text(
-                                                model.chats[index]["content"]
-                                                    .toString(),
-                                                style: TextStyle(
-                                                    //fontFamily: FontUtils.avertaDemoRegular,
-                                                    fontSize: 1.8.t,
-                                                    color:
-                                                        ColorUtils.white),
-                                              ),
-                                            ),
-                                            //SizedBox(height: 1.h,),
-                                            Align(
-                                              alignment: model.chats[index]
-                                                          ["userID"] ==
-                                                      model.barModel!.id!
-                                                          .toString()
-                                                  ? Alignment.centerLeft
-                                                  : Alignment.centerRight,
-                                              child: Padding(
-                                                padding: EdgeInsets.all(8.0),
-                                                child: Text(
-                                                  model.chats[index]["time"]
-                                                      .toString()
-                                                      .substring(11, 16),
-                                                  style: TextStyle(
-                                                      //fontFamily: FontUtils.avertaDemoRegular,
-                                                      fontSize: 1.5.t,
-                                                      color: ColorUtils
-                                                          .icon_color),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    );
+                                    return ChatImageWidget(index: index);
                                   },
                                   separatorBuilder: (context, index) =>
                                       SizedBox(
@@ -420,8 +341,14 @@ class _MessageScreenForBarState extends State<MessageScreenForBar> {
                                                                   1.7.w),
                                                       child: ExpandTapWidget(
                                                         onTap: () {
-                                                          model.getImagE();
-                                                          setState(() {});
+                                                          model.sendImageMessage(widget.id!);
+                                                          // showDialog(
+                                                          //     context: context,
+                                                          //     builder: (BuildContext context) {
+                                                          //       return AddDialogPlusAttachment();
+                                                          //     });
+                                                          // model.getImagE();
+                                                          // setState(() {});
                                                         },
                                                         tapPadding:
                                                             EdgeInsets.all(4.i),
@@ -460,7 +387,7 @@ class _MessageScreenForBarState extends State<MessageScreenForBar> {
                                                                 InputDecoration(
                                                               counterText: '',
                                                               hintText:
-                                                                  "Type your message...",
+                                                                  "ype your message...",
                                                               hintStyle:
                                                                   TextStyle(
                                                                 //fontFamily: FontUtils.proximaNovaRegular,
@@ -679,3 +606,121 @@ class _MessageScreenForBarState extends State<MessageScreenForBar> {
     );
   }
 }
+
+class ChatImageWidget extends StatefulWidget {
+  int? index;
+
+  ChatImageWidget({Key? key, this.index}) : super(key: key);
+
+  @override
+  _ChatImageWidgetState createState() => _ChatImageWidgetState();
+}
+
+class _ChatImageWidgetState extends State<ChatImageWidget> {
+
+  Uri? uri;
+
+  @override
+  Widget build(BuildContext context) {
+    return ViewModelBuilder<MainViewModel>.reactive(
+        viewModelBuilder: ()=> locator<MainViewModel>(),
+        onModelReady: (model) {
+          getFileUrl(model);
+        },
+        builder: (context, model,child){
+          return Align(
+            alignment: model.chats[widget.index!]["userID"] ==
+                model.barModel!.id!.toString()
+                ? Alignment.centerRight
+                : Alignment.centerLeft,
+            child: Container(
+              width:
+              MediaQuery.of(context).size.width /
+                  1.7,
+              decoration: BoxDecoration(
+                color: ColorUtils.messageChat,
+                borderRadius: model.chats[widget.index!]
+                ["userID"] ==
+                    model.barModel!.id!.toString()
+                    ? BorderRadius.only(
+                  topLeft: Radius.circular(15),
+                  topRight: Radius.circular(15),
+                  bottomLeft:
+                  Radius.circular(15),
+                )
+                    : BorderRadius.only(
+                  topLeft: Radius.circular(15),
+                  topRight: Radius.circular(15),
+                  bottomRight:
+                  Radius.circular(15),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: model.chats[widget.index!]
+                ["userID"] ==
+                    model.barModel!.id!.toString()
+                    ? CrossAxisAlignment.end
+                    : CrossAxisAlignment.start,
+                children: [
+                  // Padding(
+                  //   padding: EdgeInsets.symmetric(
+                  //       horizontal: 3.w,
+                  //       vertical: 1.5.h),
+                  //   child: Image.asset(
+                  //     ImageUtils.drinkImage,
+                  //   ),
+                  // ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: 3.w,
+                        right: 3.w,
+                        top: 1.5.h),
+                    child: Image.network(
+                      uri!.path
+                    ),
+                  ),
+                  //SizedBox(height: 1.h,),
+                  Align(
+                    alignment: model.chats[widget.index!]
+                    ["userID"] ==
+                        model.barModel!.id!
+                            .toString()
+                        ? Alignment.centerLeft
+                        : Alignment.centerRight,
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        model.chats[widget.index!]["time"]
+                            .toString()
+                            .substring(11, 16),
+                        style: TextStyle(
+                          //fontFamily: FontUtils.avertaDemoRegular,
+                            fontSize: 1.5.t,
+                            color: ColorUtils
+                                .icon_color),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      disposeViewModel: false,
+    );
+  }
+  void getFileUrl (MainViewModel model)async{
+    print(uri);
+    //var fileInfo = widget.ImageData;
+    // uri = await model.pubnub!.files.getFileUrl(
+    //     model.barModel!.id.toString(),
+    //     fileInfo["id"],
+    //     fileInfo["name"]
+    // );
+    setState(() {
+
+    });
+
+  }
+}
+
