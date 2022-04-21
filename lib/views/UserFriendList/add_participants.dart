@@ -210,7 +210,6 @@ class _AddParticipantsState extends State<AddParticipants> {
                                               .matchedUsers[
                                           index]
                                               .username
-                                              .toString() ?? ""
                                               .toString(),
                                           style: TextStyle(
                                               fontFamily:

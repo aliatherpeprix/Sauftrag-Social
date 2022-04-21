@@ -58,6 +58,7 @@ class _FriendListForUserState extends State<FriendListForUser> {
       disposeViewModel: false,
       onModelReady: (model) {
         //model.getAllUserForChat();
+        model.getListOfAllBars();
         model.getGroupList();
         model.matchingUsers();
         model.getListOfbars();
@@ -377,9 +378,10 @@ class _FriendListForUserState extends State<FriendListForUser> {
                                                                  profilePic: model
                                                                      .matchedUsers[index]
                                                                      .profile_picture,
+                                                                 fromUser: true,
                                                                )));
                                                      }
-                                                     else{
+                                                   /*  else{
                                                        Navigator.push(
                                                            context,
                                                            PageTransition(
@@ -397,7 +399,7 @@ class _FriendListForUserState extends State<FriendListForUser> {
                                                                      .barsList[index]
                                                                      .profile_picture,
                                                                )));
-                                                     }
+                                                     }*/
                                                    },
                                                    child: Column(
                                                      children: [
@@ -522,7 +524,7 @@ class _FriendListForUserState extends State<FriendListForUser> {
                                                itemBuilder: (context, index) {
                                                  return GestureDetector(
                                                    onTap: () {
-                                                     if(model.userModel!.role == 1){
+                                                     if(model.barModel!.role == 1){
                                                        Navigator.push(
                                                            context,
                                                            PageTransition(
@@ -539,9 +541,10 @@ class _FriendListForUserState extends State<FriendListForUser> {
                                                                  profilePic: model
                                                                      .listOfBar[index]
                                                                      .profile_picture,
+                                                                 fromUser: false,
                                                                )));
                                                      }
-                                                     else{
+                                                     /*else{
                                                        Navigator.push(
                                                            context,
                                                            PageTransition(
@@ -559,7 +562,7 @@ class _FriendListForUserState extends State<FriendListForUser> {
                                                                      .barsList[index]
                                                                      .profile_picture,
                                                                )));
-                                                     }
+                                                     }*/
                                                    },
                                                    child: Column(
                                                      children: [
@@ -660,7 +663,6 @@ class _FriendListForUserState extends State<FriendListForUser> {
                                                model.listOfBar.length :
                                                model.barsList.length
                                            ),
-
                                          ],
                                        ),
                                      ),

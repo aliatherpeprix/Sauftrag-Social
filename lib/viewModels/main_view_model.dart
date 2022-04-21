@@ -2970,7 +2970,7 @@ class MainViewModel extends BaseViewModel {
     isLoading = true;
 
     var getAnotherUserDetails = await getUserInfo.GetAnotherUserInfo(id);
-    print(getAnotherUserDetails);
+    //print(getAnotherUserDetails);
     // if (getFaqList is String){
     //   faqs = getFaqList;
     //   //isPrivacyPolicy = false;
@@ -2978,7 +2978,7 @@ class MainViewModel extends BaseViewModel {
     // }ListOfBarsModel
     if (getAnotherUserDetails is UserModel) {
       matchedUser = getAnotherUserDetails;
-      print(matchedUser);
+      //print(matchedUser);
     } else {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Some thing went wrong",

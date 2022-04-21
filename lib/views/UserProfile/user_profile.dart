@@ -13,6 +13,8 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/viewModels/prefrences_view_model.dart';
+import 'package:sauftrag/widgets/all_page_loader.dart';
+import 'package:sauftrag/widgets/loader.dart';
 import 'package:stacked/stacked.dart';
 
 class UserProfile extends StatefulWidget {
@@ -33,7 +35,8 @@ class _UserProfileState extends State<UserProfile> {
           onTap: () {
             FocusScope.of(context).unfocus();
           },
-          child: SafeArea(
+          child: model.isLoading == true ? AllPageLoader() :
+          SafeArea(
             top: false,
             bottom: false,
             child: Scaffold(
@@ -294,13 +297,15 @@ class _UserProfileState extends State<UserProfile> {
                       ///--------------Settings Options--------------------///
                       ExpandTapWidget(
                         onTap: () async {
+                          model.isLoading = true;
+                          model.navigateToUserProfileAccountScreen();
                           model.isUserProfile = true;
                           model.notifyListeners();
                           PrefrencesViewModel prefs = await locator<PrefrencesViewModel>();
-                           await Updateuser().UpdateAccountDetails(model.updateSignUpPhoneController.text, model.updateLocations.text);
+                          await Updateuser().UpdateAccountDetails(model.updateSignUpPhoneController.text, model.updateLocations.text);
                           model.userModel = (await prefs.getUser())!;
-                          model.navigateToUserProfileAccountScreen();
                           model.isUserProfile = false;
+                          model.isLoading = false;
                           model.notifyListeners();
                         },
                         tapPadding: EdgeInsets.all(8),

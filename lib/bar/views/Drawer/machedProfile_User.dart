@@ -68,7 +68,8 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
       disposeViewModel: false,
       builder: (context, model, child) {
         var getMatchedUserData = model.acceptMatchedtModel;
-        return SafeArea(
+        return model.isLoading == true ? AllPageLoader() :
+          SafeArea(
           top: false,
           bottom: false,
           child: GestureDetector(
@@ -115,7 +116,8 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                         shadowColor: Colors.transparent,
                         expandedHeight: 280,
                         flexibleSpace: FlexibleSpaceBar(
-                          background: Image.network(
+                          background:
+                          Image.network(
                             model.matchedUser!.profile_picture!,
                             fit: BoxFit.cover,
                           ),

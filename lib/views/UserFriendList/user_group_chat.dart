@@ -471,8 +471,7 @@ class _UserGroupChatState extends State<UserGroupChat> {
                                                 .matchedUsers[
                                             index]
                                                 .username
-                                                .toString() ?? ""
-                                              .toString(),
+                                                .toString(),
                                           style: TextStyle(
                                               fontFamily:
                                               FontUtils.modernistBold,
