@@ -3228,8 +3228,8 @@ class MainViewModel extends BaseViewModel {
               barModel!.id.toString(),
               id.toString()
       ), result.files.first.name, file.readAsBytesSync().toList(),fileMessage: {
-        "userId" : barModel!.id,
-        "createdAt" : DateTime.now().toIso8601String()
+        "userID" : barModel!.id,
+        "time" : DateTime.now().toString(),
       }).then((value){
         print(value);
       })

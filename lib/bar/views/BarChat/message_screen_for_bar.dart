@@ -680,6 +680,7 @@ class _ChatImageWidgetState extends State<ChatImageWidget> {
                     ),
                   ),
                   //SizedBox(height: 1.h,),
+
                   Align(
                     alignment: model.chats[widget.index!]
                     ["userID"] ==
@@ -690,9 +691,7 @@ class _ChatImageWidgetState extends State<ChatImageWidget> {
                     child: Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Text(
-                        model.chats[widget.index!]["time"]
-                            .toString()
-                            .substring(11, 16),
+                        model.chats[widget.index!]["message"]["createdAt"].toString(),
                         style: TextStyle(
                           //fontFamily: FontUtils.avertaDemoRegular,
                             fontSize: 1.5.t,
@@ -710,13 +709,14 @@ class _ChatImageWidgetState extends State<ChatImageWidget> {
     );
   }
   void getFileUrl (MainViewModel model)async{
-    print(model.chats);
+    print(model.chats[widget.index!]);
     //var fileInfo = widget.ImageData;
-    // uri = await model.pubnub!.files.getFileUrl(
-    //     model.barModel!.id.toString(),
-    //     fileInfo["id"],
-    //     fileInfo["name"]
-    // );
+    uri = await model.pubnub!.files.getFileUrl(
+        model.barModel!.id.toString(),
+        model.chats[widget.index!]["file"]["id"],
+        model.chats[widget.index!]["file"]["name"],
+    );
+    print(uri);
     setState(() {
 
     });
