@@ -478,7 +478,7 @@ class _UserProfileState extends State<UserProfile> {
                         ],
                       ),
                       SizedBox(height: 3.h),
-                      ExpandTapWidget(
+                      /*ExpandTapWidget(
                         onTap: () {
                           model.navigateToUserProfileAccountGpsScreen();
                         },
@@ -521,7 +521,7 @@ class _UserProfileState extends State<UserProfile> {
                           ],
                         ),
                       ),
-                      SizedBox(height: 3.h),
+                      SizedBox(height: 3.h),*/
                     ],
                   ),
                 ),
