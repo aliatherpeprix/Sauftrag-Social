@@ -710,7 +710,7 @@ class _ChatImageWidgetState extends State<ChatImageWidget> {
     );
   }
   void getFileUrl (MainViewModel model)async{
-    print(uri);
+    print(model.chats);
     //var fileInfo = widget.ImageData;
     // uri = await model.pubnub!.files.getFileUrl(
     //     model.barModel!.id.toString(),
