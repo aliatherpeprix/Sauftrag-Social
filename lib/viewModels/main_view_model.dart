@@ -66,6 +66,7 @@ import 'package:sauftrag/services/get_barFollowers.dart';
 import 'package:sauftrag/services/get_match_users.dart';
 import 'package:sauftrag/services/get_past_event.dart';
 import 'package:sauftrag/services/get_upcoming_events.dart';
+import 'package:sauftrag/services/get_user_details.dart';
 import 'package:sauftrag/services/get_user_to_user.dart';
 import 'package:sauftrag/services/listOfBars.dart';
 
@@ -120,6 +121,7 @@ class MainViewModel extends BaseViewModel {
   var getGroup = GetGroup();
   var feedbackUser = Userfeedback();
   var userLike = Newfeedlike();
+  var currentUserDetails = UserDetails();
 
   Barcode? result;
 
@@ -784,6 +786,23 @@ class MainViewModel extends BaseViewModel {
   Map<String, int> genderMap = {
     'Male': 1,
     'Female': 2,
+  };
+
+  int relationValue = 1;
+  String relationValueStr = "Single";
+  List<String> relationshipList = [
+    "Single",
+    "Relationship",
+    "Open Relationship",
+    "It's Complicated",
+    "Married",
+  ];
+  Map<String, int> relationshipMap = {
+    'Single': 1,
+    'Relationship': 2,
+    'Open Relationship': 3,
+    'Its Complicated': 4,
+    'Married': 5,
   };
 
   Future<bool> getImage0(int index) async {
@@ -3212,6 +3231,32 @@ class MainViewModel extends BaseViewModel {
     isLoading = false;
     notifyListeners();
     //print(getFaqsList);
+  }
+
+  // getUserDetails
+
+   int? userGenderValue;
+   String? userGender;
+
+  int? currentRelationValue;
+  String? currentRelation;
+
+  usersDetails() async {
+     List usersGender = [];
+     //isLoading = true;
+    //UserModel? user = await locator<PrefrencesViewModel>().getUser();
+    List<UserModel> response = await currentUserDetails.GetUserDetails();
+     usersGender.add(response.map((e) => e.gender).first) ;
+     userGenderValue = usersGender[0];
+     if(userGenderValue == 1){
+       userGender = "Male";
+       notifyListeners();
+     }
+     else if(userGenderValue == 2){
+       userGender = "Female";
+       notifyListeners();
+     }
+    //isLoading = false;
   }
 
 

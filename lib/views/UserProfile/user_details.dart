@@ -34,6 +34,7 @@ class _UserDetailsState extends State<UserDetails> {
   Widget build(BuildContext context) {
     return ViewModelBuilder<MainViewModel>.reactive(
       onModelReady: (model) {
+        model.usersDetails();
         // model.isUserProfile = false;
         // model.notifyListeners();
       },
@@ -791,7 +792,7 @@ class _UserDetailsState extends State<UserDetails> {
                                 children: [
                                   Expanded(
                                       child: DropdownButton<String>(
-                                        value: model.genderValueStr,
+                                        value: model.userGender,
                                         items: model.genderList
                                             .asMap()
                                             .values
@@ -817,6 +818,83 @@ class _UserDetailsState extends State<UserDetails> {
                                             model.genderValue =
                                             model.genderMap[model
                                                 .genderValueStr] as int;
+                                          });
+                                        },
+                                        hint: Text(
+                                          "Select an option",
+                                          style: TextStyle(
+                                            fontSize: 1.8.t,
+                                            fontFamily: FontUtils.modernistRegular,
+                                            color: ColorUtils.red_color,
+                                          ),
+                                        ),
+                                        isExpanded: true,
+                                        underline: Container(
+                                        ),
+                                        icon: Align(
+                                            alignment: Alignment.centerRight,
+                                            child: Icon(
+                                              Icons.keyboard_arrow_down_rounded,
+                                              color: ColorUtils.red_color,)
+                                        ),
+                                      )
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 2.h),
+                            Text(
+                              "Relationship",
+                              style: TextStyle(
+                                color: ColorUtils.black,
+                                fontFamily: FontUtils.modernistBold,
+                                fontSize: 2.2.t,
+                              ),
+                            ),
+                            SizedBox(height: 2.h),
+                            Container(
+                              height: 6.h,
+                              padding: EdgeInsets.symmetric(vertical: .8.h,
+                                  horizontal: Dimensions
+                                      .containerHorizontalPadding),
+                              decoration: BoxDecoration(
+                                  color: ColorUtils.white,
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(Dimensions.roundCorner)),
+                                  border: Border.all(color: ColorUtils.red_color)
+                              ),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                      child: DropdownButton<String>(
+                                        value: model.relationValueStr,
+                                        items: model.relationshipList
+                                            .asMap()
+                                            .values
+                                            .map((String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(
+                                              value,
+                                              style: TextStyle(
+                                                fontSize: 1.8.t,
+                                                fontFamily: FontUtils
+                                                    .modernistRegular,
+                                                color: ColorUtils.red_color,
+                                                //height: 1.8
+                                              ),
+                                            ),
+                                          );
+                                        }).toList(),
+                                        onChanged: (data) {
+                                          setState(() {
+                                            model.relationValueStr =
+                                            data as String;
+                                            model.relationValue =
+                                            model.relationshipMap[model
+                                                .relationValueStr] as int;
                                           });
                                         },
                                         hint: Text(

@@ -1906,7 +1906,7 @@ class RegistrationViewModel extends BaseViewModel {
       ));
       return;
     }
-    else if (breakTimeFrom == "") {
+    /*else if (breakTimeFrom == "") {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select week days start break time",
       ));
@@ -1917,7 +1917,7 @@ class RegistrationViewModel extends BaseViewModel {
         error: "Select week days end break time",
       ));
       return;
-    }
+    }*/
     else if (selectedWeekendDays.length == 0) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select a weekend day please",
@@ -1934,17 +1934,18 @@ class RegistrationViewModel extends BaseViewModel {
       ));
       return;
     }
-    else if (weekEndBreakTimeFrom == "") {
+    /*else if (weekEndBreakTimeFrom == "") {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select weekend days start break time",
       ));
       return;
-    } else if (weekEndBreakTimeTo == "") {
+    } */
+   /* else if (weekEndBreakTimeTo == "") {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select weekend days end break time",
       ));
       return;
-    }
+    }*/
     else if (selectedBarKind.length == 0) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select a bar kind",
@@ -1967,13 +1968,13 @@ class RegistrationViewModel extends BaseViewModel {
         workingDaysList,
         openingTimeFrom!,
         openingTimeTo!,
-        breakTimeFrom!,
-        breakTimeTo!,
+        breakTimeFrom ?? "",
+        breakTimeTo ?? "",
         weekendDaysList,
         weekEndOpeningTimeFrom!,
         weekEndOpeningTimeTo!,
-        weekEndBreakTimeFrom!,
-        weekEndBreakTimeTo!,
+        weekEndBreakTimeFrom ?? "",
+        weekEndBreakTimeTo ?? "",
         imageFiles[0] as File,
         imageFiles[1] as File,
         imageFiles[2] as File,

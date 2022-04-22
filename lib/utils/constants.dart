@@ -74,6 +74,7 @@ class Constants {
 
   static const String requestDelete =
       BaseUrlPro + 'api/user/deleteMatchRequest/';
+  static const String getUserDetails = 'api/user/profile/';
 
 
 
