@@ -896,7 +896,7 @@ class RegistrationViewModel extends BaseViewModel {
       if (signupResponse is userModel.UserModel) {
         userModel.UserModel user = signupResponse;
         user.favorite_alcohol_drinks = user.favorite_alcohol_drinks!;
-        user.favorite_night_club = user.favorite_night_club!;
+        user.favorite_musics = user.favorite_musics!;
         user.favorite_party_vacation = user.favorite_party_vacation!;
         await locator<PrefrencesViewModel>().saveUser(signupResponse);
         mainViewModel.logInUserSelected = true;
@@ -1376,8 +1376,8 @@ class RegistrationViewModel extends BaseViewModel {
               CommonFunctions.SubtractFromList(user.favorite_alcohol_drinks!);
         }
         if (favorite == "favorite_night_club") {
-          user.favorite_night_club =
-              CommonFunctions.SubtractFromList(user.favorite_night_club!);
+          user.favorite_musics =
+              CommonFunctions.SubtractFromList(user.favorite_musics!);
         }
         if (favorite == "favorite_party_vacation") {
           user.favorite_party_vacation =

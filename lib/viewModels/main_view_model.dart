@@ -437,7 +437,7 @@ class MainViewModel extends BaseViewModel {
       if (userSignupResponce is UserModel) {
         UserModel user = userSignupResponce;
         user.favorite_alcohol_drinks = user.favorite_alcohol_drinks!;
-        user.favorite_night_club = user.favorite_night_club!;
+        user.favorite_musics = user.favorite_musics!;
         user.favorite_party_vacation = user.favorite_party_vacation!;
         // if (favorite=="favorite_alcohol_drinks"){
         //
@@ -1431,15 +1431,15 @@ class MainViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  updateDrinkStatus() async {
+  updateDrinkStatus(BuildContext context) async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
     var startTimeofDrinking = DateFormat('jm')
-        .parse(drinkingFrom!)
+        .parse(drinkingFrom ?? TimeOfDay(hour: TimeOfDay.now().hour, minute: 0).format(context))
         .toString()
         .split(' ')[1]
         .substring(0, 5);
     var endTimeOfDrinking = DateFormat('jm')
-        .parse(drinkingTo!)
+        .parse(drinkingTo ?? TimeOfDay(hour: TimeOfDay.now().hour, minute: 0).format(context))
         .toString()
         .split(' ')[1]
         .substring(0, 5);
@@ -1915,7 +1915,7 @@ class MainViewModel extends BaseViewModel {
       UserModel user = userUpdateResponse;
       user.token = userModel!.token!;
       user.favorite_alcohol_drinks = user.favorite_alcohol_drinks!;
-      user.favorite_night_club = user.favorite_night_club!;
+      user.favorite_musics = user.favorite_musics!;
       user.favorite_party_vacation = user.favorite_party_vacation!;
       await prefrencesViewModel.saveUser(user);
       notifyListeners();
@@ -3235,28 +3235,21 @@ class MainViewModel extends BaseViewModel {
 
   // getUserDetails
 
-   int? userGenderValue;
    String? userGender;
-
-  int? currentRelationValue;
-  String? currentRelation;
+   String? currentRelation;
 
   usersDetails() async {
      List usersGender = [];
-     //isLoading = true;
+     List usersRelation = [];
+     isUserProfile = true;
     //UserModel? user = await locator<PrefrencesViewModel>().getUser();
     List<UserModel> response = await currentUserDetails.GetUserDetails();
      usersGender.add(response.map((e) => e.gender).first) ;
-     userGenderValue = usersGender[0];
-     if(userGenderValue == 1){
-       userGender = "Male";
-       notifyListeners();
-     }
-     else if(userGenderValue == 2){
-       userGender = "Female";
-       notifyListeners();
-     }
-    //isLoading = false;
+     userGender = usersGender[0];
+     usersRelation.add(response.map((e) => e.relation_ship).first) ;
+     currentRelation = usersRelation[0];
+     notifyListeners();
+     isUserProfile = false;
   }
 
 

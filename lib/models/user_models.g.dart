@@ -20,7 +20,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel()
   ..longitude = json['longitude'] as String?
   ..role = json['role']
   ..favorite_alcohol_drinks = json['favorite_alcohol_drinks'] as List<dynamic>?
-  ..favorite_night_club = json['favorite_night_club'] as List<dynamic>?
+  ..favorite_musics = json['favorite_musics'] as List<dynamic>?
   ..favorite_party_vacation = json['favorite_party_vacation'] as List<dynamic>?
   ..profile_picture = json['profile_picture'] as String?
   ..catalogue_image1 = json['catalogue_image1'] as String?
@@ -52,7 +52,7 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'longitude': instance.longitude,
       'role': instance.role,
       'favorite_alcohol_drinks': instance.favorite_alcohol_drinks,
-      'favorite_night_club': instance.favorite_night_club,
+      'favorite_musics': instance.favorite_musics,
       'favorite_party_vacation': instance.favorite_party_vacation,
       'profile_picture': instance.profile_picture,
       'catalogue_image1': instance.catalogue_image1,

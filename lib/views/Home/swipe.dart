@@ -507,7 +507,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                                       .discoverModel![model
                                                       .catalogImages
                                                       .indexOf(item)]
-                                                      .favorite_night_club!,
+                                                      .favorite_musics!,
                                                   model
                                                       .discoverModel![model
                                                       .catalogImages

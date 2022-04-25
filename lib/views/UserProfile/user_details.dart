@@ -869,7 +869,7 @@ class _UserDetailsState extends State<UserDetails> {
                                 children: [
                                   Expanded(
                                       child: DropdownButton<String>(
-                                        value: model.relationValueStr,
+                                        value: model.currentRelation,
                                         items: model.relationshipList
                                             .asMap()
                                             .values
@@ -1033,7 +1033,7 @@ class _UserDetailsState extends State<UserDetails> {
                                         context: context,
                                         builder: (BuildContext context){
                                           model.selectedClubList.clear();
-                                          model.selectedClubList.addAll(model.userModel!.favorite_night_club!);
+                                          model.selectedClubList.addAll(model.userModel!.favorite_musics!);
                                           // model.selectedClubList = model.userModel!.favorite_night_club!;
                                           // model.selectedVacationList = model.userModel!.favorite_party_vacation!;
                                           return FavoriteClub(title: "Add Favorite Drink",
@@ -1060,7 +1060,7 @@ class _UserDetailsState extends State<UserDetails> {
                               spacing: 2.5.w,
                               runSpacing: 1.5.h,
                               direction: Axis.horizontal,
-                              children: model.userModel!.favorite_night_club!
+                              children: model.userModel!.favorite_musics!
                                   .map((element) => ElevatedButton(
                                 onPressed: () {
                                   // if(model.selectedDrinkList.contains(element.id)){

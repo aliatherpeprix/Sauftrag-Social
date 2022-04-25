@@ -289,7 +289,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                     spacing: 2.5.w,
                                     runSpacing: 1.5.h,
                                     direction: Axis.horizontal,
-                                    children: model.matchedUser!.favorite_night_club!
+                                    children: model.matchedUser!.favorite_musics!
                                         .map((element) => ElevatedButton(
                                       onPressed: () {
                                         // if (model.selectedInterestList

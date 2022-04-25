@@ -11,6 +11,7 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/widgets/loader.dart';
 import 'package:stacked/stacked.dart';
 
 class DrinkUpdateStatusDialogBox extends StatefulWidget {
@@ -468,6 +469,9 @@ class _DrinkUpdateStatusDialogBoxState
                               onPressed: () {
                                 model.updatedrinkIndex = 0;
                                 model.notifyListeners();
+                                model.updateDrinkStatus(context);
+                                //model.getDrinkStatus();
+                                model.notifyListeners();
                                 //model.navigateBack();
                               },
                               child: const Text("Reset"),
@@ -493,7 +497,7 @@ class _DrinkUpdateStatusDialogBoxState
                           Expanded(
                             child: ElevatedButton(
                               onPressed: () {
-                                model.updateDrinkStatus();
+                                model.updateDrinkStatus(context);
                                 model.navigateBack();
                               },
                               child: const Text("Update"),
