@@ -31,8 +31,12 @@ class _GroupScreenUserState extends State<GroupScreenUser> {
           UserModel user = (await locator<PrefrencesViewModel>().getUser())!;
           var pubnub = PubNub(
               defaultKeyset: Keyset(
-                  subscribeKey: 'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
-                  publishKey: 'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
+                  subscribeKey:
+                  'sub-c-f77ff5d6-c477-11ec-a5a3-fed9c56767c0',
+                  //'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
+                  publishKey:
+                  'pub-c-086f026a-7f2a-4f5d-ab18-879296d860a7',
+                  //'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
                   uuid: UUID("Cosmos")));
           // Subscribe to a channel
           var subscription = pubnub.subscribe(channels: {"Cosmos"});

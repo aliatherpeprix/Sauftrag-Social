@@ -1318,7 +1318,10 @@ class MainViewModel extends BaseViewModel {
 
   getGroupChannelFromPubnub() async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
-    var response = await dio.get('https://ps.pndsn.com/' + 'v2/presence/sub-key/sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4/uuid/${user!.id}');
+    var response = await dio.get('https://ps.pndsn.com/' + 'v2/presence/sub-key/'
+        //'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4'
+        'sub-c-f77ff5d6-c477-11ec-a5a3-fed9c56767c0'
+        '/uuid/${user!.id}');
     print(response.data);
     var encodedData = jsonEncode(response.data);
     print(encodedData);
@@ -2859,8 +2862,12 @@ class MainViewModel extends BaseViewModel {
     //UserModel user = (await locator<PrefrencesViewModel>().getUser())!;
     pubnub = PubNub(
         defaultKeyset: Keyset(
-            subscribeKey: 'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
-            publishKey: 'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
+            subscribeKey:
+            'sub-c-f77ff5d6-c477-11ec-a5a3-fed9c56767c0',
+            //'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
+            publishKey:
+            'pub-c-086f026a-7f2a-4f5d-ab18-879296d860a7',
+            //'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
             uuid: UUID("${barUser.id.toString()}")));
   }
 
@@ -2869,8 +2876,12 @@ class MainViewModel extends BaseViewModel {
     UserModel user = (await locator<PrefrencesViewModel>().getUser())!;
     pubnub = PubNub(
         defaultKeyset: Keyset(
-            subscribeKey: 'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
-            publishKey: 'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
+            subscribeKey:
+            'sub-c-f77ff5d6-c477-11ec-a5a3-fed9c56767c0',
+            //'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
+            publishKey:
+            'pub-c-086f026a-7f2a-4f5d-ab18-879296d860a7',
+            //'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
             uuid: UUID("${user.id.toString()}")));
   }
 
@@ -2878,8 +2889,12 @@ class MainViewModel extends BaseViewModel {
     UserModel user = (await locator<PrefrencesViewModel>().getUser())!;
     pubnub = PubNub(
         defaultKeyset: Keyset(
-            subscribeKey: 'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
-            publishKey: 'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
+            subscribeKey:
+            'sub-c-f77ff5d6-c477-11ec-a5a3-fed9c56767c0',
+            //'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
+            publishKey:
+            'pub-c-086f026a-7f2a-4f5d-ab18-879296d860a7',
+            //'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
             uuid: UUID("${user.id.toString()}")));
   }
 

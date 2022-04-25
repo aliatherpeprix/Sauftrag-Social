@@ -5,6 +5,8 @@ import 'package:expand_tap_area/expand_tap_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
+import 'package:mime/mime.dart';
 import 'package:pubnub/core.dart';
 import 'package:pubnub/pubnub.dart';
 import 'package:sauftrag/app/locator.dart';
@@ -282,7 +284,21 @@ class _MessageScreenForBarState extends State<MessageScreenForBar> {
                                   physics: BouncingScrollPhysics(),
                                   controller: model.chatScroll,
                                   itemBuilder: (context, index) {
-                                    return ChatImageWidget(index: index);
+                                    if(model.chats[index]["file"] != null)
+                                      {
+
+                                        if(lookupMimeType(model.chats[index]["file"]["name"])!.contains("video"))
+                                          {
+                                            return ChatVideoWidget(index: index);
+                                          }
+                                        else {
+                                          return ChatImageWidget(index: index);
+                                        }
+                                      }
+                                    else
+                                      {
+                                        return ChatTextWidget(index : index);
+                                      }
                                   },
                                   separatorBuilder: (context, index) =>
                                       SizedBox(
@@ -607,6 +623,8 @@ class _MessageScreenForBarState extends State<MessageScreenForBar> {
   }
 }
 
+///----------------------Chat Image-------------------------------///
+
 class ChatImageWidget extends StatefulWidget {
   int? index;
 
@@ -676,7 +694,7 @@ class _ChatImageWidgetState extends State<ChatImageWidget> {
                         right: 3.w,
                         top: 1.5.h),
                     child: Image.network(
-                      uri!.path
+                      uri!.toString()
                     ),
                   ),
                   //SizedBox(height: 1.h,),
@@ -691,7 +709,7 @@ class _ChatImageWidgetState extends State<ChatImageWidget> {
                     child: Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Text(
-                        model.chats[widget.index!]["message"]["createdAt"].toString(),
+                        DateFormat("dd hh:mm").format(DateTime.parse(model.chats[widget.index!]["message"]["createdAt"].toString())),
                         style: TextStyle(
                           //fontFamily: FontUtils.avertaDemoRegular,
                             fontSize: 1.5.t,
@@ -723,4 +741,133 @@ class _ChatImageWidgetState extends State<ChatImageWidget> {
 
   }
 }
+
+///-------------------Chat Text ---------------------------///
+
+class ChatTextWidget extends StatefulWidget {
+  int? index;
+
+  ChatTextWidget({Key? key, this.index}) : super(key: key);
+
+  @override
+  _ChatTextWidgetState createState() => _ChatTextWidgetState();
+}
+
+class _ChatTextWidgetState extends State<ChatTextWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return ViewModelBuilder<MainViewModel>.reactive(
+      viewModelBuilder: ()=> locator<MainViewModel>(),
+      onModelReady: (model) {
+        //getFileUrl(model);
+      },
+      builder: (context, model,child){
+        return Align(
+          alignment: model.chats[widget.index!]["userID"] ==
+              model.barModel!.id!.toString()
+              ? Alignment.centerRight
+              : Alignment.centerLeft,
+          child: Container(
+            width:
+            MediaQuery.of(context).size.width /
+                1.7,
+            decoration: BoxDecoration(
+              color: ColorUtils.messageChat,
+              borderRadius: model.chats[widget.index!]
+              ["userID"] ==
+                  model.barModel!.id!.toString()
+                  ? BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+                bottomLeft:
+                Radius.circular(15),
+              )
+                  : BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+                bottomRight:
+                Radius.circular(15),
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: model.chats[widget.index!]
+              ["userID"] ==
+                  model.barModel!.id!.toString()
+                  ? CrossAxisAlignment.end
+                  : CrossAxisAlignment.start,
+              children: [
+                // Padding(
+                //   padding: EdgeInsets.symmetric(
+                //       horizontal: 3.w,
+                //       vertical: 1.5.h),
+                //   child: Image.asset(
+                //     ImageUtils.drinkImage,
+                //   ),
+                // ),
+                Padding(
+                  padding: EdgeInsets.only(
+                      left: 3.w,
+                      right: 3.w,
+                      top: 1.5.h),
+                  child: Text(
+                    model.chats[widget.index!]["content"]
+                        .toString(),
+                    style: TextStyle(
+                      //fontFamily: FontUtils.avertaDemoRegular,
+                        fontSize: 1.8.t,
+                        color:
+                        ColorUtils.text_dark),
+                  )
+                ),
+                //SizedBox(height: 1.h,),
+
+                Align(
+                  alignment: model.chats[widget.index!]
+                  ["userID"] ==
+                      model.barModel!.id!
+                          .toString()
+                      ? Alignment.centerLeft
+                      : Alignment.centerRight,
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      model.chats[widget.index!]["createdAt"].toString(),
+                      style: TextStyle(
+                        //fontFamily: FontUtils.avertaDemoRegular,
+                          fontSize: 1.5.t,
+                          color: ColorUtils
+                              .icon_color),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+      disposeViewModel: false,
+    );
+  }
+}
+
+///------------------ Chat Video---------------------------------///
+
+class ChatVideoWidget extends StatefulWidget {
+  int? index;
+
+  ChatVideoWidget({Key? key, this.index}) : super(key: key);
+
+  @override
+  _ChatVideoWidgetState createState() => _ChatVideoWidgetState();
+}
+
+class _ChatVideoWidgetState extends State<ChatVideoWidget> {
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
+
 
