@@ -1,10 +1,14 @@
 import 'dart:io';
 
+import 'package:better_player/better_player.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:expand_tap_area/expand_tap_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
+import 'package:mime/mime.dart';
 import 'package:pubnub/core.dart';
 import 'package:pubnub/pubnub.dart';
 import 'package:sauftrag/app/locator.dart';
@@ -22,6 +26,7 @@ import 'package:sauftrag/viewModels/prefrences_view_model.dart';
 import 'package:sauftrag/views/UserFriendList/chat_input.dart';
 import 'package:sauftrag/views/UserFriendList/chat_list_widget.dart';
 import 'package:sauftrag/widgets/back_arrow_with_container.dart';
+import 'package:sauftrag/widgets/loader.dart';
 import 'package:stacked/stacked.dart';
 
 class MessageScreen extends StatefulWidget {
@@ -511,87 +516,21 @@ class _MessageScreenState extends State<MessageScreen> {
                                   physics: BouncingScrollPhysics(),
                                   controller: model.chatScroll,
                                   itemBuilder: (context, index) {
-                                    return Align(
-                                      alignment: model.chats[index]["userID"] ==
-                                              model.barModel!.id!.toString()
-                                          ? Alignment.centerRight
-                                          : Alignment.centerLeft,
-                                      child: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                1.7,
-                                        decoration: BoxDecoration(
-                                          color: ColorUtils.red_color.withOpacity(0.9),
-                                          borderRadius: model.chats[index]
-                                                      ["userID"] ==
-                                                  model.barModel!.id!.toString()
-                                              ? BorderRadius.only(
-                                                  topLeft: Radius.circular(15),
-                                                  topRight: Radius.circular(15),
-                                                  bottomLeft:
-                                                      Radius.circular(15),
-                                                )
-                                              : BorderRadius.only(
-                                                  topLeft: Radius.circular(15),
-                                                  topRight: Radius.circular(15),
-                                                  bottomRight:
-                                                      Radius.circular(15),
-                                                ),
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment: model.chats[index]
-                                                      ["userID"] ==
-                                                  model.barModel!.id!.toString()
-                                              ? CrossAxisAlignment.end
-                                              : CrossAxisAlignment.start,
-                                          children: [
-                                            // Padding(
-                                            //   padding: EdgeInsets.symmetric(
-                                            //       horizontal: 3.w,
-                                            //       vertical: 1.5.h),
-                                            //   child: Image.asset(
-                                            //     ImageUtils.drinkImage,
-                                            //   ),
-                                            // ),
-                                            Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 3.w,
-                                                  right: 3.w,
-                                                  top: 1.5.h),
-                                              child: Text(
-                                                model.chats[index]["content"]
-                                                    .toString(),
-                                                style: TextStyle(
-                                                    //fontFamily: FontUtils.avertaDemoRegular,
-                                                    fontSize: 1.8.t,
-                                                    color:
-                                                        ColorUtils.text_dark),
-                                              ),
-                                            ),
-                                            //SizedBox(height: 1.h,),
-                                            Align(
-                                              alignment: model.chats[index]
-                                                          ["userID"] ==
-                                                      model.barModel!.id!
-                                                          .toString()
-                                                  ? Alignment.centerLeft
-                                                  : Alignment.centerRight,
-                                              child: Padding(
-                                                padding: EdgeInsets.all(8.0),
-                                                child: Text(
-                                                  model.chats[index]["time"].toString().substring(11,16),
-                                                  style: TextStyle(
-                                                      //fontFamily: FontUtils.avertaDemoRegular,
-                                                      fontSize: 1.5.t,
-                                                      color: ColorUtils
-                                                          .icon_color),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    );
+                                    if(model.chats[index]["file"] != null)
+                                    {
+
+                                      if(lookupMimeType(model.chats[index]["file"]["name"])!.contains("video"))
+                                      {
+                                        return ChatVideoWidget(index: index, id: widget.id.toString());
+                                      }
+                                      else {
+                                        return ChatImageWidget(index: index, id: widget.id.toString());
+                                      }
+                                    }
+                                    else
+                                    {
+                                      return ChatTextWidget(index : index);
+                                    }
                                   },
                                   separatorBuilder: (context, index) =>
                                       SizedBox(
@@ -650,8 +589,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                                                   1.7.w),
                                                       child: ExpandTapWidget(
                                                         onTap: () {
-                                                          model.getImagE();
-                                                          setState(() {});
+                                                          model.sendImageMessageBar(widget.id!);
                                                         },
                                                         tapPadding:
                                                             EdgeInsets.all(4.i),
@@ -830,8 +768,8 @@ class _MessageScreenState extends State<MessageScreen> {
                                       ),
                                     ),
                                   ),
-        model.groupScreenChatController.text.length <=0?
-Container(
+                                  model.groupScreenChatController.text.length <=0?
+                                  Container(
                                       //margin: EdgeInsets.only(bottom: 2.2.h),
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
@@ -894,481 +832,6 @@ Container(
                                 ],
                               ),
                             ),
-                            // Expanded(
-                            //   child: SingleChildScrollView(
-                            //     physics: BouncingScrollPhysics(),
-                            //     controller: scrollController,
-                            //     child: Container(
-                            //       padding:
-                            //           EdgeInsets.only(top: 2.h, bottom: 11.h),
-                            //       child: Column(
-                            //         children: [
-                            //           //SizedBox(height: 5.h,),
-                            //           Align(
-                            //             alignment: Alignment.centerLeft,
-                            //             child: Container(
-                            //               width:
-                            //                   MediaQuery.of(context).size.width /
-                            //                       1.7,
-                            //               decoration: BoxDecoration(
-                            //                 color: ColorUtils.messageChat,
-                            //                 borderRadius: BorderRadius.only(
-                            //                   topLeft: Radius.circular(15),
-                            //                   topRight: Radius.circular(15),
-                            //                   bottomRight: Radius.circular(15),
-                            //                 ),
-                            //               ),
-                            //               child: Column(
-                            //                 crossAxisAlignment:
-                            //                     CrossAxisAlignment.start,
-                            //                 children: [
-                            //                   Padding(
-                            //                     padding: EdgeInsets.symmetric(
-                            //                         horizontal: 3.w,
-                            //                         vertical: 1.5.h),
-                            //                     child: Image.asset(
-                            //                       ImageUtils.drinkImage,
-                            //                     ),
-                            //                   ),
-                            //                   Padding(
-                            //                     padding: EdgeInsets.only(
-                            //                         left: 3.w,
-                            //                         right: 3.w,
-                            //                         top: 1.5.h),
-                            //                     child: Text(
-                            //                       "Lorem ipsum dolor sit amet, consec tetur adipiscing elit.",
-                            //                       style: TextStyle(
-                            //                           //fontFamily: FontUtils.avertaDemoRegular,
-                            //                           fontSize: 1.8.t,
-                            //                           color:
-                            //                               ColorUtils.text_dark),
-                            //                     ),
-                            //                   ),
-                            //                   //SizedBox(height: 1.h,),
-                            //                   Align(
-                            //                     alignment: Alignment.centerRight,
-                            //                     child: Padding(
-                            //                       padding: EdgeInsets.all(8.0),
-                            //                       child: Text(
-                            //                         "02:45 pm",
-                            //                         style: TextStyle(
-                            //                             //fontFamily: FontUtils.avertaDemoRegular,
-                            //                             fontSize: 1.5.t,
-                            //                             color: ColorUtils
-                            //                                 .icon_color),
-                            //                       ),
-                            //                     ),
-                            //                   ),
-                            //                 ],
-                            //               ),
-                            //             ),
-                            //           ),
-                            //           SizedBox(
-                            //             height: 2.h,
-                            //           ),
-                            //           //SizedBox(height: 5.h,),
-                            //           Align(
-                            //             alignment: Alignment.centerRight,
-                            //             child: Container(
-                            //               width:
-                            //                   MediaQuery.of(context).size.width /
-                            //                       1.6,
-                            //               decoration: BoxDecoration(
-                            //                 color: ColorUtils.text_red,
-                            //                 borderRadius: BorderRadius.only(
-                            //                   topLeft: Radius.circular(15),
-                            //                   topRight: Radius.circular(15),
-                            //                   //bottomRight: Radius.circular(0),
-                            //                   bottomLeft: Radius.circular(15),
-                            //                 ),
-                            //               ),
-                            //               child: Column(
-                            //                 crossAxisAlignment:
-                            //                     CrossAxisAlignment.end,
-                            //                 children: [
-                            //                   Padding(
-                            //                     padding: EdgeInsets.only(
-                            //                         left: 3.w,
-                            //                         right: 3.w,
-                            //                         top: 2.h),
-                            //                     child: Text(
-                            //                       "Ok, I’m on my way",
-                            //                       style: TextStyle(
-                            //                           //fontFamily: FontUtils.avertaDemoRegular,
-                            //                           fontSize: 1.8.t,
-                            //                           color: Colors.white),
-                            //                     ),
-                            //                   ),
-                            //                   //SizedBox(height: 1.h,),
-                            //                   Align(
-                            //                     alignment: Alignment.centerLeft,
-                            //                     child: Padding(
-                            //                       padding:
-                            //                           const EdgeInsets.all(8.0),
-                            //                       child: Text(
-                            //                         "02:45 pm•Read",
-                            //                         style: TextStyle(
-                            //                             //fontFamily: FontUtils.avertaDemoRegular,
-                            //                             fontSize: 1.5.t,
-                            //                             color: Colors.white),
-                            //                       ),
-                            //                     ),
-                            //                   ),
-                            //                 ],
-                            //               ),
-                            //             ),
-                            //           ),
-
-                            //           SizedBox(
-                            //             height: 2.h,
-                            //           ),
-                            //           Align(
-                            //             alignment: Alignment.centerLeft,
-                            //             child: Container(
-                            //               width:
-                            //                   MediaQuery.of(context).size.width /
-                            //                       1.6,
-                            //               decoration: BoxDecoration(
-                            //                 color: ColorUtils.messageChat,
-                            //                 borderRadius: BorderRadius.only(
-                            //                   topLeft: Radius.circular(15),
-                            //                   topRight: Radius.circular(15),
-                            //                   //bottomRight: Radius.circular(0),
-                            //                   bottomLeft: Radius.circular(15),
-                            //                 ),
-                            //               ),
-                            //               child: Column(
-                            //                 crossAxisAlignment:
-                            //                     CrossAxisAlignment.start,
-                            //                 children: [
-                            //                   Padding(
-                            //                     padding: EdgeInsets.only(
-                            //                         left: 3.w,
-                            //                         right: 3.w,
-                            //                         top: 2.h),
-                            //                     child: Text(
-                            //                       "Ok, I’m on my way",
-                            //                       style: TextStyle(
-                            //                           //fontFamily: FontUtils.avertaDemoRegular,
-                            //                           fontSize: 1.8.t,
-                            //                           color:
-                            //                               ColorUtils.text_dark),
-                            //                     ),
-                            //                   ),
-                            //                   //SizedBox(height: 1.h,),
-                            //                   Align(
-                            //                     alignment: Alignment.centerRight,
-                            //                     child: Padding(
-                            //                       padding:
-                            //                           const EdgeInsets.all(8.0),
-                            //                       child: Text(
-                            //                         "02:45 pm•Read",
-                            //                         style: TextStyle(
-                            //                             //fontFamily: FontUtils.avertaDemoRegular,
-                            //                             fontSize: 1.5.t,
-                            //                             color: ColorUtils
-                            //                                 .icon_color),
-                            //                       ),
-                            //                     ),
-                            //                   ),
-                            //                 ],
-                            //               ),
-                            //             ),
-                            //           ),
-
-                            //           SizedBox(
-                            //             height: 2.h,
-                            //           ),
-                            //           Align(
-                            //             alignment: Alignment.centerRight,
-                            //             child: Container(
-                            //               width:
-                            //                   MediaQuery.of(context).size.width /
-                            //                       1.6,
-                            //               decoration: BoxDecoration(
-                            //                 color: ColorUtils.text_red,
-                            //                 borderRadius: BorderRadius.only(
-                            //                   topLeft: Radius.circular(15),
-                            //                   topRight: Radius.circular(15),
-                            //                   //bottomRight: Radius.circular(0),
-                            //                   bottomLeft: Radius.circular(15),
-                            //                 ),
-                            //               ),
-                            //               child: Column(
-                            //                 crossAxisAlignment:
-                            //                     CrossAxisAlignment.start,
-                            //                 children: [
-                            //                   Padding(
-                            //                     padding: EdgeInsets.only(
-                            //                         left: 3.w,
-                            //                         right: 3.w,
-                            //                         top: 2.h),
-                            //                     child: Text(
-                            //                       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin maximus ac arcu nec tristique. ",
-                            //                       style: TextStyle(
-                            //                           //fontFamily: FontUtils.avertaDemoRegular,
-                            //                           fontSize: 1.8.t,
-                            //                           color: Colors.white),
-                            //                     ),
-                            //                   ),
-                            //                   SizedBox(
-                            //                     height: 1.h,
-                            //                   ),
-                            //                   Padding(
-                            //                     padding:
-                            //                         const EdgeInsets.all(8.0),
-                            //                     child: Text(
-                            //                       "02:45 pm•Read",
-                            //                       style: TextStyle(
-                            //                           //fontFamily: FontUtils.avertaDemoRegular,
-                            //                           fontSize: 1.5.t,
-                            //                           color: Colors.white),
-                            //                     ),
-                            //                   ),
-                            //                 ],
-                            //               ),
-                            //             ),
-                            //           ),
-                            //           SizedBox(
-                            //             height: 2.h,
-                            //           ),
-                            //           Align(
-                            //             alignment: Alignment.centerRight,
-                            //             child: Container(
-                            //               width:
-                            //                   MediaQuery.of(context).size.width /
-                            //                       1.6,
-                            //               decoration: BoxDecoration(
-                            //                 color: ColorUtils.text_red,
-                            //                 borderRadius: BorderRadius.only(
-                            //                   topLeft: Radius.circular(15),
-                            //                   topRight: Radius.circular(15),
-                            //                   //bottomRight: Radius.circular(0),
-                            //                   bottomLeft: Radius.circular(15),
-                            //                 ),
-                            //               ),
-                            //               child: Column(
-                            //                 crossAxisAlignment:
-                            //                     CrossAxisAlignment.start,
-                            //                 children: [
-                            //                   Padding(
-                            //                     padding: EdgeInsets.only(
-                            //                         left: 3.w,
-                            //                         right: 3.w,
-                            //                         top: 2.h),
-                            //                     child: Text(
-                            //                       "Hii....",
-                            //                       style: TextStyle(
-                            //                           //fontFamily: FontUtils.avertaDemoRegular,
-                            //                           fontSize: 1.8.t,
-                            //                           color: Colors.white),
-                            //                     ),
-                            //                   ),
-                            //                   SizedBox(
-                            //                     height: 1.h,
-                            //                   ),
-                            //                   Padding(
-                            //                     padding:
-                            //                         const EdgeInsets.all(8.0),
-                            //                     child: Text(
-                            //                       "03:00 pm•Read",
-                            //                       style: TextStyle(
-                            //                           //fontFamily: FontUtils.avertaDemoRegular,
-                            //                           fontSize: 1.5.t,
-                            //                           color: Colors.white),
-                            //                     ),
-                            //                   ),
-                            //                 ],
-                            //               ),
-                            //             ),
-                            //           ),
-
-                            //           // Row(
-                            //           //   mainAxisSize: MainAxisSize.min,
-                            //           //   //crossAxisAlignment: CrossAxisAlignment.end,
-                            //           //   children: [
-                            //           //     Expanded(
-                            //           //       child: Container(
-                            //           //         //width: 200.0,
-                            //           //         margin: EdgeInsets.only(
-                            //           //           //left: SizeConfig.widthMultiplier * 4.5,
-                            //           //           right: SizeConfig.widthMultiplier * 2,
-                            //           //           //top: SizeConfig.heightMultiplier * 3,
-                            //           //         ),
-                            //           //         decoration: BoxDecoration(
-                            //           //             color: Colors.white,
-                            //           //             borderRadius: BorderRadius.all(
-                            //           //               Radius.circular(15.0),
-                            //           //             ),
-                            //           //             border: Border.all(color: ColorUtils.text_red)
-                            //           //         ),
-                            //           //         child: Container(
-                            //           //           //color: Colors.amber,
-                            //           //           margin:
-                            //           //           EdgeInsets.symmetric(horizontal: SizeConfig.widthMultiplier * 3,),
-                            //           //           child: Row(
-                            //           //             children: [
-                            //           //               ExpandTapWidget(
-                            //           //                 onTap: () {
-                            //           //                   model.messageScreenEmojiShowing = !model.messageScreenEmojiShowing;
-                            //           //                   model.messageScreenEmojiSelected = !model.messageScreenEmojiSelected;
-                            //           //                   SchedulerBinding.instance!.addPostFrameCallback((_) {
-                            //           //                     scrollController.jumpTo(scrollController.position.maxScrollExtent);
-                            //           //                   });
-                            //           //                   setState(() {
-                            //           //                   });
-                            //           //                 },
-                            //           //                 tapPadding: EdgeInsets.all(25.0),
-                            //           //                 child: SvgPicture.asset(ImageUtils.smileyIcon),
-                            //           //               ),
-                            //           //               // GestureDetector(
-                            //           //               //   onTap: (){
-                            //           //               //     emojiShowing = !emojiShowing;
-                            //           //               //     emojiSelected = !emojiSelected;
-                            //           //               //     SchedulerBinding.instance!.addPostFrameCallback((_) {
-                            //           //               //       scrollController.jumpTo(scrollController.position.maxScrollExtent);
-                            //           //               //     });
-                            //           //               //     setState(() {
-                            //           //               //     });
-                            //           //               //   },
-                            //           //               //   child: Container(
-                            //           //               //     child: SvgPicture.asset(ImageUtils.smileyIcon),
-                            //           //               //   ),
-                            //           //               // ),
-                            //           //               SizedBox(width: 1.w,),
-                            //           //               Expanded(
-                            //           //                 child: Container(
-                            //           //                   margin: EdgeInsets.only(
-                            //           //                       left: SizeConfig.widthMultiplier * 3,
-                            //           //                       right: SizeConfig.widthMultiplier * 3),
-                            //           //                   child: TextField(
-                            //           //                     onTap: () {},
-                            //           //                     enabled: true,
-                            //           //                     //readOnly: true,
-                            //           //                     //focusNode: model.searchFocus,
-                            //           //                     controller: model.messageScreenChatController,
-                            //           //                     decoration: InputDecoration(
-                            //           //                       hintText: "Type your message...",
-                            //           //                       hintStyle: TextStyle(
-                            //           //                         //fontFamily: FontUtils.proximaNovaRegular,
-                            //           //                         //color: ColorUtils.silverColor,
-                            //           //                         fontSize: SizeConfig.textMultiplier * 1.9,
-                            //           //                       ),
-                            //           //                       border: InputBorder.none,
-                            //           //                       isDense: true,
-                            //           //                       contentPadding: EdgeInsets.symmetric(
-                            //           //                           vertical: SizeConfig.heightMultiplier * 2),
-                            //           //                     ),
-                            //           //                   ),
-                            //           //                 ),
-                            //           //               ),
-                            //           //               Container(
-                            //           //                 decoration: BoxDecoration(
-                            //           //                   //color: ColorUtils.text_red,
-                            //           //                   borderRadius: BorderRadius.all(Radius.circular(15)),
-                            //           //                 ),
-                            //           //                 child: Row(
-                            //           //                   children: [
-                            //           //                     ExpandTapWidget(
-                            //           //                       onTap: () {
-                            //           //                         model.getImage();
-                            //           //                         setState(() {
-                            //           //                         });
-                            //           //                       },
-                            //           //                       tapPadding: EdgeInsets.all(50.0),
-                            //           //                       child: SvgPicture.asset(ImageUtils.plusIcon),
-                            //           //                     ),
-                            //           //                     // GestureDetector(
-                            //           //                     //   onTap: (){
-                            //           //                     //     model.getImage();
-                            //           //                     //   },
-                            //           //                     //     child: SvgPicture.asset(ImageUtils.plusIcon),
-                            //           //                     // ),
-                            //           //                     SizedBox(width: 4.w,),
-                            //           //                     ExpandTapWidget(
-                            //           //                         onTap: () async{
-                            //           //                           // final cameras = await availableCameras();
-                            //           //                           // final firstCamera = cameras.first;
-                            //           //                           //model.navigationService.navigateTo(to: TakePictureScreen(camera: firstCamera,));
-                            //           //                           model.openCamera();
-                            //           //                         },
-                            //           //                         tapPadding: EdgeInsets.all(25.0),
-                            //           //                         child: SvgPicture.asset(ImageUtils.photoCamera)
-                            //           //                     ),
-                            //           //                     // GestureDetector(
-                            //           //                     //   onTap: (){
-                            //           //                     //   },
-                            //           //                     //   child: SvgPicture.asset(ImageUtils.photoCamera)
-                            //           //                     // ),
-                            //           //                   ],
-                            //           //                 ),
-                            //           //               ),
-                            //           //               // Text(searchHere,
-                            //           //               //   style: TextStyle(
-                            //           //               //     fontFamily: FontUtils.gibsonRegular,
-                            //           //               //     fontWeight: FontWeight.w400,
-                            //           //               //     fontSize: SizeConfig.textMultiplier * 1.8,
-                            //           //               //     color: ColorUtils.searchFieldText,
-                            //           //               //   ),
-                            //           //               // ),
-                            //           //             ],
-                            //           //           ),
-                            //           //         ),
-                            //           //       ),
-                            //           //     ),
-                            //           //     Container(
-                            //           //       decoration: BoxDecoration(
-                            //           //         shape: BoxShape.circle,
-                            //           //         color: ColorUtils.text_red,
-                            //           //       ),
-                            //           //       child: Padding(
-                            //           //         padding: const EdgeInsets.all(15.0),
-                            //           //         child: SvgPicture.asset(ImageUtils.voiceRecorder,
-                            //           //           color: Colors.white,
-                            //           //         ),
-                            //           //       ),
-                            //           //     ),
-                            //           //   ],
-                            //           // ),
-                            //           // SizedBox(height: 2.h,),
-                            //           // if(model.messageScreenEmojiSelected == true)
-                            //           //   Container(
-                            //           //     height: 30.h,
-                            //           //     child: Offstage(
-                            //           //       offstage: !model.messageScreenEmojiShowing,
-                            //           //       child: EmojiPicker(
-                            //           //           onEmojiSelected: (Category category, Emoji emoji) {
-                            //           //             model.messageEmojiSelected(emoji);
-                            //           //           },
-                            //           //           onBackspacePressed: model.messageScreenBackspacePressed(),
-                            //           //           config: Config(
-                            //           //               columns: 7,
-                            //           //               // Issue: https://github.com/flutter/flutter/issues/28894
-                            //           //               emojiSizeMax: 32 * (Platform.isIOS ? 1.30 : 1.0),
-                            //           //               verticalSpacing: 0,
-                            //           //               horizontalSpacing: 0,
-                            //           //               initCategory: Category.RECENT,
-                            //           //               bgColor: const Color(0xFFF2F2F2),
-                            //           //               indicatorColor: Colors.blue,
-                            //           //               iconColor: Colors.grey,
-                            //           //               iconColorSelected: Colors.blue,
-                            //           //               progressIndicatorColor: Colors.blue,
-                            //           //               backspaceColor: Colors.blue,
-                            //           //               showRecentsTab: true,
-                            //           //               recentsLimit: 28,
-                            //           //               noRecentsText: 'No Recents',
-                            //           //               noRecentsStyle: const TextStyle(
-                            //           //                   fontSize: 20, color: Colors.black26),
-                            //           //               tabIndicatorAnimDuration: kTabScrollDuration,
-                            //           //               categoryIcons: const CategoryIcons(),
-                            //           //               buttonMode: ButtonMode.MATERIAL)),
-                            //           //     ),
-                            //           //   ),
-                            //         ],
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
                           ],
                         ),
                       ],
@@ -1379,5 +842,402 @@ Container(
         );
       },
     );
+  }
+}
+
+///----------------------Chat Image-------------------------------///
+
+class ChatImageWidget extends StatefulWidget {
+  int? index;
+  String? id;
+
+  ChatImageWidget({Key? key, this.index, this.id}) : super(key: key);
+
+  @override
+  _ChatImageWidgetState createState() => _ChatImageWidgetState();
+}
+
+class _ChatImageWidgetState extends State<ChatImageWidget> {
+
+  Uri? uri;
+
+  @override
+  Widget build(BuildContext context) {
+    return ViewModelBuilder<MainViewModel>.reactive(
+      viewModelBuilder: ()=> locator<MainViewModel>(),
+      onModelReady: (model) {
+        getFileUrl(model);
+      },
+      builder: (context, model,child){
+        return Align(
+          alignment: model.chats[widget.index!]["message"]["userID"] ==
+              model.userModel!.id!.toString()
+              ? Alignment.centerRight
+              : Alignment.centerLeft,
+          child: Container(
+            width:
+            MediaQuery.of(context).size.width /
+                1.7,
+            decoration: BoxDecoration(
+              color: ColorUtils.messageChat,
+              borderRadius: model.chats[widget.index!]["message"]
+              ["userID"] ==
+                  model.userModel!.id!.toString()
+                  ? BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+                bottomLeft:
+                Radius.circular(15),
+              )
+                  : BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+                bottomRight:
+                Radius.circular(15),
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: model.chats[widget.index!]["message"]
+              ["userID"] ==
+                  model.userModel!.id!.toString()
+                  ? CrossAxisAlignment.end
+                  : CrossAxisAlignment.start,
+              children: [
+                // Padding(
+                //   padding: EdgeInsets.symmetric(
+                //       horizontal: 3.w,
+                //       vertical: 1.5.h),
+                //   child: Image.asset(
+                //     ImageUtils.drinkImage,
+                //   ),
+                // ),
+                Padding(
+                  padding: EdgeInsets.only(
+                      left: 3.w,
+                      right: 3.w,
+                      top: 1.5.h),
+                  child: Image.network(
+                    uri.toString(),
+                    // height: 30.h,
+                    // width: 50.w,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                //SizedBox(height: 1.h,),
+
+                Align(
+                  alignment: model.chats[widget.index!]["message"]
+                  ["userID"] ==
+                      model.userModel!.id!
+                          .toString()
+                      ? Alignment.centerLeft
+                      : Alignment.centerRight,
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      DateFormat("dd hh:mm").format(DateTime.parse(model.chats[widget.index!]["message"]["time"])),
+                      style: TextStyle(
+                        //fontFamily: FontUtils.avertaDemoRegular,
+                          fontSize: 1.5.t,
+                          color: ColorUtils
+                              .icon_color),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+      disposeViewModel: false,
+    );
+  }
+  void getFileUrl (MainViewModel model)async{
+    print(model.chats[widget.index!]);
+    //var fileInfo = widget.ImageData;
+    uri = await model.pubnub!.files.getFileUrl(
+      model.getConversationID(
+          model.userModel!.id.toString(),
+          widget.id.toString()
+      ),
+      model.chats[widget.index!]["file"]["id"],
+      model.chats[widget.index!]["file"]["name"],
+    );
+    print(uri);
+    setState(() {
+
+    });
+
+  }
+}
+
+///-------------------Chat Text ---------------------------///
+
+class ChatTextWidget extends StatefulWidget {
+  int? index;
+
+  ChatTextWidget({Key? key, this.index}) : super(key: key);
+
+  @override
+  _ChatTextWidgetState createState() => _ChatTextWidgetState();
+}
+
+class _ChatTextWidgetState extends State<ChatTextWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return ViewModelBuilder<MainViewModel>.reactive(
+      viewModelBuilder: ()=> locator<MainViewModel>(),
+      onModelReady: (model) {
+        //getFileUrl(model);
+      },
+      builder: (context, model,child){
+        return Align(
+          alignment: model.chats[widget.index!]["userID"] ==
+              model.userModel!.id!.toString()
+              ? Alignment.centerRight
+              : Alignment.centerLeft,
+          child: Container(
+            width:
+            MediaQuery.of(context).size.width /
+                1.7,
+            decoration: BoxDecoration(
+              color: ColorUtils.messageChat,
+              borderRadius: model.chats[widget.index!]
+              ["userID"] ==
+                  model.userModel!.id!.toString()
+                  ? BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+                bottomLeft:
+                Radius.circular(15),
+              )
+                  : BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+                bottomRight:
+                Radius.circular(15),
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: model.chats[widget.index!]
+              ["userID"] ==
+                  model.userModel!.id!.toString()
+                  ? CrossAxisAlignment.end
+                  : CrossAxisAlignment.start,
+              children: [
+                // Padding(
+                //   padding: EdgeInsets.symmetric(
+                //       horizontal: 3.w,
+                //       vertical: 1.5.h),
+                //   child: Image.asset(
+                //     ImageUtils.drinkImage,
+                //   ),
+                // ),
+                Padding(
+                    padding: EdgeInsets.only(
+                        left: 3.w,
+                        right: 3.w,
+                        top: 1.5.h),
+                    child: Text(
+                      model.chats[widget.index!]["content"]
+                          .toString(),
+                      style: TextStyle(
+                        //fontFamily: FontUtils.avertaDemoRegular,
+                          fontSize: 1.8.t,
+                          color:
+                          ColorUtils.text_dark),
+                    )
+                ),
+                //SizedBox(height: 1.h,),
+
+                Align(
+                  alignment: model.chats[widget.index!]
+                  ["userID"] ==
+                      model.userModel!.id!
+                          .toString()
+                      ? Alignment.centerLeft
+                      : Alignment.centerRight,
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      DateFormat("dd hh:mm").format(DateTime.parse(model.chats[widget.index!]["time"])),
+                      //model.chats[widget.index!]["createdAt"].toString(),
+                      style: TextStyle(
+                        //fontFamily: FontUtils.avertaDemoRegular,
+                          fontSize: 1.5.t,
+                          color: ColorUtils
+                              .icon_color),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+      disposeViewModel: false,
+    );
+  }
+}
+
+///------------------ Chat Video---------------------------------///
+
+class ChatVideoWidget extends StatefulWidget {
+  int? index;
+  String? id;
+
+  ChatVideoWidget({Key? key, this.index, this.id}) : super(key: key);
+
+  @override
+  _ChatVideoWidgetState createState() => _ChatVideoWidgetState();
+}
+
+class _ChatVideoWidgetState extends State<ChatVideoWidget> {
+
+  Uri? uri;
+
+  BetterPlayerController? _betterPlayerController;
+  BetterPlayerDataSource? _betterPlayerDataSource;
+
+
+  @override
+  void dispose() {
+    _betterPlayerController!.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+
+    super.initState();
+  }
+
+  Widget build(BuildContext context) {
+    return ViewModelBuilder<MainViewModel>.reactive(
+      viewModelBuilder: ()=> locator<MainViewModel>(),
+      onModelReady: (model) {
+        getFileUrl(model);
+      },
+      builder: (context, model,child){
+        return Align(
+          alignment: model.chats[widget.index!]["message"]["userID"] ==
+              model.userModel!.id!.toString()
+              ? Alignment.centerRight
+              : Alignment.centerLeft,
+          child: Container(
+            width:
+            MediaQuery.of(context).size.width /
+                1.7,
+            decoration: BoxDecoration(
+              color: ColorUtils.messageChat,
+              borderRadius: model.chats[widget.index!]["message"]
+              ["userID"] ==
+                  model.userModel!.id!.toString()
+                  ? BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+                bottomLeft:
+                Radius.circular(15),
+              )
+                  : BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+                bottomRight:
+                Radius.circular(15),
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: model.chats[widget.index!]["message"]
+              ["userID"] ==
+                  model.userModel!.id!.toString()
+                  ? CrossAxisAlignment.end
+                  : CrossAxisAlignment.start,
+              children: [
+                // Padding(
+                //   padding: EdgeInsets.symmetric(
+                //       horizontal: 3.w,
+                //       vertical: 1.5.h),
+                //   child: Image.asset(
+                //     ImageUtils.drinkImage,
+                //   ),
+                // ),
+                const SizedBox(height: 8),
+                if(_betterPlayerController!=null)
+                  Container(
+                    height: 20.h,
+                    width: 60.w,
+                    child: AspectRatio(
+                      aspectRatio: 28 / 40,
+                      child: BetterPlayer(
+                          controller: _betterPlayerController!),
+                    ),
+                  ),
+                if(_betterPlayerController==null)
+                  Container(
+                    height: 20.h,
+                    child: Loader(),
+                  ),
+
+                Align(
+                  alignment: model.chats[widget.index!]["message"]
+                  ["userID"] ==
+                      model.userModel!.id!
+                          .toString()
+                      ? Alignment.centerLeft
+                      : Alignment.centerRight,
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      DateFormat("dd hh:mm").format(DateTime.parse(model.chats[widget.index!]["message"]["time"])),
+                      style: TextStyle(
+                        //fontFamily: FontUtils.avertaDemoRegular,
+                          fontSize: 1.5.t,
+                          color: ColorUtils
+                              .icon_color),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+      disposeViewModel: false,
+    );
+  }
+  void getFileUrl (MainViewModel model)async{
+    print(model.chats[widget.index!]);
+    //var fileInfo = widget.ImageData;
+    uri = await model.pubnub!.files.getFileUrl(
+      model.getConversationID(
+          model.userModel!.id.toString(),
+          widget.id.toString()
+      ),
+      model.chats[widget.index!]["file"]["id"],
+      model.chats[widget.index!]["file"]["name"],
+
+    );
+    BetterPlayerConfiguration betterPlayerConfiguration =
+    BetterPlayerConfiguration(
+      aspectRatio: 16 / 9,
+      fit: BoxFit.contain,
+      autoPlay: true,
+      looping: true,
+      deviceOrientationsAfterFullScreen: [
+        DeviceOrientation.portraitDown,
+        DeviceOrientation.portraitUp
+      ],
+    );
+    _betterPlayerDataSource = BetterPlayerDataSource(
+      BetterPlayerDataSourceType.network,
+      uri.toString(),
+    );
+    _betterPlayerController = BetterPlayerController(betterPlayerConfiguration);
+    await _betterPlayerController!.setupDataSource(_betterPlayerDataSource!);
+    print(uri);
+    setState(() {
+
+    });
+
   }
 }

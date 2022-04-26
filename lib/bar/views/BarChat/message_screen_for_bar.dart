@@ -1,9 +1,13 @@
+import 'dart:core';
+import 'dart:core';
 import 'dart:io';
 
+import 'package:better_player/better_player.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:expand_tap_area/expand_tap_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:mime/mime.dart';
@@ -27,6 +31,7 @@ import 'package:sauftrag/views/UserFriendList/chat_input.dart';
 import 'package:sauftrag/views/UserFriendList/chat_list_widget.dart';
 import 'package:sauftrag/widgets/add_dialog_box_plusAttachment.dart';
 import 'package:sauftrag/widgets/back_arrow_with_container.dart';
+import 'package:sauftrag/widgets/loader.dart';
 import 'package:stacked/stacked.dart';
 
 class MessageScreenForBar extends StatefulWidget {
@@ -289,10 +294,10 @@ class _MessageScreenForBarState extends State<MessageScreenForBar> {
 
                                         if(lookupMimeType(model.chats[index]["file"]["name"])!.contains("video"))
                                           {
-                                            return ChatVideoWidget(index: index);
+                                            return ChatVideoWidget(index: index, id: widget.id.toString());
                                           }
                                         else {
-                                          return ChatImageWidget(index: index);
+                                          return ChatImageWidget(index: index, id: widget.id.toString());
                                         }
                                       }
                                     else
@@ -588,7 +593,7 @@ class _MessageScreenForBarState extends State<MessageScreenForBar> {
                                             model.notifyListeners();
                                             Future.delayed(Duration(seconds: 2),
                                                 () {
-                                              model.scrollDown();
+                                               model.scrollDown();
                                             });
                                           },
                                           child: Container(
@@ -627,8 +632,9 @@ class _MessageScreenForBarState extends State<MessageScreenForBar> {
 
 class ChatImageWidget extends StatefulWidget {
   int? index;
+  String? id;
 
-  ChatImageWidget({Key? key, this.index}) : super(key: key);
+  ChatImageWidget({Key? key, this.index, this.id}) : super(key: key);
 
   @override
   _ChatImageWidgetState createState() => _ChatImageWidgetState();
@@ -647,7 +653,7 @@ class _ChatImageWidgetState extends State<ChatImageWidget> {
         },
         builder: (context, model,child){
           return Align(
-            alignment: model.chats[widget.index!]["userID"] ==
+            alignment: model.chats[widget.index!]["message"]["userID"] ==
                 model.barModel!.id!.toString()
                 ? Alignment.centerRight
                 : Alignment.centerLeft,
@@ -657,7 +663,7 @@ class _ChatImageWidgetState extends State<ChatImageWidget> {
                   1.7,
               decoration: BoxDecoration(
                 color: ColorUtils.messageChat,
-                borderRadius: model.chats[widget.index!]
+                borderRadius: model.chats[widget.index!]["message"]
                 ["userID"] ==
                     model.barModel!.id!.toString()
                     ? BorderRadius.only(
@@ -674,7 +680,7 @@ class _ChatImageWidgetState extends State<ChatImageWidget> {
                 ),
               ),
               child: Column(
-                crossAxisAlignment: model.chats[widget.index!]
+                crossAxisAlignment: model.chats[widget.index!]["message"]
                 ["userID"] ==
                     model.barModel!.id!.toString()
                     ? CrossAxisAlignment.end
@@ -694,13 +700,16 @@ class _ChatImageWidgetState extends State<ChatImageWidget> {
                         right: 3.w,
                         top: 1.5.h),
                     child: Image.network(
-                      uri!.toString()
+                      uri.toString(),
+                      // height: 30.h,
+                      // width: 50.w,
+                      fit: BoxFit.cover,
                     ),
                   ),
                   //SizedBox(height: 1.h,),
 
                   Align(
-                    alignment: model.chats[widget.index!]
+                    alignment: model.chats[widget.index!]["message"]
                     ["userID"] ==
                         model.barModel!.id!
                             .toString()
@@ -709,7 +718,7 @@ class _ChatImageWidgetState extends State<ChatImageWidget> {
                     child: Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Text(
-                        DateFormat("dd hh:mm").format(DateTime.parse(model.chats[widget.index!]["message"]["createdAt"].toString())),
+                        DateFormat("dd hh:mm").format(DateTime.parse(model.chats[widget.index!]["message"]["time"])),
                         style: TextStyle(
                           //fontFamily: FontUtils.avertaDemoRegular,
                             fontSize: 1.5.t,
@@ -730,7 +739,10 @@ class _ChatImageWidgetState extends State<ChatImageWidget> {
     print(model.chats[widget.index!]);
     //var fileInfo = widget.ImageData;
     uri = await model.pubnub!.files.getFileUrl(
-        model.barModel!.id.toString(),
+      model.getConversationID(
+          model.barModel!.id.toString(),
+          widget.id.toString()
+      ),
         model.chats[widget.index!]["file"]["id"],
         model.chats[widget.index!]["file"]["name"],
     );
@@ -831,7 +843,8 @@ class _ChatTextWidgetState extends State<ChatTextWidget> {
                   child: Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
-                      model.chats[widget.index!]["createdAt"].toString(),
+                      DateFormat("dd hh:mm").format(DateTime.parse(model.chats[widget.index!]["time"])),
+                      //model.chats[widget.index!]["createdAt"].toString(),
                       style: TextStyle(
                         //fontFamily: FontUtils.avertaDemoRegular,
                           fontSize: 1.5.t,
@@ -854,8 +867,9 @@ class _ChatTextWidgetState extends State<ChatTextWidget> {
 
 class ChatVideoWidget extends StatefulWidget {
   int? index;
+  String? id;
 
-  ChatVideoWidget({Key? key, this.index}) : super(key: key);
+  ChatVideoWidget({Key? key, this.index, this.id}) : super(key: key);
 
   @override
   _ChatVideoWidgetState createState() => _ChatVideoWidgetState();
@@ -863,9 +877,151 @@ class ChatVideoWidget extends StatefulWidget {
 
 class _ChatVideoWidgetState extends State<ChatVideoWidget> {
 
+  Uri? uri;
+
+  BetterPlayerController? _betterPlayerController;
+  BetterPlayerDataSource? _betterPlayerDataSource;
+
+
   @override
+  void dispose() {
+    _betterPlayerController!.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
-    return Container();
+    return ViewModelBuilder<MainViewModel>.reactive(
+      viewModelBuilder: ()=> locator<MainViewModel>(),
+      onModelReady: (model) {
+        getFileUrl(model);
+      },
+      builder: (context, model,child){
+        return Align(
+          alignment: model.chats[widget.index!]["message"]["userID"] ==
+              model.barModel!.id!.toString()
+              ? Alignment.centerRight
+              : Alignment.centerLeft,
+          child: Container(
+            width:
+            MediaQuery.of(context).size.width /
+                1.7,
+            decoration: BoxDecoration(
+              color: ColorUtils.messageChat,
+              borderRadius: model.chats[widget.index!]["message"]
+              ["userID"] ==
+                  model.barModel!.id!.toString()
+                  ? BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+                bottomLeft:
+                Radius.circular(15),
+              )
+                  : BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+                bottomRight:
+                Radius.circular(15),
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: model.chats[widget.index!]["message"]
+              ["userID"] ==
+                  model.barModel!.id!.toString()
+                  ? CrossAxisAlignment.end
+                  : CrossAxisAlignment.start,
+              children: [
+                // Padding(
+                //   padding: EdgeInsets.symmetric(
+                //       horizontal: 3.w,
+                //       vertical: 1.5.h),
+                //   child: Image.asset(
+                //     ImageUtils.drinkImage,
+                //   ),
+                // ),
+                const SizedBox(height: 8),
+                if(_betterPlayerController!=null)
+                  Container(
+                    height: 20.h,
+                    width: 60.w,
+                    child: AspectRatio(
+                    aspectRatio: 28 / 40,
+                    child: BetterPlayer(
+                        controller: _betterPlayerController!),
+                ),
+                  ),
+                if(_betterPlayerController==null)
+                  Container(
+                    height: 20.h,
+                  child: Loader(),
+                ),
+
+                Align(
+                  alignment: model.chats[widget.index!]["message"]
+                  ["userID"] ==
+                      model.barModel!.id!
+                          .toString()
+                      ? Alignment.centerLeft
+                      : Alignment.centerRight,
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      DateFormat("dd hh:mm").format(DateTime.parse(model.chats[widget.index!]["message"]["time"])),
+                      style: TextStyle(
+                        //fontFamily: FontUtils.avertaDemoRegular,
+                          fontSize: 1.5.t,
+                          color: ColorUtils
+                              .icon_color),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+      disposeViewModel: false,
+    );
+  }
+  void getFileUrl (MainViewModel model)async{
+    print(model.chats[widget.index!]);
+    //var fileInfo = widget.ImageData;
+    uri = await model.pubnub!.files.getFileUrl(
+      model.getConversationID(
+          model.barModel!.id.toString(),
+          widget.id.toString()
+      ),
+      model.chats[widget.index!]["file"]["id"],
+      model.chats[widget.index!]["file"]["name"],
+
+    );
+    BetterPlayerConfiguration betterPlayerConfiguration =
+    BetterPlayerConfiguration(
+      aspectRatio: 16 / 9,
+      fit: BoxFit.contain,
+      autoPlay: true,
+      looping: true,
+      deviceOrientationsAfterFullScreen: [
+        DeviceOrientation.portraitDown,
+        DeviceOrientation.portraitUp
+      ],
+    );
+    _betterPlayerDataSource = BetterPlayerDataSource(
+      BetterPlayerDataSourceType.network,
+      uri.toString(),
+    );
+    _betterPlayerController = BetterPlayerController(betterPlayerConfiguration);
+    await _betterPlayerController!.setupDataSource(_betterPlayerDataSource!);
+    print(uri);
+    setState(() {
+
+    });
+
   }
 }
 

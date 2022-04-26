@@ -3252,7 +3252,35 @@ class MainViewModel extends BaseViewModel {
         print(error);
       });
       DialogUtils().showDialog(MyErrorWidget(
-        error: "Image has been uploaded!",
+        error: "File has been uploaded!",
+      ));
+    }
+
+  }
+
+  Future sendImageMessageBar(int id) async{
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.any,
+      allowMultiple: false,
+    );
+
+    if (result != null) {
+      File file = File(result.files.first.path!);
+
+      await pubnub!.files.sendFile(getConversationID(
+          userModel!.id.toString(),
+          id.toString()
+      ), result.files.first.name, file.readAsBytesSync().toList(),fileMessage: {
+        "userID" : userModel!.id,
+        "time" : DateTime.now().toString(),
+      }).then((value){
+        print(value);
+      })
+          .catchError((error){
+        print(error);
+      });
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "File has been uploaded!",
       ));
     }
 
