@@ -11,24 +11,26 @@ import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/prefrences_view_model.dart';
 import 'package:sauftrag/views/Auth/signup.dart';
 
-class Updateuser {
+class UpdateUser {
   //var _dioService = DioService.getInstance();
 
   Dio dio = Dio();
 
-  Future UpdateUser(
-      String id,
+  Future updateUser(
+      int userId,
       String country_code,
       String phone_no,
       String about,
-      String gender,
-      String address,
+      dynamic gender,
+      String userAddress,
       String dob,
-      String relation_ship,
-      String role,
-      List<int> favorite_alcohol_drinks,
-      List<int> favorite_musics,
-      List<int> favorite_party_vacation,
+      dynamic relation_ship,
+      int role,
+      List<dynamic> favorite_alcohol_drinks,
+      List<dynamic> favorite_musics,
+      List<dynamic> favorite_party_vacation,
+      //String profilePicture,
+      List images,
       bool terms_conditions,
       bool data_protection,
       String password,
@@ -38,15 +40,13 @@ class Updateuser {
   async
   {
     try {
-      /// just login user through phoneNumber and password
-
       var param = FormData.fromMap({
 
         "country_code": country_code,
         "phone_no": phone_no,
         "about": about,
         "gender": gender,
-        "address": address,
+        "address": userAddress,
         "dob": dob,
         "relation_ship": relation_ship,
         "role": role,
@@ -61,17 +61,18 @@ class Updateuser {
         "terms_conditions": true,
         "data_protection": true,
         "password": "ZXC!asd123",
-        "password2": "ZXC!asd123"
-        /*if (images[0] is File && (images[0] as File).path.isNotEmpty)"profile_picture": await MultipartFile.fromFile((images[0] as File).path,),
-        if (images[1] is File && (images[1] as File).path.isNotEmpty)"catalogue_image1": await MultipartFile.fromFile((images[1] as File).path,),
-        if (images[2] is File && (images[2] as File).path.isNotEmpty)"catalogue_image2": await MultipartFile.fromFile((images[2] as File).path,),
-        if (images[3] is File && (images[3] as File).path.isNotEmpty)"catalogue_image3": await MultipartFile.fromFile((images[3] as File).path,),
-        if (images[4] is File && (images[4] as File).path.isNotEmpty)"catalogue_image4": await MultipartFile.fromFile((images[4] as File).path,),
-        if (images[5] is File && (images[5] as File).path.isNotEmpty)"catalogue_image5": await MultipartFile.fromFile((images[5] as File).path,),*/
+        "password2": "ZXC!asd123",
+        //"profile_picture" : profilePicture,
+        //if (images[0] is File && (images[0] as File).path.isNotEmpty)"profile_picture": await MultipartFile.fromFile((images[0] as File).path,),
+        if (images[0] is File && (images[0] as File).path.isNotEmpty)"catalogue_image1": await MultipartFile.fromFile((images[1] as File).path,),
+        if (images[1] is File && (images[1] as File).path.isNotEmpty)"catalogue_image2": await MultipartFile.fromFile((images[2] as File).path,),
+        if (images[2] is File && (images[2] as File).path.isNotEmpty)"catalogue_image3": await MultipartFile.fromFile((images[3] as File).path,),
+        if (images[3] is File && (images[3] as File).path.isNotEmpty)"catalogue_image4": await MultipartFile.fromFile((images[4] as File).path,),
+        if (images[4] is File && (images[4] as File).path.isNotEmpty)"catalogue_image5": await MultipartFile.fromFile((images[5] as File).path,),
       });
       UserModel? user = await locator<PrefrencesViewModel>().getUser();
       var response = await dio.patch(Constants.BaseUrlPro+Constants.
-      UpdateUserProfile+ id+"/", data: param,options: Options(
+      UpdateUserProfile+ "${userId}"+"/", data: param,options: Options(
         contentType: Headers.formUrlEncodedContentType,
         headers: {
           "Authorization": "Token ${user!.token!}"
@@ -93,7 +94,9 @@ class Updateuser {
 
     } catch (e) {
       //dynamic exception = e;
-      return  (e as DioError).response!.data["message"].toString();
+      print(e);
+      return  "yo";
+        //(e as DioError).response!.data["message"].toString();
     }
   }
 

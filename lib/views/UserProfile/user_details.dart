@@ -813,8 +813,10 @@ class _UserDetailsState extends State<UserDetails> {
                                         }).toList(),
                                         onChanged: (data) {
                                           setState(() {
-                                            model.genderValueStr =
+                                            model.userGender =
                                             data as String;
+                                            model.setValues();
+                                            model.notifyListeners();
                                             model.genderValue =
                                             model.genderMap[model
                                                 .genderValueStr] as int;
@@ -890,8 +892,10 @@ class _UserDetailsState extends State<UserDetails> {
                                         }).toList(),
                                         onChanged: (data) {
                                           setState(() {
-                                            model.relationValueStr =
+                                            model.currentRelation =
                                             data as String;
+                                            model.setValues();
+                                            model.notifyListeners();
                                             model.relationValue =
                                             model.relationshipMap[model
                                                 .relationValueStr] as int;
@@ -1202,7 +1206,7 @@ class _UserDetailsState extends State<UserDetails> {
                               child: ElevatedButton(
 
                                 onPressed: ()async{
-                                  await model.saveUserDetails();
+                                  await model.updatingUser();
                                   //model.navigateBack();
                                 },
                                 child:  model.editProfile == false ? Text("Save") : Loader(),

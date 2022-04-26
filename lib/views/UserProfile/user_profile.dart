@@ -302,7 +302,7 @@ class _UserProfileState extends State<UserProfile> {
                           model.isUserProfile = true;
                           model.notifyListeners();
                           PrefrencesViewModel prefs = await locator<PrefrencesViewModel>();
-                          await Updateuser().UpdateAccountDetails(model.updateSignUpPhoneController.text, model.updateLocations.text);
+                          await UpdateUser().UpdateAccountDetails(model.updateSignUpPhoneController.text, model.updateLocations.text);
                           model.userModel = (await prefs.getUser())!;
                           model.isUserProfile = false;
                           model.isLoading = false;

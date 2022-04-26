@@ -68,7 +68,7 @@ class RegistrationViewModel extends BaseViewModel {
   var forgetpassword = ForgetPassword();
   var changepassword = Changeuserpassword();
   var checkuser = Checkuser();
-  var updateUser = Updateuser();
+  var updateUser = UpdateUser();
   var addFavorite = Addfavorites();
   var createBarPost = Createpost();
   var checkBar = Checkbar();
@@ -591,7 +591,6 @@ class RegistrationViewModel extends BaseViewModel {
     "Pub",
     "Cocktail",
     "Disco",
-
   ];
 
   List<dynamic> clubList = [];

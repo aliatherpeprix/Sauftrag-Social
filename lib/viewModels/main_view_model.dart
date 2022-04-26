@@ -48,6 +48,7 @@ import 'package:sauftrag/models/pubnub_channel.dart';
 import 'package:sauftrag/models/rating_data.dart';
 import 'package:sauftrag/models/ratings.dart';
 import 'package:sauftrag/models/user_models.dart';
+import 'package:sauftrag/services/addBar.dart';
 import 'package:sauftrag/services/addFavorites.dart';
 import 'package:sauftrag/services/addressBook.dart';
 import 'package:sauftrag/services/allBars.dart';
@@ -98,7 +99,7 @@ import '../services/feedback_user.dart';
 import '../services/like_newsfeed_user.dart';
 
 class MainViewModel extends BaseViewModel {
-  var updateUser = Updateuser();
+  var updateUser = UpdateUser();
   var updateBar = Updatebar();
   var createBarPost = Createpost();
   var privacyPolicy = Privacypolicy();
@@ -122,6 +123,8 @@ class MainViewModel extends BaseViewModel {
   var feedbackUser = Userfeedback();
   var userLike = Newfeedlike();
   var currentUserDetails = UserDetails();
+  var updateUserDetails = UpdateUser();
+  var addBarKind = AddBarKind();
 
   Barcode? result;
 
@@ -404,6 +407,8 @@ class MainViewModel extends BaseViewModel {
   ];
 
   FaqsModel? selectedFaq;
+
+  TextEditingController addCustomBarController = TextEditingController();
 
   Future<bool> openCamera() async {
     ImagePicker picker = ImagePicker();
@@ -792,17 +797,17 @@ class MainViewModel extends BaseViewModel {
   String relationValueStr = "Single";
   List<String> relationshipList = [
     "Single",
+    "Married",
     "Relationship",
     "Open Relationship",
-    "It's Complicated",
-    "Married",
+    "it's complicated",
   ];
   Map<String, int> relationshipMap = {
     'Single': 1,
-    'Relationship': 2,
-    'Open Relationship': 3,
-    'Its Complicated': 4,
-    'Married': 5,
+    'Married': 2,
+    'Relationship': 3,
+    'Open Relationship': 4,
+    "it's complicated": 5,
   };
 
   Future<bool> getImage0(int index) async {
@@ -1867,7 +1872,7 @@ class MainViewModel extends BaseViewModel {
         images, name, address, alcoholDrink, nightClub, partyVacation, id);
   }
 
-  Future saveUserDetails() async {
+  /*Future saveUserDetails() async {
     List tempList = [];
 
     // for (int i = 0;i<imageFiles.length;i++){
@@ -1886,7 +1891,7 @@ class MainViewModel extends BaseViewModel {
         if (imageFiles[i].path.isEmpty) {
           DialogUtils().showDialog(
               MyErrorWidget(
-                error: "Select All Images" /*+i.toString()*/,
+                error: "Select All Images" *//*+i.toString()*//*,
               ),
               isDismissable: true);
           return;
@@ -1922,7 +1927,7 @@ class MainViewModel extends BaseViewModel {
     }
     editProfile = false;
     notifyListeners();
-  }
+  }*/
 
   Future updateAccountDetials() async {
     editProfile = true;
@@ -3236,20 +3241,96 @@ class MainViewModel extends BaseViewModel {
   // getUserDetails
 
    String? userGender;
+   dynamic userGenderValue;
+
    String? currentRelation;
+   dynamic currentRelationValue;
+
+   UserModel? currentUserResponse;
 
   usersDetails() async {
+    isUserProfile = true;
      List usersGender = [];
      List usersRelation = [];
-     isUserProfile = true;
     //UserModel? user = await locator<PrefrencesViewModel>().getUser();
     List<UserModel> response = await currentUserDetails.GetUserDetails();
+    currentUserResponse = response[0];
+    notifyListeners();
      usersGender.add(response.map((e) => e.gender).first) ;
      userGender = usersGender[0];
      usersRelation.add(response.map((e) => e.relation_ship).first) ;
      currentRelation = usersRelation[0];
      notifyListeners();
      isUserProfile = false;
+  }
+
+  setValues(){
+    if(userGender == "Male"){
+      userGenderValue = 1;
+      notifyListeners();
+    }
+    else if(userGender == "Female"){
+      userGenderValue = 2;
+      notifyListeners();
+    }
+    if(currentRelation == "Single"){
+      currentRelationValue = 1;
+      notifyListeners();
+    }
+    else if(currentRelation == "Married"){
+      currentRelationValue = 2;
+      notifyListeners();
+    }
+    else if(currentRelation == "Relationship"){
+      currentRelationValue = 3;
+      notifyListeners();
+    }
+    else if(currentRelation == "Open Relationship"){
+      currentRelationValue = 4;
+      notifyListeners();
+    }
+    else if(currentRelation == "it's complicated"){
+      currentRelationValue = 5;
+      notifyListeners();
+    }
+  }
+
+  updatingUser() async {
+    List<UserModel> response = await updateUserDetails.updateUser(
+        currentUserResponse!.id!,
+        currentUserResponse!.country_code!,
+        currentUserResponse!.phone_no!,
+        "",
+        userGenderValue!,
+        currentUserResponse!.address!,
+        currentUserResponse!.dob!,
+        currentRelationValue!,
+        currentUserResponse!.role!,
+        currentUserResponse!.favorite_alcohol_drinks!,
+        currentUserResponse!.favorite_musics!,
+        currentUserResponse!.favorite_party_vacation!,
+        //currentUserResponse!.profile_picture!,
+        [
+          currentUserResponse!.catalogue_image1,
+          currentUserResponse!.catalogue_image2,
+          currentUserResponse!.catalogue_image3,
+          currentUserResponse!.catalogue_image4,
+          currentUserResponse!.catalogue_image5,
+        ],
+        true,
+        true,
+        "ZXC!asd123",
+        "ZXC!asd123",
+    );
+    print(response);
+  }
+
+  addingBar() async {
+    //UserModel? user = await locator<PrefrencesViewModel>().getUser();
+    if(addCustomBarController.text.isNotEmpty){
+      List<UserModel> response = await addBarKind.addKindOfBar(addCustomBarController.text);
+      print(response);
+    }
   }
 
 

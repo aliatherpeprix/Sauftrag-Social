@@ -60,6 +60,7 @@ class Constants {
   static const String rating = 'api/rating/add/';
   static const String allUserForChat = 'api/user/all/';
   static const String giveRating = 'api/rating/add/';
+  static const String addBarKind = 'api/favorites/bar_kind/';
   // static const String drinkStatus = 'api/user/drinkStatus/';
   static const String drinkStatuscheck = '/api/user/drinkStatus/';
   static const String GETdrinkStatus = 'api/user/drinkStatus/';
