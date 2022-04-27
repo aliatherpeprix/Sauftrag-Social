@@ -7,8 +7,8 @@ class Constants {
   //static const String BaseUrlPro = '192.168.18.41"8000';
   //Dev Env
   static const String BaseUrlPro ='http://sauftragdev-environment.eba-yb3ya83i.ap-southeast-1.elasticbeanstalk.com/';
-  //static const String BaseUrl = 'sauftragdev-environment.eba-yb3ya83i.ap-southeast-1.elasticbeanstalk.com';
-  static const String BaseUrl = 'sauftragpro-environment.eba-4pafy8hm.ap-southeast-1.elasticbeanstalk.com';
+  static const String BaseUrl = 'sauftragdev-environment.eba-yb3ya83i.ap-southeast-1.elasticbeanstalk.com';
+  //static const String BaseUrl = 'sauftragpro-environment.eba-4pafy8hm.ap-southeast-1.elasticbeanstalk.com';
   //static const String BaseUrl = '192.168.18.41"8000';
   static const String SignUp = 'api/user/register/';
   static const String AllUsers = 'api/user/all/';

@@ -124,7 +124,7 @@ class MainViewModel extends BaseViewModel {
   var userLike = Newfeedlike();
   var currentUserDetails = UserDetails();
   var updateUserDetails = UpdateUser();
-  var addBarKind = AddBarKind();
+
 
   Barcode? result;
 
@@ -408,7 +408,6 @@ class MainViewModel extends BaseViewModel {
 
   FaqsModel? selectedFaq;
 
-  TextEditingController addCustomBarController = TextEditingController();
 
   Future<bool> openCamera() async {
     ImagePicker picker = ImagePicker();
@@ -2361,6 +2360,12 @@ class MainViewModel extends BaseViewModel {
       var index = listOfAllBars.indexOf(selectedBar!);
       listOfAllBars[index].is_follow =
           (getListofbar as FollowBAR).user!.is_follow!;
+      if(follow){
+        selectedBar!.total_followers = selectedBar!.total_followers! + 1;
+      }
+      else{
+        selectedBar!.total_followers = selectedBar!.total_followers! - 1;
+      }
       notifyListeners();
     } else {
       isLoading = false;
@@ -3324,14 +3329,5 @@ class MainViewModel extends BaseViewModel {
     );
     print(response);
   }
-
-  addingBar() async {
-    //UserModel? user = await locator<PrefrencesViewModel>().getUser();
-    if(addCustomBarController.text.isNotEmpty){
-      List<UserModel> response = await addBarKind.addKindOfBar(addCustomBarController.text);
-      print(response);
-    }
-  }
-
 
 }

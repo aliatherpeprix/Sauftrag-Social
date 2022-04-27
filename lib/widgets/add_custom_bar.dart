@@ -7,6 +7,7 @@ import 'package:sauftrag/utils/extensions.dart';
 import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:sauftrag/widgets/loader.dart';
 import 'package:stacked/stacked.dart';
 
@@ -20,7 +21,7 @@ class AddCustomBar extends StatefulWidget {
 class _AddCustomBarState extends State<AddCustomBar> {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<MainViewModel>.reactive(
+    return ViewModelBuilder<RegistrationViewModel>.reactive(
       //onModelReady: (data) => data.initializeShareDialog(),
       builder: (context, model, child){
         return Dialog(
@@ -96,7 +97,7 @@ class _AddCustomBarState extends State<AddCustomBar> {
                           //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                           child: ElevatedButton(
                             onPressed: () async{
-                              model.addingBar();
+                              model.addingBar(context);
                               //List temp = CommonFunctions.AddFromList(model.selectedClubList);
                               //await model.favoritesDrinks(model.selectedClubList, "favorite_night_club");
                               //model.navigateBack();
@@ -132,7 +133,7 @@ class _AddCustomBarState extends State<AddCustomBar> {
             )
         );
       },
-      viewModelBuilder: () => locator<MainViewModel>(),
+      viewModelBuilder: () => locator<RegistrationViewModel>(),
       disposeViewModel: false,
     );
   }

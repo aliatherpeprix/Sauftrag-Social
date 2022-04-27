@@ -494,6 +494,7 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                                                 SizedBox(
                                                   width: 1.5.w,
                                                 ),
+                                                if(model.posts[widget.index!].likes != null)
                                                 Text(
                                                   model.posts[widget.index!].likes!.toString(),
                                                   style: TextStyle(

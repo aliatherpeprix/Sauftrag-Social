@@ -133,6 +133,7 @@ class _BarprofileState extends State<Barprofile> {
                   child: SafeArea(
                     child: Stack(
                       children: [
+                        if(model.selectedBar!.catalogue_image1 != null)
                         Container(
                             width: 370.w,
                             height: 35.h,
@@ -188,6 +189,7 @@ class _BarprofileState extends State<Barprofile> {
                                 onTap: () {
                                   if(!model.isLoading) {
                                     model.postBarFollow();
+                                    //model.getListOfAllBars();
                                   }
                                 },
                                 child: Container(
@@ -226,6 +228,14 @@ class _BarprofileState extends State<Barprofile> {
                             children: [
                               Column(
                                 children: [
+                                  /*if(model.selectedBar!.is_follow!)
+                                  Text(
+                                    (model.selectedBar!.total_followers! + 1).toString(),
+                                    style: TextStyle(
+                                        fontSize: 2.5.t,
+                                        color: ColorUtils.red_color,
+                                        fontFamily: FontUtils.modernistBold),
+                                  ),*/
                                   Text(
                                     model.selectedBar!.total_followers!.toString(),
                                     style: TextStyle(

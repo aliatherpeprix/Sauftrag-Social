@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/bar_Kind_Model.dart';
 import 'package:sauftrag/models/bar_model.dart';
+import 'package:sauftrag/models/new_bar_model.dart';
 import 'package:sauftrag/utils/constants.dart';
 import 'package:sauftrag/viewModels/prefrences_view_model.dart';
 
@@ -20,13 +21,13 @@ class AddBarKind {
       var param = FormData.fromMap({
         'name': name,
       });
-      BarModel? user = (await locator<PrefrencesViewModel>().getUser()) as BarModel?;
+      //NewBarModel? user = (await locator<PrefrencesViewModel>().getBarUser());
       var response = await dio.post(Constants.BaseUrlPro+Constants.
       addBarKind, data: param,options: Options(
           contentType: Headers.formUrlEncodedContentType,
-          headers: {
-            "Authorization": "Token ${user!.token!}"
-          }
+          // headers: {
+          //   "Authorization": "Token ${user!.token!}"
+          // }
       )
       );
       if (response.statusCode == 200 || response.statusCode == 201) {

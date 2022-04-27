@@ -935,6 +935,7 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
                             ),
                             GestureDetector(
                               onTap: (){
+                                model.addCustomBarController.clear();
                                 showDialog(
                                     barrierDismissible: false,
                                     context: context,

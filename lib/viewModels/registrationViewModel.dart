@@ -16,6 +16,7 @@ import 'package:intl/intl.dart';
 import 'package:mime/mime.dart';
 import 'package:pubnub/pubnub.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/models/bar_Kind_Model.dart';
 import 'package:sauftrag/models/bar_model.dart';
 import 'package:sauftrag/models/create_bar_post.dart';
 import 'package:sauftrag/models/day_week.dart';
@@ -26,6 +27,7 @@ import 'package:sauftrag/models/user_models.dart' as userModel;
 import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/models/week_days.dart';
 import 'package:sauftrag/modules/dio_services.dart';
+import 'package:sauftrag/services/addBar.dart';
 import 'package:sauftrag/services/addFavorites.dart';
 import 'package:sauftrag/services/barSignup.dart';
 import 'package:sauftrag/services/changeUserPassword.dart';
@@ -72,6 +74,7 @@ class RegistrationViewModel extends BaseViewModel {
   var addFavorite = Addfavorites();
   var createBarPost = Createpost();
   var checkBar = Checkbar();
+  var addBarKind = AddBarKind();
 
 
   final GlobalKey<SideMenuState> sideMenuKey = GlobalKey<SideMenuState>();
@@ -592,6 +595,8 @@ class RegistrationViewModel extends BaseViewModel {
     "Cocktail",
     "Disco",
   ];
+
+  TextEditingController addCustomBarController = TextEditingController();
 
   List<dynamic> clubList = [];
   List<int> selectedClubList = [];
@@ -2064,6 +2069,24 @@ class RegistrationViewModel extends BaseViewModel {
     //   //     MyErrorWidget(error: signupResponce));
     //   navigateToUploadBarMedia();
     // }
+  }
+
+  addingBar(BuildContext context) async {
+    //UserModel? user = await locator<PrefrencesViewModel>().getUser();
+    if(addCustomBarController.text.isNotEmpty){
+      var response = await addBarKind.addKindOfBar(addCustomBarController.text);
+      if(response is BarKindModel){
+        barKindList.add(response.name!);
+        notifyListeners();
+        Navigator.pop(context);
+      }
+      else{
+        Navigator.pop(context);
+        DialogUtils().showDialog(MyErrorWidget(
+          error: "Something went wrong",
+        ));
+      }
+    }
   }
 
   // void doGoogleSignIn() async{
