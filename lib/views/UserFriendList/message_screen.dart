@@ -589,7 +589,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                                                   1.7.w),
                                                       child: ExpandTapWidget(
                                                         onTap: () {
-                                                          model.sendImageMessageBar(widget.id!);
+                                                         // model.sendImageMessageUser(widget.id!);
                                                         },
                                                         tapPadding:
                                                             EdgeInsets.all(4.i),
@@ -627,7 +627,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                                                 InputDecoration(
                                                               counterText: '',
                                                               hintText:
-                                                                  "Type your message...",
+                                                                  "Tye your message...",
                                                               hintStyle:
                                                                   TextStyle(
                                                                 //fontFamily: FontUtils.proximaNovaRegular,

@@ -1,9 +1,13 @@
 import 'dart:io';
 
+import 'package:better_player/better_player.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:expand_tap_area/expand_tap_area.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
+import 'package:mime/mime.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pubnub/pubnub.dart';
 import 'package:sauftrag/app/locator.dart';
@@ -18,6 +22,7 @@ import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/viewModels/prefrences_view_model.dart';
 import 'package:sauftrag/widgets/back_arrow_with_container.dart';
+import 'package:sauftrag/widgets/loader.dart';
 import 'package:stacked/stacked.dart';
 
 import 'group_detail_screen.dart';
@@ -118,8 +123,9 @@ class _GroupScreenState extends State<GroupScreen> {
                                             vertical: 2.2.h, horizontal: 1.7.w),
                                         child: ExpandTapWidget(
                                           onTap: () {
-                                            model.getImagE();
-                                            setState(() {});
+                                            model.sendImageMessageUser(widget.id!);
+                                            // model.getImagE();
+                                            // setState(() {});
                                           },
                                           tapPadding: EdgeInsets.all(4.i),
                                           child: SvgPicture.asset(
@@ -434,76 +440,93 @@ class _GroupScreenState extends State<GroupScreen> {
                           physics: BouncingScrollPhysics(),
                           controller: model.chatScroll,
                           itemBuilder: (context, index) {
-                            return Align(
-                              alignment: model.chats[index]["userID"] ==
-                                      model.userModel!.id!.toString()
-                                  ? Alignment.centerRight
-                                  : Alignment.centerLeft,
-                              child: Container(
-                                width: MediaQuery.of(context).size.width / 1.7,
-                                decoration: BoxDecoration(
-                                  color: ColorUtils.red_color.withOpacity(0.9),
-                                  borderRadius: model.chats[index]["userID"] ==
-                                          model.userModel!.id!.toString()
-                                      ? BorderRadius.only(
-                                          topLeft: Radius.circular(15),
-                                          topRight: Radius.circular(15),
-                                          bottomLeft: Radius.circular(15),
-                                        )
-                                      : BorderRadius.only(
-                                          topLeft: Radius.circular(15),
-                                          topRight: Radius.circular(15),
-                                          bottomRight: Radius.circular(15),
-                                        ),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: model.chats[index]
-                                              ["userID"] ==
-                                          model.userModel!.id!.toString()
-                                      ? CrossAxisAlignment.end
-                                      : CrossAxisAlignment.start,
-                                  children: [
-                                    // Padding(
-                                    //   padding: EdgeInsets.symmetric(
-                                    //       horizontal: 3.w,
-                                    //       vertical: 1.5.h),
-                                    //   child: Image.asset(
-                                    //     ImageUtils.drinkImage,
-                                    //   ),
-                                    // ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 3.w, right: 3.w, top: 1.5.h),
-                                      child: Text(
-                                        model.chats[index]["content"]
-                                            .toString(),
-                                        style: TextStyle(
-                                            //fontFamily: FontUtils.avertaDemoRegular,
-                                            fontSize: 1.8.t,
-                                            color: ColorUtils.white),
-                                      ),
-                                    ),
-                                    //SizedBox(height: 1.h,),
-                                    Align(
-                                      alignment: model.chats[index]["userID"] ==
-                                          model.userModel!.id!.toString()
-                                          ? Alignment.centerLeft
-                                          : Alignment.centerRight,
-                                      child: Padding(
-                                        padding: EdgeInsets.all(8.0),
-                                        child: Text(
-                                          "02:45 pm",
-                                          style: TextStyle(
-                                              //fontFamily: FontUtils.avertaDemoRegular,
-                                              fontSize: 1.5.t,
-                                              color: ColorUtils.icon_color),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
+
+                            if(model.chats[index]["file"] != null)
+                            {
+
+                              if(lookupMimeType(model.chats[index]["file"]["name"])!.contains("video"))
+                              {
+                                return ChatVideoWidget(index: index, id: widget.id.toString());
+                              }
+                              else {
+                                return ChatImageWidget(index: index, id: widget.id.toString());
+                              }
+                            }
+                            else
+                            {
+                              return ChatTextWidget(index : index);
+                            }
+
+                            //  return Align(
+                            //   alignment: model.chats[index]["userID"] ==
+                            //           model.userModel!.id!.toString()
+                            //       ? Alignment.centerRight
+                            //       : Alignment.centerLeft,
+                            //   child: Container(
+                            //     width: MediaQuery.of(context).size.width / 1.7,
+                            //     decoration: BoxDecoration(
+                            //       color: ColorUtils.red_color.withOpacity(0.9),
+                            //       borderRadius: model.chats[index]["userID"] ==
+                            //               model.userModel!.id!.toString()
+                            //           ? BorderRadius.only(
+                            //               topLeft: Radius.circular(15),
+                            //               topRight: Radius.circular(15),
+                            //               bottomLeft: Radius.circular(15),
+                            //             )
+                            //           : BorderRadius.only(
+                            //               topLeft: Radius.circular(15),
+                            //               topRight: Radius.circular(15),
+                            //               bottomRight: Radius.circular(15),
+                            //             ),
+                            //     ),
+                            //     child: Column(
+                            //       crossAxisAlignment: model.chats[index]
+                            //                   ["userID"] ==
+                            //               model.userModel!.id!.toString()
+                            //           ? CrossAxisAlignment.end
+                            //           : CrossAxisAlignment.start,
+                            //       children: [
+                            //         // Padding(
+                            //         //   padding: EdgeInsets.symmetric(
+                            //         //       horizontal: 3.w,
+                            //         //       vertical: 1.5.h),
+                            //         //   child: Image.asset(
+                            //         //     ImageUtils.drinkImage,
+                            //         //   ),
+                            //         // ),
+                            //         Padding(
+                            //           padding: EdgeInsets.only(
+                            //               left: 3.w, right: 3.w, top: 1.5.h),
+                            //           child: Text(
+                            //             model.chats[index]["content"]
+                            //                 .toString(),
+                            //             style: TextStyle(
+                            //                 //fontFamily: FontUtils.avertaDemoRegular,
+                            //                 fontSize: 1.8.t,
+                            //                 color: ColorUtils.white),
+                            //           ),
+                            //         ),
+                            //         //SizedBox(height: 1.h,),
+                            //         Align(
+                            //           alignment: model.chats[index]["userID"] ==
+                            //               model.userModel!.id!.toString()
+                            //               ? Alignment.centerLeft
+                            //               : Alignment.centerRight,
+                            //           child: Padding(
+                            //             padding: EdgeInsets.all(8.0),
+                            //             child: Text(
+                            //               "02:45 pm",
+                            //               style: TextStyle(
+                            //                   //fontFamily: FontUtils.avertaDemoRegular,
+                            //                   fontSize: 1.5.t,
+                            //                   color: ColorUtils.icon_color),
+                            //             ),
+                            //           ),
+                            //         ),
+                            //       ],
+                            //     ),
+                            //   ),
+                            // );
                           },
                           separatorBuilder: (context, index) => SizedBox(
                                 height: 5.h,
@@ -719,5 +742,399 @@ class _GroupScreenState extends State<GroupScreen> {
         );
       },
     );
+  }
+}
+///----------------------Chat Image-------------------------------///
+
+class ChatImageWidget extends StatefulWidget {
+  int? index;
+  String? id;
+
+  ChatImageWidget({Key? key, this.index, this.id}) : super(key: key);
+
+  @override
+  _ChatImageWidgetState createState() => _ChatImageWidgetState();
+}
+
+class _ChatImageWidgetState extends State<ChatImageWidget> {
+
+  Uri? uri;
+
+  @override
+  Widget build(BuildContext context) {
+    return ViewModelBuilder<MainViewModel>.reactive(
+      viewModelBuilder: ()=> locator<MainViewModel>(),
+      onModelReady: (model) {
+        getFileUrl(model);
+      },
+      builder: (context, model,child){
+        return Align(
+          alignment: model.chats[widget.index!]["message"]["userID"] ==
+              model.userModel!.id!.toString()
+              ? Alignment.centerLeft
+              : Alignment.centerRight,
+          child: Container(
+            width:
+            MediaQuery.of(context).size.width /
+                1.7,
+            decoration: BoxDecoration(
+              color: ColorUtils.messageChat,
+              borderRadius: model.chats[widget.index!]["message"]
+              ["userID"] ==
+                  model.userModel!.id!.toString()
+                  ? BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+                bottomRight: Radius.circular(15),
+              )
+                  : BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+                bottomLeft:
+                Radius.circular(15),
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: model.chats[widget.index!]["message"]
+              ["userID"] ==
+                  model.userModel!.id!.toString()
+                  ? CrossAxisAlignment.end
+                  : CrossAxisAlignment.start,
+              children: [
+                // Padding(
+                //   padding: EdgeInsets.symmetric(
+                //       horizontal: 3.w,
+                //       vertical: 1.5.h),
+                //   child: Image.asset(
+                //     ImageUtils.drinkImage,
+                //   ),
+                // ),
+                Padding(
+                  padding: EdgeInsets.only(
+                      left: 3.w,
+                      right: 3.w,
+                      top: 1.5.h),
+                  child: Image.network(
+                    uri.toString(),
+                    // height: 30.h,
+                    // width: 50.w,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                //SizedBox(height: 1.h,),
+
+                Align(
+                  alignment: model.chats[widget.index!]["message"]
+                  ["userID"] ==
+                      model.userModel!.id!
+                          .toString()
+                      ? Alignment.centerLeft
+                      : Alignment.centerRight,
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      DateFormat("dd hh:mm").format(DateTime.parse(model.chats[widget.index!]["message"]["time"])),
+                      style: TextStyle(
+                        //fontFamily: FontUtils.avertaDemoRegular,
+                          fontSize: 1.5.t,
+                          color: ColorUtils
+                              .icon_color),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+      disposeViewModel: false,
+    );
+  }
+  void getFileUrl (MainViewModel model)async{
+    print(model.chats[widget.index!]);
+    //var fileInfo = widget.ImageData;
+    uri = await model.pubnub!.files.getFileUrl(
+      model.getConversationID(
+          model.userModel!.id.toString(),
+          widget.id.toString()
+      ),
+      model.chats[widget.index!]["file"]["id"],
+      model.chats[widget.index!]["file"]["name"],
+    );
+    print(uri);
+    setState(() {
+
+    });
+
+  }
+}
+
+///-------------------Chat Text ---------------------------///
+
+class ChatTextWidget extends StatefulWidget {
+  int? index;
+
+  ChatTextWidget({Key? key, this.index}) : super(key: key);
+
+  @override
+  _ChatTextWidgetState createState() => _ChatTextWidgetState();
+}
+
+class _ChatTextWidgetState extends State<ChatTextWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return ViewModelBuilder<MainViewModel>.reactive(
+      viewModelBuilder: ()=> locator<MainViewModel>(),
+      onModelReady: (model) {
+        //getFileUrl(model);
+      },
+      builder: (context, model,child){
+        return Align(
+          alignment: model.chats[widget.index!]["userID"] ==
+              model.userModel!.id!.toString()
+              ? Alignment.centerLeft
+              : Alignment.centerRight,
+          child: Container(
+            width:
+            MediaQuery.of(context).size.width /
+                1.7,
+            decoration: BoxDecoration(
+              color: ColorUtils.messageChat,
+              borderRadius: model.chats[widget.index!]
+              ["userID"] ==
+                  model.userModel!.id!.toString()
+                  ? BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+                bottomRight: Radius.circular(15),
+              )
+                  : BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+                bottomLeft:
+                Radius.circular(15),
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: model.chats[widget.index!]
+              ["userID"] ==
+                  model.userModel!.id!.toString()
+                  ? CrossAxisAlignment.end
+                  : CrossAxisAlignment.start,
+              children: [
+                // Padding(
+                //   padding: EdgeInsets.symmetric(
+                //       horizontal: 3.w,
+                //       vertical: 1.5.h),
+                //   child: Image.asset(
+                //     ImageUtils.drinkImage,
+                //   ),
+                // ),
+                Padding(
+                    padding: EdgeInsets.only(
+                        left: 3.w,
+                        right: 3.w,
+                        top: 1.5.h),
+                    child: Text(
+                      model.chats[widget.index!]["content"]
+                          .toString(),
+                      style: TextStyle(
+                        //fontFamily: FontUtils.avertaDemoRegular,
+                          fontSize: 1.8.t,
+                          color:
+                          ColorUtils.text_dark),
+                    )
+                ),
+                //SizedBox(height: 1.h,),
+
+                Align(
+                  alignment: model.chats[widget.index!]
+                  ["userID"] ==
+                      model.userModel!.id!
+                          .toString()
+                      ? Alignment.centerLeft
+                      : Alignment.centerRight,
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      DateFormat("dd hh:mm").format(DateTime.parse(model.chats[widget.index!]["time"])),
+                      //model.chats[widget.index!]["createdAt"].toString(),
+                      style: TextStyle(
+                        //fontFamily: FontUtils.avertaDemoRegular,
+                          fontSize: 1.5.t,
+                          color: ColorUtils
+                              .icon_color),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+      disposeViewModel: false,
+    );
+  }
+}
+
+///------------------ Chat Video---------------------------------///
+
+class ChatVideoWidget extends StatefulWidget {
+  int? index;
+  String? id;
+
+  ChatVideoWidget({Key? key, this.index, this.id}) : super(key: key);
+
+  @override
+  _ChatVideoWidgetState createState() => _ChatVideoWidgetState();
+}
+
+class _ChatVideoWidgetState extends State<ChatVideoWidget> {
+
+  Uri? uri;
+
+  BetterPlayerController? _betterPlayerController;
+  BetterPlayerDataSource? _betterPlayerDataSource;
+
+
+  @override
+  void dispose() {
+    _betterPlayerController!.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+
+    super.initState();
+  }
+
+  Widget build(BuildContext context) {
+    return ViewModelBuilder<MainViewModel>.reactive(
+      viewModelBuilder: ()=> locator<MainViewModel>(),
+      onModelReady: (model) {
+        getFileUrl(model);
+      },
+      builder: (context, model,child){
+        return Align(
+          alignment: model.chats[widget.index!]["message"]["userID"] ==
+              model.userModel!.id!.toString()
+              ? Alignment.centerRight
+              : Alignment.centerLeft,
+          child: Container(
+            width:
+            MediaQuery.of(context).size.width /
+                1.7,
+            decoration: BoxDecoration(
+              color: ColorUtils.messageChat,
+              borderRadius: model.chats[widget.index!]["message"]
+              ["userID"] ==
+                  model.userModel!.id!.toString()
+                  ? BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+                bottomLeft:
+                Radius.circular(15),
+              )
+                  : BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+                bottomRight:
+                Radius.circular(15),
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: model.chats[widget.index!]["message"]
+              ["userID"] ==
+                  model.userModel!.id!.toString()
+                  ? CrossAxisAlignment.end
+                  : CrossAxisAlignment.start,
+              children: [
+                // Padding(
+                //   padding: EdgeInsets.symmetric(
+                //       horizontal: 3.w,
+                //       vertical: 1.5.h),
+                //   child: Image.asset(
+                //     ImageUtils.drinkImage,
+                //   ),
+                // ),
+                const SizedBox(height: 8),
+                if(_betterPlayerController!=null)
+                  Container(
+                    height: 20.h,
+                    width: 60.w,
+                    child: AspectRatio(
+                      aspectRatio: 28 / 40,
+                      child: BetterPlayer(
+                          controller: _betterPlayerController!),
+                    ),
+                  ),
+                if(_betterPlayerController==null)
+                  Container(
+                    height: 20.h,
+                    child: Loader(),
+                  ),
+
+                Align(
+                  alignment: model.chats[widget.index!]["message"]
+                  ["userID"] ==
+                      model.userModel!.id!
+                          .toString()
+                      ? Alignment.centerLeft
+                      : Alignment.centerRight,
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      DateFormat("dd hh:mm").format(DateTime.parse(model.chats[widget.index!]["message"]["time"])),
+                      style: TextStyle(
+                        //fontFamily: FontUtils.avertaDemoRegular,
+                          fontSize: 1.5.t,
+                          color: ColorUtils
+                              .icon_color),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+      disposeViewModel: false,
+    );
+  }
+  void getFileUrl (MainViewModel model)async{
+    print(model.chats[widget.index!]);
+    //var fileInfo = widget.ImageData;
+    uri = await model.pubnub!.files.getFileUrl(
+      model.getConversationID(
+          model.userModel!.id.toString(),
+          widget.id.toString()
+      ),
+      model.chats[widget.index!]["file"]["id"],
+      model.chats[widget.index!]["file"]["name"],
+
+    );
+    BetterPlayerConfiguration betterPlayerConfiguration =
+    BetterPlayerConfiguration(
+      aspectRatio: 16 / 9,
+      fit: BoxFit.contain,
+      autoPlay: true,
+      looping: true,
+      deviceOrientationsAfterFullScreen: [
+        DeviceOrientation.portraitDown,
+        DeviceOrientation.portraitUp
+      ],
+    );
+    _betterPlayerDataSource = BetterPlayerDataSource(
+      BetterPlayerDataSourceType.network,
+      uri.toString(),
+    );
+    _betterPlayerController = BetterPlayerController(betterPlayerConfiguration);
+    await _betterPlayerController!.setupDataSource(_betterPlayerDataSource!);
+    print(uri);
+    setState(() {
+
+    });
+
   }
 }

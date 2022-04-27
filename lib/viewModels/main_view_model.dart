@@ -3258,7 +3258,7 @@ class MainViewModel extends BaseViewModel {
 
   }
 
-  Future sendImageMessageBar(int id) async{
+  Future sendImageMessageUser(int id) async{
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.any,
       allowMultiple: false,

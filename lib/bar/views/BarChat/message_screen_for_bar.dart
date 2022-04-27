@@ -655,8 +655,8 @@ class _ChatImageWidgetState extends State<ChatImageWidget> {
           return Align(
             alignment: model.chats[widget.index!]["message"]["userID"] ==
                 model.barModel!.id!.toString()
-                ? Alignment.centerRight
-                : Alignment.centerLeft,
+                ? Alignment.centerLeft
+                : Alignment.centerRight,
             child: Container(
               width:
               MediaQuery.of(context).size.width /
@@ -669,13 +669,12 @@ class _ChatImageWidgetState extends State<ChatImageWidget> {
                     ? BorderRadius.only(
                   topLeft: Radius.circular(15),
                   topRight: Radius.circular(15),
-                  bottomLeft:
-                  Radius.circular(15),
+                  bottomRight: Radius.circular(15),
                 )
                     : BorderRadius.only(
                   topLeft: Radius.circular(15),
                   topRight: Radius.circular(15),
-                  bottomRight:
+                  bottomLeft:
                   Radius.circular(15),
                 ),
               ),
@@ -777,8 +776,8 @@ class _ChatTextWidgetState extends State<ChatTextWidget> {
         return Align(
           alignment: model.chats[widget.index!]["userID"] ==
               model.barModel!.id!.toString()
-              ? Alignment.centerRight
-              : Alignment.centerLeft,
+              ? Alignment.centerLeft
+              : Alignment.centerRight,
           child: Container(
             width:
             MediaQuery.of(context).size.width /
@@ -791,13 +790,12 @@ class _ChatTextWidgetState extends State<ChatTextWidget> {
                   ? BorderRadius.only(
                 topLeft: Radius.circular(15),
                 topRight: Radius.circular(15),
-                bottomLeft:
-                Radius.circular(15),
+                bottomRight: Radius.circular(15),
               )
                   : BorderRadius.only(
                 topLeft: Radius.circular(15),
                 topRight: Radius.circular(15),
-                bottomRight:
+                bottomLeft:
                 Radius.circular(15),
               ),
             ),

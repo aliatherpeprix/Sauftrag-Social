@@ -12,6 +12,7 @@ CreateGroupChat _$CreateGroupChatFromJson(Map<String, dynamic> json) =>
       ..name = json['name'] as String?
       ..privacy = json['privacy'] as String?
       ..originator = json['originator']
+      ..image = json['image'] as String?
       ..users = (json['users'] as List<dynamic>?)
           ?.map((e) => UserModel.fromJson(e as Map<String, dynamic>))
           .toList();
@@ -22,5 +23,6 @@ Map<String, dynamic> _$CreateGroupChatToJson(CreateGroupChat instance) =>
       'name': instance.name,
       'privacy': instance.privacy,
       'originator': instance.originator,
+      'image': instance.image,
       'users': instance.users,
     };
