@@ -460,7 +460,7 @@ class _MessageScreenForUserState extends State<MessageScreenForUser> {
                                                               // final firstCamera = cameras.first;
                                                               //model.navigationService.navigateTo(to: TakePictureScreen(camera: firstCamera,));
                                                               model
-                                                                  .openCamera();
+                                                                  .openCameraUser(widget.username!);
                                                             },
                                                             tapPadding:
                                                                 EdgeInsets.all(

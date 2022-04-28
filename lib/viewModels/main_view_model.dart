@@ -404,20 +404,6 @@ class MainViewModel extends BaseViewModel {
 
   FaqsModel? selectedFaq;
 
-  Future<bool> openCamera() async {
-    ImagePicker picker = ImagePicker();
-    var image = await picker.pickImage(source: ImageSource.camera);
-    _pickedFile = image;
-    if (_pickedFile != null) {
-      profileFileImage = File(_pickedFile!.path);
-    }
-    if (profileFileImage == null) {
-      return false;
-    } else {
-      notifyListeners();
-      return true;
-    }
-  }
 
   Future favoritesDrinks(List selectedList, String favorite) async {
     if (selectedList.isEmpty) {
@@ -3258,7 +3244,7 @@ class MainViewModel extends BaseViewModel {
 
   }
 
-  Future sendImageMessageUser(int id) async{
+  Future sendImageMessageUser(int id ) async{
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.any,
       allowMultiple: false,
@@ -3267,23 +3253,137 @@ class MainViewModel extends BaseViewModel {
     if (result != null) {
       File file = File(result.files.first.path!);
 
-      await pubnub!.files.sendFile(getConversationID(
-          userModel!.id.toString(),
-          id.toString()
-      ), result.files.first.name, file.readAsBytesSync().toList(),fileMessage: {
+      await pubnub!.files.sendFile(
+          getConversationID(
+              barModel!.id.toString(),
+              id.toString()
+          ),
+          result.files.first.name, file.readAsBytesSync().toList(),fileMessage: {
         "userID" : userModel!.id,
         "time" : DateTime.now().toString(),
       }).then((value){
         print(value);
+        DialogUtils().showDialog(MyErrorWidget(
+          error: "File has been uploaded!",
+        ));
       })
           .catchError((error){
         print(error);
+        if(error.message == "request failed (Out of Memory)")
+          {
+            DialogUtils().showDialog(MyErrorWidget(
+              error: "Request failed, Out of Memory",
+            ));
+          }
       });
-      DialogUtils().showDialog(MyErrorWidget(
-        error: "File has been uploaded!",
-      ));
     }
+  }
 
+  Future sendImageMessageGrpUser(int id, String username ) async{
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.any,
+      allowMultiple: false,
+    );
+
+    if (result != null) {
+      File file = File(result.files.first.path!);
+
+      await pubnub!.files.sendFile(
+          username,
+          result.files.first.name, file.readAsBytesSync().toList(),fileMessage: {
+        "userID" : userModel!.id,
+        "time" : DateTime.now().toString(),
+      }).then((value){
+        print(value);
+        DialogUtils().showDialog(MyErrorWidget(
+          error: "File has been uploaded!",
+        ));
+      })
+          .catchError((error){
+        print(error);
+        if(error.message == "request failed (Out of Memory)")
+        {
+          DialogUtils().showDialog(MyErrorWidget(
+            error: "Request failed, Out of Memory",
+          ));
+        }
+      });
+    }
+  }
+
+  Future<bool> openCameraUser(String name) async {
+    ImagePicker picker = ImagePicker();
+    var image = await picker.pickImage(source: ImageSource.camera);
+    _pickedFile = image;
+    if (_pickedFile != null) {
+      File file = File(_pickedFile!.path);
+
+      await pubnub!.files.sendFile(
+          name,
+          "image", file.readAsBytesSync().toList(),fileMessage: {
+        "userID" : userModel!.id,
+        "time" : DateTime.now().toString(),
+      }).then((value){
+        print(value);
+        DialogUtils().showDialog(MyErrorWidget(
+          error: "File has been uploaded!",
+        ));
+      })
+          .catchError((error){
+        print(error);
+        if(error.message == "request failed (Out of Memory)")
+        {
+          DialogUtils().showDialog(MyErrorWidget(
+            error: "Request failed, Out of Memory",
+          ));
+        }
+      });
+    }
+    if (profileFileImage == null) {
+      return false;
+    } else {
+      notifyListeners();
+      return true;
+    }
+  }
+
+  Future<bool> openCamera() async {
+    ImagePicker picker = ImagePicker();
+    var image = await picker.pickImage(source: ImageSource.camera);
+    _pickedFile = image;
+    if (_pickedFile != null) {
+      profileFileImage = File(_pickedFile!.path);
+    }
+    // if (_pickedFile != null) {
+    //   File file = File(_pickedFile!.path);
+    //
+    //   await pubnub!.files.sendFile(
+    //       username,
+    //       _pickedFile!.name, file.readAsBytesSync().toList(),fileMessage: {
+    //     "userID" : userModel!.id,
+    //     "time" : DateTime.now().toString(),
+    //   }).then((value){
+    //     print(value);
+    //     DialogUtils().showDialog(MyErrorWidget(
+    //       error: "File has been uploaded!",
+    //     ));
+    //   })
+    //       .catchError((error){
+    //     print(error);
+    //     if(error.message == "request failed (Out of Memory)")
+    //     {
+    //       DialogUtils().showDialog(MyErrorWidget(
+    //         error: "Request failed, Out of Memory",
+    //       ));
+    //     }
+    //   });
+    // }
+    if (profileFileImage == null) {
+      return false;
+    } else {
+      notifyListeners();
+      return true;
+    }
   }
 
 

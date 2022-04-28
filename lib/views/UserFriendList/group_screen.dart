@@ -47,6 +47,7 @@ class _GroupScreenState extends State<GroupScreen> {
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
       onModelReady: (model) async {
+        model.initUserGrpPubNub();
         // Subscribe to a channel
         model.subscription = model.pubnub!.subscribe(channels: {widget.username!});
 
@@ -123,7 +124,7 @@ class _GroupScreenState extends State<GroupScreen> {
                                             vertical: 2.2.h, horizontal: 1.7.w),
                                         child: ExpandTapWidget(
                                           onTap: () {
-                                            model.sendImageMessageUser(widget.id!);
+                                            model.sendImageMessageGrpUser(widget.id!, widget.username!);
                                             // model.getImagE();
                                             // setState(() {});
                                           },
@@ -158,7 +159,7 @@ class _GroupScreenState extends State<GroupScreen> {
                                                 decoration: InputDecoration(
                                                   counterText: '',
                                                   hintText:
-                                                      "Type your message...",
+                                                      "ype your message...",
                                                   hintStyle: TextStyle(
                                                     //fontFamily: FontUtils.proximaNovaRegular,
                                                     //color: ColorUtils.silverColor,
@@ -443,13 +444,12 @@ class _GroupScreenState extends State<GroupScreen> {
 
                             if(model.chats[index]["file"] != null)
                             {
-
                               if(lookupMimeType(model.chats[index]["file"]["name"])!.contains("video"))
                               {
-                                return ChatVideoWidget(index: index, id: widget.id.toString());
+                                return ChatVideoWidget(index: index, id: widget.id.toString(), name: widget.username);
                               }
                               else {
-                                return ChatImageWidget(index: index, id: widget.id.toString());
+                                return ChatImageWidget(index: index, id: widget.id.toString(), name:widget.username);
                               }
                             }
                             else
@@ -749,8 +749,8 @@ class _GroupScreenState extends State<GroupScreen> {
 class ChatImageWidget extends StatefulWidget {
   int? index;
   String? id;
-
-  ChatImageWidget({Key? key, this.index, this.id}) : super(key: key);
+  String? name;
+  ChatImageWidget({Key? key, this.index, this.id, this.name}) : super(key: key);
 
   @override
   _ChatImageWidgetState createState() => _ChatImageWidgetState();
@@ -765,7 +765,7 @@ class _ChatImageWidgetState extends State<ChatImageWidget> {
     return ViewModelBuilder<MainViewModel>.reactive(
       viewModelBuilder: ()=> locator<MainViewModel>(),
       onModelReady: (model) {
-        getFileUrl(model);
+        getFileUrl(model, widget.name!);
       },
       builder: (context, model,child){
         return Align(
@@ -850,14 +850,16 @@ class _ChatImageWidgetState extends State<ChatImageWidget> {
       disposeViewModel: false,
     );
   }
-  void getFileUrl (MainViewModel model)async{
+  void getFileUrl (MainViewModel model, String name)async{
     print(model.chats[widget.index!]);
     //var fileInfo = widget.ImageData;
+
     uri = await model.pubnub!.files.getFileUrl(
-      model.getConversationID(
-          model.userModel!.id.toString(),
-          widget.id.toString()
-      ),
+      // model.getConversationID(
+      //     model.userModel!.id.toString(),
+      //     widget.id.toString())
+      //model.groupChatUser!.name!,
+      name,
       model.chats[widget.index!]["file"]["id"],
       model.chats[widget.index!]["file"]["name"],
     );
@@ -936,8 +938,7 @@ class _ChatTextWidgetState extends State<ChatTextWidget> {
                         right: 3.w,
                         top: 1.5.h),
                     child: Text(
-                      model.chats[widget.index!]["content"]
-                          .toString(),
+                      model.chats[widget.index!]["content"].toString(),
                       style: TextStyle(
                         //fontFamily: FontUtils.avertaDemoRegular,
                           fontSize: 1.8.t,
@@ -982,8 +983,9 @@ class _ChatTextWidgetState extends State<ChatTextWidget> {
 class ChatVideoWidget extends StatefulWidget {
   int? index;
   String? id;
+  String? name;
 
-  ChatVideoWidget({Key? key, this.index, this.id}) : super(key: key);
+  ChatVideoWidget({Key? key, this.index, this.id,  this.name}) : super(key: key);
 
   @override
   _ChatVideoWidgetState createState() => _ChatVideoWidgetState();
@@ -1013,7 +1015,7 @@ class _ChatVideoWidgetState extends State<ChatVideoWidget> {
     return ViewModelBuilder<MainViewModel>.reactive(
       viewModelBuilder: ()=> locator<MainViewModel>(),
       onModelReady: (model) {
-        getFileUrl(model);
+        getFileUrl(model, widget.name);
       },
       builder: (context, model,child){
         return Align(
@@ -1102,14 +1104,15 @@ class _ChatVideoWidgetState extends State<ChatVideoWidget> {
       disposeViewModel: false,
     );
   }
-  void getFileUrl (MainViewModel model)async{
+  void getFileUrl (MainViewModel model, name)async{
     print(model.chats[widget.index!]);
     //var fileInfo = widget.ImageData;
     uri = await model.pubnub!.files.getFileUrl(
-      model.getConversationID(
-          model.userModel!.id.toString(),
-          widget.id.toString()
-      ),
+      // model.getConversationID(
+      //     model.userModel!.id.toString(),
+      //     widget.id.toString()
+      // ),
+      name,
       model.chats[widget.index!]["file"]["id"],
       model.chats[widget.index!]["file"]["name"],
 
