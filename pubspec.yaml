@@ -71,6 +71,7 @@ dependencies:
   intl_phone_field:
   phone_number:
   photo_view: ^0.13.0
+  stacked_services: ^0.8.18
 
 
 dev_dependencies:

@@ -18,6 +18,11 @@ import 'package:sauftrag/widgets/rating_dialog_box.dart';
 import 'package:stacked/stacked.dart';
 
 class Barprofile extends StatefulWidget {
+
+  //int? index;
+
+  Barprofile({Key? key}) : super(key: key);
+
   @override
   _BarprofileState createState() => _BarprofileState();
 }

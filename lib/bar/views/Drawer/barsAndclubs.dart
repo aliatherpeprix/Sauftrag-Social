@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/bar/views/Drawer/barProfile.dart';
+import 'package:sauftrag/bar/views/Profile/bar_profile.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
 import 'package:sauftrag/utils/extensions.dart';
@@ -307,6 +309,8 @@ class _BarAndClubsState extends State<BarAndClubs>
                             // model.barId = model.listOfBar[index].id;
                             model.selectedBar = (model.listOfAllBars[index]);
                             model.navigateToBarProfile();
+                            //model.myNavigationService.navigateTo(to: Barprofile());
+                            //model.navigationService.navigateToBarProfile();
                           },
                           child: Container(
                             padding: EdgeInsets.symmetric( horizontal: 2.5.w, vertical: 1.5.h),

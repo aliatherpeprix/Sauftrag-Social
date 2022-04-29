@@ -97,8 +97,9 @@ import '../models/newfeed_like.dart';
 import '../models/user_feedback.dart';
 import '../services/feedback_user.dart';
 import '../services/like_newsfeed_user.dart';
-
+import 'package:sauftrag/modules/navigation_service.dart' as my_nav_service;
 class MainViewModel extends BaseViewModel {
+  var myNavigationService = my_nav_service.NavigationService();
   var updateUser = UpdateUser();
   var updateBar = Updatebar();
   var createBarPost = Createpost();
@@ -1369,7 +1370,7 @@ class MainViewModel extends BaseViewModel {
 
   giveRatingToBar() async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
-    var data = {'rate': rate, 'comments': barGiveRating.text, 'bar': barId};
+    var data = {'rate': rate, 'comments': barGiveRating.text, 'bar': selectedBar!.id!};
     var encodedData = jsonEncode(data);
     var response = await http.post(
         Uri.http(Constants.BaseUrl, '/api/rating/add/'),
