@@ -134,9 +134,18 @@ class _RatingDialogBoxState extends State<RatingDialogBox> {
                           width: double.infinity,
                           //margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier * 2, horizontal: SizeConfig.widthMultiplier * 4),
                           child: ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async{
+                              model.isLoading = true;
+                              model.notifyListeners();
                               model.giveRatingToBar();
+                              await model.getListOfAllBars();
+                              model.selectedBar = (model.listOfAllBars[model.barIndex!]);
+                              model.notifyListeners();
                               model.navigateBack();
+                              model.isLoading = false;
+                              model.notifyListeners();
+                              //model.navigateToBarProfile();
+                              //model.navigateBack();
                               print(model.rate);
                             },
                             child: const Text("Submit"),

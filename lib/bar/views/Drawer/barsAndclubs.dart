@@ -13,6 +13,7 @@ import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/widgets/FadedScaleAnimation.dart';
+import 'package:sauftrag/widgets/all_page_loader.dart';
 import 'package:stacked/stacked.dart';
 
 class BarAndClubs extends StatefulWidget {
@@ -56,7 +57,8 @@ class _BarAndClubsState extends State<BarAndClubs>
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
       builder: (context, model, child) {
-        return SafeArea(
+        return
+          SafeArea(
           top: false,
           bottom: false,
           child: Scaffold(
@@ -308,6 +310,8 @@ class _BarAndClubsState extends State<BarAndClubs>
                           onTap: (){
                             // model.barId = model.listOfBar[index].id;
                             model.selectedBar = (model.listOfAllBars[index]);
+                            model.barIndex = index;
+                            model.notifyListeners();
                             model.navigateToBarProfile();
                             //model.myNavigationService.navigateTo(to: Barprofile());
                             //model.navigationService.navigateToBarProfile();
