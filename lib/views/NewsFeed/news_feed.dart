@@ -3,6 +3,7 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/new_bar_model.dart';
 import 'package:sauftrag/models/user_models.dart';
@@ -74,6 +75,7 @@ class _NewsFeedState extends State<NewsFeed> {
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
       onModelReady: (model) {
+        model.gettingComments();
         //model.userNewsFeed = true;
         // model.getEvent(context);
       },
@@ -315,14 +317,14 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
     return ViewModelBuilder<MainViewModel>.reactive(
         viewModelBuilder: () => locator<MainViewModel>(),
         onModelReady: (model) async {
-          UserModel user =
+          /*UserModel user =
           (await locator<PrefrencesViewModel>().getUser())!;
           var channel =
           model.pubnub!.channel(model.posts[widget.index!].id.toString());
           var chat = await channel.messages();
           await chat.fetch();
           comments_count = await chat.count();
-          model.notifyListeners();
+          model.notifyListeners();*/
         },
         builder: (context, model, child) {
           return Container(
@@ -494,9 +496,9 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                                                 SizedBox(
                                                   width: 1.5.w,
                                                 ),
-                                                if(model.posts[widget.index!].likes != null)
+                                                //if(model.posts[widget.index!].likes != null)
                                                 Text(
-                                                  model.posts[widget.index!].likes!.toString(),
+                                                 model.posts[widget.index!].likes_count == null ? 0.toString() : model.posts[widget.index!].likes_count.toString(),
                                                   style: TextStyle(
                                                       fontFamily: FontUtils
                                                           .modernistRegular,
@@ -511,6 +513,9 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                                           GestureDetector(
                                             onTap: () async {
                                               expandableController.toggle();
+                                              model.selectedCommentId = model.posts[widget.index!].id!;
+                                              model.gettingComments();
+                                              model.notifyListeners();
                                               if(expandableController.expanded){
                                                 if(comments.isEmpty)
                                                 {
@@ -530,7 +535,8 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                                                     model.notifyListeners();
                                                   });
                                                 }
-                                                else {}
+                                                else {
+                                                }
                                               }
                                             },
                                             child: Row(
@@ -543,7 +549,8 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                                                   width: 1.5.w,
                                                 ),
                                                 Text(
-                                                  comments_count.toString(),
+                                                model.posts[widget.index!].comments_count.toString(),
+                                                  //comments_count.toString(),
                                                   style: TextStyle(
                                                       fontFamily: FontUtils
                                                           .modernistRegular,
@@ -611,7 +618,7 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                                                     children: [
                                                       ClipRRect(
                                                         borderRadius: BorderRadius.circular(30),
-                                                        child: Image.network(model.userModel!.profile_picture!,
+                                                        child: Image.network(model.userComments![index].user_id!.profile_picture!,
                                                           width: 10.i,
                                                           height: 10.i,
                                                           fit: BoxFit.cover,
@@ -622,7 +629,9 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                                                         mainAxisAlignment: MainAxisAlignment.start,
                                                         crossAxisAlignment: CrossAxisAlignment.start,
                                                         children: [
-                                                          Text(model.userModel!.username!,
+                                                          Text(
+                                                            model.userComments![index].user_id!.username!,
+                                                            //model.userModel!.username!,
                                                             style: TextStyle(
                                                                 fontFamily: FontUtils.modernistBold,
                                                                 fontSize: 1.8.t,
@@ -657,8 +666,7 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                                                                   padding: EdgeInsets.only(
                                                                     left: 3.w, right: 3.w,),
                                                                   child: Text(
-                                                                    comments[index]["content"]
-                                                                        .toString(),
+                                                                  model.userComments![index].text!,
                                                                     style: TextStyle(
                                                                       //fontFamily: FontUtils.avertaDemoRegular,
                                                                         fontSize: 1.8.t,
@@ -678,7 +686,8 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                                                         child: Padding(
                                                           padding: EdgeInsets.only(top: 0.0, left: 0.w),
                                                           child: Text(
-                                                            comments[index]["time"].toString().substring(11,16),
+                                                            model.userComments![index].created_at!.substring(11, 16),
+                                                            //comments[index]["time"].toString().substring(11,16),
                                                             style: TextStyle(
                                                               //fontFamily: FontUtils.avertaDemoRegular,
                                                                 fontSize: 1.5.t,
@@ -694,7 +703,7 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                                               separatorBuilder: (context, index) => SizedBox(
                                                 height: 3.h,
                                               ),
-                                              itemCount: comments.length
+                                              itemCount: model.userComments != null ? model.userComments!.length : 0,
                                               //comments.length>2?2:comments.length
                                           ),
                                         ),
@@ -793,7 +802,7 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                                                   )
                                                 : InkWell(
                                                     onTap: () async {
-                                                      NewBarModel barUser =
+                                                      /*NewBarModel barUser =
                                                       (await locator<PrefrencesViewModel>()
                                                           .getBarUser())!;
                                                       UserModel user =
@@ -812,7 +821,11 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                                                       SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
                                                         model.scrollDown();
                                                       });
-                                                      model.notifyListeners();
+                                                      model.notifyListeners();*/
+                                                      await model.postingComments();
+                                                      model.getCommentNewsFeed(widget.index!);
+                                                      model.postCommentController.clear();
+                                                      expandableController.toggle();
                                                     },
                                                     child: Container(
                                                       //margin: EdgeInsets.only(bottom: 2.2.h),

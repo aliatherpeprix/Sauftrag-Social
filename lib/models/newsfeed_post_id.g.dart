@@ -18,7 +18,9 @@ NewsfeedPostId _$NewsfeedPostIdFromJson(Map<String, dynamic> json) =>
       ..media = (json['media'] as List<dynamic>?)
           ?.map((e) => PostMedia.fromJson(e as Map<String, dynamic>))
           .toList()
-      ..likes = json['likes'] as int?;
+      ..likes_count = json['likes_count'] as int?
+      ..is_like = json['is_like'] as bool?
+      ..comments_count = json['comments_count'] as int?;
 
 Map<String, dynamic> _$NewsfeedPostIdToJson(NewsfeedPostId instance) =>
     <String, dynamic>{
@@ -28,5 +30,7 @@ Map<String, dynamic> _$NewsfeedPostIdToJson(NewsfeedPostId instance) =>
       'post_content': instance.post_content,
       'user_id': instance.user_id,
       'media': instance.media,
-      'likes': instance.likes,
+      'likes_count': instance.likes_count,
+      'is_like': instance.is_like,
+      'comments_count': instance.comments_count,
     };
