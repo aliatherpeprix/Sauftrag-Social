@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:path/path.dart' as path;
+
 import 'package:dio/dio.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sauftrag/app/locator.dart';
@@ -23,6 +27,7 @@ class Creategroup {
       String name,
       List listOfUsers,
       int? privacy,
+      String? image
 
       ) async {
     try {
@@ -32,7 +37,8 @@ class Creategroup {
 
         'name' : name,
         'users' : listOfUsers,
-        'privacy' : privacy
+        'privacy' : privacy,
+         if(image!= null)'image' : image,
 
       });
 
@@ -52,7 +58,8 @@ class Creategroup {
           var userData = UserModel.fromJson(response.data['data']);
           return userData;
         }*/
-        CreateGroupChat getEventByFilter = CreateGroupChat.fromJson(response.data);
+        List<CreateGroupChat> getEventByFilter =(response.data as List).map((e) =>
+            CreateGroupChat.fromJson(e)).toList();
         return getEventByFilter;
       }
       //user not found

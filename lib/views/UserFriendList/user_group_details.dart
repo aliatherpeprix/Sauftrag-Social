@@ -26,7 +26,8 @@ import 'group_screen.dart';
 
 class GroupDetails extends StatefulWidget {
   int? id;
-  GroupDetails({Key? key, this.id}) : super(key: key);
+  int? index;
+  GroupDetails({Key? key, this.id, this.index}) : super(key: key);
 
   @override
   _GroupDetailsState createState() => _GroupDetailsState();
@@ -68,23 +69,9 @@ class _GroupDetailsState extends State<GroupDetails> {
                     await model.createGroupChatUser();
                     NewBarModel barUser = (await locator<PrefrencesViewModel>().getBarUser())!;
                     UserModel user = (await locator<PrefrencesViewModel>().getUser())!;
-                    // model.pubnub = PubNub(
-                    //     defaultKeyset: Keyset(
-                    //         subscribeKey:
-                    //             'sub-c-8825eb94-8969-11ec-a04e-822dfd796eb4',
-                    //         publishKey:
-                    //             'pub-c-1f404751-6cfb-44a8-bfea-4ab9102975ac',
-                    //         uuid: UUID(user.id.toString  ())));
-                    // Subscribe to a channel
+
                      model.subscription = model.pubnub!.subscribe(channels: {model.chatController.text});
                      model.channel = model.pubnub!.channel(model.chatController.text);
-
-                    // if(model.logInUserSelected == true){
-                    //   model.navigateToFriendListScreen();
-                    // }
-                    // else if(model.logInBarSelected == true){
-                    //   model.navigateToFriendListScreen1();
-                    // }
 
                     List<ChannelMemberMetadataInput> setMetadata = [];
                     for (var data in model.groupList) {
@@ -106,9 +93,9 @@ class _GroupDetailsState extends State<GroupDetails> {
                                   .fade,
                               child:
                               GroupScreen(
-                                  id: model.groupChatUser!.id ?? 0,
-                                  username: model.groupChatUser!.name,
-                                  userLength: model.groupChatUser!.users!.length
+                                  id: model.getUserGroup!.first.id ?? 0,
+                                  username: model.getUserGroup!.first.name,
+                                  userLength: model.getUserGroup!.first.users!.length
                               )
                           ));
                     }
@@ -120,9 +107,9 @@ class _GroupDetailsState extends State<GroupDetails> {
                                   .fade,
                               child:
                               GroupScreen(
-                                  id: model.groupChatUser!.id ?? 0,
-                                  username: model.groupChatUser!.name,
-                                  userLength: model.groupChatUser!.users!.length
+                                  id: model.getUserGroup!.first.id ?? 0,
+                                  username: model.getUserGroup!.first.name,
+                                  userLength: model.getUserGroup!.first.users!.length
                               )
                           ));
                     }
@@ -197,24 +184,33 @@ class _GroupDetailsState extends State<GroupDetails> {
                             Row(
                               children: [
                                 GestureDetector(
-                                  onTap: () {
+                                  onTap: ()  {
+                                    model.createEventGetImage();
                                     //model.openCamera();
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return EditImageDialog(
-                                              from: Constants.profileImage);
-                                        });
+                                    // showDialog(
+                                    //     context: context,
+                                    //     builder: (BuildContext context) {
+                                    //       return EditImageDialog(
+                                    //           from: Constants.profileImage);
+                                    //     });
                                   },
                                   child: Container(
+                                    height: 6.7.h,
+                                    width: 14.w,
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       color: ColorUtils.textFieldBg,
                                     ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(16.0),
-                                      child: SvgPicture.asset(
-                                          ImageUtils.photoCamera),
+                                    child: model.createEventImage == null ?
+                                    Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: SvgPicture.asset(ImageUtils.photoCamera),
+                                    )
+                                    : ClipRRect(
+                                      borderRadius: BorderRadius.circular(80),
+                                      child: Image.file(model.createEventImage!,
+                                        fit: BoxFit.fill,
+                                      ),
                                     ),
                                   ),
                                 ),

@@ -11,7 +11,9 @@ CreateGroupChat _$CreateGroupChatFromJson(Map<String, dynamic> json) =>
       ..id = json['id'] as int?
       ..name = json['name'] as String?
       ..privacy = json['privacy'] as String?
-      ..originator = json['originator']
+      ..originator = json['originator'] == null
+          ? null
+          : UserModel.fromJson(json['originator'] as Map<String, dynamic>)
       ..image = json['image'] as String?
       ..users = (json['users'] as List<dynamic>?)
           ?.map((e) => UserModel.fromJson(e as Map<String, dynamic>))

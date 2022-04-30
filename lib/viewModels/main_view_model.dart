@@ -141,6 +141,7 @@ class MainViewModel extends BaseViewModel {
   ListOfBarsModel? getUpcmoingUserDetails;
   Media? barMedia;
   CreateGroupChat? groupChatUser;
+  List<CreateGroupChat>? getUserGroup;
   UserFeedBack? getMessage;
   LikeNewsFeed? likes;
 
@@ -3070,11 +3071,19 @@ class MainViewModel extends BaseViewModel {
     addDrink = true;
     notifyListeners();
     //drinkList = await Addfavorites().GetFavoritesDrink();
+    String media = "data:${lookupMimeType(createEventImage!.path)};base64," +
+        base64Encode(createEventImage!.readAsBytesSync());
     var createGroupUser =
-        await createGroup.CreateGroup(chatController.text, getUserId, 1);
-    if (createGroupUser is CreateGroupChat) {
-      groupChatUser = createGroupUser;
-      print(groupChatUser);
+        await createGroup.CreateGroup(
+            chatController.text,
+            getUserId,
+            1,
+            media
+
+        );
+    if (createGroupUser is List<CreateGroupChat>) {
+      getUserGroup = createGroupUser;
+      print(getUserGroup);
     } else {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Some thing went wrong",
@@ -3586,6 +3595,24 @@ class MainViewModel extends BaseViewModel {
         "ZXC!asd123",
     );
     print(response);
+  }
+
+  XFile? _createEventPickedFile;
+  File? createEventImage;
+
+  Future<bool> createEventGetImage() async {
+    ImagePicker picker = ImagePicker();
+    var image = await picker.pickImage(source: ImageSource.gallery);
+    _createEventPickedFile = image;
+    createEventImage = File(_createEventPickedFile!.path);
+    if (createEventImage == null) {
+      return false;
+    } else {
+      //bannerImageSelected = true;
+      //createEventImages.add(createEventImage);
+      notifyListeners();
+      return true;
+    }
   }
 
 }

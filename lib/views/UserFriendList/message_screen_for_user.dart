@@ -204,9 +204,6 @@ class _MessageScreenForUserState extends State<MessageScreenForUser> {
                                             ],
                                           ),
                                         ],
-                                        color: Colors.white,
-                                        borderRadius:
-                                            BorderRadius.all(Radius.circular(6)),
                                       ),
                                     ),
                                     IconButton(
@@ -456,297 +453,283 @@ class _MessageScreenForUserState extends State<MessageScreenForUser> {
                                                         ],
                                                       ),
                                                     )
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Report Chat",
-                                              style: TextStyle(
-                                                  fontFamily:
-                                                      FontUtils.modernistRegular,
-                                                  fontSize: 1.9.t,
-                                                  color: ColorUtils.text_dark),
-                                            ),
-                                            SizedBox(
-                                              height: 1.h,
-                                            ),
-                                            Text(
-                                              "Block",
-                                              style: TextStyle(
-                                                  fontFamily:
-                                                      FontUtils.modernistRegular,
-                                                  fontSize: 1.9.t,
-                                                  color: ColorUtils.text_dark),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
+                                      // child: Padding(
+                                      //   padding: const EdgeInsets.all(8.0),
+                                      //   child: Column(
+                                      //     mainAxisAlignment:
+                                      //         MainAxisAlignment.start,
+                                      //     crossAxisAlignment:
+                                      //         CrossAxisAlignment.start,
+                                      //     children: [
+                                      //       Text(
+                                      //         "Report Chat",
+                                      //         style: TextStyle(
+                                      //             fontFamily:
+                                      //                 FontUtils.modernistRegular,
+                                      //             fontSize: 1.9.t,
+                                      //             color: ColorUtils.text_dark),
+                                      //       ),
+                                      //       SizedBox(
+                                      //         height: 1.h,
+                                      //       ),
+                                      //       Text(
+                                      //         "Block",
+                                      //         style: TextStyle(
+                                      //             fontFamily:
+                                      //                 FontUtils.modernistRegular,
+                                      //             fontSize: 1.9.t,
+                                      //             color: ColorUtils.text_dark),
+                                      //       ),
+                                      //     ],
+                                      //   ),
+                                      // ),
+                                    ])
                                   )),
-                            Column(
-                              children: [
-                                SizedBox(height: Dimensions.topMargin),
-                                Stack(
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            model.navigateToFollowerList();
-                                          },
-                                          child: Row(
-                                            children: [
-                                              IconButton(
-                                                  onPressed: () {
-                                                    model.navigateBack();
-                                                  },
-                                                  iconSize: 18.0,
-                                                  padding: EdgeInsets.zero,
-                                                  constraints: BoxConstraints(),
-                                                  icon: Icon(
-                                                    Icons.arrow_back_ios,
-                                                    color: ColorUtils.black,
-                                                    size: 4.5.i,
-                                                  )),
-                                              SizedBox(
-                                                width: 2.5.w,
-                                              ),
-                                              GestureDetector(
-                                                onTap: () async{
-                                                  //model.getMatchedUserData = (model.acceptMatchedtModel[index]);
-                                                  if(widget.fromUser == true){
-                                                    await model.getAnitherUserInfo(widget.id.toString());
-                                                    model.navigateToMatchedProfileUser();
-                                                  }
-                                                  else if(widget.fromUser == false){
-                                                    List myBars = [];
-                                                    model.selectedBar = model.listOfAllBars.where((element) => element.id == widget.id).first;
-                                                    //print(myBars);
-                                                    //myBars.add(model.listOfAllBars.map((e) => e.id == widget.id));
-                                                    // myBars.add(model.listOfAllBars.contains(widget.id));
-                                                    print(myBars);
-                                                    model.navigateToBarProfile();
-                                                  }
-                                                },
-                                                child: Stack(
-                                                  alignment: Alignment.topCenter,
-                                                  children: [
-                                                    CircleAvatar(
-                                                      radius: 26.0,
-                                                      backgroundImage: NetworkImage(
-                                                          widget.profilePic ??
-                                                              "https://tse2.mm.bing.net/th?id=OIP.4gcGG1F0z6LjVlJjYWGGcgHaHa&pid=Api&P=0&w=164&h=164"),
-                                                      backgroundColor:
-                                                          Colors.transparent,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: 3.w,
-                                              ),
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    widget.username.toString(),
-                                                    style: TextStyle(
-                                                        fontFamily:
-                                                            FontUtils.modernistBold,
-                                                        fontSize: 1.9.t,
-                                                        color:
-                                                            ColorUtils.text_dark),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 0.5.h,
-                                                  ),
-                                                  Text(
-                                                    "Active",
-                                                    style: TextStyle(
-                                                        fontFamily:
-                                                            FontUtils.modernistBold,
-                                                        fontSize: 1.5.t,
-                                                        color:
-                                                            ColorUtils.activeColor),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        IconButton(
-                                          onPressed: () {
-                                            if (model.openBurgerMenu == false) {
-                                              model.openBurgerMenu = true;
-                                              model.notifyListeners();
-                                            } else if (model.openBurgerMenu ==
-                                                true) {
-                                              model.openBurgerMenu = false;
-                                              model.notifyListeners();
-                                            }
-                                          },
-                                          icon: SvgPicture.asset(
-                                              ImageUtils.chatMenuIcon),
-                                        )
-                                      ],
+                            // Column(
+                            //   children: [
+                            //     SizedBox(height: Dimensions.topMargin),
+                            //     Stack(
+                            //       children: [
+                            //         Row(
+                            //           mainAxisAlignment:
+                            //               MainAxisAlignment.spaceBetween,
+                            //           children: [
+                            //             GestureDetector(
+                            //               onTap: () {
+                            //                 model.navigateToFollowerList();
+                            //               },
+                            //               child: Row(
+                            //                 children: [
+                            //                   IconButton(
+                            //                       onPressed: () {
+                            //                         model.navigateBack();
+                            //                       },
+                            //                       iconSize: 18.0,
+                            //                       padding: EdgeInsets.zero,
+                            //                       constraints: BoxConstraints(),
+                            //                       icon: Icon(
+                            //                         Icons.arrow_back_ios,
+                            //                         color: ColorUtils.black,
+                            //                         size: 4.5.i,
+                            //                       )),
+                            //                   SizedBox(
+                            //                     width: 2.5.w,
+                            //                   ),
+                            //                   GestureDetector(
+                            //                     onTap: () async{
+                            //                       //model.getMatchedUserData = (model.acceptMatchedtModel[index]);
+                            //                       if(widget.fromUser == true){
+                            //                         await model.getAnitherUserInfo(widget.id.toString());
+                            //                         model.navigateToMatchedProfileUser();
+                            //                       }
+                            //                       else if(widget.fromUser == false){
+                            //                         List myBars = [];
+                            //                         model.selectedBar = model.listOfAllBars.where((element) => element.id == widget.id).first;
+                            //                         //print(myBars);
+                            //                         //myBars.add(model.listOfAllBars.map((e) => e.id == widget.id));
+                            //                         // myBars.add(model.listOfAllBars.contains(widget.id));
+                            //                         print(myBars);
+                            //                         model.navigateToBarProfile();
+                            //                       }
+                            //                     },
+                            //                     child: Stack(
+                            //                       alignment: Alignment.topCenter,
+                            //                       children: [
+                            //                         CircleAvatar(
+                            //                           radius: 26.0,
+                            //                           backgroundImage: NetworkImage(
+                            //                               widget.profilePic ??
+                            //                                   "https://tse2.mm.bing.net/th?id=OIP.4gcGG1F0z6LjVlJjYWGGcgHaHa&pid=Api&P=0&w=164&h=164"),
+                            //                           backgroundColor:
+                            //                               Colors.transparent,
+                            //                         ),
+                            //                       ],
+                            //                     ),
+                            //                   ),
+                            //                   SizedBox(
+                            //                     width: 3.w,
+                            //                   ),
+                            //                   Column(
+                            //                     crossAxisAlignment:
+                            //                         CrossAxisAlignment.start,
+                            //                     mainAxisAlignment:
+                            //                         MainAxisAlignment.start,
+                            //                     children: [
+                            //                       Text(
+                            //                         widget.username.toString(),
+                            //                         style: TextStyle(
+                            //                             fontFamily:
+                            //                                 FontUtils.modernistBold,
+                            //                             fontSize: 1.9.t,
+                            //                             color:
+                            //                                 ColorUtils.text_dark),
+                            //                       ),
+                            //                       SizedBox(
+                            //                         height: 0.5.h,
+                            //                       ),
+                            //                       Text(
+                            //                         "Active",
+                            //                         style: TextStyle(
+                            //                             fontFamily:
+                            //                                 FontUtils.modernistBold,
+                            //                             fontSize: 1.5.t,
+                            //                             color:
+                            //                                 ColorUtils.activeColor),
+                            //                       ),
+                            //                     ],
+                            //                   ),
+                            //                 ],
+                            //               ),
+                            //             ),
+                            //             IconButton(
+                            //               onPressed: () {
+                            //                 if (model.openBurgerMenu == false) {
+                            //                   model.openBurgerMenu = true;
+                            //                   model.notifyListeners();
+                            //                 } else if (model.openBurgerMenu ==
+                            //                     true) {
+                            //                   model.openBurgerMenu = false;
+                            //                   model.notifyListeners();
+                            //                 }
+                            //               },
+                            //               icon: SvgPicture.asset(
+                            //                   ImageUtils.chatMenuIcon),
+                            //             )
+                            //           ],
+                            //         ),
+                            //       ],
+                            //     ),
+                            //     SizedBox(
+                            //       height: 1.h,
+                            //     ),
+                            //     Container(
+                            //       padding: EdgeInsets.only(bottom: 2.h, top: 3.h),
+                            //       height: 75.h,
+                            //       child: ListView.separated(
+                            //           physics: BouncingScrollPhysics(),
+                            //           controller: model.chatScroll,
+                            //           itemBuilder: (context, index) {
+                            //             return Align(
+                            //               child: Container(
+                            //                 width:
+                            //                     MediaQuery.of(context).size.width /
+                            //                         1.7,
+                            //                 decoration: BoxDecoration(
+                            //                   color: ColorUtils.red_color.withOpacity(0.9),
+                            //                   borderRadius: model.chats[index]
+                            //                               ["userID"] ==
+                            //                           model.barModel!.id!.toString()
+                            //                       ? BorderRadius.only(
+                            //                           topLeft: Radius.circular(15),
+                            //                           topRight: Radius.circular(15),
+                            //                           bottomLeft:
+                            //                               Radius.circular(15),
+                            //                         )
+                            //                       : BorderRadius.only(
+                            //                           topLeft: Radius.circular(15),
+                            //                           topRight: Radius.circular(15),
+                            //                           bottomRight:
+                            //                               Radius.circular(15),
+                            //                         ),
+                            //                 ),
+                            //                 child: Column(
+                            //                   crossAxisAlignment: model.chats[index]
+                            //                               ["userID"] ==
+                            //                           model.barModel!.id!.toString()
+                            //                       ? CrossAxisAlignment.end
+                            //                       : CrossAxisAlignment.start,
+                            //                   children: [
+                            //                     // Padding(
+                            //                     //   padding: EdgeInsets.symmetric(
+                            //                     //       horizontal: 3.w,
+                            //                     //       vertical: 1.5.h),
+                            //                     //   child: Image.asset(
+                            //                     //     ImageUtils.drinkImage,
+                            //                     //   ),
+                            //                     // ),
+                            //                     Padding(
+                            //                       padding: EdgeInsets.only(
+                            //                           left: 3.w,
+                            //                           right: 3.w,
+                            //                           top: 1.5.h),
+                            //                       child: Text(
+                            //                         model.chats[index]["content"]
+                            //                             .toString(),
+                            //                         style: TextStyle(
+                            //                             //fontFamily: FontUtils.avertaDemoRegular,
+                            //                             fontSize: 1.8.t,
+                            //                             color:
+                            //                                 ColorUtils.white),
+                            //                       ),
+                            //                     ),
+                            //                     //SizedBox(height: 1.h,),
+                            //                     Align(
+                            //                       alignment: model.chats[index]
+                            //                                   ["userID"] ==
+                            //                               model.barModel!.id!
+                            //                                   .toString()
+                            //                           ? Alignment.centerLeft
+                            //                           : Alignment.centerRight,
+                            //                       child: Padding(
+                            //                         padding: EdgeInsets.all(8.0),
+                            //                         child: Text(
+                            //                           model.chats[index]["time"].toString().substring(11,16),
+                            //                           style: TextStyle(
+                            //                               //fontFamily: FontUtils.avertaDemoRegular,
+                            //                               fontSize: 1.5.t,
+                            //                               color: ColorUtils
+                            //                                   .icon_color),
+                            //                         ),
+                            //                       ),
+                            //                     ),
+                            //                   ],
+                            //                 ),
+                            //               ),
+                            //             ],
+                            //           ),
                                     ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 1.h,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.only(bottom: 2.h, top: 3.h),
-                                  height: 75.h,
-                                  child: ListView.separated(
-                                      physics: BouncingScrollPhysics(),
-                                      controller: model.chatScroll,
-                                      itemBuilder: (context, index) {
-                                        return Align(
-                                          child: Container(
-                                            width:
-                                                MediaQuery.of(context).size.width /
-                                                    1.7,
-                                            decoration: BoxDecoration(
-                                              color: ColorUtils.red_color.withOpacity(0.9),
-                                              borderRadius: model.chats[index]
-                                                          ["userID"] ==
-                                                      model.barModel!.id!.toString()
-                                                  ? BorderRadius.only(
-                                                      topLeft: Radius.circular(15),
-                                                      topRight: Radius.circular(15),
-                                                      bottomLeft:
-                                                          Radius.circular(15),
-                                                    )
-                                                  : BorderRadius.only(
-                                                      topLeft: Radius.circular(15),
-                                                      topRight: Radius.circular(15),
-                                                      bottomRight:
-                                                          Radius.circular(15),
-                                                    ),
-                                            ),
-                                            child: Column(
-                                              crossAxisAlignment: model.chats[index]
-                                                          ["userID"] ==
-                                                      model.barModel!.id!.toString()
-                                                  ? CrossAxisAlignment.end
-                                                  : CrossAxisAlignment.start,
-                                              children: [
-                                                // Padding(
-                                                //   padding: EdgeInsets.symmetric(
-                                                //       horizontal: 3.w,
-                                                //       vertical: 1.5.h),
-                                                //   child: Image.asset(
-                                                //     ImageUtils.drinkImage,
-                                                //   ),
-                                                // ),
-                                                Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: 3.w,
-                                                      right: 3.w,
-                                                      top: 1.5.h),
-                                                  child: Text(
-                                                    model.chats[index]["content"]
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                        //fontFamily: FontUtils.avertaDemoRegular,
-                                                        fontSize: 1.8.t,
-                                                        color:
-                                                            ColorUtils.white),
-                                                  ),
-                                                ),
-                                                //SizedBox(height: 1.h,),
-                                                Align(
-                                                  alignment: model.chats[index]
-                                                              ["userID"] ==
-                                                          model.barModel!.id!
-                                                              .toString()
-                                                      ? Alignment.centerLeft
-                                                      : Alignment.centerRight,
-                                                  child: Padding(
-                                                    padding: EdgeInsets.all(8.0),
-                                                    child: Text(
-                                                      model.chats[index]["time"].toString().substring(11,16),
-                                                      style: TextStyle(
-                                                          //fontFamily: FontUtils.avertaDemoRegular,
-                                                          fontSize: 1.5.t,
-                                                          color: ColorUtils
-                                                              .icon_color),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  model.groupScreenChatController.text.length <=0 ?
-                                  Container(
-                                      //margin: EdgeInsets.only(bottom: 2.2.h),
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: ColorUtils.text_grey,
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(15.0),
-                                        child: SvgPicture.asset(
-                                          ImageUtils.sendIcon1,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    )
+                                  ]),
 
-                                 : InkWell(
-                                    onTap: () async {
-                                      // NewBarModel barUser =
-                                      //     (await locator<PrefrencesViewModel>()
-                                      //         .getBarUser())!;
-                                      UserModel User =
-                                          (await locator<PrefrencesViewModel>()
-                                              .getUser())!;
-                                      // model.chat();
-                                      model.pubnub!.publish(
-                                          model.getConversationID(User.id.toString(), widget.id.toString()),
-                                          {
-                                            "content": model.groupScreenChatController.text,
-                                            "userID": User.id!.toString(),
-                                            "time": DateTime.now().toString()
-                                          });
-                                          // model.pubnub!.files.publishFileMessage(model.getConversationID(barUser.id.toString(), widget.id.toString()), FileMessage(file));
-                                      model.groupScreenChatController.clear();
-                                      model.notifyListeners();
-                                      Future.delayed(Duration(seconds: 2), () {
-                                      model.scrollDown();
-                                      });
-                                    },
-                                    child: Container(
-                                      //margin: EdgeInsets.only(bottom: 2.2.h),
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: ColorUtils.text_red,
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(15.0),
-                                        child: SvgPicture.asset(
-                                          ImageUtils.sendIcon1,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
+
+                                 // : InkWell(
+                                 //    onTap: () async {
+                                 //      // NewBarModel barUser =
+                                 //      //     (await locator<PrefrencesViewModel>()
+                                 //      //         .getBarUser())!;
+                                 //      UserModel User =
+                                 //          (await locator<PrefrencesViewModel>()
+                                 //              .getUser())!;
+                                 //      // model.chat();
+                                 //      model.pubnub!.publish(
+                                 //          model.getConversationID(User.id.toString(), widget.id.toString()),
+                                 //          {
+                                 //            "content": model.groupScreenChatController.text,
+                                 //            "userID": User.id!.toString(),
+                                 //            "time": DateTime.now().toString()
+                                 //          });
+                                 //          // model.pubnub!.files.publishFileMessage(model.getConversationID(barUser.id.toString(), widget.id.toString()), FileMessage(file));
+                                 //      model.groupScreenChatController.clear();
+                                 //      model.notifyListeners();
+                                 //      Future.delayed(Duration(seconds: 2), () {
+                                 //      model.scrollDown();
+                                 //      });
+                                 //    },
+                                 //    child: Container(
+                                 //      //margin: EdgeInsets.only(bottom: 2.2.h),
+                                 //      decoration: BoxDecoration(
+                                 //        shape: BoxShape.circle,
+                                 //        color: ColorUtils.text_red,
+                                 //      ),
+                                 //      child: Padding(
+                                 //        padding: const EdgeInsets.all(15.0),
+                                 //        child: SvgPicture.asset(
+                                 //          ImageUtils.sendIcon1,
+                                 //          color: Colors.white,
+                                 //        ),
+                                 //      ),
+                                 //    ),
+                                 //  ),
+                            ))],
                               ),
                             ),
                           ],

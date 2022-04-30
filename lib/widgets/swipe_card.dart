@@ -34,7 +34,6 @@ class SwipeCard extends StatefulWidget {
   String? name;
   String?address;
   double distance;
-
   dynamic id;
 
 

@@ -11,7 +11,7 @@ class CreateGroupChat {
   int? id;
   String? name;
   String? privacy;
-  dynamic originator;
+  UserModel? originator;
   String? image;
   List<UserModel>? users;
 
