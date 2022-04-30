@@ -68,6 +68,7 @@ import 'package:sauftrag/views/UserFriendList/contact_list.dart';
 import 'package:sauftrag/views/UserFriendList/create_group.dart';
 import 'package:sauftrag/bar/views/BarChat/friend_list.dart';
 import 'package:sauftrag/views/NewsFeed/event_detail.dart';
+import 'package:sauftrag/views/UserFriendList/friend_list_for_user.dart';
 import 'package:sauftrag/views/UserFriendList/user_group_details.dart';
 import 'package:sauftrag/views/UserFriendList/group_screen.dart';
 import 'package:sauftrag/views/UserFriendList/invite_people.dart';
@@ -378,6 +379,10 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateToChangePassword(){
     navigationKey.currentState!.push(PageTransition(child: ChangePassword(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToFriendListForUser(){
+    navigationKey.currentState!.push(PageTransition(child: FriendListForUser(), type: PageTransitionType.rightToLeftWithFade));
   }
 
 

@@ -95,6 +95,7 @@ class _GroupDetailsState extends State<GroupDetails> {
                               GroupScreen(
                                   id: model.getUserGroup!.first.id ?? 0,
                                   username: model.getUserGroup!.first.name,
+                                  groupImg: model.getUserGroup!.first.image,
                                   userLength: model.getUserGroup!.first.users!.length
                               )
                           ));
@@ -109,6 +110,7 @@ class _GroupDetailsState extends State<GroupDetails> {
                               GroupScreen(
                                   id: model.getUserGroup!.first.id ?? 0,
                                   username: model.getUserGroup!.first.name,
+                                  groupImg: model.getUserGroup!.first.image,
                                   userLength: model.getUserGroup!.first.users!.length
                               )
                           ));

@@ -31,9 +31,10 @@ class GroupScreen extends StatefulWidget {
   int? id;
   String? username;
   int? userLength;
+  String? groupImg;
   List<UserModel>? groupUser;
 
-  GroupScreen({Key? key, this.id, this.username,  this.userLength, this.groupUser}) : super(key: key);
+  GroupScreen({Key? key, this.id, this.username,  this.userLength, this.groupUser, this.groupImg}) : super(key: key);
 
   @override
   _GroupScreenState createState() => _GroupScreenState();
@@ -338,7 +339,7 @@ class _GroupScreenState extends State<GroupScreen> {
                                 children: [
                                   IconButton(
                                       onPressed: () {
-                                        model.navigateBack();
+                                        model.navigateToFriendListScreen();
                                       },
                                       iconSize: 18.0,
                                       padding: EdgeInsets.zero,
@@ -373,11 +374,17 @@ class _GroupScreenState extends State<GroupScreen> {
                                         Stack(
                                           alignment: Alignment.topCenter,
                                           children: [
-                                            CircleAvatar(
-                                              radius: 26.0,
-                                              backgroundImage:
-                                                  AssetImage(ImageUtils.cosmos),
-                                              backgroundColor: Colors.transparent,
+                                            Container(
+                                              height: 6.7.h,
+                                              width: 14.w,
+                                              child: ClipRRect(
+                                                borderRadius: BorderRadius.circular(80),
+                                                child: widget.groupImg == null ?
+                                                  SvgPicture.asset(ImageUtils.profile) :
+                                                Image.network(widget.groupImg!,
+                                                  fit: BoxFit.fill,
+                                                ),
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -410,7 +417,7 @@ class _GroupScreenState extends State<GroupScreen> {
                                               height: 0.8.h,
                                             ),
                                             Text(
-                                              " Members" ,
+                                              widget.userLength!.toString() + " Members" ,
                                               style: TextStyle(
                                                   fontFamily:
                                                       FontUtils.modernistBold,

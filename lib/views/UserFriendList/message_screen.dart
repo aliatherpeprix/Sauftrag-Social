@@ -134,7 +134,7 @@ class _MessageScreenState extends State<MessageScreen> {
               //                   decoration: BoxDecoration(
               //                       color: Colors.white,
               //                       borderRadius: BorderRadius.all(
-              //                         Radius.circular(15.0),
+              //                           Radius.circular(15.0),
               //                       ),
               //                       border:
               //                           Border.all(color: ColorUtils.text_red)),

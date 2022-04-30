@@ -1781,6 +1781,10 @@ class MainViewModel extends BaseViewModel {
     navigationService.navigateToChangePassword();
   }
 
+  void navigateToFriendListForUser() {
+    navigationService.navigateToFriendListForUser();
+  }
+
   ///-----------Bar Profile ---------------///
 
   void navigateToAllBarRating() {

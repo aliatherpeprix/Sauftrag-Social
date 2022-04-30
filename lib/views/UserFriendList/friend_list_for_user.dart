@@ -694,6 +694,7 @@ class _FriendListForUserState extends State<FriendListForUser> {
                                                                 GroupScreen(
                                                                     id: model.getListGroup[index].id,
                                                                     username: model.getListGroup[index].name,
+                                                                    groupImg: model.getListGroup[index].image,
                                                                     //groupUser : model.getListGroup[index].users,
                                                                     userLength: model.getListGroup[index].users!.length
                                                                 )
@@ -707,9 +708,10 @@ class _FriendListForUserState extends State<FriendListForUser> {
                                                                     .fade,
                                                                 child:
                                                                 GroupScreen(
-                                                                  id: model.getListGroup[index].id,
-                                                                  username: model.getListGroup[index].name,
-                                                                  userLength: model.getListGroup[index].users!.length
+                                                                    id: model.getListGroup[index].id,
+                                                                    username: model.getListGroup[index].name,
+                                                                    groupImg: model.getListGroup[index].image,
+                                                                    userLength: model.getListGroup[index].users!.length
                                                                 )
                                                             ));
                                                       }
@@ -725,13 +727,24 @@ class _FriendListForUserState extends State<FriendListForUser> {
                                                           children: [
                                                             Row(
                                                               children: [
-                                                                CircleAvatar(
-                                                                  radius: 28.0,
-                                                                  backgroundImage: AssetImage(
-                                                                      ImageUtils.cosmos),
-                                                                  backgroundColor:
-                                                                  Colors.transparent,
-                                                                ),
+                                                    Container(
+                                                      height: 6.7.h,
+                                                      width: 14.w,
+                                                      decoration: BoxDecoration(
+                                                        color: ColorUtils.textFieldBg,
+                                                        borderRadius: BorderRadius.all(
+                                                          Radius.circular(80.0),
+                                                        ),
+                                                      ),
+                                                      child: ClipRRect(
+                                                      borderRadius: BorderRadius.circular(80),
+                                                      child: model.getListGroup[index].image == null ?
+                                                        SvgPicture.asset(ImageUtils.profileIcon, height: 5.h,) :
+                                                          Image.network(model.getListGroup[index].image!,
+                                                            fit: BoxFit.fill,
+                                                          )
+                                                      ),
+                                                  ),
                                                                 SizedBox(
                                                                   width: 3.w,
                                                                 ),
