@@ -408,7 +408,7 @@ class _MessageScreenForBarState extends State<MessageScreenForBar> {
                                                                 InputDecoration(
                                                               counterText: '',
                                                               hintText:
-                                                                  "ype your message...",
+                                                                  "Type your message...",
                                                               hintStyle:
                                                                   TextStyle(
                                                                 //fontFamily: FontUtils.proximaNovaRegular,
@@ -474,8 +474,7 @@ class _MessageScreenForBarState extends State<MessageScreenForBar> {
                                                               // final cameras = await availableCameras();
                                                               // final firstCamera = cameras.first;
                                                               //model.navigationService.navigateTo(to: TakePictureScreen(camera: firstCamera,));
-                                                              model
-                                                                  .openCamera();
+                                                              model.openCameraGrp(widget.id!, widget.username!);
                                                             },
                                                             tapPadding:
                                                                 EdgeInsets.all(

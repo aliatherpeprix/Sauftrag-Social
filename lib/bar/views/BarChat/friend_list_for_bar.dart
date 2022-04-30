@@ -58,7 +58,8 @@ class _FriendListForBarState extends State<FriendListForBar> {
         //model.getAllUserForChat();
         model.matchingUsers();
       },
-      builder: (context, model, child) {
+      builder: (context, model, child)
+      {
         return GestureDetector(
           onTap: () {
             context.unFocus();

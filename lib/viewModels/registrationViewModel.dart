@@ -707,39 +707,45 @@ class RegistrationViewModel extends BaseViewModel {
   );
 
   addBarImages() {
-    for (int i = 0; i < imageFiles.length; i++) {
-      if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
-          imageFiles[i].path.isEmpty) {
-        DialogUtils().showDialog(MyErrorWidget(
-          error: "Select All Images"/*+i.toString()*/,
-        ));
-        return;
-      }
-
-      // bool hasImages = false;
-      // if (!hasImages) {
-      //   if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
-      //       imageFiles[i].path.isEmpty) {
-      //     DialogUtils().showDialog(MyErrorWidget(
-      //       error: "Select at least one Image",
-      //     ));
-      //     return;
-      //   } else {
-      //     hasImages = true;
-      //     break;
-      //   }
-      // }
+    if (imageFiles[0].path.isEmpty) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Bar logo is required",
+      ));
+      return;
     }
     // for (int i = 0; i < imageFiles.length; i++) {
-    //   if (i == 0) {
-    //     if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
-    //         imageFiles[i].path.isEmpty) {
-    //       DialogUtils().showDialog(MyErrorWidget(
-    //         error: "Select Bar Logo",
-    //       ));
-    //       return;
-    //     }
+    //   if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
+    //       imageFiles[i].path.isEmpty) {
+    //     DialogUtils().showDialog(MyErrorWidget(
+    //       error: "Select All Images"/*+i.toString()*/,
+    //     ));
+    //     return;
     //   }
+    //
+    //   // bool hasImages = false;
+    //   // if (!hasImages) {
+    //   //   if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
+    //   //       imageFiles[i].path.isEmpty) {
+    //   //     DialogUtils().showDialog(MyErrorWidget(
+    //   //       error: "Select at least one Image",
+    //   //     ));
+    //   //     return;
+    //   //   } else {
+    //   //     hasImages = true;
+    //   //     break;
+    //   //   }
+    //   // }
+    // }
+    // for (int i = 0; i < imageFiles.length; i++) {
+    //   // if (i == 0) {
+    //   //   if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
+    //   //       imageFiles[i].path.isEmpty) {
+    //   //     DialogUtils().showDialog(MyErrorWidget(
+    //   //       error: "Select Bar Logo",
+    //   //     ));
+    //   //     return;
+    //   //   }
+    //   // }
     //   bool hasImages = false;
     //   if (i > 0) {
     //     if (!hasImages) {
@@ -1450,29 +1456,29 @@ class RegistrationViewModel extends BaseViewModel {
   Future addImageUser() async {
     getStarted = true;
     notifyListeners();
-    for (int i = 0; i < imageFiles.length; i++) {
-      if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
-          imageFiles[i].path.isEmpty) {
-        DialogUtils().showDialog(MyErrorWidget(
-          error: "Select All Images"/*+i.toString()*/,
-        ));
-        return;
-      }
-
-      // bool hasImages = false;
-      // if (!hasImages) {
-      //   if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
-      //       imageFiles[i].path.isEmpty) {
-      //     DialogUtils().showDialog(MyErrorWidget(
-      //       error: "Select at least one Image",
-      //     ));
-      //     return;
-      //   } else {
-      //     hasImages = true;
-      //     break;
-      //   }
-      // }
-    }
+    // for (int i = 0; i < imageFiles.length; i++) {
+    //   if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
+    //       imageFiles[i].path.isEmpty) {
+    //     DialogUtils().showDialog(MyErrorWidget(
+    //       error: "Select All Images"/*+i.toString()*/,
+    //     ));
+    //     return;
+    //   }
+    //
+    //   // bool hasImages = false;
+    //   // if (!hasImages) {
+    //   //   if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
+    //   //       imageFiles[i].path.isEmpty) {
+    //   //     DialogUtils().showDialog(MyErrorWidget(
+    //   //       error: "Select at least one Image",
+    //   //     ));
+    //   //     return;
+    //   //   } else {
+    //   //     hasImages = true;
+    //   //     break;
+    //   //   }
+    //   // }
+    // }
     getStarted = false;
     notifyListeners();
     //navigateToTermsScreen();

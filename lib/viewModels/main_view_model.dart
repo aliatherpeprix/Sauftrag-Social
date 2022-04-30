@@ -3218,7 +3218,7 @@ class MainViewModel extends BaseViewModel {
 
   Future sendImageMessage(int id) async{
     FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.any,
+      type: FileType.media,
       allowMultiple: false,
     );
 
@@ -3246,7 +3246,7 @@ class MainViewModel extends BaseViewModel {
 
   Future sendImageMessageUser(int id ) async{
     FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.any,
+      type: FileType.media,
       allowMultiple: false,
     );
 
@@ -3281,7 +3281,7 @@ class MainViewModel extends BaseViewModel {
 
   Future sendImageMessageGrpUser(int id, String username ) async{
     FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.any,
+      type: FileType.media,
       allowMultiple: false,
     );
 
@@ -3311,7 +3311,7 @@ class MainViewModel extends BaseViewModel {
     }
   }
 
-  Future<bool> openCameraUser(String name) async {
+  Future<bool> openCameraUser(int id) async {
     ImagePicker picker = ImagePicker();
     var image = await picker.pickImage(source: ImageSource.camera);
     _pickedFile = image;
@@ -3319,8 +3319,11 @@ class MainViewModel extends BaseViewModel {
       File file = File(_pickedFile!.path);
 
       await pubnub!.files.sendFile(
-          name,
-          "image", file.readAsBytesSync().toList(),fileMessage: {
+          getConversationID(
+              userModel!.id.toString(),
+              id.toString()
+          ),
+          _pickedFile!.name, file.readAsBytesSync().toList(),fileMessage: {
         "userID" : userModel!.id,
         "time" : DateTime.now().toString(),
       }).then((value){
@@ -3346,6 +3349,90 @@ class MainViewModel extends BaseViewModel {
       return true;
     }
   }
+
+  Future<bool> openCameraBar(int id) async {
+    ImagePicker picker = ImagePicker();
+    var image = await picker.pickImage(source: ImageSource.camera);
+    _pickedFile = image;
+    if (_pickedFile != null) {
+      File file = File(_pickedFile!.path);
+
+      await pubnub!.files.sendFile(
+          getConversationID(
+              barModel!.id.toString(),
+              id.toString()
+          ),
+          _pickedFile!.name, file.readAsBytesSync().toList(),fileMessage: {
+        "userID" : barModel!.id,
+        "time" : DateTime.now().toString(),
+      }).then((value){
+        print(value);
+        DialogUtils().showDialog(MyErrorWidget(
+          error: "File has been uploaded!",
+        ));
+      })
+          .catchError((error){
+        print(error);
+        if(error.message == "request failed (Out of Memory)")
+        {
+          DialogUtils().showDialog(MyErrorWidget(
+            error: "Request failed, Out of Memory",
+          ));
+        }
+      });
+    }
+    if (profileFileImage == null) {
+      return false;
+    } else {
+      notifyListeners();
+      return true;
+    }
+  }
+
+  Future<bool> openCameraGrp(int id, String username) async {
+    ImagePicker picker = ImagePicker();
+    var image = await picker.pickImage(source: ImageSource.camera);
+    _pickedFile = image;
+    if (_pickedFile != null) {
+      File file = File(_pickedFile!.path);
+
+      await pubnub!.files.sendFile(
+          username,
+          // getConversationID(
+          //     userModel!.id.toString(),
+          //     id.toString()
+          // ),
+          _pickedFile!.name, file.readAsBytesSync().toList(),fileMessage: {
+        "userID" : userModel!.id,
+        "time" : DateTime.now().toString(),
+      }).then((value){
+        print(value);
+        DialogUtils().showDialog(MyErrorWidget(
+          error: "File has been uploaded!",
+        ));
+      })
+          .catchError((error){
+        print(error);
+        if(error.message == "request failed (Out of Memory)")
+        {
+          DialogUtils().showDialog(MyErrorWidget(
+            error: "Request failed, Out of Memory",
+          ));
+        }
+      });
+    }
+    if (profileFileImage == null) {
+      return false;
+    } else {
+      notifyListeners();
+      return true;
+    }
+  }
+
+
+
+
+
 
   Future<bool> openCamera() async {
     ImagePicker picker = ImagePicker();
