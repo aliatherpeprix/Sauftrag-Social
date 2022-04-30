@@ -41,6 +41,8 @@ class Constants {
   static const String GetFavoriteClub = 'api/favorites/music/';
   static const String GetFavoritePartyVacation = 'api/favorites/party_vaccation/';
   static const String CreateNewFeed = 'api/news_feed/add/';
+  static const String PostNewFeedComments = 'api/comment/add/';
+  static const String GetNewFeedComments = 'api/comment/add/';
   static const String GetNewFeed = 'api/news_feed/add/';
   static const String GetPrivacyPolicy = 'api/other/privacy-policy/';
   static const String GetTermsAndConditions = 'api/other/terms/';

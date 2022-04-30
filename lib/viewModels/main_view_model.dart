@@ -16,11 +16,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:sauftrag/bar/views/Drawer/bar_followers.dart';
 import 'package:sauftrag/models/attend_event.dart';
+import 'package:sauftrag/models/comments.dart';
 import 'package:sauftrag/models/create_group_chat.dart';
 import 'package:sauftrag/models/event_attendees.dart';
 import 'package:sauftrag/models/follow_bar.dart';
 import 'package:sauftrag/models/get_bar_followers.dart';
 import 'package:sauftrag/models/get_bar_upcoming_event.dart';
+import 'package:sauftrag/models/get_comments.dart';
 import 'package:sauftrag/models/listOfFollowing_Bars.dart';
 import 'package:sauftrag/models/request_match_model.dart';
 import 'package:sauftrag/models/user_matched.dart';
@@ -64,12 +66,14 @@ import 'package:sauftrag/services/faqs.dart';
 import 'package:sauftrag/services/followBar.dart';
 import 'package:sauftrag/services/getGroup.dart';
 import 'package:sauftrag/services/get_barFollowers.dart';
+import 'package:sauftrag/services/get_comments.dart';
 import 'package:sauftrag/services/get_match_users.dart';
 import 'package:sauftrag/services/get_past_event.dart';
 import 'package:sauftrag/services/get_upcoming_events.dart';
 import 'package:sauftrag/services/get_user_details.dart';
 import 'package:sauftrag/services/get_user_to_user.dart';
 import 'package:sauftrag/services/listOfBars.dart';
+import 'package:sauftrag/services/post_comments.dart';
 
 import 'package:sauftrag/services/privacyPolicy.dart';
 import 'package:sauftrag/services/termsAndCondition.dart';
@@ -123,9 +127,12 @@ class MainViewModel extends BaseViewModel {
   var userLike = Newfeedlike();
   var currentUserDetails = UserDetails();
   var updateUserDetails = UpdateUser();
+  var postComments = PostComments();
+  var getComments = GetComments();
 
 
   Barcode? result;
+  List<GetNewsfeedComments>? userComments;
 
   //var Permission;
 
@@ -312,6 +319,8 @@ class MainViewModel extends BaseViewModel {
 
   Subscription? subscription;
   Channel? channel;
+
+  int? selectedCommentId;
 
   Future<Position> determinePosition() async {
     bool serviceEnabled;
@@ -3213,7 +3222,7 @@ class MainViewModel extends BaseViewModel {
     print(userlike);
     if (userlike is LikeNewsFeed) {
       likes = userlike;
-      posts[index].likes = posts[index].likes! + 1;
+      posts[index].likes_count = posts[index].likes_count! + 1;
       print(likes);
       DialogUtils().showDialog(MyErrorWidget(
         error: "You liked this news feed!",
@@ -3228,7 +3237,7 @@ class MainViewModel extends BaseViewModel {
     } else {
       isLoading = true;
       like = false;
-      posts[index].likes = posts[index].likes!  - 1 ;
+      posts[index].likes_count = posts[index].likes_count!  - 1 ;
       var userlike = await userLike.NewfeedLike(selectedPost!.id!, like);
       DialogUtils().showDialog(MyErrorWidget(
         error: "You disliked this new feed",
@@ -3328,6 +3337,60 @@ class MainViewModel extends BaseViewModel {
         "ZXC!asd123",
     );
     print(response);
+  }
+
+  postingComments() async {
+    isLoading = true;
+    notifyListeners();
+    if(postCommentController.text.isNotEmpty){
+      var userComments = await postComments.postComments(postCommentController.text, selectedCommentId!);
+      if(userComments == NewsfeedComments){
+        getBarPost();
+      }
+    }
+    else{
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Enter Some Text",
+      ));
+    }
+    isLoading = false;
+    notifyListeners();
+    //print(getFaqsList);
+  }
+
+  gettingComments() async {
+    isLoading = true;
+    userComments = await getComments.getComments(selectedCommentId!);
+    print(userComments);
+    isLoading = false;
+    //print(getFaqsList);
+  }
+
+  getCommentNewsFeed(int index) async {
+    isLoading = true;
+    notifyListeners();
+    var userComments = await getComments.getComments(selectedCommentId!);
+    if (userComments != null) {
+      posts[index].comments_count = posts[index].comments_count! + 1;
+      notifyListeners();
+      //feedbackController.clear();
+
+      // var index = listOfAllBars.indexOf();
+      // listOfAllBars[index].like =
+      // (getListofbar as LikeNewsFeed).user!.like!;
+    } else {
+      isLoading = true;
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Something went wrong",
+      ));
+      notifyListeners();
+      //isPrivacyPolicy = false;
+
+      return;
+    }
+    isLoading = false;
+    notifyListeners();
+    //print(getFaqsList);
   }
 
 }

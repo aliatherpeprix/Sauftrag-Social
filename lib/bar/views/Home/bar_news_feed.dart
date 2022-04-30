@@ -1203,7 +1203,7 @@ class _BarNewsFeedItemState extends State<BarNewsFeedItem> {
                                               width: 1.5.w,
                                             ),
                                             Text(
-                                              model.posts[widget.index!].likes.toString(),
+                                              model.posts[widget.index!].likes_count.toString(),
                                               style: TextStyle(
                                                   fontFamily: FontUtils
                                                       .modernistRegular,
