@@ -49,6 +49,7 @@ import 'package:sauftrag/models/pubnub_channel.dart';
 import 'package:sauftrag/models/rating_data.dart';
 import 'package:sauftrag/models/ratings.dart';
 import 'package:sauftrag/models/user_models.dart';
+import 'package:sauftrag/services/addBar.dart';
 import 'package:sauftrag/services/addFavorites.dart';
 import 'package:sauftrag/services/addressBook.dart';
 import 'package:sauftrag/services/allBars.dart';
@@ -67,6 +68,7 @@ import 'package:sauftrag/services/get_barFollowers.dart';
 import 'package:sauftrag/services/get_match_users.dart';
 import 'package:sauftrag/services/get_past_event.dart';
 import 'package:sauftrag/services/get_upcoming_events.dart';
+import 'package:sauftrag/services/get_user_details.dart';
 import 'package:sauftrag/services/get_user_to_user.dart';
 import 'package:sauftrag/services/listOfBars.dart';
 
@@ -96,9 +98,8 @@ import '../models/newfeed_like.dart';
 import '../models/user_feedback.dart';
 import '../services/feedback_user.dart';
 import '../services/like_newsfeed_user.dart';
-
 class MainViewModel extends BaseViewModel {
-  var updateUser = Updateuser();
+  var updateUser = UpdateUser();
   var updateBar = Updatebar();
   var createBarPost = Createpost();
   var privacyPolicy = Privacypolicy();
@@ -121,6 +122,9 @@ class MainViewModel extends BaseViewModel {
   var getGroup = GetGroup();
   var feedbackUser = Userfeedback();
   var userLike = Newfeedlike();
+  var currentUserDetails = UserDetails();
+  var updateUserDetails = UpdateUser();
+
 
   Barcode? result;
 
@@ -422,7 +426,7 @@ class MainViewModel extends BaseViewModel {
       if (userSignupResponce is UserModel) {
         UserModel user = userSignupResponce;
         user.favorite_alcohol_drinks = user.favorite_alcohol_drinks!;
-        user.favorite_night_club = user.favorite_night_club!;
+        user.favorite_musics = user.favorite_musics!;
         user.favorite_party_vacation = user.favorite_party_vacation!;
         // if (favorite=="favorite_alcohol_drinks"){
         //
@@ -771,6 +775,23 @@ class MainViewModel extends BaseViewModel {
   Map<String, int> genderMap = {
     'Male': 1,
     'Female': 2,
+  };
+
+  int relationValue = 1;
+  String relationValueStr = "Single";
+  List<String> relationshipList = [
+    "Single",
+    "Married",
+    "Relationship",
+    "Open Relationship",
+    "it's complicated",
+  ];
+  Map<String, int> relationshipMap = {
+    'Single': 1,
+    'Married': 2,
+    'Relationship': 3,
+    'Open Relationship': 4,
+    "it's complicated": 5,
   };
 
   Future<bool> getImage0(int index) async {
@@ -1137,6 +1158,7 @@ class MainViewModel extends BaseViewModel {
 
   Ratings? ratingKaData;
   RatingData? forTime;
+  int?  barIndex;
 
   rating() async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
@@ -1336,7 +1358,7 @@ class MainViewModel extends BaseViewModel {
 
   giveRatingToBar() async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
-    var data = {'rate': rate, 'comments': barGiveRating.text, 'bar': barId};
+    var data = {'rate': rate, 'comments': barGiveRating.text, 'bar': selectedBar!.id!};
     var encodedData = jsonEncode(data);
     var response = await http.post(
         Uri.http(Constants.BaseUrl, '/api/rating/add/'),
@@ -1402,15 +1424,15 @@ class MainViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  updateDrinkStatus() async {
+  updateDrinkStatus(BuildContext context) async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
     var startTimeofDrinking = DateFormat('jm')
-        .parse(drinkingFrom!)
+        .parse(drinkingFrom ?? TimeOfDay(hour: TimeOfDay.now().hour, minute: 0).format(context))
         .toString()
         .split(' ')[1]
         .substring(0, 5);
     var endTimeOfDrinking = DateFormat('jm')
-        .parse(drinkingTo!)
+        .parse(drinkingTo ?? TimeOfDay(hour: TimeOfDay.now().hour, minute: 0).format(context))
         .toString()
         .split(' ')[1]
         .substring(0, 5);
@@ -1838,7 +1860,7 @@ class MainViewModel extends BaseViewModel {
         images, name, address, alcoholDrink, nightClub, partyVacation, id);
   }
 
-  Future saveUserDetails() async {
+  /*Future saveUserDetails() async {
     List tempList = [];
 
     // for (int i = 0;i<imageFiles.length;i++){
@@ -1857,7 +1879,7 @@ class MainViewModel extends BaseViewModel {
         if (imageFiles[i].path.isEmpty) {
           DialogUtils().showDialog(
               MyErrorWidget(
-                error: "Select All Images" /*+i.toString()*/,
+                error: "Select All Images" *//*+i.toString()*//*,
               ),
               isDismissable: true);
           return;
@@ -1886,14 +1908,14 @@ class MainViewModel extends BaseViewModel {
       UserModel user = userUpdateResponse;
       user.token = userModel!.token!;
       user.favorite_alcohol_drinks = user.favorite_alcohol_drinks!;
-      user.favorite_night_club = user.favorite_night_club!;
+      user.favorite_musics = user.favorite_musics!;
       user.favorite_party_vacation = user.favorite_party_vacation!;
       await prefrencesViewModel.saveUser(user);
       notifyListeners();
     }
     editProfile = false;
     notifyListeners();
-  }
+  }*/
 
   Future updateAccountDetials() async {
     editProfile = true;
@@ -2327,6 +2349,12 @@ class MainViewModel extends BaseViewModel {
       var index = listOfAllBars.indexOf(selectedBar!);
       listOfAllBars[index].is_follow =
           (getListofbar as FollowBAR).user!.is_follow!;
+      if(follow){
+        selectedBar!.total_followers = selectedBar!.total_followers! + 1;
+      }
+      else{
+        selectedBar!.total_followers = selectedBar!.total_followers! - 1;
+      }
       notifyListeners();
     } else {
       isLoading = false;
@@ -2972,7 +3000,7 @@ class MainViewModel extends BaseViewModel {
     isLoading = true;
 
     var getAnotherUserDetails = await getUserInfo.GetAnotherUserInfo(id);
-    print(getAnotherUserDetails);
+    //print(getAnotherUserDetails);
     // if (getFaqList is String){
     //   faqs = getFaqList;
     //   //isPrivacyPolicy = false;
@@ -2980,7 +3008,7 @@ class MainViewModel extends BaseViewModel {
     // }ListOfBarsModel
     if (getAnotherUserDetails is UserModel) {
       matchedUser = getAnotherUserDetails;
-      print(matchedUser);
+      //print(matchedUser);
     } else {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Some thing went wrong",
@@ -3473,5 +3501,91 @@ class MainViewModel extends BaseViewModel {
     }
   }
 
+  // getUserDetails
+
+   String? userGender;
+   dynamic userGenderValue;
+
+   String? currentRelation;
+   dynamic currentRelationValue;
+
+   UserModel? currentUserResponse;
+
+  usersDetails() async {
+    isUserProfile = true;
+     List usersGender = [];
+     List usersRelation = [];
+    //UserModel? user = await locator<PrefrencesViewModel>().getUser();
+    List<UserModel> response = await currentUserDetails.GetUserDetails();
+    currentUserResponse = response[0];
+    notifyListeners();
+     usersGender.add(response.map((e) => e.gender).first) ;
+     userGender = usersGender[0];
+     usersRelation.add(response.map((e) => e.relation_ship).first) ;
+     currentRelation = usersRelation[0];
+     notifyListeners();
+     isUserProfile = false;
+  }
+
+  setValues(){
+    if(userGender == "Male"){
+      userGenderValue = 1;
+      notifyListeners();
+    }
+    else if(userGender == "Female"){
+      userGenderValue = 2;
+      notifyListeners();
+    }
+    if(currentRelation == "Single"){
+      currentRelationValue = 1;
+      notifyListeners();
+    }
+    else if(currentRelation == "Married"){
+      currentRelationValue = 2;
+      notifyListeners();
+    }
+    else if(currentRelation == "Relationship"){
+      currentRelationValue = 3;
+      notifyListeners();
+    }
+    else if(currentRelation == "Open Relationship"){
+      currentRelationValue = 4;
+      notifyListeners();
+    }
+    else if(currentRelation == "it's complicated"){
+      currentRelationValue = 5;
+      notifyListeners();
+    }
+  }
+
+  updatingUser() async {
+    List<UserModel> response = await updateUserDetails.updateUser(
+        currentUserResponse!.id!,
+        currentUserResponse!.country_code!,
+        currentUserResponse!.phone_no!,
+        "",
+        userGenderValue!,
+        currentUserResponse!.address!,
+        currentUserResponse!.dob!,
+        currentRelationValue!,
+        currentUserResponse!.role!,
+        currentUserResponse!.favorite_alcohol_drinks!,
+        currentUserResponse!.favorite_musics!,
+        currentUserResponse!.favorite_party_vacation!,
+        //currentUserResponse!.profile_picture!,
+        [
+          currentUserResponse!.catalogue_image1,
+          currentUserResponse!.catalogue_image2,
+          currentUserResponse!.catalogue_image3,
+          currentUserResponse!.catalogue_image4,
+          currentUserResponse!.catalogue_image5,
+        ],
+        true,
+        true,
+        "ZXC!asd123",
+        "ZXC!asd123",
+    );
+    print(response);
+  }
 
 }

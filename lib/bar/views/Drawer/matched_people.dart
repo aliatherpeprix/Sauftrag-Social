@@ -64,9 +64,9 @@ class _MatchedPeopleState extends State<MatchedPeople> {
                               itemBuilder: (BuildContext context, int index) {
                                 return /*model.isLoading == true ? AllPageLoader() :*/
                                 GestureDetector(
-                                  onTap:  () {
+                                  onTap:  () async{
                                     model.getMatchedUserData = (model.acceptMatchedtModel[index]);
-                                    model.getAnitherUserInfo(model.acceptMatchedtModel[index].user!.id.toString());
+                                    await model.getAnitherUserInfo(model.acceptMatchedtModel[index].user!.id.toString());
                                     model.navigateToMatchedProfileUser();
                                   },
                                   child: Stack(

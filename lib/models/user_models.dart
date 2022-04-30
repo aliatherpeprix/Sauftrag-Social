@@ -21,7 +21,7 @@ class UserModel {
   String? longitude;
   dynamic role;
   List?  favorite_alcohol_drinks;
-  List? favorite_night_club;
+  List? favorite_musics;
   List? favorite_party_vacation;
   String? profile_picture;
   String? catalogue_image1;

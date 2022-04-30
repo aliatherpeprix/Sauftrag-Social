@@ -16,6 +16,7 @@ import 'package:intl/intl.dart';
 import 'package:mime/mime.dart';
 import 'package:pubnub/pubnub.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/models/bar_Kind_Model.dart';
 import 'package:sauftrag/models/bar_model.dart';
 import 'package:sauftrag/models/create_bar_post.dart';
 import 'package:sauftrag/models/day_week.dart';
@@ -26,6 +27,7 @@ import 'package:sauftrag/models/user_models.dart' as userModel;
 import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/models/week_days.dart';
 import 'package:sauftrag/modules/dio_services.dart';
+import 'package:sauftrag/services/addBar.dart';
 import 'package:sauftrag/services/addFavorites.dart';
 import 'package:sauftrag/services/barSignup.dart';
 import 'package:sauftrag/services/changeUserPassword.dart';
@@ -68,10 +70,11 @@ class RegistrationViewModel extends BaseViewModel {
   var forgetpassword = ForgetPassword();
   var changepassword = Changeuserpassword();
   var checkuser = Checkuser();
-  var updateUser = Updateuser();
+  var updateUser = UpdateUser();
   var addFavorite = Addfavorites();
   var createBarPost = Createpost();
   var checkBar = Checkbar();
+  var addBarKind = AddBarKind();
 
 
   final GlobalKey<SideMenuState> sideMenuKey = GlobalKey<SideMenuState>();
@@ -591,8 +594,9 @@ class RegistrationViewModel extends BaseViewModel {
     "Pub",
     "Cocktail",
     "Disco",
-
   ];
+
+  TextEditingController addCustomBarController = TextEditingController();
 
   List<dynamic> clubList = [];
   List<int> selectedClubList = [];
@@ -902,7 +906,7 @@ class RegistrationViewModel extends BaseViewModel {
       if (signupResponse is userModel.UserModel) {
         userModel.UserModel user = signupResponse;
         user.favorite_alcohol_drinks = user.favorite_alcohol_drinks!;
-        user.favorite_night_club = user.favorite_night_club!;
+        user.favorite_musics = user.favorite_musics!;
         user.favorite_party_vacation = user.favorite_party_vacation!;
         await locator<PrefrencesViewModel>().saveUser(signupResponse);
         mainViewModel.logInUserSelected = true;
@@ -1382,8 +1386,8 @@ class RegistrationViewModel extends BaseViewModel {
               CommonFunctions.SubtractFromList(user.favorite_alcohol_drinks!);
         }
         if (favorite == "favorite_night_club") {
-          user.favorite_night_club =
-              CommonFunctions.SubtractFromList(user.favorite_night_club!);
+          user.favorite_musics =
+              CommonFunctions.SubtractFromList(user.favorite_musics!);
         }
         if (favorite == "favorite_party_vacation") {
           user.favorite_party_vacation =
@@ -1912,7 +1916,7 @@ class RegistrationViewModel extends BaseViewModel {
       ));
       return;
     }
-    else if (breakTimeFrom == "") {
+    /*else if (breakTimeFrom == "") {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select week days start break time",
       ));
@@ -1923,7 +1927,7 @@ class RegistrationViewModel extends BaseViewModel {
         error: "Select week days end break time",
       ));
       return;
-    }
+    }*/
     else if (selectedWeekendDays.length == 0) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select a weekend day please",
@@ -1940,17 +1944,18 @@ class RegistrationViewModel extends BaseViewModel {
       ));
       return;
     }
-    else if (weekEndBreakTimeFrom == "") {
+    /*else if (weekEndBreakTimeFrom == "") {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select weekend days start break time",
       ));
       return;
-    } else if (weekEndBreakTimeTo == "") {
+    } */
+   /* else if (weekEndBreakTimeTo == "") {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select weekend days end break time",
       ));
       return;
-    }
+    }*/
     else if (selectedBarKind.length == 0) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select a bar kind",
@@ -1973,13 +1978,13 @@ class RegistrationViewModel extends BaseViewModel {
         workingDaysList,
         openingTimeFrom!,
         openingTimeTo!,
-        breakTimeFrom!,
-        breakTimeTo!,
+        breakTimeFrom ?? "",
+        breakTimeTo ?? "",
         weekendDaysList,
         weekEndOpeningTimeFrom!,
         weekEndOpeningTimeTo!,
-        weekEndBreakTimeFrom!,
-        weekEndBreakTimeTo!,
+        weekEndBreakTimeFrom ?? "",
+        weekEndBreakTimeTo ?? "",
         imageFiles[0] as File,
         imageFiles[1] as File,
         imageFiles[2] as File,
@@ -2070,6 +2075,24 @@ class RegistrationViewModel extends BaseViewModel {
     //   //     MyErrorWidget(error: signupResponce));
     //   navigateToUploadBarMedia();
     // }
+  }
+
+  addingBar(BuildContext context) async {
+    //UserModel? user = await locator<PrefrencesViewModel>().getUser();
+    if(addCustomBarController.text.isNotEmpty){
+      var response = await addBarKind.addKindOfBar(addCustomBarController.text);
+      if(response is BarKindModel){
+        barKindList.add(response.name!);
+        notifyListeners();
+        Navigator.pop(context);
+      }
+      else{
+        Navigator.pop(context);
+        DialogUtils().showDialog(MyErrorWidget(
+          error: "Something went wrong",
+        ));
+      }
+    }
   }
 
   // void doGoogleSignIn() async{

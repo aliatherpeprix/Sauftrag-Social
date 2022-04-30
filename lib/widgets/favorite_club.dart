@@ -73,7 +73,10 @@ class _FavoriteClubState extends State<FavoriteClub> {
                     ),
 
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding, vertical: Dimensions.verticalPadding),
+                      margin: EdgeInsets.only(top: 5.h),
+                      padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding,
+                          //vertical: Dimensions.verticalPadding
+                      ),
                       child: SingleChildScrollView(
                         physics: BouncingScrollPhysics(),
                         child: Column(
@@ -255,7 +258,7 @@ class _FavoriteClubState extends State<FavoriteClub> {
                               ),
                             ),
 
-
+                            SizedBox(height: 2.h,),
 
                           ],
                         ),

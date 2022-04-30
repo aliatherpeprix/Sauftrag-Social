@@ -357,60 +357,65 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                           horizontal: 2.5.w, vertical: 1.h),
                       child: Column(
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Image.network(
-                                  model.posts[widget.index!].user_id!
-                                      .profile_picture!,
-                                  //newsEvents[index]["image"],
-                                  width: 10.i,
-                                  height: 10.i,
-                                  fit: BoxFit.cover,
+                          GestureDetector(
+                            onTap: (){
+                              model.selectedBar = model.listOfAllBars.where((element) => element.id == model.posts[widget.index!].user_id!.id).first;
+                              model.navigateToBarProfile();
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.network(
+                                    model.posts[widget.index!].user_id!.profile_picture!,
+                                    //newsEvents[index]["image"],
+                                    width: 10.i,
+                                    height: 10.i,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 3.w,
-                              ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        model.posts[widget.index!].user_id!
-                                            .bar_name!,
-                                        //newsEvents[index]["barOwnerName"],
-                                        style: TextStyle(
-                                            fontFamily: FontUtils.modernistBold,
-                                            fontSize: 2.2.t,
-                                            fontWeight: FontWeight.bold,
-                                            color: ColorUtils.black),
-                                      ),
-                                      // if (model.posts[index].post_type! == '1')
-                                      //   {
-                                      //     Text("Abc")
-                                      //   }
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 0.5.h,
-                                  ),
-                                  Text(
-                                    model.posts[widget.index!].post_location!,
-                                    //newsEvents[index]["barOwnerName"],
-                                    style: TextStyle(
-                                        fontFamily: FontUtils.modernistRegular,
-                                        fontSize: 1.7.t,
-                                        //fontWeight: FontWeight.bold,
-                                        color: ColorUtils.black),
-                                  ),
-                                ],
-                              ),
-                            ],
+                                SizedBox(
+                                  width: 3.w,
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          model.posts[widget.index!].user_id!
+                                              .bar_name!,
+                                          //newsEvents[index]["barOwnerName"],
+                                          style: TextStyle(
+                                              fontFamily: FontUtils.modernistBold,
+                                              fontSize: 2.2.t,
+                                              fontWeight: FontWeight.bold,
+                                              color: ColorUtils.black),
+                                        ),
+                                        // if (model.posts[index].post_type! == '1')
+                                        //   {
+                                        //     Text("Abc")
+                                        //   }
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 0.5.h,
+                                    ),
+                                    Text(
+                                      model.posts[widget.index!].post_location!,
+                                      //newsEvents[index]["barOwnerName"],
+                                      style: TextStyle(
+                                          fontFamily: FontUtils.modernistRegular,
+                                          fontSize: 1.7.t,
+                                          //fontWeight: FontWeight.bold,
+                                          color: ColorUtils.black),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                           SizedBox(
                             height: 1.h,
@@ -434,14 +439,23 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                           ),
                           if (model.posts[widget.index!].media != null &&
                               model.posts[widget.index!].media!.length > 0)
-                            Container(
-                                child: CachedNetworkImage(
-                              imageUrl:
-                                  model.posts[widget.index!].media![0].media!,
-                              //width: 100.i,
-                              height: 40.i,
-                              fit: BoxFit.cover,
-                            )),
+                            GestureDetector(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (_) {
+                                  return DetailScreen(
+                                    imageUrl: model.posts[widget.index!].media![0].media!,
+                                  );
+                                }));
+                              },
+                              child: Container(
+                                  child: CachedNetworkImage(
+                                imageUrl:
+                                    model.posts[widget.index!].media![0].media!,
+                                //width: 100.i,
+                                height: 40.i,
+                                fit: BoxFit.cover,
+                              )),
+                            ),
                           Divider(),
 
                           ///LIKE AND COMMENT
@@ -480,6 +494,7 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                                                 SizedBox(
                                                   width: 1.5.w,
                                                 ),
+                                                if(model.posts[widget.index!].likes != null)
                                                 Text(
                                                   model.posts[widget.index!].likes!.toString(),
                                                   style: TextStyle(
@@ -838,3 +853,39 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
         disposeViewModel: false,);
   }
 }
+
+class DetailScreen extends StatefulWidget {
+
+  String? imageUrl;
+
+  DetailScreen({this.imageUrl, Key? key}) : super(key: key);
+
+  @override
+  _DetailScreenState createState() => _DetailScreenState();
+}
+
+class _DetailScreenState extends State<DetailScreen> {
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: GestureDetector(
+        child: Hero(
+          tag: 'imageHero',
+          child: CachedNetworkImage(
+            imageUrl: widget.imageUrl!,
+            width: MediaQuery.of(context).size.width/1,
+            height: MediaQuery.of(context).size.height/1,
+              fit: BoxFit.fitWidth,
+            // placeholder: new CircularProgressIndicator(),
+            // errorWidget: new Icon(Icons.error),
+          ),
+        ),
+        onTap: () {
+          Navigator.pop(context);
+        },
+      ),
+    );
+  }
+}
+

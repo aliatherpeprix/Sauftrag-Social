@@ -18,7 +18,9 @@ import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/utils/size_config.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
 import 'package:sauftrag/viewModels/registrationViewModel.dart';
+import 'package:sauftrag/widgets/add_custom_bar.dart';
 import 'package:sauftrag/widgets/back_arrow_with_container.dart';
+import 'package:sauftrag/widgets/favorite_club.dart';
 import 'package:sauftrag/widgets/loader.dart';
 import 'package:sauftrag/widgets/radler_dialog_box.dart';
 import 'package:stacked/stacked.dart';
@@ -920,13 +922,38 @@ class _BarTimingAndTypeState extends State<BarTimingAndType> {
 
                         ///----Kind of Bar----///
                         SizedBox(height: 4.h),
-                        Text(
-                          "Kind of Bar",
-                          style: TextStyle(
-                            color: ColorUtils.black,
-                            fontFamily: FontUtils.modernistBold,
-                            fontSize: 2.5.t,
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Kind of Bar",
+                              style: TextStyle(
+                                color: ColorUtils.black,
+                                fontFamily: FontUtils.modernistBold,
+                                fontSize: 2.5.t,
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: (){
+                                model.addCustomBarController.clear();
+                                showDialog(
+                                    barrierDismissible: false,
+                                    context: context,
+                                    builder: (BuildContext context){
+                                      return AddCustomBar();
+                                    }
+                                );
+                              },
+                              child: Text(
+                                "+ ""Add Bar",
+                                style: TextStyle(
+                                  color: ColorUtils.red_color,
+                                  fontFamily: FontUtils.modernistRegular,
+                                  fontSize: 1.8.t,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         SizedBox(height: 3.h),
                         Wrap(

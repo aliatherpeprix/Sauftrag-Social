@@ -11,6 +11,7 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/authentication_view_model.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
+import 'package:sauftrag/widgets/loader.dart';
 import 'package:stacked/stacked.dart';
 
 class DrinkUpdateStatusDialogBox extends StatefulWidget {
@@ -461,28 +462,64 @@ class _DrinkUpdateStatusDialogBoxState
                       // SizedBox(height: 5.h),
 
                       //Save Button
-                      ElevatedButton(
-                        onPressed: () {
-                          model.updateDrinkStatus();
-                          model.navigateBack();
-                        },
-                        child: const Text("Update"),
-                        style: ElevatedButton.styleFrom(
-                          primary: ColorUtils.text_red,
-                          onPrimary: ColorUtils.white,
-                          padding: EdgeInsets.symmetric(
-                              vertical: 2.h, horizontal: 15.w),
-                          elevation: 1,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  Dimensions.roundCorner)),
-                          textStyle: TextStyle(
-                            color: ColorUtils.white,
-                            fontFamily: FontUtils.modernistBold,
-                            fontSize: 1.8.t,
-                            //height: 0
+                      Row(
+                        children: [
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: () {
+                                model.updatedrinkIndex = 0;
+                                model.notifyListeners();
+                                model.updateDrinkStatus(context);
+                                //model.getDrinkStatus();
+                                model.notifyListeners();
+                                //model.navigateBack();
+                              },
+                              child: const Text("Reset"),
+                              style: ElevatedButton.styleFrom(
+                                primary: ColorUtils.text_red,
+                                onPrimary: ColorUtils.white,
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 2.h, horizontal: 0.w),
+                                elevation: 1,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        Dimensions.roundCorner)),
+                                textStyle: TextStyle(
+                                  color: ColorUtils.white,
+                                  fontFamily: FontUtils.modernistBold,
+                                  fontSize: 1.8.t,
+                                  //height: 0
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
+                          SizedBox(width: 3.w,),
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: () {
+                                model.updateDrinkStatus(context);
+                                model.navigateBack();
+                              },
+                              child: const Text("Update"),
+                              style: ElevatedButton.styleFrom(
+                                primary: ColorUtils.text_red,
+                                onPrimary: ColorUtils.white,
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 2.h, horizontal: 0.w),
+                                elevation: 1,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        Dimensions.roundCorner)),
+                                textStyle: TextStyle(
+                                  color: ColorUtils.white,
+                                  fontFamily: FontUtils.modernistBold,
+                                  fontSize: 1.8.t,
+                                  //height: 0
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       SizedBox(height: 1.h),
                     ],

@@ -73,7 +73,10 @@ class _FavoriteVacationState extends State<FavoriteVacation> {
                     ),
 
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding, vertical: Dimensions.verticalPadding),
+                      margin: EdgeInsets.only(top: 5.h),
+                      padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding,
+                          //vertical: Dimensions.verticalPadding
+                      ),
                       child: SingleChildScrollView(
                         physics: BouncingScrollPhysics(),
                         child: Column(
@@ -255,9 +258,7 @@ class _FavoriteVacationState extends State<FavoriteVacation> {
                                 ),
                               ),
                             ),
-
-
-
+                            SizedBox(height: 2.h,),
                           ],
                         ),
                       ),

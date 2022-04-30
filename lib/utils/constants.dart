@@ -3,12 +3,12 @@ class Constants {
   static const int user = 1;
   static const int bar = 2;
   //Pro Env
-  static const String BaseUrlPro = 'http://sauftragpro-environment.eba-4pafy8hm.ap-southeast-1.elasticbeanstalk.com/';
+  //static const String BaseUrlPro = 'http://sauftragpro-environment.eba-4pafy8hm.ap-southeast-1.elasticbeanstalk.com/';
   //static const String BaseUrlPro = '192.168.18.41"8000';
   //Dev Env
-  //static const String BaseUrlPro ='http://sauftragdev-environment.eba-yb3ya83i.ap-southeast-1.elasticbeanstalk.com/';
-  //static const String BaseUrl = 'sauftragdev-environment.eba-yb3ya83i.ap-southeast-1.elasticbeanstalk.com';
-  static const String BaseUrl = 'sauftragpro-environment.eba-4pafy8hm.ap-southeast-1.elasticbeanstalk.com';
+  static const String BaseUrlPro ='http://sauftragdev-environment.eba-yb3ya83i.ap-southeast-1.elasticbeanstalk.com/';
+  static const String BaseUrl = 'sauftragdev-environment.eba-yb3ya83i.ap-southeast-1.elasticbeanstalk.com';
+  //static const String BaseUrl = 'sauftragpro-environment.eba-4pafy8hm.ap-southeast-1.elasticbeanstalk.com';
   //static const String BaseUrl = '192.168.18.41"8000';
   static const String SignUp = 'api/user/register/';
   static const String AllUsers = 'api/user/all/';
@@ -38,9 +38,8 @@ class Constants {
   static const String likeNewFeed = 'api/news_feed/like/';
 
   static const String GetFavoriteDrink = 'api/favorites/alcoholic_drink/';
-  static const String GetFavoriteClub = 'api/favorites/night_club/';
-  static const String GetFavoritePartyVacation =
-      'api/favorites/party_vaccation/';
+  static const String GetFavoriteClub = 'api/favorites/music/';
+  static const String GetFavoritePartyVacation = 'api/favorites/party_vaccation/';
   static const String CreateNewFeed = 'api/news_feed/add/';
   static const String GetNewFeed = 'api/news_feed/add/';
   static const String GetPrivacyPolicy = 'api/other/privacy-policy/';
@@ -61,6 +60,7 @@ class Constants {
   static const String rating = 'api/rating/add/';
   static const String allUserForChat = 'api/user/all/';
   static const String giveRating = 'api/rating/add/';
+  static const String addBarKind = 'api/favorites/bar_kind/';
   // static const String drinkStatus = 'api/user/drinkStatus/';
   static const String drinkStatuscheck = '/api/user/drinkStatus/';
   static const String GETdrinkStatus = 'api/user/drinkStatus/';
@@ -74,6 +74,7 @@ class Constants {
 
   static const String requestDelete =
       BaseUrlPro + 'api/user/deleteMatchRequest/';
+  static const String getUserDetails = 'api/user/profile/';
 
 
 

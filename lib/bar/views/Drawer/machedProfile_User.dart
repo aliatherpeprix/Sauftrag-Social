@@ -68,7 +68,8 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
       disposeViewModel: false,
       builder: (context, model, child) {
         var getMatchedUserData = model.acceptMatchedtModel;
-        return SafeArea(
+        return model.isLoading == true ? AllPageLoader() :
+          SafeArea(
           top: false,
           bottom: false,
           child: GestureDetector(
@@ -115,7 +116,8 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                         shadowColor: Colors.transparent,
                         expandedHeight: 280,
                         flexibleSpace: FlexibleSpaceBar(
-                          background: Image.network(
+                          background:
+                          Image.network(
                             model.matchedUser!.profile_picture!,
                             fit: BoxFit.cover,
                           ),
@@ -287,7 +289,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                     spacing: 2.5.w,
                                     runSpacing: 1.5.h,
                                     direction: Axis.horizontal,
-                                    children: model.matchedUser!.favorite_night_club!
+                                    children: model.matchedUser!.favorite_musics!
                                         .map((element) => ElevatedButton(
                                       onPressed: () {
                                         // if (model.selectedInterestList
@@ -458,6 +460,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                           )),
 
                                       //Image_1 Catagory Image_1
+                                      if(model.matchedUser!.catalogue_image1 != null)
                                       Container(
                                           height: MediaQuery.of(context).size.width / 3.4,
                                           width:
@@ -494,6 +497,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                           )),
 
                                       //Image_1 Catagory Image_2
+                                      if(model.matchedUser!.catalogue_image2 != null)
                                       Container(
                                           height: MediaQuery.of(context).size.width / 3.4,
                                           width:
@@ -536,6 +540,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       //Image_1 Catagory Image_3
+                                      if(model.matchedUser!.catalogue_image3 != null)
                                       Container(
                                           height: MediaQuery.of(context).size.width / 3.4,
                                           width:
@@ -572,6 +577,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                           )),
 
                                       //Image_1 Catagory Image_4
+                                      if(model.matchedUser!.catalogue_image4 != null)
                                       Container(
                                           height: MediaQuery.of(context).size.width / 3.4,
                                           width:
@@ -608,6 +614,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                           )),
 
                                       // Image_1 Catagory Image_5
+                                      if(model.matchedUser!.catalogue_image5 != null)
                                       Container(
                                           height: MediaQuery.of(context).size.width / 3.4,
                                           width:

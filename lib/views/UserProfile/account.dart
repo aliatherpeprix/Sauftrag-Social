@@ -46,7 +46,8 @@ class _AccountState extends State<Account> {
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
       builder: (context, model, child) {
-        return GestureDetector(
+        return model.isLoading == true ? Loader() :
+          GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();
           },

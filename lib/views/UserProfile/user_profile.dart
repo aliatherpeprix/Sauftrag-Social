@@ -1,3 +1,4 @@
+import 'package:expand_tap_area/expand_tap_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
@@ -12,6 +13,8 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/viewModels/prefrences_view_model.dart';
+import 'package:sauftrag/widgets/all_page_loader.dart';
+import 'package:sauftrag/widgets/loader.dart';
 import 'package:stacked/stacked.dart';
 
 class UserProfile extends StatefulWidget {
@@ -32,7 +35,8 @@ class _UserProfileState extends State<UserProfile> {
           onTap: () {
             FocusScope.of(context).unfocus();
           },
-          child: SafeArea(
+          child: model.isLoading == true ? AllPageLoader() :
+          SafeArea(
             top: false,
             bottom: false,
             child: Scaffold(
@@ -291,17 +295,20 @@ class _UserProfileState extends State<UserProfile> {
                       SizedBox(height: 4.h),
 
                       ///--------------Settings Options--------------------///
-                      GestureDetector(
+                      ExpandTapWidget(
                         onTap: () async {
+                          model.isLoading = true;
+                          model.navigateToUserProfileAccountScreen();
                           model.isUserProfile = true;
                           model.notifyListeners();
                           PrefrencesViewModel prefs = await locator<PrefrencesViewModel>();
-                           await Updateuser().UpdateAccountDetails(model.updateSignUpPhoneController.text, model.updateLocations.text);
+                          await UpdateUser().UpdateAccountDetails(model.updateSignUpPhoneController.text, model.updateLocations.text);
                           model.userModel = (await prefs.getUser())!;
-                          model.navigateToUserProfileAccountScreen();
                           model.isUserProfile = false;
+                          model.isLoading = false;
                           model.notifyListeners();
                         },
+                        tapPadding: EdgeInsets.all(8),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -341,11 +348,12 @@ class _UserProfileState extends State<UserProfile> {
                         ),
                       ),
                       SizedBox(height: 3.h),
-                      GestureDetector(
+                      ExpandTapWidget(
                         onTap: () {
                           model
                               .navigateToUserProfileAccountNotificationScreen();
                         },
+                        tapPadding: EdgeInsets.all(8),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -386,10 +394,11 @@ class _UserProfileState extends State<UserProfile> {
                         ),
                       ),
                       SizedBox(height: 3.h),
-                      GestureDetector(
+                      ExpandTapWidget(
                         onTap: () {
                           model.navigateToUserProfileAccountLegalTermScreen();
                         },
+                        tapPadding: EdgeInsets.all(8),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -469,10 +478,11 @@ class _UserProfileState extends State<UserProfile> {
                         ],
                       ),
                       SizedBox(height: 3.h),
-                      GestureDetector(
+                      /*ExpandTapWidget(
                         onTap: () {
                           model.navigateToUserProfileAccountGpsScreen();
                         },
+                        tapPadding: EdgeInsets.all(8),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -511,8 +521,8 @@ class _UserProfileState extends State<UserProfile> {
                           ],
                         ),
                       ),
-                      SizedBox(height: 3.h),
-                    ],
+                      SizedBox(height: 3.h),*/
+                    ] 
                   ),
                 ),
               ),
