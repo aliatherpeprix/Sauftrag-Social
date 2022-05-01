@@ -2201,12 +2201,12 @@ class MainViewModel extends BaseViewModel {
       listOfAllBars = getListofAllBar;
       print(listOfAllBars);
     } else {
-      DialogUtils().showDialog(MyErrorWidget(
-        error: "Some thing went wrong",
-      ));
-      //isPrivacyPolicy = false;
-
-      return;
+      // DialogUtils().showDialog(MyErrorWidget(
+      //   error: "Some thing went wrong",
+      // ));
+      // //isPrivacyPolicy = false;
+      //
+      // return;
     }
     isFaqs = false;
     notifyListeners();
@@ -3625,7 +3625,7 @@ class MainViewModel extends BaseViewModel {
       //createEventImages.add(createEventImage);
       notifyListeners();
       return true;
-    }
+    }}
   postingComments() async {
     isLoading = true;
     notifyListeners();

@@ -30,11 +30,12 @@ class GroupScreen extends StatefulWidget {
 
   int? id;
   String? username;
+  UserModel? originator;
   int? userLength;
   String? groupImg;
   List<UserModel>? groupUser;
 
-  GroupScreen({Key? key, this.id, this.username,  this.userLength, this.groupUser, this.groupImg}) : super(key: key);
+  GroupScreen({Key? key, this.id, this.username,  this.userLength, this.groupUser, this.groupImg, this.originator}) : super(key: key);
 
   @override
   _GroupScreenState createState() => _GroupScreenState();
@@ -363,7 +364,9 @@ class _GroupScreenState extends State<GroupScreen> {
                                               Group_Details(
                                                   id: widget.id,
                                                   username: widget.username,
+                                                  originator: widget.originator,
                                                   userLength: widget.userLength,
+                                                  groupImg : widget.groupImg,
                                                   groupUser: widget.groupUser
                                               )
                                           )

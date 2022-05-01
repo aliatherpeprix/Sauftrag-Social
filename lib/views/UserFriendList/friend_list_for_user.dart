@@ -694,8 +694,9 @@ class _FriendListForUserState extends State<FriendListForUser> {
                                                                 GroupScreen(
                                                                     id: model.getListGroup[index].id,
                                                                     username: model.getListGroup[index].name,
+                                                                    originator: model.getListGroup[index].originator,
                                                                     groupImg: model.getListGroup[index].image,
-                                                                    //groupUser : model.getListGroup[index].users,
+                                                                    groupUser : model.getListGroup[index].users,
                                                                     userLength: model.getListGroup[index].users!.length
                                                                 )
                                                             ));
@@ -710,7 +711,9 @@ class _FriendListForUserState extends State<FriendListForUser> {
                                                                 GroupScreen(
                                                                     id: model.getListGroup[index].id,
                                                                     username: model.getListGroup[index].name,
+                                                                    originator: model.getListGroup[index].originator,
                                                                     groupImg: model.getListGroup[index].image,
+                                                                    groupUser : model.getListGroup[index].users,
                                                                     userLength: model.getListGroup[index].users!.length
                                                                 )
                                                             ));

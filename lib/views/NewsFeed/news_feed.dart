@@ -361,7 +361,9 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                         children: [
                           GestureDetector(
                             onTap: (){
-                              model.selectedBar = model.listOfAllBars.where((element) => element.id == model.posts[widget.index!].user_id!.id).first;
+                              model.selectedBar = model.listOfAllBars.where((element) =>
+                              element.id == model.posts[widget.index!].user_id!.id).first;
+                              //print("yo");
                               model.navigateToBarProfile();
                             },
                             child: Row(
@@ -826,6 +828,7 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                                                       model.getCommentNewsFeed(widget.index!);
                                                       model.postCommentController.clear();
                                                       expandableController.toggle();
+                                                      model.gettingComments();
                                                     },
                                                     child: Container(
                                                       //margin: EdgeInsets.only(bottom: 2.2.h),

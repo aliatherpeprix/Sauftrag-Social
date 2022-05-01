@@ -24,10 +24,12 @@ class Group_Details extends StatefulWidget {
 
   int? id;
   String? username;
+  UserModel? originator;
   int? userLength;
+  String? groupImg;
   List<UserModel>? groupUser;
 
-  Group_Details({Key? key, this.id, this.username, this.userLength, this.groupUser}) : super(key: key);
+  Group_Details({Key? key, this.id, this.username, this.userLength, this.groupUser, this.groupImg, this.originator} ) : super(key: key);
 
   @override
   _Group_DetailsState createState() => _Group_DetailsState();
@@ -108,11 +110,17 @@ class _Group_DetailsState extends State<Group_Details> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            CircleAvatar(
-                              radius: 35.0,
-                              backgroundImage:
-                              AssetImage(ImageUtils.cosmos),
-                              backgroundColor: Colors.transparent,
+                            Container(
+                              height: 9.5.h,
+                              width: 20.w,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(80),
+                                child: widget.groupImg == null ?
+                                SvgPicture.asset(ImageUtils.profile) :
+                                Image.network(widget.groupImg!,
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
                             ),
                             SizedBox(height: 1.5.h,),
                             Row(
@@ -292,84 +300,100 @@ class _Group_DetailsState extends State<Group_Details> {
                             ],
                           ),
                           SizedBox(height: 2.h,),
-                          // Row(
-                          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          //   children: [
-                          //     CircleAvatar(
-                          //       radius: 25.0,
-                          //       backgroundImage:
-                          //       AssetImage(ImageUtils.cosmos),
-                          //       backgroundColor: Colors.transparent,
-                          //     ),
-                          //     Container(
-                          //       padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 0.3.h),
-                          //       decoration: BoxDecoration(
-                          //           border: Border.all(color: ColorUtils.red_color),
-                          //           borderRadius: BorderRadius.circular(5)
-                          //       ),
-                          //       child: Text("Group Admin",
-                          //         style: TextStyle(
-                          //             fontSize: 1.8.t,
-                          //             fontFamily: FontUtils.modernistRegular,
-                          //             color: ColorUtils.red_color
-                          //         ),),
-                          //     )
-                          //
-                          //   ],
-                          // ),
-                          // ListView.separated(
-                          //     padding:
-                          //     EdgeInsets.only(top: 0.h),
-                          //     physics: BouncingScrollPhysics(),
-                          //     shrinkWrap: true,
-                          //     itemBuilder: (context, index) {
-                          //       return Column(
-                          //         children: [
-                          //           Row(
-                          //             mainAxisAlignment:
-                          //             MainAxisAlignment
-                          //                 .spaceBetween,
-                          //             crossAxisAlignment:
-                          //             CrossAxisAlignment.start,
-                          //             children: [
-                          //               Row(
-                          //                 children: [
-                          //                   // Stack(
-                          //                   //   alignment:
-                          //                   //       Alignment.topCenter,
-                          //                   //   children: [
-                          //                   CircleAvatar(
-                          //                     radius: 28.0,
-                          //                     backgroundImage:
-                          //                     NetworkImage(
-                          //                         widget.groupUser![index].profile_picture??
-                          //                             "https://tse2.mm.bing.net/th?id=OIP.4gcGG1F0z6LjVlJjYWGGcgHaHa&pid=Api&P=0&w=164&h=164"),
-                          //                   backgroundColor:
-                          //                     Colors
-                          //                         .transparent,
-                          //                   ),
-                          //                   SizedBox(width: 5.w,),
-                          //                   Text(widget.groupUser![index].username!,
-                          //                     style: TextStyle(
-                          //                                 fontSize: 1.8.t,
-                          //                                 fontFamily: FontUtils.modernistBold,
-                          //                                 color: ColorUtils.black
-                          //                             ))
-                          //                 ],
-                          //               ),
-                          //
-                          //             ],
-                          //           ),
-                          //         ],
-                          //       );
-                          //     },
-                          //     separatorBuilder: (context, index) {
-                          //       return SizedBox(
-                          //         height: 2.h,
-                          //       );
-                          //     },
-                          //     itemCount: widget.groupUser!.length
-                          // ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                    height: 6.7.h,
+                                    width: 14.w,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(80),
+                                      child: widget.originator!.profile_picture == null ?
+                                      SvgPicture.asset(ImageUtils.profile) :
+                                      Image.network(widget.originator!.profile_picture!,
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 5.w,),
+                                  Text(widget.originator!.username!,  style: TextStyle(
+                                      fontSize: 1.8.t,
+                                      fontFamily: FontUtils.modernistBold,
+                                      color: ColorUtils.black
+                                  ))
+                                ],
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 0.3.h),
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: ColorUtils.red_color),
+                                    borderRadius: BorderRadius.circular(5)
+                                ),
+                                child: Text("Group Admin",
+                                  style: TextStyle(
+                                      fontSize: 1.8.t,
+                                      fontFamily: FontUtils.modernistRegular,
+                                      color: ColorUtils.red_color
+                                  ),),
+                              )
+
+                            ],
+                          ),
+                          SizedBox(height: 1.5.h,),
+                          ListView.separated(
+                              padding:
+                              EdgeInsets.only(top: 0.h),
+                              physics: BouncingScrollPhysics(),
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                return Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment
+                                          .spaceBetween,
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            // Stack(
+                                            //   alignment:
+                                            //       Alignment.topCenter,
+                                            //   children: [
+                                            CircleAvatar(
+                                              radius: 28.0,
+                                              backgroundImage:
+                                              NetworkImage(
+                                                  widget.groupUser![index].profile_picture!),
+                                            backgroundColor:
+                                              Colors
+                                                  .transparent,
+                                            ),
+                                            SizedBox(width: 5.w,),
+                                            Text(widget.groupUser![index].username!,
+                                              style: TextStyle(
+                                                          fontSize: 1.8.t,
+                                                          fontFamily: FontUtils.modernistBold,
+                                                          color: ColorUtils.black
+                                                      ))
+                                          ],
+                                        ),
+
+                                      ],
+                                    ),
+                                  ],
+                                );
+                              },
+                              separatorBuilder: (context, index) {
+                                return SizedBox(
+                                  height: 2.h,
+                                );
+                              },
+                              itemCount: widget.groupUser!.length
+                          ),
                         ],
                       )
                     ),
