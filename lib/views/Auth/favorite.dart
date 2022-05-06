@@ -244,7 +244,7 @@ class _FavoriteState extends State<Favorite> {
                           children: [
 
                             Text(
-                              "Lieblings Nachtclubs",
+                              "Lieblingsmusik",
                               style: TextStyle(
                                 color: ColorUtils.black,
                                 fontFamily: FontUtils.modernistBold,
@@ -263,65 +263,104 @@ class _FavoriteState extends State<Favorite> {
                             ),
                             SizedBox(height: 3.h),
 
-                            MediaQuery.removePadding(
-                              removeTop: true,
-                              removeBottom: true,
-                              context: context,
-                              child: GridView.builder(
-                                itemCount: model.clubList.length,
-                                scrollDirection: Axis.vertical,
-                                physics: BouncingScrollPhysics(),
-                                shrinkWrap: true,
-                                primary: false,
-                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                    childAspectRatio: 2.5,
-                                    crossAxisCount: 3,
-                                    crossAxisSpacing: 15,
-                                    mainAxisSpacing: 15
-                                ),
-                                itemBuilder: (BuildContext context, int index){
-                                  return ElevatedButton(
+                            // MediaQuery.removePadding(
+                            //   removeTop: true,
+                            //   removeBottom: true,
+                            //   context: context,
+                            //   child: GridView.builder(
+                            //     itemCount: model.clubList.length,
+                            //     scrollDirection: Axis.vertical,
+                            //     physics: BouncingScrollPhysics(),
+                            //     shrinkWrap: true,
+                            //     primary: false,
+                            //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            //         childAspectRatio: 3.5,
+                            //         crossAxisCount: 2,
+                            //         crossAxisSpacing: 15,
+                            //         mainAxisSpacing: 15
+                            //     ),
+                            //     itemBuilder: (BuildContext context, int index){
+                            //       return ElevatedButton(
+                            //         onPressed: () {
+                            //           if(model.selectedClubList.contains((model.clubList[index] as FavoritesModel).id)){
+                            //             model.selectedClubList.remove((model.clubList[index] as FavoritesModel).id);
+                            //           }
+                            //           else{
+                            //             model.selectedClubList.add((model.clubList[index] as FavoritesModel).id!);
+                            //           }
+                            //           model.notifyListeners();
+                            //         },
+                            //         child:  Text((model.clubList[index] as FavoritesModel).name ?? ""),
+                            //         //Text(model.clubList[index]),
+                            //         style: ElevatedButton.styleFrom(
+                            //           primary: model.selectedClubList.contains((model.clubList[index] as FavoritesModel).id) ? ColorUtils.text_red : ColorUtils.white,
+                            //           onPrimary: model.selectedClubList.contains((model.clubList[index] as FavoritesModel).id) ? ColorUtils.white : ColorUtils.text_dark,
+                            //           padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 5.w),
+                            //           elevation: model.selectedClubList.contains((model.clubList[index] as FavoritesModel).id) ? 5 : 0,
+                            //           shape: RoundedRectangleBorder(
+                            //               borderRadius: BorderRadius.circular(Dimensions.roundCorner),
+                            //               side: BorderSide(
+                            //                   color: model.selectedClubList.contains((model.clubList[index] as FavoritesModel).id) ? ColorUtils.text_red : ColorUtils.divider,
+                            //                   width: 1
+                            //               )
+                            //           ),
+                            //           textStyle: TextStyle(
+                            //             //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
+                            //             fontFamily: model.selectedClubList.contains((model.clubList[index] as FavoritesModel).id) ? FontUtils.modernistBold : FontUtils.modernistRegular,
+                            //             fontSize: 1.8.t,
+                            //             //height: 0
+                            //           ),
+                            //         ),
+                            //       );
+                            //     },
+                            //   ),
+                            // ),
+                            SizedBox(height: 2.h),
+                            Wrap(
+                              spacing: 2.5.w,
+                              runSpacing: 1.5.h,
+                              direction: Axis.horizontal,
+                              children: model.clubList
+                                  .map((element) =>
+                                  ElevatedButton(
                                     onPressed: () {
-                                      if(model.selectedClubList.contains((model.clubList[index] as FavoritesModel).id)){
-                                        model.selectedClubList.remove((model.clubList[index] as FavoritesModel).id);
+                                      if(model.selectedClubList.contains(element.id)){
+                                        model.selectedClubList.remove((element.id));
                                       }
                                       else{
-                                        model.selectedClubList.add((model.clubList[index] as FavoritesModel).id!);
+                                        model.selectedClubList.add((element.id));
                                       }
                                       model.notifyListeners();
                                     },
-                                    child:  Text((model.clubList[index] as FavoritesModel).name ?? ""),
+                                child:  Text((model.clubList[model.clubList.indexOf(element)] as FavoritesModel).name ?? ""),
                                     //Text(model.clubList[index]),
                                     style: ElevatedButton.styleFrom(
-                                      primary: model.selectedClubList.contains((model.clubList[index] as FavoritesModel).id) ? ColorUtils.text_red : ColorUtils.white,
-                                      onPrimary: model.selectedClubList.contains((model.clubList[index] as FavoritesModel).id) ? ColorUtils.white : ColorUtils.text_dark,
-                                      padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 5.w),
-                                      elevation: model.selectedClubList.contains((model.clubList[index] as FavoritesModel).id) ? 5 : 0,
+                                      primary: model.selectedClubList.contains(element.id) ? ColorUtils.text_red : ColorUtils.white,
+                                      onPrimary: model.selectedClubList.contains(element.id) ? ColorUtils.white : ColorUtils.text_dark,
+                                      padding: EdgeInsets.symmetric(vertical: 1.8.h, horizontal: 9.w),
+                                      elevation: model.selectedClubList.contains(element.id) ? 5 : 0,
                                       shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(Dimensions.roundCorner),
                                           side: BorderSide(
-                                              color: model.selectedClubList.contains((model.clubList[index] as FavoritesModel).id) ? ColorUtils.text_red : ColorUtils.divider,
+                                              color: model.selectedClubList.contains(element.id) ? ColorUtils.text_red : ColorUtils.divider,
                                               width: 1
                                           )
                                       ),
                                       textStyle: TextStyle(
                                         //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
-                                        fontFamily: model.selectedClubList.contains((model.clubList[index] as FavoritesModel).id) ? FontUtils.modernistBold : FontUtils.modernistRegular,
+                                        fontFamily: model.selectedClubList.contains(element.id) ? FontUtils.modernistBold : FontUtils.modernistRegular,
                                         fontSize: 1.8.t,
                                         //height: 0
                                       ),
                                     ),
-                                  );
-                                },
-                              ),
+                              )).toList(),
                             ),
-                            SizedBox(height: 2.h),
 
                             // ElevatedButton(
                             //   onPressed: () {
                             //     showDialog(
                             //         context: context,
-                            //         builder: (BuildContext context){
+                            //         builder: (BuildCon`text context){
                             //           return AddDialogBoxClubs(title: "Add New Club", btnTxt: "Add Club", icon: ImageUtils.addClubIcon);
                             //         }
                             //     );
@@ -368,7 +407,7 @@ class _FavoriteState extends State<Favorite> {
                           children: [
 
                             Text(
-                              "Lieblingsmusik in der Bar",
+                              "Lieblingsurlaub",
                               style: TextStyle(
                                 color: ColorUtils.black,
                                 fontFamily: FontUtils.modernistBold,

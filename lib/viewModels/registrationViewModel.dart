@@ -1900,6 +1900,7 @@ class RegistrationViewModel extends BaseViewModel {
   }
 
   createAccount() async {
+
     if (selectedWeekDays.length == 0) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Select a week day please",

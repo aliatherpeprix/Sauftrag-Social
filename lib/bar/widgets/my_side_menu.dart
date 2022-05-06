@@ -10,6 +10,7 @@ import 'package:sauftrag/utils/font_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/viewModels/prefrences_view_model.dart';
+import 'package:sauftrag/widgets/dialog_event.dart';
 import 'package:sauftrag/widgets/logout_dialog.dart';
 import 'package:sauftrag/widgets/round_image.dart';
 import 'package:stacked/stacked.dart';
@@ -185,7 +186,15 @@ class _MySideMenuState extends State<MySideMenu> {
               //Events
               InkWell(
                 onTap: () {
-                  model.navigateToBarEventScreen();
+                  //model.navigateToBarEventScreen();
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return DialogEvent(
+                            title: "Add New Location",
+                            btnTxt: "Add Location",
+                            icon: ImageUtils.addLocationIcon);
+                      });
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(

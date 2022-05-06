@@ -7,9 +7,11 @@ import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/modules/dio_services.dart';
 import 'package:sauftrag/utils/constants.dart';
 import 'package:sauftrag/utils/convertAssetToFile.dart';
+import 'package:sauftrag/utils/dialog_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/views/Auth/signup.dart';
 import 'package:path/path.dart' as path;
+import 'package:sauftrag/widgets/error_widget.dart';
 
 class SignupBar {
   //var _dioService = DioService.getInstance();
@@ -94,8 +96,21 @@ class SignupBar {
         return response.data['message'];
       }
     } catch (e) {
-      print(e);
-      return (e as DioError).response!.data["message"].toString();
+
+      if ((e as DioError).response!.data is Map &&
+          (e).response!.data["detail"] != null) {
+        DialogUtils().showDialog(
+            MyErrorWidget(error: (e).response!.data["detail"].toString()));
+      } else {
+        DialogUtils().showDialog(
+            MyErrorWidget(error: "Bar name already exist"));
+        //return (e).error.toString();
+      }
+
+      // DialogUtils().showDialog(MyErrorWidget(
+      //     error: (e as DioError).response!.data["details"].toString()));
+      // print(e);
+      // return (e as DioError).response!.data["details"].toString();
     }
   }
 }

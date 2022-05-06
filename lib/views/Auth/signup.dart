@@ -760,7 +760,7 @@ class _SignUpState extends State<SignUp> {
                                 padding: EdgeInsets.symmetric(horizontal: 1.w),
                                 color: ColorUtils.white,
                                 child: Text(
-                                  "Enter your address",
+                                  "Enter your city",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       color: ColorUtils.text_grey,

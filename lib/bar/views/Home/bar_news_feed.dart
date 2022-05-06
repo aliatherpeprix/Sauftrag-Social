@@ -31,6 +31,7 @@ import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/viewModels/prefrences_view_model.dart';
 import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:sauftrag/widgets/all_page_loader.dart';
+import 'package:sauftrag/widgets/dialog_event.dart';
 import 'package:sauftrag/widgets/drink_status_dialog_box.dart';
 import 'package:sauftrag/bar/widgets/message_dialog.dart';
 import 'package:sauftrag/widgets/zoom_drawer.dart';
@@ -157,7 +158,15 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
                               children: [
                                 GestureDetector(
                                   onTap: () {
-                                    model.navigateToCreateEventScreen();
+                                    //model.navigateToCreateEventScreen();
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return DialogEvent(
+                                              title: "Add New Location",
+                                              btnTxt: "Add Location",
+                                              icon: ImageUtils.addLocationIcon);
+                                        });
                                   },
                                   child: Container(
                                       decoration: BoxDecoration(

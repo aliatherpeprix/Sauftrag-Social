@@ -379,6 +379,7 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                                     fit: BoxFit.cover,
                                   ),
                                 ),
+
                                 SizedBox(
                                   width: 3.w,
                                 ),
