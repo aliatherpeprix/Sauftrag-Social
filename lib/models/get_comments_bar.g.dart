@@ -1,13 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'get_comments.dart';
+part of 'get_comments_bar.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-GetNewsfeedComments _$GetNewsfeedCommentsFromJson(Map<String, dynamic> json) =>
-    GetNewsfeedComments()
+GetNewsfeedCommentsBar _$GetNewsfeedCommentsBarFromJson(
+        Map<String, dynamic> json) =>
+    GetNewsfeedCommentsBar()
       ..id = json['id'] as int?
       ..user_id = json['user_id'] == null
           ? null
@@ -17,8 +18,8 @@ GetNewsfeedComments _$GetNewsfeedCommentsFromJson(Map<String, dynamic> json) =>
       ..updated_at = json['updated_at'] as String?
       ..post = json['post'] as int?;
 
-Map<String, dynamic> _$GetNewsfeedCommentsToJson(
-        GetNewsfeedComments instance) =>
+Map<String, dynamic> _$GetNewsfeedCommentsBarToJson(
+        GetNewsfeedCommentsBar instance) =>
     <String, dynamic>{
       'id': instance.id,
       'user_id': instance.user_id,

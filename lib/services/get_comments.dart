@@ -2,7 +2,7 @@
 import 'package:dio/dio.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/comments.dart';
-import 'package:sauftrag/models/get_comments.dart';
+import 'package:sauftrag/models/get_comments_user.dart';
 import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/utils/constants.dart';
 import 'package:sauftrag/viewModels/prefrences_view_model.dart';

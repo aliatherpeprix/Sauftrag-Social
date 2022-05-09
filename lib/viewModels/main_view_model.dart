@@ -23,7 +23,7 @@ import 'package:sauftrag/models/event_attendees.dart';
 import 'package:sauftrag/models/follow_bar.dart';
 import 'package:sauftrag/models/get_bar_followers.dart';
 import 'package:sauftrag/models/get_bar_upcoming_event.dart';
-import 'package:sauftrag/models/get_comments.dart';
+import 'package:sauftrag/models/get_comments_user.dart';
 import 'package:sauftrag/models/listOfFollowing_Bars.dart';
 import 'package:sauftrag/models/request_match_model.dart';
 import 'package:sauftrag/models/user_matched.dart';
@@ -1949,7 +1949,13 @@ class MainViewModel extends BaseViewModel {
   }
 
   Future saveBarDetails() async {
-    List tempList = [];
+    if (imageFiles[0].path.isEmpty) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Bar logo is required",
+      ));
+      return;
+    }
+
     // for (int i = 0;i<imageFiles.length;i++){
     //   if (imageFiles[i] is File && (imageFiles[i] as File).path.isNotEmpty){
     //     String image = "data:${lookupMimeType(imageFiles[0].path)};base64," +
@@ -1961,32 +1967,32 @@ class MainViewModel extends BaseViewModel {
     //   }
     // }
 
-    for (int i = 0; i < imageFiles.length; i++) {
-      if ((imageFiles[i] is File)) {
-        if (imageFiles[i].path.isEmpty) {
-          DialogUtils().showDialog(
-              MyErrorWidget(
-                error: "Select All Images" /*+i.toString()*/,
-              ),
-              isDismissable: true);
-          return;
-        }
-      }
-
-      // bool hasImages = false;
-      // if (!hasImages) {
-      //   if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
-      //       imageFiles[i].path.isEmpty) {
-      //     DialogUtils().showDialog(MyErrorWidget(
-      //       error: "Select at least one Image",
-      //     ));
-      //     return;
-      //   } else {
-      //     hasImages = true;
-      //     break;
-      //   }
-      // }
-    }
+    // for (int i = 0; i < imageFiles.length; i++) {
+    //   if ((imageFiles[i] is File)) {
+    //     if (imageFiles[i].path.isEmpty) {
+    //       DialogUtils().showDialog(
+    //           MyErrorWidget(
+    //             error: "Select All Images" /*+i.toString()*/,
+    //           ),
+    //           isDismissable: true);
+    //       return;
+    //     }
+    //   }
+    //
+    //   // bool hasImages = false;
+    //   // if (!hasImages) {
+    //   //   if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
+    //   //       imageFiles[i].path.isEmpty) {
+    //   //     DialogUtils().showDialog(MyErrorWidget(
+    //   //       error: "Select at least one Image",
+    //   //     ));
+    //   //     return;
+    //   //   } else {
+    //   //     hasImages = true;
+    //   //     break;
+    //   //   }
+    //   // }
+    // }
     editProfile = true;
     notifyListeners();
     var barUpdateResponse = await updateBar.UpdateBarProfile(

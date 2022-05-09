@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:date_picker_timeline/extra/dimen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -532,6 +533,143 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                               // ),
                                             ],
                                           )),
+                                    ],
+                                  ),
+                                  ListView(
+                                    children: [
+                                      CarouselSlider(
+                                        items: [
+
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              //Image_1 Profile Picture
+                                              Container(
+                                                  height: MediaQuery.of(context).size.width / 3.4,
+                                                  width:
+                                                  MediaQuery.of(context).size.width / 3.4,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                    BorderRadius.all(Radius.circular(20)),
+                                                    image: DecorationImage(
+                                                        image:
+                                                        NetworkImage(model.matchedUser!.profile_picture!),
+                                                        fit: BoxFit.cover),
+                                                  ),
+                                                  child: Stack(
+                                                    children: [
+                                                      // Align(
+                                                      //   alignment: Alignment.bottomRight,
+                                                      //   child: IconButton(
+                                                      //     onPressed: () {
+                                                      //       // model.imageFiles.removeAt(0);
+                                                      //       // model.imageFiles.insert(0, File(""));
+                                                      //       // model.notifyListeners();
+                                                      //     },
+                                                      //     icon: SvgPicture.asset(
+                                                      //         ImageUtils.cancelIcon),
+                                                      //     //icon: Icon(Icons.cancel_outlined, color: ColorUtils.text_red,),
+                                                      //     padding: EdgeInsets.zero,
+                                                      //     constraints: BoxConstraints(),
+                                                      //     color: ColorUtils.white,
+                                                      //     highlightColor:
+                                                      //     ColorUtils.white,
+                                                      //   ),
+                                                      // ),
+                                                    ],
+                                                  )),
+
+                                              //Image_1 Catagory Image_1
+                                              if(model.matchedUser!.catalogue_image1 != null)
+                                                Container(
+                                                    height: MediaQuery.of(context).size.width / 3.4,
+                                                    width:
+                                                    MediaQuery.of(context).size.width / 3.4,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                      BorderRadius.all(Radius.circular(20)),
+                                                      image: DecorationImage(
+                                                          image:
+                                                          NetworkImage(model.matchedUser!.catalogue_image1!),
+                                                          fit: BoxFit.cover),
+                                                    ),
+                                                    child: Stack(
+                                                      children: [
+                                                        // Align(
+                                                        //   alignment: Alignment.bottomRight,
+                                                        //   child: IconButton(
+                                                        //     onPressed: () {
+                                                        //       // model.imageFiles.removeAt(0);
+                                                        //       // model.imageFiles.insert(0, File(""));
+                                                        //       // model.notifyListeners();
+                                                        //     },
+                                                        //     icon: SvgPicture.asset(
+                                                        //         ImageUtils.cancelIcon),
+                                                        //     //icon: Icon(Icons.cancel_outlined, color: ColorUtils.text_red,),
+                                                        //     padding: EdgeInsets.zero,
+                                                        //     constraints: BoxConstraints(),
+                                                        //     color: ColorUtils.white,
+                                                        //     highlightColor:
+                                                        //     ColorUtils.white,
+                                                        //   ),
+                                                        // ),
+                                                      ],
+                                                    )),
+
+                                              //Image_1 Catagory Image_2
+                                              if(model.matchedUser!.catalogue_image2 != null)
+                                                Container(
+                                                    height: MediaQuery.of(context).size.width / 3.4,
+                                                    width:
+                                                    MediaQuery.of(context).size.width / 3.4,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                      BorderRadius.all(Radius.circular(20)),
+                                                      image: DecorationImage(
+                                                          image:
+                                                          NetworkImage(model.matchedUser!.catalogue_image2!),
+                                                          fit: BoxFit.cover),
+                                                    ),
+                                                    child: Stack(
+                                                      children: [
+                                                        // Align(
+                                                        //   alignment: Alignment.bottomRight,
+                                                        //   child: IconButton(
+                                                        //     onPressed: () {
+                                                        //       // model.imageFiles.removeAt(0);
+                                                        //       // model.imageFiles.insert(0, File(""));
+                                                        //       // model.notifyListeners();
+                                                        //     },
+                                                        //     icon: SvgPicture.asset(
+                                                        //         ImageUtils.cancelIcon),
+                                                        //     //icon: Icon(Icons.cancel_outlined, color: ColorUtils.text_red,),
+                                                        //     padding: EdgeInsets.zero,
+                                                        //     constraints: BoxConstraints(),
+                                                        //     color: ColorUtils.white,
+                                                        //     highlightColor:
+                                                        //     ColorUtils.white,
+                                                        //   ),
+                                                        // ),
+                                                      ],
+                                                    )),
+                                            ],
+                                          ),
+
+                                        ],
+
+                                        //Slider Container properties
+                                        options: CarouselOptions(
+                                          height: 180.0,
+                                          enlargeCenterPage: true,
+                                          autoPlay: true,
+                                          aspectRatio: 16 / 9,
+                                          autoPlayCurve: Curves.fastOutSlowIn,
+                                          enableInfiniteScroll: true,
+                                          autoPlayAnimationDuration: Duration(milliseconds: 800),
+                                          viewportFraction: 0.8,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                   SizedBox(height: 2.h),

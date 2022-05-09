@@ -309,7 +309,8 @@ class _MessageScreenForBarState extends State<MessageScreenForBar> {
                                       SizedBox(
                                         height: 5.h,
                                       ),
-                                  itemCount: model.chats.length),
+                                  itemCount: model.chats.length
+                              ),
                             ),
                             Container(
                               // padding: EdgeInsets.symmetric(vertical: 1.h),
