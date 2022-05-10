@@ -14,6 +14,7 @@ class NewBarModel {
   String? username;
   String? bar_name;
   String? email;
+  String? about;
   String? address;
   dynamic role;
   List<int>? bar_kind;

@@ -4,6 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/favorites_model.dart';
 import 'package:sauftrag/services/addFavorites.dart';
@@ -17,6 +20,7 @@ import 'package:sauftrag/viewModels/authentication_view_model.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/widgets/all_page_loader.dart';
 import 'package:stacked/stacked.dart';
+import 'package:photo_view/photo_view.dart';
 
 class MatchedProfileUser extends StatefulWidget {
 
@@ -159,15 +163,6 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                       color: ColorUtils.black,
                                     ),
                                   ),
-                                  // SizedBox(height: 1.h),
-                                  // Text(
-                                  //   "Professional Dancer",
-                                  //   style: TextStyle(
-                                  //     fontFamily: FontUtils.modernistRegular,
-                                  //     fontSize: 1.8.t,
-                                  //     color: ColorUtils.black,
-                                  //   ),
-                                  // ),
                                   SizedBox(height: 1.h),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -419,376 +414,42 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                   ),
                                   SizedBox(height: 2.h),
 
-                                  //Images
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      //Image_1 Profile Picture
-                                      Container(
-                                          height: MediaQuery.of(context).size.width / 3.4,
-                                          width:
-                                          MediaQuery.of(context).size.width / 3.4,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                            BorderRadius.all(Radius.circular(20)),
-                                            image: DecorationImage(
-                                                image:
-                                                NetworkImage(model.matchedUser!.profile_picture!),
-                                                fit: BoxFit.cover),
+                                  GridView.builder(
+                                    padding: EdgeInsets.zero,
+                                    shrinkWrap: true,
+                                    itemCount: model.matchedImage.length,
+                                    gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                        childAspectRatio: 0.7,
+                                        crossAxisCount: 3,
+                                        //mainAxisSpacing: 1*SizeConfig.widthMultiplier,
+                                        //childAspectRatio: 1,
+                                        crossAxisSpacing: 1*SizeConfig.widthMultiplier),
+                                    itemBuilder: (context,  index) {
+                                        return GestureDetector(
+                                          onTap: (){
+                                            Navigator.push(context, PageTransition(child: ViewZoomedImage(index: index,), type: PageTransitionType.fade));
+                                          },
+                                          child: Container(
+                                              //padding: EdgeInsets.all(4.0),
+                                              //height: 20.h,
+                                              height: MediaQuery.of(context).size.width / 3.4,
+                                              width:
+                                              MediaQuery.of(context).size.width / 3.4,
+                                              decoration: BoxDecoration(
+                                                image: DecorationImage(
+                                                  image:
+                                                  NetworkImage(model.matchedImage[index]),
+                                                  fit: BoxFit.cover),
+                                                borderRadius:
+                                                BorderRadius.all(Radius.circular(20)),
+                                              ),
+                                              child: Container()
                                           ),
-                                          child: Stack(
-                                            children: [
-                                              // Align(
-                                              //   alignment: Alignment.bottomRight,
-                                              //   child: IconButton(
-                                              //     onPressed: () {
-                                              //       // model.imageFiles.removeAt(0);
-                                              //       // model.imageFiles.insert(0, File(""));
-                                              //       // model.notifyListeners();
-                                              //     },
-                                              //     icon: SvgPicture.asset(
-                                              //         ImageUtils.cancelIcon),
-                                              //     //icon: Icon(Icons.cancel_outlined, color: ColorUtils.text_red,),
-                                              //     padding: EdgeInsets.zero,
-                                              //     constraints: BoxConstraints(),
-                                              //     color: ColorUtils.white,
-                                              //     highlightColor:
-                                              //     ColorUtils.white,
-                                              //   ),
-                                              // ),
-                                            ],
-                                          )),
+                                        );
 
-                                      //Image_1 Catagory Image_1
-                                      if(model.matchedUser!.catalogue_image1 != null)
-                                      Container(
-                                          height: MediaQuery.of(context).size.width / 3.4,
-                                          width:
-                                          MediaQuery.of(context).size.width / 3.4,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                            BorderRadius.all(Radius.circular(20)),
-                                            image: DecorationImage(
-                                                image:
-                                                NetworkImage(model.matchedUser!.catalogue_image1!),
-                                                fit: BoxFit.cover),
-                                          ),
-                                          child: Stack(
-                                            children: [
-                                              // Align(
-                                              //   alignment: Alignment.bottomRight,
-                                              //   child: IconButton(
-                                              //     onPressed: () {
-                                              //       // model.imageFiles.removeAt(0);
-                                              //       // model.imageFiles.insert(0, File(""));
-                                              //       // model.notifyListeners();
-                                              //     },
-                                              //     icon: SvgPicture.asset(
-                                              //         ImageUtils.cancelIcon),
-                                              //     //icon: Icon(Icons.cancel_outlined, color: ColorUtils.text_red,),
-                                              //     padding: EdgeInsets.zero,
-                                              //     constraints: BoxConstraints(),
-                                              //     color: ColorUtils.white,
-                                              //     highlightColor:
-                                              //     ColorUtils.white,
-                                              //   ),
-                                              // ),
-                                            ],
-                                          )),
+                                    },),
 
-                                      //Image_1 Catagory Image_2
-                                      if(model.matchedUser!.catalogue_image2 != null)
-                                      Container(
-                                          height: MediaQuery.of(context).size.width / 3.4,
-                                          width:
-                                          MediaQuery.of(context).size.width / 3.4,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                            BorderRadius.all(Radius.circular(20)),
-                                            image: DecorationImage(
-                                                image:
-                                                NetworkImage(model.matchedUser!.catalogue_image2!),
-                                                fit: BoxFit.cover),
-                                          ),
-                                          child: Stack(
-                                            children: [
-                                              // Align(
-                                              //   alignment: Alignment.bottomRight,
-                                              //   child: IconButton(
-                                              //     onPressed: () {
-                                              //       // model.imageFiles.removeAt(0);
-                                              //       // model.imageFiles.insert(0, File(""));
-                                              //       // model.notifyListeners();
-                                              //     },
-                                              //     icon: SvgPicture.asset(
-                                              //         ImageUtils.cancelIcon),
-                                              //     //icon: Icon(Icons.cancel_outlined, color: ColorUtils.text_red,),
-                                              //     padding: EdgeInsets.zero,
-                                              //     constraints: BoxConstraints(),
-                                              //     color: ColorUtils.white,
-                                              //     highlightColor:
-                                              //     ColorUtils.white,
-                                              //   ),
-                                              // ),
-                                            ],
-                                          )),
-                                    ],
-                                  ),
-                                  ListView(
-                                    children: [
-                                      CarouselSlider(
-                                        items: [
-
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: [
-                                              //Image_1 Profile Picture
-                                              Container(
-                                                  height: MediaQuery.of(context).size.width / 3.4,
-                                                  width:
-                                                  MediaQuery.of(context).size.width / 3.4,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                    BorderRadius.all(Radius.circular(20)),
-                                                    image: DecorationImage(
-                                                        image:
-                                                        NetworkImage(model.matchedUser!.profile_picture!),
-                                                        fit: BoxFit.cover),
-                                                  ),
-                                                  child: Stack(
-                                                    children: [
-                                                      // Align(
-                                                      //   alignment: Alignment.bottomRight,
-                                                      //   child: IconButton(
-                                                      //     onPressed: () {
-                                                      //       // model.imageFiles.removeAt(0);
-                                                      //       // model.imageFiles.insert(0, File(""));
-                                                      //       // model.notifyListeners();
-                                                      //     },
-                                                      //     icon: SvgPicture.asset(
-                                                      //         ImageUtils.cancelIcon),
-                                                      //     //icon: Icon(Icons.cancel_outlined, color: ColorUtils.text_red,),
-                                                      //     padding: EdgeInsets.zero,
-                                                      //     constraints: BoxConstraints(),
-                                                      //     color: ColorUtils.white,
-                                                      //     highlightColor:
-                                                      //     ColorUtils.white,
-                                                      //   ),
-                                                      // ),
-                                                    ],
-                                                  )),
-
-                                              //Image_1 Catagory Image_1
-                                              if(model.matchedUser!.catalogue_image1 != null)
-                                                Container(
-                                                    height: MediaQuery.of(context).size.width / 3.4,
-                                                    width:
-                                                    MediaQuery.of(context).size.width / 3.4,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                      BorderRadius.all(Radius.circular(20)),
-                                                      image: DecorationImage(
-                                                          image:
-                                                          NetworkImage(model.matchedUser!.catalogue_image1!),
-                                                          fit: BoxFit.cover),
-                                                    ),
-                                                    child: Stack(
-                                                      children: [
-                                                        // Align(
-                                                        //   alignment: Alignment.bottomRight,
-                                                        //   child: IconButton(
-                                                        //     onPressed: () {
-                                                        //       // model.imageFiles.removeAt(0);
-                                                        //       // model.imageFiles.insert(0, File(""));
-                                                        //       // model.notifyListeners();
-                                                        //     },
-                                                        //     icon: SvgPicture.asset(
-                                                        //         ImageUtils.cancelIcon),
-                                                        //     //icon: Icon(Icons.cancel_outlined, color: ColorUtils.text_red,),
-                                                        //     padding: EdgeInsets.zero,
-                                                        //     constraints: BoxConstraints(),
-                                                        //     color: ColorUtils.white,
-                                                        //     highlightColor:
-                                                        //     ColorUtils.white,
-                                                        //   ),
-                                                        // ),
-                                                      ],
-                                                    )),
-
-                                              //Image_1 Catagory Image_2
-                                              if(model.matchedUser!.catalogue_image2 != null)
-                                                Container(
-                                                    height: MediaQuery.of(context).size.width / 3.4,
-                                                    width:
-                                                    MediaQuery.of(context).size.width / 3.4,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                      BorderRadius.all(Radius.circular(20)),
-                                                      image: DecorationImage(
-                                                          image:
-                                                          NetworkImage(model.matchedUser!.catalogue_image2!),
-                                                          fit: BoxFit.cover),
-                                                    ),
-                                                    child: Stack(
-                                                      children: [
-                                                        // Align(
-                                                        //   alignment: Alignment.bottomRight,
-                                                        //   child: IconButton(
-                                                        //     onPressed: () {
-                                                        //       // model.imageFiles.removeAt(0);
-                                                        //       // model.imageFiles.insert(0, File(""));
-                                                        //       // model.notifyListeners();
-                                                        //     },
-                                                        //     icon: SvgPicture.asset(
-                                                        //         ImageUtils.cancelIcon),
-                                                        //     //icon: Icon(Icons.cancel_outlined, color: ColorUtils.text_red,),
-                                                        //     padding: EdgeInsets.zero,
-                                                        //     constraints: BoxConstraints(),
-                                                        //     color: ColorUtils.white,
-                                                        //     highlightColor:
-                                                        //     ColorUtils.white,
-                                                        //   ),
-                                                        // ),
-                                                      ],
-                                                    )),
-                                            ],
-                                          ),
-
-                                        ],
-
-                                        //Slider Container properties
-                                        options: CarouselOptions(
-                                          height: 180.0,
-                                          enlargeCenterPage: true,
-                                          autoPlay: true,
-                                          aspectRatio: 16 / 9,
-                                          autoPlayCurve: Curves.fastOutSlowIn,
-                                          enableInfiniteScroll: true,
-                                          autoPlayAnimationDuration: Duration(milliseconds: 800),
-                                          viewportFraction: 0.8,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 2.h),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      //Image_1 Catagory Image_3
-                                      if(model.matchedUser!.catalogue_image3 != null)
-                                      Container(
-                                          height: MediaQuery.of(context).size.width / 3.4,
-                                          width:
-                                          MediaQuery.of(context).size.width / 3.4,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                            BorderRadius.all(Radius.circular(20)),
-                                            image: DecorationImage(
-                                                image:
-                                                NetworkImage(model.matchedUser!.catalogue_image3!),
-                                                fit: BoxFit.cover),
-                                          ),
-                                          child: Stack(
-                                            children: [
-                                              // Align(
-                                              //   alignment: Alignment.bottomRight,
-                                              //   child: IconButton(
-                                              //     onPressed: () {
-                                              //       // model.imageFiles.removeAt(0);
-                                              //       // model.imageFiles.insert(0, File(""));
-                                              //       // model.notifyListeners();
-                                              //     },
-                                              //     icon: SvgPicture.asset(
-                                              //         ImageUtils.cancelIcon),
-                                              //     //icon: Icon(Icons.cancel_outlined, color: ColorUtils.text_red,),
-                                              //     padding: EdgeInsets.zero,
-                                              //     constraints: BoxConstraints(),
-                                              //     color: ColorUtils.white,
-                                              //     highlightColor:
-                                              //     ColorUtils.white,
-                                              //   ),
-                                              // ),
-                                            ],
-                                          )),
-
-                                      //Image_1 Catagory Image_4
-                                      if(model.matchedUser!.catalogue_image4 != null)
-                                      Container(
-                                          height: MediaQuery.of(context).size.width / 3.4,
-                                          width:
-                                          MediaQuery.of(context).size.width / 3.4,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                            BorderRadius.all(Radius.circular(20)),
-                                            image: DecorationImage(
-                                                image:
-                                                NetworkImage(model.matchedUser!.catalogue_image4!),
-                                                fit: BoxFit.cover),
-                                          ),
-                                          child: Stack(
-                                            children: [
-                                              // Align(
-                                              //   alignment: Alignment.bottomRight,
-                                              //   child: IconButton(
-                                              //     onPressed: () {
-                                              //       // model.imageFiles.removeAt(0);
-                                              //       // model.imageFiles.insert(0, File(""));
-                                              //       // model.notifyListeners();
-                                              //     },
-                                              //     icon: SvgPicture.asset(
-                                              //         ImageUtils.cancelIcon),
-                                              //     //icon: Icon(Icons.cancel_outlined, color: ColorUtils.text_red,),
-                                              //     padding: EdgeInsets.zero,
-                                              //     constraints: BoxConstraints(),
-                                              //     color: ColorUtils.white,
-                                              //     highlightColor:
-                                              //     ColorUtils.white,
-                                              //   ),
-                                              // ),
-                                            ],
-                                          )),
-
-                                      // Image_1 Catagory Image_5
-                                      if(model.matchedUser!.catalogue_image5 != null)
-                                      Container(
-                                          height: MediaQuery.of(context).size.width / 3.4,
-                                          width:
-                                          MediaQuery.of(context).size.width / 3.4,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                            BorderRadius.all(Radius.circular(20)),
-                                            image: DecorationImage(
-                                                image:
-                                                NetworkImage(model.matchedUser!.catalogue_image5!),
-                                                fit: BoxFit.cover),
-                                          ),
-                                          child: Stack(
-                                            children: [
-                                              // Align(
-                                              //   alignment: Alignment.bottomRight,
-                                              //   child: IconButton(
-                                              //     onPressed: () {
-                                              //       // model.imageFiles.removeAt(0);
-                                              //       // model.imageFiles.insert(0, File(""));
-                                              //       // model.notifyListeners();
-                                              //     },
-                                              //     icon: SvgPicture.asset(
-                                              //         ImageUtils.cancelIcon),
-                                              //     //icon: Icon(Icons.cancel_outlined, color: ColorUtils.text_red,),
-                                              //     padding: EdgeInsets.zero,
-                                              //     constraints: BoxConstraints(),
-                                              //     color: ColorUtils.white,
-                                              //     highlightColor:
-                                              //     ColorUtils.white,
-                                              //   ),
-                                              // ),
-                                            ],
-                                          )),
-                                    ],
-                                  ),
                                   SizedBox(height: 3.h),
 
                                   SizedBox(height: 3.h),
@@ -949,6 +610,58 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
         );
 
       },
+    );
+  }
+}
+
+class ViewZoomedImage extends StatefulWidget {
+  final int? index;
+  const ViewZoomedImage({Key? key,this.index}):super(key:key);
+  @override
+  _ViewZoomedImageState createState() => _ViewZoomedImageState();
+}
+
+class _ViewZoomedImageState extends State<ViewZoomedImage> {
+  PageController pageController = PageController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ViewModelBuilder<MainViewModel>.reactive(
+      builder: (context, model, child) {
+        return Scaffold(
+          backgroundColor: Colors.black,
+          body: SafeArea(
+            child: Center(
+              child: Container(
+                width: double.infinity,
+                child: PhotoViewGallery.builder(
+                  itemCount: model.matchedImage.length,
+                  pageController: pageController,
+                  builder: (context, index) {
+                    return  PhotoViewGalleryPageOptions(
+                      imageProvider: NetworkImage(model.matchedImage[index]),
+                      initialScale: PhotoViewComputedScale.contained * 1,
+                      //heroAttributes: PhotoViewHeroAttributes(tag: galleryItems[index].id),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+      viewModelBuilder: () => locator<MainViewModel>(),
+      onModelReady: (model){
+        Future.delayed(Duration(milliseconds: 100)).then((value)async{
+          pageController.jumpToPage(widget.index!);
+        });
+      },
+      disposeViewModel: false,
     );
   }
 }

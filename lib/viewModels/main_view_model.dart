@@ -18,11 +18,13 @@ import 'package:intl/intl.dart';
 import 'package:sauftrag/bar/views/Drawer/bar_followers.dart';
 import 'package:sauftrag/models/attend_event.dart';
 import 'package:sauftrag/models/comments.dart';
+import 'package:sauftrag/models/comments_bar.dart';
 import 'package:sauftrag/models/create_group_chat.dart';
 import 'package:sauftrag/models/event_attendees.dart';
 import 'package:sauftrag/models/follow_bar.dart';
 import 'package:sauftrag/models/get_bar_followers.dart';
 import 'package:sauftrag/models/get_bar_upcoming_event.dart';
+import 'package:sauftrag/models/get_comments_bar.dart';
 import 'package:sauftrag/models/get_comments_user.dart';
 import 'package:sauftrag/models/listOfFollowing_Bars.dart';
 import 'package:sauftrag/models/request_match_model.dart';
@@ -134,6 +136,7 @@ class MainViewModel extends BaseViewModel {
 
   Barcode? result;
   List<GetNewsfeedComments>? userComments;
+  List<GetNewsfeedCommentsBar>? barComments;
 
   //var Permission;
 
@@ -372,6 +375,10 @@ class MainViewModel extends BaseViewModel {
     File(""),
     File(""),
     File("")
+  ];
+
+  List<dynamic> matchedImage = [
+
   ];
 
   List<bool>? selected;
@@ -3632,12 +3639,32 @@ class MainViewModel extends BaseViewModel {
       notifyListeners();
       return true;
     }}
+
   postingComments() async {
     isLoading = true;
     notifyListeners();
     if(postCommentController.text.isNotEmpty){
       var userComments = await postComments.postComments(postCommentController.text, selectedCommentId!);
       if(userComments == NewsfeedComments){
+        getBarPost();
+      }
+    }
+    else{
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Enter Some Text",
+      ));
+    }
+    isLoading = false;
+    notifyListeners();
+    //print(getFaqsList);
+  }
+
+  postingCommentsBar() async {
+    isLoading = true;
+    notifyListeners();
+    if(postCommentController.text.isNotEmpty){
+      var barComments = await postComments.postCommentsBar(postCommentController.text, selectedCommentId!);
+      if(barComments == NewsfeedCommentsBar){
         getBarPost();
       }
     }
@@ -3659,11 +3686,46 @@ class MainViewModel extends BaseViewModel {
     //print(getFaqsList);
   }
 
+  gettingCommentsBars() async {
+    isLoading = true;
+    barComments = await getComments.getCommentsBar(selectedCommentId!);
+    print(barComments);
+    isLoading = false;
+    //print(getFaqsList);
+  }
+
   getCommentNewsFeed(int index) async {
     isLoading = true;
     notifyListeners();
     var userComments = await getComments.getComments(selectedCommentId!);
     if (userComments != null) {
+      posts[index].comments_count = posts[index].comments_count! + 1;
+      notifyListeners();
+      //feedbackController.clear();
+
+      // var index = listOfAllBars.indexOf();
+      // listOfAllBars[index].like =
+      // (getListofbar as LikeNewsFeed).user!.like!;
+    } else {
+      isLoading = true;
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Something went wrong",
+      ));
+      notifyListeners();
+      //isPrivacyPolicy = false;
+
+      return;
+    }
+    isLoading = false;
+    notifyListeners();
+    //print(getFaqsList);
+  }
+
+  getCommentNewsFeedBar(int index) async {
+    isLoading = true;
+    notifyListeners();
+    var barComments = await getComments.getCommentsBar(selectedCommentId!);
+    if (barComments != null) {
       posts[index].comments_count = posts[index].comments_count! + 1;
       notifyListeners();
       //feedbackController.clear();

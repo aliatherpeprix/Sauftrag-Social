@@ -227,6 +227,10 @@ class RegistrationViewModel extends BaseViewModel {
   bool isSignUpBarEmailInFocus = false;
   FocusNode signUpBarEmailFocus = new FocusNode();
 
+  final signUpBarAboutController = TextEditingController();
+  bool isSignUpBarAboutInFocus = false;
+  FocusNode signUpBarAboutFocus = new FocusNode();
+
   final signUpBarPasswordController = TextEditingController();
   bool isSignUpBarPasswordInFocus = false;
   FocusNode signUpBarPasswordFocus = new FocusNode();
@@ -714,6 +718,12 @@ class RegistrationViewModel extends BaseViewModel {
     if (imageFiles[0].path.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Bar logo is required",
+      ));
+      return;
+    }
+    if (signUpBarAboutController.text.isEmpty) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "About is required",
       ));
       return;
     }
@@ -1973,6 +1983,7 @@ class RegistrationViewModel extends BaseViewModel {
         signUpBarUserController.text.replaceAll(' ', ''),
         signUpBarUserController.text,
         signUpBarEmailController.text,
+        signUpBarAboutController.text,
         signUpBarAddressController.text,
         2,
         barKindList,

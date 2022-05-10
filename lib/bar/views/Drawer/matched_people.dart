@@ -65,7 +65,33 @@ class _MatchedPeopleState extends State<MatchedPeople> {
                                 return /*model.isLoading == true ? AllPageLoader() :*/
                                 GestureDetector(
                                   onTap:  () async{
+                                    model.matchedImage.clear();
                                     model.getMatchedUserData = (model.acceptMatchedtModel[index]);
+                                    if (model.getMatchedUserData!.user!.profilePicture != null &&
+                                        model.getMatchedUserData!.user!.profilePicture.isNotEmpty) {
+                                      model.matchedImage.add(model.getMatchedUserData!.user!.profilePicture);
+                                    }
+                                    if (model.getMatchedUserData!.user!.catalogueImage1 != null &&
+                                        model.getMatchedUserData!.user!.catalogueImage1.isNotEmpty) {
+                                      model.matchedImage.add(model.getMatchedUserData!.user!.catalogueImage1);
+                                    }
+                                    if (model.getMatchedUserData!.user!.catalogueImage2 != null &&
+                                        model.getMatchedUserData!.user!.catalogueImage2.isNotEmpty) {
+                                      model.matchedImage.add(model.getMatchedUserData!.user!.catalogueImage2);
+                                    }
+                                    if (model.getMatchedUserData!.user!.catalogueImage3 != null &&
+                                        model.getMatchedUserData!.user!.catalogueImage3.isNotEmpty) {
+                                      model.matchedImage.add(model.getMatchedUserData!.user!.catalogueImage3);
+                                    }
+                                    if (model.getMatchedUserData!.user!.catalogueImage4 != null &&
+                                        model.getMatchedUserData!.user!.catalogueImage4.isNotEmpty) {
+                                      model.matchedImage.add(model.getMatchedUserData!.user!.catalogueImage4);
+                                    }
+                                    if (model.getMatchedUserData!.user!.catalogueImage5 != null &&
+                                        model.getMatchedUserData!.user!.catalogueImage5.isNotEmpty) {
+                                      model.matchedImage.add(model.getMatchedUserData!.user!.catalogueImage5);
+                                    }
+                                    model.notifyListeners();
                                     await model.getAnitherUserInfo(model.acceptMatchedtModel[index].user!.id.toString());
                                     model.navigateToMatchedProfileUser();
                                   },

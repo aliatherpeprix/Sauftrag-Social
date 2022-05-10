@@ -418,19 +418,12 @@ class _MessageScreenForUserState extends State<MessageScreenForUser> {
                                                                     .textMultiplier *
                                                                     1.9,
                                                               ),
-                                                              border:
-                                                              InputBorder
-                                                                  .none,
+                                                              border: InputBorder.none,
                                                               // isDense: true,
-                                                              contentPadding:
-                                                              EdgeInsets.symmetric(
-                                                                  vertical:
-                                                                  SizeConfig.heightMultiplier *
-                                                                      2),
+                                                              contentPadding: EdgeInsets.symmetric(
+                                                                  vertical: SizeConfig.heightMultiplier * 2),
                                                             ),
-                                                            keyboardType:
-                                                            TextInputType
-                                                                .multiline,
+                                                            keyboardType: TextInputType.multiline,
                                                             maxLines: null,
                                                           ),
                                                         ),

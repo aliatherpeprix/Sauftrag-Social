@@ -12,6 +12,7 @@ NewBarModel _$NewBarModelFromJson(Map<String, dynamic> json) => NewBarModel()
   ..username = json['username'] as String?
   ..bar_name = json['bar_name'] as String?
   ..email = json['email'] as String?
+  ..about = json['about'] as String?
   ..address = json['address'] as String?
   ..role = json['role']
   ..bar_kind =
@@ -44,6 +45,7 @@ Map<String, dynamic> _$NewBarModelToJson(NewBarModel instance) =>
       'username': instance.username,
       'bar_name': instance.bar_name,
       'email': instance.email,
+      'about': instance.about,
       'address': instance.address,
       'role': instance.role,
       'bar_kind': instance.bar_kind,

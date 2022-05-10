@@ -320,9 +320,9 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<MainViewModel>.reactive(
-        viewModelBuilder: () => locator<MainViewModel>(),
-        onModelReady: (model) async {
-          /*UserModel user =
+      viewModelBuilder: () => locator<MainViewModel>(),
+      onModelReady: (model) async {
+        /*UserModel user =
           (await locator<PrefrencesViewModel>().getUser())!;
           var channel =
           model.pubnub!.channel(model.posts[widget.index!].id.toString());
@@ -330,197 +330,214 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
           await chat.fetch();
           comments_count = await chat.count();
           model.notifyListeners();*/
-        },
-        builder: (context, model, child) {
-          return GestureDetector(
-            onTap: (){
-              FocusScopeNode currentFocus = FocusScope.of(context);
+      },
+      builder: (context, model, child) {
+        return GestureDetector(
+          onTap: () {
+            FocusScopeNode currentFocus = FocusScope.of(context);
 
-              if (!currentFocus.hasPrimaryFocus) {
-                currentFocus.unfocus();
-              }
-            },
-            child: Container(
-              margin: EdgeInsets.only(bottom: 3.2.h),
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 3.5.w,
-                  //vertical: 3.h
+            if (!currentFocus.hasPrimaryFocus) {
+              currentFocus.unfocus();
+            }
+          },
+          child: Container(
+            margin: EdgeInsets.only(bottom: 3.2.h),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 3.5.w,
+                //vertical: 3.h
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: ColorUtils.black.withOpacity(0.1),
+                      spreadRadius: 0,
+                      blurRadius: 10,
+                      offset: Offset(0, 5), // changes position of shadow
+                    ),
+                  ],
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(18)),
+                  border:
+                      Border.all(color: ColorUtils.text_grey.withOpacity(0.1)),
                 ),
-                child: Container(
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: ColorUtils.black.withOpacity(0.1),
-                        spreadRadius: 0,
-                        blurRadius: 10,
-                        offset: Offset(0, 5), // changes position of shadow
-                      ),
-                    ],
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(18)),
-                    border:
-                        Border.all(color: ColorUtils.text_grey.withOpacity(0.1)),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 2.5.w, vertical: 1.h),
-                        child: Column(
-                          children: [
-                            GestureDetector(
-                              onTap: (){
-                                model.selectedBar = model.listOfAllBars.where((element) =>
-                                element.id == model.posts[widget.index!].user_id!.id).first;
-                                //print("yo");
-                                model.navigateToBarProfile();
-                              },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Image.network(
-                                      model.posts[widget.index!].user_id!.profile_picture!,
-                                      //newsEvents[index]["image"],
-                                      width: 10.i,
-                                      height: 10.i,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-
-                                  SizedBox(
-                                    width: 3.w,
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text(
-                                            model.posts[widget.index!].user_id!
-                                                .bar_name!,
-                                            //newsEvents[index]["barOwnerName"],
-                                            style: TextStyle(
-                                                fontFamily: FontUtils.modernistBold,
-                                                fontSize: 2.2.t,
-                                                fontWeight: FontWeight.bold,
-                                                color: ColorUtils.black),
-                                          ),
-                                          // if (model.posts[index].post_type! == '1')
-                                          //   {
-                                          //     Text("Abc")
-                                          //   }
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 0.5.h,
-                                      ),
-                                      Text(
-                                        model.posts[widget.index!].post_location!,
-                                        //newsEvents[index]["barOwnerName"],
-                                        style: TextStyle(
-                                            fontFamily: FontUtils.modernistRegular,
-                                            fontSize: 1.7.t,
-                                            //fontWeight: FontWeight.bold,
-                                            color: ColorUtils.black),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: 1.h,
-                            ),
-                            Row(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 2.5.w, vertical: 1.h),
+                      child: Column(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              model.selectedBar = model.listOfAllBars
+                                  .where((element) =>
+                                      element.id ==
+                                      model.posts[widget.index!].user_id!.id)
+                                  .first;
+                              //print("yo");
+                              model.navigateToBarProfile();
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Flexible(
-                                  child: Text(
-                                    model.posts[widget.index!].post_content!,
-                                    //newsEvents[index]["para"],
-                                    style: TextStyle(
-                                        fontFamily: FontUtils.modernistRegular,
-                                        fontSize: 1.8.t,
-                                        color: ColorUtils.black),
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.network(
+                                    model.posts[widget.index!].user_id!
+                                        .profile_picture!,
+                                    //newsEvents[index]["image"],
+                                    width: 10.i,
+                                    height: 10.i,
+                                    fit: BoxFit.cover,
                                   ),
+                                ),
+                                SizedBox(
+                                  width: 3.w,
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          model.posts[widget.index!].user_id!
+                                              .bar_name!,
+                                          //newsEvents[index]["barOwnerName"],
+                                          style: TextStyle(
+                                              fontFamily:
+                                                  FontUtils.modernistBold,
+                                              fontSize: 2.2.t,
+                                              fontWeight: FontWeight.bold,
+                                              color: ColorUtils.black),
+                                        ),
+                                        // if (model.posts[index].post_type! == '1')
+                                        //   {
+                                        //     Text("Abc")
+                                        //   }
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 0.5.h,
+                                    ),
+                                    Text(
+                                      model.posts[widget.index!].post_location!,
+                                      //newsEvents[index]["barOwnerName"],
+                                      style: TextStyle(
+                                          fontFamily:
+                                              FontUtils.modernistRegular,
+                                          fontSize: 1.7.t,
+                                          //fontWeight: FontWeight.bold,
+                                          color: ColorUtils.black),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                            SizedBox(
-                              height: 1.h,
-                            ),
-                            if (model.posts[widget.index!].media != null &&
-                                model.posts[widget.index!].media!.length > 0)
-                              GestureDetector(
-                                onTap: (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (_) {
-                                    return DetailScreen(
-                                      imageUrl: model.posts[widget.index!].media![0].media!,
-                                    );
-                                  }));
-                                },
-                                child: Container(
-                                    child: CachedNetworkImage(
-                                  imageUrl:
-                                      model.posts[widget.index!].media![0].media!,
-                                  //width: 100.i,
-                                  height: 40.i,
-                                  fit: BoxFit.cover,
-                                )),
+                          ),
+                          SizedBox(
+                            height: 1.h,
+                          ),
+                          Row(
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  model.posts[widget.index!].post_content!,
+                                  //newsEvents[index]["para"],
+                                  style: TextStyle(
+                                      fontFamily: FontUtils.modernistRegular,
+                                      fontSize: 1.8.t,
+                                      color: ColorUtils.black),
+                                ),
                               ),
-                            Divider(),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 1.h,
+                          ),
+                          if (model.posts[widget.index!].media != null &&
+                              model.posts[widget.index!].media!.length > 0)
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (_) {
+                                  return DetailScreen(
+                                    imageUrl: model
+                                        .posts[widget.index!].media![0].media!,
+                                  );
+                                }));
+                              },
+                              child: Container(
+                                  child: CachedNetworkImage(
+                                imageUrl:
+                                    model.posts[widget.index!].media![0].media!,
+                                //width: 100.i,
+                                height: 40.i,
+                                fit: BoxFit.cover,
+                              )),
+                            ),
+                          Divider(),
 
-                            ///LIKE AND COMMENT
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: ExpandableTheme(
-                                    data: ExpandableThemeData(
+                          ///LIKE AND COMMENT
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: ExpandableTheme(
+                                  data: ExpandableThemeData(
                                       headerAlignment:
                                           ExpandablePanelHeaderAlignment.top,
                                       alignment: Alignment.centerLeft,
                                       iconPadding: EdgeInsets.zero,
                                       iconSize: 0,
-                                      tapHeaderToExpand: false
-                                    ),
-                                    child: ExpandablePanel(
+                                      tapHeaderToExpand: false),
+                                  child: ExpandablePanel(
                                       controller: expandableController,
                                       header: Container(
                                         padding: EdgeInsets.only(top: 0.7.h),
                                         child: Row(
                                           children: [
                                             GestureDetector(
-                                              onTap: (){
-                                                model.selectedPost = model.posts[widget.index!];
-                                                model.postLikeNewsFeed(widget.index!);
+                                              onTap: () {
+                                                model.selectedPost =
+                                                    model.posts[widget.index!];
+                                                model.postLikeNewsFeed(
+                                                    widget.index!);
                                                 //expandableController == false ;
                                               },
                                               child: Row(
                                                 children: [
                                                   SvgPicture.asset(
                                                     ImageUtils.matchedIcon,
-                                                    color: ColorUtils.icon_color,
+                                                    color:
+                                                        ColorUtils.icon_color,
                                                   ),
                                                   SizedBox(
                                                     width: 1.5.w,
                                                   ),
                                                   //if(model.posts[widget.index!].likes != null)
                                                   Text(
-                                                   model.posts[widget.index!].likes_count == null ? 0.toString() : model.posts[widget.index!].likes_count.toString(),
+                                                    model.posts[widget.index!]
+                                                                .likes_count ==
+                                                            null
+                                                        ? 0.toString()
+                                                        : model
+                                                            .posts[
+                                                                widget.index!]
+                                                            .likes_count
+                                                            .toString(),
                                                     style: TextStyle(
                                                         fontFamily: FontUtils
                                                             .modernistRegular,
                                                         fontSize: 1.5.t,
-                                                        color:
-                                                            ColorUtils.icon_color),
+                                                        color: ColorUtils
+                                                            .icon_color),
                                                   ),
                                                 ],
                                               ),
@@ -529,44 +546,48 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                                             GestureDetector(
                                               onTap: () async {
                                                 expandableController.toggle();
-                                                model.selectedCommentId = model.posts[widget.index!].id!;
+                                                model.selectedCommentId = model
+                                                    .posts[widget.index!].id!;
                                                 model.gettingComments();
                                                 model.notifyListeners();
-                                                if(expandableController.expanded){
-                                                  if(comments.isEmpty)
-                                                  {
-                                                    UserModel user = (await locator<PrefrencesViewModel>().getUser())!;
-                                                    var channel =
-                                                    model.pubnub!.channel(model.posts[widget.index!].id.toString());
-                                                    var commnt = await channel.messages();
-                                                    await commnt.fetch().whenComplete(() {
-
-                                                      print(commnt.messages.length);
-
-                                                      for (var data in commnt.messages) {
-                                                        comments.add(data.content);
-                                                        comments = comments.reversed.toList();
-                                                      }
-                                                      comments = comments.reversed.toList();
-                                                      model.notifyListeners();
-                                                    });
-                                                  }
-                                                  else {
-                                                  }
-                                                }
+                                                // if(expandableController.expanded){
+                                                //   if(comments.isEmpty)
+                                                //   {
+                                                //     UserModel user = (await locator<PrefrencesViewModel>().getUser())!;
+                                                //     var channel =
+                                                //     model.pubnub!.channel(model.posts[widget.index!].id.toString());
+                                                //     var commnt = await channel.messages();
+                                                //     await commnt.fetch().whenComplete(() {
+                                                //
+                                                //       print(commnt.messages.length);
+                                                //
+                                                //       for (var data in commnt.messages) {
+                                                //         comments.add(data.content);
+                                                //         comments = comments.reversed.toList();
+                                                //       }
+                                                //       comments = comments.reversed.toList();
+                                                //       model.notifyListeners();
+                                                //     });
+                                                //   }
+                                                //   else {
+                                                //   }
+                                                // }
                                               },
                                               child: Row(
                                                 children: [
                                                   SvgPicture.asset(
                                                     ImageUtils.msgIcon,
-                                                    color: ColorUtils.icon_color,
+                                                    color:
+                                                        ColorUtils.icon_color,
                                                   ),
                                                   SizedBox(
                                                     width: 1.5.w,
                                                   ),
                                                   Text(
                                                     //model.userComments!.isEmpty ? 0.toString() : model.userComments!.length.toString(),
-                                                  model.posts[widget.index!].comments_count.toString(),
+                                                    model.posts[widget.index!]
+                                                        .comments_count
+                                                        .toString(),
                                                     //comments_count.toString(),
                                                     style: TextStyle(
                                                         fontFamily: FontUtils
@@ -590,8 +611,8 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                                         child: Container(),
                                       ),
                                       expanded:
-                                      // expandableController == true ?
-                                      Column(
+                                          // expandableController == true ?
+                                          Column(
                                         children: [
                                           Divider(),
                                           // GestureDetector(
@@ -615,7 +636,9 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                                           //     ),
                                           //   ),
                                           // ),
-                                          SizedBox(height: 1.5.h,),
+                                          SizedBox(
+                                            height: 1.5.h,
+                                          ),
                                           Container(
                                             //height: 10.h,
                                             // margin: EdgeInsets.only(top: 1.5.h),
@@ -623,105 +646,159 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                                             //height: 40.h,
                                             child: ListView.separated(
                                               padding: EdgeInsets.zero,
-                                                shrinkWrap: true,
-                                                physics: NeverScrollableScrollPhysics(),
-                                                controller: model.chatScroll,
-                                                itemBuilder: (context, index) {
-                                                  return Align(
-                                                    //alignment: Alignment.centerLeft,
-                                                    child: Row(
-                                                      mainAxisAlignment: MainAxisAlignment.start,
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: [
-                                                        ClipRRect(
-                                                          borderRadius: BorderRadius.circular(30),
-                                                          child: Image.network(model.userComments![index].user_id!.profile_picture!,
-                                                            width: 10.i,
-                                                            height: 10.i,
-                                                            fit: BoxFit.cover,
-                                                          ),
+                                              shrinkWrap: true,
+                                              physics:
+                                                  NeverScrollableScrollPhysics(),
+                                              controller: model.chatScroll,
+                                              itemBuilder: (context, index) {
+                                                return Align(
+                                                  //alignment: Alignment.centerLeft,
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(30),
+                                                        child: Image.network(
+                                                          model
+                                                              .userComments![
+                                                                  index]
+                                                              .user_id!
+                                                              .profile_picture!,
+                                                          width: 10.i,
+                                                          height: 10.i,
+                                                          fit: BoxFit.cover,
                                                         ),
-                                                        SizedBox(width: 3.w),
-                                                        Column(
-                                                          mainAxisAlignment: MainAxisAlignment.start,
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: [
-                                                            Text(
-                                                              model.userComments![index].user_id!.username!,
-                                                              //model.userModel!.username!,
-                                                              style: TextStyle(
-                                                                  fontFamily: FontUtils.modernistBold,
-                                                                  fontSize: 1.8.t,
-                                                                  color: ColorUtils.text_dark) ,
-                                                            ),
-                                                            SizedBox(height: 1.h,),
-                                                            Container(
-                                                              width: MediaQuery.of(context).size.width / 1.7,
-                                                              decoration: BoxDecoration(
-                                                                  shape: BoxShape
-                                                                      .rectangle,
-                                                                  borderRadius:
-                                                                  BorderRadius
-                                                                      .all(Radius
-                                                                      .circular(
-                                                                      10)),
-                                                                  color:
-                                                                  ColorUtils.icon_color.withOpacity(0.2)),
-                                                              padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 1.h),
-                                                              child: Column(
-                                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                                children: [
-                                                                  // Padding(
-                                                                  //   padding: EdgeInsets.symmetric(
-                                                                  //       horizontal: 3.w,
-                                                                  //       vertical: 1.5.h),
-                                                                  //   child: Image.asset(
-                                                                  //     ImageUtils.drinkImage,
-                                                                  //   ),
-                                                                  // ),
-                                                                  Padding(
-                                                                    padding: EdgeInsets.only(
-                                                                      left: 3.w, right: 3.w,),
-                                                                    child: Text(
-                                                                    model.userComments![index].text!,
-                                                                      style: TextStyle(
-                                                                        //fontFamily: FontUtils.avertaDemoRegular,
-                                                                          fontSize: 1.8.t,
-                                                                          color: ColorUtils.text_dark),
-                                                                    ),
+                                                      ),
+                                                      SizedBox(width: 3.w),
+                                                      Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            model
+                                                                .userComments![
+                                                                    index]
+                                                                .user_id!
+                                                                .username!,
+                                                            //model.userModel!.username!,
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                    FontUtils
+                                                                        .modernistBold,
+                                                                fontSize: 1.8.t,
+                                                                color: ColorUtils
+                                                                    .text_dark),
+                                                          ),
+                                                          SizedBox(
+                                                            height: 1.h,
+                                                          ),
+                                                          Container(
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width /
+                                                                1.7,
+                                                            decoration: BoxDecoration(
+                                                                shape: BoxShape
+                                                                    .rectangle,
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10)),
+                                                                color: ColorUtils
+                                                                    .icon_color
+                                                                    .withOpacity(
+                                                                        0.2)),
+                                                            padding: EdgeInsets
+                                                                .symmetric(
+                                                                    horizontal:
+                                                                        2.w,
+                                                                    vertical:
+                                                                        1.h),
+                                                            child: Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                // Padding(
+                                                                //   padding: EdgeInsets.symmetric(
+                                                                //       horizontal: 3.w,
+                                                                //       vertical: 1.5.h),
+                                                                //   child: Image.asset(
+                                                                //     ImageUtils.drinkImage,
+                                                                //   ),
+                                                                // ),
+                                                                Padding(
+                                                                  padding:
+                                                                      EdgeInsets
+                                                                          .only(
+                                                                    left: 3.w,
+                                                                    right: 3.w,
                                                                   ),
+                                                                  child: Text(
+                                                                    model
+                                                                        .userComments![
+                                                                            index]
+                                                                        .text!,
+                                                                    style: TextStyle(
+                                                                        //fontFamily: FontUtils.avertaDemoRegular,
+                                                                        fontSize: 1.8.t,
+                                                                        color: ColorUtils.text_dark),
+                                                                  ),
+                                                                ),
 
-                                                                  //SizedBox(height: 1.h,),
-
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        Align(
-                                                          //alignment:  Alignment.bottomRight,
-                                                          child: Padding(
-                                                            padding: EdgeInsets.only(top: 0.0, left: 0.w),
-                                                            child: Text(
-                                                              model.userComments![index].created_at!.substring(11, 16),
-                                                              //comments[index]["time"].toString().substring(11,16),
-                                                              style: TextStyle(
-                                                                //fontFamily: FontUtils.avertaDemoRegular,
-                                                                  fontSize: 1.5.t,
-                                                                  color: ColorUtils
-                                                                      .icon_color),
+                                                                //SizedBox(height: 1.h,),
+                                                              ],
                                                             ),
                                                           ),
+                                                        ],
+                                                      ),
+                                                      Align(
+                                                        //alignment:  Alignment.bottomRight,
+                                                        child: Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  top: 0.0,
+                                                                  left: 0.w),
+                                                          child: Text(
+                                                            model
+                                                                .userComments![
+                                                                    index]
+                                                                .created_at!
+                                                                .substring(
+                                                                    11, 16),
+                                                            //comments[index]["time"].toString().substring(11,16),
+                                                            style: TextStyle(
+                                                                //fontFamily: FontUtils.avertaDemoRegular,
+                                                                fontSize: 1.5.t,
+                                                                color: ColorUtils
+                                                                    .icon_color),
+                                                          ),
                                                         ),
-                                                      ],
-                                                    ),
-                                                  );
-                                                },
-                                                separatorBuilder: (context, index) => SizedBox(
-                                                  height: 3.h,
-                                                ),
-                                                itemCount: model.userComments != null ? model.userComments!.length : 0,
-                                                //comments.length>2?2:comments.length
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                              separatorBuilder:
+                                                  (context, index) => SizedBox(
+                                                height: 3.h,
+                                              ),
+                                              itemCount: model.userComments !=
+                                                      null
+                                                  ? model.userComments!.length
+                                                  : 0,
+                                              //comments.length>2?2:comments.length
                                             ),
                                           ),
                                           SizedBox(
@@ -755,7 +832,8 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                                                           BorderRadius.all(
                                                               Radius.circular(
                                                                   10)),
-                                                      color: ColorUtils.icon_color
+                                                      color: ColorUtils
+                                                          .icon_color
                                                           .withOpacity(0.2)),
                                                   // padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 1.h),
 
@@ -804,13 +882,13 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                                                       //margin: EdgeInsets.only(bottom: 2.2.h),
                                                       decoration: BoxDecoration(
                                                         shape: BoxShape.circle,
-                                                        color:
-                                                            ColorUtils.text_grey,
+                                                        color: ColorUtils
+                                                            .text_grey,
                                                       ),
                                                       child: Padding(
                                                         padding:
-                                                            const EdgeInsets.all(
-                                                                15.0),
+                                                            const EdgeInsets
+                                                                .all(15.0),
                                                         child: SvgPicture.asset(
                                                           ImageUtils.sendIcon1,
                                                           color: Colors.white,
@@ -839,26 +917,35 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                                                           model.scrollDown();
                                                         });
                                                         model.notifyListeners();*/
-                                                        await model.postingComments();
-                                                        model.getCommentNewsFeed(widget.index!);
-                                                        model.postCommentController.clear();
-                                                        expandableController.toggle();
+                                                        await model
+                                                            .postingComments();
+                                                        model
+                                                            .getCommentNewsFeed(
+                                                                widget.index!);
+                                                        model
+                                                            .postCommentController
+                                                            .clear();
+                                                        expandableController
+                                                            .toggle();
                                                         model.gettingComments();
-
                                                       },
                                                       child: Container(
                                                         //margin: EdgeInsets.only(bottom: 2.2.h),
-                                                        decoration: BoxDecoration(
-                                                          shape: BoxShape.circle,
-                                                          color:
-                                                              ColorUtils.text_red,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle,
+                                                          color: ColorUtils
+                                                              .text_red,
                                                         ),
                                                         child: Padding(
                                                           padding:
                                                               const EdgeInsets
                                                                   .all(15.0),
-                                                          child: SvgPicture.asset(
-                                                            ImageUtils.sendIcon1,
+                                                          child:
+                                                              SvgPicture.asset(
+                                                            ImageUtils
+                                                                .sendIcon1,
                                                             color: Colors.white,
                                                           ),
                                                         ),
@@ -868,27 +955,27 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                                           ),
                                         ],
                                       ) /*: Container(),*/
-                                    ),
-                                  ),
-                                )
-                              ],
-                            )
-                          ],
-                        ),
+                                      ),
+                                ),
+                              )
+                            ],
+                          )
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
-          );
-        },
-        disposeViewModel: false,);
+          ),
+        );
+      },
+      disposeViewModel: false,
+    );
   }
 }
 
 class DetailScreen extends StatefulWidget {
-
   String? imageUrl;
 
   DetailScreen({this.imageUrl, Key? key}) : super(key: key);
@@ -898,7 +985,6 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -907,9 +993,9 @@ class _DetailScreenState extends State<DetailScreen> {
           tag: 'imageHero',
           child: CachedNetworkImage(
             imageUrl: widget.imageUrl!,
-            width: MediaQuery.of(context).size.width/1,
-            height: MediaQuery.of(context).size.height/1,
-              fit: BoxFit.fitWidth,
+            width: MediaQuery.of(context).size.width / 1,
+            height: MediaQuery.of(context).size.height / 1,
+            fit: BoxFit.fitWidth,
             // placeholder: new CircularProgressIndicator(),
             // errorWidget: new Icon(Icons.error),
           ),
@@ -921,4 +1007,3 @@ class _DetailScreenState extends State<DetailScreen> {
     );
   }
 }
-

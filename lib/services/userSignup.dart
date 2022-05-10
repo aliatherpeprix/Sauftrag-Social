@@ -8,8 +8,10 @@ import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/modules/dio_services.dart';
 import 'package:sauftrag/utils/constants.dart';
 import 'package:sauftrag/utils/convertAssetToFile.dart';
+import 'package:sauftrag/utils/dialog_utils.dart';
 import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/views/Auth/signup.dart';
+import 'package:sauftrag/widgets/error_widget.dart';
 
 class SignupUser {
   //var _dioService = DioService.getInstance();
@@ -127,8 +129,17 @@ class SignupUser {
         return response.data['message'];
       }
     } catch (e) {
+      if ((e as DioError).response!.data is Map &&
+          (e).response!.data["detail"] != null) {
+        DialogUtils().showDialog(
+            MyErrorWidget(error: (e).response!.data["detail"].toString()));
+      } else {
+        DialogUtils().showDialog(
+            MyErrorWidget(error: "User name already exist"));
+        //return (e).error.toString();
+      }
       //dynamic exception = e;
-      return (e as DioError).response!.data["message"].toString();
+      //return (e as DioError).response!.data["message"].toString();
     }
   }
 }
