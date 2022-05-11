@@ -11,6 +11,7 @@ class UserModel {
   int? id;
   String? username;
   String? email;
+  String? about;
   String? country_code;
   String? phone_no;
   dynamic gender;
@@ -36,6 +37,7 @@ class UserModel {
   String? token;
   List<UserMatchedModel>? friends;
   double? distance;
+  List? drinking_motivation;
 
 
   factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);

@@ -20,7 +20,7 @@ class Constants {
   static const String CheckUser = 'api/user/check/';
   static const String ChangeUserPassword = 'api/user/change-password/';
   static const String UpdateUserProfile = 'api/user/register/';
-  static const String UpdateBarProfile = 'api/user/register/';
+  static const String UpdateBarProfile = 'api/user/regiCoster/';
   static const String AddFavoriteDrink = 'api/favorites/alcoholic_drink/';
   static const String AddFavoriteClub = 'api/favorites/night_club/';
   static const String AddFavoritePartyVacation = 'api/favorites/party_vaccation/';
@@ -36,6 +36,7 @@ class Constants {
   static const String createGroup = 'api/group/create/';
   static const String feedback = 'api/feedback/';
   static const String likeNewFeed = 'api/news_feed/like/';
+  static const String reportChat = 'api/report/chat/';
 
   static const String GetFavoriteDrink = 'api/favorites/alcoholic_drink/';
   static const String GetFavoriteClub = 'api/favorites/music/';

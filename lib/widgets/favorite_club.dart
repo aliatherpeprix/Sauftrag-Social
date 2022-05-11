@@ -234,7 +234,7 @@ class _FavoriteClubState extends State<FavoriteClub> {
                               child: ElevatedButton(
                                 onPressed: () async{
                                   //List temp = CommonFunctions.AddFromList(model.selectedClubList);
-                                  await model.favoritesDrinks(model.selectedClubList, "favorite_night_club");
+                                  await model.favoritesDrinks(model.selectedClubList, "favorite_musics");
                                   model.navigateBack();
                                 },
                                 child: model.favDrink == false ? Text("Save") : Loader(),

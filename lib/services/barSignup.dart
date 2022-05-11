@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:sauftrag/models/new_bar_model.dart';
 import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/modules/dio_services.dart';
@@ -49,6 +50,7 @@ class SignupBar {
     double latitude,
     double longitude,
   ) async {
+
     try {
       var param = FormData.fromMap({
         'username': userName,
@@ -59,15 +61,15 @@ class SignupBar {
         'role': "2",
         'bar_kind': [2],
         'working_days': workingDays,
-        'opening_time': openingTime,
-        'closing_time': closingTime,
-        'break_opening_time': breakOpeningTime,
-        'break_closing_time': breakClosingTime,
+        'opening_time': DateFormat("H:mm").format(DateFormat("hh:mm a").parse(openingTime)),
+        'closing_time': DateFormat("H:mm").format(DateFormat("hh:mm a").parse(closingTime)),
+        if(breakOpeningTime != '') 'break_opening_time': DateFormat("H:mm").format(DateFormat("hh:mm a").parse(breakOpeningTime)),
+        if(breakClosingTime != '') 'break_closing_time': DateFormat("H:mm").format(DateFormat("hh:mm a").parse(breakClosingTime)),
         'weekend_days': weekendDays,
-        'weekend_opening_time': weekendOpeningTime,
-        'weekend_closing_time': weekendClosingTime,
-        'weekend_break_opening_time': weekendBreakOpeningTime,
-        'weekend_break_closing_time': weekendBreakClosingTime,
+        'weekend_opening_time': DateFormat("H:mm").format(DateFormat("hh:mm a").parse(weekendOpeningTime)),
+        'weekend_closing_time': DateFormat("H:mm").format(DateFormat("hh:mm a").parse(weekendClosingTime)),
+        if(weekendBreakOpeningTime != '') 'weekend_break_opening_time': DateFormat("H:mm").format(DateFormat("hh:mm a").parse(weekendBreakOpeningTime)),
+        if(weekendBreakClosingTime != '') 'weekend_break_closing_time': DateFormat("H:mm").format(DateFormat("hh:mm a").parse(weekendBreakClosingTime)),
         if (barLogo.path.isNotEmpty)'profile_picture': await MultipartFile.fromFile(barLogo.path, filename: path.basename(barLogo.path)),
         if (catalogueImage1.path.isNotEmpty)'catalogue_image1': await MultipartFile.fromFile(catalogueImage1.path, filename: path.basename(catalogueImage1.path)),
         if (catalogueImage2.path.isNotEmpty)'catalogue_image2': await MultipartFile.fromFile(catalogueImage2.path, filename: path.basename(catalogueImage2.path)),
@@ -98,6 +100,7 @@ class SignupBar {
         return response.data['message'];
       }
     } catch (e) {
+      print(e);
 
       if ((e as DioError).response!.data is Map &&
           (e).response!.data["detail"] != null) {
@@ -109,10 +112,10 @@ class SignupBar {
         //return (e).error.toString();
       }
 
-      // DialogUtils().showDialog(MyErrorWidget(
-      //     error: (e as DioError).response!.data["details"].toString()));
-      // print(e);
-      // return (e as DioError).response!.data["details"].toString();
+      DialogUtils().showDialog(MyErrorWidget(
+          error: (e as DioError).response!.data["details"].toString()));
+      print(e);
+      return (e as DioError).response!.data["details"].toString();
     }
   }
 }

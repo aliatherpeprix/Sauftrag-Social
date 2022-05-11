@@ -211,17 +211,20 @@ class NavigationViewModel extends BaseViewModel{
       List nightClub,
       List partyVacation,
       dynamic id,
-      int distance,){
+      int distance,
+      List? drinking_motivation
+      ){
     navigationKey.currentState!.push(PageTransition(child:
     Profile(
-      images: images,
-      name: name!,
-      address: address,
-      alcoholDrink: alcoholDrink,
-      nightClub:nightClub,
-      partyVacation: partyVacation,
-      id: id,
-      distance: distance,
+        images: images,
+        name: name!,
+        address: address,
+        alcoholDrink: alcoholDrink,
+        nightClub:nightClub,
+        partyVacation: partyVacation,
+        id: id,
+        distance: distance,
+        drinking_motivation : drinking_motivation
     ), type: PageTransitionType.rightToLeftWithFade));
   }
 

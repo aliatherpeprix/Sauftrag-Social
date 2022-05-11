@@ -108,12 +108,12 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                           ),
                         ),
                         actions: [
-                          IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.more_vert_rounded,
-                                color: ColorUtils.transparent,
-                              ))
+                          // IconButton(
+                          //     onPressed: () {},
+                          //     icon: Icon(
+                          //       Icons.more_vert_rounded,
+                          //       color: ColorUtils.transparent,
+                          //     ))
                         ],
                         floating: true,
                         pinned: false,
@@ -193,7 +193,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                   ),
                                   SizedBox(height: 1.h),
                                   Text(
-                                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar blandit magna. Donec bibendum velit vitae lacus rutrum mollis tempus vitae leo. Ut commodo, elit sit amet pretium dapibus, arcu orci tempor massa, nec condimentum turpis nisi eu urna. Morbi non gravida ipsum, quis cursus turpis. Suspendisse sit amet est nunc. ",
+                                    model.matchedUser!.about!,
                                     style: TextStyle(
                                       fontFamily: FontUtils.modernistRegular,
                                       fontSize: 1.8.t,
@@ -215,7 +215,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
 
                                   //Favorite Drink
                                   Text(
-                                    "Favorite Alcoholic Drink",
+                                    "Lieblingsalkoholisches Getränk",
                                     style: TextStyle(
                                       fontFamily: FontUtils.modernistBold,
                                       fontSize: 2.t,
@@ -273,7 +273,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
 
                                   //Favorite Night Club
                                   Text(
-                                    "Favorite Night Club",
+                                    "Leiblingsmusik",
                                     style: TextStyle(
                                       fontFamily: FontUtils.modernistBold,
                                       fontSize: 2.t,
@@ -288,16 +288,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                     children: model.matchedUser!.favorite_musics!
                                         .map((element) => ElevatedButton(
                                       onPressed: () {
-                                        // if (model.selectedInterestList
-                                        //     .contains(model.interestList
-                                        //         .indexOf(element))) {
-                                        //   model.selectedInterestList.remove(
-                                        //       model.interestList
-                                        //           .indexOf(element));
-                                        // } else {
-                                        //   //model.selectedInterestList.add(model.interestList.indexOf(element));
-                                        // }
-                                        // model.notifyListeners();
+
                                       },
                                       child: Text( "${(model.clubList.where((drink)
                                       => element==drink.id).first as FavoritesModel).name}"),
@@ -331,7 +322,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
 
                                   //Favorite Party Vacation
                                   Text(
-                                    "Favorite Party Vacation",
+                                    "Lieblingsurlaub",
                                     style: TextStyle(
                                       fontFamily: FontUtils.modernistBold,
                                       fontSize: 2.t,
@@ -422,7 +413,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                     SliverGridDelegateWithFixedCrossAxisCount(
                                         childAspectRatio: 0.7,
                                         crossAxisCount: 3,
-                                        //mainAxisSpacing: 1*SizeConfig.widthMultiplier,
+                                        mainAxisSpacing: 1.5*SizeConfig.widthMultiplier,
                                         //childAspectRatio: 1,
                                         crossAxisSpacing: 1*SizeConfig.widthMultiplier),
                                     itemBuilder: (context,  index) {
@@ -467,14 +458,14 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                         ),
                                       ),
                                       SizedBox(width: 2.w),
-                                      Text(
+                                      /*Text(
                                         "See all",
                                         style: TextStyle(
                                             fontFamily: FontUtils.modernistRegular,
                                             fontSize: 1.8.t,
                                             color: ColorUtils.red_color,
                                             decoration: TextDecoration.underline),
-                                      ),
+                                      ),*/
                                     ],
                                   ),
                                   SizedBox(height: 2.h),
@@ -542,14 +533,14 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                         ),
                                       ),
                                       SizedBox(width: 2.w),
-                                      Text(
+                                      /*Text(
                                         "See all",
                                         style: TextStyle(
                                             fontFamily: FontUtils.modernistRegular,
                                             fontSize: 1.8.t,
                                             color: ColorUtils.red_color,
                                             decoration: TextDecoration.underline),
-                                      ),
+                                      ),*/
                                     ],
                                   ),
                                   SizedBox(height: 2.h),

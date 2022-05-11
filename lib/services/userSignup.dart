@@ -20,6 +20,7 @@ class SignupUser {
 
   Future SignUpUser(
     String email,
+    String about,
     String username,
     String password,
     String password2,
@@ -46,6 +47,7 @@ class SignupUser {
       // }
       var param = FormData.fromMap({
         'email': email,
+        'about' : about,
         'username': username,
         'password': password,
         'password2': password,
@@ -57,7 +59,7 @@ class SignupUser {
         'gender': gender,
         'dob': DOB,
         'favorite_alcohol_drinks': selectedDrinkList,
-        'favorite_night_club': selectedClubList,
+        'favorite_musics': selectedClubList,
         'favorite_party_vacation': selectedVacationList,
         'role': "1",
         if (images[0] is File && (images[0] as File).path.isNotEmpty)
@@ -129,6 +131,7 @@ class SignupUser {
         return response.data['message'];
       }
     } catch (e) {
+      print(e);
       if ((e as DioError).response!.data is Map &&
           (e).response!.data["detail"] != null) {
         DialogUtils().showDialog(

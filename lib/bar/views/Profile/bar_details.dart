@@ -93,7 +93,7 @@ class _BarDetailState extends State<BarDetail> {
                           SliverGridDelegateWithFixedCrossAxisCount(
                               childAspectRatio: 0.7,
                               crossAxisCount: 3,
-                              //mainAxisSpacing: 1*SizeConfig.widthMultiplier,
+                              mainAxisSpacing: 1.5*SizeConfig.widthMultiplier,
                               //childAspectRatio: 1,
                               crossAxisSpacing: 1*SizeConfig.widthMultiplier),
                           itemBuilder: (context, index) {

@@ -35,7 +35,7 @@ class _UserProfileState extends State<UserProfile> {
           onTap: () {
             FocusScope.of(context).unfocus();
           },
-          child: model.isLoading == true ? AllPageLoader() :
+          child: /*model.isLoading == false ? AllPageLoader() :*/
           SafeArea(
             top: false,
             bottom: false,
@@ -71,6 +71,7 @@ class _UserProfileState extends State<UserProfile> {
                           model.navigateToUserDetailSettings();
                           PrefrencesViewModel prefs =
                               locator<PrefrencesViewModel>();
+                          model.updateUserAbout.text = model.userModel!.about!;
                           model.drinkList =
                               await Addfavorites().GetFavoritesDrink();
                           model.clubList =
@@ -297,16 +298,16 @@ class _UserProfileState extends State<UserProfile> {
                       ///--------------Settings Options--------------------///
                       ExpandTapWidget(
                         onTap: () async {
-                          model.isLoading = true;
+                          //model.isLoading = true;
                           model.navigateToUserProfileAccountScreen();
-                          model.isUserProfile = true;
-                          model.notifyListeners();
-                          PrefrencesViewModel prefs = await locator<PrefrencesViewModel>();
-                          await UpdateUser().UpdateAccountDetails(model.updateSignUpPhoneController.text, model.updateLocations.text);
-                          model.userModel = (await prefs.getUser())!;
-                          model.isUserProfile = false;
-                          model.isLoading = false;
-                          model.notifyListeners();
+                          // model.isUserProfile = true;
+                          // model.notifyListeners();
+                          // PrefrencesViewModel prefs = await locator<PrefrencesViewModel>();
+                          // await UpdateUser().UpdateAccountDetails(model.updateSignUpPhoneController.text, model.updateLocations.text);
+                          // model.userModel = (await prefs.getUser())!;
+                          // model.isUserProfile = false;
+                          //model.isLoading = false;
+                         model.notifyListeners();
                         },
                         tapPadding: EdgeInsets.all(8),
                         child: Row(

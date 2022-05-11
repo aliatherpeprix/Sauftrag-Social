@@ -189,8 +189,6 @@ class Addfavorites {
     try {
       /// just login user through phoneNumber and password
 
-
-
       var response = await dio.get(Constants.BaseUrlPro+Constants.GetFavoriteClub, );
       if (response.statusCode == 200 || response.statusCode == 201) {
         // user found

@@ -28,7 +28,7 @@ class Profile extends StatefulWidget {
   List partyVacation;
   dynamic id;
   int distance;
-
+  List? drinking_motivation;
 
   Profile({
     Key? key,
@@ -39,7 +39,8 @@ class Profile extends StatefulWidget {
     required this.nightClub,
     required this.partyVacation,
     required this.id,
-    required this.distance
+    required this.distance,
+    required this.drinking_motivation
 
   }) : super(key: key);
 
@@ -407,7 +408,7 @@ class _ProfileState extends State<Profile> {
                           padding: EdgeInsets.symmetric(
                               horizontal: Dimensions.horizontalPadding),
                           child: Text(
-                            "Lieblings Nachtclub",
+                            "Leiblingsmusik",
                             style: TextStyle(
                               color: ColorUtils.black,
                               fontFamily: FontUtils.modernistBold,
@@ -460,7 +461,7 @@ class _ProfileState extends State<Profile> {
                           padding: EdgeInsets.symmetric(
                               horizontal: Dimensions.horizontalPadding),
                           child: Text(
-                            "Lieblings-Party-Urlaub",
+                            "Lieblingsurlaub",
                             style: TextStyle(
                               color: ColorUtils.black,
                               fontFamily: FontUtils.modernistBold,

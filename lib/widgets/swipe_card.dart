@@ -34,13 +34,14 @@ class SwipeCard extends StatefulWidget {
   String? name;
   String?address;
   double distance;
+  List? drinking_motivation;
   dynamic id;
 
 
   SwipeCard({Key? key, required this.img, required this.bottom, required this.right, required this.left, required this.cardWidth,
     required this.rotation, required this.skew, required this.flag, required this.dismissImg, required this.addImg,
     required this.details, required this.swipeLeft, required this.swipeRight,required this.name,required this.address,
-    required this.distance, required this.id}) : super(key: key);
+    required this.distance, required this.drinking_motivation ,required this.id}) : super(key: key);
 
   @override
   _SwipeCardState createState() => _SwipeCardState();
@@ -339,6 +340,57 @@ class _SwipeCardState extends State<SwipeCard> {
                                             ],
                                           ),
                                           SizedBox(height: 1.h),
+                                         Row(
+                                           children: [
+                                             widget.drinking_motivation != null ?
+                                             widget.drinking_motivation![0] != null ?
+                                             Text(widget.drinking_motivation![0].toString(),
+                                               style: TextStyle(
+                                                 color: ColorUtils.white,
+                                                 fontFamily: FontUtils.modernistBold,
+                                                 fontSize: 2.t,
+                                               ),
+                                             ) :
+                                             Text("",
+                                               style: TextStyle(
+                                                 color: ColorUtils.white,
+                                                 fontFamily: FontUtils.modernistRegular,
+                                                 fontSize: 1.5.t,
+                                               ),
+                                             ) :
+                                             Text("",
+                                               style: TextStyle(
+                                                 color: ColorUtils.white,
+                                                 fontFamily: FontUtils.modernistRegular,
+                                                 fontSize: 1.5.t,
+                                               ),
+                                             ),
+                                             SizedBox(width: 3.w,),
+                                             widget.drinking_motivation != null ?
+                                             widget.drinking_motivation![1] != null ?
+                                             Text(widget.drinking_motivation![1].toString(),
+                                               style: TextStyle(
+                                                 color: ColorUtils.white,
+                                                 fontFamily: FontUtils.modernistBold,
+                                                 fontSize: 2.t,
+                                               ),
+                                             ) :
+                                             Text("",
+                                               style: TextStyle(
+                                                 color: ColorUtils.white,
+                                                 fontFamily: FontUtils.modernistRegular,
+                                                 fontSize: 1.5.t,
+                                               ),
+                                             ) :
+                                             Text("",
+                                               style: TextStyle(
+                                                 color: ColorUtils.white,
+                                                 fontFamily: FontUtils.modernistRegular,
+                                                 fontSize: 1.5.t,
+                                               ),
+                                             )
+                                           ],
+                                         )
                                         ],
                                       ),
                                     ),

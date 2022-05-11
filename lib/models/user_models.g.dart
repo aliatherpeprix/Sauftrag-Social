@@ -10,6 +10,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel()
   ..id = json['id'] as int?
   ..username = json['username'] as String?
   ..email = json['email'] as String?
+  ..about = json['about'] as String?
   ..country_code = json['country_code'] as String?
   ..phone_no = json['phone_no'] as String?
   ..gender = json['gender']
@@ -36,12 +37,14 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel()
   ..friends = (json['friends'] as List<dynamic>?)
       ?.map((e) => UserMatchedModel.fromJson(e as Map<String, dynamic>))
       .toList()
-  ..distance = (json['distance'] as num?)?.toDouble();
+  ..distance = (json['distance'] as num?)?.toDouble()
+  ..drinking_motivation = json['drinking_motivation'] as List<dynamic>?;
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'id': instance.id,
       'username': instance.username,
       'email': instance.email,
+      'about': instance.about,
       'country_code': instance.country_code,
       'phone_no': instance.phone_no,
       'gender': instance.gender,
@@ -67,4 +70,5 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'token': instance.token,
       'friends': instance.friends,
       'distance': instance.distance,
+      'drinking_motivation': instance.drinking_motivation,
     };

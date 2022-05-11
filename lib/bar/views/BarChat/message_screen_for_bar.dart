@@ -32,6 +32,7 @@ import 'package:sauftrag/views/UserFriendList/chat_list_widget.dart';
 import 'package:sauftrag/widgets/add_dialog_box_plusAttachment.dart';
 import 'package:sauftrag/widgets/back_arrow_with_container.dart';
 import 'package:sauftrag/widgets/loader.dart';
+import 'package:sauftrag/widgets/loader_black.dart';
 import 'package:stacked/stacked.dart';
 
 class MessageScreenForBar extends StatefulWidget {
@@ -159,13 +160,18 @@ class _MessageScreenForBarState extends State<MessageScreenForBar> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          "Report Chat",
-                                          style: TextStyle(
-                                              fontFamily:
-                                                  FontUtils.modernistRegular,
-                                              fontSize: 1.9.t,
-                                              color: ColorUtils.text_dark),
+                                        GestureDetector(
+                                          onTap: () {
+                                            model.reportBarIndChat();
+                                          },
+                                          child: model.addDrink == false ? Text(
+                                            "Report Chat",
+                                            style: TextStyle(
+                                                fontFamily:
+                                                FontUtils.modernistRegular,
+                                                fontSize: 1.9.t,
+                                                color: ColorUtils.text_dark),
+                                          ) : LoaderBlack()
                                         ),
                                         SizedBox(
                                           height: 1.h,

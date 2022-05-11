@@ -18,6 +18,7 @@ import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/viewModels/prefrences_view_model.dart';
 import 'package:sauftrag/viewModels/registrationViewModel.dart';
 import 'package:sauftrag/views/Home/main_view.dart';
+import 'package:sauftrag/widgets/all_page_loader.dart';
 import 'package:sauftrag/widgets/loader.dart';
 import 'package:stacked/stacked.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
@@ -416,9 +417,7 @@ class _AccountState extends State<Account> {
                               model.updateAccountDetials();
                               //model.navigateBack();
                             },
-                            child: model.editProfile == false
-                                ? Text("Save")
-                                : Loader(),
+                            child:  Text("Save"),
                             style: ElevatedButton.styleFrom(
                               primary: ColorUtils.text_red,
                               onPrimary: ColorUtils.white,

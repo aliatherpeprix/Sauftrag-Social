@@ -130,7 +130,7 @@ class _FollowerProfileState extends State<FollowerProfile> {
                             margin: EdgeInsets.symmetric(
                                 horizontal: 1.7.w, vertical: 1.1.h),
                             padding: EdgeInsets.all(13),
-//height: 10.h,
+                            //height: 10.h,
                             decoration: BoxDecoration(
                               color: ColorUtils.white,
                               borderRadius: const BorderRadius.all(
@@ -142,12 +142,12 @@ class _FollowerProfileState extends State<FollowerProfile> {
                           ),
                         ),
                         actions: [
-                          IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.more_vert_rounded,
-                                color: ColorUtils.transparent,
-                              ))
+                          // IconButton(
+                          //     onPressed: () {},
+                          //     icon: Icon(
+                          //       Icons.more_vert_rounded,
+                          //       color: ColorUtils.transparent,
+                          //     ))
                         ],
                         floating: true,
                         pinned: false,

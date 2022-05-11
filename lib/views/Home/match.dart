@@ -50,8 +50,8 @@ class _MatchState extends State<Match> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
 
-                          SvgPicture.asset(ImageUtils.congratzPic),
-                          SizedBox(height: 5.h),
+                          // SvgPicture.asset(ImageUtils.congratzPic),
+                          // SizedBox(height: 5.h),
 
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -115,11 +115,11 @@ class _MatchState extends State<Match> {
 
 
                           Text(
-                            "You and Elizabeth have liked each other. Let’s ask her about her somthing interesting or you can just “Hi”.",
+                            "Request has been send",
                             style: TextStyle(
                               color: ColorUtils.black,
-                              fontFamily: FontUtils.modernistRegular,
-                              fontSize: 1.7.t,
+                              fontFamily: FontUtils.modernistBold,
+                              fontSize: 2.4.t,
                             ),
                             textAlign: TextAlign.center,
                           ),
@@ -130,35 +130,35 @@ class _MatchState extends State<Match> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
 
-                              Expanded(
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    // model.navigateToMessageScreen();
-                                  },
-                                  child: Text("Say Hi"),
-                                  style: ElevatedButton.styleFrom(
-                                    primary: ColorUtils.text_red,
-                                    onPrimary: ColorUtils.white,
-                                    padding: EdgeInsets.symmetric(vertical: 1.8.h, horizontal: 5.w),
-                                    elevation: 0,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(Dimensions.roundCorner),
-                                        side: BorderSide(
-                                            color: ColorUtils.text_red,
-                                            width: 1
-                                        )
-                                    ),
-                                    textStyle: TextStyle(
-                                      //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
-                                      fontFamily: FontUtils.modernistBold,
-                                      fontSize: 1.8.t,
-                                      //height: 0
-                                    ),
-                                  ),
-                                ),
-                              ),
-
-                              SizedBox(width: 5.w,),
+                              // Expanded(
+                              //   child: ElevatedButton(
+                              //     onPressed: () {
+                              //       // model.navigateToMessageScreen();
+                              //     },
+                              //     child: Text("Say Hi"),
+                              //     style: ElevatedButton.styleFrom(
+                              //       primary: ColorUtils.text_red,
+                              //       onPrimary: ColorUtils.white,
+                              //       padding: EdgeInsets.symmetric(vertical: 1.8.h, horizontal: 5.w),
+                              //       elevation: 0,
+                              //       shape: RoundedRectangleBorder(
+                              //           borderRadius: BorderRadius.circular(Dimensions.roundCorner),
+                              //           side: BorderSide(
+                              //               color: ColorUtils.text_red,
+                              //               width: 1
+                              //           )
+                              //       ),
+                              //       textStyle: TextStyle(
+                              //         //color: model.role == Constants.user ? ColorUtils.white: ColorUtils.text_red,
+                              //         fontFamily: FontUtils.modernistBold,
+                              //         fontSize: 1.8.t,
+                              //         //height: 0
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
+                              //
+                              // SizedBox(width: 5.w,),
 
                               Expanded(
                                 child: ElevatedButton(

@@ -231,6 +231,10 @@ class RegistrationViewModel extends BaseViewModel {
   bool isSignUpBarAboutInFocus = false;
   FocusNode signUpBarAboutFocus = new FocusNode();
 
+  final signUpUserAboutController = TextEditingController();
+  bool isSignUpUserAboutInFocus = false;
+  FocusNode signUpUserAboutFocus = new FocusNode();
+
   final signUpBarPasswordController = TextEditingController();
   bool isSignUpBarPasswordInFocus = false;
   FocusNode signUpBarPasswordFocus = new FocusNode();
@@ -1322,6 +1326,7 @@ class RegistrationViewModel extends BaseViewModel {
       var userSignupResponce = await signupUser.SignUpUser(
 
           usermodel!.email!,
+          signUpUserAboutController.text,
           usermodel.username!,
           usermodel.password!,
           usermodel.password!,
@@ -1395,7 +1400,7 @@ class RegistrationViewModel extends BaseViewModel {
           user.favorite_alcohol_drinks =
               CommonFunctions.SubtractFromList(user.favorite_alcohol_drinks!);
         }
-        if (favorite == "favorite_night_club") {
+        if (favorite == "favorite_musics") {
           user.favorite_musics =
               CommonFunctions.SubtractFromList(user.favorite_musics!);
         }

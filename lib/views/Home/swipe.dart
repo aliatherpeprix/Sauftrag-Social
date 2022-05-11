@@ -478,14 +478,14 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                         alignment: AlignmentDirectional.center,
                                         children: model.catalogImages.map((item) {
                                           return SwipeCard(
-                                            name: model.discoverModel![model.catalogImages.indexOf(item)]
-                                                .username,
+                                            name: model.discoverModel![model.catalogImages.indexOf(item)].username,
                                             img: item,
                                             cardWidth: backCardWidth + 0,
                                             rotation: rotate.value,
                                             skew: rotate.value < -10 ? 0.1 : 0.0,
                                             address: model.discoverModel![model.catalogImages.indexOf(item)].address,
                                             distance : model.discoverModel![model.catalogImages.indexOf(item)].distance!,
+                                            drinking_motivation : model.discoverModel![model.catalogImages.indexOf(item)].drinking_motivation,
                                             details: () {
                                               if(model.catalogImages.isNotEmpty){
                                                 model.navigateToProfileScreen(
@@ -523,6 +523,11 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                                       .catalogImages
                                                       .indexOf(item)]
                                                       .distance!.toInt(),
+                                                  model
+                                                      .discoverModel![model
+                                                      .catalogImages
+                                                      .indexOf(item)]
+                                                      .drinking_motivation,
                                                 );
                                               }
                                             },
@@ -534,11 +539,8 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                             dismissImg: dismissImg,
                                             swipeRight: swipeRight,
                                             swipeLeft: swipeLeft,
-                                            id: model
-                                                .discoverModel![model
-                                                    .catalogImages
-                                                    .indexOf(item)]
-                                                .id,
+                                            id: model.discoverModel![model.catalogImages.indexOf(item)].id,
+
                                           );
                                         }).toList(),
                                       ),

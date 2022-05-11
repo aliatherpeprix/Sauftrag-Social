@@ -18,7 +18,7 @@ class UpdateUser {
 
   Future updateUser(
       int userId,
-      String country_code,
+      //String country_code,
       String phone_no,
       String about,
       dynamic gender,
@@ -33,8 +33,6 @@ class UpdateUser {
       List images,
       bool terms_conditions,
       bool data_protection,
-      String password,
-      String password2,
 
       )
   async
@@ -42,33 +40,32 @@ class UpdateUser {
     try {
       var param = FormData.fromMap({
 
-        "country_code": country_code,
+        //"country_code": country_code,
         "phone_no": phone_no,
         "about": about,
-        "gender": gender,
+        if(gender!=null)"gender": gender,
         "address": userAddress,
         "dob": dob,
-        "relation_ship": relation_ship,
+        if(relation_ship != null)"relation_ship": relation_ship,
         "role": role,
         "favorite_alcohol_drinks": favorite_alcohol_drinks,
         "favorite_musics": favorite_musics,
         "favorite_party_vacation": favorite_party_vacation,
-        "catalogue_image1": null,
-        "catalogue_image2": null,
-        "catalogue_image3": null,
-        "catalogue_image4": null,
-        "catalogue_image5": null,
         "terms_conditions": true,
         "data_protection": true,
-        "password": "ZXC!asd123",
-        "password2": "ZXC!asd123",
         //"profile_picture" : profilePicture,
-        //if (images[0] is File && (images[0] as File).path.isNotEmpty)"profile_picture": await MultipartFile.fromFile((images[0] as File).path,),
-        if (images[0] is File && (images[0] as File).path.isNotEmpty)"catalogue_image1": await MultipartFile.fromFile((images[1] as File).path,),
-        if (images[1] is File && (images[1] as File).path.isNotEmpty)"catalogue_image2": await MultipartFile.fromFile((images[2] as File).path,),
-        if (images[2] is File && (images[2] as File).path.isNotEmpty)"catalogue_image3": await MultipartFile.fromFile((images[3] as File).path,),
-        if (images[3] is File && (images[3] as File).path.isNotEmpty)"catalogue_image4": await MultipartFile.fromFile((images[4] as File).path,),
-        if (images[4] is File && (images[4] as File).path.isNotEmpty)"catalogue_image5": await MultipartFile.fromFile((images[5] as File).path,),
+        if (images[0] is File && (images[0] as File).path.isNotEmpty)"profile_picture": await MultipartFile.fromFile((images[0] as File).path,),
+        if (images[1] is File && (images[1] as File).path.isNotEmpty)"catalogue_image1": await MultipartFile.fromFile((images[1] as File).path,),
+        if (images[2] is File && (images[2] as File).path.isNotEmpty)"catalogue_image2": await MultipartFile.fromFile((images[2] as File).path,),
+        if (images[3] is File && (images[3] as File).path.isNotEmpty)"catalogue_image3": await MultipartFile.fromFile((images[3] as File).path,),
+        if (images[4] is File && (images[4] as File).path.isNotEmpty)"catalogue_image4": await MultipartFile.fromFile((images[4] as File).path,),
+        if (images[5] is File && (images[5] as File).path.isNotEmpty)"catalogue_image5": await MultipartFile.fromFile((images[5] as File).path,),
+        if (images[0] is File && (images[0] as File).path.isEmpty)"profile_picture": "",
+        if (images[1] is File && (images[1] as File).path.isEmpty)"catalogue_image1": "",
+        if (images[2] is File && (images[2] as File).path.isEmpty)"catalogue_image2": "",
+        if (images[3] is File && (images[3] as File).path.isEmpty)"catalogue_image3": "",
+        if (images[4] is File && (images[4] as File).path.isEmpty)"catalogue_image4": "",
+        if (images[5] is File && (images[5] as File).path.isEmpty)"catalogue_image5": "",
       });
       UserModel? user = await locator<PrefrencesViewModel>().getUser();
       var response = await dio.patch(Constants.BaseUrlPro+Constants.
@@ -92,7 +89,7 @@ class UpdateUser {
         return response.data['message'];
       }
 
-    } catch (e) {
+      } catch (e) {
       //dynamic exception = e;
       print(e);
       return  "yo";
@@ -110,7 +107,7 @@ class UpdateUser {
       var param = FormData.fromMap({
 
         if(favorite=='favorite_alcohol_drinks')'favorite_alcohol_drinks' : selectedList,
-        if(favorite=='favorite_night_club')'favorite_night_club' : selectedList,
+        if(favorite=='favorite_musics')'favorite_musics' : selectedList,
         if(favorite=='favorite_party_vacation')'favorite_party_vacation' : selectedList,
 
       });

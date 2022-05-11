@@ -805,7 +805,7 @@ class _MediaState extends State<Media> {
                             SliverGridDelegateWithFixedCrossAxisCount(
                               childAspectRatio: 0.7,
                                 crossAxisCount: 3,
-                                //mainAxisSpacing: 1*SizeConfig.widthMultiplier,
+                                mainAxisSpacing: 1.5*SizeConfig.widthMultiplier,
                                 //childAspectRatio: 1,
                                 crossAxisSpacing: 1*SizeConfig.widthMultiplier),
                                 itemBuilder: (context, index) {
@@ -924,7 +924,48 @@ class _MediaState extends State<Media> {
                               }
                             },),
 
-                        SizedBox(height: 7.h),
+                        SizedBox(height: 3.h),
+                        Text(
+                          "About",
+                          style: TextStyle(
+                            color: ColorUtils.black,
+                            fontFamily: FontUtils.modernistBold,
+                            fontSize: 2.5.t,
+                          ),
+                        ),
+                        SizedBox(height: 3.h),
+                        Container(
+                          //height: 15.h,
+                          constraints:
+                          BoxConstraints(
+                              maxHeight:
+                              100),
+                          padding: EdgeInsets.symmetric(vertical: Dimensions.containerVerticalPadding, horizontal: Dimensions.containerHorizontalPadding),
+                          decoration: BoxDecoration(
+                              color: ColorUtils.white,
+                              borderRadius: BorderRadius.all(Radius.circular(Dimensions.roundCorner)),
+                              border: Border.all(color: ColorUtils.divider)
+                          ),
+                          child: TextField(
+                            focusNode: model.signUpUserAboutFocus,
+                            controller: model.signUpUserAboutController,
+                            //obscureText: !model.signupEmailVisible,
+                            keyboardType: TextInputType.multiline,
+                            textInputAction: TextInputAction.next,
+                            style: TextStyle(
+                              color: ColorUtils.red_color,
+                              fontFamily: FontUtils.modernistRegular,
+                              fontSize: 1.9.t,
+                            ),
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              isDense:true,
+                              contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                            ),
+                            maxLines: null,
+                          ),
+                        ),
+                        SizedBox(height: 5.h),
                         //Next Button
                         SizedBox(
                           width: double.infinity,
@@ -960,6 +1001,7 @@ class _MediaState extends State<Media> {
                     ),
                   ),
                 )),
+
           ),
         );
       },

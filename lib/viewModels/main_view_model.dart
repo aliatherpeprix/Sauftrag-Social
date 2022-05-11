@@ -27,6 +27,7 @@ import 'package:sauftrag/models/get_bar_upcoming_event.dart';
 import 'package:sauftrag/models/get_comments_bar.dart';
 import 'package:sauftrag/models/get_comments_user.dart';
 import 'package:sauftrag/models/listOfFollowing_Bars.dart';
+import 'package:sauftrag/models/report_chat.dart';
 import 'package:sauftrag/models/request_match_model.dart';
 import 'package:sauftrag/models/user_matched.dart';
 import 'package:sauftrag/models/user_models.dart' as userModel;
@@ -79,6 +80,7 @@ import 'package:sauftrag/services/listOfBars.dart';
 import 'package:sauftrag/services/post_comments.dart';
 
 import 'package:sauftrag/services/privacyPolicy.dart';
+import 'package:sauftrag/services/report_chat_user.dart';
 import 'package:sauftrag/services/termsAndCondition.dart';
 import 'package:sauftrag/services/updateBarProfile.dart';
 import 'package:sauftrag/services/updateUserProfile.dart';
@@ -132,6 +134,7 @@ class MainViewModel extends BaseViewModel {
   var updateUserDetails = UpdateUser();
   var postComments = PostComments();
   var getComments = GetComments();
+  var postUserChat = UserreportChat();
 
 
   Barcode? result;
@@ -232,6 +235,7 @@ class MainViewModel extends BaseViewModel {
   final barNameController = TextEditingController();
   final updateSignUpPhoneController = TextEditingController();
   final updateLocations = TextEditingController();
+  final updateUserAbout = TextEditingController();
   ScrollController chatScroll = ScrollController();
   final addDrinkController = TextEditingController();
   bool isAddDrinkInFocus = false;
@@ -1536,9 +1540,11 @@ class MainViewModel extends BaseViewModel {
       List nightClub,
       List partyVacation,
       dynamic id,
-      int? distance) {
+      int? distance,
+      List? drinking_motivation
+      ) {
     navigationService.navigateToProfileScreen(
-        images, name, address, alcoholDrink, nightClub, partyVacation, id, distance!);
+        images, name, address, alcoholDrink, nightClub, partyVacation, id, distance!, drinking_motivation);
   }
 
   void navigateToMatchScreen() {
@@ -1939,7 +1945,7 @@ class MainViewModel extends BaseViewModel {
   }*/
 
   Future updateAccountDetials() async {
-    editProfile = true;
+    isLoading = true;
     notifyListeners();
     var updateAccountDetailResponse = await updateUser.UpdateAccountDetails(
         updateSignUpPhoneController.text, updateLocations.text);
@@ -1950,7 +1956,7 @@ class MainViewModel extends BaseViewModel {
       await prefrencesViewModel.saveUser(user);
       notifyListeners();
     }
-    editProfile = false;
+    isLoading = false;
     navigateToUserProfileScreen();
     notifyListeners();
   }
@@ -3594,33 +3600,53 @@ class MainViewModel extends BaseViewModel {
   }
 
   updatingUser() async {
-    List<UserModel> response = await updateUserDetails.updateUser(
+    editProfile = true;
+    notifyListeners();
+    List tempList = [];
+    for (int i = 0;i<6;i++)
+    {
+      if(i<imageFiles.length){
+        tempList.add(imageFiles[i]);
+      }
+      else{
+        tempList.add(File(""));
+      }
+    }
+
+    var  response = await updateUserDetails.updateUser(
         currentUserResponse!.id!,
-        currentUserResponse!.country_code!,
         currentUserResponse!.phone_no!,
-        "",
-        userGenderValue!,
+        updateUserAbout.text,
+        userGenderValue,
         currentUserResponse!.address!,
         currentUserResponse!.dob!,
-        currentRelationValue!,
+        currentRelationValue  /*== "Single" ? 1 :
+        currentUserResponse!.relation_ship == "Married" ? 2 :
+        currentUserResponse!.relation_ship == "Relationship" ? 3 :
+        currentUserResponse!.relation_ship == "Open Relationship" ? 4 : 5*/ ,
         currentUserResponse!.role!,
-        currentUserResponse!.favorite_alcohol_drinks!,
-        currentUserResponse!.favorite_musics!,
-        currentUserResponse!.favorite_party_vacation!,
+        selectedDrinkList,
+        selectedClubList,
+        selectedVacationList,
         //currentUserResponse!.profile_picture!,
-        [
-          currentUserResponse!.catalogue_image1,
-          currentUserResponse!.catalogue_image2,
-          currentUserResponse!.catalogue_image3,
-          currentUserResponse!.catalogue_image4,
-          currentUserResponse!.catalogue_image5,
-        ],
+        tempList,
         true,
         true,
-        "ZXC!asd123",
-        "ZXC!asd123",
     );
     print(response);
+    if (response is UserModel) {
+      UserModel user = response;
+      user.about = user.about!;
+
+
+      user.token = userModel!.token!;
+      userModel = user;
+      await prefrencesViewModel.saveUser(user);
+    }
+    //await prefrencesViewModel.saveUser(user);
+    editProfile = false;
+    notifyListeners();
+    navigateToUserProfileScreen();
   }
 
   XFile? _createEventPickedFile;
@@ -3746,6 +3772,68 @@ class MainViewModel extends BaseViewModel {
     isLoading = false;
     notifyListeners();
     //print(getFaqsList);
+  }
+
+  reportUserIndChat() async {
+
+    addDrink = true;
+    notifyListeners();
+    //drinkList = await Addfavorites().GetFavoritesDrink();
+    var report = await postUserChat.UserReportChat(
+
+
+
+    );
+    if (report is ReportChat) {
+     // getMessage = feedBack;
+      print(getMessage);
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Report has been sent",
+      ));
+      addDrink = false;
+      //feedbackController.clear();
+    }
+    else {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Some thing went wrong",
+      ));
+      //isPrivacyPolicy = false;
+      return;
+    }
+    print(addFilters);
+    //navigateToMapSearchScreen();
+    notifyListeners();
+
+  }
+
+  reportBarIndChat() async {
+
+    addDrink = true;
+    notifyListeners();
+    //drinkList = await Addfavorites().GetFavoritesDrink();
+    var report = await postUserChat.BarReportChat(
+
+    );
+    if (report is ReportChat) {
+      // getMessage = feedBack;
+      print(getMessage);
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Report has been sent",
+      ));
+      addDrink = false;
+      //feedbackController.clear();
+    }
+    else {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Some thing went wrong",
+      ));
+      //isPrivacyPolicy = false;
+      return;
+    }
+    print(addFilters);
+    //navigateToMapSearchScreen();
+    notifyListeners();
+
   }
 
 }
