@@ -120,8 +120,8 @@ class _BarDetailState extends State<BarDetail> {
                                           ? InkWell(
                                           onTap: () {
                                             if (index != 0) {
-                                              if ((model
-                                                  .imageFiles[index -1] as File)
+                                              if (model.imageFiles[index -1] is String ||
+                                              (model.imageFiles[index -1] as File)
                                                   .path.isNotEmpty) {
                                                 model.getImage(index);
                                                 model
@@ -135,9 +135,13 @@ class _BarDetailState extends State<BarDetail> {
                                             }
                                           },
                                           child: DottedBorder(
-                                              color: index != 0 ?(model
-                                                  .imageFiles[index -1] as File)
-                                                  .path.isNotEmpty?ColorUtils.text_red :ColorUtils.text_grey :ColorUtils.text_red,
+                                              color: index != 0 ?
+                                                  model.imageFiles[index -1] is File ?
+                                              (model.imageFiles[index -1] as File).path.isNotEmpty
+                                                  ? ColorUtils.text_red
+                                                     : ColorUtils.text_grey
+                                                       :ColorUtils.text_red
+                                                          :ColorUtils.text_red,
                                               strokeWidth: 1.5,
                                               borderType: BorderType.RRect,
                                               radius:
@@ -146,9 +150,14 @@ class _BarDetailState extends State<BarDetail> {
                                               child: Center(
                                                 child: Icon(
                                                   Icons.add_rounded,
-                                                  color: index != 0 ?(model
-                                                      .imageFiles[index -1] as File)
-                                                      .path.isNotEmpty?ColorUtils.text_red :ColorUtils.text_grey :ColorUtils.text_red,
+                                                  color: index != 0 ?
+                                                     model.imageFiles[index -1] is File ?
+                                                  (model.imageFiles[index -1] as File)
+                                                      .path.isNotEmpty
+                                                      ?ColorUtils.text_red
+                                                      :ColorUtils.text_grey
+                                                         :ColorUtils.text_red
+                                                            : ColorUtils.text_red,
                                                   size: 8.i,
                                                 ),
                                               )))
@@ -599,6 +608,51 @@ class _BarDetailState extends State<BarDetail> {
                             ),
                           ),
                         ),
+                        SizedBox(height: 2.h),
+                        Text(
+                          "About",
+                          style: TextStyle(
+                            color: ColorUtils.black,
+                            fontFamily: FontUtils.modernistBold,
+                            fontSize: 2.2.t,
+                          ),
+                        ),
+                        SizedBox(height: 2.h),
+                        Container(
+                          //height: 15.h,
+                          constraints: BoxConstraints(maxHeight: 100),
+                          padding: EdgeInsets.symmetric(
+                              vertical:
+                              Dimensions.containerVerticalPadding,
+                              horizontal: Dimensions
+                                  .containerHorizontalPadding),
+                          decoration: BoxDecoration(
+                              color: ColorUtils.white,
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(
+                                      Dimensions.roundCorner)),
+                              border: Border.all(
+                                  color: ColorUtils.divider)),
+                          child: TextField(
+                            //focusNode: model.signUpUserAboutFocus,
+                            controller: model.updateBarAbout,
+                            //obscureText: !model.signupEmailVisible,
+                            keyboardType: TextInputType.multiline,
+                            textInputAction: TextInputAction.next,
+                            style: TextStyle(
+                              color: ColorUtils.red_color,
+                              fontFamily: FontUtils.modernistRegular,
+                              fontSize: 1.9.t,
+                            ),
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              isDense: true,
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 0, vertical: 0),
+                            ),
+                            maxLines: null,
+                          ),
+                        ),
                         SizedBox(height: 6.h),
 
                         SizedBox(
@@ -615,8 +669,7 @@ class _BarDetailState extends State<BarDetail> {
                               primary: ColorUtils.text_red,
                               onPrimary: ColorUtils.white,
                               padding: EdgeInsets.symmetric(
-                                  vertical:
-                                  Dimensions.containerVerticalPadding),
+                                  vertical: Dimensions.containerVerticalPadding),
                               elevation: 1,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(

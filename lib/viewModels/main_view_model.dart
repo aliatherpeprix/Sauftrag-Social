@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:geocoding/geocoding.dart';
@@ -15,6 +16,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:record/record.dart';
 import 'package:sauftrag/bar/views/Drawer/bar_followers.dart';
 import 'package:sauftrag/models/attend_event.dart';
 import 'package:sauftrag/models/comments.dart';
@@ -236,6 +239,7 @@ class MainViewModel extends BaseViewModel {
   final updateSignUpPhoneController = TextEditingController();
   final updateLocations = TextEditingController();
   final updateUserAbout = TextEditingController();
+  final updateBarAbout = TextEditingController();
   ScrollController chatScroll = ScrollController();
   final addDrinkController = TextEditingController();
   bool isAddDrinkInFocus = false;
@@ -1961,60 +1965,37 @@ class MainViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future saveBarDetails() async {
-    if (imageFiles[0].path.isEmpty) {
-      DialogUtils().showDialog(MyErrorWidget(
-        error: "Bar logo is required",
-      ));
-      return;
-    }
+  saveBarDetails() async {
 
-    // for (int i = 0;i<imageFiles.length;i++){
-    //   if (imageFiles[i] is File && (imageFiles[i] as File).path.isNotEmpty){
-    //     String image = "data:${lookupMimeType(imageFiles[0].path)};base64," +
-    //         base64Encode(imageFiles[0].readAsBytesSync());
-    //     tempList.add(image);
-    //   }
-    //   else {
-    //     tempList.add(imageFiles[i]);
-    //   }
-    // }
-
-    // for (int i = 0; i < imageFiles.length; i++) {
-    //   if ((imageFiles[i] is File)) {
-    //     if (imageFiles[i].path.isEmpty) {
-    //       DialogUtils().showDialog(
-    //           MyErrorWidget(
-    //             error: "Select All Images" /*+i.toString()*/,
-    //           ),
-    //           isDismissable: true);
-    //       return;
-    //     }
-    //   }
-    //
-    //   // bool hasImages = false;
-    //   // if (!hasImages) {
-    //   //   if ((imageFiles[i] is String && (imageFiles[i] as String).isEmpty) ||
-    //   //       imageFiles[i].path.isEmpty) {
-    //   //     DialogUtils().showDialog(MyErrorWidget(
-    //   //       error: "Select at least one Image",
-    //   //     ));
-    //   //     return;
-    //   //   } else {
-    //   //     hasImages = true;
-    //   //     break;
-    //   //   }
-    //   // }
-    // }
     editProfile = true;
     notifyListeners();
+    List tempList = [];
+
+    for(int i=0; i<6; i++)
+      {
+        if(i<imageFiles.length)
+          {
+            tempList.add(imageFiles[i]);
+          }
+        else{
+          tempList.add(File(""));
+        }
+      }
+    NewBarModel? barmodel = await prefrencesViewModel.getBarUser();
+
     var barUpdateResponse = await updateBar.UpdateBarProfile(
+
+      barmodel!.id,
       barNameController.text,
-      imageFiles,
+      barmodel.role,
+      updateBarAbout.text,
+      tempList,
     );
+    print(barUpdateResponse);
 
     if (barUpdateResponse is NewBarModel) {
       NewBarModel barUser = barUpdateResponse;
+      //barUser.bar_name = barUser.bar_name;
       barUser.token = barModel!.token!;
       // user.favorite_alcohol_drinks = user.favorite_alcohol_drinks!;
       // user.favorite_night_club = user.favorite_night_club!;
@@ -3247,6 +3228,8 @@ class MainViewModel extends BaseViewModel {
 
   }
 
+  bool increment = false;
+  bool decrement = false;
   postLikeNewsFeed(int index) async {
     isLoading = true;
     notifyListeners();
@@ -3256,6 +3239,8 @@ class MainViewModel extends BaseViewModel {
     if (userlike is LikeNewsFeed) {
       likes = userlike;
       posts[index].likes_count = posts[index].likes_count! + 1;
+      increment = true;
+      notifyListeners();
       print(likes);
       DialogUtils().showDialog(MyErrorWidget(
         error: "You liked this news feed!",
@@ -3271,6 +3256,9 @@ class MainViewModel extends BaseViewModel {
       isLoading = true;
       like = false;
       posts[index].likes_count = posts[index].likes_count!  - 1 ;
+      decrement = true;
+      notifyListeners();
+
       var userlike = await userLike.NewfeedLike(selectedPost!.id!, like);
       DialogUtils().showDialog(MyErrorWidget(
         error: "You disliked this new feed",
@@ -3836,4 +3824,99 @@ class MainViewModel extends BaseViewModel {
 
   }
 
+
+  Timer? _timer;
+  Timer? _ampTimer;
+  bool _isRecording = false;
+  File? file;
+  String? sdPath;
+  final audioRecorder = Record();
+  bool recordPressed = false;
+
+  initializeRecording(){
+    _isRecording = false;
+  }
+
+  disposeRecording(){
+    _timer?.cancel();
+    _ampTimer?.cancel();
+    audioRecorder.dispose();
+  }
+
+  start() async {
+    try {
+      if (await audioRecorder.hasPermission()) {
+        // We don't do anything with this but printing
+        // final isSupported = await audioRecorder.isEncoderSupported(
+        //   AudioEncoder.aacLc,
+        // );
+        // if (kDebugMode) {
+        //   print('${AudioEncoder.aacLc.name} supported: $isSupported');
+        // }
+
+        getFilePath();
+        await audioRecorder.start(
+            encoder: AudioEncoder.AAC
+        );
+
+
+        // bool isRecording = await audioRecorder.isRecording();
+        // await audioRecorder.stop();
+        //isRecording = isRecording;
+        //recordDuration = 0;
+        notifyListeners();
+        // setState(() {
+        //   _isRecording = isRecording;
+        //   _recordDuration = 0;
+        // });
+
+        //_startTimer();
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  stop(int id) async {
+    _timer?.cancel();
+    _ampTimer?.cancel();
+    _isRecording = false;
+    file = await File((await audioRecorder.stop())!).create();
+    await pubnub!.files.sendFile(getConversationID(
+        barModel!.id.toString(),
+        id.toString()
+    ), "abc.mp3", file!.readAsBytesSync().toList(),fileMessage: {
+      "userID" : barModel!.id,
+      "time" : DateTime.now().toString(),
+    }).then((value){
+      print(value);
+    })
+        .catchError((error){
+      print(error);
+    });
+    DialogUtils().showDialog(MyErrorWidget(
+      error: "File has been uploaded!",
+    ));
+    // File test = await File(file!.path);
+    // test.writeAsBytesSync(await file!.readAsBytesSync());
+    // file = test;
+    notifyListeners();
+    //await firebaseChat.uploadRecording(attendeeFbId, otherUserId);
+    notifyListeners();
+    //widget.onStop(path!);
+    //setState(() => _isRecording = false);
+  }
+
+  int i = 0;
+
+  getFilePath() async {
+    var storageDirectory = await getExternalStorageDirectory();
+    sdPath = await storageDirectory!.path + "/record/audio.mp4";
+    notifyListeners();
+    //var d = Directory(sdPath!);
+    // if (!d.existsSync()) {
+    //   d.createSync(recursive: true);
+    // }
+    //return sdPath! + "/test_${i++}.mp3";
+  }
 }

@@ -92,58 +92,42 @@ class Updatebar {
   }
 
   Future UpdateBarProfile(
-    String bar_name,
-    List images
+
+      int? userId,
+      String bar_name,
+      int? role,
+      String about,
+      List images,
+
       ) async
   {
    try{
      var param = FormData.fromMap({
 
        'bar_name': bar_name,
+       'role' : role,
+       'about' : about,
 
-
-       if (images[0] is File && (images[0] as File).path.isNotEmpty)
-         "profile_picture": await MultipartFile.fromFile((images[0] as File).path,)
-       else if (images[0] is String) "profile_picture" : null
-       else "profile_picture" : "",
-
-
-       if (images[1] is File && (images[1] as File).path.isNotEmpty)
-         "catalogue_image1": await MultipartFile.fromFile((images[1] as File).path,)
-       else if (images[1] is String) "catalogue_image1" : null
-       else "catalogue_image1" : "",
-
-
-       if (images[2] is File && (images[2] as File).path.isNotEmpty)
-         "catalogue_image2": await MultipartFile.fromFile((images[2] as File).path,)
-       else if (images[2] is String) "catalogue_image2" : null
-       else "catalogue_image2" : "",
-
-
-       if (images[3] is File && (images[3] as File).path.isNotEmpty)
-         "catalogue_image3": await MultipartFile.fromFile((images[3] as File).path,)
-       else if (images[3] is String) "catalogue_image3" : null
-       else "catalogue_image3" : "",
-
-
-       if (images[4] is File && (images[4] as File).path.isNotEmpty)
-         "catalogue_image4": await MultipartFile.fromFile((images[4] as File).path,)
-       else if (images[4] is String) "catalogue_image4" : null
-       else "catalogue_image4" : "",
-
-
-       if (images[5] is File && (images[5] as File).path.isNotEmpty)
-         "catalogue_image5": await MultipartFile.fromFile((images[5] as File).path,)
-       else if (images[5] is String) "catalogue_image5" : null
-       else "catalogue_image5" : "",
+       if (images[0] is File && (images[0] as File).path.isNotEmpty)"profile_picture": await MultipartFile.fromFile((images[0] as File).path,),
+       if (images[1] is File && (images[1] as File).path.isNotEmpty)"catalogue_image1": await MultipartFile.fromFile((images[1] as File).path,),
+       if (images[2] is File && (images[2] as File).path.isNotEmpty)"catalogue_image2": await MultipartFile.fromFile((images[2] as File).path,),
+       if (images[3] is File && (images[3] as File).path.isNotEmpty)"catalogue_image3": await MultipartFile.fromFile((images[3] as File).path,),
+       if (images[4] is File && (images[4] as File).path.isNotEmpty)"catalogue_image4": await MultipartFile.fromFile((images[4] as File).path,),
+       if (images[5] is File && (images[5] as File).path.isNotEmpty)"catalogue_image5": await MultipartFile.fromFile((images[5] as File).path,),
+       if (images[0] is File && (images[0] as File).path.isEmpty)"profile_picture": "",
+       if (images[1] is File && (images[1] as File).path.isEmpty)"catalogue_image1": "",
+       if (images[2] is File && (images[2] as File).path.isEmpty)"catalogue_image2": "",
+       if (images[3] is File && (images[3] as File).path.isEmpty)"catalogue_image3": "",
+       if (images[4] is File && (images[4] as File).path.isEmpty)"catalogue_image4": "",
+       if (images[5] is File && (images[5] as File).path.isEmpty)"catalogue_image5": "",
 
       });
      NewBarModel? user = await locator<PrefrencesViewModel>().getBarUser();
      var response = await dio.patch(Constants.BaseUrlPro+Constants.
-     UpdateBarProfile+ user!.id.toString()+"/", data: param,options: Options(
+     UpdateBarProfile+ "${userId}"+"/", data: param,options: Options(
          contentType: Headers.formUrlEncodedContentType,
          headers: {
-           "Authorization": "Token ${user.token!}"
+           "Authorization": "Token ${user!.token!}"
          }
      ));
      if (response.statusCode == 200 || response.statusCode == 201) {

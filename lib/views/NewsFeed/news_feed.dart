@@ -505,39 +505,33 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                                           children: [
                                             GestureDetector(
                                               onTap: () {
-                                                model.selectedPost =
-                                                    model.posts[widget.index!];
-                                                model.postLikeNewsFeed(
-                                                    widget.index!);
+                                                if(model.isLoading == true)
+                                                {
+                                                  model.selectedPost = model.posts[widget.index!];
+                                                  model.postLikeNewsFeed(widget.index!);
+                                                }
                                                 //expandableController == false ;
                                               },
                                               child: Row(
                                                 children: [
                                                   SvgPicture.asset(
                                                     ImageUtils.matchedIcon,
-                                                    color:
-                                                        ColorUtils.icon_color,
+                                                    color: model.posts[widget.index!].is_like! ? ColorUtils.text_red : ColorUtils.icon_color,
                                                   ),
                                                   SizedBox(
                                                     width: 1.5.w,
                                                   ),
                                                   //if(model.posts[widget.index!].likes != null)
                                                   Text(
-                                                    model.posts[widget.index!]
-                                                                .likes_count ==
-                                                            null
+                                                    model.posts[widget.index!].likes_count == null
                                                         ? 0.toString()
-                                                        : model
-                                                            .posts[
-                                                                widget.index!]
-                                                            .likes_count
-                                                            .toString(),
+                                                        : model.posts[widget.index!].likes_count.toString(),
                                                     style: TextStyle(
                                                         fontFamily: FontUtils
                                                             .modernistRegular,
                                                         fontSize: 1.5.t,
-                                                        color: ColorUtils
-                                                            .icon_color),
+                                                        color: model.posts[widget.index!].is_like! ? ColorUtils.text_red : ColorUtils.icon_color,
+                                                    ),
                                                   ),
                                                 ],
                                               ),
@@ -550,28 +544,6 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                                                     .posts[widget.index!].id!;
                                                 model.gettingComments();
                                                 model.notifyListeners();
-                                                // if(expandableController.expanded){
-                                                //   if(comments.isEmpty)
-                                                //   {
-                                                //     UserModel user = (await locator<PrefrencesViewModel>().getUser())!;
-                                                //     var channel =
-                                                //     model.pubnub!.channel(model.posts[widget.index!].id.toString());
-                                                //     var commnt = await channel.messages();
-                                                //     await commnt.fetch().whenComplete(() {
-                                                //
-                                                //       print(commnt.messages.length);
-                                                //
-                                                //       for (var data in commnt.messages) {
-                                                //         comments.add(data.content);
-                                                //         comments = comments.reversed.toList();
-                                                //       }
-                                                //       comments = comments.reversed.toList();
-                                                //       model.notifyListeners();
-                                                //     });
-                                                //   }
-                                                //   else {
-                                                //   }
-                                                // }
                                               },
                                               child: Row(
                                                 children: [

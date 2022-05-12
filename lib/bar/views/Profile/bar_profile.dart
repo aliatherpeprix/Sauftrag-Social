@@ -71,6 +71,7 @@ class _BarProfileState extends State<BarProfile> {
                           model.navigateToBarDetails();
                           PrefrencesViewModel prefs =
                               locator<PrefrencesViewModel>();
+                          model.updateBarAbout.text = model.barModel!.about!;
                           model.barModel = await prefs.getBarUser();
                           if (model.barModel!.profile_picture != null &&
                               model.barModel!.profile_picture!.isNotEmpty) {

@@ -688,7 +688,7 @@ class _BarMediaState extends State<BarMedia> {
                                           },
                                           child: DottedBorder(
                                               color: index != 0 ?(model
-                                                  .imageFiles[index -1] as File)
+                                                  .imageFiles[index -1] as File )
                                                   .path.isNotEmpty?ColorUtils.text_red :ColorUtils.text_grey :ColorUtils.text_red,
                                               strokeWidth: 1.5,
                                               borderType: BorderType.RRect,
