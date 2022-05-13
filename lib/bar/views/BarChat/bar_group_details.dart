@@ -78,8 +78,11 @@ class _BarGroupDetailsState extends State<BarGroupDetails> {
                           ChannelMemberMetadataInput(data['id'].toString());
                       setMetadata.add(user);
                     }
-                    model.pubnub!.objects.setChannelMembers(
-                        model.barGroupNameController.text, setMetadata);
+                    model.pubnub!.objects.setChannelMetadata(model.barGroupNameController.text,
+                        ChannelMetadataInput(name: model.barGroupNameController.text,description: "Group", custom: {
+                          "admin" : model.userModel!.id
+                        }));
+                    model.pubnub!.objects.setChannelMembers(model.barGroupNameController.text, setMetadata);
                     print(setMetadata);
                     if(model.barModel!.role == 2){
                       Navigator.push(
@@ -177,24 +180,33 @@ class _BarGroupDetailsState extends State<BarGroupDetails> {
                             Row(
                               children: [
                                 GestureDetector(
-                                  onTap: () {
+                                  onTap: ()  {
+                                    model.createEventGetImage();
                                     //model.openCamera();
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return EditImageDialog(
-                                              from: Constants.profileImage);
-                                        });
+                                    // showDialog(
+                                    //     context: context,
+                                    //     builder: (BuildContext context) {
+                                    //       return EditImageDialog(
+                                    //           from: Constants.profileImage);
+                                    //     });
                                   },
                                   child: Container(
+                                    height: 6.7.h,
+                                    width: 14.w,
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       color: ColorUtils.textFieldBg,
                                     ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(16.0),
-                                      child: SvgPicture.asset(
-                                          ImageUtils.photoCamera),
+                                    child: model.createEventImage == null ?
+                                    Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: SvgPicture.asset(ImageUtils.photoCamera),
+                                    )
+                                        : ClipRRect(
+                                      borderRadius: BorderRadius.circular(80),
+                                      child: Image.file(model.createEventImage!,
+                                        fit: BoxFit.fill,
+                                      ),
                                     ),
                                   ),
                                 ),

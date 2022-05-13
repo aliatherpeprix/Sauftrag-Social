@@ -91,6 +91,8 @@ import 'package:sauftrag/widgets/bar_auth_viewmodel.dart';
 import 'package:sauftrag/widgets/zoom_drawer.dart';
 import 'package:stacked/stacked.dart';
 
+import '../widgets/serverError.dart';
+
 class NavigationViewModel extends BaseViewModel{
 
   final GlobalKey<NavigatorState> navigationKey = GlobalKey<NavigatorState>();
@@ -288,8 +290,16 @@ class NavigationViewModel extends BaseViewModel{
     navigationKey.currentState!.push(PageTransition(child: MainView(index: 2), type: PageTransitionType.rightToLeftWithFade));
   }
 
+  void navigateUntilToSwipeScreen(){
+    navigationKey.currentState!.pushAndRemoveUntil(PageTransition(child: MainView(index: 2), type: PageTransitionType.rightToLeftWithFade),(route) => false);
+  }
+
   void navigateBack(){
     navigationKey.currentState!.pop();
+  }
+
+  void navigateToServerErrorPage(){
+    navigationKey.currentState!.push(PageTransition(child: ServerError(), type: PageTransitionType.rightToLeftWithFade));
   }
 
   void navigateToGroupDetail(){

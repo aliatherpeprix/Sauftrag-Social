@@ -258,14 +258,15 @@ class _BarAndClubsState extends State<BarAndClubs>
       },
       disposeViewModel: false,
       builder: (context, model, child) {
-        return SafeArea(
+        return model.isFaqs == true ? AllPageLoader()
+            : SafeArea(
           top: false,
           bottom: false,
           child: Scaffold(
             backgroundColor: Colors.white,
             body: Column(
               children: [
-                 SizedBox(height: Dimensions.topMargin),
+                SizedBox(height: Dimensions.topMargin),
                 // Container(
                 //   padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding),
                 //
@@ -443,7 +444,8 @@ class _BarAndClubsState extends State<BarAndClubs>
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
       builder: (context, model, child) {
-        return SafeArea(
+        return model.isFaqs == true ? AllPageLoader() :
+        SafeArea(
           top: false,
           bottom: false,
           child: Scaffold(

@@ -18,7 +18,11 @@ import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/prefrences_view_model.dart';
 import 'package:sauftrag/views/Auth/signup.dart';
 
+import '../main.dart';
+
 class Createpost {
+
+  var navigationService = navigationViewModel;
   //var _dioService = DioService.getInstance();
 
   Dio dio = Dio();
@@ -87,16 +91,15 @@ class Createpost {
     try {
       NewBarModel? barModel =
           (await locator<PrefrencesViewModel>().getBarUser());
-      var getResponse = await dio
-          .get(Constants.BaseUrlPro + Constants.GetNewFeed, options: Options(
+      var getResponse = await dio.get(Constants.BaseUrlPro + Constants.GetNewFeed, options: Options(
               // contentType: Headers.formUrlEncodedContentType,
               headers: {"Authorization": "Token ${barModel!.token!}"}));
-      if (getResponse.statusCode == 200 || getResponse.statusCode == 201) {
+      if (getResponse.  statusCode == 200 || getResponse.statusCode == 201) {
         List<NewsfeedPostId> getBarPost = (getResponse.data as List)
             .map((e) => NewsfeedPostId.fromJson(e))
             .toList();
 
-        print(getBarPost);
+          print(getBarPost);
         return getBarPost;
       }
 
@@ -104,9 +107,19 @@ class Createpost {
       else {
         return getResponse.data['message'];
       }
-    } catch (e) {
-      print(e);
-      return (e as DioError).response!.data["message"].toString();
     }
+    on DioError catch (e) {
+      // bloodDonationLoader = false;
+      // notifyListeners();
+      if (e.response!.statusCode == 404) {
+        return (e as DioError).response!.data["message"].toString();
+      } else if (e.response!.statusCode == 500) {
+        navigationService.navigateToServerErrorPage();
+      }
+    }
+    // catch (e) {
+    //   print(e);
+    //   return (e as DioError).response!.data["message"].toString();
+    // }
   }
 }

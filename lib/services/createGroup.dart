@@ -17,6 +17,9 @@ import 'package:sauftrag/viewModels/prefrences_view_model.dart';
 import 'package:sauftrag/views/Auth/signup.dart';
 import 'package:sauftrag/views/UserFriendList/create_group.dart';
 
+import '../utils/dialog_utils.dart';
+import '../widgets/error_widget.dart';
+
 class Creategroup {
   //var _dioService = DioService.getInstance();
 
@@ -78,6 +81,7 @@ class Creategroup {
       String name,
       List listOfUsers,
       int? privacy,
+      String? image
 
       ) async {
     try {
@@ -87,7 +91,8 @@ class Creategroup {
 
         'name' : name,
         'users' : listOfUsers,
-        'privacy' : privacy
+        'privacy' : privacy,
+        if(image!= null)'image' : image,
 
       });
 
@@ -107,7 +112,8 @@ class Creategroup {
           var userData = UserModel.fromJson(response.data['data']);
           return userData;
         }*/
-        CreateGroupChat getEventByFilter = CreateGroupChat.fromJson(response.data);
+        List<CreateGroupChat> getEventByFilter =(response.data as List).map((e) =>
+            CreateGroupChat.fromJson(e)).toList();
         return getEventByFilter;
       }
       //user not found
@@ -117,6 +123,15 @@ class Creategroup {
 
     } catch (e) {
       dynamic exception = e;
+      if ((e as DioError).response!.data is Map &&
+          (e).response!.data["detail"] != null) {
+        DialogUtils().showDialog(
+            MyErrorWidget(error: (e).response!.data["detail"].toString()));
+      } else  {
+        DialogUtils().showDialog(
+            MyErrorWidget(error: "Group with this name already exists"));
+        //return (e).error.toString();
+      }
       return exception.message;
     }
   }

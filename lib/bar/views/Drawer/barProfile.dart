@@ -192,7 +192,7 @@ class _BarprofileState extends State<Barprofile> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  if(!model.isLoading) {
+                                  if(model.isLoading) {
                                     model.postBarFollow();
                                     //model.getListOfAllBars();
                                   }

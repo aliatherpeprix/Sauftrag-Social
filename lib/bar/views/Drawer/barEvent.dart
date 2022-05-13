@@ -34,7 +34,8 @@ class _BarEventState extends State<BarEvent> {
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
       builder: (context, model, child) {
-        return model.eventLoader? Center(child: Loader()): SafeArea(
+        return model.eventLoader? Center(child: Loader()):
+        SafeArea(
           top: false,
           bottom: false,
           child: Scaffold(

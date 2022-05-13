@@ -516,7 +516,8 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                                                 children: [
                                                   SvgPicture.asset(
                                                     ImageUtils.matchedIcon,
-                                                    color: model.posts[widget.index!].is_like! ? ColorUtils.text_red : ColorUtils.icon_color,
+                                                    color:
+                                                    model.posts[widget.index!].is_like != null ? model.posts[widget.index!].is_like! ? ColorUtils.text_red : ColorUtils.icon_color : ColorUtils.icon_color,
                                                   ),
                                                   SizedBox(
                                                     width: 1.5.w,
@@ -530,7 +531,7 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                                                         fontFamily: FontUtils
                                                             .modernistRegular,
                                                         fontSize: 1.5.t,
-                                                        color: model.posts[widget.index!].is_like! ? ColorUtils.text_red : ColorUtils.icon_color,
+                                                        color: model.posts[widget.index!].is_like != null ? model.posts[widget.index!].is_like! ? ColorUtils.text_red : ColorUtils.icon_color : ColorUtils.icon_color,
                                                     ),
                                                   ),
                                                 ],

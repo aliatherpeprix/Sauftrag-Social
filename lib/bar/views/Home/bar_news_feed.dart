@@ -144,7 +144,7 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
                   menu: MySideMenu(),
                   child: GestureDetector(
                     onTap: () {
-                      final _state = model.sideMenuKey.currentState;
+                      final _state = model.sideMenuKey!.currentState;
                       if (_state!.isOpened)
                         _state.closeSideMenu(); // close side menu
                     },
@@ -241,7 +241,7 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
                                       ElevatedButton(
                                         onPressed: () {
                                           final _state =
-                                              model.sideMenuKey.currentState;
+                                              model.sideMenuKey!.currentState;
                                           if (_state!.isOpened)
                                             _state
                                                 .closeSideMenu(); // close side menu
@@ -1198,15 +1198,19 @@ class _BarNewsFeedItemState extends State<BarNewsFeedItem> {
                                     children: [
                                       GestureDetector(
                                         onTap: (){
-                                          model.selectedPost = model.posts[widget.index!];
-                                          model.postLikeNewsFeed(widget.index!);
+                                          if(model.isLoading == true) {
+                                            model.selectedPost =
+                                            model.posts[widget.index!];
+                                            model.postLikeNewsFeed(
+                                                widget.index!);
+                                          }
                                         },
                                         child: Row(
                                           children: [
                                             SvgPicture.asset(
                                               ImageUtils.matchedIcon,
                                               color:
-                                              ColorUtils.icon_color,
+                                              model.posts[widget.index!].is_like != null ? model.posts[widget.index!].is_like! ? ColorUtils.red_color : ColorUtils.icon_color : ColorUtils.icon_color
                                             ),
                                             SizedBox(
                                               width: 1.5.w,
@@ -1217,8 +1221,8 @@ class _BarNewsFeedItemState extends State<BarNewsFeedItem> {
                                                   fontFamily: FontUtils
                                                       .modernistRegular,
                                                   fontSize: 1.5.t,
-                                                  color: ColorUtils
-                                                      .icon_color),
+                                                  color:
+                                                  model.posts[widget.index!].is_like != null ? model.posts[widget.index!].is_like! ? ColorUtils.red_color : ColorUtils.icon_color: ColorUtils.icon_color ),
                                             ),
                                           ],
                                         ),

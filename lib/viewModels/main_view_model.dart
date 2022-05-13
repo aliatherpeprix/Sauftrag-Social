@@ -146,7 +146,7 @@ class MainViewModel extends BaseViewModel {
 
   //var Permission;
 
-  final GlobalKey<SideMenuState> sideMenuKey = GlobalKey<SideMenuState>();
+   GlobalKey<SideMenuState> sideMenuKey = GlobalKey<SideMenuState>();
 
   Completer<GoogleMapController> controller = Completer();
   final GlobalKey<NavigatorState> navigationKey = GlobalKey<NavigatorState>();
@@ -629,24 +629,16 @@ class MainViewModel extends BaseViewModel {
   // }
 
   Future<Null> cropImage(BuildContext context, String path) async {
-    File? croppedFile = await ImageCropper.cropImage(
+    CroppedFile? croppedFile = await ImageCropper().cropImage(
         sourcePath: path,
         cropStyle: CropStyle.circle,
         compressFormat: ImageCompressFormat.png,
         //compressQuality: 50,
         maxWidth: 500,
         maxHeight: 500,
-        androidUiSettings: AndroidUiSettings(
-            toolbarTitle: 'S',
-            toolbarColor: ColorUtils.red_color,
-            toolbarWidgetColor: Colors.white,
-            initAspectRatio: CropAspectRatioPreset.original,
-            lockAspectRatio: false),
-        iosUiSettings: IOSUiSettings(
-          title: 'SaufTrag',
-        ));
+    );
     if (croppedFile != null) {
-      profileFileImage = croppedFile;
+      profileFileImage = File(croppedFile.path);
       notifyListeners();
       //
       // var imageParams = FormData.fromMap({
@@ -1564,6 +1556,10 @@ class MainViewModel extends BaseViewModel {
     navigationService.navigateToGroupDetail();
   }
 
+  void navigateToServerErrorPage() {
+    navigationService.navigateToServerErrorPage();
+  }
+
   void navigateToGroupScreen() {
     navigationService.navigateToGroupScreen();
   }
@@ -1673,7 +1669,7 @@ class MainViewModel extends BaseViewModel {
   }
 
   void navigateToSwipeScreen() {
-    navigationService.navigateToSwipeScreen();
+    navigationService.navigateUntilToSwipeScreen();
   }
 
   void navigateToFriendListScreen1() {
@@ -2298,7 +2294,8 @@ class MainViewModel extends BaseViewModel {
         error: "Some thing went wrong",
       ));
       //isPrivacyPolicy = false;
-
+      isFaqs = false;
+      notifyListeners();
       return;
     }
     isFaqs = false;
@@ -3145,14 +3142,25 @@ class MainViewModel extends BaseViewModel {
 
   createGroupChatBar() async {
 
+    if (barGroupNameController.text.isEmpty) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Group name is required",
+      ));
+      return;
+    }
+
+
     addDrink = true;
     notifyListeners();
+    String media = "data:${lookupMimeType(createEventImage!.path)};base64," +
+        base64Encode(createEventImage!.readAsBytesSync());
     //drinkList = await Addfavorites().GetFavoritesDrink();
     var createGroupUser = await createGroup.CreateGroupBar(
 
         barGroupNameController.text,
         getUserId,
-        1
+        1,
+        media
 
     );
     if (createGroupUser is CreateGroupChat) {
@@ -3160,12 +3168,12 @@ class MainViewModel extends BaseViewModel {
       print(groupChatUser);
     }
     else {
-      DialogUtils().showDialog(MyErrorWidget(
-        error: "Some thing went wrong",
-      ));
-      //isPrivacyPolicy = false;
-
-      return;
+      // DialogUtils().showDialog(MyErrorWidget(
+      //   error: "Some thing went wrong",
+      // ));
+      // //isPrivacyPolicy = false;
+      //
+      // return;
     }
 
     print(addFilters);
@@ -3244,13 +3252,14 @@ class MainViewModel extends BaseViewModel {
     if (userlike is LikeNewsFeed) {
       likes = userlike;
       posts[index].likes_count = posts[index].likes_count! + 1;
-      increment = true;
+      posts[index].is_like = true;
+      //increment = true;
       notifyListeners();
       print(likes);
       DialogUtils().showDialog(MyErrorWidget(
         error: "You liked this news feed!",
       ));
-      addDrink = false;
+      isLoading = false;
       //feedbackController.clear();
 
       // var index = listOfAllBars.indexOf();
@@ -3261,10 +3270,12 @@ class MainViewModel extends BaseViewModel {
       isLoading = true;
       like = false;
       posts[index].likes_count = posts[index].likes_count!  - 1 ;
-      decrement = true;
+      posts[index].is_like = false;
+      //decrement = true;
       notifyListeners();
 
       var userlike = await userLike.NewfeedLike(selectedPost!.id!, like);
+
       DialogUtils().showDialog(MyErrorWidget(
         error: "You disliked this new feed",
       ));

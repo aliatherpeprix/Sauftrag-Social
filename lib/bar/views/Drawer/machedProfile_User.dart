@@ -192,6 +192,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                     ),
                                   ),
                                   SizedBox(height: 1.h),
+                                  model.matchedUser!.about != null ?
                                   Text(
                                     model.matchedUser!.about!,
                                     style: TextStyle(
@@ -199,7 +200,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                       fontSize: 1.8.t,
                                       color: ColorUtils.black,
                                     ),
-                                  ),
+                                  ) : Text(""),
                                   SizedBox(height: 3.h),
 
                                   //Interest

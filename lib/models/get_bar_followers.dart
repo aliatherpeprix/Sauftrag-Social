@@ -11,7 +11,7 @@ class GetBarFollower {
 
   int? id;
   /*NewBarModel? follow_to;*/
-  UserModel? follow_by;
+  List<UserModel?>? follow_by;
 
 
   factory GetBarFollower.fromJson(Map<String, dynamic> json) => _$GetBarFollowerFromJson(json);

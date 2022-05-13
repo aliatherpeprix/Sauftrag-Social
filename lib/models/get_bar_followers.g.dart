@@ -9,9 +9,10 @@ part of 'get_bar_followers.dart';
 GetBarFollower _$GetBarFollowerFromJson(Map<String, dynamic> json) =>
     GetBarFollower()
       ..id = json['id'] as int?
-      ..follow_by = json['follow_by'] == null
-          ? null
-          : UserModel.fromJson(json['follow_by'] as Map<String, dynamic>);
+      ..follow_by = (json['follow_by'] as List<dynamic>?)
+          ?.map((e) =>
+              e == null ? null : UserModel.fromJson(e as Map<String, dynamic>))
+          .toList();
 
 Map<String, dynamic> _$GetBarFollowerToJson(GetBarFollower instance) =>
     <String, dynamic>{

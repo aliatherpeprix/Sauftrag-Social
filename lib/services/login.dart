@@ -10,7 +10,10 @@ import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/views/Auth/signup.dart';
 import 'package:sauftrag/widgets/error_widget.dart';
 
+import '../main.dart';
+
 class LoginUser {
+  var navigationService = navigationViewModel;
   //var _dioService = DioService.getInstance();
 
   Dio dio = Dio();
@@ -56,14 +59,14 @@ class LoginUser {
     on DioError catch (e) {
 
       if(e.response!.statusCode == 500) {
-        return "abc";
+        navigationService.navigateToServerErrorPage();
       }
 
       if ((e as DioError).response!.data is Map &&
           (e).response!.data["detail"] != null) {
         DialogUtils().showDialog(
             MyErrorWidget(error: (e).response!.data["detail"].toString()));
-      } else {
+      } else  {
         DialogUtils().showDialog(
             MyErrorWidget(error: "Unable to login with provided credentials"));
         //return (e).error.toString();

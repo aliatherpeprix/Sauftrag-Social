@@ -136,6 +136,7 @@ class ImageUtils {
   static String eventLock = "assets/eventLock.svg";
   static String beerMug = "assets/beermug.svg";
   static String infoIcon = "assets/info.svg";
+  static String internalServer = "assets/internalServerError.png";
 
   //Girls Images
   static String girl1 = "assets/girls/girl_1.jpeg";

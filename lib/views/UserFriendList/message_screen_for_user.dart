@@ -223,51 +223,61 @@ class _MessageScreenForUserState extends State<MessageScreenForUser> {
                                           SizedBox(
                                             width: 2.5.w,
                                           ),
-                                          Stack(
-                                            alignment: Alignment.topCenter,
-                                            children: [
-                                              CircleAvatar(
-                                                radius: 26.0,
-                                                backgroundImage: NetworkImage(
-                                                    widget.profilePic ??
-                                                        "https://tse2.mm.bing.net/th?id=OIP.4gcGG1F0z6LjVlJjYWGGcgHaHa&pid=Api&P=0&w=164&h=164"),
-                                                backgroundColor:
-                                                Colors.transparent,
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            width: 3.w,
-                                          ),
-                                          Column(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                widget.username.toString(),
-                                                style: TextStyle(
-                                                    fontFamily:
-                                                    FontUtils.modernistBold,
-                                                    fontSize: 1.9.t,
-                                                    color:
-                                                    ColorUtils.text_dark),
-                                              ),
-                                              SizedBox(
-                                                height: 0.5.h,
-                                              ),
-                                              Text(
-                                                "Active",
-                                                style: TextStyle(
-                                                    fontFamily:
-                                                    FontUtils.modernistBold,
-                                                    fontSize: 1.5.t,
-                                                    color:
-                                                    ColorUtils.activeColor),
-                                              ),
-                                            ],
-                                          ),
+                                          GestureDetector(
+                                            onTap: () async {
+                                              await model.getAnitherUserInfo(widget.id.toString());
+                                              model.navigateToMatchedProfileUser();
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Stack(
+                                                  alignment: Alignment.topCenter,
+                                                  children: [
+                                                    CircleAvatar(
+                                                      radius: 26.0,
+                                                      backgroundImage: NetworkImage(
+                                                          widget.profilePic ??
+                                                              "https://tse2.mm.bing.net/th?id=OIP.4gcGG1F0z6LjVlJjYWGGcgHaHa&pid=Api&P=0&w=164&h=164"),
+                                                      backgroundColor:
+                                                      Colors.transparent,
+                                                    ),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  width: 3.w,
+                                                ),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      widget.username.toString(),
+                                                      style: TextStyle(
+                                                          fontFamily:
+                                                          FontUtils.modernistBold,
+                                                          fontSize: 1.9.t,
+                                                          color:
+                                                          ColorUtils.text_dark),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 0.5.h,
+                                                    ),
+                                                    Text(
+                                                      "Active",
+                                                      style: TextStyle(
+                                                          fontFamily:
+                                                          FontUtils.modernistBold,
+                                                          fontSize: 1.5.t,
+                                                          color:
+                                                          ColorUtils.activeColor),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          )
                                         ],
                                       ),
                                     ),

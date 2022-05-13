@@ -156,7 +156,7 @@ class _FollowerProfileState extends State<FollowerProfile> {
                         expandedHeight: 280,
                         flexibleSpace: FlexibleSpaceBar(
                           background: Image.network(
-                            model.getbarFollowersDet!.follow_by!.profile_picture!,
+                            model.getbarFollowersDet!.follow_by!.first!.profile_picture!,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -189,7 +189,7 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    model.getbarFollowersDet!.follow_by!.username!,
+                                    model.getbarFollowersDet!.follow_by!.first!.username!,
                                     style: TextStyle(
                                       fontFamily: FontUtils.modernistBold,
                                       fontSize: 2.5.t,
@@ -214,7 +214,7 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                       SizedBox(width: 2.w),
                                       Flexible(
                                         child: Text(
-                                          model.getbarFollowersDet!.follow_by!.address!,
+                                          model.getbarFollowersDet!.follow_by!.first!.address!,
                                           style: TextStyle(
                                             fontFamily: FontUtils.modernistRegular,
                                             fontSize: 1.8.t,
@@ -265,11 +265,13 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                     ),
                                   ),
                                   SizedBox(height: 2.h),
+
+                                  model.getbarFollowersDet!.follow_by!.first!.favorite_alcohol_drinks! !=null ?
                                   Wrap(
                                     spacing: 2.5.w,
                                     runSpacing: 1.5.h,
                                     direction: Axis.horizontal,
-                                    children: model.getbarFollowersDet!.follow_by!.favorite_alcohol_drinks!
+                                    children: model.getbarFollowersDet!.follow_by!.first!.favorite_alcohol_drinks!
                                         .map((element) => ElevatedButton(
                                       onPressed: () {
                                         // if (model.selectedInterestList
@@ -283,7 +285,8 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                         // }
                                         // model.notifyListeners();
                                       },
-                                      child: Text( "${(model.drinkList.where((drink)
+                                      child:
+                                      Text( "${(model.drinkList.where((drink)
                                       => element==drink.id).first as FavoritesModel).name}"),
                                       style: ElevatedButton.styleFrom(
                                         primary:  ColorUtils.white,
@@ -310,7 +313,7 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                       ),
                                     ))
                                         .toList(),
-                                  ),
+                                  ) : Container(),
                                   SizedBox(height: 3.h),
 
                                   //Favorite Night Club
@@ -323,11 +326,12 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                     ),
                                   ),
                                   SizedBox(height: 2.h),
+                                  model.getbarFollowersDet!.follow_by!.first!.favorite_musics != null ?
                                   Wrap(
                                     spacing: 2.5.w,
                                     runSpacing: 1.5.h,
                                     direction: Axis.horizontal,
-                                    children: model.getbarFollowersDet!.follow_by!.favorite_musics!
+                                    children: model.getbarFollowersDet!.follow_by!.first!.favorite_musics!
                                         .map((element) => ElevatedButton(
                                       onPressed: () {
                                         // if (model.selectedInterestList
@@ -368,7 +372,7 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                       ),
                                     ))
                                         .toList(),
-                                  ),
+                                  ) : Container(),
                                   SizedBox(height: 3.h),
 
                                   //Favorite Party Vacation
@@ -381,11 +385,13 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                     ),
                                   ),
                                   SizedBox(height: 2.h),
+
+                                  model.getbarFollowersDet!.follow_by!.first!.favorite_party_vacation !=null ?
                                   Wrap(
                                     spacing: 2.5.w,
                                     runSpacing: 1.5.h,
                                     direction: Axis.horizontal,
-                                    children: model.getbarFollowersDet!.follow_by!.favorite_party_vacation!
+                                    children: model.getbarFollowersDet!.follow_by!.first!.favorite_party_vacation!
                                         .map((element) => ElevatedButton(
                                       onPressed: () {
                                         // if (model.selectedInterestList
@@ -426,7 +432,7 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                       ),
                                     ))
                                         .toList(),
-                                  ),
+                                  ): Container(),
                                   SizedBox(height: 3.h),
 
 
@@ -471,7 +477,7 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                             BorderRadius.all(Radius.circular(20)),
                                             image: DecorationImage(
                                                 image:
-                                                NetworkImage(model.getbarFollowersDet!.follow_by!.profile_picture!),
+                                                NetworkImage(model.getbarFollowersDet!.follow_by!.first!.profile_picture!),
                                                 fit: BoxFit.cover),
                                           ),
                                           child: Stack(
@@ -507,7 +513,7 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                             BorderRadius.all(Radius.circular(20)),
                                             image: DecorationImage(
                                                 image:
-                                                NetworkImage(model.getbarFollowersDet!.follow_by!.catalogue_image1!),
+                                                NetworkImage(model.getbarFollowersDet!.follow_by!.first!.catalogue_image1!),
                                                 fit: BoxFit.cover),
                                           ),
                                           child: Stack(
@@ -541,10 +547,12 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                           decoration: BoxDecoration(
                                             borderRadius:
                                             BorderRadius.all(Radius.circular(20)),
-                                            image: DecorationImage(
-                                                image:
-                                                NetworkImage(model.getbarFollowersDet!.follow_by!.catalogue_image2!),
-                                                fit: BoxFit.cover),
+                                            image:
+                                            model.getbarFollowersDet!.follow_by!.first!.catalogue_image2 != null ?
+                                            DecorationImage(
+                                                image: NetworkImage(model.getbarFollowersDet!.follow_by!.first!.catalogue_image2!) ,
+                                                fit: BoxFit.cover) :
+                                            DecorationImage(image: NetworkImage(ImageUtils.userIcon)),
                                           ),
                                           child: Stack(
                                             children: [
@@ -583,10 +591,12 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                           decoration: BoxDecoration(
                                             borderRadius:
                                             BorderRadius.all(Radius.circular(20)),
-                                            image: DecorationImage(
-                                                image:
-                                                NetworkImage(model.getbarFollowersDet!.follow_by!.catalogue_image3!),
-                                                fit: BoxFit.cover),
+                                            image:
+                                            model.getbarFollowersDet!.follow_by!.first!.catalogue_image2 != null ?
+                                            DecorationImage(
+                                                image: NetworkImage(model.getbarFollowersDet!.follow_by!.first!.catalogue_image2!) ,
+                                                fit: BoxFit.cover) :
+                                            DecorationImage(image: NetworkImage(ImageUtils.userIcon)),
                                           ),
                                           child: Stack(
                                             children: [
@@ -619,10 +629,12 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                           decoration: BoxDecoration(
                                             borderRadius:
                                             BorderRadius.all(Radius.circular(20)),
-                                            image: DecorationImage(
-                                                image:
-                                                NetworkImage(model.getbarFollowersDet!.follow_by!.catalogue_image4!),
-                                                fit: BoxFit.cover),
+                                            image:
+                                            model.getbarFollowersDet!.follow_by!.first!.catalogue_image2 != null ?
+                                            DecorationImage(
+                                                image: NetworkImage(model.getbarFollowersDet!.follow_by!.first!.catalogue_image2!) ,
+                                                fit: BoxFit.cover) :
+                                            DecorationImage(image: NetworkImage(ImageUtils.userIcon)),
                                           ),
                                           child: Stack(
                                             children: [
@@ -655,10 +667,11 @@ class _FollowerProfileState extends State<FollowerProfile> {
                                           decoration: BoxDecoration(
                                             borderRadius:
                                             BorderRadius.all(Radius.circular(20)),
-                                            image: DecorationImage(
-                                                image:
-                                                NetworkImage(model.getbarFollowersDet!.follow_by!.catalogue_image5!),
-                                                fit: BoxFit.cover),
+                                            image: model.getbarFollowersDet!.follow_by!.first!.catalogue_image2 != null ?
+                                            DecorationImage(
+                                                image: NetworkImage(model.getbarFollowersDet!.follow_by!.first!.catalogue_image2!) ,
+                                                fit: BoxFit.cover) :
+                                            DecorationImage(image: NetworkImage(ImageUtils.userIcon)),
                                           ),
                                           child: Stack(
                                             children: [
