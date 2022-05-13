@@ -387,9 +387,13 @@ class _MessageScreenForUserState extends State<MessageScreenForUser> {
                                                         },
                                                         tapPadding:
                                                         EdgeInsets.all(4.i),
-                                                        child: SvgPicture.asset(
+
+                                                        child:
+                                                        model.recordPressed == false ?
+                                                        SvgPicture.asset(
                                                             ImageUtils
-                                                                .plusIcon),
+                                                                .plusIcon)
+                                                            : Container()
                                                       ),
                                                     ),
 
@@ -407,7 +411,18 @@ class _MessageScreenForUserState extends State<MessageScreenForUser> {
                                                           BoxConstraints(
                                                               maxHeight:
                                                               100),
-                                                          child: TextField(
+                                                          child:
+                                                          model.recordPressed == true ?
+                                                              Padding(
+                                                                padding: const EdgeInsets.only(bottom: 15.0),
+                                                                child: Text("Recording....." ,
+                                                                  style: TextStyle(
+                                                                      fontSize: 2.2.t,
+                                                                      fontWeight: FontWeight.bold ,
+                                                                      color: ColorUtils.red_color),),
+                                                              )
+                                                             :
+                                                          TextField(
                                                             onTap: () {},
                                                             onChanged: (value) {
                                                               model
@@ -438,7 +453,8 @@ class _MessageScreenForUserState extends State<MessageScreenForUser> {
                                                             ),
                                                             keyboardType: TextInputType.multiline,
                                                             maxLines: null,
-                                                          ),
+                                                          )
+                                                          ,
                                                         ),
                                                       ),
                                                     ),
@@ -486,13 +502,15 @@ class _MessageScreenForUserState extends State<MessageScreenForUser> {
                                                             tapPadding:
                                                             EdgeInsets.all(
                                                                 25.0),
-                                                            child: SvgPicture
+                                                            child:
+                                                            model.recordPressed == false ?
+                                                            SvgPicture
                                                                 .asset(
                                                               ImageUtils
                                                                   .photoCamera,
                                                               color: ColorUtils
                                                                   .text_red,
-                                                            ),
+                                                            ) : Container(),
                                                           ),
                                                           SizedBox(
                                                             width: 3.w,
@@ -518,12 +536,26 @@ class _MessageScreenForUserState extends State<MessageScreenForUser> {
                                                             tapPadding:
                                                             EdgeInsets.all(
                                                                 0.i),
-                                                            child: SvgPicture.asset(
+                                                            child:
+                                                            model.recordPressed == false ?
+                                                            SvgPicture.asset(
                                                               ImageUtils
                                                                   .voiceRecorder,
                                                               color: ColorUtils
                                                                   .red_color,
                                                               height: 5.5.i,
+                                                            ) :
+                                                            Container(
+                                                              // padding: EdgeInsets.symmetric(horizontal: 8.w),
+                                                              // height: 2.h,
+                                                              // width: 5.w,
+                                                              //color: ColorUtils.transparent,
+                                                              child: SvgPicture.asset(
+                                                              ImageUtils
+                                                                  .voiceRecord,
+                                                              //color: ColorUtils.white,
+                                                              height: 7.5.i,
+                                                              ),
                                                             ),
                                                           ),
 
@@ -568,7 +600,7 @@ class _MessageScreenForUserState extends State<MessageScreenForUser> {
                                     ),
                                   ),
                                   model.groupScreenChatController.text.length <=
-                                      0
+                                      0 && model.recordPressed == false
                                       ? Container(
                                     //margin: EdgeInsets.only(bottom: 2.2.h),
                                     decoration: BoxDecoration(
@@ -614,21 +646,24 @@ class _MessageScreenForUserState extends State<MessageScreenForUser> {
                                             model.scrollDown();
                                           });
                                     },
-                                    child: Container(
+                                    child:
+                                    model.recordPressed == false ?
+                                    Container(
                                       //margin: EdgeInsets.only(bottom: 2.2.h),
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         color: ColorUtils.text_red,
                                       ),
-                                      child: Padding(
+                                      child:
+                                      Padding(
                                         padding:
                                         const EdgeInsets.all(15.0),
                                         child: SvgPicture.asset(
                                           ImageUtils.sendIcon1,
                                           color: Colors.white,
                                         ),
-                                      ),
-                                    ),
+                                      ) ,
+                                    ): Container(),
                                   ),
                                 ],
                               ),
@@ -1716,24 +1751,53 @@ class _ChatAudioWidgetState extends State<ChatAudioWidget> {
     return ViewModelBuilder<MainViewModel>.reactive(
         viewModelBuilder: ()=>locator<MainViewModel>(),
         builder: (context, model, child) {
-          return LayoutBuilder(
-            builder: (context, constraints) {
-              return Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  _buildControl(),
-                  _buildSlider(constraints.maxWidth),
-                  // IconButton(
-                  //   icon: const Icon(Icons.delete,
-                  //       color: Color(0xFF73748D), size: _deleteBtnSize),
-                  //   onPressed: () {
-                  //     stop().then((value) => widget.onDelete());
-                  //   },
-                  // ),
-                ],
-              );
-            },
+          return Align(
+              alignment: model.chats[widget.index!]["message"]["userID"] ==
+                  model.userModel!.id!.toString()
+                  ? Alignment.centerLeft
+                  : Alignment.centerRight,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return Container(
+                  padding: EdgeInsets.only(top: 0.6.h, bottom: 0.6.h, left: 0.6.h),
+                  width:
+                  MediaQuery.of(context).size.width /
+                      1.25,
+                  decoration: BoxDecoration(
+                    color: ColorUtils.messageChat,
+                    borderRadius: model.chats[widget.index!]["message"]
+                    ["userID"] ==
+                        model.userModel!.id!.toString()
+                        ? BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15),
+                      bottomRight: Radius.circular(15),
+                    )
+                        : BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15),
+                      bottomLeft: Radius.circular(15),
+                    ),
+                  ),
+
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      _buildControl(),
+                      _buildSlider(constraints.maxWidth),
+                      // IconButton(
+                      //   icon: const Icon(Icons.delete,
+                      //       color: Color(0xFF73748D), size: _deleteBtnSize),
+                      //   onPressed: () {
+                      //     stop().then((value) => widget.onDelete());
+                      //   },
+                      // ),
+                    ],
+                  ),
+                );
+              },
+            )
           );
         },
       onModelReady: (model){
@@ -1747,12 +1811,12 @@ class _ChatAudioWidgetState extends State<ChatAudioWidget> {
     Color color;
 
     if (_audioPlayer.state == ap.PlayerState.PLAYING) {
-      icon = const Icon(Icons.pause, color: Colors.red, size: 30);
+      icon = const Icon(Icons.pause, color: Colors.red, size: 28);
       color = Colors.red.withOpacity(0.1);
     } else {
       final theme = Theme.of(context);
-      icon = Icon(Icons.play_arrow, color: theme.primaryColor, size: 30);
-      color = theme.primaryColor.withOpacity(0.1);
+      icon = Icon(Icons.play_arrow, color: Colors.red, size: 28);
+      color = theme.scaffoldBackgroundColor.withOpacity(0.1);
     }
 
     return ClipOval(
@@ -1787,10 +1851,11 @@ class _ChatAudioWidgetState extends State<ChatAudioWidget> {
     width -= _deleteBtnSize;
 
     return SizedBox(
+      //height: 0.2.h,
       width: width,
       child: Slider(
-        activeColor: Theme.of(context).primaryColor,
-        inactiveColor: Theme.of(context).colorScheme.secondary,
+        activeColor: Theme.of(context).errorColor,
+        inactiveColor: Theme.of(context).colorScheme.onError,
         onChanged: (v) {
           if (duration != null) {
             final position = v * duration.inMilliseconds;

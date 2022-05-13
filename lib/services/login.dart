@@ -30,8 +30,7 @@ class LoginUser {
         'profile_picture': ''
       });
 
-      var response =
-          await dio.post(Constants.BaseUrlPro + Constants.Login, data: param);
+      var response = await dio.post(Constants.BaseUrlPro + Constants.Login, data: param);
       if (response.statusCode == 200 || response.statusCode == 201) {
         // user found
         /* if (response.data["status"] == 200) {
@@ -53,7 +52,13 @@ class LoginUser {
       else {
         return response.data['message'];
       }
-    } catch (e) {
+    }
+    on DioError catch (e) {
+
+      if(e.response!.statusCode == 500) {
+        return "abc";
+      }
+
       if ((e as DioError).response!.data is Map &&
           (e).response!.data["detail"] != null) {
         DialogUtils().showDialog(

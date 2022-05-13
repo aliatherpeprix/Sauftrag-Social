@@ -239,8 +239,7 @@ class ImageUtils {
   static String sendIcon1 = "assets/sndIcon.svg";
   static String UserNotFound = "assets/gifs/UserNF.gif";
   static String document = "assets/google-docs.svg";
-
-
+  static String voiceRecord = "assets/recordStateMic.svg";
 
   static String saufTragLogoGif = "assets/gifs/logo.gif";
 

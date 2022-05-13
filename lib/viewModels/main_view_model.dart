@@ -182,6 +182,7 @@ class MainViewModel extends BaseViewModel {
   bool emojiSelected = false;
   bool signInBar = false;
 
+
   //-----Group Name User-----////
   final chatController = TextEditingController();
 
@@ -1661,6 +1662,10 @@ class MainViewModel extends BaseViewModel {
 
   void navigateToHomeBarScreen() {
     navigationService.navigateToHomeBarScreen();
+  }
+
+  void navigateToNotFound() {
+    navigationService.navigateToNotFound();
   }
 
   void navigateAndRemoveSignInScreen() {
@@ -3832,6 +3837,7 @@ class MainViewModel extends BaseViewModel {
   String? sdPath;
   final audioRecorder = Record();
   bool recordPressed = false;
+  bool record = false;
 
   initializeRecording(){
     _isRecording = false;
@@ -3842,6 +3848,7 @@ class MainViewModel extends BaseViewModel {
     _ampTimer?.cancel();
     audioRecorder.dispose();
   }
+
 
   start() async {
     try {
@@ -3883,6 +3890,83 @@ class MainViewModel extends BaseViewModel {
     _isRecording = false;
     file = await File((await audioRecorder.stop())!).create();
     await pubnub!.files.sendFile(getConversationID(
+        userModel!.id.toString(),
+        id.toString()
+    ), "abc.mp3", file!.readAsBytesSync().toList(),fileMessage: {
+      "userID" : userModel!.id,
+      "time" : DateTime.now().toString(),
+    }).then((value){
+      print(value);
+    })
+        .catchError((error){
+      print(error);
+    });
+    DialogUtils().showDialog(MyErrorWidget(
+      error: "File has been uploaded!",
+    ));
+    // File test = await File(file!.path);
+    // test.writeAsBytesSync(await file!.readAsBytesSync());
+    // file = test;
+    notifyListeners();
+    //await firebaseChat.uploadRecording(attendeeFbId, otherUserId);
+    notifyListeners();
+    //widget.onStop(path!);
+    //setState(() => _isRecording = false);
+  }
+
+  int i = 0;
+
+  getFilePath() async {
+    var storageDirectory = await getExternalStorageDirectory();
+    sdPath = await storageDirectory!.path + "/record/audio.mp4";
+    notifyListeners();
+    //var d = Directory(sdPath!);
+    // if (!d.existsSync()) {
+    //   d.createSync(recursive: true);
+    // }
+    //return sdPath! + "/test_${i++}.mp3";
+  }
+
+  startBarVoiceRecord() async {
+    try {
+      if (await audioRecorder.hasPermission()) {
+        // We don't do anything with this but printing
+        // final isSupported = await audioRecorder.isEncoderSupported(
+        //   AudioEncoder.aacLc,
+        // );
+        // if (kDebugMode) {
+        //   print('${AudioEncoder.aacLc.name} supported: $isSupported');
+        // }
+
+        getFilePath();
+        await audioRecorder.start(
+            encoder: AudioEncoder.AAC
+        );
+
+
+        // bool isRecording = await audioRecorder.isRecording();
+        // await audioRecorder.stop();
+        //isRecording = isRecording;
+        //recordDuration = 0;
+        notifyListeners();
+        // setState(() {
+        //   _isRecording = isRecording;
+        //   _recordDuration = 0;
+        // });
+
+        //_startTimer();
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  stopBarVoiceRecord(int id) async {
+    _timer?.cancel();
+    _ampTimer?.cancel();
+    _isRecording = false;
+    file = await File((await audioRecorder.stop())!).create();
+    await pubnub!.files.sendFile(getConversationID(
         barModel!.id.toString(),
         id.toString()
     ), "abc.mp3", file!.readAsBytesSync().toList(),fileMessage: {
@@ -3907,9 +3991,9 @@ class MainViewModel extends BaseViewModel {
     //setState(() => _isRecording = false);
   }
 
-  int i = 0;
+  int j = 0;
 
-  getFilePath() async {
+  getFilePathBarVoiceRecord() async {
     var storageDirectory = await getExternalStorageDirectory();
     sdPath = await storageDirectory!.path + "/record/audio.mp4";
     notifyListeners();

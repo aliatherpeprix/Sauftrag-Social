@@ -199,6 +199,10 @@ class NavigationViewModel extends BaseViewModel{
     navigationKey.currentState!.pushAndRemoveUntil(PageTransition(child: MainViewBar(index: 0), type: PageTransitionType.rightToLeftWithFade),(Route<dynamic> route) => false);
   }
 
+  void navigateToNotFound(){
+    navigationKey.currentState!.pushAndRemoveUntil(PageTransition(child: MainViewBar(index: 0), type: PageTransitionType.rightToLeftWithFade),(Route<dynamic> route) => false);
+  }
+
   void navigateToMapScreen(int index){
     navigationKey.currentState!.pushAndRemoveUntil(PageTransition(child: MainView(index: index), type: PageTransitionType.rightToLeftWithFade),(Route<dynamic> route) => false);
   }

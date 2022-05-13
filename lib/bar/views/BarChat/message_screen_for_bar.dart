@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:core';
 import 'dart:core';
 import 'dart:io';
@@ -34,6 +35,8 @@ import 'package:sauftrag/widgets/back_arrow_with_container.dart';
 import 'package:sauftrag/widgets/loader.dart';
 import 'package:sauftrag/widgets/loader_black.dart';
 import 'package:stacked/stacked.dart';
+import 'package:audioplayers/audioplayers.dart'as ap;
+
 
 class MessageScreenForBar extends StatefulWidget {
   int? id;
@@ -302,6 +305,9 @@ class _MessageScreenForBarState extends State<MessageScreenForBar> {
                                           {
                                             return ChatVideoWidget(index: index, id: widget.id.toString());
                                           }
+                                        else if(lookupMimeType(model.chats[index]["file"]["name"])!.contains("audio")) {
+                                          return ChatAudioWidget(index: index, id: widget.id.toString());
+                                        }
                                         else {
                                           return ChatImageWidget(index: index, id: widget.id.toString());
                                         }
@@ -361,6 +367,7 @@ class _MessageScreenForBarState extends State<MessageScreenForBar> {
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.end,
                                                   children: [
+                                                    model.recordPressed == false ?
                                                     Container(
                                                       padding:
                                                           EdgeInsets.symmetric(
@@ -384,7 +391,7 @@ class _MessageScreenForBarState extends State<MessageScreenForBar> {
                                                             ImageUtils
                                                                 .plusIcon),
                                                       ),
-                                                    ),
+                                                    ) : Container(),
 
                                                     Expanded(
                                                       child: Container(
@@ -400,7 +407,17 @@ class _MessageScreenForBarState extends State<MessageScreenForBar> {
                                                               BoxConstraints(
                                                                   maxHeight:
                                                                       100),
-                                                          child: TextField(
+                                                          child:
+                                                          model.recordPressed == true ?
+                                                          Padding(
+                                                            padding: const EdgeInsets.only(bottom: 15.0),
+                                                            child: Text("Recording....." ,
+                                                              style: TextStyle(
+                                                                  fontSize: 2.2.t,
+                                                                  fontWeight: FontWeight.bold ,
+                                                                  color: ColorUtils.red_color),),
+                                                          ) :
+                                                          TextField(
                                                             onTap: () {},
                                                             onChanged: (value) {
                                                               model
@@ -438,10 +455,11 @@ class _MessageScreenForBarState extends State<MessageScreenForBar> {
                                                                 TextInputType
                                                                     .multiline,
                                                             maxLines: null,
-                                                          ),
+                                                          )
                                                         ),
                                                       ),
                                                     ),
+
                                                     Container(
                                                       padding:
                                                           EdgeInsets.symmetric(
@@ -486,32 +504,60 @@ class _MessageScreenForBarState extends State<MessageScreenForBar> {
                                                             tapPadding:
                                                                 EdgeInsets.all(
                                                                     25.0),
-                                                            child: SvgPicture
+                                                            child:
+                                                            model.recordPressed == false ?
+                                                            SvgPicture
                                                                 .asset(
                                                               ImageUtils
                                                                   .photoCamera,
                                                               color: ColorUtils
                                                                   .text_red,
-                                                            ),
+                                                            ): Container(),
                                                           ),
                                                           SizedBox(
                                                             width: 3.w,
                                                           ),
                                                           ExpandTapWidget(
                                                             onTap: () {
+                                                              if(model.recordPressed == false){
+                                                                model.recordPressed = true;
+                                                                model.notifyListeners();
+                                                                print("record started");
+                                                                model.startBarVoiceRecord();
+                                                              }
+                                                              else if(model.recordPressed == true){
+                                                                model.recordPressed = false;
+                                                                model.notifyListeners();
+                                                                print("recording stopped");
+                                                                model.stopBarVoiceRecord(widget.id!);
+                                                              }
+                                                              //model.isRecording ? model.stop() : model.start();
                                                               //model.getImage();
                                                               setState(() {});
                                                             },
                                                             tapPadding:
-                                                                EdgeInsets.all(
-                                                                    0.i),
-                                                            child: SvgPicture
-                                                                .asset(
+                                                            EdgeInsets.all(
+                                                                0.i),
+                                                            child:
+                                                            model.recordPressed == false ?
+                                                            SvgPicture.asset(
                                                               ImageUtils
                                                                   .voiceRecorder,
                                                               color: ColorUtils
                                                                   .red_color,
                                                               height: 5.5.i,
+                                                            ) :
+                                                            Container(
+                                                              // padding: EdgeInsets.symmetric(horizontal: 8.w),
+                                                              // height: 2.h,
+                                                              // width: 5.w,
+                                                              //color: ColorUtils.transparent,
+                                                              child: SvgPicture.asset(
+                                                                ImageUtils
+                                                                    .voiceRecord,
+                                                                //color: ColorUtils.white,
+                                                                height: 7.5.i,
+                                                              ),
                                                             ),
                                                           ),
 
@@ -556,21 +602,21 @@ class _MessageScreenForBarState extends State<MessageScreenForBar> {
                                     ),
                                   ),
                                   model.groupScreenChatController.text.length <=
-                                          0
+                                      0 && model.recordPressed == false
                                       ? Container(
-                                          //margin: EdgeInsets.only(bottom: 2.2.h),
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: ColorUtils.text_grey,
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(15.0),
-                                            child: SvgPicture.asset(
-                                              ImageUtils.sendIcon1,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        )
+                                    //margin: EdgeInsets.only(bottom: 2.2.h),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: ColorUtils.text_grey,
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(15.0),
+                                      child: SvgPicture.asset(
+                                        ImageUtils.sendIcon1,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  )
                                       : InkWell(
                                           onTap: () async {
                                             // NewBarModel barUser =
@@ -602,21 +648,23 @@ class _MessageScreenForBarState extends State<MessageScreenForBar> {
                                                model.scrollDown();
                                             });
                                           },
-                                          child: Container(
+                                          child:   model.recordPressed == false ?
+                                          Container(
                                             //margin: EdgeInsets.only(bottom: 2.2.h),
                                             decoration: BoxDecoration(
                                               shape: BoxShape.circle,
                                               color: ColorUtils.text_red,
                                             ),
-                                            child: Padding(
+                                            child:
+                                            Padding(
                                               padding:
-                                                  const EdgeInsets.all(15.0),
+                                              const EdgeInsets.all(15.0),
                                               child: SvgPicture.asset(
                                                 ImageUtils.sendIcon1,
                                                 color: Colors.white,
                                               ),
-                                            ),
-                                          ),
+                                            ) ,
+                                          ): Container(),
                                         ),
                                 ],
                               ),
@@ -1028,6 +1076,217 @@ class _ChatVideoWidgetState extends State<ChatVideoWidget> {
 
   }
 }
+
+///--------------------- Chat Audio ----------------------///
+
+class ChatAudioWidget extends StatefulWidget {
+  int? index;
+  String? id;
+
+  ChatAudioWidget({Key? key, this.index, this.id}) : super(key: key);
+
+  @override
+  _ChatAudioWidgetState createState() => _ChatAudioWidgetState();
+}
+
+class _ChatAudioWidgetState extends State<ChatAudioWidget> {
+
+  Uri? uri;
+
+  static const double _controlSize = 56;
+  static const double _deleteBtnSize = 24;
+
+  final _audioPlayer = ap.AudioPlayer();
+  late StreamSubscription<void> _playerStateChangedSubscription;
+  late StreamSubscription<Duration?> _durationChangedSubscription;
+  late StreamSubscription<Duration> _positionChangedSubscription;
+  Duration? _position;
+  Duration? _duration;
+
+  @override
+  void initState() {
+    _playerStateChangedSubscription =
+        _audioPlayer.onPlayerCompletion.listen((state) async {
+          await stop();
+          setState(() {});
+        });
+    _positionChangedSubscription = _audioPlayer.onAudioPositionChanged.listen(
+          (position) => setState(() {
+        _position = position;
+      }),
+    );
+    _durationChangedSubscription = _audioPlayer.onDurationChanged.listen(
+          (duration) => setState(() {
+        _duration = duration;
+      }),
+    );
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _playerStateChangedSubscription.cancel();
+    _positionChangedSubscription.cancel();
+    _durationChangedSubscription.cancel();
+    _audioPlayer.dispose();
+    super.dispose();
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return ViewModelBuilder<MainViewModel>.reactive(
+      viewModelBuilder: ()=>locator<MainViewModel>(),
+      builder: (context, model, child) {
+        return Align(
+            alignment: model.chats[widget.index!]["message"]["userID"] ==
+                model.barModel!.id!.toString()
+                ? Alignment.centerLeft
+                : Alignment.centerRight,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return Container(
+                  padding: EdgeInsets.only(top: 0.6.h, bottom: 0.6.h, left: 0.6.h),
+                  width:
+                  MediaQuery.of(context).size.width /
+                      1.25,
+                  decoration: BoxDecoration(
+                    color: ColorUtils.messageChat,
+                    borderRadius: model.chats[widget.index!]["message"]
+                    ["userID"] ==
+                        model.barModel!.id!.toString()
+                        ? BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15),
+                      bottomRight: Radius.circular(15),
+                    )
+                        : BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15),
+                      bottomLeft: Radius.circular(15),
+                    ),
+                  ),
+
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      _buildControl(),
+                      _buildSlider(constraints.maxWidth),
+                      // IconButton(
+                      //   icon: const Icon(Icons.delete,
+                      //       color: Color(0xFF73748D), size: _deleteBtnSize),
+                      //   onPressed: () {
+                      //     stop().then((value) => widget.onDelete());
+                      //   },
+                      // ),
+                    ],
+                  ),
+                );
+              },
+            )
+        );
+      },
+      onModelReady: (model){
+        getFileUrl(model);
+      },
+      disposeViewModel: false,
+    );
+  }
+  Widget _buildControl() {
+    Icon icon;
+    Color color;
+
+    if (_audioPlayer.state == ap.PlayerState.PLAYING) {
+      icon = const Icon(Icons.pause, color: Colors.red, size: 28);
+      color = Colors.red.withOpacity(0.1);
+    } else {
+      final theme = Theme.of(context);
+      icon = Icon(Icons.play_arrow, color: Colors.red, size: 28);
+      color = theme.scaffoldBackgroundColor.withOpacity(0.1);
+    }
+
+    return ClipOval(
+      child: Material(
+        color: color,
+        child: InkWell(
+          child:
+          SizedBox(width: _controlSize, height: _controlSize, child: icon),
+          onTap: () {
+            if (_audioPlayer.state == ap.PlayerState.PLAYING) {
+              pause();
+            } else {
+              play();
+            }
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSlider(double widgetWidth) {
+    bool canSetValue = false;
+    final duration = _duration;
+    final position = _position;
+
+    if (duration != null && position != null) {
+      canSetValue = position.inMilliseconds > 0;
+      canSetValue &= position.inMilliseconds < duration.inMilliseconds;
+    }
+
+    double width = widgetWidth - _controlSize - _deleteBtnSize;
+    width -= _deleteBtnSize;
+
+    return SizedBox(
+      //height: 0.2.h,
+      width: width,
+      child: Slider(
+        activeColor: Theme.of(context).errorColor,
+        inactiveColor: Theme.of(context).colorScheme.onError,
+        onChanged: (v) {
+          if (duration != null) {
+            final position = v * duration.inMilliseconds;
+            _audioPlayer.seek(Duration(milliseconds: position.round()));
+          }
+        },
+        value: canSetValue && duration != null && position != null
+            ? position.inMilliseconds / duration.inMilliseconds
+            : 0.0,
+      ),
+    );
+  }
+
+  Future<void> play() {
+    return _audioPlayer.play(
+      uri.toString(),
+      //ap.AudioPlayer(widget.source);
+      //DeviceFileSource(widget.source),
+    );
+  }
+  void getFileUrl (MainViewModel model)async{
+    print(model.chats[widget.index!]);
+    //var fileInfo = widget.ImageData;
+    uri = await model.pubnub!.files.getFileUrl(
+      model.getConversationID(
+          model.barModel!.id.toString(),
+          widget.id.toString()
+      ),
+      model.chats[widget.index!]["file"]["id"],
+      model.chats[widget.index!]["file"]["name"],
+    );
+    print(uri);
+    setState(() {
+
+    });
+
+  }
+
+  Future<void> pause() => _audioPlayer.pause();
+
+  Future<void> stop() => _audioPlayer.stop();
+}
+
 
 
 

@@ -939,7 +939,10 @@ class RegistrationViewModel extends BaseViewModel {
         //logIn = false;
         //notifyListeners();
         navigateToHomeBarScreen();
-      }
+      }else if(signupResponse == "abc")
+        {
+
+        }
       // if (logInUserSelected == true) {
       //
       // } else if (logInBarSelected == true) {
