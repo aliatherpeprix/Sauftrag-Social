@@ -1198,11 +1198,10 @@ class _BarNewsFeedItemState extends State<BarNewsFeedItem> {
                                     children: [
                                       GestureDetector(
                                         onTap: (){
-                                          if(model.isLoading == true) {
-                                            model.selectedPost =
-                                            model.posts[widget.index!];
-                                            model.postLikeNewsFeed(
-                                                widget.index!);
+
+                                          if(!model.isLoading) {
+                                            model.selectedPost = model.posts[widget.index!];
+                                            model.postLikeNewsFeed(widget.index!);
                                           }
                                         },
                                         child: Row(

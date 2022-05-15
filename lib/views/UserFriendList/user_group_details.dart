@@ -20,6 +20,7 @@ import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:sauftrag/viewModels/prefrences_view_model.dart';
 import 'package:sauftrag/widgets/back_arrow_with_container.dart';
 import 'package:sauftrag/widgets/image_edit_dialog.dart';
+import 'package:sauftrag/widgets/loader.dart';
 import 'package:stacked/stacked.dart';
 
 import 'group_screen.dart';
@@ -39,6 +40,7 @@ class _GroupDetailsState extends State<GroupDetails> {
     return ViewModelBuilder<MainViewModel>.reactive(
       onModelReady: (model) {
         model.chatController.clear();
+        model.createEventImage = File("");
       },
       builder: (context, model, child) {
         return GestureDetector(
@@ -118,7 +120,7 @@ class _GroupDetailsState extends State<GroupDetails> {
                     //model.navigateToGroupScreen();
                     //model.navigateToFriendListScreen1();
                   },
-                  child: const Text("Create Group"),
+                  child:  const Text("Create Group"),
                   style: ElevatedButton.styleFrom(
                     primary: ColorUtils.text_red,
                     onPrimary: ColorUtils.white,

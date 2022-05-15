@@ -39,6 +39,7 @@ class _BarGroupDetailsState extends State<BarGroupDetails> {
     return ViewModelBuilder<MainViewModel>.reactive(
       onModelReady: (model) {
         model.barGroupNameController.clear();
+        model.createEventImage = File("");
       },
       builder: (context, model, child) {
         return GestureDetector(
@@ -80,7 +81,7 @@ class _BarGroupDetailsState extends State<BarGroupDetails> {
                     }
                     model.pubnub!.objects.setChannelMetadata(model.barGroupNameController.text,
                         ChannelMetadataInput(name: model.barGroupNameController.text,description: "Group", custom: {
-                          "admin" : model.userModel!.id
+                          "admin" : model.barModel!.id
                         }));
                     model.pubnub!.objects.setChannelMembers(model.barGroupNameController.text, setMetadata);
                     print(setMetadata);
@@ -92,8 +93,12 @@ class _BarGroupDetailsState extends State<BarGroupDetails> {
                                   .fade,
                               child:
                               BarGroupScreen(
-                                id: model.groupChatUser!.id ?? 0,
-                                username: model.groupChatUser!.name,
+                                // id: model.groupChatUser!.id ?? 0,
+                                // username: model.groupChatUser!.name,
+                                  id: model.getUserGroup!.first.id ?? 0,
+                                  username: model.getUserGroup!.first.name,
+                                  groupImg: model.getUserGroup!.first.image,
+                                  userLength: model.getUserGroup!.first.users!.length
                               )
                           ));
                     }
@@ -105,8 +110,10 @@ class _BarGroupDetailsState extends State<BarGroupDetails> {
                                   .fade,
                               child:
                               BarGroupScreen(
-                                  id: model.groupChatUser!.id ?? 0,
-                                  username: model.groupChatUser!.name,
+                                  id: model.getUserGroup!.first.id! ?? 0,
+                                  username: model.getUserGroup!.first.name,
+                                  groupImg: model.getUserGroup!.first.image,
+                                  userLength: model.getUserGroup!.first.users!.length
                                   //userLength: model.getListGroup[index].users!.length
                               )
                           ));

@@ -1,17 +1,64 @@
 PODS:
-  - AppAuth (1.4.0):
-    - AppAuth/Core (= 1.4.0)
-    - AppAuth/ExternalUserAgent (= 1.4.0)
-  - AppAuth/Core (1.4.0)
-  - AppAuth/ExternalUserAgent (1.4.0)
+  - AppAuth (1.5.0):
+    - AppAuth/Core (= 1.5.0)
+    - AppAuth/ExternalUserAgent (= 1.5.0)
+  - AppAuth/Core (1.5.0)
+  - AppAuth/ExternalUserAgent (1.5.0):
+    - AppAuth/Core
+  - audioplayers (0.0.1):
+    - Flutter
+  - better_player (0.0.1):
+    - Cache (~> 6.0.0)
+    - Flutter
+    - GCDWebServer
+    - HLSCachingReverseProxyServer
+    - PINCache
+  - Cache (6.0.0)
   - contacts_service (0.2.2):
     - Flutter
+  - DKImagePickerController/Core (4.3.3):
+    - DKImagePickerController/ImageDataManager
+    - DKImagePickerController/Resource
+  - DKImagePickerController/ImageDataManager (4.3.3)
+  - DKImagePickerController/PhotoGallery (4.3.3):
+    - DKImagePickerController/Core
+    - DKPhotoGallery
+  - DKImagePickerController/Resource (4.3.3)
+  - DKPhotoGallery (0.0.17):
+    - DKPhotoGallery/Core (= 0.0.17)
+    - DKPhotoGallery/Model (= 0.0.17)
+    - DKPhotoGallery/Preview (= 0.0.17)
+    - DKPhotoGallery/Resource (= 0.0.17)
+    - SDWebImage
+    - SwiftyGif
+  - DKPhotoGallery/Core (0.0.17):
+    - DKPhotoGallery/Model
+    - DKPhotoGallery/Preview
+    - SDWebImage
+    - SwiftyGif
+  - DKPhotoGallery/Model (0.0.17):
+    - SDWebImage
+    - SwiftyGif
+  - DKPhotoGallery/Preview (0.0.17):
+    - DKPhotoGallery/Model
+    - DKPhotoGallery/Resource
+    - SDWebImage
+    - SwiftyGif
+  - DKPhotoGallery/Resource (0.0.17):
+    - SDWebImage
+    - SwiftyGif
   - emoji_picker_flutter (0.0.1):
+    - Flutter
+  - file_picker (0.0.1):
+    - DKImagePickerController/PhotoGallery
     - Flutter
   - Flutter (1.0.0)
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
+  - GCDWebServer (3.5.4):
+    - GCDWebServer/Core (= 3.5.4)
+  - GCDWebServer/Core (3.5.4)
   - geocoding (1.0.5):
     - Flutter
   - geolocator_apple (1.2.0):
@@ -19,26 +66,29 @@ PODS:
   - google_maps_flutter (0.0.1):
     - Flutter
     - GoogleMaps
-  - google_sign_in (0.0.1):
+  - google_sign_in_ios (0.0.1):
     - Flutter
     - GoogleSignIn (~> 5.0)
-  - GoogleMaps (4.1.0):
-    - GoogleMaps/Maps (= 4.1.0)
-  - GoogleMaps/Base (4.1.0)
-  - GoogleMaps/Maps (4.1.0):
+  - GoogleMaps (6.2.1):
+    - GoogleMaps/Maps (= 6.2.1)
+  - GoogleMaps/Base (6.2.1)
+  - GoogleMaps/Maps (6.2.1):
     - GoogleMaps/Base
   - GoogleSignIn (5.0.2):
     - AppAuth (~> 1.2)
     - GTMAppAuth (~> 1.0)
     - GTMSessionFetcher/Core (~> 1.1)
-  - GTMAppAuth (1.2.2):
+  - GTMAppAuth (1.3.0):
     - AppAuth/Core (~> 1.4)
     - GTMSessionFetcher/Core (~> 1.5)
-  - GTMSessionFetcher/Core (1.7.0)
+  - GTMSessionFetcher/Core (1.7.2)
+  - HLSCachingReverseProxyServer (0.1.0):
+    - GCDWebServer (~> 3.5)
+    - PINCache (>= 3.0.1-beta.3)
   - image_cropper (0.0.4):
     - Flutter
-    - TOCropViewController (~> 2.6.0)
-  - image_picker (0.0.1):
+    - TOCropViewController (~> 2.6.1)
+  - image_picker_ios (0.0.1):
     - Flutter
   - location (0.0.1):
     - Flutter
@@ -47,64 +97,97 @@ PODS:
     - Flutter
   - path_provider_ios (0.0.1):
     - Flutter
-  - "permission_handler (5.1.0+2)":
+  - permission_handler_apple (9.0.4):
     - Flutter
   - phone_number (0.12.0):
     - Flutter
-    - PhoneNumberKit/PhoneNumberKitCore (= 3.3.3)
-  - PhoneNumberKit/PhoneNumberKitCore (3.3.3)
+    - PhoneNumberKit/PhoneNumberKitCore (= 3.3.4)
+  - PhoneNumberKit/PhoneNumberKitCore (3.3.4)
+  - PINCache (3.0.3):
+    - PINCache/Arc-exception-safe (= 3.0.3)
+    - PINCache/Core (= 3.0.3)
+  - PINCache/Arc-exception-safe (3.0.3):
+    - PINCache/Core
+  - PINCache/Core (3.0.3):
+    - PINOperation (~> 1.2.1)
+  - PINOperation (1.2.1)
   - qr_code_scanner (0.2.0):
     - Flutter
     - MTBBarcodeScanner
+  - record (0.0.1):
+    - Flutter
+  - SDWebImage (5.12.5):
+    - SDWebImage/Core (= 5.12.5)
+  - SDWebImage/Core (5.12.5)
   - shared_preferences_ios (0.0.1):
     - Flutter
   - sqflite (0.0.2):
     - Flutter
     - FMDB (>= 2.7.5)
+  - SwiftyGif (5.4.3)
   - TOCropViewController (2.6.1)
-  - video_player (0.0.1):
+  - video_player_avfoundation (0.0.1):
     - Flutter
   - wakelock (0.0.1):
     - Flutter
 
 DEPENDENCIES:
+  - audioplayers (from `.symlinks/plugins/audioplayers/ios`)
+  - better_player (from `.symlinks/plugins/better_player/ios`)
   - contacts_service (from `.symlinks/plugins/contacts_service/ios`)
   - emoji_picker_flutter (from `.symlinks/plugins/emoji_picker_flutter/ios`)
+  - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - Flutter (from `Flutter`)
   - geocoding (from `.symlinks/plugins/geocoding/ios`)
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
   - google_maps_flutter (from `.symlinks/plugins/google_maps_flutter/ios`)
-  - google_sign_in (from `.symlinks/plugins/google_sign_in/ios`)
+  - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/ios`)
   - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
-  - image_picker (from `.symlinks/plugins/image_picker/ios`)
+  - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - location (from `.symlinks/plugins/location/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
-  - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
+  - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - phone_number (from `.symlinks/plugins/phone_number/ios`)
   - qr_code_scanner (from `.symlinks/plugins/qr_code_scanner/ios`)
+  - record (from `.symlinks/plugins/record/ios`)
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
-  - video_player (from `.symlinks/plugins/video_player/ios`)
+  - video_player_avfoundation (from `.symlinks/plugins/video_player_avfoundation/ios`)
   - wakelock (from `.symlinks/plugins/wakelock/ios`)
 
 SPEC REPOS:
   trunk:
     - AppAuth
+    - Cache
+    - DKImagePickerController
+    - DKPhotoGallery
     - FMDB
+    - GCDWebServer
     - GoogleMaps
     - GoogleSignIn
     - GTMAppAuth
     - GTMSessionFetcher
+    - HLSCachingReverseProxyServer
     - MTBBarcodeScanner
     - PhoneNumberKit
+    - PINCache
+    - PINOperation
+    - SDWebImage
+    - SwiftyGif
     - TOCropViewController
 
 EXTERNAL SOURCES:
+  audioplayers:
+    :path: ".symlinks/plugins/audioplayers/ios"
+  better_player:
+    :path: ".symlinks/plugins/better_player/ios"
   contacts_service:
     :path: ".symlinks/plugins/contacts_service/ios"
   emoji_picker_flutter:
     :path: ".symlinks/plugins/emoji_picker_flutter/ios"
+  file_picker:
+    :path: ".symlinks/plugins/file_picker/ios"
   Flutter:
     :path: Flutter
   geocoding:
@@ -113,63 +196,78 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/geolocator_apple/ios"
   google_maps_flutter:
     :path: ".symlinks/plugins/google_maps_flutter/ios"
-  google_sign_in:
-    :path: ".symlinks/plugins/google_sign_in/ios"
+  google_sign_in_ios:
+    :path: ".symlinks/plugins/google_sign_in_ios/ios"
   image_cropper:
     :path: ".symlinks/plugins/image_cropper/ios"
-  image_picker:
-    :path: ".symlinks/plugins/image_picker/ios"
+  image_picker_ios:
+    :path: ".symlinks/plugins/image_picker_ios/ios"
   location:
     :path: ".symlinks/plugins/location/ios"
   package_info_plus:
     :path: ".symlinks/plugins/package_info_plus/ios"
   path_provider_ios:
     :path: ".symlinks/plugins/path_provider_ios/ios"
-  permission_handler:
-    :path: ".symlinks/plugins/permission_handler/ios"
+  permission_handler_apple:
+    :path: ".symlinks/plugins/permission_handler_apple/ios"
   phone_number:
     :path: ".symlinks/plugins/phone_number/ios"
   qr_code_scanner:
     :path: ".symlinks/plugins/qr_code_scanner/ios"
+  record:
+    :path: ".symlinks/plugins/record/ios"
   shared_preferences_ios:
     :path: ".symlinks/plugins/shared_preferences_ios/ios"
   sqflite:
     :path: ".symlinks/plugins/sqflite/ios"
-  video_player:
-    :path: ".symlinks/plugins/video_player/ios"
+  video_player_avfoundation:
+    :path: ".symlinks/plugins/video_player_avfoundation/ios"
   wakelock:
     :path: ".symlinks/plugins/wakelock/ios"
 
 SPEC CHECKSUMS:
-  AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
+  AppAuth: 80317d99ac7ff2801a2f18ff86b48cd315ed465d
+  audioplayers: 455322b54050b30ea4b1af7cd9e9d105f74efa8c
+  better_player: 2406bfe8175203c7a46fa15f9d778d73b12e1646
+  Cache: 4ca7e00363fca5455f26534e5607634c820ffc2d
   contacts_service: 849e1f84281804c8bfbec1b4c3eedcb23c5d3eca
-  emoji_picker_flutter: 4f9a1ac31d355e1bf9622a1e821a809149130127
+  DKImagePickerController: 72fd378f244cef3d27288e0aebf217a4467e4012
+  DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
+  emoji_picker_flutter: df19dac03a2b39ac667dc8d1da939ef3a9e21347
+  file_picker: 3e6c3790de664ccf9b882732d9db5eaf6b8d4eb1
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  GCDWebServer: 2c156a56c8226e2d5c0c3f208a3621ccffbe3ce4
   geocoding: 32cfcdb16d38d907caaba65e2e42ad10d38bee58
   geolocator_apple: cc556e6844d508c95df1e87e3ea6fa4e58c50401
-  google_maps_flutter: abdb8dee6c52d4be36ad131ee6ebfacd14417c5a
-  google_sign_in: c5cecea71f3be43282263550556e311c4cc03582
-  GoogleMaps: 008e2c80e38605b56b560e8deb73d4194ff30bef
+  google_maps_flutter: c59fc576c0d0c7f4dc4bd63832c862d22d5a7c6d
+  google_sign_in_ios: ed71c0dbddfba8b1ea9aa210dbda695f46bf51bd
+  GoogleMaps: 20d7b12be49a14287f797e88e0e31bc4156aaeb4
   GoogleSignIn: 7137d297ddc022a7e0aa4619c86d72c909fa7213
-  GTMAppAuth: ad5c2b70b9a8689e1a04033c9369c4915bfcbe89
-  GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
-  image_cropper: f1668dd8d2cad2d357955caad15a40547856edcb
-  image_picker: 0d37d1cb66231c2473a0e3ccb8d062d0c2b3d297
+  GTMAppAuth: 4d8f864896f3646f0c33baf38a28362f4c601e15
+  GTMSessionFetcher: 5595ec75acf5be50814f81e9189490412bad82ba
+  HLSCachingReverseProxyServer: 59935e1e0244ad7f3375d75b5ef46e8eb26ab181
+  image_cropper: 60c2789d1f1a78c873235d4319ca0c34a69f2d98
+  image_picker_ios: b786a5dcf033a8336a657191401bfdf12017dabb
   location: 3a2eed4dd2fab25e7b7baf2a9efefe82b512d740
   MTBBarcodeScanner: f453b33c4b7dfe545d8c6484ed744d55671788cb
   package_info_plus: 6c92f08e1f853dc01228d6f553146438dafcd14e
-  path_provider_ios: 7d7ce634493af4477d156294792024ec3485acd5
-  permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
-  phone_number: 667dd76f1ae3ee67ac0cb95d6b603c3a5aa7077e
-  PhoneNumberKit: 4ce83273551c4d2ae10b7361162f4283dd02835f
+  path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
+  permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
+  phone_number: 7e56d6e4e43fbe37507512a3aab3f11cf082af69
+  PhoneNumberKit: 441e8b26ec88d598e3591de9061eff18f5dd12e8
+  PINCache: 7a8fc1a691173d21dbddbf86cd515de6efa55086
+  PINOperation: 00c935935f1e8cf0d1e2d6b542e75b88fc3e5e20
   qr_code_scanner: bb67d64904c3b9658ada8c402e8b4d406d5d796e
-  shared_preferences_ios: aef470a42dc4675a1cdd50e3158b42e3d1232b32
+  record: 7ee2393532f8553bbb09fa19e95478323b7c0a99
+  SDWebImage: 0905f1b7760fc8ac4198cae0036600d67478751e
+  shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
+  SwiftyGif: 6c3eafd0ce693cad58bb63d2b2fb9bacb8552780
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
-  video_player: 7e9dad9437c238a97648819f6dd443c8854cf0c7
+  video_player_avfoundation: e489aac24ef5cf7af82702979ed16f2a5ef84cff
   wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
 
 PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3

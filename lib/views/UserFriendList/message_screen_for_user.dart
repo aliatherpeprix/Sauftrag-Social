@@ -225,8 +225,8 @@ class _MessageScreenForUserState extends State<MessageScreenForUser> {
                                           ),
                                           GestureDetector(
                                             onTap: () async {
-                                              await model.getAnitherUserInfo(widget.id.toString());
-                                              model.navigateToMatchedProfileUser();
+                                              // await model.getAnitherUserInfo(widget.id.toString());
+                                              // model.navigateToMatchedProfileUser();
                                             },
                                             child: Row(
                                               children: [
@@ -514,8 +514,7 @@ class _MessageScreenForUserState extends State<MessageScreenForUser> {
                                                                 25.0),
                                                             child:
                                                             model.recordPressed == false ?
-                                                            SvgPicture
-                                                                .asset(
+                                                            SvgPicture.asset(
                                                               ImageUtils
                                                                   .photoCamera,
                                                               color: ColorUtils

@@ -109,6 +109,7 @@ class _BarFollowersState extends State<BarFollowers> {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
+                                  model.getbarfollowers[index].follow_by![index]!.profile_picture! != null ?
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(10),
                                     child: Image.network(model.getbarfollowers[index].follow_by![index]!.profile_picture!,
@@ -116,7 +117,7 @@ class _BarFollowersState extends State<BarFollowers> {
                                       height: 15.i,
                                       fit: BoxFit.cover,
                                     ),
-                                  ),
+                                  ) : Container(),
                                   SizedBox(width: 2.w,),
                                   Expanded(
                                     child: Column(

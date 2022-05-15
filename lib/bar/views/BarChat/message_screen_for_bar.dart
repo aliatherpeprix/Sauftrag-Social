@@ -203,7 +203,7 @@ class _MessageScreenForBarState extends State<MessageScreenForBar> {
                                   children: [
                                     GestureDetector(
                                       onTap: () {
-                                        model.navigateToFollowerList();
+                                       // model.navigateToFollowerList();
                                       },
                                       child: Row(
                                         children: [
@@ -957,8 +957,8 @@ class _ChatVideoWidgetState extends State<ChatVideoWidget> {
         return Align(
           alignment: model.chats[widget.index!]["message"]["userID"] ==
               model.barModel!.id!.toString()
-              ? Alignment.centerRight
-              : Alignment.centerLeft,
+              ? Alignment.centerLeft
+              : Alignment.centerRight,
           child: Container(
             width:
             MediaQuery.of(context).size.width /

@@ -336,6 +336,8 @@ class MainViewModel extends BaseViewModel {
 
   int? selectedCommentId;
 
+  bool isFollowBar = false;
+
   Future<Position> determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -2356,32 +2358,34 @@ class MainViewModel extends BaseViewModel {
   // }
 
   postBarFollow() async {
-    isLoading = true;
+    isFollowBar = true;
     notifyListeners();
     bool follow = !selectedBar!.is_follow!;
     var getListofbar = await followbar.FollowBar(selectedBar!.id!, follow);
     print(getListofbar);
     if (getListofbar is FollowBAR) {
-      var index = listOfAllBars.indexOf(selectedBar!);
+      var index = listOfAllBars.indexWhere((element) => element.id==selectedBar!.id);
       listOfAllBars[index].is_follow =
           (getListofbar as FollowBAR).user!.is_follow!;
+      selectedBar!.is_follow = (getListofbar as FollowBAR).user!.is_follow!;
       if(follow){
         selectedBar!.total_followers = selectedBar!.total_followers! + 1;
       }
       else{
         selectedBar!.total_followers = selectedBar!.total_followers! - 1;
       }
-      notifyListeners();
+      //isLoading = false;
+      //notifyListeners();
     } else {
-      isLoading = false;
-      DialogUtils().showDialog(MyErrorWidget(
-        error: "Some thing went wrong",
-      ));
+      // isLoading = false;
+      // DialogUtils().showDialog(MyErrorWidget(
+      //   error: "Some thing went wrong",
+      // ));
       //isPrivacyPolicy = false;
 
-      return;
+      //return;
     }
-    isLoading = false;
+    isFollowBar = false;
     notifyListeners();
     //print(getFaqsList);
   }
@@ -2877,6 +2881,7 @@ class MainViewModel extends BaseViewModel {
       }
     } on DioError catch (e) {
       print(e);
+      isLoading =false;
       acceptMatchesLoader = false;
       notifyListeners();
     }
@@ -3031,7 +3036,7 @@ class MainViewModel extends BaseViewModel {
       ));
       //isPrivacyPolicy = false;
 
-      return;
+      //return;
     }
     isLoading = false;
     notifyListeners();
@@ -3083,6 +3088,20 @@ class MainViewModel extends BaseViewModel {
   }
 
   createGroupChatUser() async {
+
+    if (chatController.text.isEmpty) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Group name is required",
+      ));
+      return;
+    }
+    else if (createEventImage!.path.isEmpty) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Group image is required",
+      ));
+      return;
+    }
+
     addDrink = true;
     notifyListeners();
     //drinkList = await Addfavorites().GetFavoritesDrink();
@@ -3149,6 +3168,13 @@ class MainViewModel extends BaseViewModel {
       return;
     }
 
+    if (createEventImage!.path.isEmpty) {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Group image is required",
+      ));
+      return;
+    }
+
 
     addDrink = true;
     notifyListeners();
@@ -3163,9 +3189,9 @@ class MainViewModel extends BaseViewModel {
         media
 
     );
-    if (createGroupUser is CreateGroupChat) {
-      groupChatUser = createGroupUser;
-      print(groupChatUser);
+    if (createGroupUser is List<CreateGroupChat>) {
+      getUserGroup = createGroupUser;
+      print(getUserGroup);
     }
     else {
       // DialogUtils().showDialog(MyErrorWidget(
@@ -3176,7 +3202,7 @@ class MainViewModel extends BaseViewModel {
       // return;
     }
 
-    print(addFilters);
+    print(createGroupUser);
     //navigateToMapSearchScreen();
     notifyListeners();
 
@@ -3241,8 +3267,6 @@ class MainViewModel extends BaseViewModel {
 
   }
 
-  bool increment = false;
-  bool decrement = false;
   postLikeNewsFeed(int index) async {
     isLoading = true;
     notifyListeners();
@@ -3254,35 +3278,32 @@ class MainViewModel extends BaseViewModel {
       posts[index].likes_count = posts[index].likes_count! + 1;
       posts[index].is_like = true;
       //increment = true;
-      notifyListeners();
+      //notifyListeners();
       print(likes);
-      DialogUtils().showDialog(MyErrorWidget(
-        error: "You liked this news feed!",
-      ));
-      isLoading = false;
-      //feedbackController.clear();
-
-      // var index = listOfAllBars.indexOf();
-      // listOfAllBars[index].like =
-      // (getListofbar as LikeNewsFeed).user!.like!;
-      notifyListeners();
+      // DialogUtils().showDialog(MyErrorWidget(
+      //   error: "You liked this news feed!",
+      // ));
+      // isLoading = false;
+      // notifyListeners();
     } else {
-      isLoading = true;
+
+      //isLoading = true;
       like = false;
       posts[index].likes_count = posts[index].likes_count!  - 1 ;
       posts[index].is_like = false;
       //decrement = true;
-      notifyListeners();
+      //notifyListeners();
 
       var userlike = await userLike.NewfeedLike(selectedPost!.id!, like);
 
-      DialogUtils().showDialog(MyErrorWidget(
-        error: "You disliked this new feed",
-      ));
-      notifyListeners();
+      // DialogUtils().showDialog(MyErrorWidget(
+      //   error: "You disliked this new feed",
+      // ));
+      // isLoading = false;
+      // notifyListeners();
       //isPrivacyPolicy = false;
 
-      return;
+      //return;
     }
     isLoading = false;
     notifyListeners();
@@ -3304,6 +3325,7 @@ class MainViewModel extends BaseViewModel {
       ), result.files.first.name, file.readAsBytesSync().toList(),fileMessage: {
         "userID" : barModel!.id,
         "time" : DateTime.now().toString(),
+        "name" : barModel!.username
       }).then((value){
         print(value);
       })
@@ -3334,6 +3356,7 @@ class MainViewModel extends BaseViewModel {
           result.files.first.name, file.readAsBytesSync().toList(),fileMessage: {
         "userID" : userModel!.id,
         "time" : DateTime.now().toString(),
+        "name" : userModel!.username
       }).then((value){
         print(value);
         DialogUtils().showDialog(MyErrorWidget(
@@ -3366,6 +3389,40 @@ class MainViewModel extends BaseViewModel {
           result.files.first.name, file.readAsBytesSync().toList(),fileMessage: {
         "userID" : userModel!.id,
         "time" : DateTime.now().toString(),
+        "name" : userModel!.username
+      }).then((value){
+        print(value);
+        DialogUtils().showDialog(MyErrorWidget(
+          error: "File has been uploaded!",
+        ));
+      })
+          .catchError((error){
+        print(error);
+        if(error.message == "request failed (Out of Memory)")
+        {
+          DialogUtils().showDialog(MyErrorWidget(
+            error: "Request failed, Out of Memory",
+          ));
+        }
+      });
+    }
+  }
+
+  Future sendImageMessageGrpBar(int id, String username ) async{
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.media,
+      allowMultiple: false,
+    );
+
+    if (result != null) {
+      File file = File(result.files.first.path!);
+
+      await pubnub!.files.sendFile(
+          username,
+          result.files.first.name, file.readAsBytesSync().toList(),fileMessage: {
+        "userID" : barModel!.id,
+        "time" : DateTime.now().toString(),
+        "name" : barModel!.username
       }).then((value){
         print(value);
         DialogUtils().showDialog(MyErrorWidget(
@@ -3399,6 +3456,7 @@ class MainViewModel extends BaseViewModel {
           _pickedFile!.name, file.readAsBytesSync().toList(),fileMessage: {
         "userID" : userModel!.id,
         "time" : DateTime.now().toString(),
+        "name" : userModel!.username
       }).then((value){
         print(value);
         DialogUtils().showDialog(MyErrorWidget(
@@ -3438,6 +3496,7 @@ class MainViewModel extends BaseViewModel {
           _pickedFile!.name, file.readAsBytesSync().toList(),fileMessage: {
         "userID" : barModel!.id,
         "time" : DateTime.now().toString(),
+        "name" : barModel!.username
       }).then((value){
         print(value);
         DialogUtils().showDialog(MyErrorWidget(
@@ -3471,13 +3530,47 @@ class MainViewModel extends BaseViewModel {
 
       await pubnub!.files.sendFile(
           username,
-          // getConversationID(
-          //     userModel!.id.toString(),
-          //     id.toString()
-          // ),
           _pickedFile!.name, file.readAsBytesSync().toList(),fileMessage: {
         "userID" : userModel!.id,
         "time" : DateTime.now().toString(),
+        "name" : userModel!.username
+      }).then((value){
+        print(value);
+        DialogUtils().showDialog(MyErrorWidget(
+          error: "File has been uploaded!",
+        ));
+      })
+          .catchError((error){
+        print(error);
+        if(error.message == "request failed (Out of Memory)")
+        {
+          DialogUtils().showDialog(MyErrorWidget(
+            error: "Request failed, Out of Memory",
+          ));
+        }
+      });
+    }
+    if (profileFileImage == null) {
+      return false;
+    } else {
+      notifyListeners();
+      return true;
+    }
+  }
+
+  Future<bool> openCameraGrpBar(int id, String username) async {
+    ImagePicker picker = ImagePicker();
+    var image = await picker.pickImage(source: ImageSource.camera);
+    _pickedFile = image;
+    if (_pickedFile != null) {
+      File file = File(_pickedFile!.path);
+
+      await pubnub!.files.sendFile(
+          username,
+          _pickedFile!.name, file.readAsBytesSync().toList(),fileMessage: {
+        "userID" : barModel!.id,
+        "time" : DateTime.now().toString(),
+        "name" : barModel!.username
       }).then((value){
         print(value);
         DialogUtils().showDialog(MyErrorWidget(
@@ -3737,14 +3830,14 @@ class MainViewModel extends BaseViewModel {
       // listOfAllBars[index].like =
       // (getListofbar as LikeNewsFeed).user!.like!;
     } else {
-      isLoading = true;
+      //isLoading = true;
       DialogUtils().showDialog(MyErrorWidget(
         error: "Something went wrong",
       ));
-      notifyListeners();
+      //notifyListeners();
       //isPrivacyPolicy = false;
 
-      return;
+      //return;
     }
     isLoading = false;
     notifyListeners();
@@ -3764,14 +3857,14 @@ class MainViewModel extends BaseViewModel {
       // listOfAllBars[index].like =
       // (getListofbar as LikeNewsFeed).user!.like!;
     } else {
-      isLoading = true;
+      //isLoading = true;
       DialogUtils().showDialog(MyErrorWidget(
         error: "Something went wrong",
       ));
-      notifyListeners();
+      //notifyListeners();
       //isPrivacyPolicy = false;
 
-      return;
+      //return;
     }
     isLoading = false;
     notifyListeners();
@@ -3861,6 +3954,8 @@ class MainViewModel extends BaseViewModel {
   }
 
 
+  ///----------Audio recorder for user ------------///
+
   start() async {
     try {
       if (await audioRecorder.hasPermission()) {
@@ -3874,7 +3969,8 @@ class MainViewModel extends BaseViewModel {
 
         getFilePath();
         await audioRecorder.start(
-            encoder: AudioEncoder.AAC
+            encoder: AudioEncoder.AAC,
+            path: Platform.isAndroid?null:sdPath!
         );
 
 
@@ -3906,6 +4002,7 @@ class MainViewModel extends BaseViewModel {
     ), "abc.mp3", file!.readAsBytesSync().toList(),fileMessage: {
       "userID" : userModel!.id,
       "time" : DateTime.now().toString(),
+      "name" : userModel!.username
     }).then((value){
       print(value);
     })
@@ -3913,7 +4010,7 @@ class MainViewModel extends BaseViewModel {
       print(error);
     });
     DialogUtils().showDialog(MyErrorWidget(
-      error: "File has been uploaded!",
+      error: "Voice has been uploaded!",
     ));
     // File test = await File(file!.path);
     // test.writeAsBytesSync(await file!.readAsBytesSync());
@@ -3928,7 +4025,7 @@ class MainViewModel extends BaseViewModel {
   int i = 0;
 
   getFilePath() async {
-    var storageDirectory = await getExternalStorageDirectory();
+    var storageDirectory = Platform.isAndroid ? await getExternalStorageDirectory() : await getApplicationDocumentsDirectory();
     sdPath = await storageDirectory!.path + "/record/audio.mp4";
     notifyListeners();
     //var d = Directory(sdPath!);
@@ -3938,7 +4035,93 @@ class MainViewModel extends BaseViewModel {
     //return sdPath! + "/test_${i++}.mp3";
   }
 
+
+  ///------------- Audio Recorder for bar------------///
+
   startBarVoiceRecord() async {
+    try {
+      if (await audioRecorder.hasPermission()) {
+        // We don't do anything with this but printing
+        // final isSupported = await audioRecorder.isEncoderSupported(
+        //   AudioEncoder.aacLc,
+        // );
+        // if (kDebugMode) {
+        //   print('${AudioEncoder.aacLc.name} supported: $isSupported');
+        // }
+
+        getFilePath();
+        await audioRecorder.start(
+            encoder: AudioEncoder.AAC,
+            path: Platform.isAndroid?null:sdPath!
+        );
+
+
+        // bool isRecording = await audioRecorder.isRecording();
+        // await audioRecorder.stop();
+        //isRecording = isRecording;
+        //recordDuration = 0;
+        notifyListeners();
+        // setState(() {
+        //   _isRecording = isRecording;
+        //   _recordDuration = 0;
+        // });
+
+        //_startTimer();
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  stopBarVoiceRecord(int id) async {
+    _timer?.cancel();
+    _ampTimer?.cancel();
+    _isRecording = false;
+    //print((await audioRecorder.stop())!);
+    file = await File((await audioRecorder.stop())!).create();
+    await pubnub!.files.sendFile(getConversationID(
+        barModel!.id.toString(),
+        id.toString()
+    ), "abc.mp3", file!.readAsBytesSync().toList(),fileMessage: {
+      "userID" : barModel!.id,
+      "time" : DateTime.now().toString(),
+      "name" : barModel!.username
+    }).then((value){
+      print(value);
+    })
+        .catchError((error){
+      print(error);
+    });
+    DialogUtils().showDialog(MyErrorWidget(
+      error: "Voice has been uploaded!",
+    ));
+    // File test = await File(file!.path);
+    // test.writeAsBytesSync(await file!.readAsBytesSync());
+    // file = test;
+    notifyListeners();
+    //await firebaseChat.uploadRecording(attendeeFbId, otherUserId);
+    notifyListeners();
+    //widget.onStop(path!);
+    //setState(() => _isRecording = false);
+  }
+
+  int j = 0;
+
+  getFilePathBarVoiceRecord() async {
+    var storageDirectory = Platform.isAndroid ? await getExternalStorageDirectory() : await getApplicationDocumentsDirectory();
+    sdPath = await storageDirectory!.path + "/record/audio.mp4";
+    notifyListeners();
+    //var d = Directory(sdPath!);
+    // if (!d.existsSync()) {
+    //   d.createSync(recursive: true);
+    // }
+    //return sdPath! + "/test_${i++}.mp3";
+  }
+
+
+  ///-------------Audio recorder for user group chat--------------///
+
+  startGroupVoice() async {
     try {
       if (await audioRecorder.hasPermission()) {
         // We don't do anything with this but printing
@@ -3972,17 +4155,18 @@ class MainViewModel extends BaseViewModel {
     }
   }
 
-  stopBarVoiceRecord(int id) async {
+  stopGroupVoice(int id, String username) async {
     _timer?.cancel();
     _ampTimer?.cancel();
     _isRecording = false;
     file = await File((await audioRecorder.stop())!).create();
-    await pubnub!.files.sendFile(getConversationID(
-        barModel!.id.toString(),
-        id.toString()
-    ), "abc.mp3", file!.readAsBytesSync().toList(),fileMessage: {
-      "userID" : barModel!.id,
-      "time" : DateTime.now().toString(),
+
+    await pubnub!.files.sendFile(
+        username,
+        "abc.mp3", file!.readAsBytesSync().toList(),fileMessage: {
+        "userID" : userModel!.id,
+        "time" : DateTime.now().toString(),
+      "name" : userModel!.username
     }).then((value){
       print(value);
     })
@@ -3990,7 +4174,7 @@ class MainViewModel extends BaseViewModel {
       print(error);
     });
     DialogUtils().showDialog(MyErrorWidget(
-      error: "File has been uploaded!",
+      error: "Voice has been uploaded!",
     ));
     // File test = await File(file!.path);
     // test.writeAsBytesSync(await file!.readAsBytesSync());
@@ -4002,10 +4186,10 @@ class MainViewModel extends BaseViewModel {
     //setState(() => _isRecording = false);
   }
 
-  int j = 0;
+  int k = 0;
 
-  getFilePathBarVoiceRecord() async {
-    var storageDirectory = await getExternalStorageDirectory();
+  getFilePathGroupVoice() async {
+    var storageDirectory = Platform.isAndroid ? await getExternalStorageDirectory() : await getApplicationDocumentsDirectory();
     sdPath = await storageDirectory!.path + "/record/audio.mp4";
     notifyListeners();
     //var d = Directory(sdPath!);
@@ -4014,4 +4198,93 @@ class MainViewModel extends BaseViewModel {
     // }
     //return sdPath! + "/test_${i++}.mp3";
   }
+
+
+  ///------------ Audio recorder for bar group chat ----------------///
+
+  startGroupVoiceBar() async {
+    try {
+      if (await audioRecorder.hasPermission()) {
+        // We don't do anything with this but printing
+        // final isSupported = await audioRecorder.isEncoderSupported(
+        //   AudioEncoder.aacLc,
+        // );
+        // if (kDebugMode) {
+        //   print('${AudioEncoder.aacLc.name} supported: $isSupported');
+        // }
+
+        getFilePath();
+        await audioRecorder.start(
+            encoder: AudioEncoder.AAC
+        );
+
+
+        // bool isRecording = await audioRecorder.isRecording();
+        // await audioRecorder.stop();
+        //isRecording = isRecording;
+        //recordDuration = 0;
+        notifyListeners();
+        // setState(() {
+        //   _isRecording = isRecording;
+        //   _recordDuration = 0;
+        // });
+
+        //_startTimer();
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  stopGroupVoiceBar(int id, String username) async {
+    _timer?.cancel();
+    _ampTimer?.cancel();
+    _isRecording = false;
+    file = await File((await audioRecorder.stop())!).create();
+
+    await pubnub!.files.sendFile(
+        username,
+        "abc.mp3", file!.readAsBytesSync().toList(),fileMessage: {
+      "userID" : barModel!.id,
+      "time" : DateTime.now().toString(),
+      "name" : barModel!.username
+    }).then((value){
+      print(value);
+    })
+        .catchError((error){
+      print(error);
+    });
+    DialogUtils().showDialog(MyErrorWidget(
+      error: "Voice has been uploaded!",
+    ));
+    // File test = await File(file!.path);
+    // test.writeAsBytesSync(await file!.readAsBytesSync());
+    // file = test;
+    notifyListeners();
+    //await firebaseChat.uploadRecording(attendeeFbId, otherUserId);
+    notifyListeners();
+    //widget.onStop(path!);
+    //setState(() => _isRecording = false);
+  }
+
+  int l = 0;
+
+  getFilePathGroupVoiceBar() async {
+    var storageDirectory = Platform.isAndroid ? await getExternalStorageDirectory() : await getApplicationDocumentsDirectory();
+    sdPath = await storageDirectory!.path + "/record/audio.mp4";
+    notifyListeners();
+    //var d = Directory(sdPath!);
+    // if (!d.existsSync()) {
+    //   d.createSync(recursive: true);
+    // }
+    //return sdPath! + "/test_${i++}.mp3";
+  }
+
+
+
+
+
+
 }
+
+

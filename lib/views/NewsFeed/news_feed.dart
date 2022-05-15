@@ -505,7 +505,7 @@ class _UserNewsFeedState extends State<UserNewsFeed> {
                                           children: [
                                             GestureDetector(
                                               onTap: () {
-                                                if(model.isLoading == true)
+                                                if(!model.isLoading)
                                                 {
                                                   model.selectedPost = model.posts[widget.index!];
                                                   model.postLikeNewsFeed(widget.index!);

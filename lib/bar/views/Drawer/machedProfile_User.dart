@@ -628,21 +628,48 @@ class _ViewZoomedImageState extends State<ViewZoomedImage> {
         return Scaffold(
           backgroundColor: Colors.black,
           body: SafeArea(
-            child: Center(
-              child: Container(
-                width: double.infinity,
-                child: PhotoViewGallery.builder(
-                  itemCount: model.matchedImage.length,
-                  pageController: pageController,
-                  builder: (context, index) {
-                    return  PhotoViewGalleryPageOptions(
-                      imageProvider: NetworkImage(model.matchedImage[index]),
-                      initialScale: PhotoViewComputedScale.contained * 1,
-                      //heroAttributes: PhotoViewHeroAttributes(tag: galleryItems[index].id),
-                    );
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    model.navigateBack();
                   },
+                  child: Container(
+                    margin: EdgeInsets.only(
+                        left: 1.7.w, top: 3.h),
+                    padding: EdgeInsets.all(13),
+                    //height: 10.h,
+                    decoration: BoxDecoration(
+                      color: ColorUtils.white,
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(10),
+                      ),
+                    ),
+                    child: SvgPicture.asset(ImageUtils.backArrow),
+                    height: 10.i,
+                  ),
                 ),
-              ),
+                Expanded(
+                  child: Center(
+                    child: Container(
+                      width: double.infinity,
+                      child: PhotoViewGallery.builder(
+                        itemCount: model.matchedImage.length,
+                        pageController: pageController,
+                        builder: (context, index) {
+                          return  PhotoViewGalleryPageOptions(
+                            imageProvider: NetworkImage(model.matchedImage[index]),
+                            initialScale: PhotoViewComputedScale.contained * 1,
+                            //heroAttributes: PhotoViewHeroAttributes(tag: galleryItems[index].id),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         );
