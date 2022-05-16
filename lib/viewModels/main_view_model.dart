@@ -3967,7 +3967,7 @@ class MainViewModel extends BaseViewModel {
         //   print('${AudioEncoder.aacLc.name} supported: $isSupported');
         // }
 
-        getFilePath();
+        await getFilePath();
         await audioRecorder.start(
             encoder: AudioEncoder.AAC,
             path: Platform.isAndroid?null:sdPath!
@@ -3995,7 +3995,9 @@ class MainViewModel extends BaseViewModel {
     _timer?.cancel();
     _ampTimer?.cancel();
     _isRecording = false;
-    file = await File((await audioRecorder.stop())!).create();
+    //print((await audioRecorder.stop())!);
+    file = await File((await audioRecorder.stop())!);
+    file!.createSync(recursive: true);
     await pubnub!.files.sendFile(getConversationID(
         userModel!.id.toString(),
         id.toString()
@@ -4015,7 +4017,7 @@ class MainViewModel extends BaseViewModel {
     // File test = await File(file!.path);
     // test.writeAsBytesSync(await file!.readAsBytesSync());
     // file = test;
-    notifyListeners();
+    //notifyListeners();
     //await firebaseChat.uploadRecording(attendeeFbId, otherUserId);
     notifyListeners();
     //widget.onStop(path!);
@@ -4024,9 +4026,9 @@ class MainViewModel extends BaseViewModel {
 
   int i = 0;
 
-  getFilePath() async {
+  Future getFilePath() async {
     var storageDirectory = Platform.isAndroid ? await getExternalStorageDirectory() : await getApplicationDocumentsDirectory();
-    sdPath = await storageDirectory!.path + "/record/audio.mp4";
+    sdPath = await storageDirectory!.path + "/record/audio.m4a";
     notifyListeners();
     //var d = Directory(sdPath!);
     // if (!d.existsSync()) {

@@ -542,7 +542,7 @@ class _MessageScreenForUserState extends State<MessageScreenForUser> {
                                                               //model.getImage();
                                                               setState(() {});
                                                             },
-                                                            tapPadding:
+                                                              tapPadding:
                                                             EdgeInsets.all(
                                                                 0.i),
                                                             child:
