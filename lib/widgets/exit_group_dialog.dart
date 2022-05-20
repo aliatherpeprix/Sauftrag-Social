@@ -12,11 +12,12 @@ import 'package:stacked/stacked.dart';
 
 class ExitGroup extends StatefulWidget {
 
+  int id;
   String title;
   String btnTxt;
   String icon;
 
-  ExitGroup({required this.title, required this.btnTxt, required this.icon ,Key? key}) : super(key: key);
+  ExitGroup({required this.title, required this.btnTxt, required this.icon , required this.id,Key? key}) : super(key: key);
 
   @override
   _ExitGroupState createState() => _ExitGroupState();
@@ -88,9 +89,10 @@ class _ExitGroupState extends State<ExitGroup> {
                                 // model.deleteSelected = true;
                                 // model.deleteUnselected = false;
                                 // model.notifyListeners();
-                                // model.DeactivateAccount();
+                                //model.DeactivateAccount();
                                 // model.logOutUser();
-                                model.navigateBack();
+                                //model.navigateBack();
+                                model.exitGroupUser(widget!.id!);
                               },
                               child: Container(
                                 padding: EdgeInsets.symmetric(
