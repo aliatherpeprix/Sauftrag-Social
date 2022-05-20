@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:mime/mime.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:pubnub/pubnub.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/new_bar_model.dart';
@@ -26,6 +27,7 @@ import 'package:sauftrag/widgets/back_arrow_with_container.dart';
 import 'package:stacked/stacked.dart';
 import 'package:audioplayers/audioplayers.dart'as ap;
 
+import '../../../views/UserFriendList/group_detail_screen.dart';
 import '../../../widgets/loader.dart';
 
 class BarGroupScreen extends StatefulWidget {
@@ -35,8 +37,9 @@ class BarGroupScreen extends StatefulWidget {
   int? userLength;
   String? groupImg;
   List<UserModel>? groupUser;
+  UserModel? originator;
 
-  BarGroupScreen({Key? key, this.id, this.username,  this.userLength, this.groupUser, this.groupImg}) : super(key: key);
+  BarGroupScreen({Key? key, this.id, this.username,  this.userLength, this.groupUser, this.groupImg,this.originator}) : super(key: key);
 
   @override
   _BarGroupScreenState createState() => _BarGroupScreenState();
@@ -439,64 +442,84 @@ class _BarGroupScreenState extends State<BarGroupScreen> {
                                   SizedBox(
                                     width: 2.5.w,
                                   ),
-                                  Row(
-                                    children: [
-                                      Stack(
-                                        alignment: Alignment.topCenter,
-                                        children: [
-                                          Container(
-                                            height: 6.7.h,
-                                            width: 14.w,
-                                            child: ClipRRect(
-                                              borderRadius: BorderRadius.circular(80),
-                                              child: widget.groupImg == null ?
-                                              SvgPicture.asset(ImageUtils.profile) :
-                                              Image.network(widget.groupImg!,
-                                                fit: BoxFit.fill,
+                                  GestureDetector(
+                                    onTap: (){
+                                      Navigator.push(
+                                          context ,
+                                          PageTransition(
+                                              type: PageTransitionType
+                                                  .fade,
+                                              child:
+                                              Group_Details(
+                                                  id: widget.id,
+                                                  username: widget.username,
+                                                  originator: widget.originator,
+                                                  userLength: widget.userLength,
+                                                  groupImg : widget.groupImg,
+                                                  groupUser: widget.groupUser
+                                              )
+                                          )
+                                      );
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Stack(
+                                          alignment: Alignment.topCenter,
+                                          children: [
+                                            Container(
+                                              height: 6.7.h,
+                                              width: 14.w,
+                                              child: ClipRRect(
+                                                borderRadius: BorderRadius.circular(80),
+                                                child: widget.groupImg == null ?
+                                                SvgPicture.asset(ImageUtils.profile) :
+                                                Image.network(widget.groupImg!,
+                                                  fit: BoxFit.fill,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        width: 3.w,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Text(
-                                                widget.username!,
-                                                style: TextStyle(
-                                                    fontFamily:
-                                                    FontUtils.modernistBold,
-                                                    fontSize: 1.9.t,
-                                                    color:
-                                                    ColorUtils.text_dark),
-                                              ),
-                                              SizedBox(
-                                                width: 2.w,
-                                              ),
-                                              SvgPicture.asset(
-                                                  ImageUtils.groupLock, height: 2.h,),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 0.8.h,
-                                          ),
-                                          Text(
-                                           widget.userLength!.toString() +  " Members" ,
-                                            style: TextStyle(
-                                                fontFamily:
-                                                FontUtils.modernistBold,
-                                                fontSize: 1.5.t,
-                                                color: ColorUtils.activeColor),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          width: 3.w,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  widget.username!,
+                                                  style: TextStyle(
+                                                      fontFamily:
+                                                      FontUtils.modernistBold,
+                                                      fontSize: 1.9.t,
+                                                      color:
+                                                      ColorUtils.text_dark),
+                                                ),
+                                                SizedBox(
+                                                  width: 2.w,
+                                                ),
+                                                SvgPicture.asset(
+                                                    ImageUtils.groupLock, height: 2.h,),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 0.8.h,
+                                            ),
+                                            Text(
+                                             widget.userLength!.toString() +  " Members" ,
+                                              style: TextStyle(
+                                                  fontFamily:
+                                                  FontUtils.modernistBold,
+                                                  fontSize: 1.5.t,
+                                                  color: ColorUtils.activeColor),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),

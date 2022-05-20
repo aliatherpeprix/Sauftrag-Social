@@ -525,7 +525,10 @@ class _FriendListState extends State<FriendList> {
                                                                 BarGroupScreen(
                                                                     id: model.getListGroup[index].id,
                                                                     username: model.getListGroup[index].name,
-                                                                    userLength: model.getListGroup[index].users!.length
+                                                                    userLength: model.getListGroup[index].users!.length,
+                                                                    originator: model.getListGroup[index].originator,
+                                                                    groupUser: model.getListGroup[index].users,
+                                                                    groupImg: model.getListGroup[index].image,
                                                                 )
                                                             ));
                                                       }
@@ -537,9 +540,12 @@ class _FriendListState extends State<FriendList> {
                                                                     .fade,
                                                                 child:
                                                                 BarGroupScreen(
-                                                                    id: model.getListGroup[index].id,
-                                                                    username: model.getListGroup[index].name,
-                                                                    userLength: model.getListGroup[index].users!.length
+                                                                  id: model.getListGroup[index].id,
+                                                                  username: model.getListGroup[index].name,
+                                                                  userLength: model.getListGroup[index].users!.length,
+                                                                  originator: model.getListGroup[index].originator,
+                                                                  groupUser: model.getListGroup[index].users,
+                                                                  groupImg: model.getListGroup[index].image,
                                                                 )
                                                             ));
                                                       }

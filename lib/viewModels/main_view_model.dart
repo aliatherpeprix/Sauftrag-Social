@@ -535,12 +535,22 @@ class MainViewModel extends BaseViewModel {
     //navigateToHomeScreen(2);
   }
 
+  ///Message Type value
   int msgTypeValue = 1;
   String msgTypeValueStr = "Private";
   List<String> msgTypeList = ["Private", "Public"];
   Map<String, int> msgTypeMap = {
     'Private': 1,
     'Public': 2,
+  };
+
+  ///Group Status/Type Value
+  int groupTypeValue = 1;
+  String groupTypeValueStr = "Public";
+  List<String> groupTypeList = ["Public", "Private"];
+  Map<String, int> groupTypeMap = {
+    'Public': 1,
+    'Private': 2,
   };
 
   Future<bool> getImage1(BuildContext context, int type) async {
@@ -3050,6 +3060,36 @@ class MainViewModel extends BaseViewModel {
     // }ListOfBarsModel
     if (getAnotherUserDetails is UserModel) {
       matchedUser = getAnotherUserDetails;
+      isLoading = false;
+      return getAnotherUserDetails;
+      //print(matchedUser);
+    } else {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Some thing went wrong",
+      ));
+      //isPrivacyPolicy = false;
+
+      //return;
+    }
+    isLoading = false;
+    notifyListeners();
+    //print(getFaqsList);
+  }
+
+  Future getOtherUserInfo(String id) async {
+    isLoading = true;
+
+    var getAnotherUserDetails = await getUserInfo.GetAnotherUserInfo(id);
+    //print(getAnotherUserDetails);
+    // if (getFaqList is String){
+    //   faqs = getFaqList;
+    //   //isPrivacyPolicy = false;
+    //
+    // }ListOfBarsModel
+    if (getAnotherUserDetails is UserModel) {
+      //matchedUser = getAnotherUserDetails;
+      isLoading = false;
+      return getAnotherUserDetails;
       //print(matchedUser);
     } else {
       DialogUtils().showDialog(MyErrorWidget(
@@ -3132,9 +3172,8 @@ class MainViewModel extends BaseViewModel {
         await createGroup.CreateGroup(
             chatController.text,
             getUserId,
-            1,
+            groupTypeValue,
             media
-
         );
     if (createGroupUser is List<CreateGroupChat>) {
       getUserGroup = createGroupUser;
