@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pubnub/pubnub.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/models/create_group_chat.dart';
 import 'package:sauftrag/models/new_bar_model.dart';
 import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/utils/color_utils.dart';
@@ -68,55 +69,57 @@ class _GroupDetailsState extends State<GroupDetails> {
                       model.getUserId.add(data['id']);
                     }
 
-                    await model.createGroupChatUser();
-                    NewBarModel barUser = (await locator<PrefrencesViewModel>().getBarUser())!;
-                    UserModel user = (await locator<PrefrencesViewModel>().getUser())!;
+                    if (await model.createGroupChatUser() is List<CreateGroupChat>){
+                      NewBarModel barUser = (await locator<PrefrencesViewModel>().getBarUser())!;
+                      UserModel user = (await locator<PrefrencesViewModel>().getUser())!;
 
-                     model.subscription = model.pubnub!.subscribe(channels: {model.chatController.text});
-                     model.channel = model.pubnub!.channel(model.chatController.text);
+                      model.subscription = model.pubnub!.subscribe(channels: {model.chatController.text});
+                      model.channel = model.pubnub!.channel(model.chatController.text);
 
-                    List<ChannelMemberMetadataInput> setMetadata = [];
-                    for (var data in model.groupList) {
-                      var user =
-                          ChannelMemberMetadataInput(data['id'].toString());
-                      setMetadata.add(user);
+                      List<ChannelMemberMetadataInput> setMetadata = [];
+                      for (var data in model.groupList) {
+                        var user =
+                        ChannelMemberMetadataInput(data['id'].toString());
+                        setMetadata.add(user);
+                      }
+                      model.pubnub!.objects.setChannelMetadata(model.chatController.text,
+                          ChannelMetadataInput(name: model.chatController.text,description: "Group", custom: {
+                            "admin" : model.userModel!.id
+                          }));
+                      model.pubnub!.objects.setChannelMembers(model.chatController.text, setMetadata);
+                      print(setMetadata);
+                      if(model.userModel!.role == 1){
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                type: PageTransitionType
+                                    .fade,
+                                child:
+                                GroupScreen(
+                                    id: model.getUserGroup!.first.id ?? 0,
+                                    username: model.getUserGroup!.first.name,
+                                    groupImg: model.getUserGroup!.first.image,
+                                    userLength: model.getUserGroup!.first.users!.length
+                                )
+                            ));
+                      }
+                      else{
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                type: PageTransitionType
+                                    .fade,
+                                child:
+                                GroupScreen(
+                                    id: model.getUserGroup!.first.id ?? 0,
+                                    username: model.getUserGroup!.first.name,
+                                    groupImg: model.getUserGroup!.first.image,
+                                    userLength: model.getUserGroup!.first.users!.length
+                                )
+                            ));
+                      }
                     }
-                    model.pubnub!.objects.setChannelMetadata(model.chatController.text,
-                        ChannelMetadataInput(name: model.chatController.text,description: "Group", custom: {
-                      "admin" : model.userModel!.id
-                    }));
-                    model.pubnub!.objects.setChannelMembers(model.chatController.text, setMetadata);
-                    print(setMetadata);
-                    if(model.userModel!.role == 1){
-                      Navigator.push(
-                          context,
-                          PageTransition(
-                              type: PageTransitionType
-                                  .fade,
-                              child:
-                              GroupScreen(
-                                  id: model.getUserGroup!.first.id ?? 0,
-                                  username: model.getUserGroup!.first.name,
-                                  groupImg: model.getUserGroup!.first.image,
-                                  userLength: model.getUserGroup!.first.users!.length
-                              )
-                          ));
-                    }
-                    else{
-                      Navigator.push(
-                          context,
-                          PageTransition(
-                              type: PageTransitionType
-                                  .fade,
-                              child:
-                              GroupScreen(
-                                  id: model.getUserGroup!.first.id ?? 0,
-                                  username: model.getUserGroup!.first.name,
-                                  groupImg: model.getUserGroup!.first.image,
-                                  userLength: model.getUserGroup!.first.users!.length
-                              )
-                          ));
-                    }
+
                     //model.navigateToGroupScreen();
                     //model.navigateToFriendListScreen1();
                   },
@@ -139,6 +142,7 @@ class _GroupDetailsState extends State<GroupDetails> {
                   ),
                 ),
               ),
+
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.centerFloat,
               backgroundColor: ColorUtils.white,
@@ -172,6 +176,91 @@ class _GroupDetailsState extends State<GroupDetails> {
                             color: ColorUtils.black,
                             fontFamily: FontUtils.modernistBold,
                             fontSize: 3.t,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: Dimensions.topMargin),
+                    Stack(
+                      children: [
+                        Container(
+                          height: 7.h,
+                          padding: EdgeInsets.symmetric(
+                              vertical: Dimensions.containerVerticalPadding,
+                              horizontal:
+                              Dimensions.containerHorizontalPadding),
+                          decoration: BoxDecoration(
+                              color: ColorUtils.white,
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(Dimensions.roundCorner)),
+                              border:
+                              Border.all(color: ColorUtils.divider)),
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(ImageUtils.relationIcon),
+                              SizedBox(width: 4.w),
+                              Expanded(
+                                  child: DropdownButton<String>(
+                                    value: model.relationStatusValueStr,
+                                    items: model.relationStatusList
+                                        .asMap()
+                                        .values
+                                        .map((String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(
+                                          value,
+                                          style: TextStyle(
+                                            fontSize: 1.9.t,
+                                            fontFamily:
+                                            FontUtils.modernistRegular,
+                                            color: ColorUtils.red_color,
+                                            //height: 1.8
+                                          ),
+                                        ),
+                                      );
+                                    }).toList(),
+                                    onChanged: (data) {
+                                      setState(() {
+                                        model.relationStatusValueStr = data as String;
+                                        model.relationStatusValue = model
+                                            .relationStatusMap[model.relationStatusValueStr]
+                                        as int;
+                                      });
+                                    },
+                                    hint: Text(
+                                      "Select an option",
+                                      style: TextStyle(
+                                        fontSize: 1.8.t,
+                                        fontFamily: FontUtils.modernistRegular,
+                                        color: ColorUtils.text_grey,
+                                      ),
+                                    ),
+                                    isExpanded: true,
+                                    underline: Container(),
+                                    icon: Align(
+                                        alignment: Alignment.centerRight,
+                                        child: Icon(
+                                          Icons.keyboard_arrow_down_rounded,
+                                          color: ColorUtils.black,
+                                        )),
+                                  )
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 5.w),
+                          padding: EdgeInsets.symmetric(horizontal: 1.w),
+                          color: ColorUtils.white,
+                          child: Text(
+                            "Relationship",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: ColorUtils.text_grey,
+                                fontFamily: FontUtils.modernistRegular,
+                                fontSize: 1.5.t,
+                                height: .4),
                           ),
                         ),
                       ],

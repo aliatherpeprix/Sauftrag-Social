@@ -62,7 +62,7 @@ class _FriendListForUserState extends State<FriendListForUser> {
         model.getGroupList();
         model.matchingUsers();
         model.getListOfbars();
-        model.initUserGrpPubNub();
+        //model.initUserGrpPubNub();
         model.openGroupMenu = false;
         // model.selectedGroup = (model.getListGroup.);
       },

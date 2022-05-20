@@ -64,7 +64,7 @@ class _MessageScreenForUserState extends State<MessageScreenForUser> {
     return ViewModelBuilder<MainViewModel>.reactive(
       viewModelBuilder: () => locator<MainViewModel>(),
       onModelReady: (model) async {
-        model.initUserGrpPubNub();
+        //model.initUserGrpPubNub();
         // model.chat();
        // model.getAllUserForChat();
         model.chats.clear();
@@ -82,14 +82,11 @@ class _MessageScreenForUserState extends State<MessageScreenForUser> {
           print(chat.messages.length);
           for (var data in chat.messages) {
             model.chats.add(data.content);
-            SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
-              model.chatScroll.animateTo(
-                  model.chatScroll.position.maxScrollExtent,
-                  duration: Duration(milliseconds: 500),
-                  curve: Curves.easeIn);
-            });
           }
           model.notifyListeners();
+          SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
+            model.chatScroll.jumpTo(model.chatScroll.position.maxScrollExtent);
+          });
         });
 
         model.pubnub!.fetchMessageActions("${model.getConversationID(User.id.toString(), widget.id.toString())}",limit: 20).then((value){
@@ -507,7 +504,7 @@ class _MessageScreenForUserState extends State<MessageScreenForUser> {
                                                               // final cameras = await availableCameras();
                                                               // final firstCamera = cameras.first;
                                                               //model.navigationService.navigateTo(to: TakePictureScreen(camera: firstCamera,));
-                                                              model.openCameraGrp(widget.id!, widget.username!);
+                                                              model.openCameraUser(widget.id!);
                                                             },
                                                             tapPadding:
                                                             EdgeInsets.all(
@@ -1392,7 +1389,7 @@ class _ChatImageWidgetState extends State<ChatImageWidget> {
                   child: Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
-                      DateFormat("dd hh:mm").format(DateTime.parse(model.chats[widget.index!]["message"]["time"])),
+                      DateFormat("hh:mm").format(DateTime.parse(model.chats[widget.index!]["message"]["time"])),
                       style: TextStyle(
                         //fontFamily: FontUtils.avertaDemoRegular,
                           fontSize: 1.5.t,
@@ -1517,7 +1514,7 @@ class _ChatTextWidgetState extends State<ChatTextWidget> {
                   child: Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
-                      DateFormat("dd hh:mm").format(DateTime.parse(model.chats[widget.index!]["time"])),
+                      DateFormat("hh:mm").format(DateTime.parse(model.chats[widget.index!]["time"])),
                       //model.chats[widget.index!]["createdAt"].toString(),
                       style: TextStyle(
                         //fontFamily: FontUtils.avertaDemoRegular,
@@ -1643,7 +1640,7 @@ class _ChatVideoWidgetState extends State<ChatVideoWidget> {
                   child: Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
-                      DateFormat("dd hh:mm").format(DateTime.parse(model.chats[widget.index!]["message"]["time"])),
+                      DateFormat("hh:mm").format(DateTime.parse(model.chats[widget.index!]["message"]["time"])),
                       style: TextStyle(
                         //fontFamily: FontUtils.avertaDemoRegular,
                           fontSize: 1.5.t,
@@ -1676,8 +1673,8 @@ class _ChatVideoWidgetState extends State<ChatVideoWidget> {
     BetterPlayerConfiguration(
       aspectRatio: 16 / 9,
       fit: BoxFit.contain,
-      autoPlay: true,
-      looping: true,
+      autoPlay: false,
+      looping: false,
       deviceOrientationsAfterFullScreen: [
         DeviceOrientation.portraitDown,
         DeviceOrientation.portraitUp

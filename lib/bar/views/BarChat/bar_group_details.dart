@@ -23,6 +23,7 @@ import 'package:sauftrag/widgets/back_arrow_with_container.dart';
 import 'package:sauftrag/widgets/image_edit_dialog.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../../models/create_group_chat.dart';
 import 'bar_group_screen.dart';
 
 class BarGroupDetails extends StatefulWidget {
@@ -62,62 +63,66 @@ class _BarGroupDetailsState extends State<BarGroupDetails> {
                 child: ElevatedButton(
 
                   onPressed: () async {
-                    model.getUserId = [];
-                    for (var data in model.groupList) {
-                      model.getUserId.add(data['id']);
-                    }
-                    await model.createGroupChatBar();
-                    NewBarModel barUser =
-                        (await locator<PrefrencesViewModel>().getBarUser())!;
-                    UserModel user =
-                        (await locator<PrefrencesViewModel>().getUser())!;
-                     model.subscription = model.pubnub!.subscribe(channels: {model.barGroupNameController.text});
-                     model.channel = model.pubnub!.channel(model.barGroupNameController.text);
-                    List<ChannelMemberMetadataInput> setMetadata = [];
-                    for (var data in model.groupList) {
-                      var user =
-                          ChannelMemberMetadataInput(data['id'].toString());
-                      setMetadata.add(user);
-                    }
-                    model.pubnub!.objects.setChannelMetadata(model.barGroupNameController.text,
-                        ChannelMetadataInput(name: model.barGroupNameController.text,description: "Group", custom: {
-                          "admin" : model.barModel!.id
-                        }));
-                    model.pubnub!.objects.setChannelMembers(model.barGroupNameController.text, setMetadata);
-                    print(setMetadata);
-                    if(model.barModel!.role == 2){
-                      Navigator.push(
-                          context,
-                          PageTransition(
-                              type: PageTransitionType
-                                  .fade,
-                              child:
-                              BarGroupScreen(
-                                // id: model.groupChatUser!.id ?? 0,
-                                // username: model.groupChatUser!.name,
-                                  id: model.getUserGroup!.first.id ?? 0,
-                                  username: model.getUserGroup!.first.name,
-                                  groupImg: model.getUserGroup!.first.image,
-                                  userLength: model.getUserGroup!.first.users!.length
-                              )
-                          ));
-                    }
-                    else{
-                      Navigator.push(
-                          context,
-                          PageTransition(
-                              type: PageTransitionType
-                                  .fade,
-                              child:
-                              BarGroupScreen(
-                                  id: model.getUserGroup!.first.id! ?? 0,
-                                  username: model.getUserGroup!.first.name,
-                                  groupImg: model.getUserGroup!.first.image,
-                                  userLength: model.getUserGroup!.first.users!.length
-                                  //userLength: model.getListGroup[index].users!.length
-                              )
-                          ));
-                    }
+                    if (model.barGroupNameController.text.isNotEmpty){
+                      model.getUserId = [];
+                      for (var data in model.groupList) {
+                        model.getUserId.add(data['id']);
+                      }
+                      if (await model.createGroupChatBar() is List<CreateGroupChat>){
+                          NewBarModel barUser =
+                          (await locator<PrefrencesViewModel>().getBarUser())!;
+                          UserModel user =
+                          (await locator<PrefrencesViewModel>().getUser())!;
+                          model.subscription = model.pubnub!.subscribe(channels: {model.barGroupNameController.text});
+                          model.channel = model.pubnub!.channel(model.barGroupNameController.text);
+                          List<ChannelMemberMetadataInput> setMetadata = [];
+                          for (var data in model.groupList) {
+                            var user =
+                            ChannelMemberMetadataInput(data['id'].toString());
+                            setMetadata.add(user);
+                          }
+                          model.pubnub!.objects.setChannelMetadata(model.barGroupNameController.text,
+                              ChannelMetadataInput(name: model.barGroupNameController.text,description: "Group", custom: {
+                                "admin" : model.barModel!.id
+                              }));
+                          model.pubnub!.objects.setChannelMembers(model.barGroupNameController.text, setMetadata);
+                          print(setMetadata);
+                          if(model.barModel!.role == 2){
+                            Navigator.push(
+                                context,
+                                PageTransition(
+                                    type: PageTransitionType
+                                        .fade,
+                                    child:
+                                    BarGroupScreen(
+                                      // id: model.groupChatUser!.id ?? 0,
+                                      // username: model.groupChatUser!.name,
+                                        id: model.getUserGroup!.first.id ?? 0,
+                                        username: model.getUserGroup!.first.name,
+                                        groupImg: model.getUserGroup!.first.image,
+                                        userLength: model.getUserGroup!.first.users!.length
+                                    )
+                                ));
+                          }
+                          else{
+                            Navigator.push(
+                                context,
+                                PageTransition(
+                                    type: PageTransitionType
+                                        .fade,
+                                    child:
+                                    BarGroupScreen(
+                                        id: model.getUserGroup!.first.id! ?? 0,
+                                        username: model.getUserGroup!.first.name,
+                                        groupImg: model.getUserGroup!.first.image,
+                                        userLength: model.getUserGroup!.first.users!.length
+                                      //userLength: model.getListGroup[index].users!.length
+                                    )
+                                ));
+                          }
+                        }
+                      }
+
                   },
                   child: const Text("Create Group"),
                   style: ElevatedButton.styleFrom(

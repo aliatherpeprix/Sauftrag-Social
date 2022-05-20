@@ -1199,7 +1199,7 @@ class _BarNewsFeedItemState extends State<BarNewsFeedItem> {
                                       GestureDetector(
                                         onTap: (){
 
-                                          if(!model.isLoading) {
+                                          if(!model.isLikeNewsFeed) {
                                             model.selectedPost = model.posts[widget.index!];
                                             model.postLikeNewsFeed(widget.index!);
                                           }

@@ -338,6 +338,27 @@ class MainViewModel extends BaseViewModel {
 
   bool isFollowBar = false;
 
+  bool isLikeNewsFeed = false;
+
+  String relationStatusValueStr = "Single";
+  List<String> relationStatusList = [
+    "Single",
+    "Relationship",
+    "Open Relationship",
+    "It´s Complicated",
+    "Married"
+  ];
+
+  int relationStatusValue = 1;
+
+  Map<String, int> relationStatusMap = {
+    'Single': 1,
+    'Relationship': 2,
+    'Open Relationship': 3,
+    'It´s Complicated': 4,
+    'Married': 5,
+  };
+
   Future<Position> determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -3118,13 +3139,14 @@ class MainViewModel extends BaseViewModel {
     if (createGroupUser is List<CreateGroupChat>) {
       getUserGroup = createGroupUser;
       print(getUserGroup);
+      return createGroupUser;
     } else {
       DialogUtils().showDialog(MyErrorWidget(
         error: "Some thing went wrong",
       ));
+      return "Error";
       //isPrivacyPolicy = false;
 
-      return;
     }
 
     print(addFilters);
@@ -3159,7 +3181,7 @@ class MainViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  createGroupChatBar() async {
+  Future createGroupChatBar() async {
 
     if (barGroupNameController.text.isEmpty) {
       DialogUtils().showDialog(MyErrorWidget(
@@ -3192,8 +3214,10 @@ class MainViewModel extends BaseViewModel {
     if (createGroupUser is List<CreateGroupChat>) {
       getUserGroup = createGroupUser;
       print(getUserGroup);
+      return createGroupUser;
     }
     else {
+      return "Error";
       // DialogUtils().showDialog(MyErrorWidget(
       //   error: "Some thing went wrong",
       // ));
@@ -3268,7 +3292,7 @@ class MainViewModel extends BaseViewModel {
   }
 
   postLikeNewsFeed(int index) async {
-    isLoading = true;
+    isLikeNewsFeed = true;
     notifyListeners();
     bool like = true;
     var userlike = await userLike.NewfeedLike(selectedPost!.id!, like);
@@ -3305,7 +3329,7 @@ class MainViewModel extends BaseViewModel {
 
       //return;
     }
-    isLoading = false;
+    isLikeNewsFeed = false;
     notifyListeners();
     //print(getFaqsList);
   }
@@ -3594,11 +3618,6 @@ class MainViewModel extends BaseViewModel {
       return true;
     }
   }
-
-
-
-
-
 
   Future<bool> openCamera() async {
     ImagePicker picker = ImagePicker();

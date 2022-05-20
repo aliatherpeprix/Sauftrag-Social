@@ -807,7 +807,8 @@ class RegistrationViewModel extends BaseViewModel {
 
     List<Placemark> placemarks = await placemarkFromCoordinates(latLng.latitude, latLng.longitude);
 
-    address = "${placemarks[0].name} ${placemarks[0].street} ${placemarks[0].subLocality} ${placemarks[0].locality} ${placemarks[0].country}";
+    //address = "${placemarks[0].name} ${placemarks[0].street} ${placemarks[0].subLocality} ${placemarks[0].locality} ${placemarks[0].country}";
+    address = "${placemarks[0].street} ${placemarks[0].name} ${placemarks[0].postalCode} ${placemarks[0].locality} ${placemarks[0].country}";
     lat = latLng.latitude;
     lng = latLng.longitude;
 
@@ -1883,7 +1884,7 @@ class RegistrationViewModel extends BaseViewModel {
       var checkuserResponce =
           await checkBar.CheckBar(signUpBarEmailController.text, "2");
 
-      if (checkuserResponce is UserModel) {
+      if (checkuserResponce is NewBarModel) {
         checkSignupUser = false;
         notifyListeners();
         DialogUtils().showDialog(MyErrorWidget(
@@ -2474,7 +2475,7 @@ class RegistrationViewModel extends BaseViewModel {
     navigationService.navigateToMapSearchScreen();
   }
 
-  void navigateToAddAddressScreen() {
+  void  navigateToAddAddressScreen() {
     navigationService.navigateToAddAddressScreen();
   }
 

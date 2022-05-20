@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sauftrag/models/bar_model.dart';
+import 'package:sauftrag/models/new_bar_model.dart';
 import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/modules/dio_services.dart';
 import 'package:sauftrag/utils/constants.dart';
@@ -36,8 +37,9 @@ class Checkbar {
           var userData = UserModel.fromJson(response.data['data']);
           return userData;
         }*/
-        var userData = BarModel.fromJson(response.data);
-        return userData;}
+        var userData = NewBarModel.fromJson(response.data);
+        return userData;
+      }
       //user not found
       else {
         return response.data['message'];

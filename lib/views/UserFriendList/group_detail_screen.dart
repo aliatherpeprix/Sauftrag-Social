@@ -64,7 +64,7 @@ class _Group_DetailsState extends State<Group_Details> {
         model.getGroupList();
         model.matchingUsers();
         model.getListOfbars();
-        model.initUserGrpPubNub();
+        //model.initUserGrpPubNub();
         model.openGroupMenu = false;
         // model.selectedGroup = (model.getListGroup.);
       },

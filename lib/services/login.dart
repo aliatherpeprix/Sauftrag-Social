@@ -58,20 +58,21 @@ class LoginUser {
     }
     on DioError catch (e) {
 
-      if(e.response!.statusCode == 500) {
-        navigationService.navigateToServerErrorPage();
-      }
+      if (e.response!=null){
+        if(e.response!.statusCode == 500) {
+          navigationService.navigateToServerErrorPage();
+        }
 
-      if ((e as DioError).response!.data is Map &&
-          (e).response!.data["detail"] != null) {
-        DialogUtils().showDialog(
-            MyErrorWidget(error: (e).response!.data["detail"].toString()));
-      } else  {
-        DialogUtils().showDialog(
-            MyErrorWidget(error: "Unable to login with provided credentials"));
-        //return (e).error.toString();
+        if ((e as DioError).response!.data is Map &&
+            (e).response!.data["detail"] != null) {
+          DialogUtils().showDialog(
+              MyErrorWidget(error: (e).response!.data["detail"].toString()));
+        } else  {
+          DialogUtils().showDialog(
+              MyErrorWidget(error: "Unable to login with provided credentials"));
+          //return (e).error.toString();
+        }
       }
-
       print(e);
       //return (e as DioError).response!.data["detail"];
       // dynamic exception = e;

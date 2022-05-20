@@ -5,6 +5,7 @@ import 'package:better_player/better_player.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:expand_tap_area/expand_tap_area.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
@@ -48,7 +49,7 @@ class _BarGroupScreenState extends State<BarGroupScreen> {
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
       onModelReady: (model) async {
-        model.initUserGrpPubNub();
+        // model.initUserGrpPubNub();
         // Subscribe to a channel
         model.subscription = model.pubnub!.subscribe(channels: {widget.username!});
 
@@ -62,6 +63,12 @@ class _BarGroupScreenState extends State<BarGroupScreen> {
             model.chats.add(data.content);
           }
           model.notifyListeners();
+          SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
+            model.chatScroll.animateTo(
+                model.chatScroll.position.maxScrollExtent,
+                duration: Duration(milliseconds: 500),
+                curve: Curves.easeIn);
+          });
         });
 
         model.subscription!.messages.listen((message) async {
@@ -849,7 +856,7 @@ class _ChatImageWidgetState extends State<ChatImageWidget> {
                   child: Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
-                      DateFormat("dd hh:mm").format(DateTime.parse(model.chats[widget.index!]["message"]["time"])),
+                      DateFormat("hh:mm").format(DateTime.parse(model.chats[widget.index!]["message"]["time"])),
                       style: TextStyle(
                         //fontFamily: FontUtils.avertaDemoRegular,
                           fontSize: 1.5.t,
@@ -982,7 +989,7 @@ class _ChatTextWidgetState extends State<ChatTextWidget> {
                   child: Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
-                      DateFormat("dd hh:mm").format(DateTime.parse(model.chats[widget.index!]["time"])),
+                      DateFormat("hh:mm").format(DateTime.parse(model.chats[widget.index!]["time"])),
                       //model.chats[widget.index!]["createdAt"].toString(),
                       style: TextStyle(
                         //fontFamily: FontUtils.avertaDemoRegular,
@@ -1126,7 +1133,7 @@ class _ChatVideoWidgetState extends State<ChatVideoWidget> {
                   child: Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
-                      DateFormat("dd hh:mm").format(DateTime.parse(model.chats[widget.index!]["message"]["time"])),
+                      DateFormat("hh:mm").format(DateTime.parse(model.chats[widget.index!]["message"]["time"])),
                       style: TextStyle(
                         //fontFamily: FontUtils.avertaDemoRegular,
                           fontSize: 1.5.t,
@@ -1157,8 +1164,8 @@ class _ChatVideoWidgetState extends State<ChatVideoWidget> {
     BetterPlayerConfiguration(
       aspectRatio: 16 / 9,
       fit: BoxFit.contain,
-      autoPlay: true,
-      looping: true,
+      autoPlay: false,
+      looping: false,
       deviceOrientationsAfterFullScreen: [
         DeviceOrientation.portraitDown,
         DeviceOrientation.portraitUp

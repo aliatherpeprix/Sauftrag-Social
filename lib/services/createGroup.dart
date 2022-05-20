@@ -125,10 +125,10 @@ class Creategroup {
       dynamic exception = e;
       if ((e as DioError).response!.data is Map &&
           (e).response!.data["detail"] != null) {
-        DialogUtils().showDialog(
+        await DialogUtils().showDialog(
             MyErrorWidget(error: (e).response!.data["detail"].toString()));
       } else  {
-        DialogUtils().showDialog(
+        await DialogUtils().showDialog(
             MyErrorWidget(error: "Group with this name already exists"));
         //return (e).error.toString();
       }
