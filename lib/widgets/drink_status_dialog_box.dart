@@ -451,8 +451,8 @@ class _DrinkStatusDialogBoxState extends State<DrinkStatusDialogBox> {
 
                       //Save Button
                       ElevatedButton(
-                        onPressed: () {
-                          model.drinkStatus();
+                        onPressed: () async{
+                          await model.drinkStatus();
                           model.getDrinkStatus();
                           model.navigateBack();
                           model.updateStatus = true;

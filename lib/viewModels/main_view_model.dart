@@ -1436,7 +1436,7 @@ class MainViewModel extends BaseViewModel {
   String? drinkingTo;
   bool updateStatus = false;
 
-  drinkStatus() async {
+  Future drinkStatus() async {
     UserModel? user = await locator<PrefrencesViewModel>().getUser();
     var startTimeofDrinking = DateFormat('jm')
         .parse(drinkingFrom!)
