@@ -107,6 +107,7 @@ import '../main.dart';
 import '../models/get_bar_follower_list.dart';
 import '../models/newfeed_like.dart';
 import '../models/user_feedback.dart';
+import '../services/exitGroupUser.dart';
 import '../services/feedback_user.dart';
 import '../services/like_newsfeed_user.dart';
 class MainViewModel extends BaseViewModel {
@@ -138,6 +139,7 @@ class MainViewModel extends BaseViewModel {
   var postComments = PostComments();
   var getComments = GetComments();
   var postUserChat = UserreportChat();
+  var exitgrpUser = ExitGroupuser();
 
 
   Barcode? result;
@@ -4330,7 +4332,8 @@ class MainViewModel extends BaseViewModel {
   int l = 0;
 
   getFilePathGroupVoiceBar() async {
-    var storageDirectory = Platform.isAndroid ? await getExternalStorageDirectory() : await getApplicationDocumentsDirectory();
+    var storageDirectory = Platform.isAndroid ? await getExternalStorageDirectory() :
+    await getApplicationDocumentsDirectory();
     sdPath = await storageDirectory!.path + "/record/audio.mp4";
     notifyListeners();
     //var d = Directory(sdPath!);
@@ -4338,6 +4341,26 @@ class MainViewModel extends BaseViewModel {
     //   d.createSync(recursive: true);
     // }
     //return sdPath! + "/test_${i++}.mp3";
+  }
+
+  exitGroupUser(int id) async {
+
+    addDrink = true;
+    notifyListeners();
+    //drinkList = await Addfavorites().GetFavoritesDrink();
+    var exitGroup = await exitgrpUser.ExitGroupUser(
+      id
+    );
+    print(getMessage);
+    DialogUtils().showDialog(MyErrorWidget(
+      error: "Report has been sent",
+    ));
+    addDrink = false;
+    navigateBack();
+    print(addFilters);
+    //navigateToMapSearchScreen();
+    notifyListeners();
+
   }
 
 

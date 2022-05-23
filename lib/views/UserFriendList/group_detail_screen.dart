@@ -416,7 +416,7 @@ class _Group_DetailsState extends State<Group_Details> {
                               showDialog(
                                   context: context,
                                   builder: (BuildContext context){
-                                    return ExitGroup(title: "Add New Location",
+                                    return ExitGroup(id: widget.id!,title: "Add New Location",
                                         btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
                                   }
                               );

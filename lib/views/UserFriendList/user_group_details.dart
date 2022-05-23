@@ -206,21 +206,23 @@ class _GroupDetailsState extends State<GroupDetails> {
                                     //           from: Constants.profileImage);
                                     //     });
                                   },
-                                  child: Container(
+                                  child:
+                                  Container(
                                     height: 6.7.h,
                                     width: 14.w,
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       color: ColorUtils.textFieldBg,
                                     ),
-                                    child: model.createEventImage == null ?
+                                    child: model.createEventImage!.path.isEmpty ?
                                     Padding(
                                       padding: const EdgeInsets.all(10.0),
                                       child: SvgPicture.asset(ImageUtils.photoCamera),
                                     )
                                     : ClipRRect(
                                       borderRadius: BorderRadius.circular(80),
-                                      child: Image.file(model.createEventImage!,
+                                      child:
+                                      Image.file(model.createEventImage!,
                                         fit: BoxFit.fill,
                                       ),
                                     ),

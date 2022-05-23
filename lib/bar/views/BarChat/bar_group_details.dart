@@ -213,7 +213,7 @@ class _BarGroupDetailsState extends State<BarGroupDetails> {
                                       shape: BoxShape.circle,
                                       color: ColorUtils.textFieldBg,
                                     ),
-                                    child: model.createEventImage == null ?
+                                    child: model.createEventImage!.path.isEmpty?
                                     Padding(
                                       padding: const EdgeInsets.all(10.0),
                                       child: SvgPicture.asset(ImageUtils.photoCamera),
