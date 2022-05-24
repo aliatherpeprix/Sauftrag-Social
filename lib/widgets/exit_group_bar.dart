@@ -92,7 +92,7 @@ class _ExitGroupBarState extends State<ExitGroupBar> {
                                 //model.DeactivateAccount();
                                 // model.logOutUser();
                                 //model.navigateBack();
-                                model.exitGroupUser(widget!.id!);
+                                model.exitGroupUser(widget.id);
                               },
                               child: Container(
                                 padding: EdgeInsets.symmetric(

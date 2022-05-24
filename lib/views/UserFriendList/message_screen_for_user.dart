@@ -233,32 +233,32 @@ class _MessageScreenForUserState extends State<MessageScreenForUser> {
                                               children: [
                                                 GestureDetector(
                                                   onTap : ()async{
-                                                    if (widget!.fromUser!) {
+                                                    if (widget.fromUser!) {
                                                       model.matchedImage.clear();
                                                       //model.getMatchedUserData = (model.acceptMatchedtModel[index]);
-                                                      if (widget!.user!.profile_picture != null &&
-                                                          widget!.user!.profile_picture!.isNotEmpty) {
-                                                        model.matchedImage.add(widget!.user!.profile_picture);
+                                                      if (widget.user!.profile_picture != null &&
+                                                          widget.user!.profile_picture!.isNotEmpty) {
+                                                        model.matchedImage.add(widget.user!.profile_picture);
                                                       }
-                                                      if (widget!.user!.catalogue_image1 != null &&
-                                                          widget!.user!.catalogue_image1!.isNotEmpty) {
-                                                        model.matchedImage.add(widget!.user!.catalogue_image1);
+                                                      if (widget.user!.catalogue_image1 != null &&
+                                                          widget.user!.catalogue_image1!.isNotEmpty) {
+                                                        model.matchedImage.add(widget.user!.catalogue_image1);
                                                       }
-                                                      if (widget!.user!.catalogue_image2 != null &&
-                                                          widget!.user!.catalogue_image2!.isNotEmpty) {
-                                                        model.matchedImage.add(widget!.user!.catalogue_image2);
+                                                      if (widget.user!.catalogue_image2 != null &&
+                                                          widget.user!.catalogue_image2!.isNotEmpty) {
+                                                        model.matchedImage.add(widget.user!.catalogue_image2);
                                                       }
-                                                      if (widget!.user!.catalogue_image3 != null &&
-                                                          widget!.user!.catalogue_image3!.isNotEmpty) {
-                                                        model.matchedImage.add(widget!.user!.catalogue_image3);
+                                                      if (widget.user!.catalogue_image3 != null &&
+                                                          widget.user!.catalogue_image3!.isNotEmpty) {
+                                                        model.matchedImage.add(widget.user!.catalogue_image3);
                                                       }
-                                                      if (widget!.user!.catalogue_image4 != null &&
-                                                          widget!.user!.catalogue_image4!.isNotEmpty) {
-                                                        model.matchedImage.add(widget!.user!.catalogue_image4);
+                                                      if (widget.user!.catalogue_image4 != null &&
+                                                          widget.user!.catalogue_image4!.isNotEmpty) {
+                                                        model.matchedImage.add(widget.user!.catalogue_image4);
                                                       }
-                                                      if (widget!.user!.catalogue_image5 != null &&
-                                                          widget!.user!.catalogue_image5!.isNotEmpty) {
-                                                        model.matchedImage.add(widget!.user!.catalogue_image5);
+                                                      if (widget.user!.catalogue_image5 != null &&
+                                                          widget.user!.catalogue_image5!.isNotEmpty) {
+                                                        model.matchedImage.add(widget.user!.catalogue_image5);
                                                       }
                                                       model.notifyListeners();
                                                       await model.getAnitherUserInfo(widget.user!.id.toString());

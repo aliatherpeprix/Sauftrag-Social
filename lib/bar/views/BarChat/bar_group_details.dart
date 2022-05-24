@@ -115,7 +115,7 @@ class _BarGroupDetailsState extends State<BarGroupDetails> {
                                         .fade,
                                     child:
                                     BarGroupScreen(
-                                        id: model.getUserGroup!.first.id! ?? 0,
+                                        id: model.getUserGroup!.first.id ?? 0,
                                         username: model.getUserGroup!.first.name,
                                         groupImg: model.getUserGroup!.first.image,
                                         userLength: model.getUserGroup!.first.users!.length,
@@ -334,10 +334,10 @@ class _BarGroupDetailsState extends State<BarGroupDetails> {
                                           backspaceColor: Colors.blue,
                                           showRecentsTab: true,
                                           recentsLimit: 28,
-                                          noRecentsText: 'No Recents',
-                                          noRecentsStyle: const TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.black26),
+                                          // noRecentsText: 'No Recents',
+                                          // noRecentsStyle: const TextStyle(
+                                          //     fontSize: 20,
+                                          //     color: Colors.black26),
                                           tabIndicatorAnimDuration:
                                               kTabScrollDuration,
                                           categoryIcons: const CategoryIcons(),
@@ -476,97 +476,97 @@ class _BarGroupDetailsState extends State<BarGroupDetails> {
                             SizedBox(
                               height: 4.h,
                             ),
-                            Stack(
-                              children: [
-                                Container(
-                                  height: 7.h,
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: Dimensions.containerVerticalPadding,
-                                      horizontal:
-                                      Dimensions.containerHorizontalPadding),
-                                  decoration: BoxDecoration(
-                                      color: ColorUtils.white,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(Dimensions.roundCorner)),
-                                      border:
-                                      Border.all(color: ColorUtils.divider)),
-                                  child: Row(
-                                    children: [
-                                      SvgPicture.asset(ImageUtils.relationIcon),
-                                      SizedBox(width: 4.w),
-                                      Expanded(
-                                          child: DropdownButton<String>(
-                                            value: model.groupTypeValueStr,
-                                            items: model.groupTypeList
-                                                .asMap()
-                                                .values
-                                                .map((String value) {
-                                              return DropdownMenuItem<String>(
-                                                value: value,
-                                                child: Text(
-                                                  value,
-                                                  style: TextStyle(
-                                                    fontSize: 1.9.t,
-                                                    fontFamily:
-                                                    FontUtils.modernistRegular,
-                                                    color: ColorUtils.red_color,
-                                                    //height: 1.8
-                                                  ),
-                                                ),
-                                              );
-                                            }).toList(),
-                                            onChanged: (data) {
-                                              setState(() {
-                                                model.groupTypeValueStr = data as String;
-                                                model.groupTypeValue = model
-                                                    .groupTypeMap[model.groupTypeValueStr]
-                                                as int;
-                                              });
-                                            },
-                                            hint: Text(
-                                              "Select an option",
-                                              style: TextStyle(
-                                                fontSize: 1.8.t,
-                                                fontFamily: FontUtils.modernistRegular,
-                                                color: ColorUtils.text_grey,
-                                              ),
-                                            ),
-                                            isExpanded: true,
-                                            underline: Container(),
-                                            icon: Align(
-                                                alignment: Alignment.centerRight,
-                                                child: Icon(
-                                                  Icons.keyboard_arrow_down_rounded,
-                                                  color: ColorUtils.black,
-                                                )),
-                                          )
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(left: 5.w),
-                                  padding: EdgeInsets.symmetric(horizontal: 1.w),
-                                  color: ColorUtils.white,
-                                  child: Text(
-                                    "Type",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: ColorUtils.text_grey,
-                                        fontFamily: FontUtils.modernistRegular,
-                                        fontSize: 1.5.t,
-                                        height: .4),
-                                  ),
-                                ),
-                              ],
-                            ),
+                            // Stack(
+                            //   children: [
+                            //     Container(
+                            //       height: 7.h,
+                            //       padding: EdgeInsets.symmetric(
+                            //           vertical: Dimensions.containerVerticalPadding,
+                            //           horizontal:
+                            //           Dimensions.containerHorizontalPadding),
+                            //       decoration: BoxDecoration(
+                            //           color: ColorUtils.white,
+                            //           borderRadius: BorderRadius.all(
+                            //               Radius.circular(Dimensions.roundCorner)),
+                            //           border:
+                            //           Border.all(color: ColorUtils.divider)),
+                            //       child: Row(
+                            //         children: [
+                            //           SvgPicture.asset(ImageUtils.relationIcon),
+                            //           SizedBox(width: 4.w),
+                            //           Expanded(
+                            //               child: DropdownButton<String>(
+                            //                 value: model.groupTypeValueStr,
+                            //                 items: model.groupTypeList
+                            //                     .asMap()
+                            //                     .values
+                            //                     .map((String value) {
+                            //                   return DropdownMenuItem<String>(
+                            //                     value: value,
+                            //                     child: Text(
+                            //                       value,
+                            //                       style: TextStyle(
+                            //                         fontSize: 1.9.t,
+                            //                         fontFamily:
+                            //                         FontUtils.modernistRegular,
+                            //                         color: ColorUtils.red_color,
+                            //                         //height: 1.8
+                            //                       ),
+                            //                     ),
+                            //                   );
+                            //                 }).toList(),
+                            //                 onChanged: (data) {
+                            //                   setState(() {
+                            //                     model.groupTypeValueStr = data as String;
+                            //                     model.groupTypeValue = model
+                            //                         .groupTypeMap[model.groupTypeValueStr]
+                            //                     as int;
+                            //                   });
+                            //                 },
+                            //                 hint: Text(
+                            //                   "Select an option",
+                            //                   style: TextStyle(
+                            //                     fontSize: 1.8.t,
+                            //                     fontFamily: FontUtils.modernistRegular,
+                            //                     color: ColorUtils.text_grey,
+                            //                   ),
+                            //                 ),
+                            //                 isExpanded: true,
+                            //                 underline: Container(),
+                            //                 icon: Align(
+                            //                     alignment: Alignment.centerRight,
+                            //                     child: Icon(
+                            //                       Icons.keyboard_arrow_down_rounded,
+                            //                       color: ColorUtils.black,
+                            //                     )),
+                            //               )
+                            //           ),
+                            //         ],
+                            //       ),
+                            //     ),
+                            //     Container(
+                            //       margin: EdgeInsets.only(left: 5.w),
+                            //       padding: EdgeInsets.symmetric(horizontal: 1.w),
+                            //       color: ColorUtils.white,
+                            //       child: Text(
+                            //         "Type",
+                            //         textAlign: TextAlign.center,
+                            //         style: TextStyle(
+                            //             color: ColorUtils.text_grey,
+                            //             fontFamily: FontUtils.modernistRegular,
+                            //             fontSize: 1.5.t,
+                            //             height: .4),
+                            //       ),
+                            //     ),
+                            //   ],
+                            // ),
                             Divider(
                               color: ColorUtils.divider,
                             ),
                             SizedBox(
                               height: 2.5.h,
                             ),
-                            Text(
+                            if (model.groupTypeValue==2)Text(
                               "Participants",
                               style: TextStyle(
                                 fontFamily: FontUtils.modernistBold,
@@ -574,7 +574,7 @@ class _BarGroupDetailsState extends State<BarGroupDetails> {
                                 color: Colors.black,
                               ),
                             ),
-                            Container(
+                            if (model.groupTypeValue==2)Container(
                               margin: EdgeInsets.only(top: 3.h),
                               child: GridView.builder(
                                 padding: EdgeInsets.zero,

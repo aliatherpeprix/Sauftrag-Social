@@ -144,7 +144,7 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
                   menu: MySideMenu(),
                   child: GestureDetector(
                     onTap: () {
-                      final _state = model.sideMenuKey!.currentState;
+                      final _state = model.sideMenuKey.currentState;
                       if (_state!.isOpened)
                         _state.closeSideMenu(); // close side menu
                     },
@@ -241,7 +241,7 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
                                       ElevatedButton(
                                         onPressed: () {
                                           final _state =
-                                              model.sideMenuKey!.currentState;
+                                              model.sideMenuKey.currentState;
                                           if (_state!.isOpened)
                                             _state
                                                 .closeSideMenu(); // close side menu
@@ -693,9 +693,9 @@ class _BarNewsFeedState extends State<BarNewsFeed> {
                                     backspaceColor: Colors.blue,
                                     showRecentsTab: true,
                                     recentsLimit: 28,
-                                    noRecentsText: 'No Recents',
-                                    noRecentsStyle: const TextStyle(
-                                        fontSize: 20, color: Colors.black26),
+                                    // noRecentsText: 'No Recents',
+                                    // noRecentsStyle: const TextStyle(
+                                    //     fontSize: 20, color: Colors.black26),
                                     tabIndicatorAnimDuration:
                                         kTabScrollDuration,
                                     categoryIcons: const CategoryIcons(),
