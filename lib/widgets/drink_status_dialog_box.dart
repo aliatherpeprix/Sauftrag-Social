@@ -43,7 +43,10 @@ class _DrinkStatusDialogBoxState extends State<DrinkStatusDialogBox> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<MainViewModel>.reactive(
-      //onModelReady: (data) => data.initializeShareDialog(),
+      onModelReady: (model){
+        model.drinkingFrom = TimeOfDay(hour: TimeOfDay.now().hour, minute: 0).format(context);
+        model.drinkingTo = TimeOfDay(hour: TimeOfDay.now().hour, minute: 0).format(context);
+      },
       builder: (context, model, child) {
         return Dialog(
             shape: RoundedRectangleBorder(
@@ -258,7 +261,7 @@ class _DrinkStatusDialogBoxState extends State<DrinkStatusDialogBox> {
                                         children: [
                                           Expanded(
                                             child: Text(
-                                              drinkingFrom!,
+                                              model.drinkingFrom!,
                                               style: TextStyle(
                                                 color: ColorUtils.text_dark,
                                                 fontFamily:
@@ -335,7 +338,7 @@ class _DrinkStatusDialogBoxState extends State<DrinkStatusDialogBox> {
                                         children: [
                                           Expanded(
                                             child: Text(
-                                              drinkingTo!,
+                                              model.drinkingTo!,
                                               style: TextStyle(
                                                 color: ColorUtils.text_dark,
                                                 fontFamily:

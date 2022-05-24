@@ -13,7 +13,9 @@ import 'package:mime/mime.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pubnub/pubnub.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/bar/views/BarChat/bar_group_detail_screen.dart';
 import 'package:sauftrag/models/new_bar_model.dart';
+import 'package:sauftrag/models/user.dart';
 import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
@@ -36,8 +38,9 @@ class BarGroupScreen extends StatefulWidget {
   String? username;
   int? userLength;
   String? groupImg;
-  List<UserModel>? groupUser;
-  UserModel? originator;
+  List<User>? groupUser;
+  User? originator;
+
 
   BarGroupScreen({Key? key, this.id, this.username,  this.userLength, this.groupUser, this.groupImg,this.originator}) : super(key: key);
 
@@ -450,7 +453,7 @@ class _BarGroupScreenState extends State<BarGroupScreen> {
                                               type: PageTransitionType
                                                   .fade,
                                               child:
-                                              Group_Details(
+                                              BarGroupDetailScreen(
                                                   id: widget.id,
                                                   username: widget.username,
                                                   originator: widget.originator,

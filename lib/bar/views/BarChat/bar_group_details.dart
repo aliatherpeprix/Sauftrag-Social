@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pubnub/pubnub.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/models/bar_group_chat.dart';
 import 'package:sauftrag/models/new_bar_model.dart';
 import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/utils/color_utils.dart';
@@ -68,7 +69,7 @@ class _BarGroupDetailsState extends State<BarGroupDetails> {
                       for (var data in model.groupList) {
                         model.getUserId.add(data['id']);
                       }
-                      if (await model.createGroupChatBar() is List<CreateGroupChat>){
+                      if (await model.createGroupChatBar() is List<BarGroupChat>){
                           NewBarModel barUser =
                           (await locator<PrefrencesViewModel>().getBarUser())!;
                           UserModel user =

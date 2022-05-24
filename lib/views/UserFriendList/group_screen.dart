@@ -13,6 +13,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:pubnub/pubnub.dart';
 import 'package:sauftrag/app/locator.dart';
 import 'package:sauftrag/models/new_bar_model.dart';
+import 'package:sauftrag/models/user.dart';
 import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/utils/color_utils.dart';
 import 'package:sauftrag/utils/dimensions.dart';
@@ -33,10 +34,10 @@ class GroupScreen extends StatefulWidget {
 
   int? id;
   String? username;
-  UserModel? originator;
+  User? originator;
   int? userLength;
   String? groupImg;
-  List<UserModel>? groupUser;
+  List<User>? groupUser;
 
   GroupScreen({Key? key, this.id, this.username,  this.userLength, this.groupUser, this.groupImg, this.originator}) : super(key: key);
 

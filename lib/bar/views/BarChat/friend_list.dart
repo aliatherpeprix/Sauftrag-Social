@@ -59,7 +59,8 @@ class _FriendListState extends State<FriendList> {
       viewModelBuilder: () => locator<MainViewModel>(),
       disposeViewModel: false,
       onModelReady: (model) {
-        model.getGroupList();
+        //model.getGroupList();
+        model.getBarGroupList();
         model.getBarsFollowerList();
         //model.initBarPubNub();
         model.openGroupMenu = false;
@@ -523,12 +524,12 @@ class _FriendListState extends State<FriendList> {
                                                                     .fade,
                                                                 child:
                                                                 BarGroupScreen(
-                                                                    id: model.getListGroup[index].id,
-                                                                    username: model.getListGroup[index].name,
-                                                                    userLength: model.getListGroup[index].users!.length,
-                                                                    originator: model.getListGroup[index].originator,
-                                                                    groupUser: model.getListGroup[index].users,
-                                                                    groupImg: model.getListGroup[index].image,
+                                                                    id: model.barGroupList[index].id,
+                                                                    username: model.barGroupList[index].name,
+                                                                    userLength: model.barGroupList[index].users!.length,
+                                                                    originator: model.barGroupList[index].originator,
+                                                                    groupUser: model.barGroupList[index].users,
+                                                                    groupImg: model.barGroupList[index].image,
                                                                 )
                                                             ));
                                                       }
@@ -540,12 +541,12 @@ class _FriendListState extends State<FriendList> {
                                                                     .fade,
                                                                 child:
                                                                 BarGroupScreen(
-                                                                  id: model.getListGroup[index].id,
-                                                                  username: model.getListGroup[index].name,
-                                                                  userLength: model.getListGroup[index].users!.length,
-                                                                  originator: model.getListGroup[index].originator,
-                                                                  groupUser: model.getListGroup[index].users,
-                                                                  groupImg: model.getListGroup[index].image,
+                                                                  id: model.barGroupList[index].id,
+                                                                  username: model.barGroupList[index].name,
+                                                                  userLength: model.barGroupList[index].users!.length,
+                                                                  originator: model.barGroupList[index].originator,
+                                                                  groupUser: model.barGroupList[index].users,
+                                                                  groupImg: model.barGroupList[index].image,
                                                                 )
                                                             ));
                                                       }
@@ -576,7 +577,7 @@ class _FriendListState extends State<FriendList> {
                                                                   CrossAxisAlignment.start,
                                                                   children: [
                                                                     Text(
-                                                                      model.getListGroup[index].name!,
+                                                                      model.barGroupList[index].name!,
                                                                       style: TextStyle(
                                                                           fontFamily: FontUtils
                                                                               .modernistBold,
@@ -635,7 +636,7 @@ class _FriendListState extends State<FriendList> {
                                                     height: 2.h,
                                                   );
                                                 },
-                                                itemCount: model.getListGroup.length
+                                                itemCount: model.barGroupList.length
                                             ),
                                           ],
                                         ),

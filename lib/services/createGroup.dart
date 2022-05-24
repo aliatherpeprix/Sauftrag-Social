@@ -5,6 +5,7 @@ import 'package:path/path.dart' as path;
 import 'package:dio/dio.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/models/bar_group_chat.dart';
 import 'package:sauftrag/models/create_group_chat.dart';
 import 'package:sauftrag/models/get_bar_upcoming_event.dart';
 import 'package:sauftrag/models/new_bar_model.dart';
@@ -61,8 +62,8 @@ class Creategroup {
           var userData = UserModel.fromJson(response.data['data']);
           return userData;
         }*/
-        List<CreateGroupChat> getEventByFilter =(response.data as List).map((e) =>
-            CreateGroupChat.fromJson(e)).toList();
+        List<BarGroupChat> getEventByFilter =(response.data as List).map((e) =>
+            BarGroupChat.fromJson(e)).toList();
         return getEventByFilter;
       }
       //user not found
@@ -112,8 +113,8 @@ class Creategroup {
           var userData = UserModel.fromJson(response.data['data']);
           return userData;
         }*/
-        List<CreateGroupChat> getEventByFilter =(response.data as List).map((e) =>
-            CreateGroupChat.fromJson(e)).toList();
+        List<BarGroupChat> getEventByFilter =(response.data as List).map((e) =>
+            BarGroupChat.fromJson(e)).toList();
         return getEventByFilter;
       }
       //user not found

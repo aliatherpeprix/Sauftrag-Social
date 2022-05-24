@@ -1,27 +1,24 @@
-import 'package:date_picker_timeline/extra/dimen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:page_transition/page_transition.dart';
-import 'package:sauftrag/app/locator.dart';
-import 'package:sauftrag/models/create_group_chat.dart';
+import 'package:sauftrag/models/new_bar_model.dart';
 import 'package:sauftrag/models/user.dart';
-import 'package:sauftrag/models/user_models.dart';
-import 'package:sauftrag/utils/color_utils.dart';
-import 'package:sauftrag/utils/dimensions.dart';
+import 'package:sauftrag/utils/common_functions.dart';
 import 'package:sauftrag/utils/extensions.dart';
-import 'package:sauftrag/utils/font_utils.dart';
-import 'package:sauftrag/utils/image_utils.dart';
-import 'package:sauftrag/utils/size_config.dart';
-import 'package:sauftrag/viewModels/main_view_model.dart';
-import 'package:sauftrag/views/UserFriendList/create_group.dart';
-import 'package:sauftrag/widgets/exit_group_dialog.dart';
+
 import 'package:stacked/stacked.dart';
 
-import 'group_screen.dart';
-import 'message_screen_for_user.dart';
+import '../../../app/locator.dart';
+import '../../../utils/color_utils.dart';
+import '../../../utils/dimensions.dart';
+import '../../../utils/font_utils.dart';
+import '../../../utils/image_utils.dart';
+import '../../../viewModels/main_view_model.dart';
+import '../../../widgets/exit_group_bar.dart';
 
-class Group_Details extends StatefulWidget {
+import '../../../widgets/exit_group_dialog.dart';
+
+class BarGroupDetailScreen extends StatefulWidget {
 
   int? id;
   String? username;
@@ -30,13 +27,13 @@ class Group_Details extends StatefulWidget {
   String? groupImg;
   List<User>? groupUser;
 
-  Group_Details({Key? key, this.id, this.username, this.userLength, this.groupUser, this.groupImg, this.originator} ) : super(key: key);
+  BarGroupDetailScreen({Key? key, this.id,this.username,this.originator,this.userLength,this.groupImg, this.groupUser}) : super(key: key);
 
   @override
-  _Group_DetailsState createState() => _Group_DetailsState();
+  _BarGroupDetailScreenState createState() => _BarGroupDetailScreenState();
 }
 
-class _Group_DetailsState extends State<Group_Details> {
+class _BarGroupDetailScreenState extends State<BarGroupDetailScreen> {
 
   bool _isSwitch =false;
 
@@ -63,8 +60,8 @@ class _Group_DetailsState extends State<Group_Details> {
       onModelReady: (model) {
         //model.getAllUserForChat();
         model.getGroupList();
-        model.matchingUsers();
-        model.getListOfbars();
+        //model.matchingUsers();
+        //model.getListOfbars();
         //model.initUserGrpPubNub();
         model.openGroupMenu = false;
         // model.selectedGroup = (model.getListGroup.);
@@ -72,9 +69,9 @@ class _Group_DetailsState extends State<Group_Details> {
       builder: (context, model, child) {
         return GestureDetector(
           onTap: () {
-            context.unFocus();
+            //context.unFocus();
             model.openGroupMenu = false;
-            model.getListOfbars();
+            //model.getListOfbars();
             model.notifyListeners();
 
           },
@@ -82,7 +79,7 @@ class _Group_DetailsState extends State<Group_Details> {
             backgroundColor: Colors.white,
             body: Container(
               padding: EdgeInsets.symmetric(
-                horizontal: Dimensions.horizontalPadding,vertical: Dimensions.verticalPadding
+                  horizontal: Dimensions.horizontalPadding,vertical: Dimensions.verticalPadding
               ),
               child: SingleChildScrollView(
                 physics: BouncingScrollPhysics(),
@@ -138,7 +135,7 @@ class _Group_DetailsState extends State<Group_Details> {
                                   width: 2.w,
                                 ),
                                 SvgPicture.asset(
-                                    ImageUtils.groupLock , height: 5.i,),
+                                  ImageUtils.groupLock , height: 5.i,),
                               ],
                             ),
                             SizedBox(height: 0.5.h,),
@@ -281,122 +278,122 @@ class _Group_DetailsState extends State<Group_Details> {
                     ),
                     SizedBox(height: 2.h,),
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding, vertical: Dimensions.verticalPadding),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: ColorUtils.red_color),
-                          borderRadius: BorderRadius.circular(15)
-                      ),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(widget.userLength.toString() + " Participants",
-                                style: TextStyle(
-                                    color: ColorUtils.text_grey,
-                                    fontFamily: FontUtils.modernistBold
-                                ),),
-                              SvgPicture.asset(ImageUtils.searchIcon)
+                        padding: EdgeInsets.symmetric(horizontal: Dimensions.horizontalPadding, vertical: Dimensions.verticalPadding),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: ColorUtils.red_color),
+                            borderRadius: BorderRadius.circular(15)
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(widget.userLength.toString() + " Participants",
+                                  style: TextStyle(
+                                      color: ColorUtils.text_grey,
+                                      fontFamily: FontUtils.modernistBold
+                                  ),),
+                                SvgPicture.asset(ImageUtils.searchIcon)
 
-                            ],
-                          ),
-                          SizedBox(height: 2.h,),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  Container(
-                                    height: 6.7.h,
-                                    width: 14.w,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(80),
-                                      child: widget.originator!.profile_picture == null ?
-                                      SvgPicture.asset(ImageUtils.profile) :
-                                      Image.network(widget.originator!.profile_picture!,
-                                        fit: BoxFit.fill,
+                              ],
+                            ),
+                            SizedBox(height: 2.h,),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                      height: 6.7.h,
+                                      width: 14.w,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(80),
+                                        child: widget.originator!.profile_picture == null ?
+                                        SvgPicture.asset(ImageUtils.profile) :
+                                        Image.network(widget.originator!.profile_picture!,
+                                          fit: BoxFit.fill,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  SizedBox(width: 5.w,),
-                                  Text(widget.originator!.username!,  style: TextStyle(
-                                      fontSize: 1.8.t,
-                                      fontFamily: FontUtils.modernistBold,
-                                      color: ColorUtils.black
-                                  ))
-                                ],
-                              ),
-                              Container(
-                                padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 0.3.h),
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: ColorUtils.red_color),
-                                    borderRadius: BorderRadius.circular(5)
-                                ),
-                                child: Text("Group Admin",
-                                  style: TextStyle(
-                                      fontSize: 1.8.t,
-                                      fontFamily: FontUtils.modernistRegular,
-                                      color: ColorUtils.red_color
-                                  ),),
-                              )
-
-                            ],
-                          ),
-                          SizedBox(height: 1.5.h,),
-                          ListView.separated(
-                              padding:
-                              EdgeInsets.only(top: 0.h),
-                              physics: BouncingScrollPhysics(),
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                return Column(
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment
-                                          .spaceBetween,
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            // Stack(
-                                            //   alignment:
-                                            //       Alignment.topCenter,
-                                            //   children: [
-                                            CircleAvatar(
-                                              radius: 28.0,
-                                              backgroundImage:
-                                              NetworkImage(
-                                                  widget.groupUser![index].profile_picture!),
-                                            backgroundColor:
-                                              Colors
-                                                  .transparent,
-                                            ),
-                                            SizedBox(width: 5.w,),
-                                            Text(widget.groupUser![index].username!,
-                                              style: TextStyle(
-                                                          fontSize: 1.8.t,
-                                                          fontFamily: FontUtils.modernistBold,
-                                                          color: ColorUtils.black
-                                                      ))
-                                          ],
-                                        ),
-
-                                      ],
-                                    ),
+                                    SizedBox(width: 5.w,),
+                                    Text(widget.originator!.username!,  style: TextStyle(
+                                        fontSize: 1.8.t,
+                                        fontFamily: FontUtils.modernistBold,
+                                        color: ColorUtils.black
+                                    ))
                                   ],
-                                );
-                              },
-                              separatorBuilder: (context, index) {
-                                return SizedBox(
-                                  height: 2.h,
-                                );
-                              },
-                              itemCount: widget.groupUser!.length
-                          ),
-                        ],
-                      )
+                                ),
+                                Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 0.3.h),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: ColorUtils.red_color),
+                                      borderRadius: BorderRadius.circular(5)
+                                  ),
+                                  child: Text("Group Admin",
+                                    style: TextStyle(
+                                        fontSize: 1.8.t,
+                                        fontFamily: FontUtils.modernistRegular,
+                                        color: ColorUtils.red_color
+                                    ),),
+                                )
+
+                              ],
+                            ),
+                            SizedBox(height: 1.5.h,),
+                            ListView.separated(
+                                padding:
+                                EdgeInsets.only(top: 0.h),
+                                physics: BouncingScrollPhysics(),
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  return Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment
+                                            .spaceBetween,
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              // Stack(
+                                              //   alignment:
+                                              //       Alignment.topCenter,
+                                              //   children: [
+                                              CircleAvatar(
+                                                radius: 28.0,
+                                                backgroundImage:
+                                                NetworkImage(
+                                                    widget.groupUser![index].profile_picture!),
+                                                backgroundColor:
+                                                Colors
+                                                    .transparent,
+                                              ),
+                                              SizedBox(width: 5.w,),
+                                              Text(widget.groupUser![index].username!,
+                                                  style: TextStyle(
+                                                      fontSize: 1.8.t,
+                                                      fontFamily: FontUtils.modernistBold,
+                                                      color: ColorUtils.black
+                                                  ))
+                                            ],
+                                          ),
+
+                                        ],
+                                      ),
+                                    ],
+                                  );
+                                },
+                                separatorBuilder: (context, index) {
+                                  return SizedBox(
+                                    height: 2.h,
+                                  );
+                                },
+                                itemCount: widget.groupUser!.length
+                            ),
+                          ],
+                        )
                     ),
                     SizedBox(height: 2.h,),
                     Container(
@@ -413,15 +410,15 @@ class _Group_DetailsState extends State<Group_Details> {
                           SvgPicture.asset(ImageUtils.exitGroup),
                           SizedBox(width: 3.w,),
                           GestureDetector(
-                            onTap: () async {
-                              await showDialog(
-                                  context: context,
-                                  builder: (BuildContext context){
-                                    return ExitGroup(id: widget.id!,title: "Add New Location",
-                                        btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
-                                  }
-                              );
-                            },
+                              onTap: () async {
+                                await showDialog(
+                                    context: context,
+                                    builder: (BuildContext context){
+                                      return ExitGroupBar(id: widget.id!,title: "Add New Location",
+                                          btnTxt: "Add Location", icon: ImageUtils.addLocationIcon);
+                                    }
+                                );
+                              },
                               child:
                               Text("Exit Group",
                                 style: TextStyle(

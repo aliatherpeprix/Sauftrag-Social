@@ -18,6 +18,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
+// import 'package:sauftrag/bar/views/BarChat/bar_group_chat.dart';
 import 'package:sauftrag/bar/views/Drawer/bar_followers.dart';
 import 'package:sauftrag/models/attend_event.dart';
 import 'package:sauftrag/models/comments.dart';
@@ -104,6 +105,7 @@ import 'package:shrink_sidemenu/shrink_sidemenu.dart';
 import 'package:stacked/stacked.dart';
 
 import '../main.dart';
+import '../models/bar_group_chat.dart';
 import '../models/get_bar_follower_list.dart';
 import '../models/newfeed_like.dart';
 import '../models/user_feedback.dart';
@@ -159,7 +161,7 @@ class MainViewModel extends BaseViewModel {
   ListOfBarsModel? getUpcmoingUserDetails;
   Media? barMedia;
   CreateGroupChat? groupChatUser;
-  List<CreateGroupChat>? getUserGroup;
+  List<BarGroupChat>? getUserGroup;
   UserFeedBack? getMessage;
   LikeNewsFeed? likes;
 
@@ -300,7 +302,8 @@ class MainViewModel extends BaseViewModel {
 
   List<GetBarFollowersList> getFollowerList = [];
 
-  List<CreateGroupChat> getListGroup = [];
+  List<BarGroupChat> getListGroup = [];
+  List<BarGroupChat> barGroupList = [];
   CreateGroupChat? selectedGroup;
 
   ListOfBarsModel? selectedBar;
@@ -1504,12 +1507,12 @@ class MainViewModel extends BaseViewModel {
     print(response.data);
     getStatus = DrinkStatus.fromJson(response.data);
     getStatus!.start_time = TimeOfDay(
-            hour: int.parse(getStatus!.start_time!.split(":")[0]),
-            minute: int.parse(getStatus!.start_time!.split(":")[1]))
+        hour: int.parse(getStatus!.start_time!.split(":")[0]),
+        minute: int.parse(getStatus!.start_time!.split(":")[1]))
         .format(navigationService.navigationKey.currentContext!);
     getStatus!.end_time = TimeOfDay(
-            hour: int.parse(getStatus!.end_time!.split(":")[0]),
-            minute: int.parse(getStatus!.end_time!.split(":")[1]))
+        hour: int.parse(getStatus!.end_time!.split(":")[0]),
+        minute: int.parse(getStatus!.end_time!.split(":")[1]))
         .format(navigationService.navigationKey.currentContext!);
     updatedrinkIndex = getStatus!.quantity!;
     notifyListeners();
@@ -3177,7 +3180,7 @@ class MainViewModel extends BaseViewModel {
             groupTypeValue,
             media
         );
-    if (createGroupUser is List<CreateGroupChat>) {
+    if (createGroupUser is List<BarGroupChat>) {
       getUserGroup = createGroupUser;
       print(getUserGroup);
       return createGroupUser;
@@ -3252,7 +3255,7 @@ class MainViewModel extends BaseViewModel {
         media
 
     );
-    if (createGroupUser is List<CreateGroupChat>) {
+    if (createGroupUser is List<BarGroupChat>) {
       getUserGroup = createGroupUser;
       print(getUserGroup);
       return createGroupUser;
@@ -3283,7 +3286,7 @@ class MainViewModel extends BaseViewModel {
     //   //isPrivacyPolicy = false;
     //
     // }ListOfBarsModel
-    if (getList is List<CreateGroupChat>) {
+    if (getList is List<BarGroupChat>) {
       getListGroup = getList;
       print(getListGroup);
     } else {
@@ -4351,9 +4354,30 @@ class MainViewModel extends BaseViewModel {
     var exitGroup = await exitgrpUser.ExitGroupUser(
       id
     );
-    print(getMessage);
+    print(exitGroup);
+    await DialogUtils().showDialog(MyErrorWidget(
+      error: "You have exited the group",
+    ));
+    addDrink = false;
+    navigateBack();
+    navigateToFriendListScreen1();
+    print(addFilters);
+    //navigateToMapSearchScreen();
+    notifyListeners();
+
+  }
+
+  exitGroupBar(int id) async {
+
+    addDrink = true;
+    notifyListeners();
+    //drinkList = await Addfavorites().GetFavoritesDrink();
+    var exitGroup = await exitgrpUser.ExitGroupBar(
+        id
+    );
+    print(exitGroup);
     DialogUtils().showDialog(MyErrorWidget(
-      error: "Report has been sent",
+      error: "You have exited the group",
     ));
     addDrink = false;
     navigateBack();
@@ -4361,6 +4385,31 @@ class MainViewModel extends BaseViewModel {
     //navigateToMapSearchScreen();
     notifyListeners();
 
+  }
+
+  void getBarGroupList()async {
+    isFaqs = true;
+
+    var getList = await getGroup.GetBarGroups();
+    print(getList);
+    // if (getFaqList is String){
+    //   faqs = getFaqList;
+    //   //isPrivacyPolicy = false;
+    //
+    // }ListOfBarsModel
+    if (getList is List<BarGroupChat>) {
+      barGroupList = getList;
+      print(getListGroup);
+    } else {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Some thing went wrong",
+      ));
+      //isPrivacyPolicy = false;
+
+      return;
+    }
+    isFaqs = false;
+    notifyListeners();
   }
 
 
