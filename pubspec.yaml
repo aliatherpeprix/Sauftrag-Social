@@ -77,6 +77,7 @@ dependencies:
   record: ^3.0.4
   path_provider: ^2.0.7
   audioplayers: ^0.20.1
+  circular_reveal_animation:
 
 
 dev_dependencies:

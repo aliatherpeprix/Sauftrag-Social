@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:better_player/better_player.dart';
+import 'package:circular_reveal_animation/circular_reveal_animation.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:expand_tap_area/expand_tap_area.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +53,10 @@ class MessageScreenForUser extends StatefulWidget {
   _MessageScreenForUserState createState() => _MessageScreenForUserState();
 }
 
-class _MessageScreenForUserState extends State<MessageScreenForUser> {
+class _MessageScreenForUserState extends State<MessageScreenForUser> with SingleTickerProviderStateMixin {
+  AnimationController? animationController;
+  Animation<double>? animation;
+
 
   @override
   void dispose() {
@@ -71,6 +75,14 @@ class _MessageScreenForUserState extends State<MessageScreenForUser> {
         //model.initUserGrpPubNub();
         // model.chat();
        // model.getAllUserForChat();
+        animationController = AnimationController(
+          vsync: this,
+          duration: Duration(milliseconds: 1000),
+        );
+        animation = CurvedAnimation(
+          parent: animationController!,
+          curve: Curves.easeIn,
+        );
         model.chats.clear();
         
         // Subscribe to a channel
@@ -718,6 +730,7 @@ class _MessageScreenForUserState extends State<MessageScreenForUser> {
                             ),
                           ],
                         ),
+                        CircularRevealAnimation(child: Container(), animation: animation)
                       ],
                     ),
                     // child: Column(
