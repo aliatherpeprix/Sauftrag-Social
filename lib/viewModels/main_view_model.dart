@@ -15,6 +15,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
@@ -1571,6 +1572,10 @@ class MainViewModel extends BaseViewModel {
 
   void navigateToMatchScreen() {
     navigationService.navigateToMatchScreen();
+  }
+
+  void navigateToSplashScreen() {
+    navigationService.navigateToSplashScreen();
   }
 
   void navigateBack() {
@@ -4323,6 +4328,68 @@ class MainViewModel extends BaseViewModel {
     notifyListeners();
 
   }
+
+  void getBarGroupList()async {
+    isFaqs = true;
+
+    var getList = await getGroup.GetBarGroups();
+    print(getList);
+    // if (getFaqList is String){
+    //   faqs = getFaqList;
+    //   //isPrivacyPolicy = false;
+    //
+    // }ListOfBarsModel
+    if (getList is List<BarGroupChat>) {
+      barGroupList = getList;
+      print(getListGroup);
+    } else {
+      DialogUtils().showDialog(MyErrorWidget(
+        error: "Some thing went wrong",
+      ));
+      //isPrivacyPolicy = false;
+
+      return;
+    }
+    isFaqs = false;
+    notifyListeners();
+  }
+
+  // var listener;
+  // bool isInternet = false;
+  //
+  // void connection() async {
+  //   await internetConnection();
+  // }
+  //
+  // void initState() {
+  //   connection();
+  //   super.initState();
+  // }
+  //
+  // Future internetConnection() async {
+  //   print(await InternetConnectionChecker().hasConnection);
+  //   print(
+  //       "Current status: ${await InternetConnectionChecker().connectionStatus}");
+  //
+  //   listener = InternetConnectionChecker().onStatusChange.listen((status) {
+  //     switch (status) {
+  //       case InternetConnectionStatus.connected:
+  //         setState(() {
+  //           isInternet = true;
+  //         });
+  //         print('Data connection is available.');
+  //         break;
+  //       case InternetConnectionStatus.disconnected:
+  //         setState(() {
+  //           isInternet = false;
+  //         });
+  //         print('You are disconnected from the internet.');
+  //         break;
+  //     }
+  //   });
+  //   await Future.delayed(Duration(seconds: 30));
+  //   await listener.cancel();
+  // }
 
 
 

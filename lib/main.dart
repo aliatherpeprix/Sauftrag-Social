@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:pubnub/pubnub.dart';
 import 'package:sauftrag/bar/views/Home/bar_news_feed.dart';
 import 'package:sauftrag/utils/screen_utils.dart';
@@ -9,6 +10,7 @@ import 'package:sauftrag/viewModels/navigation_view_model.dart';
 import 'package:sauftrag/views/Auth/signup.dart';
 import 'package:sauftrag/views/Auth/splash.dart';
 import 'package:sauftrag/views/UserProfile/gps.dart';
+import 'package:sauftrag/widgets/NoInternetConnection.dart';
 import 'app/locator.dart';
 import 'bar/views/Drawer/barEvent.dart';
 import 'bar/views/Drawer/barProfile.dart';
@@ -61,7 +63,43 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  @override
+  var listener;
+  bool isInternet = false;
+
+  void initState() {
+    connection();
+    super.initState();
+  }
+
+  void connection() async {
+    await internetConnection();
+  }
+
+  Future internetConnection() async {
+    print(await InternetConnectionChecker().hasConnection);
+    print(
+        "Current status: ${await InternetConnectionChecker().connectionStatus}");
+
+    listener = InternetConnectionChecker().onStatusChange.listen((status) {
+      switch (status) {
+        case InternetConnectionStatus.connected:
+          setState(() {
+            isInternet = true;
+          });
+          print('Data connection is available.');
+          break;
+        case InternetConnectionStatus.disconnected:
+          setState(() {
+            isInternet = false;
+          });
+          print('You are disconnected from the internet.');
+          break;
+      }
+    });
+    await Future.delayed(Duration(seconds: 30));
+    await listener.cancel();
+  }
+
   Widget build(BuildContext context) {
     ScreenUtil.getInstance()..init(context);
     return LayoutBuilder(
@@ -69,7 +107,8 @@ class _MyAppState extends State<MyApp> {
         return OrientationBuilder(
           builder: (context, orientation) {
             SizeConfig().init(constraints, orientation);
-            return Splash();
+            //return Splash();
+            return isInternet ? Splash() : NoInternetConnection();
           },
         );
       },

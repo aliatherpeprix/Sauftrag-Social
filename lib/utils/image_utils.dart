@@ -243,5 +243,6 @@ class ImageUtils {
   static String voiceRecord = "assets/recordStateMic.svg";
 
   static String saufTragLogoGif = "assets/gifs/logo.gif";
+  static String internetError = "assets/internetError.png";
 
 }

@@ -91,6 +91,7 @@ import 'package:sauftrag/widgets/bar_auth_viewmodel.dart';
 import 'package:sauftrag/widgets/zoom_drawer.dart';
 import 'package:stacked/stacked.dart';
 
+import '../views/Auth/splash.dart';
 import '../widgets/serverError.dart';
 
 class NavigationViewModel extends BaseViewModel{
@@ -236,6 +237,10 @@ class NavigationViewModel extends BaseViewModel{
 
   void navigateToMatchScreen(){
     navigationKey.currentState!.push(PageTransition(child: Match(), type: PageTransitionType.rightToLeftWithFade));
+  }
+
+  void navigateToSplashScreen(){
+    navigationKey.currentState!.push(PageTransition(child: Splash(), type: PageTransitionType.rightToLeftWithFade));
   }
 
   void navigateToMatchDetailScreen(dynamic images,String? name,String? address,List alcoholDrink,List nightClub, List partyVacation, dynamic id){
