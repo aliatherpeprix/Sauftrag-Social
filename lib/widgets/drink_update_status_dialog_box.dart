@@ -36,8 +36,8 @@ class _DrinkUpdateStatusDialogBoxState
   @override
   void didChangeDependencies() {
     MainViewModel model = locator<MainViewModel>();
-    drinkingFrom = model.getStatus!.start_time;
-    drinkingTo = model.getStatus!.end_time;
+    model.drinkingFrom = model.getStatus!.start_time;
+    model.drinkingTo = model.getStatus!.end_time;
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
   }
@@ -45,7 +45,10 @@ class _DrinkUpdateStatusDialogBoxState
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<MainViewModel>.reactive(
-      //onModelReady: (data) => data.initializeShareDialog(),
+      onModelReady: (model){
+        model.drinkingFrom = model.getStatus!.start_time;
+        model.drinkingTo = model.getStatus!.end_time;
+      },
       builder: (context, model, child) {
         return Dialog(
             shape: RoundedRectangleBorder(
@@ -265,7 +268,7 @@ class _DrinkUpdateStatusDialogBoxState
                                         children: [
                                           Expanded(
                                             child: Text(
-                                              drinkingFrom!,
+                                              model.drinkingFrom!,
                                               style: TextStyle(
                                                 color: ColorUtils.text_dark,
                                                 fontFamily:
@@ -347,7 +350,7 @@ class _DrinkUpdateStatusDialogBoxState
                                         children: [
                                           Expanded(
                                             child: Text(
-                                              drinkingTo!,
+                                              model.drinkingTo!,
                                               style: TextStyle(
                                                 color: ColorUtils.text_dark,
                                                 fontFamily:
@@ -469,6 +472,8 @@ class _DrinkUpdateStatusDialogBoxState
                               onPressed: () {
                                 model.updatedrinkIndex = 0;
                                 model.notifyListeners();
+                                model.drinkingFrom = TimeOfDay(hour: 0,minute: 0).format(context);
+                                model.drinkingTo= TimeOfDay(hour: 0,minute: 0).format(context);
                                 model.updateDrinkStatus(context);
                                 //model.getDrinkStatus();
                                 model.notifyListeners();

@@ -379,6 +379,8 @@ class _FriendListForUserState extends State<FriendListForUser> {
                                                                      .matchedUsers[index]
                                                                      .profile_picture,
                                                                  fromUser: true,
+                                                                 user: model
+                                                                     .matchedUsers[index],
                                                                )));
                                                      }
                                                    /*  else{
@@ -525,6 +527,7 @@ class _FriendListForUserState extends State<FriendListForUser> {
                                                  return GestureDetector(
                                                    onTap: () {
                                                      if(model.barModel!.role == 1){
+                                                       model.selectedBar = (model.listOfAllBars[index]);
                                                        Navigator.push(
                                                            context,
                                                            PageTransition(

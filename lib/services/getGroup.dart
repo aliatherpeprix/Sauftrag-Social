@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:sauftrag/app/locator.dart';
+import 'package:sauftrag/models/bar_group_chat.dart';
 import 'package:sauftrag/models/create_group_chat.dart';
 import 'package:sauftrag/models/faqs_questions.dart';
 import 'package:sauftrag/models/get_bar_followers.dart';
@@ -34,8 +35,45 @@ class GetGroup {
         var faqs = (response.data);
         //List<FaqsModel> Faq = faqs[1]['question'];
         //print("jhjg");
-        List<CreateGroupChat> getListGroup = (response.data as List).map((e) =>
-            CreateGroupChat.fromJson(e)).toList();
+        List<BarGroupChat> getListGroup = (response.data as List).map((e) =>
+            BarGroupChat.fromJson(e)).toList();
+        // getbarfollowers.removeWhere((element) => element.role==2);
+        return getListGroup;
+      }
+
+      //user not found
+      else {
+        return response.data['message'];
+      }
+
+    }
+    catch (e) {
+      dynamic exception = e;
+      return exception.message;
+    }
+  }
+
+  Future GetBarGroups(
+
+
+      ) async {
+    try {
+
+      NewBarModel? user = (await locator<PrefrencesViewModel>().getBarUser());
+      var response = await dio.get(Constants.BaseUrlPro+Constants.GetGroup,
+          options: Options(
+            // contentType: Headers.formUrlEncodedContentType,
+              headers: {
+                "Authorization": "Token ${user!.token!}"
+              }
+          ));
+      if (response.statusCode == 200 || response.statusCode == 201) {
+
+        var faqs = (response.data);
+        //List<FaqsModel> Faq = faqs[1]['question'];
+        //print("jhjg");
+        List<BarGroupChat> getListGroup = (response.data as List).map((e) =>
+            BarGroupChat.fromJson(e)).toList();
         // getbarfollowers.removeWhere((element) => element.role==2);
         return getListGroup;
       }

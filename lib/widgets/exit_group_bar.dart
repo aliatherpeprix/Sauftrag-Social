@@ -10,20 +10,20 @@ import 'package:sauftrag/utils/image_utils.dart';
 import 'package:sauftrag/viewModels/main_view_model.dart';
 import 'package:stacked/stacked.dart';
 
-class ExitGroup extends StatefulWidget {
+class ExitGroupBar extends StatefulWidget {
 
   int id;
   String title;
   String btnTxt;
   String icon;
 
-  ExitGroup({required this.title, required this.btnTxt, required this.icon , required this.id,Key? key}) : super(key: key);
+  ExitGroupBar({required this.title, required this.btnTxt, required this.icon , required this.id,Key? key}) : super(key: key);
 
   @override
-  _ExitGroupState createState() => _ExitGroupState();
+  _ExitGroupBarState createState() => _ExitGroupBarState();
 }
 
-class _ExitGroupState extends State<ExitGroup> {
+class _ExitGroupBarState extends State<ExitGroupBar> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<MainViewModel>.reactive(

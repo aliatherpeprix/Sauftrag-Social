@@ -350,7 +350,6 @@ class _BarprofileState extends State<Barprofile> {
                             child: TabBarView(children: [
                               ///----New Feed Tab----///
                               Container(
-
                                 child: ListView.separated(
                                   scrollDirection: Axis.vertical,
                                   padding: EdgeInsets.zero,

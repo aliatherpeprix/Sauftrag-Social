@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:mime/mime.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:pubnub/core.dart';
 import 'package:pubnub/pubnub.dart';
 import 'package:sauftrag/app/locator.dart';
@@ -33,6 +34,8 @@ import 'package:sauftrag/widgets/loader_black.dart';
 import 'package:stacked/stacked.dart';
 import 'package:audioplayers/audioplayers.dart'as ap;
 
+import '../../models/user_matched.dart';
+
 
 
 class MessageScreenForUser extends StatefulWidget {
@@ -40,8 +43,9 @@ class MessageScreenForUser extends StatefulWidget {
   String? username;
   String? profilePic;
   bool? fromUser;
+  UserModel? user;
 
-  MessageScreenForUser({Key? key, this.id, this.username, this.profilePic, this.fromUser})
+  MessageScreenForUser({Key? key, this.id, this.username, this.profilePic, this.fromUser,this.user})
       : super(key: key);
 
   @override
@@ -227,18 +231,56 @@ class _MessageScreenForUserState extends State<MessageScreenForUser> {
                                             },
                                             child: Row(
                                               children: [
-                                                Stack(
-                                                  alignment: Alignment.topCenter,
-                                                  children: [
-                                                    CircleAvatar(
-                                                      radius: 26.0,
-                                                      backgroundImage: NetworkImage(
-                                                          widget.profilePic ??
-                                                              "https://tse2.mm.bing.net/th?id=OIP.4gcGG1F0z6LjVlJjYWGGcgHaHa&pid=Api&P=0&w=164&h=164"),
-                                                      backgroundColor:
-                                                      Colors.transparent,
-                                                    ),
-                                                  ],
+                                                GestureDetector(
+                                                  onTap : ()async{
+                                                    if (widget.fromUser!) {
+                                                      model.matchedImage.clear();
+                                                      //model.getMatchedUserData = (model.acceptMatchedtModel[index]);
+                                                      if (widget.user!.profile_picture != null &&
+                                                          widget.user!.profile_picture!.isNotEmpty) {
+                                                        model.matchedImage.add(widget.user!.profile_picture);
+                                                      }
+                                                      if (widget.user!.catalogue_image1 != null &&
+                                                          widget.user!.catalogue_image1!.isNotEmpty) {
+                                                        model.matchedImage.add(widget.user!.catalogue_image1);
+                                                      }
+                                                      if (widget.user!.catalogue_image2 != null &&
+                                                          widget.user!.catalogue_image2!.isNotEmpty) {
+                                                        model.matchedImage.add(widget.user!.catalogue_image2);
+                                                      }
+                                                      if (widget.user!.catalogue_image3 != null &&
+                                                          widget.user!.catalogue_image3!.isNotEmpty) {
+                                                        model.matchedImage.add(widget.user!.catalogue_image3);
+                                                      }
+                                                      if (widget.user!.catalogue_image4 != null &&
+                                                          widget.user!.catalogue_image4!.isNotEmpty) {
+                                                        model.matchedImage.add(widget.user!.catalogue_image4);
+                                                      }
+                                                      if (widget.user!.catalogue_image5 != null &&
+                                                          widget.user!.catalogue_image5!.isNotEmpty) {
+                                                        model.matchedImage.add(widget.user!.catalogue_image5);
+                                                      }
+                                                      model.notifyListeners();
+                                                      await model.getAnitherUserInfo(widget.user!.id.toString());
+                                                      model.navigateToMatchedProfileUser();
+                                                    }
+                                                    else {
+                                                      model.navigateToBarProfile();
+                                                    }
+                                                  },
+                                                  child: Stack(
+                                                    alignment: Alignment.topCenter,
+                                                    children: [
+                                                      CircleAvatar(
+                                                        radius: 26.0,
+                                                        backgroundImage: NetworkImage(
+                                                            widget.profilePic ??
+                                                                "https://tse2.mm.bing.net/th?id=OIP.4gcGG1F0z6LjVlJjYWGGcgHaHa&pid=Api&P=0&w=164&h=164"),
+                                                        backgroundColor:
+                                                        Colors.transparent,
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                                 SizedBox(
                                                   width: 3.w,

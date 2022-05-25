@@ -8,9 +8,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:sauftrag/app/locator.dart';
-import 'package:sauftrag/bar/views/Drawer/matchedProfile_Friend.dart';
 import 'package:sauftrag/models/favorites_model.dart';
-import 'package:sauftrag/models/user_matched.dart';
 import 'package:sauftrag/models/user_models.dart';
 import 'package:sauftrag/services/addFavorites.dart';
 import 'package:sauftrag/utils/color_utils.dart';
@@ -25,16 +23,19 @@ import 'package:sauftrag/widgets/all_page_loader.dart';
 import 'package:stacked/stacked.dart';
 import 'package:photo_view/photo_view.dart';
 
-class MatchedProfileUser extends StatefulWidget {
+import '../../../models/user_matched.dart';
 
-  MatchedProfileUser({Key? key,})
+class MatchedProfileFriend extends StatefulWidget {
+  List? images = [];
+  UserModel? getMatchedUserData;
+  MatchedProfileFriend({Key? key,this.images,this.getMatchedUserData})
       : super(key: key);
 
   @override
-  _MatchedProfileUserState createState() => _MatchedProfileUserState();
+  _MatchedProfileFriendState createState() => _MatchedProfileFriendState();
 }
 
-class _MatchedProfileUserState extends State<MatchedProfileUser> {
+class _MatchedProfileFriendState extends State<MatchedProfileFriend> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   // List followerImg = [
@@ -65,7 +66,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
       viewModelBuilder: () => locator<MainViewModel>(),
       onModelReady: (model) async {
 
-        model.acceptMatched(context);
+        // model.acceptMatched(context);
         model.drinkList =
         await Addfavorites().GetFavoritesDrink();
         model.clubList =
@@ -75,9 +76,8 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
       },
       disposeViewModel: false,
       builder: (context, model, child) {
-        var getMatchedUserData = model.acceptMatchedtModel;
         return model.isLoading == true ? AllPageLoader() :
-          SafeArea(
+        SafeArea(
           top: false,
           bottom: false,
           child: GestureDetector(
@@ -126,7 +126,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                         flexibleSpace: FlexibleSpaceBar(
                           background:
                           Image.network(
-                            model.matchedUser!.profile_picture!,
+                            widget.getMatchedUserData!.profile_picture!,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -159,7 +159,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    model.matchedUser!.username!,
+                                    widget.getMatchedUserData!.username!,
                                     style: TextStyle(
                                       fontFamily: FontUtils.modernistBold,
                                       fontSize: 2.5.t,
@@ -175,7 +175,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                       SizedBox(width: 2.w),
                                       Flexible(
                                         child: Text(
-                                          model.matchedUser!.address!,
+                                          widget.getMatchedUserData!.address!,
                                           style: TextStyle(
                                             fontFamily: FontUtils.modernistRegular,
                                             fontSize: 1.8.t,
@@ -195,9 +195,9 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                     ),
                                   ),
                                   SizedBox(height: 1.h),
-                                  model.matchedUser!.about != null ?
+                                  widget.getMatchedUserData!.about != null ?
                                   Text(
-                                    model.matchedUser!.about!,
+                                    widget.getMatchedUserData!.about!,
                                     style: TextStyle(
                                       fontFamily: FontUtils.modernistRegular,
                                       fontSize: 1.8.t,
@@ -231,7 +231,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                     spacing: 2.5.w,
                                     runSpacing: 1.5.h,
                                     direction: Axis.horizontal,
-                                    children: model.matchedUser!.favorite_alcohol_drinks!
+                                    children: widget.getMatchedUserData!.favorite_alcohol_drinks!
                                         .map((element) => ElevatedButton(
                                       onPressed: () {
                                         // if (model.selectedInterestList
@@ -289,7 +289,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                     spacing: 2.5.w,
                                     runSpacing: 1.5.h,
                                     direction: Axis.horizontal,
-                                    children: model.matchedUser!.favorite_musics!
+                                    children: widget.getMatchedUserData!.favorite_musics!
                                         .map((element) => ElevatedButton(
                                       onPressed: () {
 
@@ -338,7 +338,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                     spacing: 2.5.w,
                                     runSpacing: 1.5.h,
                                     direction: Axis.horizontal,
-                                    children: model.matchedUser!.favorite_party_vacation!
+                                    children: widget.getMatchedUserData!.favorite_party_vacation!
                                         .map((element) => ElevatedButton(
                                       onPressed: () {
                                         // if (model.selectedInterestList
@@ -412,7 +412,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                   GridView.builder(
                                     padding: EdgeInsets.zero,
                                     shrinkWrap: true,
-                                    itemCount: model.matchedImage.length,
+                                    itemCount: widget.images!.length,
                                     gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
                                         childAspectRatio: 0.7,
@@ -421,27 +421,27 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                         //childAspectRatio: 1,
                                         crossAxisSpacing: 1*SizeConfig.widthMultiplier),
                                     itemBuilder: (context,  index) {
-                                        return GestureDetector(
-                                          onTap: (){
-                                            Navigator.push(context, PageTransition(child: ViewZoomedImage(index: index,), type: PageTransitionType.fade));
-                                          },
-                                          child: Container(
-                                              //padding: EdgeInsets.all(4.0),
-                                              //height: 20.h,
-                                              height: MediaQuery.of(context).size.width / 3.4,
-                                              width:
-                                              MediaQuery.of(context).size.width / 3.4,
-                                              decoration: BoxDecoration(
-                                                image: DecorationImage(
+                                      return GestureDetector(
+                                        onTap: (){
+                                          Navigator.push(context, PageTransition(child: ViewZoomedImage(index: index,), type: PageTransitionType.fade));
+                                        },
+                                        child: Container(
+                                          //padding: EdgeInsets.all(4.0),
+                                          //height: 20.h,
+                                            height: MediaQuery.of(context).size.width / 3.4,
+                                            width:
+                                            MediaQuery.of(context).size.width / 3.4,
+                                            decoration: BoxDecoration(
+                                              image: DecorationImage(
                                                   image:
-                                                  NetworkImage(model.matchedImage[index]),
+                                                  NetworkImage(widget.images![index]),
                                                   fit: BoxFit.cover),
-                                                borderRadius:
-                                                BorderRadius.all(Radius.circular(20)),
-                                              ),
-                                              child: Container()
-                                          ),
-                                        );
+                                              borderRadius:
+                                              BorderRadius.all(Radius.circular(20)),
+                                            ),
+                                            child: Container()
+                                        ),
+                                      );
 
                                     },),
 
@@ -478,81 +478,45 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                       padding: EdgeInsets.zero,
                                       shrinkWrap: true,
                                       physics: NeverScrollableScrollPhysics(),
-                                      itemCount: model.matchedUser!.friends!.length,
+                                      itemCount: widget.getMatchedUserData!.friends!.length,
                                       gridDelegate:
                                       SliverGridDelegateWithFixedCrossAxisCount(
                                           crossAxisCount: 4,
                                           mainAxisSpacing: 25,
                                           crossAxisSpacing: 15),
                                       itemBuilder: (context, index) {
-                                        return GestureDetector(
-                                          onTap: ()async{
-                                            UserMatchedModel getMatchedUserData = (model.matchedUser!.friends![index]);
-                                            List images = [];
-                                            if (getMatchedUserData.user!.profilePicture != null &&
-                                                getMatchedUserData.user!.profilePicture.isNotEmpty) {
-                                              images.add(getMatchedUserData.user!.profilePicture);
-                                            }
-                                            if (getMatchedUserData.user!.catalogueImage1 != null &&
-                                                getMatchedUserData.user!.catalogueImage1.isNotEmpty) {
-                                              images.add(getMatchedUserData.user!.catalogueImage1);
-                                            }
-                                            if (getMatchedUserData.user!.catalogueImage2 != null &&
-                                                getMatchedUserData.user!.catalogueImage2.isNotEmpty) {
-                                              images.add(getMatchedUserData.user!.catalogueImage2);
-                                            }
-                                            if (getMatchedUserData.user!.catalogueImage3 != null &&
-                                                getMatchedUserData.user!.catalogueImage3.isNotEmpty) {
-                                              images.add(getMatchedUserData.user!.catalogueImage3);
-                                            }
-                                            if (getMatchedUserData.user!.catalogueImage4 != null &&
-                                                getMatchedUserData.user!.catalogueImage4.isNotEmpty) {
-                                              images.add(getMatchedUserData.user!.catalogueImage4);
-                                            }
-                                            if (getMatchedUserData.user!.catalogueImage5 != null &&
-                                                getMatchedUserData.user!.catalogueImage5.isNotEmpty) {
-                                              images.add(getMatchedUserData.user!.catalogueImage5);
-                                            }
-                                            model.notifyListeners();
-                                            var user = await model.getOtherUserInfo(model.matchedUser!.friends![index].user!.id.toString());
-                                            if (user is UserModel){
-                                              Navigator.push(model.navigationService.navigationKey.currentState!.context, PageTransition(child: MatchedProfileFriend(images: images,getMatchedUserData: user,), type: PageTransitionType.fade));
-                                            }
-                                            model.notifyListeners();
-                                          },
-                                          child: Center(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                              mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                ClipRRect(
-                                                  borderRadius: BorderRadius.circular(50),
-                                                  child: Image.network(model.matchedUser!.friends![index].user!.profilePicture!,
-                                                    width: 15.i,
-                                                    height: 15.i,
-                                                    fit: BoxFit.cover,
+                                        return Center(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              ClipRRect(
+                                                borderRadius: BorderRadius.circular(50),
+                                                child: Image.network(widget.getMatchedUserData!.friends![index].user!.profilePicture!,
+                                                  width: 15.i,
+                                                  height: 15.i,
+                                                  fit: BoxFit.cover,
 
-                                                  ),
                                                 ),
-                                                // Image.network(
-                                                //   model.matchedUser!.friends![index].user!.profilePicture!,
-                                                //   height: 15.i,
-                                                // ),
-                                                Expanded(
-                                                    child: Text(
-                                                      (model.matchedUser!.friends![index].user!.username),
-                                                      maxLines: 2,
-                                                      style: TextStyle(
-                                                          fontFamily:
-                                                          FontUtils.modernistBold,
-                                                          fontSize: 1.7.t),
-                                                      textAlign: TextAlign.center,
-                                                    ))
-                                              ],
-                                            ),
+                                              ),
+                                              // Image.network(
+                                              //   model.matchedUser!.friends![index].user!.profilePicture!,
+                                              //   height: 15.i,
+                                              // ),
+                                              Expanded(
+                                                  child: Text(
+                                                    (widget.getMatchedUserData!.friends![index].user!.username),
+                                                    maxLines: 2,
+                                                    style: TextStyle(
+                                                        fontFamily:
+                                                        FontUtils.modernistBold,
+                                                        fontSize: 1.7.t),
+                                                    textAlign: TextAlign.center,
+                                                  ))
+                                            ],
                                           ),
                                         );
                                       },
@@ -589,7 +553,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                       padding: EdgeInsets.zero,
                                       shrinkWrap: true,
                                       physics: NeverScrollableScrollPhysics(),
-                                      itemCount: model.matchedUser!.friends!.length,
+                                      itemCount: widget.getMatchedUserData!.friends!.length,
                                       gridDelegate:
                                       SliverGridDelegateWithFixedCrossAxisCount(
                                           crossAxisCount: 4,
@@ -606,7 +570,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                             children: [
                                               ClipRRect(
                                                 borderRadius: BorderRadius.circular(50),
-                                                child: Image.network(model.matchedUser!.friends![index].user!.profilePicture!,
+                                                child: Image.network(widget.getMatchedUserData!.friends![index].user!.profilePicture!,
                                                   width: 15.i,
                                                   height: 15.i,
                                                   fit: BoxFit.cover,
@@ -615,7 +579,7 @@ class _MatchedProfileUserState extends State<MatchedProfileUser> {
                                               ),
                                               Expanded(
                                                   child: Text(
-                                                    (model.matchedUser!.friends![index].user!.username),
+                                                    (widget.getMatchedUserData!.friends![index].user!.username),
                                                     maxLines: 2,
                                                     style: TextStyle(
                                                         fontFamily:
