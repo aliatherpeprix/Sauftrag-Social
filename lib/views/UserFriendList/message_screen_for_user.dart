@@ -730,7 +730,7 @@ class _MessageScreenForUserState extends State<MessageScreenForUser> with Single
                             ),
                           ],
                         ),
-                        CircularRevealAnimation(child: Container(), animation: animation)
+                       // CircularRevealAnimation(child: Container(), animation: animation)
                       ],
                     ),
                     // child: Column(
